@@ -108,9 +108,7 @@ class Shape extends JsonSerializableType
         switch ($this->type) {
             case 'circle':
                 $value = $this->value->jsonSerialize();
-                foreach ($value as $k => $v) {
-                    $result[$k] = $v;
-                }
+                $result = array_merge($value, $result);
                 break;
             case 'square':
                 $value = $this->value->jsonSerialize();
@@ -124,9 +122,7 @@ class Shape extends JsonSerializableType
                     break;
                 }
                 $value = $this->value->jsonSerialize();
-                foreach ($value as $k => $v) {
-                    $result[$k] = $v;
-                }
+                $result = array_merge($value, $result);
         }
 
         return $result;
