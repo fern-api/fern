@@ -1,0 +1,58 @@
+---
+title: 'Parameters'
+description: 'Display API parameter information with metadata like type, requirements, and descriptions'
+---
+
+The `ParamField` component helps document API parameters and properties with consistent formatting. It displays the parameter name, type, requirements, and description in a structured layout.
+
+## Properties
+
+<ParamField path="type" type="string" required={true}>
+  The data type of the parameter (e.g., "string", "number", "boolean")
+</ParamField>
+
+<ParamField path="required" type="boolean" required={false}>
+  Indicates if the parameter is required. Displays a "Required" label when true.
+</ParamField>
+
+<ParamField path="default" type="string" required={false}>
+  The default value for the parameter, if any
+</ParamField>
+
+<ParamField path="deprecated" type="boolean" required={false}>
+  Marks the parameter as deprecated. Shows a "Deprecated" warning when true.
+</ParamField>
+
+<Aside>
+## Example
+  <Tabs>
+    <Tab title="Example">
+      <ParamField path="username" type="string" required={true}>
+        The user's display name
+      </ParamField>
+
+      <ParamField path="limit" type="number" default="50">
+        Maximum number of items to return
+      </ParamField>
+
+      <ParamField path="api_key" type="string" deprecated={true}>
+        Use OAuth authentication instead
+      </ParamField>
+    </Tab>
+    <Tab title="Markdown">
+      ```jsx
+      <ParamField path="username" type="string" required={true}>
+        The user's display name
+      </ParamField>
+
+      <ParamField path="limit" type="number" default="50">
+        Maximum number of items to return
+      </ParamField>
+
+      <ParamField path="api_key" type="string" deprecated={true}>
+        Use OAuth authentication instead
+      </ParamField>
+      ```
+    </Tab>
+  </Tabs>
+</Aside>
