@@ -483,7 +483,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     contentType: bodyProperty.contentType,
                                     description: bodyProperty.docs,
                                     availability: convertIrAvailability(bodyProperty.availability),
-                                    exploded: bodyProperty.style === "exploded",
+                                    exploded: bodyProperty.style === "exploded"
                                 }),
                                 _other: () => undefined
                             });
@@ -769,9 +769,7 @@ function convertHttpEndpointExample({
                                     const example = fullExample[bodyProperty.name.wireValue];
                                     value[bodyProperty.name.wireValue] = {
                                         type: "exploded",
-                                        value: Array.isArray(example) 
-                                            ? example
-                                            : [example]
+                                        value: Array.isArray(example) ? example : [example]
                                     };
                                 } else {
                                     value[bodyProperty.name.wireValue] = {
