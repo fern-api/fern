@@ -1,9 +1,9 @@
-import { UnnamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FileUploadRequest, HttpEndpoint, HttpRequestBodyReference, InlinedRequestBody, SdkRequest, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { assertNever } from "@fern-api/core-utils";
 
 export interface QueryParameterCodeBlock {
     code: php.CodeBlock;
@@ -29,6 +29,36 @@ export abstract class EndpointRequest {
 
     public getRequestParameterName(): string {
         return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`;
+    }
+
+    public hasRequiredProperties(): boolean {
+        // TODO: Add path parameters to this check when inlinePathParameters is supported.
+        for (const queryParameter of this.endpoint.queryParameters) {
+            if (!this.context.isOptional(queryParameter.valueType)) {
+                return true;
+            }
+        }
+        for (const headerParameter of this.endpoint.headers) {
+            if (!this.context.isOptional(headerParameter.valueType)) {
+                return true;
+            }
+        }
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            switch (requestBody.type) {
+                case "inlinedRequestBody":
+                    return this.inlinedRequestBodyHasRequiredProperties(requestBody);
+                case "reference":
+                    return this.referenceRequestBodyHasRequiredProperties(requestBody);
+                case "fileUpload":
+                    return this.fileUploadRequestBodyHasRequiredProperties(requestBody);
+                case "bytes":
+                    return true;
+                default:
+                    assertNever(requestBody);
+            }
+        }
+        return false;
     }
 
     public abstract getRequestParameterType(): php.Type;
@@ -197,4 +227,41 @@ export abstract class EndpointRequest {
             );
         });
     }
+
+    private inlinedRequestBodyHasRequiredProperties(requestBody: InlinedRequestBody): boolean {
+        const properties = requestBody.properties;
+        for (const property of [...properties, ...(requestBody.extendedProperties ?? [])]) {
+            if (!this.context.isOptional(property.valueType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private referenceRequestBodyHasRequiredProperties(requestBody: HttpRequestBodyReference): boolean {
+        return !this.context.isOptional(requestBody.requestBodyType);
+    }
+
+    private fileUploadRequestBodyHasRequiredProperties(requestBody: FileUploadRequest): boolean {
+        for (const property of requestBody.properties) {
+            switch (property.type) {
+                case "file": {
+                    if (!property.value.isOptional) {
+                        return true;
+                    }
+                    break;
+                }
+                case "bodyProperty": {
+                    if (!this.context.isOptional(property.valueType)) {
+                        return true;
+                    }
+                    break;
+                }
+                default:
+                    assertNever(property);
+            }
+        }
+        return false;
+    }
+
 }

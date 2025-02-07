@@ -6,6 +6,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { EndpointRequest } from "./request/EndpointRequest";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -23,10 +24,7 @@ export abstract class AbstractEndpointGenerator {
     }): EndpointSignatureInfo {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
-        const requestParameter =
-            request != null
-                ? php.parameter({ type: request.getRequestParameterType(), name: request.getRequestParameterName() })
-                : undefined;
+        const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
         return {
             baseParameters: [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null),
             pathParameters,
@@ -66,5 +64,17 @@ export abstract class AbstractEndpointGenerator {
             pathParameters,
             pathParameterReferences
         };
+    }
+
+    private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
+        return  php.parameter({
+            type: request.getRequestParameterType(),
+            name: request.getRequestParameterName(),
+            initializer: !request.hasRequiredProperties() ? php.codeblock((writer) => {
+                writer.write("new ");
+                writer.writeNode(request.getRequestParameterType());
+                writer.write("()");
+            }): undefined,
+        })
     }
 }
