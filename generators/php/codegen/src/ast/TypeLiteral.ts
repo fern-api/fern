@@ -164,7 +164,8 @@ export class TypeLiteral extends AstNode {
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {
         writer.writeLine("<<<EOT");
         writer.writeNoIndent(value);
-        writer.writeLine("EOT;");
+        writer.newLine();
+        writer.writeNoIndent("EOT");
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
@@ -229,6 +230,16 @@ export class TypeLiteral extends AstNode {
 
     public static boolean(value: boolean): TypeLiteral {
         return new this({ type: "boolean", value });
+    }
+
+    public static class_({
+        reference,
+        fields
+    }: {
+        reference: ClassReference;
+        fields: ConstructorField[];
+    }): TypeLiteral {
+        return new this({ type: "class", reference, fields });
     }
 
     public static file(value: string): TypeLiteral {
@@ -341,7 +352,7 @@ export class TypeLiteral extends AstNode {
         writer.writeLine("[");
         writer.indent();
         for (const [key, val] of entries) {
-            writer.write(`${key} => `);
+            writer.write(`'${key}' => `);
             writer.writeNode(TypeLiteral.unknown(val));
             writer.writeLine(",");
         }
@@ -354,7 +365,7 @@ function buildFileFromString({ writer, value }: { writer: Writer; value: string 
     return new MethodInvocation({
         on: new ClassReference({
             name: "File",
-            namespace: writer.rootNamespace
+            namespace: `${writer.rootNamespace}\\Utils`
         }),
         method: "createFromString",
         arguments_: [new CodeBlock(`"${value}"`)]

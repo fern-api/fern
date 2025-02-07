@@ -6068,6 +6068,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
+      '@fern-api/php-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/php/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3

@@ -39,8 +39,32 @@ export class DynamicTypeLiteralMapper {
         if (args.value === undefined) {
             return php.TypeLiteral.nop();
         }
-        // TODO: Handle mapping types.
-        return php.TypeLiteral.nop();
+        switch (args.typeReference.type) {
+            case "list":
+            case "set":
+                return this.convertList({ list: args.typeReference.value, value: args.value });
+            case "literal":
+                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value });
+            case "map":
+                return this.convertMap({ map: args.typeReference, value: args.value });
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return this.convertNamed({ named, value: args.value, as: args.as });
+            }
+            case "optional":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "nullable":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "primitive":
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
+            case "unknown":
+                return this.convertUnknown({ value: args.value });
+            default:
+                assertNever(args.typeReference);
+        }
     }
 
     private convertLiteral({
@@ -152,12 +176,73 @@ export class DynamicTypeLiteralMapper {
         return php.TypeLiteral.nop(/* TODO: Implement me! */);
     }
 
-    private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+    private convertObject({
+        object_,
+        value
+    }: {
+        object_: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): php.TypeLiteral {
+        const properties = this.context.associateByWireValue({
+            parameters: object_.properties,
+            values: this.context.getRecord(value) ?? {}
+        });
+        return php.TypeLiteral.class_({
+            reference: php.classReference({
+                name: this.context.getClassName(object_.declaration.name),
+                namespace: this.context.getTypesNamespace(object_.declaration.fernFilepath)
+            }),
+            fields: properties.map((property) => {
+                this.context.errors.scope(property.name.wireValue);
+                try {
+                    return {
+                        name: this.context.getPropertyName(property.name.name),
+                        value: this.convert(property)
+                    };
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+        const name = this.getEnumValueName({ enum_, value });
+        if (name == null) {
+            return php.TypeLiteral.nop();
+        }
+        return php.TypeLiteral.reference(
+            php.codeblock(
+                (writer) => {
+                    writer.writeNode(php.classReference({
+                        name: this.context.getClassName(enum_.declaration.name),
+                        namespace: this.context.getTypesNamespace(enum_.declaration.fernFilepath)
+                    }));
+                    writer.write("::");
+                    writer.write(name);
+                    writer.write("->value");
+                }
+            )
+        );
+    }
+
+    private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected enum value string, got: ${typeof value}`
+            });
+            return undefined;
+        }
+        const enumValue = enum_.values.find((v) => v.wireValue === value);
+        if (enumValue == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `An enum value named "${value}" does not exist in this context`
+            });
+            return undefined;
+        }
+        return this.context.getClassName(enumValue.name);
     }
 
     private convertUndiscriminatedUnion({
