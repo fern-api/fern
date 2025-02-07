@@ -1,0 +1,10 @@
+imports:
+  auth: auth.yml
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    get-token:
+      endpoint: auth.getToken
+    scheme: oauth
+    type: client-credentials
+name: oauth-client-credentials-default

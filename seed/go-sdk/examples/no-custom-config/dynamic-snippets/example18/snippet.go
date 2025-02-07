@@ -28,6 +28,23 @@ func do() () {
                 },
             },
             ExtendedMovie: &fern.ExtendedMovie{
+                Id: "id",
+                Prequel: fern.String(
+                    "prequel",
+                ),
+                Title: "title",
+                From: "from",
+                Rating: 1.1,
+                Tag: "tag",
+                Book: fern.String(
+                    "book",
+                ),
+                Metadata: map[string]interface{}{
+                    "metadata": map[string]interface{}{
+                        "key": "value",
+                    },
+                },
+                Revenue: 1000000,
                 Cast: []string{
                     "cast",
                     "cast",
@@ -39,7 +56,14 @@ func do() () {
                 },
                 Name: "name",
             },
-            Metadata: &fern.Metadata{},
+            Metadata: &fern.Metadata{
+                Extra: map[string]string{
+                    "extra": "extra",
+                },
+                Tags: []string{
+                    "tags",
+                },
+            },
             CommonMetadata: &commons.Metadata{
                 Id: "id",
                 Data: map[string]string{

@@ -19,8 +19,8 @@ await client.Nullable.GetUsersAsync(
         Usernames = ["usernames"],
         Avatar = "avatar",
         Activated = [true],
-        Tags = [null],
-        Extra = null,
+        Tags = ["tags"],
+        Extra = true,
     }
 );
 ```
