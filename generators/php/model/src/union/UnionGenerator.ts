@@ -190,6 +190,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {
+        let underlyingTypeCheck: php.CodeBlock | null = null;
         switch (type.internalType.type) {
             case "int":
                 return php.codeblock((writer) =>
@@ -266,8 +267,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.writeNode(type);
                 });
 
-            case "typeDict":
             case "optional":
+                underlyingTypeCheck = this.getTypeCheck(variableGetter, type.underlyingType());
+                if (underlyingTypeCheck == null) {
+                    return null;
+                }
+                return php.codeblock((writer) => {
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_null",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    );
+                    writer.write(" || ");
+
+                    // NOTE: Casting because LSP was complaining here
+                    writer.writeNode(underlyingTypeCheck as php.CodeBlock);
+                });
+
+            case "typeDict":
             case "enumString":
             case "union":
             default:

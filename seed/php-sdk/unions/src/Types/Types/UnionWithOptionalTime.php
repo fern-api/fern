@@ -4,6 +4,7 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use DateTime;
+use Exception;
 
 class UnionWithOptionalTime extends JsonSerializableType
 {
@@ -35,6 +36,12 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDate(): ?DateTime
     {
+        if (!(is_null($this->value) || $this->value instanceof DateTime)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
         return $this->value;
     }
 
@@ -43,6 +50,12 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDatetime(): ?DateTime
     {
+        if (!(is_null($this->value) || $this->value instanceof DateTime)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
         return $this->value;
     }
 
