@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { AncestorOmissionCriteria, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
+import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -9,12 +9,12 @@ export async function mergeWithOverrides<T extends object>({
     absoluteFilePathToOverrides,
     data,
     context,
-    ancestorOmissionCriteria
+    ancestorOmissionKeyList
 }: {
     absoluteFilePathToOverrides: AbsoluteFilePath;
     data: T;
     context: TaskContext;
-    ancestorOmissionCriteria?: AncestorOmissionCriteria;
+    ancestorOmissionKeyList?: string[];
 }): Promise<T> {
     let parsedOverrides = null;
     try {
@@ -27,5 +27,5 @@ export async function mergeWithOverrides<T extends object>({
     } catch (err) {
         return context.failAndThrow(`Failed to read overrides from file ${absoluteFilePathToOverrides}`);
     }
-    return coreMergeWithOverrides({ data, overrides: parsedOverrides, ancestorOmissionCriteria });
+    return coreMergeWithOverrides({ data, overrides: parsedOverrides, ancestorOmissionKeyList });
 }

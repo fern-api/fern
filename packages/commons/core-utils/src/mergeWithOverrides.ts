@@ -1,7 +1,7 @@
 import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from "lodash";
 import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
 
-export type AncestorOmissionCriteria = {
+type AncestorOmissionCriteria = {
     ancestorKeys: string[];
     isDescendant: boolean;
 };
@@ -9,11 +9,11 @@ export type AncestorOmissionCriteria = {
 export function mergeWithOverrides<T extends object>({
     data,
     overrides,
-    ancestorOmissionCriteria
+    ancestorOmissionKeyList
 }: {
     data: T;
     overrides: object;
-    ancestorOmissionCriteria?: AncestorOmissionCriteria;
+    ancestorOmissionKeyList?: string[];
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
@@ -25,7 +25,10 @@ export function mergeWithOverrides<T extends object>({
             : undefined
     ) as T;
     // Remove any nullified values
-    const filtered = omitDeepBy(merged, isNull, ancestorOmissionCriteria);
+    const filtered = omitDeepBy(merged, isNull, {
+        ancestorKeys: ancestorOmissionKeyList ?? [],
+        isDescendant: false
+    });
     return filtered as T;
 }
 

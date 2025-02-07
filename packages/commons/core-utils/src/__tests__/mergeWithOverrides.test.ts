@@ -18,10 +18,7 @@ describe("mergeWithOverrides", () => {
         const result = mergeWithOverrides({
             data: schema1,
             overrides: {},
-            ancestorOmissionCriteria: {
-                ancestorKeys: ["examples"],
-                isDescendant: true
-            }
+            ancestorOmissionKeyList: ["examples"]
         });
 
         expect(result).toEqual(schema1);
