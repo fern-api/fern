@@ -1,13 +1,93 @@
 name: Update Seed
 
 on:
-  schedule:
-    - cron: "0 * * * *" # Run every hour
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/seed/**'
+      - 'packages/ir-sdk/fern/apis/**'
+      - 'packages/cli/generation/ir-generator/**'
+      - 'test-definitions/**'
+      - 'test-definitions-openapi/**'
+      - 'generators/**'
+      - 'seed/**'
   workflow_dispatch:
 
+env:
+  DOCKER_BUILDKIT: 1
+
 jobs:
-  ruby-model:
+  changes:
     if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    outputs:
+      seed: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.seed }}
+      ruby: ${{ steps.filter.outputs.ruby }}
+      openapi: ${{ steps.filter.outputs.openapi }}
+      python: ${{ steps.filter.outputs.python }}
+      postman: ${{ steps.filter.outputs.postman }}
+      java: ${{ steps.filter.outputs.java }}
+      typescript: ${{ steps.filter.outputs.typescript }}
+      go: ${{ steps.filter.outputs.go }}
+      csharp: ${{ steps.filter.outputs.csharp }}
+      php: ${{ steps.filter.outputs.php }}
+    steps:
+      - if: github.event_name != 'workflow_dispatch'
+        uses: actions/checkout@v4
+      - if: github.event_name != 'workflow_dispatch'
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            seed:
+              - '.github/workflows/update-seed.yml'
+              - 'packages/seed/**'
+              - 'packages/ir-sdk/fern/apis/**'
+              - 'packages/cli/generation/ir-generator/**'
+              - 'test-definitions/**'
+              - 'test-definitions-openapi/**'
+            ruby:
+              - 'generators/ruby/**'
+              - seed/ruby-sdk/seed.yml
+              - seed/ruby-model/seed.yml
+            openapi:
+              - 'generators/openapi/**'
+              - seed/openapi/seed.yml
+            python:
+              - 'generators/python/**'
+              - seed/pydantic/seed.yml
+              - seed/python-sdk/seed.yml
+              - seed/fastapi/seed.yml
+            postman:
+              - 'generators/postman/**'
+              - seed/postman/seed.yml
+            java:
+              - 'generators/java/**'
+              - seed/java-sdk/seed.yml
+              - seed/java-model/seed.yml
+              - seed/java-spring/seed.yml
+            typescript:
+              - 'generators/typescript/**'
+              - seed/ts-sdk/seed.yml
+              - seed/ts-express/seed.yml
+            go:
+              - 'generators/go/**'
+              - seed/go-sdk/seed.yml
+              - seed/go-model/seed.yml
+              - seed/go-fiber/seed.yml
+            csharp:
+              - 'generators/csharp/**'
+              - seed/csharp-sdk/seed.yml
+              - seed/csharp-model/seed.yml
+            php:
+              - 'generators/php/**'
+              - seed/php-sdk/seed.yml
+              - seed/php-model/seed.yml
+
+  ruby-model:
+    needs: changes
+    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -32,7 +112,8 @@ jobs:
           delete-branch: true
 
   ruby-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -57,7 +138,8 @@ jobs:
           delete-branch: true
 
   pydantic-model:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -82,7 +164,8 @@ jobs:
           delete-branch: true
 
   python-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -107,7 +190,8 @@ jobs:
           delete-branch: true
 
   fastapi:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -132,7 +216,8 @@ jobs:
           delete-branch: true
 
   openapi:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -157,7 +242,8 @@ jobs:
           delete-branch: true
 
   postman:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -182,7 +268,8 @@ jobs:
           delete-branch: true
 
   java-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -207,7 +294,8 @@ jobs:
           delete-branch: true
 
   java-model:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -232,7 +320,8 @@ jobs:
           delete-branch: true
 
   java-spring:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -257,7 +346,8 @@ jobs:
           delete-branch: true
 
   typescript-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -282,7 +372,8 @@ jobs:
           delete-branch: true
 
   typescript-express:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -307,7 +398,8 @@ jobs:
           delete-branch: true
 
   go-fiber:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -332,7 +424,8 @@ jobs:
           delete-branch: true
 
   go-model:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -357,7 +450,8 @@ jobs:
           delete-branch: true
 
   go-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -382,7 +476,8 @@ jobs:
           delete-branch: true
 
   csharp-model:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -407,7 +502,8 @@ jobs:
           delete-branch: true
 
   csharp-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -432,7 +528,8 @@ jobs:
           delete-branch: true
 
   php-model:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -457,7 +554,8 @@ jobs:
           delete-branch: true
 
   php-sdk:
-    if: github.repository == 'fern-api/fern'
+    needs: changes
+    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
