@@ -5,19 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { FormDataBodyEncodingStyle } from "./FormDataBodyEncodingStyle";
 import { TypeReferenceDeclarationWithName } from "../../types/types/TypeReferenceDeclarationWithName";
 
-export const TypeReferenceDeclarationWithContentTypeSchema: core.serialization.ObjectSchema<
-    serializers.TypeReferenceDeclarationWithContentTypeSchema.Raw,
-    FernDefinition.TypeReferenceDeclarationWithContentTypeSchema
+export const HttpInlineFileRequestBodyPropertySchema: core.serialization.ObjectSchema<
+    serializers.HttpInlineFileRequestBodyPropertySchema.Raw,
+    FernDefinition.HttpInlineFileRequestBodyPropertySchema
 > = core.serialization
     .object({
+        style: FormDataBodyEncodingStyle.optional(),
         "content-type": core.serialization.string().optional(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
-export declare namespace TypeReferenceDeclarationWithContentTypeSchema {
+export declare namespace HttpInlineFileRequestBodyPropertySchema {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
+        style?: FormDataBodyEncodingStyle.Raw | null;
         "content-type"?: string | null;
     }
 }

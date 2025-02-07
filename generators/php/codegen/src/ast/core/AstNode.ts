@@ -31,4 +31,25 @@ export abstract class AstNode extends AbstractAstNode {
         this.write(writer);
         return writer.toString();
     }
+
+    /**
+     * Writes the node to a string.
+     */
+    public async toStringAsync({
+        namespace,
+        rootNamespace,
+        customConfig
+    }: {
+        namespace: string;
+        rootNamespace: string;
+        customConfig: BasePhpCustomConfigSchema;
+    }): Promise<string> {
+        const writer = new Writer({
+            namespace,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        return writer.toString();
+    }
 }

@@ -46,7 +46,7 @@ export class ClassInstantiation extends AstNode {
         this.arguments_.forEach((argument, idx) => {
             if (isNamedArgument(argument)) {
                 writer.write(`${argument.name} = `);
-                argument.assignment.write(writer);
+                writer.writeNodeOrString(argument.assignment);
             } else {
                 argument.write(writer);
             }

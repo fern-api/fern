@@ -1,5 +1,6 @@
 import { Rule } from "./Rule";
 import { ContentTypeOnlyForMultipartRule } from "./rules/content-type-only-for-multipart";
+import { ExplodedFormDataIsArrayRule } from "./rules/exploded-form-data-is-array";
 import { ImportFileExistsRule } from "./rules/import-file-exists";
 import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
 import { NoCircularImportsRule } from "./rules/no-circular-imports";
@@ -89,7 +90,8 @@ export function getAllRules(): Rule[] {
         NoUnusedGenericRule,
         ValidGenericRule,
         ContentTypeOnlyForMultipartRule,
-        ValidPathParametersConfigurationRule
+        ValidPathParametersConfigurationRule,
+        ExplodedFormDataIsArrayRule
     ];
 }
 

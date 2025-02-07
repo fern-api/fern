@@ -27,6 +27,8 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
 
+    public abstract clone(): AbstractDynamicSnippetsGeneratorContext;
+
     public associateQueryParametersByWireValue({
         parameters,
         values
