@@ -76,6 +76,9 @@ class UnionWithUnknown extends JsonSerializableType
         $result = [];
         $result["type"] = $this->type;
 
+        $base = parent::jsonSerialize();
+        $result = array_merge($base, $result);
+
         switch ($this->type) {
             case "foo":
                 break;

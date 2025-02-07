@@ -369,15 +369,47 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("$result = []");
                 writer.writeTextStatement('$result["type"] = $this->type');
+
                 writer.writeLine();
+
+                writer.writeNodeStatement(
+                    php.codeblock((_writer) => {
+                        _writer.write("$base = ");
+                        _writer.writeNode(
+                            php.invokeMethod({
+                                method: "jsonSerialize",
+                                arguments_: [],
+                                static_: true,
+                                on: php.codeblock("parent")
+                            })
+                        );
+                    })
+                );
+                writer.writeNodeStatement(
+                    php.codeblock((_writer) => {
+                        _writer.write("$result = ");
+                        _writer.writeNode(
+                            php.invokeMethod({
+                                method: "array_merge",
+                                arguments_: [php.codeblock("$base"), php.codeblock("$result")],
+                                static_: true
+                            })
+                        );
+                    })
+                );
+
+                writer.writeLine();
+
                 writer.writeNode(
                     this.variantSwitchStatement(
                         php.codeblock("$this->type"),
-                        (variant) => php.codeblock((writer) => writer.writeTextStatement("break")),
+                        (variant) => php.codeblock((_writer) => _writer.writeTextStatement("break")),
                         this.jsonSerializeDefaultHandler()
                     )
                 );
+
                 writer.writeLine();
+
                 writer.writeTextStatement("return $result");
             })
         });
@@ -398,9 +430,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             writer.controlFlow(
                 "if",
-                php.codeblock((writer) => {
-                    writer.write("$this->value instanceof ");
-                    writer.writeNode(php.classReference(this.context.getJsonSerializableTypeClassReference()));
+                php.codeblock((_writer) => {
+                    _writer.write("$this->value instanceof ");
+                    _writer.writeNode(php.classReference(this.context.getJsonSerializableTypeClassReference()));
                 })
             );
             writer.writeTextStatement("$value = $this->value->jsonSerialize()");
@@ -426,9 +458,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 })
             );
             writer.writeNodeStatement(
-                php.codeblock((writer) => {
-                    writer.write("$result = ");
-                    writer.writeNode(
+                php.codeblock((_writer) => {
+                    _writer.write("$result = ");
+                    _writer.writeNode(
                         php.invokeMethod({
                             method: "array_merge",
                             arguments_: [php.codeblock("$this->value"), php.codeblock("$result")],
