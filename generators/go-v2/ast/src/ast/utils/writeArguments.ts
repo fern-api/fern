@@ -22,7 +22,7 @@ export function writeArguments({ writer, arguments_ }: { writer: Writer; argumen
 
 function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {
     if (isNamedArgument(argument)) {
-        argument.assignment.write(writer);
+        writer.writeNodeOrString(argument.assignment);
     } else {
         argument.write(writer);
     }
