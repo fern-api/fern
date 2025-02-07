@@ -1,12 +1,7 @@
 name: "✨ Feature Request"
 description: "How can we make Fern even more awesome?"
-title: "[Feature]: "
-labels: ["enhancement"]
-assignees: [dsheridan]
+type: "feature"
 body:
-  - type: markdown
-    attributes:
-      value: "### 🚀 Thanks for helping make Fern better! Please fill out the details below."
 
   - type: dropdown
     id: product

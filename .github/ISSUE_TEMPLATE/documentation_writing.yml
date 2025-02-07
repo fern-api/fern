@@ -1,12 +1,8 @@
 name: "📖 Documentation Improvement"
 description: "Something missing or incorrect in our docs (buildwithfern.com/learn)?"
-title: "[Docs]: "
 labels: ["documentation"]
-assignees: [dsheridan]
+type: "task"
 body:
-  - type: markdown
-    attributes:
-      value: "### 📖 Thanks for helping improve the docs! Please provide details below."
 
   - type: dropdown
     id: issue-type
