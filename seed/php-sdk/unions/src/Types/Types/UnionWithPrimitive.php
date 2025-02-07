@@ -4,7 +4,6 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonSerializer;
 
 class UnionWithPrimitive extends JsonSerializableType
 {
@@ -96,11 +95,11 @@ class UnionWithPrimitive extends JsonSerializableType
 
         switch ($this->type) {
             case "integer":
-                $value = JsonSerializer::serializeValue($this->asInteger(), "int");
+                $value = $this->value;
                 $result['integer'] = $value;
                 break;
             case "string":
-                $value = JsonSerializer::serializeValue($this->asString(), "string");
+                $value = $this->value;
                 $result['string'] = $value;
                 break;
             case "_unknown":

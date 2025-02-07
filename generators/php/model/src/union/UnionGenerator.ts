@@ -416,15 +416,11 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
+        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
         switch (variant.shape.propertiesType) {
             case "samePropertiesAsObject":
                 return php.codeblock((writer) => {
-                    writer.writeNodeStatement(
-                        php.codeblock((_writer) => {
-                            _writer.write("$value = ");
-                            _writer.writeNode(this.jsonSerializeValueCall(variant));
-                        })
-                    );
+                    writer.writeNode(this.jsonSerializeValueCall(asCastMethodName, this.getReturnType(variant)));
                     writer.controlFlow(
                         "if",
                         php.invokeMethod({
@@ -460,12 +456,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 });
             case "singleProperty":
                 return php.codeblock((writer) => {
-                    writer.writeNodeStatement(
-                        php.codeblock((_writer) => {
-                            _writer.write("$value = ");
-                            _writer.writeNode(this.jsonSerializeValueCall(variant));
-                        })
-                    );
+                    writer.writeNode(this.jsonSerializeValueCall(asCastMethodName, this.getReturnType(variant)));
                     writer.writeNodeStatement(
                         php.codeblock((_writer) => {
                             _writer.write("$result");
@@ -484,25 +475,101 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         }
     }
 
-    private jsonSerializeValueCall(variant: SingleUnionType): php.MethodInvocation {
-        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
-        return php.invokeMethod({
-            method: "serializeValue",
-            arguments_: [
-                php.invokeMethod({
-                    method: asCastMethodName,
-                    arguments_: [],
-                    on: php.codeblock("$this")
-                }),
-                php.codeblock((__writer) => {
-                    __writer.write('"');
-                    __writer.writeNode(this.getReturnType(variant));
-                    __writer.write('"');
-                })
-            ],
-            static_: true,
-            on: this.context.getJsonSerializerClassReference()
-        });
+    private jsonSerializeValueCall(asCastMethodName: string, type: php.Type): php.CodeBlock {
+        switch (type.internalType.type) {
+            case "date":
+                return php.codeblock((writer) => {
+                    writer.write("$value = ");
+                    writer.writeNodeStatement(
+                        php.invokeMethod({
+                            method: "serializeDate",
+                            arguments_: [
+                                php.invokeMethod({
+                                    method: asCastMethodName,
+                                    arguments_: [],
+                                    static_: false,
+                                    on: php.codeblock("$this")
+                                })
+                            ],
+                            static_: true,
+                            on: this.context.getJsonSerializerClassReference()
+                        })
+                    );
+                });
+
+            case "dateTime":
+                return php.codeblock((writer) => {
+                    writer.write("$value = ");
+                    writer.writeNodeStatement(
+                        php.invokeMethod({
+                            method: "serializeDateTime",
+                            arguments_: [
+                                php.invokeMethod({
+                                    method: asCastMethodName,
+                                    arguments_: [],
+                                    static_: false,
+                                    on: php.codeblock("$this")
+                                })
+                            ],
+                            static_: true,
+                            on: this.context.getJsonSerializerClassReference()
+                        })
+                    );
+                });
+
+            case "reference":
+                return php.codeblock((writer) => {
+                    writer.write("$value = ");
+                    writer.writeNodeStatement(
+                        php.invokeMethod({
+                            method: "jsonSerialize",
+                            arguments_: [],
+                            static_: false,
+                            on: php.invokeMethod({
+                                method: asCastMethodName,
+                                arguments_: [],
+                                static_: false,
+                                on: php.codeblock("$this")
+                            })
+                        })
+                    );
+                });
+
+            case "optional":
+                return php.codeblock((writer) => {
+                    writer.controlFlow(
+                        "if",
+                        php.invokeMethod({
+                            method: "is_null",
+                            arguments_: [php.codeblock("$this->value")],
+                            static_: true
+                        })
+                    );
+                    writer.writeTextStatement("$value = $this->value");
+                    if (
+                        ["reference", "dateTime", "date", "optional"].includes(type.underlyingType().internalType.type)
+                    ) {
+                        writer.alternativeControlFlow("else");
+                        writer.writeNodeStatement(this.jsonSerializeValueCall(asCastMethodName, type.underlyingType()));
+                    }
+                    writer.endControlFlow();
+                });
+
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            default:
+                return php.codeblock((writer) => writer.writeTextStatement("$value = $this->value"));
+        }
     }
 
     private jsonSerializeDefaultHandler(): php.CodeBlock {

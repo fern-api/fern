@@ -5,7 +5,6 @@ namespace Seed\Types\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Exception;
-use Seed\Core\Json\JsonSerializer;
 
 class UnionWithLiteral extends JsonSerializableType
 {
@@ -83,7 +82,7 @@ class UnionWithLiteral extends JsonSerializableType
 
         switch ($this->type) {
             case "fern":
-                $value = JsonSerializer::serializeValue($this->asFern(), "string");
+                $value = $this->value;
                 $result['fern'] = $value;
                 break;
             case "_unknown":

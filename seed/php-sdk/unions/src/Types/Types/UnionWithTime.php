@@ -119,15 +119,15 @@ class UnionWithTime extends JsonSerializableType
 
         switch ($this->type) {
             case "value":
-                $value = JsonSerializer::serializeValue($this->asValue(), "int");
+                $value = $this->value;
                 $result['value'] = $value;
                 break;
             case "date":
-                $value = JsonSerializer::serializeValue($this->asDate(), "DateTime");
+                $value = JsonSerializer::serializeDate($this->asDate());
                 $result['date'] = $value;
                 break;
             case "datetime":
-                $value = JsonSerializer::serializeValue($this->asDatetime(), "DateTime");
+                $value = JsonSerializer::serializeDateTime($this->asDatetime());
                 $result['datetime'] = $value;
                 break;
             case "_unknown":

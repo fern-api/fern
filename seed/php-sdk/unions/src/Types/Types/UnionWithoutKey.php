@@ -4,7 +4,6 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonSerializer;
 
 class UnionWithoutKey extends JsonSerializableType
 {
@@ -96,7 +95,7 @@ class UnionWithoutKey extends JsonSerializableType
 
         switch ($this->type) {
             case "foo":
-                $value = JsonSerializer::serializeValue($this->asFoo(), "Foo");
+                $value = $this->asFoo()->jsonSerialize();
                 if (is_array($value)) {
                     $result = array_merge($value, $result);
                 } else {
@@ -104,7 +103,7 @@ class UnionWithoutKey extends JsonSerializableType
                 }
                 break;
             case "bar":
-                $value = JsonSerializer::serializeValue($this->asBar(), "Bar");
+                $value = $this->asBar()->jsonSerialize();
                 if (is_array($value)) {
                     $result = array_merge($value, $result);
                 } else {

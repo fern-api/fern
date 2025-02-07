@@ -4,7 +4,6 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonSerializer;
 
 class UnionWithDiscriminant extends JsonSerializableType
 {
@@ -96,11 +95,11 @@ class UnionWithDiscriminant extends JsonSerializableType
 
         switch ($this->type) {
             case "foo":
-                $value = JsonSerializer::serializeValue($this->asFoo(), "Foo");
+                $value = $this->asFoo()->jsonSerialize();
                 $result['foo'] = $value;
                 break;
             case "bar":
-                $value = JsonSerializer::serializeValue($this->asBar(), "Bar");
+                $value = $this->asBar()->jsonSerialize();
                 $result['bar'] = $value;
                 break;
             case "_unknown":

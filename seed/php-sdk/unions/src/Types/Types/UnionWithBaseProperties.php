@@ -5,7 +5,6 @@ namespace Seed\Types\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Exception;
-use Seed\Core\Json\JsonSerializer;
 
 class UnionWithBaseProperties extends JsonSerializableType
 {
@@ -127,15 +126,15 @@ class UnionWithBaseProperties extends JsonSerializableType
 
         switch ($this->type) {
             case "integer":
-                $value = JsonSerializer::serializeValue($this->asInteger(), "int");
+                $value = $this->value;
                 $result['integer'] = $value;
                 break;
             case "string":
-                $value = JsonSerializer::serializeValue($this->asString(), "string");
+                $value = $this->value;
                 $result['string'] = $value;
                 break;
             case "foo":
-                $value = JsonSerializer::serializeValue($this->asFoo(), "Foo");
+                $value = $this->asFoo()->jsonSerialize();
                 if (is_array($value)) {
                     $result = array_merge($value, $result);
                 } else {
