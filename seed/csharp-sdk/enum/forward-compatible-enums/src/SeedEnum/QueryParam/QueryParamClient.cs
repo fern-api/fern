@@ -71,7 +71,7 @@ public partial class QueryParamClient
     ///         Operand = [Operand.GreaterThan],
     ///         MaybeOperand = [Operand.GreaterThan],
     ///         OperandOrColor = [Color.Red],
-    ///         MaybeOperandOrColor = [null],
+    ///         MaybeOperandOrColor = [Color.Red],
     ///     }
     /// );
     /// </code>

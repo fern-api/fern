@@ -22,6 +22,8 @@ client.nullable.get_users(
     usernames="usernames",
     avatar="avatar",
     activated=True,
+    tags="tags",
+    extra=True,
 )
 
 ```

@@ -9,8 +9,18 @@ from seed.playlist import UpdatePlaylistRequest
 
 
 async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
+    expected_response: typing.Any = {
+        "name": "name",
+        "problems": ["problems", "problems"],
+        "playlist_id": "playlist_id",
+        "owner-id": "owner-id",
+    }
+    expected_types: typing.Any = {
+        "name": None,
+        "problems": ("list", {0: None, 1: None}),
+        "playlist_id": None,
+        "owner-id": None,
+    }
     response = client.playlist.create_playlist(
         service_param=1,
         datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
@@ -32,12 +42,15 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
 
 async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = [
-        {"playlist_id": "playlist_id", "owner-id": "owner-id"},
-        {"playlist_id": "playlist_id", "owner-id": "owner-id"},
+        {"name": "name", "problems": ["problems", "problems"], "playlist_id": "playlist_id", "owner-id": "owner-id"},
+        {"name": "name", "problems": ["problems", "problems"], "playlist_id": "playlist_id", "owner-id": "owner-id"},
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"playlist_id": None, "owner-id": None}, 1: {"playlist_id": None, "owner-id": None}},
+        {
+            0: {"name": None, "problems": ("list", {0: None, 1: None}), "playlist_id": None, "owner-id": None},
+            1: {"name": None, "problems": ("list", {0: None, 1: None}), "playlist_id": None, "owner-id": None},
+        },
     )
     response = client.playlist.get_playlists(
         service_param=1,
@@ -61,8 +74,18 @@ async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) ->
 
 
 async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
+    expected_response: typing.Any = {
+        "name": "name",
+        "problems": ["problems", "problems"],
+        "playlist_id": "playlist_id",
+        "owner-id": "owner-id",
+    }
+    expected_types: typing.Any = {
+        "name": None,
+        "problems": ("list", {0: None, 1: None}),
+        "playlist_id": None,
+        "owner-id": None,
+    }
     response = client.playlist.get_playlist(service_param=1, playlist_id="playlistId")
     validate_response(response, expected_response, expected_types)
 
@@ -71,8 +94,18 @@ async def test_get_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 
 
 async def test_update_playlist(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = {"playlist_id": "playlist_id", "owner-id": "owner-id"}
-    expected_types: typing.Any = {"playlist_id": None, "owner-id": None}
+    expected_response: typing.Any = {
+        "name": "name",
+        "problems": ["problems", "problems"],
+        "playlist_id": "playlist_id",
+        "owner-id": "owner-id",
+    }
+    expected_types: typing.Any = {
+        "name": None,
+        "problems": ("list", {0: None, 1: None}),
+        "playlist_id": None,
+        "owner-id": None,
+    }
     response = client.playlist.update_playlist(
         service_param=1,
         playlist_id="playlistId",

@@ -39,8 +39,8 @@ export class Nullable {
      *         usernames: "usernames",
      *         avatar: "avatar",
      *         activated: true,
-     *         tags: null,
-     *         extra: null
+     *         tags: "tags",
+     *         extra: true
      *     })
      */
     public async getUsers(

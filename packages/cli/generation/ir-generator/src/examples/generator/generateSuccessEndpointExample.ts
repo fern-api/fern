@@ -24,6 +24,7 @@ import {
 
 import { hashJSON } from "../../utils/hashJSON";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
 
@@ -131,7 +132,7 @@ export function generateEndpointExample({
         const generatedExample = generateTypeReferenceExample({
             fieldName: queryParameter.name.name.originalName,
             currentDepth: 0,
-            maxDepth: 1,
+            maxDepth: 10,
             typeDeclarations,
             typeReference: queryParameter.valueType,
             skipOptionalProperties: skipOptionalRequestProperties
@@ -193,6 +194,28 @@ export function generateEndpointExample({
             case "inlinedRequestBody": {
                 const jsonExample: Record<string, unknown> = {};
                 const properties: ExampleInlinedRequestBodyProperty[] = [];
+
+                if (endpoint.requestBody.extends != null) {
+                    for (const extendedTypeReference of endpoint.requestBody.extends) {
+                        const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
+                        if (extendedTypeDeclaration == null) {
+                            throw new Error(
+                                `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
+                            );
+                        }
+                        const extendedExample = generateTypeDeclarationExample({
+                            typeDeclaration: extendedTypeDeclaration,
+                            typeDeclarations,
+                            currentDepth: 1,
+                            maxDepth: 10,
+                            skipOptionalProperties: skipOptionalRequestProperties
+                        });
+                        if (extendedExample.type === "success") {
+                            Object.assign(jsonExample, extendedExample.jsonExample);
+                        }
+                    }
+                }
+
                 for (const property of [
                     ...(endpoint.requestBody.properties ?? []),
                     ...(endpoint.requestBody.extendedProperties ?? [])
