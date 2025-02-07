@@ -98,8 +98,15 @@ class Union extends JsonSerializableType
                 break;
             case "bar":
                 break;
+            case "_unknown":
             default:
-                break;
+                if (is_null($this->value)) {
+                    break;
+                }
+                if ($this->value instanceof JsonSerializableType) {
+                    $value = $this->value->jsonSerialize();
+                    $result = array_merge($value, $result);
+                }
         }
 
         return $result;

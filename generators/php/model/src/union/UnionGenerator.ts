@@ -361,6 +361,40 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMethod(): php.Method {
+        const defaultHandler = php.codeblock((writer) => {
+            writer.controlFlow(
+                "if",
+                php.invokeMethod({
+                    method: "is_null",
+                    arguments_: [php.codeblock("$this->value")],
+                    static_: true
+                })
+            );
+            writer.writeTextStatement("break");
+            writer.endControlFlow();
+
+            writer.controlFlow(
+                "if",
+                php.codeblock((writer) => {
+                    writer.write("$this->value instanceof ");
+                    writer.writeNode(php.classReference(this.context.getJsonSerializableTypeClassReference()));
+                })
+            );
+            writer.writeTextStatement("$value = $this->value->jsonSerialize()");
+            writer.writeNodeStatement(
+                php.codeblock((writer) => {
+                    writer.write("$result = ");
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "array_merge",
+                            arguments_: [php.codeblock("$value"), php.codeblock("$result")]
+                        })
+                    );
+                })
+            );
+            writer.endControlFlow();
+        });
+
         return php.method({
             name: "jsonSerialize",
             access: "public",
@@ -373,8 +407,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeNode(
                     this.variantSwitchStatement(
                         php.codeblock("$this->type"),
-                        (variant) => php.codeblock("break"),
-                        php.codeblock("break")
+                        (variant) => php.codeblock((writer) => writer.writeTextStatement("break")),
+                        defaultHandler
                     )
                 );
                 writer.writeLine();
@@ -398,13 +432,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.write('"');
                 writer.writeLine(":");
                 writer.indent();
-                writer.writeNodeStatement(caseMapper(variant));
+                writer.writeNode(caseMapper(variant));
                 writer.dedent();
             }
 
+            writer.writeLine('case "_unknown":');
             writer.writeLine("default:");
             writer.indent();
-            writer.writeNodeStatement(defaultHandler);
+            writer.writeNode(defaultHandler);
             writer.dedent();
 
             writer.endControlFlow();
