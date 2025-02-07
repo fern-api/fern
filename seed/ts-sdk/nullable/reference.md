@@ -19,8 +19,8 @@ await client.nullable.getUsers({
     usernames: "usernames",
     avatar: "avatar",
     activated: true,
-    tags: null,
-    extra: null,
+    tags: "tags",
+    extra: true,
 });
 ```
 
