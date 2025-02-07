@@ -3,10 +3,10 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 
 export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractDynamicSnippetsGeneratorContext> {
-    protected readonly context: Context;
+    private readonly _context: Context;
 
     public constructor({ context }: { context: Context }) {
-        this.context = context;
+        this._context = context;
     }
 
     public abstract generateSnippet({
