@@ -199,7 +199,9 @@ export function generateEndpointExample({
                     for (const extendedTypeReference of endpoint.requestBody.extends) {
                         const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
                         if (extendedTypeDeclaration == null) {
-                            throw new Error(`Failed to find extended type declaration with id ${extendedTypeReference.typeId}`);
+                            throw new Error(
+                                `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
+                            );
                         }
                         const extendedExample = generateTypeDeclarationExample({
                             typeDeclaration: extendedTypeDeclaration,
