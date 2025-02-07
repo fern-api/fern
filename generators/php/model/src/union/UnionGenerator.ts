@@ -102,12 +102,25 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         }
 
         const methodName = "as" + type.discriminantValue.name.pascalCase.safeName;
+        const returnType = this.getReturnType(type);
+
+        const typeCheckConditional = this.getTypeCheckConditional(php.codeblock("$this->value"), returnType);
+
+        const body = php.codeblock((writer) => {
+            if (typeCheckConditional) {
+                writer.writeNode(typeCheckConditional);
+                writer.writeLine();
+            }
+
+            writer.writeTextStatement("return $this->value");
+        });
 
         return php.method({
             name: methodName,
             access: "public",
             parameters: [],
-            return_: this.getReturnType(type)
+            return_: returnType,
+            body
         });
     }
 
@@ -126,6 +139,140 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 throw new Error("Got unexpected union type: " + value);
             }
         });
+    }
+
+    private getTypeCheckConditional(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {
+        const typeCheck = this.getTypeCheck(variableGetter, type);
+
+        if (typeCheck == null) {
+            return null;
+        }
+
+        const negation = php.codeblock((writer) => {
+            writer.write("!");
+            writer.write("(");
+            writer.writeNode(typeCheck);
+            writer.write(")");
+        });
+
+        return php.codeblock((writer) => {
+            writer.controlFlow("if", negation);
+            writer.writeNodeStatement(this.getTypeCheckErrorThrow());
+            writer.endControlFlow();
+        });
+    }
+
+    private getTypeCheckErrorThrow(): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write("throw ");
+            writer.writeNode(
+                php.instantiateClass({
+                    classReference: php.classReference({
+                        name: "Exception",
+                        namespace: ""
+                    }),
+                    arguments_: [
+                        php.codeblock((writer) => {
+                            writer.write('"');
+                            writer.write(this.getTypeCheckErrorMessage());
+                            writer.write('"');
+                        })
+                    ],
+                    multiline: true
+                })
+            );
+        });
+    }
+
+    private getTypeCheckErrorMessage(): string {
+        // TODO(ajgateno): Customize this message to the real expected and received types.
+        return "Unexpected value type";
+    }
+
+    private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {
+        switch (type.internalType.type) {
+            case "int":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_int",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+            case "string":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_string",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+            case "bool":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_bool",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+            case "float":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_float",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+
+            case "object":
+            case "map":
+            case "array":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_array",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+
+            case "null":
+            case "mixed":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_null",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                );
+
+            case "date":
+            case "dateTime":
+            case "reference":
+                return php.codeblock((writer) => {
+                    writer.writeNode(variableGetter);
+                    writer.write(" instanceof ");
+                    writer.writeNode(type);
+                });
+
+            case "typeDict":
+            case "optional":
+            case "enumString":
+            case "union":
+            default:
+                return null;
+        }
     }
 
     protected getFilepath(): RelativeFilePath {

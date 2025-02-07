@@ -35,6 +35,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDate(): ?DateTime
     {
+        return $this->value;
     }
 
     /**
@@ -42,6 +43,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDatetime(): ?DateTime
     {
+        return $this->value;
     }
 
     /**

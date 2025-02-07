@@ -4,6 +4,7 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Exception;
 
 class UnionWithBaseProperties extends JsonSerializableType
 {
@@ -43,6 +44,13 @@ class UnionWithBaseProperties extends JsonSerializableType
      */
     public function asInteger(): int
     {
+        if (!(is_int($this->value))) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**
@@ -50,6 +58,13 @@ class UnionWithBaseProperties extends JsonSerializableType
      */
     public function asString(): string
     {
+        if (!(is_string($this->value))) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**
@@ -57,6 +72,13 @@ class UnionWithBaseProperties extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
+        if (!($this->value instanceof Foo)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**

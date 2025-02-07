@@ -4,6 +4,7 @@ namespace Seed\Union\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Exception;
 
 class Shape extends JsonSerializableType
 {
@@ -43,6 +44,13 @@ class Shape extends JsonSerializableType
      */
     public function asCircle(): Circle
     {
+        if (!($this->value instanceof Circle)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**
@@ -50,6 +58,13 @@ class Shape extends JsonSerializableType
      */
     public function asSquare(): Square
     {
+        if (!($this->value instanceof Square)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**

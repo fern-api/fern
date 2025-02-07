@@ -4,6 +4,7 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Exception;
 
 class UnionWithLiteral extends JsonSerializableType
 {
@@ -43,6 +44,13 @@ class UnionWithLiteral extends JsonSerializableType
      */
     public function asFern(): string
     {
+        if (!(is_string($this->value))) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
+use Exception;
 
 class UnionWithUnknown extends JsonSerializableType
 {
@@ -34,6 +35,13 @@ class UnionWithUnknown extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
+        if (!($this->value instanceof Foo)) {
+            throw new Exception(
+                "Unexpected value type",
+            );
+        }
+
+        return $this->value;
     }
 
     /**
