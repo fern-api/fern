@@ -3,6 +3,14 @@
         Type reference example generation now handles extends and base properties correctly, as well as in-lined Alias types.
       type: fix
   irVersion: 55
+  version: 0.51.36
+
+- changelogEntry:
+    - summary: |
+        The cli will now respect examples with `null` values in OpenAPI specs. This will allow for null properties to show up when using
+        OpenAPI parser v2.
+      type: fix
+  irVersion: 55
   version: 0.51.35
 
 - changelogEntry:

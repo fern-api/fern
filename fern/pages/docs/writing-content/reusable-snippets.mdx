@@ -24,7 +24,7 @@ fern
 
 In each snippet file, define the content you want to reuse. For example, `peace-lily.mdx` might contain:
 
-```mdx snippets/peace-lily.mdx
+```mdx title="snippets/peace-lily.mdx"
 <Warning> Remember to water your plant at least twice a week. </Warning>
 ```
 
@@ -32,19 +32,17 @@ In each snippet file, define the content you want to reuse. For example, `peace-
 
 To use a snippet in your documentation, reference it by its file path (including the `.mdx` extension) in your content. For example, to include the `peace-lily` snippet in your content, use:
 
+<Tabs>
+    <Tab title="Markdown">
+        ```mdx
+        Peace lilies are easy to grow and relatively trouble-free.
 
-```mdx pages/my-tutorial.mdx
----
-title: Getting started with your peace lily
-description: Peace lily care tips for beginners
----
+        <Markdown src="/snippets/peace-lily.mdx" />
+        ```
+    </Tab>
+    <Tab title="Preview">
+        Peace lilies are easy to grow and relatively trouble-free.
 
-## Caring for your new plant
-
-Peace lilies are easy to grow and relatively trouble-free.
-
-<Markdown src="../snippets/peace-lily.mdx" />
-```
-
-
-
+        <Warning> Remember to water your plant at least twice a week. </Warning>
+    </Tab>
+</Tabs>
