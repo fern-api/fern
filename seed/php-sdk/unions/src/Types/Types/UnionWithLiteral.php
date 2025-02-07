@@ -88,6 +88,8 @@ class UnionWithLiteral extends JsonSerializableType
                 if ($this->value instanceof JsonSerializableType) {
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
+                } elseif (is_array($this->value)) {
+                    $result = array_merge($this->value, $result);
                 }
         }
 

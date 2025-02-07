@@ -361,7 +361,30 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMethod(): php.Method {
-        const defaultHandler = php.codeblock((writer) => {
+        return php.method({
+            name: "jsonSerialize",
+            access: "public",
+            parameters: [],
+            return_: php.Type.array(php.Type.mixed()),
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement("$result = []");
+                writer.writeTextStatement('$result["type"] = $this->type');
+                writer.writeLine();
+                writer.writeNode(
+                    this.variantSwitchStatement(
+                        php.codeblock("$this->type"),
+                        (variant) => php.codeblock((writer) => writer.writeTextStatement("break")),
+                        this.jsonSerializeDefaultHandler()
+                    )
+                );
+                writer.writeLine();
+                writer.writeTextStatement("return $result");
+            })
+        });
+    }
+
+    private jsonSerializeDefaultHandler(): php.CodeBlock {
+        return php.codeblock((writer) => {
             writer.controlFlow(
                 "if",
                 php.invokeMethod({
@@ -382,38 +405,40 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
             writer.writeTextStatement("$value = $this->value->jsonSerialize()");
             writer.writeNodeStatement(
+                php.codeblock((_writer) => {
+                    _writer.write("$result = ");
+                    _writer.writeNode(
+                        php.invokeMethod({
+                            method: "array_merge",
+                            arguments_: [php.codeblock("$value"), php.codeblock("$result")],
+                            static_: true
+                        })
+                    );
+                })
+            );
+
+            writer.contiguousControlFlow(
+                "elseif",
+                php.invokeMethod({
+                    method: "is_array",
+                    arguments_: [php.codeblock("$this->value")],
+                    static_: true
+                })
+            );
+            writer.writeNodeStatement(
                 php.codeblock((writer) => {
                     writer.write("$result = ");
                     writer.writeNode(
                         php.invokeMethod({
                             method: "array_merge",
-                            arguments_: [php.codeblock("$value"), php.codeblock("$result")]
+                            arguments_: [php.codeblock("$this->value"), php.codeblock("$result")],
+                            static_: true
                         })
                     );
                 })
             );
-            writer.endControlFlow();
-        });
 
-        return php.method({
-            name: "jsonSerialize",
-            access: "public",
-            parameters: [],
-            return_: php.Type.array(php.Type.mixed()),
-            body: php.codeblock((writer) => {
-                writer.writeTextStatement("$result = []");
-                writer.writeTextStatement('$result["type"] = $this->type');
-                writer.writeLine();
-                writer.writeNode(
-                    this.variantSwitchStatement(
-                        php.codeblock("$this->type"),
-                        (variant) => php.codeblock((writer) => writer.writeTextStatement("break")),
-                        defaultHandler
-                    )
-                );
-                writer.writeLine();
-                writer.writeTextStatement("return $result");
-            })
+            writer.endControlFlow();
         });
     }
 
