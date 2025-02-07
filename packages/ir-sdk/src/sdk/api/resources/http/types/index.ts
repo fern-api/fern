@@ -18,6 +18,7 @@ export * from "./FileUploadRequest";
 export * from "./BytesRequest";
 export * from "./FileUploadRequestProperty";
 export * from "./FileUploadBodyProperty";
+export * from "./FileUploadBodyPropertyEncoding";
 export * from "./FileProperty";
 export * from "./FilePropertySingle";
 export * from "./FilePropertyArray";

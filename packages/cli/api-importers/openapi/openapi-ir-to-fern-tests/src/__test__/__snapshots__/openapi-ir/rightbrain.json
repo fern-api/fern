@@ -4148,7 +4148,8 @@
               "isOptional": false,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -4644,7 +4645,8 @@
               "isOptional": false,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -6596,7 +6598,8 @@
               "isOptional": false,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -14085,7 +14088,8 @@
               "isOptional": true,
               "isArray": true,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -14417,7 +14421,8 @@
               "isOptional": true,
               "isArray": true,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -47665,7 +47670,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {

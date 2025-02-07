@@ -43,10 +43,17 @@ paths:
                 metadata: 
                   type: object
                   description: This is a metadata field
+                data: 
+                  type: object
+                  properties: 
+                    datum:
+                      type: string
               required: [file]                                
             encoding: 
               file:   
                 contentType: "application/octet-stream"
               metadata: 
                 contentType: "application/json"
+              data: 
+                explode: true
               
