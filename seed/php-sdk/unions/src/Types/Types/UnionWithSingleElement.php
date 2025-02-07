@@ -37,7 +37,7 @@ class UnionWithSingleElement extends JsonSerializableType
     {
         if (!($this->value instanceof Foo)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected Foo; got ". get_debug_type($this->value),
             );
         }
 

@@ -46,7 +46,7 @@ class Shape extends JsonSerializableType
     {
         if (!($this->value instanceof Circle)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected Circle; got ". get_debug_type($this->value),
             );
         }
 
@@ -60,7 +60,7 @@ class Shape extends JsonSerializableType
     {
         if (!($this->value instanceof Square)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected Square; got ". get_debug_type($this->value),
             );
         }
 

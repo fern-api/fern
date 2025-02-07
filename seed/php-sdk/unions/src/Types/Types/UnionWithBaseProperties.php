@@ -46,7 +46,7 @@ class UnionWithBaseProperties extends JsonSerializableType
     {
         if (!(is_int($this->value))) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected int; got ". get_debug_type($this->value),
             );
         }
 
@@ -60,7 +60,7 @@ class UnionWithBaseProperties extends JsonSerializableType
     {
         if (!(is_string($this->value))) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected string; got ". get_debug_type($this->value),
             );
         }
 
@@ -74,7 +74,7 @@ class UnionWithBaseProperties extends JsonSerializableType
     {
         if (!($this->value instanceof Foo)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected Foo; got ". get_debug_type($this->value),
             );
         }
 

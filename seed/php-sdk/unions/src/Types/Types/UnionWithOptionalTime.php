@@ -38,7 +38,7 @@ class UnionWithOptionalTime extends JsonSerializableType
     {
         if (!(is_null($this->value) || $this->value instanceof DateTime)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected ?DateTime; got ". get_debug_type($this->value),
             );
         }
 
@@ -52,7 +52,7 @@ class UnionWithOptionalTime extends JsonSerializableType
     {
         if (!(is_null($this->value) || $this->value instanceof DateTime)) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected ?DateTime; got ". get_debug_type($this->value),
             );
         }
 

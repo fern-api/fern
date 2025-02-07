@@ -157,12 +157,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
         return php.codeblock((writer) => {
             writer.controlFlow("if", negation);
-            writer.writeNodeStatement(this.getTypeCheckErrorThrow());
+            writer.writeNodeStatement(this.getTypeCheckErrorThrow(variableGetter, type));
             writer.endControlFlow();
         });
     }
 
-    private getTypeCheckErrorThrow(): php.CodeBlock {
+    private getTypeCheckErrorThrow(variableGetter: php.CodeBlock, expectedType: php.Type): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write("throw ");
             writer.writeNode(
@@ -173,9 +173,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     }),
                     arguments_: [
                         php.codeblock((writer) => {
-                            writer.write('"');
-                            writer.write(this.getTypeCheckErrorMessage());
-                            writer.write('"');
+                            writer.writeNode(this.getTypeCheckErrorMessage(variableGetter, expectedType));
                         })
                     ],
                     multiline: true
@@ -184,9 +182,22 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheckErrorMessage(): string {
-        // TODO(ajgateno): Customize this message to the real expected and received types.
-        return "Unexpected value type";
+    private getTypeCheckErrorMessage(variableGetter: php.CodeBlock, expectedType: php.Type): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write('"');
+            writer.write("Expected ");
+            writer.writeNode(expectedType);
+            writer.write("; got ");
+            writer.write('"');
+            writer.write(". ");
+            writer.writeNode(
+                php.invokeMethod({
+                    method: "get_debug_type",
+                    arguments_: [variableGetter],
+                    static_: true
+                })
+            );
+        });
     }
 
     private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {

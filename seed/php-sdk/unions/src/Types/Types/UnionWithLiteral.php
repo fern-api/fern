@@ -46,7 +46,7 @@ class UnionWithLiteral extends JsonSerializableType
     {
         if (!(is_string($this->value))) {
             throw new Exception(
-                "Unexpected value type",
+                "Expected string; got ". get_debug_type($this->value),
             );
         }
 
