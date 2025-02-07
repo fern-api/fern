@@ -64,6 +64,13 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
 }
 
+export function throwException(args: ClassInstantiation.Args): AstNode {
+    return codeblock((writer) => {
+        writer.write("throw ");
+        writer.writeNode(instantiateClass(args));
+    });
+}
+
 export function map(args: Map.Args): Map {
     return new Map(args);
 }
@@ -90,6 +97,10 @@ export function assignVariable(variableRef: AstNode, variableValue: string | Ast
 
 export function variable(name: string): AstNode {
     return codeblock(convertToPhpVariableName(name));
+}
+
+export function string(stringValue: string): AstNode {
+    return codeblock(`"${stringValue}"`);
 }
 
 export function mergeArrays(...args: MergeArrays.Args): MergeArrays {

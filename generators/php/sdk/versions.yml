@@ -1,8 +1,16 @@
+- version: 0.5.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Catch HTTP request exceptions and rethrow it as a FooApiException.
+  irVersion: 55
+
 - version: 0.5.0
   changelogEntry:
     - type: feat
       summary: >-
         Add the `__toString()` magic method to all generated class types.
+  irVersion: 55
 
 - version: 0.4.0
   changelogEntry:
@@ -28,8 +36,8 @@
         $httpClient = new Client(['handler' => $handlerStack]);
         $client = new FooClient(['client' => $client]);
         ```
-
   irVersion: 55
+
 - version: 0.3.2
   changelogEntry:
     - type: internal
