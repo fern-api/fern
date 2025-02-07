@@ -1,4 +1,84 @@
 # Reference
+## Conversations
+<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedPagination
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
+
+client = SeedPagination(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.complex_.search(
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `SearchRequestQuery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pagination:** `typing.Optional[StartingAfterPaging]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users
 <details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...)</code></summary>
 <dl>
