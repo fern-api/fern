@@ -9,12 +9,12 @@ export async function mergeWithOverrides<T extends object>({
     absoluteFilePathToOverrides,
     data,
     context,
-    nullOmissionKeys
+    allowNullKeys
 }: {
     absoluteFilePathToOverrides: AbsoluteFilePath;
     data: T;
     context: TaskContext;
-    nullOmissionKeys?: string[];
+    allowNullKeys?: string[];
 }): Promise<T> {
     let parsedOverrides = null;
     try {
@@ -27,5 +27,5 @@ export async function mergeWithOverrides<T extends object>({
     } catch (err) {
         return context.failAndThrow(`Failed to read overrides from file ${absoluteFilePathToOverrides}`);
     }
-    return coreMergeWithOverrides({ data, overrides: parsedOverrides, nullOmissionKeys });
+    return coreMergeWithOverrides({ data, overrides: parsedOverrides, allowNullKeys });
 }

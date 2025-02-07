@@ -3,17 +3,17 @@ import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
 
 type AncestorOmissionCriteria = {
     ancestorKeys: string[];
-    isDescendant: boolean;
+    allowOmissionCursor: boolean;
 };
 
 export function mergeWithOverrides<T extends object>({
     data,
     overrides,
-    nullOmissionKeys
+    allowNullKeys
 }: {
     data: T;
     overrides: object;
-    nullOmissionKeys?: string[];
+    allowNullKeys?: string[];
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
@@ -26,8 +26,8 @@ export function mergeWithOverrides<T extends object>({
     ) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
-        ancestorKeys: nullOmissionKeys ?? [],
-        isDescendant: false
+        ancestorKeys: allowNullKeys ?? [],
+        allowOmissionCursor: false
     });
     return filtered as T;
 }
@@ -71,18 +71,18 @@ export const omitDeepBy: OmitDeepBy = (
                 temp[key] = omitDeepBy(
                     value,
                     cb,
-                    ancestorOmissionCriteria != null
+                    ancestorOmissionCriteria != null &&
+                        (ancestorOmissionCriteria.allowOmissionCursor ||
+                            ancestorOmissionCriteria.ancestorKeys.includes(key))
                         ? {
                               ...ancestorOmissionCriteria,
-                              isDescendant:
-                                  ancestorOmissionCriteria.isDescendant ||
-                                  ancestorOmissionCriteria.ancestorKeys.includes(key)
+                              allowOmissionCursor: true
                           }
-                        : undefined
+                        : ancestorOmissionCriteria
                 );
             }
 
-            if (ancestorOmissionCriteria == null || !ancestorOmissionCriteria?.isDescendant) {
+            if (ancestorOmissionCriteria == null || !ancestorOmissionCriteria?.allowOmissionCursor) {
                 return omitBy(temp, cb);
             }
 

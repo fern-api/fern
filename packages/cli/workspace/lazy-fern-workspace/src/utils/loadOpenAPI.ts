@@ -48,7 +48,7 @@ export async function loadOpenAPI({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
             data: parsed,
-            nullOmissionKeys: OPENAPI_EXAMPLES_KEYS
+            allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
         // Run the merged document through the parser again to ensure that any override
         // references are resolved.
