@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required 
+        properties for global headers and improves upon example generation for APIs.
+      type: fix
+  irVersion: 55
+  version: 0.51.33
+
+- changelogEntry:
+    - summary: |
         The Conjure Importer now handles replacing 'rid' types more safely by checking if an import alias starts with 'rid'.
         Previously, it would replace any 'rid' text with 'string', which could incorrectly modify import aliases that happened to start with 'rid'.
         Now it only replaces 'rid' when it appears as a standalone type or generic parameter.
