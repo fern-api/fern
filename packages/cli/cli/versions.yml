@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The cli will now respect examples with `null` values in OpenAPI specs. This will allow for null properties to show up when using
+        OpenAPI parser v2.
+      type: fix
+  irVersion: 55
+  version: 0.51.35
+
+- changelogEntry:
+    - summary: |
         The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets 
         accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which 
         could lead to incorrect API usage. This fix ensures that array parameters marked as "exploded" are properly expanded in the generated curl examples.
