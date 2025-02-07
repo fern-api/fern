@@ -28,7 +28,7 @@ interface OmitDeepBy {
 export const omitDeepBy: OmitDeepBy = (object: unknown, cb: any): any => {
     function omitByDeepByOnOwnProps(object: unknown) {
         if (Array.isArray(object)) {
-            return object.map((element) => omitDeepBy(element, cb));
+            return object.map((element) => omitDeepBy(element, cb)) as unknown[];
         }
 
         if (isPlainObject(object)) {
