@@ -4,6 +4,7 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
+use Seed\Core\Json\JsonSerializer;
 
 /**
  * This is a simple union.
@@ -98,8 +99,12 @@ class Union extends JsonSerializableType
 
         switch ($this->type) {
             case "foo":
+                $value = JsonSerializer::serializeValue($this->asFoo(), "Foo");
+                $result['foo'] = $value;
                 break;
             case "bar":
+                $value = JsonSerializer::serializeValue($this->asBar(), "Bar");
+                $result['bar'] = $value;
                 break;
             case "_unknown":
             default:

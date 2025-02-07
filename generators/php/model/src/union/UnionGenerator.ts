@@ -403,7 +403,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeNode(
                     this.variantSwitchStatement(
                         php.codeblock("$this->type"),
-                        (variant) => php.codeblock((_writer) => _writer.writeTextStatement("break")),
+                        (variant) => this.jsonSerializeCaseHandler(variant),
                         this.jsonSerializeDefaultHandler()
                     )
                 );
@@ -412,6 +412,96 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                 writer.writeTextStatement("return $result");
             })
+        });
+    }
+
+    private jsonSerializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
+        switch (variant.shape.propertiesType) {
+            case "samePropertiesAsObject":
+                return php.codeblock((writer) => {
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$value = ");
+                            _writer.writeNode(this.jsonSerializeValueCall(variant));
+                        })
+                    );
+                    writer.controlFlow(
+                        "if",
+                        php.invokeMethod({
+                            method: "is_array",
+                            arguments_: [php.codeblock("$value")],
+                            static_: true
+                        })
+                    );
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$result = ");
+                            _writer.writeNode(
+                                php.invokeMethod({
+                                    method: "array_merge",
+                                    arguments_: [php.codeblock("$value"), php.codeblock("$result")],
+                                    static_: true
+                                })
+                            );
+                        })
+                    );
+                    writer.alternativeControlFlow("else");
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$result");
+                            _writer.write("['");
+                            _writer.write(variant.discriminantValue.wireValue);
+                            _writer.write("']");
+                            _writer.write(" = $value");
+                        })
+                    );
+                    writer.endControlFlow();
+                    writer.writeTextStatement("break");
+                });
+            case "singleProperty":
+                return php.codeblock((writer) => {
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$value = ");
+                            _writer.writeNode(this.jsonSerializeValueCall(variant));
+                        })
+                    );
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$result");
+                            _writer.write("['");
+                            _writer.write(variant.discriminantValue.wireValue);
+                            _writer.write("']");
+                            _writer.write(" = $value");
+                        })
+                    );
+                    writer.writeTextStatement("break");
+                });
+            case "noProperties":
+                return php.codeblock((writer) => writer.writeTextStatement("break"));
+            default:
+                return php.codeblock("");
+        }
+    }
+
+    private jsonSerializeValueCall(variant: SingleUnionType): php.MethodInvocation {
+        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
+        return php.invokeMethod({
+            method: "serializeValue",
+            arguments_: [
+                php.invokeMethod({
+                    method: asCastMethodName,
+                    arguments_: [],
+                    on: php.codeblock("$this")
+                }),
+                php.codeblock((__writer) => {
+                    __writer.write('"');
+                    __writer.writeNode(this.getReturnType(variant));
+                    __writer.write('"');
+                })
+            ],
+            static_: true,
+            on: this.context.getJsonSerializerClassReference()
         });
     }
 

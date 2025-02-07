@@ -127,6 +127,20 @@ export class AbstractWriter {
     }
 
     /**
+     * Starts a control flow alternative block
+     * @param prefix
+     */
+    public alternativeControlFlow(prefix: string): void {
+        this.dedent();
+        this.write("} ");
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
      * Please try to not use this. It is here for swift.
      * @param titles
      * @param openingCharacter

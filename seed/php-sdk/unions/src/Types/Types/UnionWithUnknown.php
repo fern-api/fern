@@ -4,6 +4,7 @@ namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
+use Seed\Core\Json\JsonSerializer;
 
 class UnionWithUnknown extends JsonSerializableType
 {
@@ -81,6 +82,12 @@ class UnionWithUnknown extends JsonSerializableType
 
         switch ($this->type) {
             case "foo":
+                $value = JsonSerializer::serializeValue($this->asFoo(), "Foo");
+                if (is_array($value)) {
+                    $result = array_merge($value, $result);
+                } else {
+                    $result['foo'] = $value;
+                }
                 break;
             case "unknown":
                 break;

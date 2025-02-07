@@ -5,6 +5,7 @@ namespace Seed\Types\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
 use DateTime;
+use Seed\Core\Json\JsonSerializer;
 
 class UnionWithTime extends JsonSerializableType
 {
@@ -118,10 +119,16 @@ class UnionWithTime extends JsonSerializableType
 
         switch ($this->type) {
             case "value":
+                $value = JsonSerializer::serializeValue($this->asValue(), "int");
+                $result['value'] = $value;
                 break;
             case "date":
+                $value = JsonSerializer::serializeValue($this->asDate(), "DateTime");
+                $result['date'] = $value;
                 break;
             case "datetime":
+                $value = JsonSerializer::serializeValue($this->asDatetime(), "DateTime");
+                $result['datetime'] = $value;
                 break;
             case "_unknown":
             default:

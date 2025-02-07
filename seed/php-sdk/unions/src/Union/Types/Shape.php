@@ -5,6 +5,7 @@ namespace Seed\Union\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Exception;
+use Seed\Core\Json\JsonSerializer;
 
 class Shape extends JsonSerializableType
 {
@@ -104,8 +105,20 @@ class Shape extends JsonSerializableType
 
         switch ($this->type) {
             case "circle":
+                $value = JsonSerializer::serializeValue($this->asCircle(), "Circle");
+                if (is_array($value)) {
+                    $result = array_merge($value, $result);
+                } else {
+                    $result['circle'] = $value;
+                }
                 break;
             case "square":
+                $value = JsonSerializer::serializeValue($this->asSquare(), "Square");
+                if (is_array($value)) {
+                    $result = array_merge($value, $result);
+                } else {
+                    $result['square'] = $value;
+                }
                 break;
             case "_unknown":
             default:

@@ -204,6 +204,10 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreJsonClassReference("JsonSerializableType");
     }
 
+    public getJsonSerializerClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonSerializer");
+    }
+
     public getUnionClassReference(): php.ClassReference {
         return this.getCoreTypesClassReference("Union");
     }

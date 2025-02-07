@@ -56,7 +56,7 @@ class JsonSerializer
      * @return mixed The serialized value.
      * @throws JsonException If serialization fails.
      */
-    private static function serializeValue(mixed $data, mixed $type): mixed
+    public static function serializeValue(mixed $data, mixed $type): mixed
     {
         if ($type instanceof Union) {
             return self::serializeUnion($data, $type);
