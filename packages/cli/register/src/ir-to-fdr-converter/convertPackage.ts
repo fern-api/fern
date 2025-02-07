@@ -482,7 +482,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     valueType: convertTypeReference(bodyProperty.valueType),
                                     contentType: bodyProperty.contentType,
                                     description: bodyProperty.docs,
-                                    availability: convertIrAvailability(bodyProperty.availability)
+                                    availability: convertIrAvailability(bodyProperty.availability),
+                                    exploded: bodyProperty.style === "exploded"
                                 }),
                                 _other: () => undefined
                             });
@@ -764,10 +765,18 @@ function convertHttpEndpointExample({
                                 }
                             },
                             bodyProperty: (bodyProperty) => {
-                                value[bodyProperty.name.wireValue] = {
-                                    type: "json",
-                                    value: fullExample[bodyProperty.name.wireValue]
-                                };
+                                if (bodyProperty.style === "exploded") {
+                                    const example = fullExample[bodyProperty.name.wireValue];
+                                    value[bodyProperty.name.wireValue] = {
+                                        type: "exploded",
+                                        value: Array.isArray(example) ? example : [example]
+                                    };
+                                } else {
+                                    value[bodyProperty.name.wireValue] = {
+                                        type: "json",
+                                        value: fullExample[bodyProperty.name.wireValue]
+                                    };
+                                }
                             },
                             _other: noop
                         });
