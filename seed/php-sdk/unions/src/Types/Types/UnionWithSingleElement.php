@@ -31,13 +31,21 @@ class UnionWithSingleElement extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isFoo(): bool
+    {
+        return $this->value instanceof Foo && $this->type === "foo";
+    }
+
+    /**
      * @return Foo
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo)) {
+        if (!($this->value instanceof Foo && $this->type === "foo")) {
             throw new Exception(
-                "Expected Foo; got ". get_debug_type($this->value),
+                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

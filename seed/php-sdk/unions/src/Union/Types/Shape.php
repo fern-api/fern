@@ -40,13 +40,21 @@ class Shape extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isCircle(): bool
+    {
+        return $this->value instanceof Circle && $this->type === "circle";
+    }
+
+    /**
      * @return Circle
      */
     public function asCircle(): Circle
     {
-        if (!($this->value instanceof Circle)) {
+        if (!($this->value instanceof Circle && $this->type === "circle")) {
             throw new Exception(
-                "Expected Circle; got ". get_debug_type($this->value),
+                "Expected circle; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -54,13 +62,21 @@ class Shape extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isSquare(): bool
+    {
+        return $this->value instanceof Square && $this->type === "square";
+    }
+
+    /**
      * @return Square
      */
     public function asSquare(): Square
     {
-        if (!($this->value instanceof Square)) {
+        if (!($this->value instanceof Square && $this->type === "square")) {
             throw new Exception(
-                "Expected Square; got ". get_debug_type($this->value),
+                "Expected square; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

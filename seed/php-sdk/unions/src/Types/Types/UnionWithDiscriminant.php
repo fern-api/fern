@@ -31,13 +31,21 @@ class UnionWithDiscriminant extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isFoo(): bool
+    {
+        return $this->value instanceof Foo && $this->type === "foo";
+    }
+
+    /**
      * @return Foo
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo)) {
+        if (!($this->value instanceof Foo && $this->type === "foo")) {
             throw new Exception(
-                "Expected Foo; got ". get_debug_type($this->value),
+                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -45,13 +53,21 @@ class UnionWithDiscriminant extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isBar(): bool
+    {
+        return $this->value instanceof Bar && $this->type === "bar";
+    }
+
+    /**
      * @return Bar
      */
     public function asBar(): Bar
     {
-        if (!($this->value instanceof Bar)) {
+        if (!($this->value instanceof Bar && $this->type === "bar")) {
             throw new Exception(
-                "Expected Bar; got ". get_debug_type($this->value),
+                "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

@@ -46,9 +46,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         clazz.addField(valueField);
 
         for (const type of this.unionTypeDeclaration.types) {
-            const method = this.asCastMethod(type);
-            if (method) {
-                clazz.addMethod(method);
+            const isMethod = this.isMethod(type);
+            clazz.addMethod(isMethod);
+
+            const asMethod = this.asCastMethod(type);
+            if (asMethod) {
+                clazz.addMethod(asMethod);
             }
         }
 
@@ -96,15 +99,30 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private asCastMethod(type: SingleUnionType): php.Method | null {
-        if (type.shape.propertiesType === "noProperties") {
+    private isMethod(variant: SingleUnionType): php.Method {
+        const methodName = "is" + variant.discriminantValue.name.pascalCase.safeName;
+
+        return php.method({
+            name: methodName,
+            access: "public",
+            parameters: [],
+            return_: php.Type.bool(),
+            body: php.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNodeStatement(this.isMethodCheck(variant));
+            })
+        });
+    }
+
+    private asCastMethod(variant: SingleUnionType): php.Method | null {
+        if (variant.shape.propertiesType === "noProperties") {
             return null;
         }
 
-        const methodName = "as" + type.discriminantValue.name.pascalCase.safeName;
-        const returnType = this.getReturnType(type);
+        const methodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
+        const returnType = this.getReturnType(variant);
 
-        const typeCheckConditional = this.getTypeCheckConditional(php.codeblock("$this->value"), returnType);
+        const typeCheckConditional = this.getTypeCheckConditional(variant, php.codeblock("$this->value"), returnType);
 
         const body = php.codeblock((writer) => {
             if (typeCheckConditional) {
@@ -124,8 +142,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getReturnType(type: SingleUnionType): php.Type {
-        return type.shape._visit({
+    private getReturnType(variant: SingleUnionType): php.Type {
+        return variant.shape._visit({
             samePropertiesAsObject: (value: DeclaredTypeName) => {
                 return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(value));
             },
@@ -141,7 +159,11 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheckConditional(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {
+    private getTypeCheckConditional(
+        variant: SingleUnionType,
+        variableGetter: php.CodeBlock,
+        type: php.Type
+    ): php.CodeBlock | null {
         const typeCheck = this.getTypeCheck(variableGetter, type);
 
         if (typeCheck == null) {
@@ -151,18 +173,32 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const negation = php.codeblock((writer) => {
             writer.write("!");
             writer.write("(");
-            writer.writeNode(typeCheck);
+            writer.writeNode(this.isMethodCheck(variant));
             writer.write(")");
         });
 
         return php.codeblock((writer) => {
             writer.controlFlow("if", negation);
-            writer.writeNodeStatement(this.getTypeCheckErrorThrow(variableGetter, type));
+            writer.writeNodeStatement(this.getTypeCheckErrorThrow(variant, variableGetter));
             writer.endControlFlow();
         });
     }
 
-    private getTypeCheckErrorThrow(variableGetter: php.CodeBlock, expectedType: php.Type): php.CodeBlock {
+    private isMethodCheck(variant: SingleUnionType): php.CodeBlock {
+        const discriminantCheck = this.getDiscriminantCheck(php.codeblock("$this->type"), variant);
+        const typeCheck = this.getTypeCheck(php.codeblock("$this->value"), this.getReturnType(variant));
+
+        return php.codeblock((writer) => {
+            if (typeCheck) {
+                writer.writeNode(typeCheck);
+                writer.write("&& ");
+            }
+
+            writer.writeNode(discriminantCheck);
+        });
+    }
+
+    private getTypeCheckErrorThrow(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write("throw ");
             writer.writeNode(
@@ -173,7 +209,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     }),
                     arguments_: [
                         php.codeblock((writer) => {
-                            writer.writeNode(this.getTypeCheckErrorMessage(variableGetter, expectedType));
+                            writer.writeNode(this.getTypeCheckErrorMessage(variant, variableGetter));
                         })
                     ],
                     multiline: true
@@ -182,14 +218,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheckErrorMessage(variableGetter: php.CodeBlock, expectedType: php.Type): php.CodeBlock {
+    private getTypeCheckErrorMessage(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write('"');
             writer.write("Expected ");
-            writer.writeNode(expectedType);
+            writer.write(variant.discriminantValue.wireValue);
             writer.write("; got ");
             writer.write('"');
-            writer.write(". ");
+            writer.write(" . ");
+            writer.write("$this->type . ");
+            writer.write('"');
+            writer.write("with value of type ");
+            writer.write('"');
+            writer.write(" . ");
             writer.writeNode(
                 php.invokeMethod({
                     method: "get_debug_type",
@@ -197,6 +238,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     static_: true
                 })
             );
+        });
+    }
+
+    private getDiscriminantCheck(variableGetter: php.CodeBlock, variant: SingleUnionType): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(variableGetter);
+            writer.write(" === ");
+            writer.write('"');
+            writer.write(variant.discriminantValue.wireValue);
+            writer.write('"');
         });
     }
 
@@ -284,6 +335,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     return null;
                 }
                 return php.codeblock((writer) => {
+                    writer.write("(");
                     writer.writeNode(
                         php.invokeMethod({
                             method: "is_null",
@@ -295,6 +347,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                     // NOTE: Casting because LSP was complaining here
                     writer.writeNode(underlyingTypeCheck as php.CodeBlock);
+                    writer.write(")");
                 });
 
             case "typeDict":

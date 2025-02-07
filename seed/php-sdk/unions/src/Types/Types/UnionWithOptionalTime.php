@@ -32,13 +32,21 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isDate(): bool
+    {
+        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === "date";
+    }
+
+    /**
      * @return ?DateTime
      */
     public function asDate(): ?DateTime
     {
-        if (!(is_null($this->value) || $this->value instanceof DateTime)) {
+        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === "date")) {
             throw new Exception(
-                "Expected ?DateTime; got ". get_debug_type($this->value),
+                "Expected date; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -46,13 +54,21 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isDatetime(): bool
+    {
+        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === "datetime";
+    }
+
+    /**
      * @return ?DateTime
      */
     public function asDatetime(): ?DateTime
     {
-        if (!(is_null($this->value) || $this->value instanceof DateTime)) {
+        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === "datetime")) {
             throw new Exception(
-                "Expected ?DateTime; got ". get_debug_type($this->value),
+                "Expected datetime; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

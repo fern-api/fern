@@ -32,17 +32,33 @@ class UnionWithTime extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isValue(): bool
+    {
+        return is_int($this->value) && $this->type === "value";
+    }
+
+    /**
      * @return int
      */
     public function asValue(): int
     {
-        if (!(is_int($this->value))) {
+        if (!(is_int($this->value) && $this->type === "value")) {
             throw new Exception(
-                "Expected int; got ". get_debug_type($this->value),
+                "Expected value; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
         return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDate(): bool
+    {
+        return $this->value instanceof DateTime && $this->type === "date";
     }
 
     /**
@@ -50,9 +66,9 @@ class UnionWithTime extends JsonSerializableType
      */
     public function asDate(): DateTime
     {
-        if (!($this->value instanceof DateTime)) {
+        if (!($this->value instanceof DateTime && $this->type === "date")) {
             throw new Exception(
-                "Expected DateTime; got ". get_debug_type($this->value),
+                "Expected date; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -60,13 +76,21 @@ class UnionWithTime extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isDatetime(): bool
+    {
+        return $this->value instanceof DateTime && $this->type === "datetime";
+    }
+
+    /**
      * @return DateTime
      */
     public function asDatetime(): DateTime
     {
-        if (!($this->value instanceof DateTime)) {
+        if (!($this->value instanceof DateTime && $this->type === "datetime")) {
             throw new Exception(
-                "Expected DateTime; got ". get_debug_type($this->value),
+                "Expected datetime; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

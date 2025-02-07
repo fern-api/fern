@@ -31,13 +31,21 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isInteger(): bool
+    {
+        return is_int($this->value) && $this->type === "integer";
+    }
+
+    /**
      * @return int
      */
     public function asInteger(): int
     {
-        if (!(is_int($this->value))) {
+        if (!(is_int($this->value) && $this->type === "integer")) {
             throw new Exception(
-                "Expected int; got ". get_debug_type($this->value),
+                "Expected integer; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -45,13 +53,21 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isString(): bool
+    {
+        return is_string($this->value) && $this->type === "string";
+    }
+
+    /**
      * @return string
      */
     public function asString(): string
     {
-        if (!(is_string($this->value))) {
+        if (!(is_string($this->value) && $this->type === "string")) {
             throw new Exception(
-                "Expected string; got ". get_debug_type($this->value),
+                "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 

@@ -40,13 +40,21 @@ class UnionWithLiteral extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isFern(): bool
+    {
+        return is_string($this->value) && $this->type === "fern";
+    }
+
+    /**
      * @return string
      */
     public function asFern(): string
     {
-        if (!(is_string($this->value))) {
+        if (!(is_string($this->value) && $this->type === "fern")) {
             throw new Exception(
-                "Expected string; got ". get_debug_type($this->value),
+                "Expected fern; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
