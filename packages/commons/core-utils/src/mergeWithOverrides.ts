@@ -1,17 +1,19 @@
 import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from "lodash";
 import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
 
+export type AncestorOmissionCriteria = {
+    ancestorKeys: string[];
+    isDescendant: boolean;
+};
+
 export function mergeWithOverrides<T extends object>({
     data,
     overrides,
-    omissionCriteria
+    ancestorOmissionCriteria
 }: {
     data: T;
     overrides: object;
-    omissionCriteria?: {
-        ancestorKeys: string[];
-        isDescendant: boolean;
-    };
+    ancestorOmissionCriteria?: AncestorOmissionCriteria;
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
@@ -23,8 +25,8 @@ export function mergeWithOverrides<T extends object>({
             : undefined
     ) as T;
     // Remove any nullified values
-    const filtered = omitDeepBy<T>(merged, isNull, omissionCriteria);
-    return filtered;
+    const filtered = omitDeepBy(merged, isNull, ancestorOmissionCriteria);
+    return filtered as T;
 }
 
 // This is essentially lodash's omitBy, but actually running through your object tree.
@@ -33,42 +35,30 @@ interface OmitDeepBy {
     <T>(
         object: Dictionary<T> | null | undefined,
         predicate?: ValueKeyIteratee<T>,
-        omissionCriteria?: {
-            ancestorKeys: string[];
-            isDescendant: boolean;
-        }
+        ancestorOmissionCriteria?: AncestorOmissionCriteria
     ): Dictionary<T>;
     <T>(
         object: NumericDictionary<T> | null | undefined,
         predicate?: ValueKeyIteratee<T>,
-        omissionCriteria?: {
-            ancestorKeys: string[];
-            isDescendant: boolean;
-        }
+        ancestorOmissionCriteria?: AncestorOmissionCriteria
     ): NumericDictionary<T>;
     <T extends object>(
         object: T | null | undefined,
         predicate: ValueKeyIteratee<T[keyof T]>,
-        omissionCriteria?: {
-            ancestorKeys: string[];
-            isDescendant: boolean;
-        }
+        ancestorOmissionCriteria?: AncestorOmissionCriteria
     ): PartialObject<T>;
 }
 
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export const omitDeepBy: OmitDeepBy = (
     object: unknown,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     cb: any,
-    omissionCriteria?: {
-        ancestorKeys: string[];
-        isDescendant: boolean;
-        // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    }
+    ancestorOmissionCriteria?: AncestorOmissionCriteria
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 ): any => {
     function omitByDeepByOnOwnProps(object: unknown) {
         if (Array.isArray(object)) {
-            return object.map((element) => omitDeepBy(element, cb));
+            return object.map((element) => omitDeepBy(element, cb, ancestorOmissionCriteria));
         }
 
         if (isPlainObject(object)) {
@@ -78,16 +68,18 @@ export const omitDeepBy: OmitDeepBy = (
                 temp[key] = omitDeepBy(
                     value,
                     cb,
-                    omissionCriteria != null
+                    ancestorOmissionCriteria != null
                         ? {
-                              ...omissionCriteria,
-                              isDescendant: omissionCriteria.ancestorKeys.includes(key)
+                              ...ancestorOmissionCriteria,
+                              isDescendant:
+                                  ancestorOmissionCriteria.isDescendant ||
+                                  ancestorOmissionCriteria.ancestorKeys.includes(key)
                           }
                         : undefined
                 );
             }
 
-            if (omissionCriteria == null || omissionCriteria?.isDescendant) {
+            if (ancestorOmissionCriteria == null || !ancestorOmissionCriteria?.isDescendant) {
                 return omitBy(temp, cb);
             }
 

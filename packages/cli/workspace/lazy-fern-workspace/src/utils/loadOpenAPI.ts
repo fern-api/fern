@@ -1,11 +1,19 @@
 import { OpenAPI } from "openapi-types";
 
 import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
+
+const OPENAPI_EXAMPLES_KEYS = [
+    "examples",
+    "example",
+    FernOpenAPIExtension.EXAMPLES,
+    OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
+    OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB
+];
 
 export async function loadOpenAPI({
     context,
@@ -39,7 +47,11 @@ export async function loadOpenAPI({
         const merged = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed
+            data: parsed,
+            ancestorOmissionCriteria: {
+                ancestorKeys: OPENAPI_EXAMPLES_KEYS,
+                isDescendant: false
+            }
         });
         // Run the merged document through the parser again to ensure that any override
         // references are resolved.

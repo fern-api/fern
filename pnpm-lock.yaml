@@ -5247,7 +5247,7 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
-        specifier: 0.0.53
+        specifier: ^0.0.53
         version: 0.0.53(typescript@5.7.2)
       '@fern-api/fdr-sdk':
         specifier: 0.129.4-b6c699ad2
