@@ -18,7 +18,7 @@ describe("mergeWithOverrides", () => {
         const result = mergeWithOverrides({
             data: schema1,
             overrides: {},
-            ancestorOmissionKeyList: ["examples"]
+            nullOmissionKeys: ["examples"]
         });
 
         expect(result).toEqual(schema1);

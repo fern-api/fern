@@ -9,11 +9,11 @@ type AncestorOmissionCriteria = {
 export function mergeWithOverrides<T extends object>({
     data,
     overrides,
-    ancestorOmissionKeyList
+    nullOmissionKeys
 }: {
     data: T;
     overrides: object;
-    ancestorOmissionKeyList?: string[];
+    nullOmissionKeys?: string[];
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
@@ -26,7 +26,7 @@ export function mergeWithOverrides<T extends object>({
     ) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
-        ancestorKeys: ancestorOmissionKeyList ?? [],
+        ancestorKeys: nullOmissionKeys ?? [],
         isDescendant: false
     });
     return filtered as T;
