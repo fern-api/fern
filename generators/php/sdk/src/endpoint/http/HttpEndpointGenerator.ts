@@ -99,6 +99,49 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 writer.dedent();
                 writer.write("} catch (");
+                writer.writeNode(this.context.guzzleClient.getRequestExceptionClassReference());
+                writer.writeLine(" $e) {");
+                writer.indent();
+                writer.writeNodeStatement(php.assignVariable(php.variable("response"), "$e->getResponse()"));
+                writer.controlFlow("if", php.codeblock("$response === null"));
+                writer.writeNodeStatement(
+                    php.throwException({
+                        classReference: this.context.getBaseExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: "$e->getMessage()"
+                            },
+                            {
+                                name: "previous",
+                                assignment: php.variable("e")
+                            }
+                        ]
+                    })
+                );
+                writer.endControlFlow();
+                writer.writeNodeStatement(
+                    php.throwException({
+                        classReference: this.context.getBaseApiExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: php.string("API request failed")
+                            },
+                            {
+                                name: "statusCode",
+                                assignment: "$response->getStatusCode()"
+                            },
+                            {
+                                name: "body",
+                                assignment: "$response->getBody()->getContents()"
+                            }
+                        ],
+                        multiline: true
+                    })
+                );
+                writer.dedent();
+                writer.write("} catch (");
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());
                 writer.writeLine(" $e) {");
                 writer.indent();
