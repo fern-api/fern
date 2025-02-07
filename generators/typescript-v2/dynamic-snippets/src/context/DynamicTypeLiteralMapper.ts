@@ -310,13 +310,6 @@ export class DynamicTypeLiteralMapper {
                     return [
                         ...baseFields,
                         {
-                            name: UNION_VALUE_KEY,
-                            value: this.convert({
-                                typeReference: unionVariant.typeReference,
-                                value: record.value
-                            })
-                        },
-                        {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
