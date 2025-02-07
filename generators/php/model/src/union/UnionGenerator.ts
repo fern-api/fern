@@ -56,6 +56,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         }
 
         clazz.addMethod(this.context.getToStringMethod());
+
+        clazz.addMethod(this.jsonSerializeMethod());
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
@@ -356,6 +358,57 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             default:
                 return null;
         }
+    }
+
+    private jsonSerializeMethod(): php.Method {
+        return php.method({
+            name: "jsonSerialize",
+            access: "public",
+            parameters: [],
+            return_: php.Type.array(php.Type.mixed()),
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement("$result = []");
+                writer.writeTextStatement('$result["type"] = $this->type');
+                writer.writeLine();
+                writer.writeNode(
+                    this.variantSwitchStatement(
+                        php.codeblock("$this->type"),
+                        (variant) => php.codeblock("break"),
+                        php.codeblock("break")
+                    )
+                );
+                writer.writeLine();
+                writer.writeTextStatement("return $result");
+            })
+        });
+    }
+
+    private variantSwitchStatement(
+        variableGetter: php.CodeBlock,
+        caseMapper: (variant: SingleUnionType) => php.CodeBlock,
+        defaultHandler: php.CodeBlock
+    ): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.controlFlow("switch", variableGetter);
+
+            for (const variant of this.unionTypeDeclaration.types) {
+                writer.write("case ");
+                writer.write('"');
+                writer.write(variant.discriminantValue.wireValue);
+                writer.write('"');
+                writer.writeLine(":");
+                writer.indent();
+                writer.writeNodeStatement(caseMapper(variant));
+                writer.dedent();
+            }
+
+            writer.writeLine("default:");
+            writer.indent();
+            writer.writeNodeStatement(defaultHandler);
+            writer.dedent();
+
+            writer.endControlFlow();
+        });
     }
 
     protected getFilepath(): RelativeFilePath {

@@ -81,4 +81,24 @@ class UnionWithPrimitive extends JsonSerializableType
     {
         return $this->toJson();
     }
+
+    /**
+     * @return array<mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        $result = [];
+        $result["type"] = $this->type;
+
+        switch ($this->type) {
+            case "integer":
+                break;
+            case "string":
+                break;
+            default:
+                break;
+        }
+
+        return $result;
+    }
 }

@@ -90,4 +90,24 @@ class Shape extends JsonSerializableType
     {
         return $this->toJson();
     }
+
+    /**
+     * @return array<mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        $result = [];
+        $result["type"] = $this->type;
+
+        switch ($this->type) {
+            case "circle":
+                break;
+            case "square":
+                break;
+            default:
+                break;
+        }
+
+        return $result;
+    }
 }
