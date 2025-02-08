@@ -403,7 +403,7 @@ export class EndpointSnippetGenerator {
     private getBytesBodyRequestArg({ value }: { value: unknown }): php.TypeLiteral {
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `The PHP SDK doesn't support bytes requests yet`
+            message: "The PHP SDK doesn't support bytes requests yet"
         });
         return php.TypeLiteral.nop();
     }

@@ -112,7 +112,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getEnvironmentClassReference(name: FernIr.Name): php.ClassReference {
         return php.classReference({
-            name: `Environments`,
+            name: "Environments",
             namespace: this.rootNamespace
         });
     }
