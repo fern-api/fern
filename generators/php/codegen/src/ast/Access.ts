@@ -1,7 +1,8 @@
-export type Access = "public" | "private" | "protected";
+export type Access = "public" | "public readonly" | "protected" | "private";
 
 export const Access = {
     Public: "public",
-    Private: "private",
-    Protected: "protected"
+    PublicReadonly: "public readonly",
+    Protected: "protected",
+    Private: "private"
 } as const;

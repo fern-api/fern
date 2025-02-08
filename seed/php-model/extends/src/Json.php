@@ -18,15 +18,15 @@ class Json extends JsonSerializableType
 
     /**
      * @param array{
-     *   raw: string,
      *   docs: string,
+     *   raw: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->raw = $values['raw'];
         $this->docs = $values['docs'];
+        $this->raw = $values['raw'];
     }
 
     /**

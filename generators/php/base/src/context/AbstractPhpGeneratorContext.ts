@@ -3,7 +3,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, php } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, SELF, php } from "@fern-api/php-codegen";
 
 import {
     FernFilepath,
@@ -145,6 +145,14 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getPropertyName(name: Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    public getPropertyGetterName(name: Name): string {
+        return `get${name.pascalCase.unsafeName}`;
+    }
+
+    public getPropertySetterName(name: Name): string {
+        return `set${name.pascalCase.unsafeName}`;
     }
 
     public getToStringMethod(): php.Method {
@@ -531,6 +539,56 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
         return this.ir.types[typeId];
+    }
+
+    public shouldGenerateGetterMethods(): boolean {
+        const propertyAccess = this.getPropertyAccess();
+        return propertyAccess === php.Access.Protected || propertyAccess === php.Access.Private;
+    }
+
+    public shouldGenerateSetterMethods(): boolean {
+        const propertyAccess = this.getPropertyAccess();
+        return propertyAccess === php.Access.Protected || propertyAccess === php.Access.Private;
+    }
+
+    public getGetterMethod({ name, field }: { name: Name; field: php.Field }): php.Method {
+        return php.method({
+            name: this.getPropertyGetterName(name),
+            access: php.Access.Public,
+            parameters: [],
+            return_: field.type,
+            body: php.codeblock((writer) => {
+                writer.write(`return $this->${this.getPropertyName(name)};`);
+            })
+        });
+    }
+
+    public getSetterMethod({ name, field }: { name: Name; field: php.Field }): php.Method {
+        return php.method({
+            name: this.getPropertySetterName(name),
+            access: php.Access.Public,
+            parameters: [php.parameter({ name: "value", type: field.type })],
+            return_: SELF,
+            body: php.codeblock((writer) => {
+                writer.write(`$this->${this.getPropertyName(name)} = $value;`);
+                writer.write("return $this;");
+            })
+        });
+    }
+
+    public getPropertyAccess(): php.Access {
+        const propertyAccess = this.customConfig.propertyAccess;
+        if (propertyAccess == null) {
+            return php.Access.Public;
+        }
+        switch (propertyAccess) {
+            case "public":
+                return php.Access.Public;
+            case "private":
+                return php.Access.Private;
+            default:
+                assertNever(propertyAccess);
+        }
     }
 
     public abstract getRawAsIsFiles(): string[];

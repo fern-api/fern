@@ -20,17 +20,17 @@ class Response extends JsonSerializableType
 
     /**
      * @param array{
-     *   data: Movie,
      *   metadata: array<string, string>,
      *   docs: string,
+     *   data: Movie,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->data = $values['data'];
         $this->metadata = $values['metadata'];
         $this->docs = $values['docs'];
+        $this->data = $values['data'];
     }
 
     /**
