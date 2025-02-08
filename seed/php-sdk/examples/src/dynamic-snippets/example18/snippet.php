@@ -54,6 +54,7 @@ $client->service->createBigEntity(
             'type' => BasicType::Primitive->value,
             'name' => 'name',
         ]),
+        'metadata' => 'todo',
         'commonMetadata' => new Metadata([
             'id' => 'id',
             'data' => [
@@ -61,10 +62,14 @@ $client->service->createBigEntity(
             ],
             'jsonString' => 'jsonString',
         ]),
+        'eventInfo' => 'todo',
+        'data' => 'todo',
         'migration' => new Migration([
             'name' => 'name',
             'status' => MigrationStatus::Running->value,
         ]),
+        'exception' => 'todo',
+        'test' => 'todo',
         'node' => new Node([
             'name' => 'name',
             'nodes' => [

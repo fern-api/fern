@@ -22,7 +22,10 @@ $client->problem->createProblem(
     new CreateProblemRequest([
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
-            'boards' => [],
+            'boards' => [
+                'todo',
+                'todo',
+            ],
         ]),
         'files' => [
             Language::Java->value => new ProblemFiles([
@@ -44,24 +47,35 @@ $client->problem->createProblem(
         ],
         'inputParams' => [
             new VariableTypeAndName([
+                'variableType' => 'todo',
                 'name' => 'name',
             ]),
             new VariableTypeAndName([
+                'variableType' => 'todo',
                 'name' => 'name',
             ]),
         ],
+        'outputType' => 'todo',
         'testcases' => [
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
-                    'params' => [],
+                    'params' => [
+                        'todo',
+                        'todo',
+                    ],
                 ]),
+                'expectedResult' => 'todo',
             ]),
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
-                    'params' => [],
+                    'params' => [
+                        'todo',
+                        'todo',
+                    ],
                 ]),
+                'expectedResult' => 'todo',
             ]),
         ],
         'methodName' => 'methodName',

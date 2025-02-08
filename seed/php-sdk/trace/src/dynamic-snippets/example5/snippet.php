@@ -24,6 +24,8 @@ $client->admin->storeTracedTestCase(
     new StoreTracedTestCaseRequest([
         'result' => new TestCaseResultWithStdout([
             'result' => new TestCaseResult([
+                'expectedResult' => 'todo',
+                'actualResult' => 'todo',
                 'passed' => true,
             ]),
             'stdout' => 'stdout',
@@ -32,6 +34,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
+                'returnValue' => 'todo',
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -43,10 +46,14 @@ $client->admin->storeTracedTestCase(
                         'lineNumber' => 1,
                         'scopes' => [
                             new Scope([
-                                'variables' => [],
+                                'variables' => [
+                                    'variables' => 'todo',
+                                ],
                             ]),
                             new Scope([
-                                'variables' => [],
+                                'variables' => [
+                                    'variables' => 'todo',
+                                ],
                             ]),
                         ],
                     ]),
@@ -56,6 +63,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
+                'returnValue' => 'todo',
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -67,10 +75,14 @@ $client->admin->storeTracedTestCase(
                         'lineNumber' => 1,
                         'scopes' => [
                             new Scope([
-                                'variables' => [],
+                                'variables' => [
+                                    'variables' => 'todo',
+                                ],
                             ]),
                             new Scope([
-                                'variables' => [],
+                                'variables' => [
+                                    'variables' => 'todo',
+                                ],
                             ]),
                         ],
                     ]),

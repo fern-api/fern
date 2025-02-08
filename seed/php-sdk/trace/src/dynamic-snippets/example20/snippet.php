@@ -16,12 +16,15 @@ $client->problem->getDefaultStarterFiles(
     new GetDefaultStarterFilesRequest([
         'inputParams' => [
             new VariableTypeAndName([
+                'variableType' => 'todo',
                 'name' => 'name',
             ]),
             new VariableTypeAndName([
+                'variableType' => 'todo',
                 'name' => 'name',
             ]),
         ],
+        'outputType' => 'todo',
         'methodName' => 'methodName',
     ]),
 );
