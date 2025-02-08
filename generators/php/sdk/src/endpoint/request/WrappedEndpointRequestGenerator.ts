@@ -4,11 +4,8 @@ import { FileGenerator, FileLocation, PhpFile, php } from "@fern-api/php-codegen
 
 import {
     FileProperty,
-    FilePropertyArray,
-    FilePropertySingle,
     HttpEndpoint,
     InlinedRequestBodyProperty,
-    ObjectProperty,
     SdkRequestWrapper,
     ServiceId
 } from "@fern-fern/ir-sdk/api";

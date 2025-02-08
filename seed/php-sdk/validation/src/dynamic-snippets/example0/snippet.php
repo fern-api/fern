@@ -16,6 +16,6 @@ $client->create(
         'decimal' => 2.2,
         'even' => 100,
         'name' => 'foo',
-        'shape' => Shape::Square,
+        'shape' => Shape::Square->value,
     ]),
 );

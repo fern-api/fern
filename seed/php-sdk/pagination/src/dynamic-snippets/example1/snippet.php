@@ -16,7 +16,7 @@ $client->users->listWithCursorPagination(
     new ListUsersCursorPaginationRequest([
         'page' => 1,
         'perPage' => 1,
-        'order' => Order::Asc,
+        'order' => Order::Asc->value,
         'startingAfter' => 'starting_after',
     ]),
 );

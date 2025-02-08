@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,5 +12,5 @@ $client = new SeedClient(
     ],
 );
 $client->endpoints->primitive->getAndReturnDatetime(
-    '2024-01-15T09:30:00Z',
+    new DateTime('2024-01-15T09:30:00Z'),
 );

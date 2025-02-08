@@ -135,7 +135,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "datetime": {
-                writer.write(`'${this.internalType.value}'`);
+                writer.writeNode(buildDateTimeFromString({ writer, value: this.internalType.value }));
                 break;
             }
             case "string": {
@@ -361,6 +361,15 @@ export class TypeLiteral extends AstNode {
     }
 }
 
+function buildDateTimeFromString({ writer, value }: { writer: Writer; value: string }): ClassInstantiation {
+    return new ClassInstantiation({
+        classReference: new ClassReference({
+            name: "DateTime",
+            namespace: "",
+        }),
+        arguments_: [new CodeBlock(`'${value}'`)]
+    });
+}
 function buildFileFromString({ writer, value }: { writer: Writer; value: string }): MethodInvocation {
     return new MethodInvocation({
         on: new ClassReference({

@@ -19,6 +19,9 @@ $client->nullable->getUsers(
         'activated' => [
             true,
         ],
-        'tags' => [],
+        'tags' => [
+            'tags',
+        ],
+        'extra' => true,
     ]),
 );

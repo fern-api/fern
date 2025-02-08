@@ -16,6 +16,6 @@ $client->users->listWithOffsetStepPagination(
     new ListUsersOffsetStepPaginationRequest([
         'page' => 1,
         'limit' => 1,
-        'order' => Order::Asc,
+        'order' => Order::Asc->value,
     ]),
 );

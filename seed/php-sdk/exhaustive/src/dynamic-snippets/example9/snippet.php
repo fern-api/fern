@@ -12,5 +12,5 @@ $client = new SeedClient(
     ],
 );
 $client->endpoints->enum->getAndReturnEnum(
-    WeatherReport::Sunny,
+    WeatherReport::Sunny->value,
 );

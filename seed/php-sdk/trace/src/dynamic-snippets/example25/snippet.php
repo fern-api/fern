@@ -12,6 +12,6 @@ $client = new SeedClient(
     ],
 );
 $client->sysprop->setNumWarmInstances(
-    Language::Java,
+    Language::Java->value,
     1,
 );

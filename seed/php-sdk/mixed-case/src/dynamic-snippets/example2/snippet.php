@@ -4,6 +4,7 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Service\Requests\ListResourcesRequest;
+use DateTime;
 
 $client = new SeedClient(
     options: [
@@ -13,6 +14,6 @@ $client = new SeedClient(
 $client->service->listResources(
     new ListResourcesRequest([
         'pageLimit' => 10,
-        'beforeDate' => '2023-01-01',
+        'beforeDate' => new DateTime('2023-01-01'),
     ]),
 );

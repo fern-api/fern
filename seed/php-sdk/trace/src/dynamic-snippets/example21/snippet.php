@@ -12,5 +12,5 @@ $client = new SeedClient(
     ],
 );
 $client->submission->createExecutionSession(
-    Language::Java,
+    Language::Java->value,
 );

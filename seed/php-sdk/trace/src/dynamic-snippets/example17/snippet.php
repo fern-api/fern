@@ -25,7 +25,7 @@ $client->problem->createProblem(
             'boards' => [],
         ]),
         'files' => [
-            Language::Java => new ProblemFiles([
+            Language::Java->value => new ProblemFiles([
                 'solutionFile' => new FileInfo([
                     'filename' => 'filename',
                     'contents' => 'contents',

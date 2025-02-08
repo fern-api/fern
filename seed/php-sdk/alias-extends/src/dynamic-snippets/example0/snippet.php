@@ -12,6 +12,7 @@ $client = new SeedClient(
 );
 $client->extendedInlineRequestBody(
     new InlinedChildRequest([
+        'parent' => 'parent',
         'child' => 'child',
     ]),
 );

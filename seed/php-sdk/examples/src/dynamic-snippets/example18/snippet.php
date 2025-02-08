@@ -16,6 +16,7 @@ use Seed\Types\Types\Tree;
 use Seed\Types\Types\Directory;
 use Seed\Types\Types\File;
 use Seed\Types\Types\Moment;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -30,13 +31,27 @@ $client->service->createBigEntity(
             'id' => 'id',
         ]),
         'extendedMovie' => new ExtendedMovie([
+            'id' => 'id',
+            'prequel' => 'prequel',
+            'title' => 'title',
+            'from' => 'from',
+            'rating' => 1.1,
+            'type' => 'movie',
+            'tag' => 'tag',
+            'book' => 'book',
+            'metadata' => [
+                'metadata' => [
+                    'key' => "value",
+                ],
+            ],
+            'revenue' => 1000000,
             'cast' => [
                 'cast',
                 'cast',
             ],
         ]),
         'entity' => new Entity([
-            'type' => BasicType::Primitive,
+            'type' => BasicType::Primitive->value,
             'name' => 'name',
         ]),
         'commonMetadata' => new Metadata([
@@ -48,7 +63,7 @@ $client->service->createBigEntity(
         ]),
         'migration' => new Migration([
             'name' => 'name',
-            'status' => MigrationStatus::Running,
+            'status' => MigrationStatus::Running->value,
         ]),
         'node' => new Node([
             'name' => 'name',
@@ -198,8 +213,8 @@ $client->service->createBigEntity(
         ]),
         'moment' => new Moment([
             'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-            'date' => '2023-01-15',
-            'datetime' => '2024-01-15T09:30:00Z',
+            'date' => new DateTime('2023-01-15'),
+            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
         ]),
     ]),
 );

@@ -53,6 +53,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             for (const endpoint of this.service.endpoints) {
                 const method = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
+                    service: this.service,
                     endpoint
                 });
                 class_.addMethod(method);

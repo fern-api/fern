@@ -23,6 +23,8 @@ $client->queryParam->sendList(
         'operandOrColor' => [
             Color::Red->value,
         ],
-        'maybeOperandOrColor' => [],
+        'maybeOperandOrColor' => [
+            Color::Red->value,
+        ],
     ]),
 );

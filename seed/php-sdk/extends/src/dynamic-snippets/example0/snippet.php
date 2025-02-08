@@ -12,6 +12,8 @@ $client = new SeedClient(
 );
 $client->extendedInlineRequestBody(
     new Inlined([
+        'docs' => 'docs',
+        'name' => 'name',
         'unique' => 'unique',
     ]),
 );

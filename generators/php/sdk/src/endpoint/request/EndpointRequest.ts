@@ -1,6 +1,6 @@
 import { php } from "@fern-api/php-codegen";
 
-import { FileUploadRequest, HttpEndpoint, HttpRequestBodyReference, InlinedRequestBody, SdkRequest, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import { FileUploadRequest, HttpEndpoint, HttpRequestBodyReference, HttpService, InlinedRequestBody, SdkRequest, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { assertNever } from "@fern-api/core-utils";
@@ -24,6 +24,7 @@ export abstract class EndpointRequest {
     public constructor(
         protected readonly context: SdkGeneratorContext,
         protected readonly sdkRequest: SdkRequest,
+        protected readonly service: HttpService,
         protected readonly endpoint: HttpEndpoint
     ) {}
 
@@ -31,16 +32,16 @@ export abstract class EndpointRequest {
         return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`;
     }
 
-    public hasRequiredProperties(): boolean {
+    public shouldIncludeDefaultInitializer(): boolean {
         // TODO: Add path parameters to this check when inlinePathParameters is supported.
         for (const queryParameter of this.endpoint.queryParameters) {
             if (!this.context.isOptional(queryParameter.valueType)) {
-                return true;
+                return false;
             }
         }
-        for (const headerParameter of this.endpoint.headers) {
+        for (const headerParameter of [...this.service.headers, ...this.endpoint.headers]) {
             if (!this.context.isOptional(headerParameter.valueType)) {
-                return true;
+                return false;
             }
         }
         const requestBody = this.endpoint.requestBody;
@@ -48,17 +49,17 @@ export abstract class EndpointRequest {
             switch (requestBody.type) {
                 case "inlinedRequestBody":
                     return this.inlinedRequestBodyHasRequiredProperties(requestBody);
-                case "reference":
-                    return this.referenceRequestBodyHasRequiredProperties(requestBody);
                 case "fileUpload":
                     return this.fileUploadRequestBodyHasRequiredProperties(requestBody);
+                case "reference":
+                    return false;
                 case "bytes":
-                    return true;
+                    return false;
                 default:
                     assertNever(requestBody);
             }
         }
-        return false;
+        return true;
     }
 
     public abstract getRequestParameterType(): php.Type;
@@ -232,14 +233,10 @@ export abstract class EndpointRequest {
         const properties = requestBody.properties;
         for (const property of [...properties, ...(requestBody.extendedProperties ?? [])]) {
             if (!this.context.isOptional(property.valueType)) {
-                return true;
+                return false;
             }
         }
-        return false;
-    }
-
-    private referenceRequestBodyHasRequiredProperties(requestBody: HttpRequestBodyReference): boolean {
-        return !this.context.isOptional(requestBody.requestBodyType);
+        return true;
     }
 
     private fileUploadRequestBodyHasRequiredProperties(requestBody: FileUploadRequest): boolean {
@@ -247,13 +244,13 @@ export abstract class EndpointRequest {
             switch (property.type) {
                 case "file": {
                     if (!property.value.isOptional) {
-                        return true;
+                        return false;
                     }
                     break;
                 }
                 case "bodyProperty": {
                     if (!this.context.isOptional(property.valueType)) {
-                        return true;
+                        return false;
                     }
                     break;
                 }
@@ -261,7 +258,7 @@ export abstract class EndpointRequest {
                     assertNever(property);
             }
         }
-        return false;
+        return true;
     }
 
 }

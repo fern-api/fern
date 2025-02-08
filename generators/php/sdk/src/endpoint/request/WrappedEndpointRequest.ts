@@ -43,6 +43,7 @@ export declare namespace WrappedEndpointRequest {
         serviceId: ServiceId;
         sdkRequest: SdkRequest;
         wrapper: SdkRequestWrapper;
+        service: HttpService;
         endpoint: HttpEndpoint;
     }
 }
@@ -54,8 +55,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
     private wrapper: SdkRequestWrapper;
 
-    public constructor({ context, sdkRequest, serviceId, wrapper, endpoint }: WrappedEndpointRequest.Args) {
-        super(context, sdkRequest, endpoint);
+    public constructor({ context, sdkRequest, serviceId, wrapper, service, endpoint }: WrappedEndpointRequest.Args) {
+        super(context, sdkRequest, service, endpoint);
         this.serviceId = serviceId;
         this.wrapper = wrapper;
     }

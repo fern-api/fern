@@ -15,6 +15,6 @@ $client = new SeedClient(
 $client->payment->create(
     new CreatePaymentRequest([
         'amount' => 1,
-        'currency' => Currency::Usd,
+        'currency' => Currency::Usd->value,
     ]),
 );

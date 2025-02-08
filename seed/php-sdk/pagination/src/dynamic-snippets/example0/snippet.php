@@ -22,7 +22,7 @@ $client->complex->search(
         ]),
         'query' => new SingleFilterSearchRequest([
             'field' => 'field',
-            'operator' => SingleFilterSearchRequestOperator::Equals,
+            'operator' => SingleFilterSearchRequestOperator::Equals->value,
             'value' => 'value',
         ]),
     ]),

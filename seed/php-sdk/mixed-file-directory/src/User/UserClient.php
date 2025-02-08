@@ -68,7 +68,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function list(ListUsersRequest $request, ?array $options = null): array
+    public function list(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

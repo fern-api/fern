@@ -4,7 +4,7 @@ import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, HttpRequestBody, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpRequestBody, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -30,8 +30,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         super({ context });
     }
 
-    public generate({ serviceId, endpoint }: { serviceId: ServiceId; endpoint: HttpEndpoint }): php.Method {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+    public generate({ serviceId, service, endpoint }: { serviceId: ServiceId; service: HttpService; endpoint: HttpEndpoint }): php.Method {
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             php.parameter({
