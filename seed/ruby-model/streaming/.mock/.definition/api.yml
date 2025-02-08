@@ -1,3 +1,0 @@
-error-discrimination:
-  strategy: status-code
-name: streaming
