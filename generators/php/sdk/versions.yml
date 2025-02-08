@@ -1,3 +1,10 @@
+- version: 0.5.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Update the endpoint generator to not require the in-lined request wrapper if it's
+        only composed of optional properties.
+
 - version: 0.5.1
   changelogEntry:
     - type: fix
