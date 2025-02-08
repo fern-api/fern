@@ -482,5 +482,30 @@ subtitle: 'Learn about the Fern CLI commands.'
     ### list
 
     Use `--list` to see the full list of generator upgrades available.
+
+    ```bash
+    fern generator upgrade --list
+    ```
+
+    ### generator
+
+    Use `--generator` to specify a particular generator type to upgrade.
+
+    ```bash
+    fern generator upgrade --generator fernapi/fern-typescript-node-sdk
+    fern generator upgrade --generator fernapi/fern-python-sdk
+    ```
+
+    ### group
+
+    Use `--group` to upgrade generators within a specific group in your `generators.yml`. If not specified, all generators of the specified type will be upgraded.
+
+    ```bash
+    fern generator upgrade --group public
+    ```
+
+    <Note>
+    This is different from `fern upgrade` which updates the Fern CLI version. Use both commands to keep your entire Fern toolchain up to date.
+    </Note>
   </Accordion>
 </AccordionGroup>
