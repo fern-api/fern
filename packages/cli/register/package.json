@@ -33,23 +33,24 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.130.1-6a9e22770",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "lodash-es": "^4.17.21"
+    "@fern-fern/fdr-cjs-sdk": "0.130.0-8bf179148",
+    "lodash-es": "^4.17.21",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "@types/lodash-es": "^4.17.12",
     "vitest": "^2.1.9"
   }
 }
