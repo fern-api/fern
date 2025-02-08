@@ -42,10 +42,22 @@ scripts:
       - composer analyze
       - composer test
 allowedFailures:
+  # Dynamic snippets need to add support for global headers included in the client constructor.
+  - auth-environment-variables
   # Basic auth is not supported yet.
   - basic-auth
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Add support for literals and confirm that string literal examples are being generated.
+  - literal
+  # Add support for OAuth.
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
+  - pagination
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default

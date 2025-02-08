@@ -117,7 +117,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePath(string $param, GetWithInlinePath $request, ?array $options = null): string
+    public function getWithInlinePath(string $param, GetWithInlinePath $request = new GetWithInlinePath(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

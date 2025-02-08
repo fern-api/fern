@@ -1,7 +1,15 @@
-import { UnnamedArgument } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+import {
+    FileUploadRequest,
+    HttpEndpoint,
+    HttpRequestBodyReference,
+    HttpService,
+    InlinedRequestBody,
+    SdkRequest,
+    SdkRequestWrapper
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -24,11 +32,42 @@ export abstract class EndpointRequest {
     public constructor(
         protected readonly context: SdkGeneratorContext,
         protected readonly sdkRequest: SdkRequest,
+        protected readonly service: HttpService,
         protected readonly endpoint: HttpEndpoint
     ) {}
 
     public getRequestParameterName(): string {
         return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`;
+    }
+
+    public shouldIncludeDefaultInitializer(): boolean {
+        // TODO: Add path parameters to this check when inlinePathParameters is supported.
+        for (const queryParameter of this.endpoint.queryParameters) {
+            if (!this.context.isOptional(queryParameter.valueType)) {
+                return false;
+            }
+        }
+        for (const headerParameter of [...this.service.headers, ...this.endpoint.headers]) {
+            if (!this.context.isOptional(headerParameter.valueType)) {
+                return false;
+            }
+        }
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            switch (requestBody.type) {
+                case "inlinedRequestBody":
+                    return this.inlinedRequestBodyHasRequiredProperties(requestBody);
+                case "fileUpload":
+                    return this.fileUploadRequestBodyHasRequiredProperties(requestBody);
+                case "reference":
+                    return false;
+                case "bytes":
+                    return false;
+                default:
+                    assertNever(requestBody);
+            }
+        }
+        return true;
     }
 
     public abstract getRequestParameterType(): php.Type;
@@ -196,5 +235,37 @@ export abstract class EndpointRequest {
                 })
             );
         });
+    }
+
+    private inlinedRequestBodyHasRequiredProperties(requestBody: InlinedRequestBody): boolean {
+        const properties = requestBody.properties;
+        for (const property of [...properties, ...(requestBody.extendedProperties ?? [])]) {
+            if (!this.context.isOptional(property.valueType)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private fileUploadRequestBodyHasRequiredProperties(requestBody: FileUploadRequest): boolean {
+        for (const property of requestBody.properties) {
+            switch (property.type) {
+                case "file": {
+                    if (!property.value.isOptional) {
+                        return false;
+                    }
+                    break;
+                }
+                case "bodyProperty": {
+                    if (!this.context.isOptional(property.valueType)) {
+                        return false;
+                    }
+                    break;
+                }
+                default:
+                    assertNever(property);
+            }
+        }
+        return true;
     }
 }

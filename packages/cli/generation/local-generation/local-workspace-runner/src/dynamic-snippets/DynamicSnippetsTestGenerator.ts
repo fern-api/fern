@@ -7,6 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
+import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
 interface DynamicSnippetsGenerator {
@@ -26,13 +27,13 @@ export class DynamicSnippetsTestGenerator {
     private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> =
         {
             go: DynamicSnippetsGoTestGenerator,
+            php: DynamicSnippetsPhpTestGenerator,
             typescript: undefined, // TODO: Re-enable dynamic snippet tests when example generation is resolved.
             java: undefined,
             python: undefined,
             ruby: undefined,
             csharp: undefined,
-            swift: undefined,
-            php: undefined
+            swift: undefined
         };
 
     constructor(

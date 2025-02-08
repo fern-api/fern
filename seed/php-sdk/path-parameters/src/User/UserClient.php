@@ -63,7 +63,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUser(string $tenantId, string $userId, GetUsersRequest $request, ?array $options = null): User
+    public function getUser(string $tenantId, string $userId, GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -217,7 +217,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchUsers(string $tenantId, string $userId, SearchUsersRequest $request, ?array $options = null): array
+    public function searchUsers(string $tenantId, string $userId, SearchUsersRequest $request = new SearchUsersRequest(), ?array $options = null): array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

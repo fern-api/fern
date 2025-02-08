@@ -14,9 +14,9 @@ class SendEnumListAsQueryParamRequest extends JsonSerializableType
     public array $operand;
 
     /**
-     * @var array<?value-of<Operand>> $maybeOperand
+     * @var ?array<value-of<Operand>> $maybeOperand
      */
-    public array $maybeOperand;
+    public ?array $maybeOperand;
 
     /**
      * @var array<value-of<Color>|value-of<Operand>> $operandOrColor
@@ -24,24 +24,24 @@ class SendEnumListAsQueryParamRequest extends JsonSerializableType
     public array $operandOrColor;
 
     /**
-     * @var array<value-of<Color>|value-of<Operand>|null> $maybeOperandOrColor
+     * @var ?array<value-of<Color>|value-of<Operand>> $maybeOperandOrColor
      */
-    public array $maybeOperandOrColor;
+    public ?array $maybeOperandOrColor;
 
     /**
      * @param array{
      *   operand: array<value-of<Operand>>,
-     *   maybeOperand: array<?value-of<Operand>>,
+     *   maybeOperand?: ?array<value-of<Operand>>,
      *   operandOrColor: array<value-of<Color>|value-of<Operand>>,
-     *   maybeOperandOrColor: array<value-of<Color>|value-of<Operand>|null>,
+     *   maybeOperandOrColor?: ?array<value-of<Color>|value-of<Operand>>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->operand = $values['operand'];
-        $this->maybeOperand = $values['maybeOperand'];
+        $this->maybeOperand = $values['maybeOperand'] ?? null;
         $this->operandOrColor = $values['operandOrColor'];
-        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
     }
 }

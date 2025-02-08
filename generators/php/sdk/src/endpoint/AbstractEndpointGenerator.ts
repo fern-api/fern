@@ -1,9 +1,10 @@
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
+import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
@@ -16,17 +17,16 @@ export abstract class AbstractEndpointGenerator {
 
     public getEndpointSignatureInfo({
         serviceId,
+        service,
         endpoint
     }: {
         serviceId: ServiceId;
+        service: HttpService;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
-        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
-        const requestParameter =
-            request != null
-                ? php.parameter({ type: request.getRequestParameterType(), name: request.getRequestParameterName() })
-                : undefined;
+        const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
+        const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
         return {
             baseParameters: [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null),
             pathParameters,
@@ -66,5 +66,19 @@ export abstract class AbstractEndpointGenerator {
             pathParameters,
             pathParameterReferences
         };
+    }
+
+    private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
+        return php.parameter({
+            type: request.getRequestParameterType(),
+            name: request.getRequestParameterName(),
+            initializer: request.shouldIncludeDefaultInitializer()
+                ? php.codeblock((writer) => {
+                      writer.write("new ");
+                      writer.writeNode(request.getRequestParameterType());
+                      writer.write("()");
+                  })
+                : undefined
+        });
     }
 }

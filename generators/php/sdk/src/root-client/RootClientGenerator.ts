@@ -96,6 +96,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             for (const endpoint of service.endpoints) {
                 const method = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
+                    service,
                     endpoint
                 });
                 class_.addMethod(method);

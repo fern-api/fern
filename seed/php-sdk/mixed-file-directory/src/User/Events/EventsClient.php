@@ -68,7 +68,7 @@ class EventsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listEvents(ListUserEventsRequest $request, ?array $options = null): array
+    public function listEvents(ListUserEventsRequest $request = new ListUserEventsRequest(), ?array $options = null): array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -61,7 +61,7 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(GetUsersRequest $request, ?array $options = null): array
+    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -177,7 +177,7 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteUser(DeleteUserRequest $request, ?array $options = null): bool
+    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

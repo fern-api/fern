@@ -58,7 +58,7 @@ class FooClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function find(FindRequest $request, ?array $options = null): ImportingType
+    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ImportingType
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

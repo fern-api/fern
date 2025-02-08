@@ -114,7 +114,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, GetOrganizationUserRequest $request, ?array $options = null): User
+    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, GetOrganizationUserRequest $request = new GetOrganizationUserRequest(), ?array $options = null): User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -165,7 +165,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request, ?array $options = null): array
+    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

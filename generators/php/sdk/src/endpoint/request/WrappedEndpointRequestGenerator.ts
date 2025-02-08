@@ -4,11 +4,9 @@ import { FileGenerator, FileLocation, PhpFile, php } from "@fern-api/php-codegen
 
 import {
     FileProperty,
-    FilePropertyArray,
-    FilePropertySingle,
     HttpEndpoint,
     InlinedRequestBodyProperty,
-    ObjectProperty,
+    QueryParameter,
     SdkRequestWrapper,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
@@ -64,13 +62,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const query of this.endpoint.queryParameters) {
-            const type = query.allowMultiple
-                ? php.Type.array(this.context.phpTypeMapper.convert({ reference: query.valueType }))
-                : this.context.phpTypeMapper.convert({ reference: query.valueType });
             clazz.addField(
                 php.field({
                     name: this.context.getPropertyName(query.name.name),
-                    type,
+                    type: this.getQueryParameterType(query),
                     access: "public",
                     docs: query.docs
                 })
@@ -169,6 +164,26 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             }),
             inherited
         });
+    }
+
+    private getQueryParameterType(query: QueryParameter): php.Type {
+        if (query.allowMultiple) {
+            if (this.context.isOptional(query.valueType)) {
+                return php.Type.optional(
+                    php.Type.array(
+                        this.context.phpTypeMapper.convert({
+                            reference: this.context.dereferenceOptional(query.valueType)
+                        })
+                    )
+                );
+            }
+            return php.Type.array(
+                this.context.phpTypeMapper.convert({
+                    reference: query.valueType
+                })
+            );
+        }
+        return this.context.phpTypeMapper.convert({ reference: query.valueType });
     }
 
     protected getFilepath(): RelativeFilePath {
