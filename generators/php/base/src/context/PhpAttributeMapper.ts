@@ -1,14 +1,10 @@
-import { isEqual, uniq, uniqWith } from "lodash-es";
+import { isEqual, uniqWith } from "lodash-es";
 
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
 
 import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 
-import { php } from "..";
-import { ClassInstantiation } from "../ast";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
-import { parameter } from "../php";
 import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 
 export declare namespace PhpAttributeMapper {
@@ -70,7 +66,7 @@ export class PhpAttributeMapper {
         return attributes;
     }
 
-    public getUnionTypeClassRepresentation(arguments_: php.AstNode[]): ClassInstantiation {
+    public getUnionTypeClassRepresentation(arguments_: php.AstNode[]): php.ClassInstantiation {
         return php.instantiateClass({
             classReference: this.context.getUnionClassReference(),
             arguments_

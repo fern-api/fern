@@ -1,15 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import {
-    FileUploadRequest,
-    HttpEndpoint,
-    HttpRequestBodyReference,
-    HttpService,
-    InlinedRequestBody,
-    SdkRequest,
-    SdkRequestWrapper
-} from "@fern-fern/ir-sdk/api";
+import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 

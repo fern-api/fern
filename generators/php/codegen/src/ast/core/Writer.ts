@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "../ClassReference";

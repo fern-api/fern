@@ -1,4 +1,4 @@
-import { Arguments } from "@fern-api/base-generator";
+import { Arguments } from "@fern-api/browser-compatible-base-generator";
 
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

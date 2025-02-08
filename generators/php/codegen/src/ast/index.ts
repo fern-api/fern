@@ -5,6 +5,7 @@ export { Trait } from "./Trait";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
+export { DataClass } from "./DataClass";
 export { Enum } from "./Enum";
 export { Field } from "./Field";
 export { Map } from "./Map";

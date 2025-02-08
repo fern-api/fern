@@ -5,7 +5,6 @@ import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { Trait } from "./Trait";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

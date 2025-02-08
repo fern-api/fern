@@ -1,4 +1,4 @@
-import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation, php } from "@fern-api/php-codegen";
+import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 

@@ -3,9 +3,10 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
+    { "path": "../../../packages/commons/core-utils" },
     { "path": "../../../packages/commons/fs-utils" },
+    { "path": "../../../packages/commons/logging-execa" },
     { "path": "../../base" },
-    { "path": "../base" },
     { "path": "../codegen" }
   ]
 }

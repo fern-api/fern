@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FileGenerator, PhpFile } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
 
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
 
