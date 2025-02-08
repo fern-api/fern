@@ -1,9 +1,10 @@
 ---
 title: "Global Configuration"
 subtitle: "Customize your documentation using the docs.yml file"
+description: "Learn how to configure your Fern documentation site with the docs.yml file. Customize colors, typography, layout, analytics and more."
 ---
 
-### Editor Support
+### YAML Schema Validation
 
 To enable intelligent YAML validation and autocompletion in your editor, add this line at the top of your `docs.yml` file:
 
@@ -13,21 +14,37 @@ To enable intelligent YAML validation and autocompletion in your editor, add thi
 
 This enables real-time schema validation and autocompletion based on our [complete schema](https://github.com/fern-api/fern/blob/09555d587294fd3dc77ceb35f21e8976a5a2b7a2/fern/apis/docs-yml/definition/docs.yml#L110).
 
-## Top-level properties
+## Core configuration
 
-Every Fern documentation website needs a `docs.yml` file with the core configuration settings. 
+Every Fern documentation website requires a `docs.yml` file that contains the core configuration settings. Here are the essential top-level properties you can configure:
 
 ```yaml docs.yml
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
-title: My Docs
+title: Stripe API Documentation        
+favicon: assets/stripe-favicon.ico     
+default-language: typescript          # Default code sample language
 
-logo: 
-  href: mydomain.com
-  dark: path/to/logo.png
-  light: path/to/logo.png
+logo:                                
+  href: https://stripe.com
+  dark: assets/stripe-logo-dark.svg
+  light: assets/stripe-logo-light.svg
 
-favicon: path/to/favicon.ico
+colors:                              
+  accent-primary:
+    light: "#635BFF"                 # Stripe's primary purple
+    dark: "#9B90FF"                  # Lighter purple for dark mode
+  background:
+    light: "#FFFFFF" 
+    dark: "#0A2540"                  
+
+navbar-links:                       
+  - type: filled
+    text: "Dashboard"
+    href: "https://dashboard.stripe.com"
+  - type: minimal 
+    text: "Support"
+    href: "https://support.stripe.com"
 ```
 
 <ParamField path="title" type="string" required={false}>
@@ -285,7 +302,7 @@ typography:
   # Font for body text
   bodyFont:
     name: Inter-Regular
-    path: ./fonts/Inter-Regular.woff2
+    path: fonts/Inter-Regular.woff2
     style: normal
   
   # Font for code snippets
@@ -317,7 +334,7 @@ typography:
 typography:
   bodyFont:
     name: Inter-Regular
-    path: ./fonts/Inter-Regular.woff2
+    path: fonts/Inter-Regular.woff2
     style: normal
 ```
 </Tab>
