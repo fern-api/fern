@@ -1,6 +1,8 @@
 import { isEqual, uniqWith } from "lodash-es";
 
 import { assertNever } from "@fern-api/core-utils";
+import { php } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 
 import {
     ContainerType,
@@ -13,9 +15,6 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { php } from "../";
-import { ClassReference, Type } from "../ast";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 
 export declare namespace PhpTypeMapper {
@@ -36,7 +35,7 @@ export class PhpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference, preserveEnums = false }: PhpTypeMapper.Args): Type {
+    public convert({ reference, preserveEnums = false }: PhpTypeMapper.Args): php.Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
@@ -54,35 +53,41 @@ export class PhpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
+    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
-    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
+    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getTraitLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
-    private convertContainer({ container, preserveEnums }: { container: ContainerType; preserveEnums: boolean }): Type {
+    private convertContainer({
+        container,
+        preserveEnums
+    }: {
+        container: ContainerType;
+        preserveEnums: boolean;
+    }): php.Type {
         switch (container.type) {
             case "list":
-                return Type.array(this.convert({ reference: container.list, preserveEnums }));
+                return php.Type.array(this.convert({ reference: container.list, preserveEnums }));
             case "map": {
                 const key = this.convert({ reference: container.keyType, preserveEnums });
                 const value = this.convert({ reference: container.valueType, preserveEnums });
-                return Type.map(key, value);
+                return php.Type.map(key, value);
             }
             case "set":
-                return Type.array(this.convert({ reference: container.set, preserveEnums }));
+                return php.Type.array(this.convert({ reference: container.set, preserveEnums }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional, preserveEnums }));
+                return php.Type.optional(this.convert({ reference: container.optional, preserveEnums }));
             case "nullable":
-                return Type.optional(this.convert({ reference: container.nullable, preserveEnums }));
+                return php.Type.optional(this.convert({ reference: container.nullable, preserveEnums }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -90,7 +95,7 @@ export class PhpTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
+    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): php.Type {
         return PrimitiveTypeV1._visit<php.Type>(primitive.v1, {
             integer: () => php.Type.int(),
             long: () => php.Type.int(),
@@ -109,7 +114,7 @@ export class PhpTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): Type {
+    private convertLiteral({ literal }: { literal: Literal }): php.Type {
         switch (literal.type) {
             case "boolean":
                 return php.Type.bool();
@@ -118,7 +123,7 @@ export class PhpTypeMapper {
         }
     }
 
-    private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): Type {
+    private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): php.Type {
         const classReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {

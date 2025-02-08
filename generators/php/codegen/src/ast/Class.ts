@@ -5,7 +5,6 @@ import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { Trait } from "./Trait";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { orderByAccess } from "./utils/orderByAccess";

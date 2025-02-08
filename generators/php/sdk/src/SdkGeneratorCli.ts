@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
+import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
 import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

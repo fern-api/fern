@@ -47,6 +47,5 @@
     "string.prototype.replaceall": "^1.0.10",
     "typescript": "5.7.2",
     "vitest": "^2.1.8"
-
   }
 }

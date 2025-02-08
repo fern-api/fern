@@ -1,4 +1,4 @@
-import { Ternary } from "@fern-api/base-generator";
+import { Ternary } from "@fern-api/browser-compatible-base-generator";
 
 import {
     Array as Array_,
@@ -123,6 +123,7 @@ export {
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    DataClass,
     Enum,
     Field,
     Map,

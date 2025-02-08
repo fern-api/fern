@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/base-generator";
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 
 import { codeblock } from "../php";
 import { AstNode } from "./core/AstNode";

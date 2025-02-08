@@ -2,20 +2,16 @@ import path from "path";
 
 import { File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
 
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
-
-import { Enum, Trait } from "../ast";
-import { Class } from "../ast/Class";
-import { DataClass } from "../ast/DataClass";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 
 export type Namespace = string;
 
 export declare namespace PhpFile {
     interface Args {
         /* The class to be written to the PHP File */
-        clazz: Class | DataClass | Trait | Enum;
+        clazz: php.Class | php.DataClass | php.Trait | php.Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* The root namespace of the project. Can be pulled directly from context. */
@@ -52,7 +48,7 @@ function phpFileContent({
     rootNamespace,
     customConfig
 }: {
-    clazz: Class | DataClass | Trait | Enum;
+    clazz: php.Class | php.DataClass | php.Trait | php.Enum;
     rootNamespace: string;
     customConfig: BasePhpCustomConfigSchema;
 }): string {

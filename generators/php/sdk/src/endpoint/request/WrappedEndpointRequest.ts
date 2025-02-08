@@ -1,10 +1,7 @@
-import { CodeBlock } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
 import {
-    BytesRequest,
-    ContainerType,
     FileProperty,
     FilePropertyArray,
     FilePropertySingle,
@@ -12,22 +9,14 @@ import {
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
-    HttpRequestBodyReference,
     HttpService,
-    InlinedRequestBody,
-    InlinedRequestBodyProperty,
-    Literal,
-    MapType,
     Name,
-    NamedType,
-    PrimitiveType,
     QueryParameter,
     SdkRequest,
     SdkRequestWrapper,
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { FileUploadBodyProperty } from "@fern-fern/ir-sdk/serialization";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import {
