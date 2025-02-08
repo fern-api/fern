@@ -1,7 +1,0 @@
-default-environment: Default
-display-name: Test API
-environments:
-  Default: https://localhost
-error-discrimination:
-  strategy: status-code
-name: api
