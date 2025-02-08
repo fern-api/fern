@@ -7,8 +7,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
-import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
+import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
 interface DynamicSnippetsGenerator {
     new (

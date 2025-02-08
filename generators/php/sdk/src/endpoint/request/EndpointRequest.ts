@@ -1,9 +1,17 @@
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import { FileUploadRequest, HttpEndpoint, HttpRequestBodyReference, HttpService, InlinedRequestBody, SdkRequest, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import {
+    FileUploadRequest,
+    HttpEndpoint,
+    HttpRequestBodyReference,
+    HttpService,
+    InlinedRequestBody,
+    SdkRequest,
+    SdkRequestWrapper
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { assertNever } from "@fern-api/core-utils";
 
 export interface QueryParameterCodeBlock {
     code: php.CodeBlock;
@@ -260,5 +268,4 @@ export abstract class EndpointRequest {
         }
         return true;
     }
-
 }

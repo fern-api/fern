@@ -173,9 +173,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     php.Type.array(
                         this.context.phpTypeMapper.convert({
                             reference: this.context.dereferenceOptional(query.valueType)
-                        }),
+                        })
                     )
-                )
+                );
             }
             return php.Type.array(
                 this.context.phpTypeMapper.convert({

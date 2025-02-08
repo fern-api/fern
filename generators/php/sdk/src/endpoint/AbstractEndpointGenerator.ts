@@ -4,9 +4,9 @@ import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
+import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { EndpointRequest } from "./request/EndpointRequest";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -69,14 +69,16 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getRequestParameter({ request }: { request: EndpointRequest }): php.Parameter {
-        return  php.parameter({
+        return php.parameter({
             type: request.getRequestParameterType(),
             name: request.getRequestParameterName(),
-            initializer: request.shouldIncludeDefaultInitializer() ? php.codeblock((writer) => {
-                writer.write("new ");
-                writer.writeNode(request.getRequestParameterType());
-                writer.write("()");
-            }): undefined,
-        })
+            initializer: request.shouldIncludeDefaultInitializer()
+                ? php.codeblock((writer) => {
+                      writer.write("new ");
+                      writer.writeNode(request.getRequestParameterType());
+                      writer.write("()");
+                  })
+                : undefined
+        });
     }
 }

@@ -1,3 +1,5 @@
+import { camelCase, upperFirst } from "lodash-es";
+
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
@@ -7,7 +9,6 @@ import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
-import { camelCase, upperFirst } from "lodash-es";
 
 const RESERVED_METHOD_NAMES = ["use", "clone", "list"];
 const REQUEST_NAMESPACE = "Requests";
@@ -52,7 +53,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getPropertyName(name: FernIr.Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
-    
+
     public getMethodName(name: FernIr.Name): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
         const unsafeName = name.camelCase.unsafeName;
@@ -102,13 +103,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (environmentName == null) {
             return undefined;
         }
-        return php.codeblock(
-            (writer) => {
-                writer.writeNode(this.getEnvironmentClassReference(environmentName));
-                writer.write("::");
-                writer.write(this.getClassName(environmentName));
-            }
-        );
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getEnvironmentClassReference(environmentName));
+            writer.write("::");
+            writer.write(this.getClassName(environmentName));
+        });
     }
 
     public getEnvironmentClassReference(name: FernIr.Name): php.ClassReference {

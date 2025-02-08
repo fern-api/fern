@@ -30,7 +30,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         super({ context });
     }
 
-    public generate({ serviceId, service, endpoint }: { serviceId: ServiceId; service: HttpService; endpoint: HttpEndpoint }): php.Method {
+    public generate({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): php.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(

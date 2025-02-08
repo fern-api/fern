@@ -365,7 +365,7 @@ function buildDateTimeFromString({ writer, value }: { writer: Writer; value: str
     return new ClassInstantiation({
         classReference: new ClassReference({
             name: "DateTime",
-            namespace: "",
+            namespace: ""
         }),
         arguments_: [new CodeBlock(`'${value}'`)]
     });

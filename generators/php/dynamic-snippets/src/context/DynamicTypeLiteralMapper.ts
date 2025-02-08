@@ -174,16 +174,10 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): php.TypeLiteral {
         // TODO: Implement me!
-        return php.TypeLiteral.string('todo');
+        return php.TypeLiteral.string("todo");
     }
 
-    private convertObject({
-        object_,
-        value
-    }: {
-        object_: FernIr.dynamic.ObjectType;
-        value: unknown;
-    }): php.TypeLiteral {
+    private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
@@ -213,17 +207,17 @@ export class DynamicTypeLiteralMapper {
             return php.TypeLiteral.nop();
         }
         return php.TypeLiteral.reference(
-            php.codeblock(
-                (writer) => {
-                    writer.writeNode(php.classReference({
+            php.codeblock((writer) => {
+                writer.writeNode(
+                    php.classReference({
                         name: this.context.getClassName(enum_.declaration.name),
                         namespace: this.context.getTypesNamespace(enum_.declaration.fernFilepath)
-                    }));
-                    writer.write("::");
-                    writer.write(name);
-                    writer.write("->value");
-                }
-            )
+                    })
+                );
+                writer.write("::");
+                writer.write(name);
+                writer.write("->value");
+            })
         );
     }
 

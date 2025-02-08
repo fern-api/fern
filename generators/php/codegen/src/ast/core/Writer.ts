@@ -91,10 +91,12 @@ ${this.buffer}`;
         if (referenceKeys.length === 0) {
             return "";
         }
-        return referenceKeys
-            // Filter out the current namespace.
-            .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
-            .map((ref) => `use ${ref};`)
-            .join("\n");
+        return (
+            referenceKeys
+                // Filter out the current namespace.
+                .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
+                .map((ref) => `use ${ref};`)
+                .join("\n")
+        );
     }
 }

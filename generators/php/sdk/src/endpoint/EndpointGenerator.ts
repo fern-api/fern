@@ -14,7 +14,15 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         this.http = new HttpEndpointGenerator({ context });
     }
 
-    public generate({ serviceId, service, endpoint }: { serviceId: ServiceId; service: HttpService; endpoint: HttpEndpoint }): php.Method {
+    public generate({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): php.Method {
         return this.http.generate({
             serviceId,
             service,

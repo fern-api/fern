@@ -1,9 +1,9 @@
+import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const CLIENT_VAR_NAME = "$client";
@@ -25,11 +25,14 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return PHP_PREFIX + await code.toStringAsync({
-            namespace: SNIPPET_NAMESPACE,
-            rootNamespace: SNIPPET_NAMESPACE,
-            customConfig: this.context.customConfig ?? {}
-        });
+        return (
+            PHP_PREFIX +
+            (await code.toStringAsync({
+                namespace: SNIPPET_NAMESPACE,
+                rootNamespace: SNIPPET_NAMESPACE,
+                customConfig: this.context.customConfig ?? {}
+            }))
+        );
     }
 
     public generateSnippetSync({
@@ -40,11 +43,14 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return PHP_PREFIX + code.toString({
-            namespace: SNIPPET_NAMESPACE,
-            rootNamespace: SNIPPET_NAMESPACE,
-            customConfig: this.context.customConfig ?? {}
-        });
+        return (
+            PHP_PREFIX +
+            code.toString({
+                namespace: SNIPPET_NAMESPACE,
+                rootNamespace: SNIPPET_NAMESPACE,
+                customConfig: this.context.customConfig ?? {}
+            })
+        );
     }
 
     private buildCodeBlock({
@@ -84,7 +90,7 @@ export class EndpointSnippetGenerator {
             on: php.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
-            multiline: true,
+            multiline: true
         });
     }
 
@@ -116,7 +122,9 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
-            optionArgs.push(...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers }));
+            optionArgs.push(
+                ...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
         }
         this.context.errors.unscope();
 
@@ -207,10 +215,12 @@ export class EndpointSnippetGenerator {
         if (php.TypeLiteral.isNop(baseUrlArg)) {
             return [];
         }
-        return [{
-            name: "baseUrl",
-            value: baseUrlArg
-        }];
+        return [
+            {
+                name: "baseUrl",
+                value: baseUrlArg
+            }
+        ];
     }
 
     private getBaseUrlArg({
@@ -425,11 +435,13 @@ export class EndpointSnippetGenerator {
             args.push(...pathParameterFields.map((field) => field.value));
         }
 
-        if (this.context.needsRequestParameter({
-            request,
-            inlinePathParameters,
-            inlineFileProperties: true, // The PHP SDK requires inlineFileProperties.
-         })) {
+        if (
+            this.context.needsRequestParameter({
+                request,
+                inlinePathParameters,
+                inlineFileProperties: true // The PHP SDK requires inlineFileProperties.
+            })
+        ) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
@@ -637,7 +649,7 @@ export class EndpointSnippetGenerator {
         return php.instantiateClass({
             classReference: php.classReference({
                 name: this.context.getRootClientClassName(),
-                namespace: this.context.rootNamespace,
+                namespace: this.context.rootNamespace
             }),
             arguments_,
             multiline: true
