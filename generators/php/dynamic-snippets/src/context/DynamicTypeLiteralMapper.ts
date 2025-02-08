@@ -173,7 +173,8 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+        // TODO: Implement me!
+        return php.TypeLiteral.string('todo');
     }
 
     private convertObject({
