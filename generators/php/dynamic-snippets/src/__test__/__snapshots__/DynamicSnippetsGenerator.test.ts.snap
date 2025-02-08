@@ -83,8 +83,8 @@ $client->service->createBigEntity(
                 'academyAward' => true,
                 'releaseDate' => "2023-12-08",
                 'ratings' => [
-                    rottenTomatoes => 97,
-                    imdb => 7.6,
+                    'rottenTomatoes' => 97,
+                    'imdb' => 7.6,
                 ],
             ],
             'revenue' => 1000000,
@@ -135,8 +135,8 @@ $client->service->createMovie(
             ],
             'releaseDate' => "2023-12-08",
             'ratings' => [
-                rottenTomatoes => 97,
-                imdb => 7.6,
+                'rottenTomatoes' => 97,
+                'imdb' => 7.6,
             ],
         ],
         'revenue' => 1000000,
@@ -152,6 +152,7 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Types\\Object\\Types\\ObjectWithOptionalField;
+use DateTime;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
@@ -163,8 +164,8 @@ $client->endpoints->object->getAndReturnWithOptionalField(
         'long' => 1000000,
         'double' => 1.1,
         'bool' => true,
-        'datetime' => '2024-01-15T09:30:00Z',
-        'date' => '2023-01-15',
+        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'date' => new DateTime('2023-01-15'),
         'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
         'base64' => 'SGVsbG8gd29ybGQh',
         'list' => [
@@ -439,6 +440,7 @@ namespace Example;
 use Acme\\AcmeClient;
 use Acme\\Nullable\\Requests\\CreateUserRequest;
 use Acme\\Nullable\\Types\\Metadata;
+use DateTime;
 
 $client = new AcmeClient(
     options: [
@@ -452,8 +454,8 @@ $client->nullable->createUser(
             'admin',
         ],
         'metadata' => new Metadata([
-            'createdAt' => '1980-01-01T00:00:00Z',
-            'updatedAt' => '1980-01-01T00:00:00Z',
+            'createdAt' => new DateTime('1980-01-01T00:00:00Z'),
+            'updatedAt' => new DateTime('1980-01-01T00:00:00Z'),
             'avatar' => null,
             'activated' => null,
         ]),
