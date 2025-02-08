@@ -453,7 +453,7 @@ navigation:
                 icon: fa-regular fa-icons
                 slug: icons
               - page: Parameter Fields
-                path: ./pages/docs/components/ParamField.mdx
+                path: ./pages/docs/components/paramfield.mdx
                 icon: fa-regular fa-input-text
                 slug: paramfield
               - page: Steps
