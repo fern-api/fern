@@ -17,15 +17,15 @@ class GetMetadataRequest extends JsonSerializableType
     public ?bool $shallow;
 
     /**
-     * @var array<?string> $tag
+     * @var ?array<string> $tag
      */
-    public array $tag;
+    public ?array $tag;
 
     /**
      * @param array{
      *   xApiVersion: string,
      *   shallow?: ?bool,
-     *   tag: array<?string>,
+     *   tag?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -33,6 +33,6 @@ class GetMetadataRequest extends JsonSerializableType
     ) {
         $this->xApiVersion = $values['xApiVersion'];
         $this->shallow = $values['shallow'] ?? null;
-        $this->tag = $values['tag'];
+        $this->tag = $values['tag'] ?? null;
     }
 }

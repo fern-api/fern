@@ -46,6 +46,12 @@ allowedFailures:
   - basic-auth
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Add support for OAuth.
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default

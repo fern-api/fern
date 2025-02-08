@@ -4,6 +4,10 @@
       summary: >-
         Update the endpoint generator to not require the in-lined request wrapper if it's
         only composed of optional properties.
+    - type: fix
+      summary: >-
+        Update optional query parameters lists to be generated as an optional array instead
+        of an array of optional values.
 
 - version: 0.5.1
   changelogEntry:
