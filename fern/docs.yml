@@ -452,6 +452,10 @@ navigation:
                 path: ./pages/docs/components/icons.mdx
                 icon: fa-regular fa-icons
                 slug: icons
+              - page: Parameter Fields
+                path: ./pages/docs/components/ParamField.mdx
+                icon: fa-regular fa-input-text
+                slug: paramfield
               - page: Steps
                 path: ./pages/docs/components/steps.mdx
                 icon: fa-regular fa-list-ol

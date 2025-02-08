@@ -77,7 +77,8 @@ it.skip("finds endpoint by id and by path/method", () => {
             requests: [],
             responses: [],
             errors: [],
-            snippetTemplates: undefined
+            snippetTemplates: undefined,
+            protocol: undefined
         }
     };
     expect(findEndpointByLocator("getUser", mockEndpoints)).toBeDefined();

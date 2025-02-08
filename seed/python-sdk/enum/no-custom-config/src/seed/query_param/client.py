@@ -110,6 +110,7 @@ class QueryParamClient:
             operand=">",
             maybe_operand=">",
             operand_or_color="red",
+            maybe_operand_or_color="red",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -245,6 +246,7 @@ class AsyncQueryParamClient:
                 operand=">",
                 maybe_operand=">",
                 operand_or_color="red",
+                maybe_operand_or_color="red",
             )
 
 

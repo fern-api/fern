@@ -1,5 +1,4 @@
 import {
-    ExampleAliasType,
     ExampleObjectProperty,
     ExampleObjectType,
     ExampleSingleUnionTypeProperties,
@@ -71,6 +70,32 @@ export function generateTypeDeclarationExample({
             };
         }
         case "object": {
+            const baseJsonExample: Record<string, unknown> = {};
+            const baseProperties: ExampleObjectProperty[] = [];
+
+            if (typeDeclaration.shape.extends != null) {
+                for (const extendedTypeReference of typeDeclaration.shape.extends) {
+                    const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
+                    if (extendedTypeDeclaration == null) {
+                        throw new Error(
+                            `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
+                        );
+                    }
+                    const extendedExample = generateTypeDeclarationExample({
+                        fieldName,
+                        typeDeclaration: extendedTypeDeclaration,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties
+                    });
+                    if (extendedExample.type === "success" && extendedExample.example.type === "object") {
+                        Object.assign(baseJsonExample, extendedExample.jsonExample);
+                        baseProperties.push(...extendedExample.example.properties);
+                    }
+                }
+            }
+
             const objectExample = generateObjectDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -86,8 +111,11 @@ export function generateTypeDeclarationExample({
             const { example, jsonExample } = objectExample;
             return {
                 type: "success",
-                example: ExampleTypeShape.object(example),
-                jsonExample
+                example: ExampleTypeShape.object({
+                    ...example,
+                    properties: [...baseProperties, ...example.properties]
+                }),
+                jsonExample: Object.assign({}, baseJsonExample, jsonExample)
             };
         }
         case "undiscriminatedUnion": {
@@ -119,6 +147,23 @@ export function generateTypeDeclarationExample({
         }
         case "union": {
             const discriminant = typeDeclaration.shape.discriminant;
+            const basePropertyExamples: Record<string, unknown> = {};
+            if (typeDeclaration.shape.baseProperties != null) {
+                for (const baseProperty of typeDeclaration.shape.baseProperties) {
+                    const basePropertyExample = generateTypeReferenceExample({
+                        fieldName: baseProperty.name.wireValue,
+                        typeReference: baseProperty.valueType,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties
+                    });
+                    if (basePropertyExample.type === "success") {
+                        basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
+                    }
+                }
+            }
+
             for (const variant of typeDeclaration.shape.types) {
                 const variantExample = variant.shape._visit<ExampleGenerationResult<ExampleTypeShape>>({
                     noProperties: () => {
@@ -132,7 +177,8 @@ export function generateTypeDeclarationExample({
                                 }
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue
+                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                                ...basePropertyExamples
                             }
                         };
                     },
@@ -173,7 +219,8 @@ export function generateTypeDeclarationExample({
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,
-                                ...(typeof jsonExample === "object" ? jsonExample : {})
+                                ...(typeof jsonExample === "object" ? jsonExample : {}),
+                                ...basePropertyExamples
                             }
                         };
                     },
@@ -201,7 +248,8 @@ export function generateTypeDeclarationExample({
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,
-                                [value.name.wireValue]: jsonExample
+                                [value.name.wireValue]: jsonExample,
+                                ...basePropertyExamples
                             }
                         };
                     },

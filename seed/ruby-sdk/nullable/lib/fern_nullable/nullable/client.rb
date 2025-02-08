@@ -29,7 +29,9 @@ module SeedNullableClient
     #  nullable.nullable.get_users(
     #    usernames: "usernames",
     #    avatar: "avatar",
-    #    activated: true
+    #    activated: true,
+    #    tags: "tags",
+    #    extra: true
     #  )
     def get_users(usernames: nil, avatar: nil, activated: nil, tags: nil, extra: nil, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -146,7 +148,9 @@ module SeedNullableClient
     #  nullable.nullable.get_users(
     #    usernames: "usernames",
     #    avatar: "avatar",
-    #    activated: true
+    #    activated: true,
+    #    tags: "tags",
+    #    extra: true
     #  )
     def get_users(usernames: nil, avatar: nil, activated: nil, tags: nil, extra: nil, request_options: nil)
       Async do

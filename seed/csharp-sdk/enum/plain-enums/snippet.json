@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [null],\n    }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [Color.Red],\n    }\n);\n"
             }
         }
     ]

@@ -101,7 +101,7 @@ function createRawFileUploadRequest(
                     style
                 });
             } else {
-                acc.push({ isFile: false, key, propertyType, docs, contentType });
+                acc.push({ isFile: false, key, propertyType, docs, contentType, style });
             }
             return acc;
         },

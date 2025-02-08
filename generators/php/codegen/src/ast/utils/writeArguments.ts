@@ -47,7 +47,7 @@ function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Argu
 function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {
     if (isNamedArgument(argument)) {
         writer.write(`${argument.name}: `);
-        argument.assignment.write(writer);
+        writer.writeNodeOrString(argument.assignment);
     } else {
         argument.write(writer);
     }

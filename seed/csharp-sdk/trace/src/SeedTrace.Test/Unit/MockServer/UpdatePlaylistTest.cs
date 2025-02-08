@@ -25,6 +25,11 @@ public class UpdatePlaylistTest : BaseMockServerTest
 
         const string mockResponse = """
             {
+              "name": "name",
+              "problems": [
+                "problems",
+                "problems"
+              ],
               "playlist_id": "playlist_id",
               "owner-id": "owner-id"
             }

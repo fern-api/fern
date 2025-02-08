@@ -34,7 +34,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.129.3-c425af4ef",
+    "@fern-fern/fdr-cjs-sdk": "0.130.0-8bf179148",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",

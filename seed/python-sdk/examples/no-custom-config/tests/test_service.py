@@ -125,7 +125,18 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
     }
     response = client.service.create_big_entity(
         cast_member=Actor(name="name", id="id"),
-        extended_movie=ExtendedMovie(cast=["cast", "cast"]),
+        extended_movie=ExtendedMovie(
+            id="id",
+            prequel="prequel",
+            title="title",
+            from_="from",
+            rating=1.1,
+            tag="tag",
+            book="book",
+            metadata={"metadata": {"key": "value"}},
+            revenue=1000000,
+            cast=["cast", "cast"],
+        ),
         entity=Entity(type="primitive", name="name"),
         metadata=Metadata_Html(value="metadata"),
         common_metadata=Metadata(id="id", data={"data": "data"}, json_string="jsonString"),
@@ -189,7 +200,18 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
 
     async_response = await async_client.service.create_big_entity(
         cast_member=Actor(name="name", id="id"),
-        extended_movie=ExtendedMovie(cast=["cast", "cast"]),
+        extended_movie=ExtendedMovie(
+            id="id",
+            prequel="prequel",
+            title="title",
+            from_="from",
+            rating=1.1,
+            tag="tag",
+            book="book",
+            metadata={"metadata": {"key": "value"}},
+            revenue=1000000,
+            cast=["cast", "cast"],
+        ),
         entity=Entity(type="primitive", name="name"),
         metadata=Metadata_Html(value="metadata"),
         common_metadata=Metadata(id="id", data={"data": "data"}, json_string="jsonString"),

@@ -200,6 +200,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
@@ -208,6 +212,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
@@ -277,6 +285,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
@@ -285,6 +297,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
@@ -425,6 +441,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
@@ -433,6 +453,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
@@ -505,6 +529,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
@@ -513,6 +541,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"

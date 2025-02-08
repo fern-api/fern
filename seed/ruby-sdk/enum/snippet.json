@@ -62,7 +62,7 @@
                 "identifierOverride": "endpoint_query-param.sendList"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED\n)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
             }
         },
@@ -84,7 +84,7 @@
                 "identifierOverride": "endpoint_query-param.sendList"
             },
             "snippet": {
-                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED\n)",
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.query_param.send_list(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
             }
         }

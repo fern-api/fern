@@ -8,7 +8,7 @@ from seed.union import Shape_Circle
 
 
 async def test_get(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
-    expected_response: typing.Any = {"type": "circle", "radius": 1.1}
+    expected_response: typing.Any = {"type": "circle", "radius": 1.1, "id": "id"}
     expected_types: typing.Any = "no_validate"
     response = client.union.get(id="id")
     validate_response(response, expected_response, expected_types)

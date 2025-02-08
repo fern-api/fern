@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_nullable.getUsers"
             },
             "snippet": {
-                "sync_client": "from seed import SeedNullable\n\nclient = SeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable.get_users(\n    usernames=\"usernames\",\n    avatar=\"avatar\",\n    activated=True,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullable\n\nclient = AsyncSeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable.get_users(\n        usernames=\"usernames\",\n        avatar=\"avatar\",\n        activated=True,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedNullable\n\nclient = SeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nullable.get_users(\n    usernames=\"usernames\",\n    avatar=\"avatar\",\n    activated=True,\n    tags=\"tags\",\n    extra=True,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNullable\n\nclient = AsyncSeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nullable.get_users(\n        usernames=\"usernames\",\n        avatar=\"avatar\",\n        activated=True,\n        tags=\"tags\",\n        extra=True,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
