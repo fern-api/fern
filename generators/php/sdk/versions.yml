@@ -22,6 +22,7 @@
           config:
             inlinePathParameters: true
         ```
+  irVersion: 55
 
 - version: 0.6.0
   changelogEntry:
@@ -40,6 +41,7 @@
           config:
             propertyAccess: private
         ```
+  irVersion: 55
 
 - version: 0.5.2
   changelogEntry:
@@ -51,6 +53,7 @@
       summary: >-
         Update optional query parameters lists to be generated as an optional array instead
         of an array of optional values.
+  irVersion: 55
 
 - version: 0.5.1
   changelogEntry:
