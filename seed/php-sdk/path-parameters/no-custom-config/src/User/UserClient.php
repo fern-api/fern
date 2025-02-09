@@ -4,7 +4,6 @@ namespace Seed\User;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Requests\GetUsersRequest;
 use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -54,7 +53,6 @@ class UserClient
     /**
      * @param string $tenantId
      * @param string $userId
-     * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +61,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUser(string $tenantId, string $userId, GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): User
+    public function getUser(string $tenantId, string $userId, ?array $options = null): User
     {
         $options = array_merge($this->options, $options ?? []);
         try {

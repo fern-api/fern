@@ -12,7 +12,6 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Endpoints\Params\Requests\GetWithInlinePath;
 use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
@@ -108,7 +107,6 @@ class ParamsClient
      * GET with path param
      *
      * @param string $param
-     * @param GetWithInlinePath $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -117,7 +115,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePath(string $param, GetWithInlinePath $request = new GetWithInlinePath(), ?array $options = null): string
+    public function getWithInlinePath(string $param, ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -18,6 +18,11 @@ export function getEndpointRequest({
     if (endpoint.sdkRequest == null) {
         return undefined;
     }
+    if (endpoint.sdkRequest.shape.type === "wrapper") {
+        if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
+            return undefined;
+        }
+    }
     return createEndpointRequest({
         context,
         endpoint,

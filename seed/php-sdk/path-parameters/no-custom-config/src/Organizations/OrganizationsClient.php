@@ -12,7 +12,6 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Organizations\Requests\GetOrganizationUserRequest;
 use Seed\User\Types\User;
 use Seed\Organizations\Requests\SearchOrganizationsRequest;
 use Seed\Core\Json\JsonDecoder;
@@ -105,7 +104,6 @@ class OrganizationsClient
      * @param string $tenantId
      * @param string $organizationId
      * @param string $userId
-     * @param GetOrganizationUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -114,7 +112,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, GetOrganizationUserRequest $request = new GetOrganizationUserRequest(), ?array $options = null): User
+    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, ?array $options = null): User
     {
         $options = array_merge($this->options, $options ?? []);
         try {

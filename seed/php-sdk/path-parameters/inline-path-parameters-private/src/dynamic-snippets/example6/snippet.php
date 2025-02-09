@@ -11,9 +11,9 @@ $client = new SeedClient(
     ],
 );
 $client->user->searchUsers(
-    'tenant_id',
-    'user_id',
     new SearchUsersRequest([
+        'tenantId' => 'tenant_id',
+        'userId' => 'user_id',
         'limit' => 1,
     ]),
 );
