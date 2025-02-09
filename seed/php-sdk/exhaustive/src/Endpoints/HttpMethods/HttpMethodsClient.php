@@ -66,7 +66,7 @@ class HttpMethodsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/$id",
+                    path: "/http-methods/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -166,7 +166,7 @@ class HttpMethodsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/$id",
+                    path: "/http-methods/{$id}",
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
@@ -217,7 +217,7 @@ class HttpMethodsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/$id",
+                    path: "/http-methods/{$id}",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -267,7 +267,7 @@ class HttpMethodsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/$id",
+                    path: "/http-methods/{$id}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

@@ -66,7 +66,7 @@ class SyspropClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sysprop/num-warm-instances/$language/$numWarmInstances",
+                    path: "/sysprop/num-warm-instances/{$language}/{$numWarmInstances}",
                     method: HttpMethod::PUT,
                 ),
                 $options,

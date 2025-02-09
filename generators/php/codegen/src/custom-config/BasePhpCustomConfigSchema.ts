@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const BasePhpCustomConfigSchema = z.object({
     clientName: z.string().optional(),
+    inlinePathParameters: z.boolean().optional(),
     packageName: z.string().optional(),
     propertyAccess: z.enum(["public", "private"]).optional(),
     namespace: z.string().optional(),

@@ -49,6 +49,16 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      customConfig:
+        inlinePathParameters: true
+    - outputFolder: inline-path-parameters-private
+      customConfig:
+        inlinePathParameters: true
+        propertyAccess: private
   query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
