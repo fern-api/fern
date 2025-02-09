@@ -75,8 +75,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     this.writeQueryParameter(writer, query);
                 }
                 for (const query of optionalQueryParameters) {
-                    const queryPropertyName = this.context.getPropertyName(query.name.name);
-                    const queryParameterReference = `${this.getRequestParameterName()}->${queryPropertyName}`;
+                    const queryParameterReference = this.accessRequestProperty({ propertyName: query.name.name });
                     writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
@@ -108,8 +107,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     this.writeHeader(writer, header);
                 }
                 for (const header of optionalHeaders) {
-                    const headerPropertyName = this.context.getPropertyName(header.name.name);
-                    const headerParameterReference = `${this.getRequestParameterName()}->${headerPropertyName}`;
+                    const headerParameterReference = this.accessRequestProperty({ propertyName: header.name.name });
                     writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
                     this.writeHeader(writer, header);
                     writer.endControlFlow();
@@ -139,8 +137,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (property.type !== "bodyProperty") {
             return;
         }
-        const propertyName = this.context.getPropertyName(property.name.name);
-        let paramRef = `${this.getRequestParameterName()}->${propertyName}`;
+        let paramRef = this.accessRequestProperty({ propertyName: property.name.name });
         let propType = property.valueType;
         const isOptional = this.context.isOptional(propType);
 
@@ -264,7 +261,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private stringify({ reference, name }: { reference: TypeReference; name: Name }): php.CodeBlock {
-        const parameter = `${this.getRequestParameterName()}->${this.context.getPropertyName(name)}`;
+        const parameter = this.accessRequestProperty({ propertyName: name });
         if (this.context.isDateTime(reference)) {
             return php.codeblock((writer) => {
                 writer.write(`${parameter}->format(`);
@@ -318,9 +315,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
         return this.endpoint.requestBody._visit({
             reference: () => {
-                return php.codeblock(
-                    `${this.getRequestParameterName()}->${this.context.getPropertyName(this.wrapper.bodyKey)}`
-                );
+                return php.codeblock(this.accessRequestProperty({ propertyName: this.wrapper.bodyKey }));
             },
             inlinedRequestBody: (_inlinedRequestBody) => {
                 return php.codeblock(`${this.getRequestParameterName()}`);
@@ -388,7 +383,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private writeSingleFile(writer: php.Writer, file: FilePropertySingle): void {
-        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(file.key.name)}`;
+        const paramRef = this.accessRequestProperty({ propertyName: file.key.name });
         if (file.isOptional) {
             writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
             this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) });
@@ -400,12 +395,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeFileArray(writer: php.Writer, fileArray: FilePropertyArray): void {
         if (fileArray.isOptional) {
-            const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(fileArray.key.name)}`;
+            const ref = this.accessRequestProperty({ propertyName: fileArray.key.name });
             writer.controlFlow("if", php.codeblock(`${ref} != null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });
             writer.endControlFlow();
         } else {
             this.writeMultipartPartFileArray({ writer, property: fileArray });
         }
+    }
+
+    private accessRequestProperty({ propertyName }: { propertyName: Name }): string {
+        if (this.context.shouldGenerateGetterMethods()) {
+            return `${this.getRequestParameterName()}->${this.context.getPropertyGetterName(propertyName)}()`;
+        }
+        return `${this.getRequestParameterName()}->${this.context.getPropertyName(propertyName)}`;
     }
 }

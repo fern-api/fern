@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 export const BasePhpCustomConfigSchema = z.object({
-    namespace: z.string().optional(),
-    packageName: z.string().optional(),
     clientName: z.string().optional(),
+    packageName: z.string().optional(),
+    propertyAccess: z.enum(["public", "private"]).optional(),
+    namespace: z.string().optional(),
 
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()

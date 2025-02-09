@@ -1,3 +1,4 @@
+export { Access } from "./Access";
 export { Array_ as Array } from "./Array";
 export { Attribute } from "./Attribute";
 export { Class } from "./Class";

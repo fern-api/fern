@@ -115,6 +115,7 @@ export function this_(): AstNode {
 
 export { AstNode } from "./ast/core/AstNode";
 export {
+    Access,
     Array,
     Attribute,
     Class,

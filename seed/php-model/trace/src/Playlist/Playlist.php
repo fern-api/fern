@@ -24,19 +24,19 @@ class Playlist extends JsonSerializableType
 
     /**
      * @param array{
-     *   playlistId: string,
-     *   ownerId: string,
      *   name: string,
      *   problems: array<string>,
+     *   playlistId: string,
+     *   ownerId: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->playlistId = $values['playlistId'];
-        $this->ownerId = $values['ownerId'];
         $this->name = $values['name'];
         $this->problems = $values['problems'];
+        $this->playlistId = $values['playlistId'];
+        $this->ownerId = $values['ownerId'];
     }
 
     /**

@@ -1,3 +1,21 @@
+- version: 0.6.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        You can now configure the generated class property access to be `public` or `private`.
+
+         - When the access is public, both the getter and setter methods are omitted (default).
+         - When the access is private, both the getter and setter methods are generated.
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.6.0
+          config:
+            propertyAccess: private
+        ```
+
 - version: 0.5.2
   changelogEntry:
     - type: fix

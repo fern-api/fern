@@ -36,25 +36,25 @@ class Account extends JsonSerializableType
 
     /**
      * @param array{
+     *   id: string,
+     *   relatedResources: array<Account|Patient|Practitioner|Script>,
+     *   memo: Memo,
      *   resourceType: string,
      *   name: string,
      *   patient?: ?Patient,
      *   practitioner?: ?Practitioner,
-     *   id: string,
-     *   relatedResources: array<Account|Patient|Practitioner|Script>,
-     *   memo: Memo,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->id = $values['id'];
+        $this->relatedResources = $values['relatedResources'];
+        $this->memo = $values['memo'];
         $this->resourceType = $values['resourceType'];
         $this->name = $values['name'];
         $this->patient = $values['patient'] ?? null;
         $this->practitioner = $values['practitioner'] ?? null;
-        $this->id = $values['id'];
-        $this->relatedResources = $values['relatedResources'];
-        $this->memo = $values['memo'];
     }
 
     /**

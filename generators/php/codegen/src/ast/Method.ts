@@ -5,6 +5,7 @@ import { Comment } from "./Comment";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
+import { SELF } from "./core/Constant";
 import { Writer } from "./core/Writer";
 
 export declare namespace Method {
@@ -18,7 +19,7 @@ export declare namespace Method {
         /* The exceptions that can be thrown, if any */
         throws?: ClassReference[];
         /* The return type of the method */
-        return_?: Type;
+        return_?: Type | typeof SELF;
         /* The body of the method */
         body?: CodeBlock;
         /* Documentation for the method */
@@ -33,7 +34,7 @@ export class Method extends AstNode {
     public readonly access: Access;
     public readonly parameters: Parameter[];
     public readonly throws: ClassReference[];
-    public readonly return_: Type | undefined;
+    public readonly return_: Type | typeof SELF | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly classReference: ClassReference | undefined;
@@ -61,7 +62,7 @@ export class Method extends AstNode {
         });
         writer.write("): ");
         if (this.return_ != null) {
-            this.return_.write(writer);
+            writer.writeNodeOrString(this.return_);
         } else {
             writer.write("void");
         }
@@ -84,7 +85,7 @@ export class Method extends AstNode {
                 docs: parameter.docs
             });
         }
-        if (this.return_ != null) {
+        if (this.return_ != null && this.return_ !== SELF) {
             comment.addTag({
                 tagType: "return",
                 type: this.return_
