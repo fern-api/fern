@@ -4,6 +4,9 @@ namespace Seed\Traits;
 
 use Seed\Core\Json\JsonProperty;
 
+/**
+ * @property string $name
+ */
 trait ExampleType
 {
     use Docs;
