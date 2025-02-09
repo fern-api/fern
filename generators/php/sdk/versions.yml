@@ -1,3 +1,28 @@
+- version: 0.7.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        The SDK now supports inline path parameters in the generated request class like so:
+
+        ```php
+        class GetUserRequest extends JsonSerializableType
+        {
+            /**
+            * @var string $userId
+            */
+            public string $userId;
+        }
+        ```
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.7.0
+          config:
+            inlinePathParameters: true
+        ```
+
 - version: 0.6.0
   changelogEntry:
     - type: feat

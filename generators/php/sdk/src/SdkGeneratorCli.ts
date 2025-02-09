@@ -94,6 +94,9 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
         for (const endpoint of service.endpoints) {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
+                    continue;
+                }
                 const generator = new WrappedEndpointRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context,

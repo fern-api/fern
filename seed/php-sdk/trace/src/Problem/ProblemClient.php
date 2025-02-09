@@ -124,7 +124,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/update/$problemId",
+                    path: "/problem-crud/update/{$problemId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -175,7 +175,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/delete/$problemId",
+                    path: "/problem-crud/delete/{$problemId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

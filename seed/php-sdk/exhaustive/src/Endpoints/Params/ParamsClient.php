@@ -72,7 +72,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path/$param",
+                    path: "/params/path/{$param}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -124,7 +124,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path/$param",
+                    path: "/params/path/{$param}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -279,7 +279,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path-query/$param",
+                    path: "/params/path-query/{$param}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -330,7 +330,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path-query/$param",
+                    path: "/params/path-query/{$param}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -380,7 +380,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path/$param",
+                    path: "/params/path/{$param}",
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
@@ -433,7 +433,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path/$param",
+                    path: "/params/path/{$param}",
                     method: HttpMethod::PUT,
                     body: $request->body,
                 ),

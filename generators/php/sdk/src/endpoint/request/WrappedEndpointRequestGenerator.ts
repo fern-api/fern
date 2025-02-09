@@ -51,25 +51,31 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             parentClassReference: this.context.getJsonSerializableTypeClassReference()
         });
 
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
         const { includeGetters, includeSetters } = {
             includeGetters: this.context.shouldGenerateGetterMethods(),
             includeSetters: this.context.shouldGenerateSetterMethods()
         };
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        for (const header of [...service.headers, ...this.endpoint.headers]) {
-            this.addFieldWithMethods({
-                clazz,
-                name: header.name.name,
-                field: php.field({
-                    name: this.context.getPropertyName(header.name.name),
-                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
-                    access: this.context.getPropertyAccess(),
-                    docs: header.docs
-                }),
-                includeGetters,
-                includeSetters
-            });
+        const includePathParameters = this.context.includePathParametersInWrappedRequest({
+            endpoint: this.endpoint,
+            wrapper: this.wrapper
+        });
+        if (includePathParameters) {
+            for (const pathParameter of this.endpoint.allPathParameters) {
+                this.addFieldWithMethods({
+                    clazz,
+                    name: pathParameter.name,
+                    field: php.field({
+                        name: this.context.getPropertyName(pathParameter.name),
+                        type: this.context.phpTypeMapper.convert({ reference: pathParameter.valueType }),
+                        access: this.context.getPropertyAccess(),
+                        docs: pathParameter.docs
+                    }),
+                    includeGetters,
+                    includeSetters
+                });
+            }
         }
 
         for (const query of this.endpoint.queryParameters) {
@@ -81,6 +87,21 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     type: this.getQueryParameterType(query),
                     access: this.context.getPropertyAccess(),
                     docs: query.docs
+                }),
+                includeGetters,
+                includeSetters
+            });
+        }
+
+        for (const header of [...service.headers, ...this.endpoint.headers]) {
+            this.addFieldWithMethods({
+                clazz,
+                name: header.name.name,
+                field: php.field({
+                    name: this.context.getPropertyName(header.name.name),
+                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
+                    access: this.context.getPropertyAccess(),
+                    docs: header.docs
                 }),
                 includeGetters,
                 includeSetters

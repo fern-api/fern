@@ -141,7 +141,7 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `$${reference}${part.tail}`;
+            path += `{${reference}}${part.tail}`;
         }
         return path;
     }
