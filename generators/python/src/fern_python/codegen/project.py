@@ -8,10 +8,10 @@ from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
 from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
-from isort import file
 
 from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
+from fern_python.codegen.requirements_txt import RequirementsTxt
 
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
@@ -185,6 +185,10 @@ class Project:
                 user_defined_toml=self._user_defined_toml,
             )
             py_project_toml.write()
+
+            # generate requirements.txt
+            requirements_txt = RequirementsTxt(self._root_filepath, self._dependency_manager)
+            requirements_txt.write()
 
             # generate py.typed
             with open(os.path.join(self._project_filepath, "py.typed"), "w") as f:
