@@ -11,7 +11,7 @@
         foreach($items as $item){
             echo $item;
         }
-        $pages = $customers->getPages();
+        $pages = $items->getPages();
         foreach($pages as $page){
             foreach($page as $item){
                 echo $item;
