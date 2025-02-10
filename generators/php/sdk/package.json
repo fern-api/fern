@@ -44,7 +44,7 @@
     "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",

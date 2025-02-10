@@ -43,7 +43,7 @@
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "tsup": "^8.3.5",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
