@@ -32,6 +32,7 @@ export enum AsIsFiles {
     OffsetPager = "Pagination/OffsetPager.Template.php",
     Page = "Pagination/Page.Template.php",
     Pager = "Pagination/Pager.Template.php",
+    PaginationHelper = "Pagination/PaginationHelper.Template.php",
 
     // Tests/Core/Json files.
     DateArrayTest = "Json/DateArrayTest.Template.php",
@@ -53,20 +54,15 @@ export enum AsIsFiles {
     IntOffsetPagerTest = "Pagination/IntOffsetPagerTest/IntOffsetPagerTest.Template.php",
     StepOffsetPagerTest = "Pagination/StepOffsetPagerTest/StepOffsetPagerTest.Template.php",
     GeneratorPagerTest = "Pagination/GeneratorPagerTest/GeneratorPagerTest.Template.php",
+    DeepSetTest = "Pagination/DeepSetTest.Template.php",
+    DeepSetAccessorsTest = "Pagination/DeepSetAccessorsTest.Template.php",
+    CreateRequestWithDefaultsTest = "Pagination/CreateRequestWithDefaultsTest.Template.php",
 
     // Core/Types files.
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
-
-    // Core/Reflection files.
-    TypeFactory = "Reflection/TypeFactory.Template.php",
-    DeepTypeSetter = "Reflection/DeepTypeSetter.Template.php",
-
-    // Tests/Core/Reflection files.
-    TypeFactoryTest = "Reflection/TypeFactoryTest.Template.php",
-    DeepTypeSetterTest = "Reflection/DeepTypeSetterTest.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better

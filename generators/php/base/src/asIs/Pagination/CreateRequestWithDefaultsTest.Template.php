@@ -1,9 +1,9 @@
 <?php
 
-namespace Seed\Tests\Core\Reflection;
+namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use Seed\Core\Reflection\TypeFactory;
+use <%= coreNamespace%>\Pagination\PaginationHelper;
 
 class SearchRequest
 {
@@ -116,15 +116,13 @@ class MultipleFilterSearchRequest
     }
 }
 
-class TypeFactoryTest extends TestCase
+class CreateRequestWithDefaultsTest extends TestCase
 {
     public function testCreateInstanceWithDefaults(): void
     {
-        $instance = TypeFactory::createInstanceWithDefaults(SearchRequest::class);
+        $instance = PaginationHelper::createRequestWithDefaults(SearchRequest::class);
         $this->assertInstanceOf(SearchRequest::class, $instance);
-        $this->assertInstanceOf(StartingAfterPaging::class, $instance->pagination);
-        $this->assertEquals(0, $instance->pagination->perPage);
-        $this->assertNull($instance->pagination->startingAfter);
+        $this->assertNull($instance->pagination);
         $this->assertInstanceOf(SingleFilterSearchRequest::class, $instance->query);
         $this->assertNull($instance->query->field);
         $this->assertNull($instance->query->operator);

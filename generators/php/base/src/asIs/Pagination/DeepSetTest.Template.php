@@ -3,9 +3,10 @@
 namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use <%= coreNamespace%>\Reflection\DeepTypeSetter;
+use <%= coreNamespace%>\Pagination\PaginationHelper;
 
-class RootObject{
+class RootObject
+{
     public ?Level1Object $level1;
 
     /**
@@ -19,7 +20,8 @@ class RootObject{
     }
 }
 
-class Level1Object{
+class Level1Object
+{
     public ?Level2Object $level2;
 
     /**
@@ -33,7 +35,8 @@ class Level1Object{
     }
 }
 
-class Level2Object{
+class Level2Object
+{
     public ?string $level3;
 
     /**
@@ -47,7 +50,7 @@ class Level2Object{
     }
 }
 
-class DeepTypeSetterTest extends TestCase
+class DeepSetTest extends TestCase
 {
     public function testSetNestedPropertyWithNull(): void
     {
@@ -55,7 +58,7 @@ class DeepTypeSetterTest extends TestCase
 
         $this->assertNull($object->level1);
 
-        DeepTypeSetter::setDeep($object, ['level1', 'level2', 'level3'], 'testValue');
+        PaginationHelper::setDeep($object, ['level1', 'level2', 'level3'], 'testValue');
 
         $this->assertEquals('testValue', $object->level1?->level2?->level3);
     }
@@ -72,7 +75,7 @@ class DeepTypeSetterTest extends TestCase
 
         $this->assertNull($object->level1?->level2?->level3);
 
-        DeepTypeSetter::setDeep($object, ['level1', 'level2', 'level3'], 'testValue');
+        PaginationHelper::setDeep($object, ['level1', 'level2', 'level3'], 'testValue');
 
         $this->assertEquals('testValue', $object->level1?->level2?->level3);
     }

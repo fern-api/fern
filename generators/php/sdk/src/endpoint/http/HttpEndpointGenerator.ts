@@ -250,7 +250,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNodeStatement(
                         php.assignVariable(
                             requestParamVar,
-                            this.context.createInstanceOfPhpType(
+                            this.context.createRequestWithDefaults(
                                 requestParam.type.internalType.value.internalType.value
                             )
                         )
@@ -317,7 +317,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(" $request, string $cursor) { ");
                         writer.indent();
                         writer.writeNodeStatement(
-                            this.context.deepSetOnPhpType(
+                            this.context.deepSetPagination(
                                 php.variable("request"),
                                 this.getFullPropertyPath(pagination.page),
                                 php.variable("cursor")
@@ -388,7 +388,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(" $request, int $offset) { ");
                         writer.indent();
                         writer.writeNodeStatement(
-                            this.context.deepSetOnPhpType(
+                            this.context.deepSetPagination(
                                 php.variable("request"),
                                 this.getFullPropertyPath(pagination.page),
                                 php.variable("offset")

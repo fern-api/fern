@@ -119,13 +119,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getReflectionPropertyClassReference(): php.ClassReference {
-        return php.classReference({
-            name: "ReflectionProperty",
-            namespace: this.getGlobalNamespace()
-        });
-    }
-
     public getBaseExceptionClassReference(): php.ClassReference {
         return php.classReference({
             name: this.getOrganizationPascalCase() + "Exception",
@@ -324,13 +317,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public createInstanceOfPhpType(reference: php.ClassReference | php.CodeBlock): php.AstNode {
+    public createRequestWithDefaults(reference: php.ClassReference | php.CodeBlock): php.AstNode {
         return php.invokeMethod({
             on: php.classReference({
-                name: "TypeFactory",
-                namespace: this.getCoreReflectionNamespace()
+                name: "PaginationHelper",
+                namespace: this.getCorePaginationNamespace()
             }),
-            method: "createInstanceWithDefaults",
+            method: "createRequestWithDefaults",
             arguments_: [
                 php.codeblock((writer) => {
                     if (reference instanceof php.ClassReference) {
@@ -345,7 +338,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public deepSetOnPhpType(
+    public deepSetPagination(
         objectVarToSetOn: php.AstNode,
         setterPath: Name[],
         valueVarToSet: php.AstNode
@@ -362,8 +355,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
         return php.invokeMethod({
             on: php.classReference({
-                name: "DeepTypeSetter",
-                namespace: this.getCoreReflectionNamespace()
+                name: "PaginationHelper",
+                namespace: this.getCorePaginationNamespace()
             }),
             method: "setDeep",
             arguments_: [
@@ -476,8 +469,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
-            AsIsFiles.TypeFactory,
-            AsIsFiles.DeepTypeSetter,
             ...this.getCorePagerAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
@@ -485,15 +476,20 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     private getCorePagerAsIsFiles(): string[] {
         return this.hasPagination()
-            ? [AsIsFiles.CursorPager, AsIsFiles.OffsetPager, AsIsFiles.Page, AsIsFiles.Pager]
+            ? [
+                  AsIsFiles.CursorPager,
+                  AsIsFiles.OffsetPager,
+                  AsIsFiles.Page,
+                  AsIsFiles.Pager,
+                  AsIsFiles.PaginationHelper
+              ]
             : [];
     }
 
     public getCoreTestAsIsFiles(): string[] {
         return [
             AsIsFiles.RawClientTest,
-            AsIsFiles.TypeFactoryTest,
-            AsIsFiles.DeepTypeSetterTest,
+            AsIsFiles.CreateRequestWithDefaultsTest,
             ...this.getCorePagerTestAsIsFiles(),
             ...this.getCoreSerializationTestAsIsFiles()
         ];
@@ -506,7 +502,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                   AsIsFiles.GeneratorPagerTest,
                   AsIsFiles.HasNextPageOffsetPagerTest,
                   AsIsFiles.IntOffsetPagerTest,
-                  AsIsFiles.StepOffsetPagerTest
+                  AsIsFiles.StepOffsetPagerTest,
+                  AsIsFiles.DeepSetTest,
+                  AsIsFiles.DeepSetAccessorsTest
               ]
             : [];
     }
