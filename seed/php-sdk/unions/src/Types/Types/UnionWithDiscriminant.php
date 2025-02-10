@@ -31,6 +31,30 @@ class UnionWithDiscriminant extends JsonSerializableType
     }
 
     /**
+     * @param Foo $foo
+     * @return UnionWithDiscriminant
+     */
+    public static function foo(Foo $foo): UnionWithDiscriminant
+    {
+        return new UnionWithDiscriminant([
+            '_type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
+     * @param Bar $bar
+     * @return UnionWithDiscriminant
+     */
+    public static function bar(Bar $bar): UnionWithDiscriminant
+    {
+        return new UnionWithDiscriminant([
+            '_type' => 'bar',
+            'value' => $bar,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

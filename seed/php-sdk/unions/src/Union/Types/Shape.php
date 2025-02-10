@@ -40,6 +40,34 @@ class Shape extends JsonSerializableType
     }
 
     /**
+     * @param string $id
+     * @param Circle $circle
+     * @return Shape
+     */
+    public static function circle(string $id, Circle $circle): Shape
+    {
+        return new Shape([
+            'id' => $id,
+            'type' => 'circle',
+            'value' => $circle,
+        ]);
+    }
+
+    /**
+     * @param string $id
+     * @param Square $square
+     * @return Shape
+     */
+    public static function square(string $id, Square $square): Shape
+    {
+        return new Shape([
+            'id' => $id,
+            'type' => 'square',
+            'value' => $square,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isCircle(): bool

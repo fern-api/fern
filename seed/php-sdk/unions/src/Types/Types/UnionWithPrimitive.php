@@ -31,6 +31,30 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
+     * @param int $integer
+     * @return UnionWithPrimitive
+     */
+    public static function integer(int $integer): UnionWithPrimitive
+    {
+        return new UnionWithPrimitive([
+            'type' => 'integer',
+            'value' => $integer,
+        ]);
+    }
+
+    /**
+     * @param string $string
+     * @return UnionWithPrimitive
+     */
+    public static function string(string $string): UnionWithPrimitive
+    {
+        return new UnionWithPrimitive([
+            'type' => 'string',
+            'value' => $string,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isInteger(): bool

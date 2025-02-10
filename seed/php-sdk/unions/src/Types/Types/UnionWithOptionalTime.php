@@ -33,6 +33,30 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
+     * @param ?DateTime $date
+     * @return UnionWithOptionalTime
+     */
+    public static function date(?DateTime $date = null): UnionWithOptionalTime
+    {
+        return new UnionWithOptionalTime([
+            'type' => 'date',
+            'value' => $date,
+        ]);
+    }
+
+    /**
+     * @param ?DateTime $datetime
+     * @return UnionWithOptionalTime
+     */
+    public static function datetime(?DateTime $datetime = null): UnionWithOptionalTime
+    {
+        return new UnionWithOptionalTime([
+            'type' => 'datetime',
+            'value' => $datetime,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isDate(): bool

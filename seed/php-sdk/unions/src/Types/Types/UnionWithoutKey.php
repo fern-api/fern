@@ -31,6 +31,30 @@ class UnionWithoutKey extends JsonSerializableType
     }
 
     /**
+     * @param Foo $foo
+     * @return UnionWithoutKey
+     */
+    public static function foo(Foo $foo): UnionWithoutKey
+    {
+        return new UnionWithoutKey([
+            'type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
+     * @param Bar $bar
+     * @return UnionWithoutKey
+     */
+    public static function bar(Bar $bar): UnionWithoutKey
+    {
+        return new UnionWithoutKey([
+            'type' => 'bar',
+            'value' => $bar,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

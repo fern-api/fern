@@ -31,6 +31,18 @@ class UnionWithSingleElement extends JsonSerializableType
     }
 
     /**
+     * @param Foo $foo
+     * @return UnionWithSingleElement
+     */
+    public static function foo(Foo $foo): UnionWithSingleElement
+    {
+        return new UnionWithSingleElement([
+            'type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

@@ -147,6 +147,10 @@ export abstract class AbstractPhpGeneratorContext<
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
+    public getVariableName(name: Name): string {
+        return "$" + this.getPropertyName(name);
+    }
+
     public getPropertyGetterName(name: Name): string {
         return `get${name.pascalCase.unsafeName}`;
     }

@@ -40,6 +40,20 @@ class UnionWithLiteral extends JsonSerializableType
     }
 
     /**
+     * @param string $base
+     * @param string $fern
+     * @return UnionWithLiteral
+     */
+    public static function fern(string $base, string $fern): UnionWithLiteral
+    {
+        return new UnionWithLiteral([
+            'base' => $base,
+            'type' => 'fern',
+            'value' => $fern,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFern(): bool

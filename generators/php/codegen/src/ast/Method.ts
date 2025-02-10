@@ -26,6 +26,8 @@ export declare namespace Method {
         docs?: string;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
+        /* Whether this method is static */
+        static_?: boolean;
     }
 }
 
@@ -38,8 +40,9 @@ export class Method extends AstNode {
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly classReference: ClassReference | undefined;
+    public readonly static_: boolean;
 
-    constructor({ name, access, parameters, throws, return_, body, docs, classReference }: Method.Args) {
+    constructor({ name, access, parameters, throws, return_, body, docs, classReference, static_ }: Method.Args) {
         super();
         this.name = name;
         this.access = access;
@@ -49,11 +52,12 @@ export class Method extends AstNode {
         this.body = body;
         this.docs = docs;
         this.classReference = classReference;
+        this.static_ = static_ ?? false;
     }
 
     public write(writer: Writer): void {
         this.writeComment(writer);
-        writer.write(`${this.access} function ${this.name}(`);
+        writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`);
         this.parameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");

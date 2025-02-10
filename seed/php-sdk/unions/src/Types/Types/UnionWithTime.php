@@ -3,8 +3,8 @@
 namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
-use Exception;
 use DateTime;
+use Exception;
 use Seed\Core\Json\JsonSerializer;
 
 class UnionWithTime extends JsonSerializableType
@@ -30,6 +30,42 @@ class UnionWithTime extends JsonSerializableType
     ) {
         $this->type = $values['type'];
         $this->value = $values['value'];
+    }
+
+    /**
+     * @param int $value
+     * @return UnionWithTime
+     */
+    public static function value(int $value): UnionWithTime
+    {
+        return new UnionWithTime([
+            'type' => 'value',
+            'value' => $value,
+        ]);
+    }
+
+    /**
+     * @param DateTime $date
+     * @return UnionWithTime
+     */
+    public static function date(DateTime $date): UnionWithTime
+    {
+        return new UnionWithTime([
+            'type' => 'date',
+            'value' => $date,
+        ]);
+    }
+
+    /**
+     * @param DateTime $datetime
+     * @return UnionWithTime
+     */
+    public static function datetime(DateTime $datetime): UnionWithTime
+    {
+        return new UnionWithTime([
+            'type' => 'datetime',
+            'value' => $datetime,
+        ]);
     }
 
     /**

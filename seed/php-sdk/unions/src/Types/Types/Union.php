@@ -34,6 +34,30 @@ class Union extends JsonSerializableType
     }
 
     /**
+     * @param Foo $foo
+     * @return Union
+     */
+    public static function foo(Foo $foo): Union
+    {
+        return new Union([
+            'type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
+     * @param Bar $bar
+     * @return Union
+     */
+    public static function bar(Bar $bar): Union
+    {
+        return new Union([
+            'type' => 'bar',
+            'value' => $bar,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

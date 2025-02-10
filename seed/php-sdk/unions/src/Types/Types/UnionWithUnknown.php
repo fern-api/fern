@@ -31,6 +31,29 @@ class UnionWithUnknown extends JsonSerializableType
     }
 
     /**
+     * @param Foo $foo
+     * @return UnionWithUnknown
+     */
+    public static function foo(Foo $foo): UnionWithUnknown
+    {
+        return new UnionWithUnknown([
+            'type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
+     * @return UnionWithUnknown
+     */
+    public static function unknown(): UnionWithUnknown
+    {
+        return new UnionWithUnknown([
+            'type' => 'unknown',
+            'value' => null,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

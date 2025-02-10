@@ -40,6 +40,48 @@ class UnionWithBaseProperties extends JsonSerializableType
     }
 
     /**
+     * @param string $id
+     * @param int $integer
+     * @return UnionWithBaseProperties
+     */
+    public static function integer(string $id, int $integer): UnionWithBaseProperties
+    {
+        return new UnionWithBaseProperties([
+            'id' => $id,
+            'type' => 'integer',
+            'value' => $integer,
+        ]);
+    }
+
+    /**
+     * @param string $id
+     * @param string $string
+     * @return UnionWithBaseProperties
+     */
+    public static function string(string $id, string $string): UnionWithBaseProperties
+    {
+        return new UnionWithBaseProperties([
+            'id' => $id,
+            'type' => 'string',
+            'value' => $string,
+        ]);
+    }
+
+    /**
+     * @param string $id
+     * @param Foo $foo
+     * @return UnionWithBaseProperties
+     */
+    public static function foo(string $id, Foo $foo): UnionWithBaseProperties
+    {
+        return new UnionWithBaseProperties([
+            'id' => $id,
+            'type' => 'foo',
+            'value' => $foo,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isInteger(): bool

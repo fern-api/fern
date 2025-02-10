@@ -1,3 +1,4 @@
+import { NamedArgument } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -54,6 +55,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
         const valueField = this.getValueField();
         clazz.addField(valueField);
+
+        for (const type of this.unionTypeDeclaration.types) {
+            clazz.addMethod(this.staticConstructor(type));
+        }
 
         for (const type of this.unionTypeDeclaration.types) {
             const isMethod = this.isMethod(type);
@@ -114,6 +119,88 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 property
             }),
             inherited
+        });
+    }
+
+    private staticConstructor(variant: SingleUnionType): php.Method {
+        return php.method({
+            name: this.context.getPropertyName(variant.discriminantValue.name),
+            access: "public",
+            parameters: this.getStaticConstructorParameters(variant),
+            return_: php.Type.reference(this.classReference),
+            body: this.getStaticConstructorBody(variant),
+            static_: true
+        });
+    }
+
+    private getStaticConstructorParameters(variant: SingleUnionType): php.Parameter[] {
+        const parameters: php.Parameter[] = [];
+
+        for (const property of this.unionTypeDeclaration.baseProperties) {
+            parameters.push(
+                php.parameter({
+                    name: this.context.getPropertyName(property.name.name),
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType })
+                })
+            );
+        }
+
+        switch (variant.shape.propertiesType) {
+            case "samePropertiesAsObject":
+            case "singleProperty":
+                parameters.push(
+                    php.parameter({
+                        name: this.context.getPropertyName(variant.discriminantValue.name),
+                        type: this.getReturnType(variant)
+                    })
+                );
+                break;
+            case "noProperties":
+            default:
+        }
+
+        return parameters;
+    }
+
+    private getStaticConstructorBody(variant: SingleUnionType) {
+        return php.codeblock((writer) => {
+            const constructorArgs: php.Map.Entry[] = [];
+
+            for (const property of this.unionTypeDeclaration.baseProperties) {
+                constructorArgs.push({
+                    key: php.codeblock(`'${property.name.wireValue}'`),
+                    value: php.codeblock(this.context.getVariableName(property.name.name))
+                });
+            }
+
+            constructorArgs.push({
+                key: php.codeblock(`'${this.unionTypeDeclaration.discriminant.wireValue}'`),
+                value: php.codeblock(`'${variant.discriminantValue.wireValue}'`)
+            });
+
+            switch (variant.shape.propertiesType) {
+                case "samePropertiesAsObject":
+                case "singleProperty":
+                    constructorArgs.push({
+                        key: php.codeblock("'value'"),
+                        value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
+                    });
+                    break;
+                case "noProperties":
+                default:
+                    constructorArgs.push({
+                        key: php.codeblock("'value'"),
+                        value: php.codeblock("null")
+                    });
+            }
+
+            const constructorCall = php.instantiateClass({
+                classReference: this.classReference,
+                arguments_: [php.map({ entries: constructorArgs, multiline: true })]
+            });
+
+            writer.write("return ");
+            writer.writeNodeStatement(constructorCall);
         });
     }
 
