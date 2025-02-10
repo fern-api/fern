@@ -9,6 +9,7 @@ use Generator;
  * @template TRequestOptions
  * @template TResponse
  * @template TItem
+ * @template TCursor
  * @extends Pager<TItem>
  * @internal Use the Pager class
  */
@@ -23,10 +24,10 @@ class CursorPager extends Pager
     /** @var callable(TRequest, ?TRequestOptions): TResponse */
     private $getNextPage;
 
-    /** @var callable(TRequest, string): void */
+    /** @var callable(TRequest, TCursor): void */
     private $setCursor;
 
-    /** @var callable(TResponse): ?string */
+    /** @var callable(TResponse): ?TCursor */
     private $getNextCursor;
 
     /** @var callable(TResponse): ?array<TItem> */
@@ -36,8 +37,8 @@ class CursorPager extends Pager
      * @param TRequest $request
      * @param ?TRequestOptions $options
      * @param callable(TRequest, ?TRequestOptions): TResponse $getNextPage
-     * @param callable(TRequest, string): void $setCursor
-     * @param callable(TResponse): ?string $getNextCursor
+     * @param callable(TRequest, TCursor): void $setCursor
+     * @param callable(TResponse): ?TCursor $getNextCursor
      * @param callable(TResponse): ?array<TItem> $getItems
      */
     public function __construct(

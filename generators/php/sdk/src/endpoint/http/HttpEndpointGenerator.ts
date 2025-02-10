@@ -214,10 +214,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const parameters = [...endpointSignatureInfo.baseParameters];
         const requestOptionsType = this.context.getRequestOptionsType();
         const optionsParamName = this.context.getRequestOptionsName();
+        const optionsParamType = php.Type.optional(requestOptionsType);
         parameters.push(
             php.parameter({
                 name: optionsParamName,
-                type: php.Type.optional(requestOptionsType)
+                type: optionsParamType
             })
         );
         const itemType = this.getPaginationItemType(endpoint);
@@ -267,6 +268,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointResponseType,
                             writer,
                             optionsParamName,
+                            optionsParamType,
                             unpagedEndpointMethodName
                         });
                         break;
@@ -277,6 +279,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointResponseType,
                             writer,
                             optionsParamName,
+                            optionsParamType,
                             unpagedEndpointMethodName
                         });
                         break;
@@ -293,6 +296,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         unpagedEndpointResponseType,
         writer,
         optionsParamName,
+        optionsParamType,
         unpagedEndpointMethodName
     }: {
         pagination: CursorPagination;
@@ -300,21 +304,36 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
         optionsParamName: string;
+        optionsParamType: php.Type;
         unpagedEndpointMethodName: string;
     }) {
         const cursorPagerClassReference = this.context.getCursorPagerClassReference();
+        const cursorType = this.context.phpTypeMapper.convert({ reference: pagination.next.property.valueType });
         writer.write("return ");
         writer.writeNodeStatement(
             php.instantiateClass({
                 classReference: cursorPagerClassReference,
                 arguments_: [
+                    // request param
                     php.variable(requestParam.name),
+                    // options param
                     php.variable(optionsParamName),
-                    php.codeblock(`[$this, '${unpagedEndpointMethodName}']`),
+                    // get next page callback
+                    php.codeblock((writer) => {
+                        writer.write("fn(");
+                        writer.writeNode(requestParam.type);
+                        writer.write(" $request, ");
+                        writer.writeNode(optionsParamType);
+                        writer.write(" $options) => ");
+                        writer.write(`$this->${unpagedEndpointMethodName}($request, $options)`);
+                    }),
+                    // set cursor on request callback
                     php.codeblock((writer) => {
                         writer.write("function (");
                         writer.writeNode(requestParam.type);
-                        writer.writeLine(" $request, string $cursor) { ");
+                        writer.write(" $request, ");
+                        writer.writeNode(cursorType);
+                        writer.writeLine(" $cursor) { ");
                         writer.indent();
                         writer.writeNodeStatement(
                             this.context.deepSetPagination(
@@ -326,6 +345,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.dedent();
                         writer.write("}");
                     }),
+                    // get next cursor callback
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn (");
@@ -334,6 +354,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeNode(this.nullableGet("$response", pagination.next));
                         writer.write(" ?? null");
                     }),
+                    // get results callback
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn (");
@@ -354,6 +375,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         unpagedEndpointResponseType,
         writer,
         optionsParamName,
+        optionsParamType,
         unpagedEndpointMethodName
     }: {
         pagination: OffsetPagination;
@@ -361,6 +383,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
         optionsParamName: string;
+        optionsParamType: php.Type;
         unpagedEndpointMethodName: string;
     }) {
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference();
@@ -372,7 +395,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     php.variable(requestParam.name),
                     php.variable(optionsParamName),
                     php.codeblock((writer) => {
-                        writer.writeLine(`[$this, '${unpagedEndpointMethodName}']`);
+                        writer.write("fn(");
+                        writer.writeNode(requestParam.type);
+                        writer.write(" $request, ");
+                        writer.writeNode(optionsParamType);
+                        writer.write(" $options) => ");
+                        writer.write(`$this->${unpagedEndpointMethodName}($request, $options)`);
                     }),
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");

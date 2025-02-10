@@ -69,7 +69,7 @@ class CursorPagerTest extends TestCase
     }
 
     /**
-     * @return CursorPager<Request, null, Response, string>
+     * @return CursorPager<Request, null, Response, string, string>
      */
     private function createPager(): CursorPager
     {
