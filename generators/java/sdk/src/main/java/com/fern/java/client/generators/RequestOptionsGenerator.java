@@ -193,7 +193,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
 
         getHeadersCodeBlock
-                .addStatement("this.$L.forEach(headers::put)", HEADERS_FIELD.name)
+                .addStatement("headers.putAll(this.$L)", HEADERS_FIELD.name)
                 .beginControlFlow("this.$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("headers.put(key, supplier.get())")
                 .endControlFlow(")");

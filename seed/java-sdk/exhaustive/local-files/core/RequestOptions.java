@@ -45,7 +45,7 @@ public final class RequestOptions {
     if (this.token != null) {
       headers.put("Authorization", "Bearer " + this.token);
     }
-    this.headers.forEach(headers::put);
+    headers.putAll(this.headers);
     this.headerSuppliers.forEach((key, supplier) ->  {
       headers.put(key, supplier.get());
     } );
