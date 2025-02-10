@@ -354,9 +354,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             throw new Error("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
+            const singleSetter = setterPath[0] as Name;
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);
-                writer.writeNode(this.getTypeSetter(setterPath[0]!, valueVarToSet));
+                writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));
             });
         }
         return php.invokeMethod({
