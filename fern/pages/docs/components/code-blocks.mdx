@@ -361,3 +361,49 @@ System.out.println("Second code block - syncs with the one above!");
 puts "Second code block - syncs with the one above!"
 ```
 </CodeBlocks>
+
+### Specify language for syncing
+By default, `CodeBlocks` will sync based on the language specified immediately after the opening backticks (e.g. `ruby` in `\`\`\`ruby`). To override the language used to sync the `CodeBlocks`, use the `for` property.
+
+<Tabs>
+    <Tab title="Example">
+        <CodeBlocks>
+        ```bash title="Python" for="python"
+        pip install plant-store
+        ```
+
+        ```bash title="TypeScript" for="typescript"
+        npm install plant-store
+        ```
+
+        ```bash title="Ruby" for="ruby"
+        gem install plant-store
+        ```
+
+        ```bash title="PHP" for="php"
+        composer require plant-store/plant-store-php
+        ```
+        </CodeBlocks>
+    </Tab>
+    <Tab title="Markdown">
+        ````jsx maxLines=0
+        <CodeBlocks>
+        ```bash title="Python" for="python"
+        pip install plant-store
+        ```
+
+        ```bash title="TypeScript" for="typescript"
+        npm install plant-store
+        ```
+
+        ```bash title="Ruby" for="ruby"
+        gem install plant-store
+        ```
+
+        ```bash title="PHP" for="php"
+        composer require plant-store/plant-store-php
+        ```
+        </CodeBlocks>
+        ````
+    </Tab>
+</Tabs>
