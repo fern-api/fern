@@ -182,8 +182,12 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         requestOptionsTypeSpec.addField(HEADERS_FIELD);
         requestOptionsTypeSpec.addField(HEADER_SUPPLIERS_FIELD);
 
-        builderTypeSpec.addField(HEADERS_FIELD.toBuilder().initializer(CodeBlock.of("new $T<>()", HashMap.class)).build());
-        builderTypeSpec.addField(HEADER_SUPPLIERS_FIELD.toBuilder().initializer(CodeBlock.of("new $T<>()", HashMap.class)).build());
+        builderTypeSpec.addField(HEADERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+        builderTypeSpec.addField(HEADER_SUPPLIERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
 
         fields.add(new RequestOption(HEADERS_FIELD, HEADERS_FIELD));
         fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
