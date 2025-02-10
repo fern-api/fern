@@ -97,20 +97,20 @@ class UnionWithOptionalTime extends JsonSerializableType
 
         switch ($this->type) {
             case "date":
-                if (is_null($this->value)) {
-                    $value = $this->value;
+                $asDate = $this->asDate();
+                if (is_null($asDate)) {
+                    $value = $asDate;
                 } else {
-                    $value = JsonSerializer::serializeDate($this->asDate());
-                    ;
+                    $value = JsonSerializer::serializeDate($asDate);
                 }
                 $result['date'] = $value;
                 break;
             case "datetime":
-                if (is_null($this->value)) {
-                    $value = $this->value;
+                $asDatetime = $this->asDatetime();
+                if (is_null($asDatetime)) {
+                    $value = $asDatetime;
                 } else {
-                    $value = JsonSerializer::serializeDateTime($this->asDatetime());
-                    ;
+                    $value = JsonSerializer::serializeDateTime($asDatetime);
                 }
                 $result['datetime'] = $value;
                 break;

@@ -135,11 +135,7 @@ class UnionWithBaseProperties extends JsonSerializableType
                 break;
             case "foo":
                 $value = $this->asFoo()->jsonSerialize();
-                if (is_array($value)) {
-                    $result = array_merge($value, $result);
-                } else {
-                    $result['foo'] = $value;
-                }
+                $result = array_merge($value, $result);
                 break;
             case "_unknown":
             default:

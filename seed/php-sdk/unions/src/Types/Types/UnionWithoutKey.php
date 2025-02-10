@@ -96,19 +96,11 @@ class UnionWithoutKey extends JsonSerializableType
         switch ($this->type) {
             case "foo":
                 $value = $this->asFoo()->jsonSerialize();
-                if (is_array($value)) {
-                    $result = array_merge($value, $result);
-                } else {
-                    $result['foo'] = $value;
-                }
+                $result = array_merge($value, $result);
                 break;
             case "bar":
                 $value = $this->asBar()->jsonSerialize();
-                if (is_array($value)) {
-                    $result = array_merge($value, $result);
-                } else {
-                    $result['bar'] = $value;
-                }
+                $result = array_merge($value, $result);
                 break;
             case "_unknown":
             default:

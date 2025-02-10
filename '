@@ -439,17 +439,18 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
+        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
         switch (variant.shape.propertiesType) {
             case "samePropertiesAsObject":
                 return php.codeblock((writer) => {
-                    const type = this.getReturnType(variant);
-                    writer.writeNode(this.jsonSerializeValueCall({ variant, type }));
-                    writer.writeNode(this.jsonSerializeMaybeArrayMerge(variant, type));
+                    const returnType = this.getReturnType(variant);
+                    writer.writeNode(this.jsonSerializeValueCall(asCastMethodName, returnType));
+                    writer.writeNode(this.jsonSerializeMaybeArrayMerge(variant, returnType));
                     writer.writeTextStatement("break");
                 });
             case "singleProperty":
                 return php.codeblock((writer) => {
-                    writer.writeNode(this.jsonSerializeValueCall({ variant, type: this.getReturnType(variant) }));
+                    writer.writeNode(this.jsonSerializeValueCall(asCastMethodName, this.getReturnType(variant)));
                     writer.writeNodeStatement(
                         php.codeblock((_writer) => {
                             _writer.write("$result");
@@ -469,51 +470,59 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMaybeArrayMerge(variant: SingleUnionType, type: php.Type): php.CodeBlock {
-        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
         switch (type.internalType.type) {
             case "reference":
-            case "object":
-            case "map":
-            case "array":
                 return php.codeblock((writer) => {
-                    writer.write("$result = ");
-                    writer.writeNodeStatement(
-                        php.invokeMethod({
-                            method: "array_merge",
-                            arguments_: [php.codeblock("$value"), php.codeblock("$result")],
-                            static_: true
-                        })
-                    );
-                });
-
-            case "optional":
-                return php.codeblock((writer) => {
-                    writer.write(asCastMethodName);
-                    writer.write(" = ");
-                    writer.writeNodeStatement(
-                        php.invokeMethod({
-                            method: asCastMethodName,
-                            arguments_: [],
-                            on: php.codeblock("$this")
-                        })
-                    );
                     writer.controlFlow(
                         "if",
                         php.invokeMethod({
                             method: "is_array",
-                            arguments_: [php.codeblock(asCastMethodName)],
+                            arguments_: [php.codeblock("$value")],
                             static_: true
                         })
                     );
-                    writer.write("$result");
-                    writer.write("['");
-                    writer.write(variant.discriminantValue.wireValue);
-                    writer.write("']");
-                    writer.write(" = ");
-                    writer.writeTextStatement(asCastMethodName);
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$result = ");
+                            _writer.writeNode(
+                                php.invokeMethod({
+                                    method: "array_merge",
+                                    arguments_: [php.codeblock("$value"), php.codeblock("$result")],
+                                    static_: true
+                                })
+                            );
+                        })
+                    );
+                    writer.alternativeControlFlow("else");
+                    writer.writeNodeStatement(
+                        php.codeblock((_writer) => {
+                            _writer.write("$result");
+                            _writer.write("['");
+                            _writer.write(variant.discriminantValue.wireValue);
+                            _writer.write("']");
+                            _writer.write(" = $value");
+                        })
+                    );
                     writer.endControlFlow();
-                    writer.writeNode(this.jsonSerializeMaybeArrayMerge(variant, type.underlyingType()));
                 });
+
+            case "optional":
+                return php.codeblock((writer) => {
+                    writer.controlFlow(
+                        "if",
+                        php.invokeMethod({
+                            method: "is_array",
+                            arguments_: [php.codeblock("$value")],
+                            static_: true
+                        })
+                    );
+
+                    writer.endControlFlow();
+                });
+
+            case "object":
+            case "map":
+            case "array":
 
             case "date":
             case "dateTime":
@@ -527,43 +536,32 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "enumString":
             case "union":
             default:
-                return php.codeblock((writer) => {
-                    writer.write("$result");
-                    writer.write("['");
-                    writer.write(variant.discriminantValue.wireValue);
-                    writer.write("']");
-                    writer.writeTextStatement(" = $value");
+                return php.codeblock((_writer) => {
+                    _writer.write("$result");
+                    _writer.write("['");
+                    _writer.write(variant.discriminantValue.wireValue);
+                    _writer.write("']");
+                    _writer.writeNodeStatement(" = $value");
                 });
         }
     }
 
-    private jsonSerializeValueCall({
-        declaredVariableName,
-        variant,
-        type
-    }: {
-        declaredVariableName?: string | null;
-        variant: SingleUnionType;
-        type: php.Type;
-    }): php.CodeBlock {
-        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
-        let argument: php.AstNode = php.invokeMethod({
-            method: asCastMethodName,
-            arguments_: [],
-            static_: false,
-            on: php.codeblock("$this")
-        });
+    private jsonSerializeValueCall(asCastMethodName: string, type: php.Type): php.CodeBlock {
         switch (type.internalType.type) {
             case "date":
-                if (declaredVariableName != null) {
-                    argument = php.codeblock(declaredVariableName);
-                }
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: "serializeDate",
-                            arguments_: [argument],
+                            arguments_: [
+                                php.invokeMethod({
+                                    method: asCastMethodName,
+                                    arguments_: [],
+                                    static_: false,
+                                    on: php.codeblock("$this")
+                                })
+                            ],
                             static_: true,
                             on: this.context.getJsonSerializerClassReference()
                         })
@@ -571,15 +569,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 });
 
             case "dateTime":
-                if (declaredVariableName != null) {
-                    argument = php.codeblock(declaredVariableName);
-                }
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: "serializeDateTime",
-                            arguments_: [argument],
+                            arguments_: [
+                                php.invokeMethod({
+                                    method: asCastMethodName,
+                                    arguments_: [],
+                                    static_: false,
+                                    on: php.codeblock("$this")
+                                })
+                            ],
                             static_: true,
                             on: this.context.getJsonSerializerClassReference()
                         })
@@ -587,9 +589,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 });
 
             case "reference":
-                if (declaredVariableName != null) {
-                    argument = php.codeblock(declaredVariableName);
-                }
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(
@@ -597,43 +596,32 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             method: "jsonSerialize",
                             arguments_: [],
                             static_: false,
-                            on: argument
+                            on: php.invokeMethod({
+                                method: asCastMethodName,
+                                arguments_: [],
+                                static_: false,
+                                on: php.codeblock("$this")
+                            })
                         })
                     );
                 });
 
             case "optional":
                 return php.codeblock((writer) => {
-                    writer.write("$" + asCastMethodName);
-                    writer.write(" = ");
-                    writer.writeNodeStatement(
-                        php.invokeMethod({
-                            method: asCastMethodName,
-                            arguments_: [],
-                            on: php.codeblock("$this")
-                        })
-                    );
                     writer.controlFlow(
                         "if",
                         php.invokeMethod({
                             method: "is_null",
-                            arguments_: [php.codeblock("$" + asCastMethodName)],
+                            arguments_: [php.codeblock("$this->value")],
                             static_: true
                         })
                     );
-                    writer.write("$value = ");
-                    writer.writeTextStatement("$" + asCastMethodName);
+                    writer.writeTextStatement("$value = $this->value");
                     if (
                         ["reference", "dateTime", "date", "optional"].includes(type.underlyingType().internalType.type)
                     ) {
                         writer.alternativeControlFlow("else");
-                        writer.writeNode(
-                            this.jsonSerializeValueCall({
-                                declaredVariableName: "$" + asCastMethodName,
-                                variant,
-                                type: type.underlyingType()
-                            })
-                        );
+                        writer.writeNodeStatement(this.jsonSerializeValueCall(asCastMethodName, type.underlyingType()));
                     }
                     writer.endControlFlow();
                 });
