@@ -64,6 +64,10 @@ export enum AsIsFiles {
     TypeFactory = "Reflection/TypeFactory.Template.php",
     DeepTypeSetter = "Reflection/DeepTypeSetter.Template.php",
 
+    // Tests/Core/Reflection files.
+    TypeFactoryTest = "Reflection/TypeFactoryTest.Template.php",
+    DeepTypeSetterTest = "Reflection/DeepTypeSetterTest.Template.php",
+
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better
     File = "File.Template.php"

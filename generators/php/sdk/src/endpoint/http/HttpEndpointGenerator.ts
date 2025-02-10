@@ -9,6 +9,7 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
+    Name,
     OffsetPagination,
     RequestProperty,
     ResponseProperty,
@@ -311,26 +312,35 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     php.variable(optionsParamName),
                     php.codeblock(`[$this, '${unpagedEndpointMethodName}']`),
                     php.codeblock((writer) => {
-                        writer.write("fn (");
+                        writer.write("function (");
                         writer.writeNode(requestParam.type);
-                        writer.write(" $request, string $cursor) => ");
-                        writer.writeNode(this.context.deepSetOnPhpType(
-                            php.variable("request"),
-                            this.getFullPropertyPath(pagination.page),
-                            php.variable("cursor"),
-                        ));
+                        writer.writeLine(" $request, string $cursor) { ");
+                        writer.indent();
+                        writer.writeNodeStatement(
+                            this.context.deepSetOnPhpType(
+                                php.variable("request"),
+                                this.getFullPropertyPath(pagination.page),
+                                php.variable("cursor")
+                            )
+                        );
+                        writer.dedent();
+                        writer.write("}");
                     }),
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn (");
                         writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(` $response) => ${this.nullableGet("$response", pagination.next)} ?? null`);
+                        writer.write(" $response) => ");
+                        writer.writeNode(this.nullableGet("$response", pagination.next));
+                        writer.write(" ?? null");
                     }),
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn (");
                         writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(` $response) => ${this.nullableGet("$response", pagination.results)} ?? []`);
+                        writer.write(" $response) => ");
+                        writer.writeNode(this.nullableGet("$response", pagination.results));
+                        writer.write(" ?? []");
                     })
                 ],
                 multiline: true
@@ -368,17 +378,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
                         writer.writeNode(requestParam.type);
-                        writer.write(`$request) => ${this.nullableGet("$request", pagination.page)} ?? 0`);
+                        writer.write(" $request) => ");
+                        writer.writeNode(this.nullableGet("$request", pagination.page));
+                        writer.write(" ?? 0");
                     }),
                     php.codeblock((writer) => {
-                        writer.write("fn (");
+                        writer.write("function (");
                         writer.writeNode(requestParam.type);
-                        writer.write(" $request, int $offset) => ");
-                        writer.writeNode(this.context.deepSetOnPhpType(
-                            php.variable("request"),
-                            this.getFullPropertyPath(pagination.page),
-                            php.variable("offset"),
-                        ));
+                        writer.writeLine(" $request, int $offset) { ");
+                        writer.indent();
+                        writer.writeNodeStatement(
+                            this.context.deepSetOnPhpType(
+                                php.variable("request"),
+                                this.getFullPropertyPath(pagination.page),
+                                php.variable("offset")
+                            )
+                        );
+                        writer.dedent();
+                        writer.write("}");
                     }),
                     php.codeblock((writer) => {
                         if (!pagination.step) {
@@ -388,23 +405,28 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
                         writer.writeNode(requestParam.type);
-                        writer.write(` $request) => ${this.nullableGet("$request", pagination.step)} ?? 0`);
+                        writer.write(" $request) => ");
+                        writer.writeNode(this.nullableGet("$request", pagination.step));
+                        writer.write(" ?? 0");
                     }),
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
                         writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(` $response) => ${this.nullableGet("$response", pagination.results)} ?? []`);
+                        writer.write(" $response) => ");
+                        writer.writeNode(this.nullableGet("$response", pagination.results));
+                        writer.write(" ?? []");
                     }),
                     php.codeblock((writer) => {
                         if (!pagination.hasNextPage) {
                             writer.write("null");
                             return;
                         }
-
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
                         writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(` $response) => ${this.nullableGet("$response", pagination.hasNextPage)}`);
+                        writer.write(" $response) => ");
+                        writer.writeNode(this.nullableGet("$response", pagination.hasNextPage));
                     })
                 ],
                 multiline: true
@@ -412,78 +434,37 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
-    private getFullPropertyPath(property: RequestProperty | ResponseProperty): string[] {
-        return [
-            ...(property.propertyPath?.map((val) => val.camelCase.safeName) ?? []),
-            property.property.name.name.camelCase.safeName
-        ];
+    private getFullPropertyPath(property: RequestProperty | ResponseProperty): Name[] {
+        return [...(property.propertyPath ?? []), property.property.name.name];
     }
 
-
-    private initializeNestedObjects(writer: php.Writer, variableName: string, { propertyPath }: RequestProperty) {
-        if (!propertyPath || propertyPath.length === 0) {
-            return;
-        }
-
-        for (let i = 0; i < propertyPath.length; i++) {
-            const propertyPathPart = propertyPath.slice(0, i + 1);
-            const reflectionPropVar = php.variable(
-                `${variableName}${propertyPathPart.map((val) => val.pascalCase.safeName).join("")}Property`
-            );
-            const parentPathParts = propertyPathPart.slice(0, propertyPathPart.length - 1);
-            const parentObject =
-                parentPathParts.length === 0
-                    ? variableName
-                    : `${variableName}->${parentPathParts.map((val) => val.camelCase.safeName).join("->")}`;
-            const prop = propertyPathPart[propertyPathPart.length - 1]!;
-            writer.writeLine(`if (${parentObject}->${prop.camelCase.safeName} == null) {`);
-            writer.indent();
-            writer.writeNodeStatement(
-                php.assignVariable(
-                    reflectionPropVar,
-                    php.instantiateClass({
-                        classReference: this.context.getReflectionPropertyClassReference(),
-                        arguments_: [php.codeblock(parentObject), php.string(prop.camelCase.safeName)]
-                    })
-                )
-            );
-            writer.writeLine("/* @phpstan-ignore-next-line */");
-            writer.writeNodeStatement(
-                php.assignVariable(
-                    php.codeblock(
-                        `${variableName}->${propertyPathPart.map((val) => val.camelCase.safeName).join("->")}`
-                    ),
-                    this.context.createInstanceOfPhpType(
-                        php.codeblock((writer) => {
-                            writer.writeNode(reflectionPropVar);
-                            writer.write("->getType()->getName()");
-                        })
-                    )
-                )
-            );
-            writer.dedent();
-            writer.writeLine("}");
-        }
+    private get(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(php.variable(variableName));
+            if (propertyPath) {
+                for (const propertyPathElement of propertyPath) {
+                    return this.context.getTypeGetter(propertyPathElement);
+                }
+            }
+            return this.context.getTypeGetter(property.name.name);
+        });
     }
 
-    private get(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): string {
-        if (!propertyPath || propertyPath.length === 0) {
-            return `${variableName}->${property.name.name.camelCase.safeName}`;
-        }
-
-        return `${variableName}->${propertyPath.map((val) => val.camelCase.safeName).join("->")}->${
-            property.name.name.camelCase.safeName
-        }`;
-    }
-
-    private nullableGet(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): string {
-        if (!propertyPath || propertyPath.length === 0) {
-            return `${variableName}->${property.name.name.camelCase.safeName}`;
-        }
-
-        return `${variableName}->${propertyPath.map((val) => val.camelCase.safeName).join("?->")}?->${
-            property.name.name.camelCase.safeName
-        }`;
+    private nullableGet(
+        variableName: string,
+        { property, propertyPath }: RequestProperty | ResponseProperty
+    ): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(php.variable(variableName));
+            if (propertyPath) {
+                for (const propertyPathElement of propertyPath) {
+                    writer.write("?");
+                    writer.writeNode(this.context.getTypeGetter(propertyPathElement));
+                }
+            }
+            writer.write("?");
+            writer.writeNode(this.context.getTypeGetter(property.name.name));
+        });
     }
 
     protected getPagerReturnType(endpoint: HttpEndpoint): php.Type {

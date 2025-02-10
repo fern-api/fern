@@ -27,7 +27,6 @@ import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_
 import { RawClient } from "./core/RawClient";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { GuzzleClient } from "./external/GuzzleClient";
-import { AstNode } from "@fern-api/php-codegen/src/php";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
@@ -346,7 +345,20 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public deepSetOnPhpType(objectVarToSetOn: php.AstNode, setterPath: string[], valueVarToSet: php.AstNode): AstNode {
+    public deepSetOnPhpType(
+        objectVarToSetOn: php.AstNode,
+        setterPath: Name[],
+        valueVarToSet: php.AstNode
+    ): php.AstNode {
+        if (setterPath.length === 0) {
+            throw new Error("setterPath cannot be empty");
+        }
+        if (setterPath.length === 1) {
+            return php.codeblock((writer) => {
+                writer.writeNode(objectVarToSetOn);
+                writer.writeNode(this.getTypeSetter(setterPath[0]!, valueVarToSet));
+            });
+        }
         return php.invokeMethod({
             on: php.classReference({
                 name: "DeepTypeSetter",
@@ -355,7 +367,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             method: "setDeep",
             arguments_: [
                 objectVarToSetOn,
-                php.codeblock(`[${setterPath.map((path) => `"${path}"`).join(", ")}]`),
+                php.codeblock(`[${setterPath.map((path) => `"${this.getPropertyName(path)}"`).join(", ")}]`),
                 valueVarToSet
             ],
             static_: true
@@ -377,6 +389,31 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             };
         }
         return undefined;
+    }
+
+    public getTypeGetter(propertyName: Name): php.AstNode {
+        return php.codeblock((writer) => {
+            if (this.shouldGenerateGetterMethods()) {
+                writer.write(`->${this.getPropertyGetterName(propertyName)}()`);
+            } else {
+                writer.write(`->${this.getPropertyName(propertyName)}`);
+            }
+        });
+    }
+
+    public getTypeSetter(propertyName: Name, valueVarToSet: php.AstNode): php.AstNode {
+        return php.codeblock((writer) => {
+            if (this.shouldGenerateGetterMethods()) {
+                writer.write(`->${this.getPropertySetterName(propertyName)}`);
+                writer.write("(");
+                writer.writeNode(valueVarToSet);
+                writer.write(")");
+            } else {
+                writer.write(`->${this.getPropertyName(propertyName)}`);
+                writer.write(" = ");
+                writer.writeNode(valueVarToSet);
+            }
+        });
     }
 
     public accessRequestProperty({
@@ -454,6 +491,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getCoreTestAsIsFiles(): string[] {
         return [
             AsIsFiles.RawClientTest,
+            AsIsFiles.TypeFactoryTest,
+            AsIsFiles.DeepTypeSetterTest,
             ...this.getCorePagerTestAsIsFiles(),
             ...this.getCoreSerializationTestAsIsFiles()
         ];
