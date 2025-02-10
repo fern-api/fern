@@ -62,7 +62,7 @@ class IntOffsetPagerTest extends TestCase
     }
 
     /**
-     * @return OffsetPager<Request, null, Response, string>
+     * @return OffsetPager<Request, Response, string>
      */
     private function createPager(): OffsetPager
     {
@@ -74,8 +74,7 @@ class IntOffsetPagerTest extends TestCase
 
         return new OffsetPager(
             new Request(new Pagination(1)),
-            null,
-            function (Request $request, ?array $options) use ($responses) {
+            function (Request $request) use ($responses) {
                 $response = $responses->current();
                 $responses->next();
                 return $response;

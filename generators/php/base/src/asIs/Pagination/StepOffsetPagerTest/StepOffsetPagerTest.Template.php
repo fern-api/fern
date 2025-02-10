@@ -66,7 +66,7 @@ class StepOffsetPagerTest extends TestCase
     }
 
     /**
-     * @return OffsetPager<Request, null, Response, string>
+     * @return OffsetPager<Request, Response, string>
      */
     private function createPager(): OffsetPager
     {
@@ -80,8 +80,7 @@ class StepOffsetPagerTest extends TestCase
 
         return new OffsetPager(
             new Request($this->paginationCopy),
-            null,
-            function (Request $request, ?array $options) use ($responses) {
+            function (Request $request) use ($responses) {
                 $response = $responses->current();
                 $responses->next();
                 return $response;

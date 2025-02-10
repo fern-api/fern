@@ -69,7 +69,7 @@ class CursorPagerTest extends TestCase
     }
 
     /**
-     * @return CursorPager<Request, null, Response, string, string>
+     * @return CursorPager<Request, Response, string, string>
      */
     private function createPager(): CursorPager
     {
@@ -84,8 +84,7 @@ class CursorPagerTest extends TestCase
 
         return new CursorPager(
             $request,
-            null,
-            function (Request $request, ?array $options) use ($responses) {
+            function (Request $request) use ($responses) {
                 $response = $responses->current();
                 $responses->next();
                 return $response;

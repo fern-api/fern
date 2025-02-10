@@ -265,6 +265,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         this.generateOffsetMethodBody({
                             pagination: endpoint.pagination,
                             requestParam,
+                            parameters,
                             unpagedEndpointResponseType,
                             writer,
                             optionsParamName,
@@ -276,6 +277,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         this.generateCursorMethodBody({
                             pagination: endpoint.pagination,
                             requestParam,
+                            parameters,
                             unpagedEndpointResponseType,
                             writer,
                             optionsParamName,
@@ -293,6 +295,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private generateCursorMethodBody({
         pagination,
         requestParam,
+        parameters,
         unpagedEndpointResponseType,
         writer,
         optionsParamName,
@@ -301,6 +304,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: CursorPagination;
         requestParam: php.Parameter;
+        parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
         optionsParamName: string;
@@ -316,16 +320,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 arguments_: [
                     // request param
                     php.variable(requestParam.name),
-                    // options param
-                    php.variable(optionsParamName),
                     // get next page callback
                     php.codeblock((writer) => {
                         writer.write("fn(");
                         writer.writeNode(requestParam.type);
-                        writer.write(" $request, ");
-                        writer.writeNode(optionsParamType);
-                        writer.write(" $options) => ");
-                        writer.write(`$this->${unpagedEndpointMethodName}($request, $options)`);
+                        writer.write(" ");
+                        writer.writeNode(php.variable(requestParam.name));
+                        writer.write(") => ");
+                        writer.writeNode(
+                            php.invokeMethod({
+                                on: php.variable("this"),
+                                method: unpagedEndpointMethodName,
+                                arguments_: parameters.map((parameter) => php.variable(parameter.name))
+                            })
+                        );
                     }),
                     // set cursor on request callback
                     php.codeblock((writer) => {
@@ -372,6 +380,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private generateOffsetMethodBody({
         pagination,
         requestParam,
+        parameters,
         unpagedEndpointResponseType,
         writer,
         optionsParamName,
@@ -380,6 +389,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: OffsetPagination;
         requestParam: php.Parameter;
+        parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
         optionsParamName: string;
@@ -392,16 +402,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             php.instantiateClass({
                 classReference: offsetPagerClassReference,
                 arguments_: [
+                    // request param
                     php.variable(requestParam.name),
-                    php.variable(optionsParamName),
+                    // get next page callback
                     php.codeblock((writer) => {
                         writer.write("fn(");
                         writer.writeNode(requestParam.type);
-                        writer.write(" $request, ");
-                        writer.writeNode(optionsParamType);
-                        writer.write(" $options) => ");
-                        writer.write(`$this->${unpagedEndpointMethodName}($request, $options)`);
+                        writer.write(" ");
+                        writer.writeNode(php.variable(requestParam.name));
+                        writer.write(") => ");
+                        writer.writeNode(
+                            php.invokeMethod({
+                                on: php.variable("this"),
+                                method: unpagedEndpointMethodName,
+                                arguments_: parameters.map((parameter) => php.variable(parameter.name))
+                            })
+                        );
                     }),
+                    // get page callback
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
@@ -410,6 +428,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeNode(this.nullableGet("$request", pagination.page));
                         writer.write(" ?? 0");
                     }),
+                    // set page on request callback
                     php.codeblock((writer) => {
                         writer.write("function (");
                         writer.writeNode(requestParam.type);
@@ -425,6 +444,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.dedent();
                         writer.write("}");
                     }),
+                    // get step callback
                     php.codeblock((writer) => {
                         if (!pagination.step) {
                             writer.write("null");
@@ -437,6 +457,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeNode(this.nullableGet("$request", pagination.step));
                         writer.write(" ?? 0");
                     }),
+                    // get results callback
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
                         writer.write("fn(");
@@ -445,6 +466,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeNode(this.nullableGet("$response", pagination.results));
                         writer.write(" ?? []");
                     }),
+                    // has next page callback
                     php.codeblock((writer) => {
                         if (!pagination.hasNextPage) {
                             writer.write("null");

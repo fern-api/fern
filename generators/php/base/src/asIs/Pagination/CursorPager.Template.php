@@ -6,7 +6,6 @@ use Generator;
 
 /**
  * @template TRequest
- * @template TRequestOptions
  * @template TResponse
  * @template TItem
  * @template TCursor
@@ -18,10 +17,7 @@ class CursorPager extends Pager
     /** @var TRequest */
     private $request;
 
-    /** @var ?TRequestOptions */
-    private $options;
-
-    /** @var callable(TRequest, ?TRequestOptions): TResponse */
+    /** @var callable(TRequest): TResponse */
     private $getNextPage;
 
     /** @var callable(TRequest, TCursor): void */
@@ -35,22 +31,19 @@ class CursorPager extends Pager
 
     /**
      * @param TRequest $request
-     * @param ?TRequestOptions $options
-     * @param callable(TRequest, ?TRequestOptions): TResponse $getNextPage
+     * @param callable(TRequest): TResponse $getNextPage
      * @param callable(TRequest, TCursor): void $setCursor
      * @param callable(TResponse): ?TCursor $getNextCursor
      * @param callable(TResponse): ?array<TItem> $getItems
      */
     public function __construct(
         $request,
-        $options,
         callable $getNextPage,
         callable $setCursor,
         callable $getNextCursor,
         callable $getItems
     ) {
         $this->request = clone $request;
-        $this->options = $options !== null ? clone $options : null;
         $this->getNextPage = $getNextPage;
         $this->setCursor = $setCursor;
         $this->getNextCursor = $getNextCursor;
@@ -63,7 +56,7 @@ class CursorPager extends Pager
     public function getPages(): Generator
     {
         do {
-            $response = ($this->getNextPage)($this->request, $this->options);
+            $response = ($this->getNextPage)($this->request);
             $items = ($this->getItems)($response);
             $nextCursor = ($this->getNextCursor)($response);
             if ($items !== null) {

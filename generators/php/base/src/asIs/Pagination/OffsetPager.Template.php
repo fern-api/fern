@@ -6,7 +6,6 @@ use Generator;
 
 /**
  * @template TRequest
- * @template TRequestOptions
  * @template TResponse
  * @template TItem
  * @extends Pager<TItem>
@@ -17,10 +16,7 @@ class OffsetPager extends Pager
     /** @var TRequest */
     private $request;
 
-    /** @var ?TRequestOptions */
-    private $options;
-
-    /** @var callable(TRequest, ?TRequestOptions): TResponse */
+    /** @var callable(TRequest): TResponse */
     private $getNextPage;
 
     /** @var callable(TRequest): int */
@@ -40,8 +36,7 @@ class OffsetPager extends Pager
 
     /**
      * @param TRequest $request
-     * @param ?TRequestOptions $options
-     * @param callable(TRequest, ?TRequestOptions): TResponse $getNextPage
+     * @param callable(TRequest): TResponse $getNextPage
      * @param callable(TRequest): int $getOffset
      * @param callable(TRequest, int): void $setOffset
      * @param ?callable(TRequest): ?int $getStep
@@ -50,7 +45,6 @@ class OffsetPager extends Pager
      */
     public function __construct(
         $request,
-        $options,
         callable $getNextPage,
         callable $getOffset,
         callable $setOffset,
@@ -59,7 +53,6 @@ class OffsetPager extends Pager
         ?callable $hasNextPage
     ) {
         $this->request = clone $request;
-        $this->options = $options !== null ? clone $options : null;
         $this->getNextPage = $getNextPage;
         $this->getOffset = $getOffset;
         $this->setOffset = $setOffset;
@@ -76,7 +69,7 @@ class OffsetPager extends Pager
         $hasStep = $this->getStep !== null && ($this->getStep)($this->request) !== null;
         $offset = ($this->getOffset)($this->request);
         do {
-            $response = ($this->getNextPage)($this->request, $this->options);
+            $response = ($this->getNextPage)($this->request);
             $items = ($this->getItems)($response);
             $itemCount = $items !== null ? count($items) : 0;
             $hasNextPage = $this->hasNextPage !== null ? ($this->hasNextPage)($response) : $itemCount > 0;
