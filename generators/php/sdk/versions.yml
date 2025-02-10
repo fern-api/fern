@@ -1,3 +1,53 @@
+- version: 0.9.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        You can now modify the generated `composer.json` file by adding a `composerJson` property to your generator configuration.
+
+        Here's an example of the `generators.yml` file with the `composerJson` property:
+
+        ```yaml generators.yml
+        ...
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                ...
+                config:
+                  composerJson:
+                    description: This is my PHP library
+                    keywords:
+                    - myCustomTag
+                    license:
+                    - "LGPL-2.1-only"
+                    - "GPL-3.0-or-later"
+                    scripts:
+                      hello: echo hello
+        ```
+
+        Which will result in the following composer.json file:
+
+        ```json composer.json
+        {
+          ...,
+          "description": "This is my PHP library",
+          "keywords": [
+            "myCustomTag",
+            ...,
+          ],
+          "license": [
+            "LGPL-2.1-only",
+            "GPL-3.0-or-later"
+          ],
+          ...,
+          "scripts": {
+            ...,
+            "hello": "echo hello"
+          }
+        }
+        ```
+  irVersion: 55
+
 - version: 0.7.0
   changelogEntry:
     - type: feat
