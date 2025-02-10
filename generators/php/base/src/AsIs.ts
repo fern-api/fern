@@ -28,6 +28,7 @@ export enum AsIsFiles {
     MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
 
     // Tests/Core/Json files.
+    AdditionalPropertiesTest = "Json/AdditionalPropertiesTest.Template.php",
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
     EnumTest = "Json/EnumTest.Template.php",

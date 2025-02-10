@@ -614,6 +614,7 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreSerializationTestAsIsFiles(): string[] {
         return [
+            AsIsFiles.AdditionalPropertiesTest,
             AsIsFiles.DateArrayTest,
             AsIsFiles.EmptyArrayTest,
             AsIsFiles.EnumTest,
