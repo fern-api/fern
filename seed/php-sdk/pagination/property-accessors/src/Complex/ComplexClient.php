@@ -8,7 +8,7 @@ use Seed\Complex\Types\SearchRequest;
 use Seed\Core\Pagination\Pager;
 use Seed\Complex\Types\Conversation;
 use Seed\Core\Pagination\CursorPager;
-use Seed\Core\Reflection\DeepTypeSetter;
+use Seed\Core\Pagination\PaginationHelper;
 use Seed\Complex\Types\PaginatedConversationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -67,7 +67,7 @@ class ComplexClient
             $options,
             [$this, 'searchInternal'],
             function (SearchRequest $request, string $cursor) {
-                DeepTypeSetter::setDeep($request, ["pagination", "startingAfter"], $cursor);
+                PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
             fn (PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,

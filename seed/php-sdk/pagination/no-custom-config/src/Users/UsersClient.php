@@ -12,7 +12,7 @@ use Seed\Users\Types\ListUsersPaginationResponse;
 use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
-use Seed\Core\Reflection\DeepTypeSetter;
+use Seed\Core\Pagination\PaginationHelper;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
 use Seed\Core\Pagination\OffsetPager;
 use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
@@ -132,7 +132,7 @@ class UsersClient
             $options,
             [$this, 'listWithBodyCursorPaginationInternal'],
             function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
-                DeepTypeSetter::setDeep($request, ["pagination", "cursor"], $cursor);
+                PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
@@ -210,7 +210,7 @@ class UsersClient
             /* @phpstan-ignore-next-line */
             fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->pagination?->page ?? 0,
             function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
-                DeepTypeSetter::setDeep($request, ["pagination", "page"], $offset);
+                PaginationHelper::setDeep($request, ["pagination", "page"], $offset);
             },
             null,
             /* @phpstan-ignore-next-line */
