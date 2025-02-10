@@ -1,3 +1,48 @@
+- version: 0.7.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        The SDK now supports inline path parameters in the generated request class like so:
+
+        ```php
+        class GetUserRequest extends JsonSerializableType
+        {
+            /**
+            * @var string $userId
+            */
+            public string $userId;
+        }
+        ```
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.7.0
+          config:
+            inlinePathParameters: true
+        ```
+  irVersion: 55
+
+- version: 0.6.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        You can now configure the generated class property access to be `public` or `private`.
+
+         - When the access is public, both the getter and setter methods are omitted (default).
+         - When the access is private, both the getter and setter methods are generated.
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.6.0
+          config:
+            propertyAccess: private
+        ```
+  irVersion: 55
+
 - version: 0.5.2
   changelogEntry:
     - type: fix
@@ -8,6 +53,7 @@
       summary: >-
         Update optional query parameters lists to be generated as an optional array instead
         of an array of optional values.
+  irVersion: 55
 
 - version: 0.5.1
   changelogEntry:

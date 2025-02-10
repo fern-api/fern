@@ -22,6 +22,12 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  extends:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -34,6 +40,31 @@ fixtures:
     - outputFolder: namespace
       customConfig:
         namespace: Fern
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+  package-yml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      customConfig:
+        inlinePathParameters: true
+    - outputFolder: inline-path-parameters-private
+      customConfig:
+        inlinePathParameters: true
+        propertyAccess: private
+  query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
 scripts:
   - docker: composer:2.7.9
     commands:

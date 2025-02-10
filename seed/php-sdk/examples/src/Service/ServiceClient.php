@@ -68,7 +68,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movie/$movieId",
+                    path: "/movie/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

@@ -1,6 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 
@@ -10,6 +11,7 @@ import {
     HttpMethod,
     HttpService,
     Name,
+    SdkRequestWrapper,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -299,6 +301,51 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             };
         }
         return undefined;
+    }
+
+    public accessRequestProperty({
+        requestParameterName,
+        propertyName
+    }: {
+        requestParameterName: Name;
+        propertyName: Name;
+    }): string {
+        const requestParameter = this.getRequestParameterVar({ requestParameterName });
+        if (this.shouldGenerateGetterMethods()) {
+            return `${requestParameter}->${this.getPropertyGetterName(propertyName)}()`;
+        }
+        return `${requestParameter}->${this.getPropertyName(propertyName)}`;
+    }
+
+    public getRequestParameterVar({ requestParameterName }: { requestParameterName: Name }): string {
+        return `$${this.getParameterName(requestParameterName)}`;
+    }
+
+    public shouldSkipWrappedRequest({
+        endpoint,
+        wrapper
+    }: {
+        endpoint: HttpEndpoint;
+        wrapper: SdkRequestWrapper;
+    }): boolean {
+        return (
+            (wrapper.onlyPathParameters ?? false) && !this.includePathParametersInWrappedRequest({ endpoint, wrapper })
+        );
+    }
+
+    public includePathParametersInWrappedRequest({
+        endpoint,
+        wrapper
+    }: {
+        endpoint: HttpEndpoint;
+        wrapper: SdkRequestWrapper;
+    }): boolean {
+        const inlinePathParameters = this.customConfig.inlinePathParameters;
+        if (inlinePathParameters == null) {
+            return false;
+        }
+        const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
+        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public getRawAsIsFiles(): string[] {

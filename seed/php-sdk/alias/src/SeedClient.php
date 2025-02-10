@@ -73,7 +73,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/$typeId",
+                    path: "/{$typeId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

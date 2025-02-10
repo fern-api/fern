@@ -5,6 +5,18 @@ namespace Seed\Types\Traits;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
+/**
+ * @property string $id
+ * @property ?string $prequel
+ * @property string $title
+ * @property string $from
+ * @property float $rating
+ * @property string $type
+ * @property string $tag
+ * @property ?string $book
+ * @property array<string, mixed> $metadata
+ * @property int $revenue
+ */
 trait Movie
 {
     /**

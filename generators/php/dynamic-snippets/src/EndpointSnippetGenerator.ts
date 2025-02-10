@@ -417,8 +417,7 @@ export class EndpointSnippetGenerator {
     }): php.TypeLiteral[] {
         const args: php.TypeLiteral[] = [];
 
-        // TODO: Add support for inlinePathParameters, when available.
-        const inlinePathParameters = false;
+        const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: php.ConstructorField[] = [];

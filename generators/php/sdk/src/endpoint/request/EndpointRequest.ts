@@ -33,7 +33,16 @@ export abstract class EndpointRequest {
     }
 
     public shouldIncludeDefaultInitializer(): boolean {
-        // TODO: Add path parameters to this check when inlinePathParameters is supported.
+        if (this.sdkRequest.shape.type === "wrapper") {
+            if (
+                this.context.includePathParametersInWrappedRequest({
+                    endpoint: this.endpoint,
+                    wrapper: this.sdkRequest.shape
+                })
+            ) {
+                return false;
+            }
+        }
         for (const queryParameter of this.endpoint.queryParameters) {
             if (!this.context.isOptional(queryParameter.valueType)) {
                 return false;

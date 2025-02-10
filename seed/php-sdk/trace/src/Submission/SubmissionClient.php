@@ -69,7 +69,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/create-session/$language",
+                    path: "/sessions/create-session/{$language}",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -120,7 +120,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/$sessionId",
+                    path: "/sessions/{$sessionId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -173,7 +173,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/stop/$sessionId",
+                    path: "/sessions/stop/{$sessionId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
