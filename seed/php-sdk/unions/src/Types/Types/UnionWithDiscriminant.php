@@ -8,9 +8,9 @@ use Exception;
 class UnionWithDiscriminant extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var string $_type
      */
-    public readonly string $type;
+    public readonly string $_type;
 
     /**
      * @var mixed $value
@@ -19,14 +19,14 @@ class UnionWithDiscriminant extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   _type: string,
      *   value: mixed,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->type = $values['type'];
+        $this->_type = $values['_type'];
         $this->value = $values['value'];
     }
 
@@ -35,7 +35,7 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function isFoo(): bool
     {
-        return $this->value instanceof Foo && $this->type === "foo";
+        return $this->value instanceof Foo && $this->_type === "foo";
     }
 
     /**
@@ -43,9 +43,9 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo && $this->type === "foo")) {
+        if (!($this->value instanceof Foo && $this->_type === "foo")) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->_type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -57,7 +57,7 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function isBar(): bool
     {
-        return $this->value instanceof Bar && $this->type === "bar";
+        return $this->value instanceof Bar && $this->_type === "bar";
     }
 
     /**
@@ -65,9 +65,9 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function asBar(): Bar
     {
-        if (!($this->value instanceof Bar && $this->type === "bar")) {
+        if (!($this->value instanceof Bar && $this->_type === "bar")) {
             throw new Exception(
-                "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected bar; got " . $this->_type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -88,12 +88,12 @@ class UnionWithDiscriminant extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result["type"] = $this->_type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
 
-        switch ($this->type) {
+        switch ($this->_type) {
             case "foo":
                 $value = $this->asFoo()->jsonSerialize();
                 $result['foo'] = $value;

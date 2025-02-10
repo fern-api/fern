@@ -34,8 +34,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             parentClassReference: this.context.getJsonSerializableTypeClassReference()
         });
 
+        const { includeGetter, includeSetter } = {
+            includeGetter: this.context.shouldGenerateGetterMethods(),
+            includeSetter: this.context.shouldGenerateSetterMethods()
+        };
         for (const property of this.unionTypeDeclaration.baseProperties) {
-            clazz.addField(this.toField({ property }));
+            const field = this.toField({ property });
+            if (includeGetter) {
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+            }
+            if (includeSetter) {
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+            }
+            clazz.addField(field);
         }
 
         const typeField = this.getTypeField();
@@ -65,10 +76,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
+    private typeGetter(): php.CodeBlock {
+        const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
+        return php.codeblock("$this->" + discriminant);
+    }
+
     private getTypeField(): php.Field {
         // TODO(ajgateno): Actually add the literals as a union rather than just string
         return php.field({
-            name: this.unionTypeDeclaration.discriminant.name.camelCase.safeName,
+            name: this.unionTypeDeclaration.discriminant.wireValue,
             type: php.Type.string(),
             access: "public",
             readonly_: true
@@ -78,6 +94,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getValueField(): php.Field {
         // TODO(ajgateno): Actually add the class references as a union rather than just mixed
         return php.field({
+            // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
             name: "value",
             type: php.Type.mixed(),
             access: "public",
@@ -186,7 +203,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private isMethodCheck(variant: SingleUnionType): php.CodeBlock {
-        const discriminantCheck = this.getDiscriminantCheck(php.codeblock("$this->type"), variant);
+        const discriminantCheck = this.getDiscriminantCheck(this.typeGetter(), variant);
         const typeCheck = this.getTypeCheck(php.codeblock("$this->value"), this.getReturnType(variant));
 
         return php.codeblock((writer) => {
@@ -227,7 +244,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.write("; got ");
             writer.write('"');
             writer.write(" . ");
-            writer.write("$this->type . ");
+            writer.writeNode(this.typeGetter());
+            writer.write(" . ");
             writer.write('"');
             writer.write("with value of type ");
             writer.write('"');
@@ -367,7 +385,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             return_: php.Type.array(php.Type.mixed()),
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("$result = []");
-                writer.writeTextStatement('$result["type"] = $this->type');
+                writer.writeNodeStatement(
+                    php.codeblock((_writer) => {
+                        _writer.write('$result["type"] = ');
+                        _writer.writeNode(this.typeGetter());
+                    })
+                );
 
                 writer.writeLine();
 
@@ -401,7 +424,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                 writer.writeNode(
                     this.variantSwitchStatement(
-                        php.codeblock("$this->type"),
+                        this.typeGetter(),
                         (variant) => this.jsonSerializeCaseHandler(variant),
                         this.jsonSerializeDefaultHandler()
                     )
