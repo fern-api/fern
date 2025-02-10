@@ -1,4 +1,10 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.12
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now autogenerates a requirements.txt file.
 
 - version: 4.3.11
   irVersion: 53
