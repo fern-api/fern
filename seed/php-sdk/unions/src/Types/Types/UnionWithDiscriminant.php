@@ -88,7 +88,7 @@ class UnionWithDiscriminant extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->_type;
+        $result["_type"] = $this->_type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

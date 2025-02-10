@@ -378,6 +378,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMethod(): php.Method {
+        const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
         return php.method({
             name: "jsonSerialize",
             access: "public",
@@ -387,7 +388,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeTextStatement("$result = []");
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
-                        _writer.write('$result["type"] = ');
+                        _writer.write(`$result["${discriminant}"] = `);
                         _writer.writeNode(this.typeGetter());
                     })
                 );
