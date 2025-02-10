@@ -8,12 +8,11 @@ use Seed\Users\Requests\ListUsersCursorPaginationRequest;
 use Seed\Core\Pagination\Pager;
 use Seed\Users\Types\User;
 use Seed\Core\Pagination\CursorPager;
+use Seed\Core\Reflection\DeepTypeSetter;
 use Seed\Users\Types\ListUsersPaginationResponse;
 use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
-use ReflectionProperty;
-use Seed\Core\Types\TypeFactory;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
 use Seed\Core\Pagination\OffsetPager;
 use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
@@ -84,10 +83,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listWithCursorPaginationInternal'],
-            function (ListUsersCursorPaginationRequest $request, string $cursor) {
-                /* @phpstan-ignore-next-line */
-                $request->startingAfter = $cursor;
-            },
+            fn (ListUsersCursorPaginationRequest $request, string $cursor) => DeepTypeSetter::setDeep($request, ["startingAfter"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
@@ -109,10 +105,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listWithMixedTypeCursorPaginationInternal'],
-            function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
-                /* @phpstan-ignore-next-line */
-                $request->cursor = $cursor;
-            },
+            fn (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) => DeepTypeSetter::setDeep($request, ["cursor"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (ListUsersMixedTypePaginationResponse $response) => $response->next ?? null,
             /* @phpstan-ignore-next-line */
@@ -134,15 +127,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listWithBodyCursorPaginationInternal'],
-            function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
-                if ($request->pagination == null) {
-                    $requestPaginationProperty = new ReflectionProperty($request, "pagination");
-                    /* @phpstan-ignore-next-line */
-                    $request->pagination = TypeFactory::createInstanceWithDefaults($requestPaginationProperty->getType()->getName());
-                }
-                /* @phpstan-ignore-next-line */
-                $request->pagination->cursor = $cursor;
-            },
+            fn (ListUsersBodyCursorPaginationRequest $request, string $cursor) => DeepTypeSetter::setDeep($request, ["pagination", "cursor"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
@@ -166,10 +151,7 @@ class UsersClient
             [$this, 'listWithOffsetPaginationInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListUsersOffsetPaginationRequest$request) => $request->page ?? 0,
-            function (ListUsersOffsetPaginationRequest $request, int $offset) {
-                /* @phpstan-ignore-next-line */
-                $request->page = $offset;
-            },
+            fn (ListUsersOffsetPaginationRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["page"], $offset),
             null,
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response->data ?? [],
@@ -193,10 +175,7 @@ class UsersClient
             [$this, 'listWithDoubleOffsetPaginationInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListUsersDoubleOffsetPaginationRequest$request) => $request->page ?? 0,
-            function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
-                /* @phpstan-ignore-next-line */
-                $request->page = $offset;
-            },
+            fn (ListUsersDoubleOffsetPaginationRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["page"], $offset),
             null,
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response->data ?? [],
@@ -220,15 +199,7 @@ class UsersClient
             [$this, 'listWithBodyOffsetPaginationInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListUsersBodyOffsetPaginationRequest$request) => $request->pagination?->page ?? 0,
-            function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
-                if ($request->pagination == null) {
-                    $requestPaginationProperty = new ReflectionProperty($request, "pagination");
-                    /* @phpstan-ignore-next-line */
-                    $request->pagination = TypeFactory::createInstanceWithDefaults($requestPaginationProperty->getType()->getName());
-                }
-                /* @phpstan-ignore-next-line */
-                $request->pagination->page = $offset;
-            },
+            fn (ListUsersBodyOffsetPaginationRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["pagination", "page"], $offset),
             null,
             /* @phpstan-ignore-next-line */
             fn (ListUsersPaginationResponse $response) => $response->data ?? [],
@@ -252,10 +223,7 @@ class UsersClient
             [$this, 'listWithOffsetStepPaginationInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListUsersOffsetStepPaginationRequest$request) => $request->page ?? 0,
-            function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
-                /* @phpstan-ignore-next-line */
-                $request->page = $offset;
-            },
+            fn (ListUsersOffsetStepPaginationRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["page"], $offset),
             /* @phpstan-ignore-next-line */
             fn (ListUsersOffsetStepPaginationRequest $request) => $request->limit ?? 0,
             /* @phpstan-ignore-next-line */
@@ -280,10 +248,7 @@ class UsersClient
             [$this, 'listWithOffsetPaginationHasNextPageInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListWithOffsetPaginationHasNextPageRequest$request) => $request->page ?? 0,
-            function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
-                /* @phpstan-ignore-next-line */
-                $request->page = $offset;
-            },
+            fn (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["page"], $offset),
             /* @phpstan-ignore-next-line */
             fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request->limit ?? 0,
             /* @phpstan-ignore-next-line */
@@ -306,10 +271,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listWithExtendedResultsInternal'],
-            function (ListUsersExtendedRequest $request, string $cursor) {
-                /* @phpstan-ignore-next-line */
-                $request->cursor = $cursor;
-            },
+            fn (ListUsersExtendedRequest $request, string $cursor) => DeepTypeSetter::setDeep($request, ["cursor"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (ListUsersExtendedResponse $response) => $response->next ?? null,
             /* @phpstan-ignore-next-line */
@@ -331,10 +293,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listWithExtendedResultsAndOptionalDataInternal'],
-            function (ListUsersExtendedRequestForOptionalData $request, string $cursor) {
-                /* @phpstan-ignore-next-line */
-                $request->cursor = $cursor;
-            },
+            fn (ListUsersExtendedRequestForOptionalData $request, string $cursor) => DeepTypeSetter::setDeep($request, ["cursor"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (ListUsersExtendedOptionalListResponse $response) => $response->next ?? null,
             /* @phpstan-ignore-next-line */
@@ -356,10 +315,7 @@ class UsersClient
             $request,
             $options,
             [$this, 'listUsernamesInternal'],
-            function (ListUsernamesRequest $request, string $cursor) {
-                /* @phpstan-ignore-next-line */
-                $request->startingAfter = $cursor;
-            },
+            fn (ListUsernamesRequest $request, string $cursor) => DeepTypeSetter::setDeep($request, ["startingAfter"], $cursor),
             /* @phpstan-ignore-next-line */
             fn (UsernameCursor $response) => $response->cursor?->after ?? null,
             /* @phpstan-ignore-next-line */
@@ -383,10 +339,7 @@ class UsersClient
             [$this, 'listWithGlobalConfigInternal'],
             /* @phpstan-ignore-next-line */
             fn (ListWithGlobalConfigRequest$request) => $request->offset ?? 0,
-            function (ListWithGlobalConfigRequest $request, int $offset) {
-                /* @phpstan-ignore-next-line */
-                $request->offset = $offset;
-            },
+            fn (ListWithGlobalConfigRequest $request, int $offset) => DeepTypeSetter::setDeep($request, ["offset"], $offset),
             null,
             /* @phpstan-ignore-next-line */
             fn (UsernameContainer $response) => $response->results ?? [],

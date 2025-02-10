@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\GetUsersRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,8 +10,6 @@ $client = new SeedClient(
     ],
 );
 $client->user->getUser(
-    new GetUsersRequest([
-        'tenantId' => 'tenant_id',
-        'userId' => 'user_id',
-    ]),
+    'tenant_id',
+    'user_id',
 );
