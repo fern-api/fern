@@ -5,6 +5,7 @@
         Add automatic pagination support for endpoints that return a paginated response.
 
         Here's an example of how users can use paginated endpoints:
+
         ```php
         $items = $client->list($request);
         foreach($items as $item){
