@@ -8,6 +8,8 @@ use ReflectionIntersectionType;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
+use RuntimeException;
+use stdClass;
 
 /**
  * @internal
@@ -26,8 +28,12 @@ class TypeFactory
             $args = [];
             $values = [];
 
-            $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC);
+            $properties = $reflectionClass->getProperties();
             foreach ($properties as $property) {
+                if($property->isStatic())
+                {
+                    continue;
+                }
                 /** @var ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType|null $type */
                 $type = $property->getType();
                 $name = $property->getName();
@@ -40,19 +46,18 @@ class TypeFactory
 
             /** @var T|null $instance */
             $instance = $reflectionClass->newInstanceArgs($args);
-            if($instance === null) {
+            if ($instance === null) {
                 return new $className();
             }
             return $instance;
-        } catch (ReflectionException) {
-            return new $className();
+        } catch (ReflectionException $ex) {
+            throw new RuntimeException("Failed create instance of $className", 0, $ex);
         }
     }
 
     private static function getDefaultValueForType(
         null|ReflectionIntersectionType|ReflectionNamedType|ReflectionUnionType $type
-    ): mixed
-    {
+    ): mixed {
         if ($type === null) {
             return null;
         }

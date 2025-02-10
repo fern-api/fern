@@ -59,7 +59,10 @@ export enum AsIsFiles {
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
-    TypeFactory = "Types/TypeFactory.Template.php",
+
+    // Core/Reflection files.
+    TypeFactory = "Reflection/TypeFactory.Template.php",
+    DeepTypeSetter = "Reflection/DeepTypeSetter.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better

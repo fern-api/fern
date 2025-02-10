@@ -311,15 +311,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     php.variable(optionsParamName),
                     php.codeblock(`[$this, '${unpagedEndpointMethodName}']`),
                     php.codeblock((writer) => {
-                        writer.write("function (");
+                        writer.write("fn (");
                         writer.writeNode(requestParam.type);
-                        writer.writeLine(" $request, string $cursor) {");
-                        writer.indent();
-                        this.initializeNestedObjects(writer, "$request", pagination.page);
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.writeTextStatement(`${this.get("$request", pagination.page)} = $cursor`);
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.write(" $request, string $cursor) => ");
+                        writer.writeNode(this.context.deepSetOnPhpType(
+                            php.variable("request"),
+                            this.getFullPropertyPath(pagination.page),
+                            php.variable("cursor"),
+                        ));
                     }),
                     php.codeblock((writer) => {
                         writer.writeLine("/* @phpstan-ignore-next-line */");
@@ -372,15 +371,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.write(`$request) => ${this.nullableGet("$request", pagination.page)} ?? 0`);
                     }),
                     php.codeblock((writer) => {
-                        writer.write("function (");
+                        writer.write("fn (");
                         writer.writeNode(requestParam.type);
-                        writer.writeLine(" $request, int $offset) {");
-                        writer.indent();
-                        this.initializeNestedObjects(writer, "$request", pagination.page);
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.writeTextStatement(`${this.get("$request", pagination.page)} = $offset`);
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.write(" $request, int $offset) => ");
+                        writer.writeNode(this.context.deepSetOnPhpType(
+                            php.variable("request"),
+                            this.getFullPropertyPath(pagination.page),
+                            php.variable("offset"),
+                        ));
                     }),
                     php.codeblock((writer) => {
                         if (!pagination.step) {
@@ -413,6 +411,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             })
         );
     }
+
+    private getFullPropertyPath(property: RequestProperty | ResponseProperty): string[] {
+        return [
+            ...(property.propertyPath?.map((val) => val.camelCase.safeName) ?? []),
+            property.property.name.name.camelCase.safeName
+        ];
+    }
+
 
     private initializeNestedObjects(writer: php.Writer, variableName: string, { propertyPath }: RequestProperty) {
         if (!propertyPath || propertyPath.length === 0) {

@@ -11,6 +11,7 @@ import {
     HttpMethod,
     HttpService,
     Name,
+    RequestProperty,
     SdkRequestWrapper,
     ServiceId,
     Subpackage,
@@ -26,6 +27,7 @@ import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_
 import { RawClient } from "./core/RawClient";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { GuzzleClient } from "./external/GuzzleClient";
+import { AstNode } from "@fern-api/php-codegen/src/php";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
@@ -327,7 +329,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return php.invokeMethod({
             on: php.classReference({
                 name: "TypeFactory",
-                namespace: this.getCoreTypesNamespace()
+                namespace: this.getCoreReflectionNamespace()
             }),
             method: "createInstanceWithDefaults",
             arguments_: [
@@ -339,6 +341,22 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     }
                     writer.writeNode(reference);
                 })
+            ],
+            static_: true
+        });
+    }
+
+    public deepSetOnPhpType(objectVarToSetOn: php.AstNode, setterPath: string[], valueVarToSet: php.AstNode): AstNode {
+        return php.invokeMethod({
+            on: php.classReference({
+                name: "DeepTypeSetter",
+                namespace: this.getCoreReflectionNamespace()
+            }),
+            method: "setDeep",
+            arguments_: [
+                objectVarToSetOn,
+                php.codeblock(`[${setterPath.map((path) => `"${path}"`).join(", ")}]`),
+                valueVarToSet
             ],
             static_: true
         });
@@ -421,6 +439,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
             AsIsFiles.TypeFactory,
+            AsIsFiles.DeepTypeSetter,
             ...this.getCorePagerAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];

@@ -123,6 +123,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreNamespace()}\\Types`;
     }
 
+    public getCoreReflectionNamespace(): string {
+        return `${this.getCoreNamespace()}\\Reflection`;
+    }
+
     public getCoreTestsNamespace(): string {
         return `${this.rootNamespace}\\Tests\\Core`;
     }
