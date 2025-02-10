@@ -489,7 +489,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getCoreTestAsIsFiles(): string[] {
         return [
             AsIsFiles.RawClientTest,
-            AsIsFiles.CreateRequestWithDefaultsTest,
             ...this.getCorePagerTestAsIsFiles(),
             ...this.getCoreSerializationTestAsIsFiles()
         ];
@@ -504,7 +503,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                   AsIsFiles.IntOffsetPagerTest,
                   AsIsFiles.StepOffsetPagerTest,
                   AsIsFiles.DeepSetTest,
-                  AsIsFiles.DeepSetAccessorsTest
+                  AsIsFiles.DeepSetAccessorsTest,
+                  AsIsFiles.CreateRequestWithDefaultsTest
               ]
             : [];
     }
