@@ -24,21 +24,21 @@ class Script extends JsonSerializableType
 
     /**
      * @param array{
-     *   resourceType: string,
-     *   name: string,
      *   id: string,
      *   relatedResources: array<Account|Patient|Practitioner|Script>,
      *   memo: Memo,
+     *   resourceType: string,
+     *   name: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->resourceType = $values['resourceType'];
-        $this->name = $values['name'];
         $this->id = $values['id'];
         $this->relatedResources = $values['relatedResources'];
         $this->memo = $values['memo'];
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
     }
 
     /**

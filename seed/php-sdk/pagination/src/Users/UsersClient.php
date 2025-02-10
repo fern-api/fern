@@ -11,6 +11,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
@@ -73,7 +74,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -106,6 +107,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -126,7 +137,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request, ?array $options = null): ListUsersMixedTypePaginationResponse
+    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -150,6 +161,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -170,7 +191,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -190,6 +211,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -210,7 +241,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -243,6 +274,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -263,7 +304,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -296,6 +337,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -316,7 +367,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -336,6 +387,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -356,7 +417,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -386,6 +447,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -406,7 +477,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options = null): ListUsersPaginationResponse
+    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -436,6 +507,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -456,7 +537,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options = null): ListUsersExtendedResponse
+    public function listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -480,6 +561,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -500,7 +591,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options = null): ListUsersExtendedOptionalListResponse
+    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -524,6 +615,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -544,7 +645,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsernames(ListUsernamesRequest $request, ?array $options = null): UsernameCursor
+    public function listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -568,6 +669,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -588,7 +699,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options = null): UsernameContainer
+    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -612,6 +723,16 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

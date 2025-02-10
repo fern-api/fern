@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/base-generator";
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { Writer } from "./Writer";
@@ -23,6 +23,27 @@ export abstract class AstNode extends AbstractAstNode {
         }
         const { namespace, rootNamespace, customConfig } = param;
 
+        const writer = new Writer({
+            namespace,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        return writer.toString();
+    }
+
+    /**
+     * Writes the node to a string.
+     */
+    public async toStringAsync({
+        namespace,
+        rootNamespace,
+        customConfig
+    }: {
+        namespace: string;
+        rootNamespace: string;
+        customConfig: BasePhpCustomConfigSchema;
+    }): Promise<string> {
         const writer = new Writer({
             namespace,
             rootNamespace,

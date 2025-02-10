@@ -85,6 +85,7 @@ export function convertHttpRequestBody({
                             availability: convertAvailability(property.availability),
                             file
                         }),
+                        style: property.style,
                         contentType: property.contentType
                     });
                 }

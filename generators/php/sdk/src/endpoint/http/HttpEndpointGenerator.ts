@@ -4,7 +4,7 @@ import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, HttpRequestBody, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpRequestBody, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -30,8 +30,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         super({ context });
     }
 
-    public generate({ serviceId, endpoint }: { serviceId: ServiceId; endpoint: HttpEndpoint }): php.Method {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+    public generate({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): php.Method {
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             php.parameter({
@@ -97,6 +105,49 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (successResponseStatements != null) {
                     writer.writeNode(successResponseStatements);
                 }
+                writer.dedent();
+                writer.write("} catch (");
+                writer.writeNode(this.context.guzzleClient.getRequestExceptionClassReference());
+                writer.writeLine(" $e) {");
+                writer.indent();
+                writer.writeNodeStatement(php.assignVariable(php.variable("response"), "$e->getResponse()"));
+                writer.controlFlow("if", php.codeblock("$response === null"));
+                writer.writeNodeStatement(
+                    php.throwException({
+                        classReference: this.context.getBaseExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: "$e->getMessage()"
+                            },
+                            {
+                                name: "previous",
+                                assignment: php.variable("e")
+                            }
+                        ]
+                    })
+                );
+                writer.endControlFlow();
+                writer.writeNodeStatement(
+                    php.throwException({
+                        classReference: this.context.getBaseApiExceptionClassReference(),
+                        arguments_: [
+                            {
+                                name: "message",
+                                assignment: php.string("API request failed")
+                            },
+                            {
+                                name: "statusCode",
+                                assignment: "$response->getStatusCode()"
+                            },
+                            {
+                                name: "body",
+                                assignment: "$response->getBody()->getContents()"
+                            }
+                        ],
+                        multiline: true
+                    })
+                );
                 writer.dedent();
                 writer.write("} catch (");
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());

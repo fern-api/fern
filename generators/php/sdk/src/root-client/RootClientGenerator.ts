@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { FileGenerator, PhpFile, php } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
 
 import {
     AuthScheme,
@@ -96,6 +97,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             for (const endpoint of service.endpoints) {
                 const method = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
+                    service,
                     endpoint
                 });
                 class_.addMethod(method);

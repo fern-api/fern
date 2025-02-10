@@ -18,17 +18,17 @@ class NestedType extends JsonSerializableType
 
     /**
      * @param array{
-     *   name: string,
      *   raw: string,
      *   docs: string,
+     *   name: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->name = $values['name'];
         $this->raw = $values['raw'];
         $this->docs = $values['docs'];
+        $this->name = $values['name'];
     }
 
     /**

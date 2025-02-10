@@ -9,6 +9,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Submission\Types\TestSubmissionUpdate;
 use Seed\Submission\Types\WorkspaceSubmissionUpdate;
@@ -68,7 +69,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-submission-status/$submissionId",
+                    path: "/admin/store-test-submission-status/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -78,6 +79,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -105,7 +116,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-submission-status-v2/$submissionId",
+                    path: "/admin/store-test-submission-status-v2/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -115,6 +126,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -142,7 +163,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-submission-status/$submissionId",
+                    path: "/admin/store-workspace-submission-status/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -152,6 +173,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -179,7 +210,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-submission-status-v2/$submissionId",
+                    path: "/admin/store-workspace-submission-status-v2/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -189,6 +220,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -217,7 +258,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-trace/submission/$submissionId/testCase/$testCaseId",
+                    path: "/admin/store-test-trace/submission/{$submissionId}/testCase/{$testCaseId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -227,6 +268,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -255,7 +306,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-trace-v2/submission/$submissionId/testCase/$testCaseId",
+                    path: "/admin/store-test-trace-v2/submission/{$submissionId}/testCase/{$testCaseId}",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [TraceResponseV2::class]),
                 ),
@@ -265,6 +316,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -292,7 +353,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-trace/submission/$submissionId",
+                    path: "/admin/store-workspace-trace/submission/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -302,6 +363,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -329,7 +400,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-trace-v2/submission/$submissionId",
+                    path: "/admin/store-workspace-trace-v2/submission/{$submissionId}",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [TraceResponseV2::class]),
                 ),
@@ -339,6 +410,16 @@ class AdminClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

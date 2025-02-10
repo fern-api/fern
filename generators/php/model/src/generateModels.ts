@@ -1,4 +1,4 @@
-import { PhpFile } from "@fern-api/php-codegen";
+import { PhpFile } from "@fern-api/php-base";
 
 import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 

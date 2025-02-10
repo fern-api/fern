@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "../ClassReference";
@@ -91,15 +91,12 @@ ${this.buffer}`;
         if (referenceKeys.length === 0) {
             return "";
         }
-        let result = referenceKeys
-            // Filter out the current namespace.
-            .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
-            .map((ref) => `use ${ref};`)
-            .join("\n");
-
-        if (result.length > 0) {
-            result += "\n";
-        }
-        return result;
+        return (
+            referenceKeys
+                // Filter out the current namespace.
+                .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
+                .map((ref) => `use ${ref};`)
+                .join("\n")
+        );
     }
 }

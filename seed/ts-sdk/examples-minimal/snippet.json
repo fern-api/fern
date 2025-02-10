@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesEnvironment, SeedExamplesClient } from \"@fern/examples-minimal\";\n\nconst client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.service.getMovie({\n    foo: \"foo\",\n    bar: 1,\n    cast: [\"cast\", \"cast\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/big-entity",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createBigEntity"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesEnvironment, SeedExamplesClient } from \"@fern/examples-minimal\";\n\nconst client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.service.createBigEntity({\n    type: \"and\",\n    value: true\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

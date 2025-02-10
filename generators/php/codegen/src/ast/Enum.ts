@@ -1,9 +1,7 @@
-import { this_ } from "../php";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Method } from "./Method";
-import { MethodInvocation } from "./MethodInvocation";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

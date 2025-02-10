@@ -1,4 +1,4 @@
-import { Ternary } from "@fern-api/base-generator";
+import { Ternary } from "@fern-api/browser-compatible-base-generator";
 
 import {
     Array as Array_,
@@ -64,6 +64,13 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
 }
 
+export function throwException(args: ClassInstantiation.Args): AstNode {
+    return codeblock((writer) => {
+        writer.write("throw ");
+        writer.writeNode(instantiateClass(args));
+    });
+}
+
 export function map(args: Map.Args): Map {
     return new Map(args);
 }
@@ -92,6 +99,10 @@ export function variable(name: string): AstNode {
     return codeblock(convertToPhpVariableName(name));
 }
 
+export function string(stringValue: string): AstNode {
+    return codeblock(`"${stringValue}"`);
+}
+
 export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
     return new MergeArrays(args);
 }
@@ -104,13 +115,16 @@ export function this_(): AstNode {
 
 export { AstNode } from "./ast/core/AstNode";
 export {
+    Access,
     Array,
     Attribute,
     Class,
+    type ConstructorField,
     Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    DataClass,
     Enum,
     Field,
     Map,
@@ -118,5 +132,6 @@ export {
     MethodInvocation,
     Parameter,
     Type,
+    TypeLiteral,
     Writer
 } from "./ast";

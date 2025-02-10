@@ -1,12 +1,7 @@
 name: "🐛 Bug Report"
 description: "Uh-oh! Something not working?"
-title: "[Bug]: "
-labels: ["bug"]
-assignees: [dsheridan]
+type: "bug"
 body:
-  - type: markdown
-    attributes:
-      value: "### 🛠 Thanks for reporting a bug! Please provide the details below."
 
   - type: dropdown
     id: product

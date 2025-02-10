@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type HttpInlineRequestBodyPropertySchema = string | FernDefinition.TypeReferenceDeclarationWithContentTypeSchema;
+export type HttpInlineRequestBodyPropertySchema = string | FernDefinition.HttpInlineFileRequestBodyPropertySchema;

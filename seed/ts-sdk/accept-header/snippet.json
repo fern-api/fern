@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container/",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.endpoint"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAcceptClient } from \"@fern/accept-header\";\n\nconst client = new SeedAcceptClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.endpoint();\n"
+            }
+        }
+    ],
+    "types": {}
+}

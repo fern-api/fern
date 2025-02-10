@@ -3,10 +3,11 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
-export type TagType = "param" | "return" | "throws" | "var";
+export type TagType = "param" | "property" | "return" | "throws" | "var";
 
 export const TagType = {
     Param: "param",
+    Property: "property",
     Returns: "return",
     Throws: "throws",
     Var: "var"

@@ -46,10 +46,14 @@ async def test_get_users(client: SeedNullable, async_client: AsyncSeedNullable) 
             },
         },
     )
-    response = client.nullable.get_users(usernames="usernames", avatar="avatar", activated=True)
+    response = client.nullable.get_users(
+        usernames="usernames", avatar="avatar", activated=True, tags="tags", extra=True
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.nullable.get_users(usernames="usernames", avatar="avatar", activated=True)
+    async_response = await async_client.nullable.get_users(
+        usernames="usernames", avatar="avatar", activated=True, tags="tags", extra=True
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

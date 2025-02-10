@@ -1,5 +1,6 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { FileGenerator, PhpFile, php } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
 
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
@@ -53,6 +54,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             for (const endpoint of this.service.endpoints) {
                 const method = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
+                    service: this.service,
                     endpoint
                 });
                 class_.addMethod(method);

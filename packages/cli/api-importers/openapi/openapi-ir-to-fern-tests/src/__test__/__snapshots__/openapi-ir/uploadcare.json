@@ -93,7 +93,8 @@
               "isArray": true,
               "type": "file"
             },
-            "description": "File's content"
+            "description": "File's content",
+            "exploded": false
           },
           {
             "key": "metadata[{key}]",
