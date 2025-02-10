@@ -55,6 +55,18 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
+     * @param mixed $_unknown
+     * @return UnionWithPrimitive
+     */
+    public static function _unknown(mixed $_unknown): UnionWithPrimitive
+    {
+        return new UnionWithPrimitive([
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isInteger(): bool

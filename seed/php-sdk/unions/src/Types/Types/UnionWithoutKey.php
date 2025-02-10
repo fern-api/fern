@@ -55,6 +55,18 @@ class UnionWithoutKey extends JsonSerializableType
     }
 
     /**
+     * @param mixed $_unknown
+     * @return UnionWithoutKey
+     */
+    public static function _unknown(mixed $_unknown): UnionWithoutKey
+    {
+        return new UnionWithoutKey([
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

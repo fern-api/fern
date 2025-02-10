@@ -54,6 +54,20 @@ class UnionWithLiteral extends JsonSerializableType
     }
 
     /**
+     * @param string $base
+     * @param mixed $_unknown
+     * @return UnionWithLiteral
+     */
+    public static function _unknown(string $base, mixed $_unknown): UnionWithLiteral
+    {
+        return new UnionWithLiteral([
+            'base' => $base,
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFern(): bool

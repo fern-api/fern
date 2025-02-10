@@ -55,6 +55,18 @@ class UnionWithDiscriminant extends JsonSerializableType
     }
 
     /**
+     * @param mixed $_unknown
+     * @return UnionWithDiscriminant
+     */
+    public static function _unknown(mixed $_unknown): UnionWithDiscriminant
+    {
+        return new UnionWithDiscriminant([
+            '_type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

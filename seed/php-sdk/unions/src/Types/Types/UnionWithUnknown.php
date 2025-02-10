@@ -54,6 +54,18 @@ class UnionWithUnknown extends JsonSerializableType
     }
 
     /**
+     * @param mixed $_unknown
+     * @return UnionWithUnknown
+     */
+    public static function _unknown(mixed $_unknown): UnionWithUnknown
+    {
+        return new UnionWithUnknown([
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isFoo(): bool

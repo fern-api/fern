@@ -57,6 +57,18 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
+     * @param mixed $_unknown
+     * @return UnionWithOptionalTime
+     */
+    public static function _unknown(mixed $_unknown): UnionWithOptionalTime
+    {
+        return new UnionWithOptionalTime([
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isDate(): bool

@@ -1,4 +1,3 @@
-import { NamedArgument } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -60,6 +59,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             clazz.addMethod(this.staticConstructor(type));
         }
 
+        clazz.addMethod(this.unknownStaticConstructor());
+
         for (const type of this.unionTypeDeclaration.types) {
             const isMethod = this.isMethod(type);
             clazz.addMethod(isMethod);
@@ -119,6 +120,63 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 property
             }),
             inherited
+        });
+    }
+
+    private unknownStaticConstructor(): php.Method {
+        const parameters: php.Parameter[] = [];
+
+        for (const property of this.unionTypeDeclaration.baseProperties) {
+            parameters.push(
+                php.parameter({
+                    name: this.context.getPropertyName(property.name.name),
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType })
+                })
+            );
+        }
+
+        parameters.push(
+            php.parameter({
+                name: "_unknown",
+                type: php.Type.mixed()
+            })
+        );
+
+        const body = php.codeblock((writer) => {
+            const constructorArgs: php.Map.Entry[] = [];
+
+            for (const property of this.unionTypeDeclaration.baseProperties) {
+                constructorArgs.push({
+                    key: php.codeblock(`'${property.name.wireValue}'`),
+                    value: php.codeblock(this.context.getVariableName(property.name.name))
+                });
+            }
+
+            constructorArgs.push({
+                key: php.codeblock(`'${this.unionTypeDeclaration.discriminant.wireValue}'`),
+                value: php.codeblock("'_unknown'")
+            });
+            constructorArgs.push({
+                key: php.codeblock("'value'"),
+                value: php.codeblock("$_unknown")
+            });
+
+            const constructorCall = php.instantiateClass({
+                classReference: this.classReference,
+                arguments_: [php.map({ entries: constructorArgs, multiline: true })]
+            });
+
+            writer.write("return ");
+            writer.writeNodeStatement(constructorCall);
+        });
+
+        return php.method({
+            name: "_unknown",
+            access: "public",
+            parameters,
+            return_: php.Type.reference(this.classReference),
+            body,
+            static_: true
         });
     }
 

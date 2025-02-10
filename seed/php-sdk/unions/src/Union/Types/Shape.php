@@ -68,6 +68,20 @@ class Shape extends JsonSerializableType
     }
 
     /**
+     * @param string $id
+     * @param mixed $_unknown
+     * @return Shape
+     */
+    public static function _unknown(string $id, mixed $_unknown): Shape
+    {
+        return new Shape([
+            'id' => $id,
+            'type' => '_unknown',
+            'value' => $_unknown,
+        ]);
+    }
+
+    /**
      * @return bool
      */
     public function isCircle(): bool
