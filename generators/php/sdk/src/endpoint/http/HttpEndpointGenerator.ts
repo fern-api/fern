@@ -4,11 +4,22 @@ import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, HttpRequestBody, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    CursorPagination,
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+    OffsetPagination,
+    RequestProperty,
+    ResponseProperty,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+
+type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -38,19 +49,41 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
+    }): php.Method[] {
+        const methods: php.Method[] = [];
+        if (this.hasPagination(endpoint)) {
+            methods.push(this.generatePagedEndpointMethod({ serviceId, service, endpoint }));
+        }
+
+        methods.push(this.generateUnpagedEndpointMethod({ serviceId, service, endpoint }));
+
+        return methods;
+    }
+
+    public generateUnpagedEndpointMethod({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
     }): php.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             php.parameter({
-                name: `$${this.context.getRequestOptionsName()}`,
+                name: this.context.getRequestOptionsName(),
                 type: php.Type.optional(this.context.getRequestOptionsType())
             })
         );
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
+        const hasPagination = this.hasPagination(endpoint);
         return php.method({
-            name: this.context.getEndpointMethodName(endpoint),
-            access: "public",
+            name: hasPagination
+                ? this.context.getUnpagedEndpointMethodName(endpoint)
+                : this.context.getEndpointMethodName(endpoint),
+            access: hasPagination ? "private" : "public",
             parameters,
             docs: endpoint.docs,
             return_,
@@ -164,6 +197,341 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
         });
+    }
+
+    public generatePagedEndpointMethod({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): php.Method {
+        this.assertHasPagination(endpoint);
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        const requestOptionsType = this.context.getRequestOptionsType();
+        const optionsParamName = this.context.getRequestOptionsName();
+        parameters.push(
+            php.parameter({
+                name: optionsParamName,
+                type: php.Type.optional(requestOptionsType)
+            })
+        );
+        const itemType = this.getPaginationItemType(endpoint);
+        const return_ = this.getPagerReturnType(endpoint);
+        return php.method({
+            name: this.context.getPagedEndpointMethodName(endpoint),
+            access: "public",
+            parameters,
+            docs: endpoint.docs,
+            return_,
+            body: php.codeblock((writer) => {
+                const requestParam = endpointSignatureInfo.requestParameter;
+                if (!requestParam) {
+                    throw new Error("Request parameter is required for pagination");
+                }
+                const unpagedEndpointMethodName = this.context.getUnpagedEndpointMethodName(endpoint);
+                const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
+                if (!unpagedEndpointResponseType) {
+                    throw new Error("Internal error; a response type is required for pagination endpoints");
+                }
+                const requestParamVar = php.variable(requestParam.name);
+                if (
+                    requestParam.type.internalType.type === "optional" &&
+                    requestParam.type.internalType.value.internalType.type === "reference"
+                ) {
+                    writer.write("if (");
+                    writer.writeNode(requestParamVar);
+                    writer.writeLine(" === null) {");
+                    writer.indent();
+                    writer.writeNodeStatement(
+                        php.assignVariable(
+                            requestParamVar,
+                            this.context.createInstanceOfPhpType(
+                                requestParam.type.internalType.value.internalType.value
+                            )
+                        )
+                    );
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+
+                switch (endpoint.pagination.type) {
+                    case "offset":
+                        this.generateOffsetMethodBody({
+                            pagination: endpoint.pagination,
+                            requestParam,
+                            unpagedEndpointResponseType,
+                            writer,
+                            optionsParamName,
+                            unpagedEndpointMethodName
+                        });
+                        break;
+                    case "cursor":
+                        this.generateCursorMethodBody({
+                            pagination: endpoint.pagination,
+                            requestParam,
+                            unpagedEndpointResponseType,
+                            writer,
+                            optionsParamName,
+                            unpagedEndpointMethodName
+                        });
+                        break;
+                    default:
+                        assertNever(endpoint.pagination);
+                }
+            })
+        });
+    }
+
+    private generateCursorMethodBody({
+        pagination,
+        requestParam,
+        unpagedEndpointResponseType,
+        writer,
+        optionsParamName,
+        unpagedEndpointMethodName
+    }: {
+        pagination: CursorPagination;
+        requestParam: php.Parameter;
+        unpagedEndpointResponseType: php.Type;
+        writer: php.Writer;
+        optionsParamName: string;
+        unpagedEndpointMethodName: string;
+    }) {
+        const cursorPagerClassReference = this.context.getCursorPagerClassReference();
+        writer.write("return ");
+        writer.writeNodeStatement(
+            php.instantiateClass({
+                classReference: cursorPagerClassReference,
+                arguments_: [
+                    php.variable(requestParam.name),
+                    php.variable(optionsParamName),
+                    php.codeblock(`[$this, '${unpagedEndpointMethodName}']`),
+                    php.codeblock((writer) => {
+                        writer.write("function (");
+                        writer.writeNode(requestParam.type);
+                        writer.writeLine(" $request, string $cursor) {");
+                        writer.indent();
+                        this.initializeNestedObjects(writer, "$request", pagination.page);
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.writeTextStatement(`${this.get("$request", pagination.page)} = $cursor`);
+                        writer.dedent();
+                        writer.writeLine("}");
+                    }),
+                    php.codeblock((writer) => {
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.write("fn (");
+                        writer.writeNode(unpagedEndpointResponseType);
+                        writer.write(` $response) => ${this.nullableGet("$response", pagination.next)} ?? null`);
+                    }),
+                    php.codeblock((writer) => {
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.write("fn (");
+                        writer.writeNode(unpagedEndpointResponseType);
+                        writer.write(` $response) => ${this.nullableGet("$response", pagination.results)} ?? []`);
+                    })
+                ],
+                multiline: true
+            })
+        );
+    }
+
+    private generateOffsetMethodBody({
+        pagination,
+        requestParam,
+        unpagedEndpointResponseType,
+        writer,
+        optionsParamName,
+        unpagedEndpointMethodName
+    }: {
+        pagination: OffsetPagination;
+        requestParam: php.Parameter;
+        unpagedEndpointResponseType: php.Type;
+        writer: php.Writer;
+        optionsParamName: string;
+        unpagedEndpointMethodName: string;
+    }) {
+        const offsetPagerClassReference = this.context.getOffsetPagerClassReference();
+        writer.write("return ");
+        writer.writeNodeStatement(
+            php.instantiateClass({
+                classReference: offsetPagerClassReference,
+                arguments_: [
+                    php.variable(requestParam.name),
+                    php.variable(optionsParamName),
+                    php.codeblock((writer) => {
+                        writer.writeLine(`[$this, '${unpagedEndpointMethodName}']`);
+                    }),
+                    php.codeblock((writer) => {
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.write("fn(");
+                        writer.writeNode(requestParam.type);
+                        writer.write(`$request) => ${this.nullableGet("$request", pagination.page)} ?? 0`);
+                    }),
+                    php.codeblock((writer) => {
+                        writer.write("function (");
+                        writer.writeNode(requestParam.type);
+                        writer.writeLine(" $request, int $offset) {");
+                        writer.indent();
+                        this.initializeNestedObjects(writer, "$request", pagination.page);
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.writeTextStatement(`${this.get("$request", pagination.page)} = $offset`);
+                        writer.dedent();
+                        writer.writeLine("}");
+                    }),
+                    php.codeblock((writer) => {
+                        if (!pagination.step) {
+                            writer.write("null");
+                            return;
+                        }
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.write("fn(");
+                        writer.writeNode(requestParam.type);
+                        writer.write(` $request) => ${this.nullableGet("$request", pagination.step)} ?? 0`);
+                    }),
+                    php.codeblock((writer) => {
+                        writer.writeLine("/* @phpstan-ignore-next-line */");
+                        writer.write("fn(");
+                        writer.writeNode(unpagedEndpointResponseType);
+                        writer.write(` $response) => ${this.nullableGet("$response", pagination.results)} ?? []`);
+                    }),
+                    php.codeblock((writer) => {
+                        if (!pagination.hasNextPage) {
+                            writer.write("null");
+                            return;
+                        }
+
+                        writer.write("fn(");
+                        writer.writeNode(unpagedEndpointResponseType);
+                        writer.write(` $response) => ${this.nullableGet("$response", pagination.hasNextPage)}`);
+                    })
+                ],
+                multiline: true
+            })
+        );
+    }
+
+    private initializeNestedObjects(writer: php.Writer, variableName: string, { propertyPath }: RequestProperty) {
+        if (!propertyPath || propertyPath.length === 0) {
+            return;
+        }
+
+        for (let i = 0; i < propertyPath.length; i++) {
+            const propertyPathPart = propertyPath.slice(0, i + 1);
+            const reflectionPropVar = php.variable(
+                `${variableName}${propertyPathPart.map((val) => val.pascalCase.safeName).join("")}Property`
+            );
+            const parentPathParts = propertyPathPart.slice(0, propertyPathPart.length - 1);
+            const parentObject =
+                parentPathParts.length === 0
+                    ? variableName
+                    : `${variableName}->${parentPathParts.map((val) => val.camelCase.safeName).join("->")}`;
+            const prop = propertyPathPart[propertyPathPart.length - 1]!;
+            writer.writeLine(`if (${parentObject}->${prop.camelCase.safeName} == null) {`);
+            writer.indent();
+            writer.writeNodeStatement(
+                php.assignVariable(
+                    reflectionPropVar,
+                    php.instantiateClass({
+                        classReference: this.context.getReflectionPropertyClassReference(),
+                        arguments_: [php.codeblock(parentObject), php.string(prop.camelCase.safeName)]
+                    })
+                )
+            );
+            writer.writeLine("/* @phpstan-ignore-next-line */");
+            writer.writeNodeStatement(
+                php.assignVariable(
+                    php.codeblock(
+                        `${variableName}->${propertyPathPart.map((val) => val.camelCase.safeName).join("->")}`
+                    ),
+                    this.context.createInstanceOfPhpType(
+                        php.codeblock((writer) => {
+                            writer.writeNode(reflectionPropVar);
+                            writer.write("->getType()->getName()");
+                        })
+                    )
+                )
+            );
+            writer.dedent();
+            writer.writeLine("}");
+        }
+    }
+
+    private get(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): string {
+        if (!propertyPath || propertyPath.length === 0) {
+            return `${variableName}->${property.name.name.camelCase.safeName}`;
+        }
+
+        return `${variableName}->${propertyPath.map((val) => val.camelCase.safeName).join("->")}->${
+            property.name.name.camelCase.safeName
+        }`;
+    }
+
+    private nullableGet(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): string {
+        if (!propertyPath || propertyPath.length === 0) {
+            return `${variableName}->${property.name.name.camelCase.safeName}`;
+        }
+
+        return `${variableName}->${propertyPath.map((val) => val.camelCase.safeName).join("?->")}?->${
+            property.name.name.camelCase.safeName
+        }`;
+    }
+
+    protected getPagerReturnType(endpoint: HttpEndpoint): php.Type {
+        const itemType = this.getPaginationItemType(endpoint);
+        const pager = this.context.getPagerClassReference(itemType);
+        return php.Type.reference(pager);
+    }
+
+    protected getPaginationItemType(endpoint: HttpEndpoint): php.Type {
+        this.assertHasPagination(endpoint);
+        const listItemType = this.context.phpTypeMapper.convert({
+            reference: (() => {
+                switch (endpoint.pagination.type) {
+                    case "offset":
+                        return endpoint.pagination.results.property.valueType;
+                    case "cursor":
+                        return endpoint.pagination.results.property.valueType;
+                    default:
+                        assertNever(endpoint.pagination);
+                }
+            })()
+        });
+
+        if (listItemType.internalType.type === "optional") {
+            if (listItemType.internalType.value.internalType.type === "array") {
+                return listItemType.internalType.value.internalType.value;
+            }
+
+            throw new Error(
+                `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
+            );
+        }
+
+        if (listItemType.internalType.type === "array") {
+            return listItemType.internalType.value;
+        }
+
+        throw new Error(
+            `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is ${listItemType.internalType.type}.`
+        );
+    }
+
+    protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
+        if (!this.context.config.generatePaginatedClients) {
+            return false;
+        }
+        return endpoint.pagination !== undefined;
+    }
+
+    protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
+        if (this.hasPagination(endpoint)) {
+            return;
+        }
+        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
     }
 
     private getRequestTypeClassReference(requestBody: HttpRequestBody): php.ClassReference {

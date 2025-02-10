@@ -5,6 +5,11 @@ namespace Seed\Complex;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Complex\Types\SearchRequest;
+use Seed\Core\Pagination\Pager;
+use Seed\Complex\Types\Conversation;
+use Seed\Core\Pagination\CursorPager;
+use ReflectionProperty;
+use Seed\Core\Types\TypeFactory;
 use Seed\Complex\Types\PaginatedConversationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -54,11 +59,41 @@ class ComplexClient
      *   baseUrl?: string,
      *   maxRetries?: int,
      * } $options
+     * @return Pager<Conversation>
+     */
+    public function search(SearchRequest $request, ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'searchInternal'],
+            function (SearchRequest $request, string $cursor) {
+                if ($request->pagination == null) {
+                    $requestPaginationProperty = new ReflectionProperty($request, "pagination");
+                    /* @phpstan-ignore-next-line */
+                    $request->pagination = TypeFactory::createInstanceWithDefaults($requestPaginationProperty->getType()->getName());
+                }
+                /* @phpstan-ignore-next-line */
+                $request->pagination->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (PaginatedConversationResponse $response) => $response->pages?->next?->startingAfter ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (PaginatedConversationResponse $response) => $response->conversations ?? [],
+        );
+    }
+
+    /**
+     * @param SearchRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
      * @return PaginatedConversationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function search(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function searchInternal(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

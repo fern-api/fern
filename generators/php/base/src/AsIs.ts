@@ -27,6 +27,12 @@ export enum AsIsFiles {
     MultipartFormData = "Multipart/MultipartFormData.Template.php",
     MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
 
+    // Core/Pagination files.
+    CursorPager = "Pagination/CursorPager.Template.php",
+    OffsetPager = "Pagination/OffsetPager.Template.php",
+    Page = "Pagination/Page.Template.php",
+    Pager = "Pagination/Pager.Template.php",
+
     // Tests/Core/Json files.
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
@@ -41,11 +47,19 @@ export enum AsIsFiles {
     UnionArrayTest = "Json/UnionArrayTest.Template.php",
     UnionPropertyTest = "Json/UnionPropertyTest.Template.php",
 
+    // Tests/Core/Pagination files.
+    CursorPagerTest = "Pagination/CursorPagerTest/CursorPagerTest.Template.php",
+    HasNextPageOffsetPagerTest = "Pagination/HasNextPageOffsetPagerTest/HasNextPageOffsetPagerTest.Template.php",
+    IntOffsetPagerTest = "Pagination/IntOffsetPagerTest/IntOffsetPagerTest.Template.php",
+    StepOffsetPagerTest = "Pagination/StepOffsetPagerTest/StepOffsetPagerTest.Template.php",
+    GeneratorPagerTest = "Pagination/GeneratorPagerTest/GeneratorPagerTest.Template.php",
+
     // Core/Types files.
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
+    TypeFactory = "Types/TypeFactory.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better

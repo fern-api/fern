@@ -95,12 +95,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     service,
                     endpoint
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 

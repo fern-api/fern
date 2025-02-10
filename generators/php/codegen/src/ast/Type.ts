@@ -211,7 +211,23 @@ export class Type extends AstNode {
                 break;
             }
             case "reference":
-                writer.writeNode(this.internalType.value);
+                if (comment) {
+                    writer.writeNode(this.internalType.value);
+                    const generics = this.internalType.value.generics;
+                    if (generics && generics.length > 0) {
+                        writer.write("<");
+                        for (let genericIndex = 0; genericIndex < generics.length; genericIndex++) {
+                            const generic = generics[genericIndex];
+                            generic?.write(writer, { comment });
+                            if (genericIndex !== generics.length - 1) {
+                                writer.write(", ");
+                            }
+                        }
+                        writer.write(">");
+                    }
+                } else {
+                    writer.writeNode(this.internalType.value);
+                }
                 break;
             case "enumString":
                 if (comment) {

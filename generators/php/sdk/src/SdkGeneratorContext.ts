@@ -88,6 +88,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return endpoint.name.camelCase.safeName;
     }
 
+    public getUnpagedEndpointMethodName(endpoint: HttpEndpoint): string {
+        return `${this.getEndpointMethodName(endpoint)}Internal`;
+    }
+
+    public getPagedEndpointMethodName(endpoint: HttpEndpoint): string {
+        return this.getEndpointMethodName(endpoint);
+    }
+
     public getSubpackageField(subpackage: Subpackage): php.Field {
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
@@ -106,6 +114,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getExceptionClassReference(): php.ClassReference {
         return php.classReference({
             name: "Exception",
+            namespace: this.getGlobalNamespace()
+        });
+    }
+
+    public getReflectionPropertyClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "ReflectionProperty",
             namespace: this.getGlobalNamespace()
         });
     }
@@ -175,6 +190,28 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getHttpMethodClassReference(): php.ClassReference {
         return this.getCoreClientClassReference("HttpMethod");
+    }
+
+    public getPagerClassReference(itemType: php.Type): php.ClassReference {
+        return php.classReference({
+            name: "Pager",
+            namespace: this.getCorePaginationNamespace(),
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "OffsetPager",
+            namespace: this.getCorePaginationNamespace()
+        });
+    }
+
+    public getCursorPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "CursorPager",
+            namespace: this.getCorePaginationNamespace()
+        });
     }
 
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
@@ -286,6 +323,27 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public createInstanceOfPhpType(reference: php.ClassReference | php.CodeBlock): php.AstNode {
+        return php.invokeMethod({
+            on: php.classReference({
+                name: "TypeFactory",
+                namespace: this.getCoreTypesNamespace()
+            }),
+            method: "createInstanceWithDefaults",
+            arguments_: [
+                php.codeblock((writer) => {
+                    if (reference instanceof php.ClassReference) {
+                        writer.writeNode(reference);
+                        writer.write("::class");
+                        return;
+                    }
+                    writer.writeNode(reference);
+                })
+            ],
+            static_: true
+        });
+    }
+
     public getEnvironmentName(name: Name): string {
         return name.pascalCase.safeName;
     }
@@ -362,12 +420,36 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
+            AsIsFiles.TypeFactory,
+            ...this.getCorePagerAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
     }
 
+    private getCorePagerAsIsFiles(): string[] {
+        return this.hasPagination()
+            ? [AsIsFiles.CursorPager, AsIsFiles.OffsetPager, AsIsFiles.Page, AsIsFiles.Pager]
+            : [];
+    }
+
     public getCoreTestAsIsFiles(): string[] {
-        return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
+        return [
+            AsIsFiles.RawClientTest,
+            ...this.getCorePagerTestAsIsFiles(),
+            ...this.getCoreSerializationTestAsIsFiles()
+        ];
+    }
+
+    private getCorePagerTestAsIsFiles(): string[] {
+        return this.hasPagination()
+            ? [
+                  AsIsFiles.CursorPagerTest,
+                  AsIsFiles.GeneratorPagerTest,
+                  AsIsFiles.HasNextPageOffsetPagerTest,
+                  AsIsFiles.IntOffsetPagerTest,
+                  AsIsFiles.StepOffsetPagerTest
+              ]
+            : [];
     }
 
     public getUtilsAsIsFiles(): string[] {
@@ -444,5 +526,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     private getOrganizationPascalCase(): string {
         return `${upperFirst(camelCase(this.config.organization))}`;
+    }
+
+    public hasPagination(): boolean {
+        return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 }

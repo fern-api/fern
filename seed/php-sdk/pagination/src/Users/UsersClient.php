@@ -5,18 +5,17 @@ namespace Seed\Users;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Users\Requests\ListUsersCursorPaginationRequest;
+use Seed\Core\Pagination\Pager;
+use Seed\Users\Types\User;
+use Seed\Core\Pagination\CursorPager;
 use Seed\Users\Types\ListUsersPaginationResponse;
-use Seed\Exceptions\SeedException;
-use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
-use Seed\Core\Client\HttpMethod;
-use JsonException;
-use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
+use ReflectionProperty;
+use Seed\Core\Types\TypeFactory;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
+use Seed\Core\Pagination\OffsetPager;
 use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
 use Seed\Users\Requests\ListUsersBodyOffsetPaginationRequest;
 use Seed\Users\Requests\ListUsersOffsetStepPaginationRequest;
@@ -29,6 +28,13 @@ use Seed\Users\Requests\ListUsernamesRequest;
 use Seed\Types\UsernameCursor;
 use Seed\Users\Requests\ListWithGlobalConfigRequest;
 use Seed\Users\Types\UsernameContainer;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
+use JsonException;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class UsersClient
 {
@@ -70,11 +76,335 @@ class UsersClient
      *   baseUrl?: string,
      *   maxRetries?: int,
      * } $options
+     * @return Pager<User>
+     */
+    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listWithCursorPaginationInternal'],
+            function (ListUsersCursorPaginationRequest $request, string $cursor) {
+                /* @phpstan-ignore-next-line */
+                $request->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->page?->next?->startingAfter ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersMixedTypeCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listWithMixedTypeCursorPaginationInternal'],
+            function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
+                /* @phpstan-ignore-next-line */
+                $request->cursor = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersMixedTypePaginationResponse $response) => $response->next ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersMixedTypePaginationResponse $response) => $response->data ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listWithBodyCursorPaginationInternal'],
+            function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
+                if ($request->pagination == null) {
+                    $requestPaginationProperty = new ReflectionProperty($request, "pagination");
+                    /* @phpstan-ignore-next-line */
+                    $request->pagination = TypeFactory::createInstanceWithDefaults($requestPaginationProperty->getType()->getName());
+                }
+                /* @phpstan-ignore-next-line */
+                $request->pagination->cursor = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->page?->next?->startingAfter ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithOffsetPaginationInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersOffsetPaginationRequest$request) => $request->page ?? 0,
+            function (ListUsersOffsetPaginationRequest $request, int $offset) {
+                /* @phpstan-ignore-next-line */
+                $request->page = $offset;
+            },
+            null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+            null,
+        );
+    }
+
+    /**
+     * @param ListUsersDoubleOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithDoubleOffsetPaginationInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersDoubleOffsetPaginationRequest$request) => $request->page ?? 0,
+            function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
+                /* @phpstan-ignore-next-line */
+                $request->page = $offset;
+            },
+            null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+            null,
+        );
+    }
+
+    /**
+     * @param ListUsersBodyOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithBodyOffsetPaginationInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersBodyOffsetPaginationRequest$request) => $request->pagination?->page ?? 0,
+            function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
+                if ($request->pagination == null) {
+                    $requestPaginationProperty = new ReflectionProperty($request, "pagination");
+                    /* @phpstan-ignore-next-line */
+                    $request->pagination = TypeFactory::createInstanceWithDefaults($requestPaginationProperty->getType()->getName());
+                }
+                /* @phpstan-ignore-next-line */
+                $request->pagination->page = $offset;
+            },
+            null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+            null,
+        );
+    }
+
+    /**
+     * @param ListUsersOffsetStepPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithOffsetStepPaginationInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersOffsetStepPaginationRequest$request) => $request->page ?? 0,
+            function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
+                /* @phpstan-ignore-next-line */
+                $request->page = $offset;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersOffsetStepPaginationRequest $request) => $request->limit ?? 0,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+            null,
+        );
+    }
+
+    /**
+     * @param ListWithOffsetPaginationHasNextPageRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithOffsetPaginationHasNextPageInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListWithOffsetPaginationHasNextPageRequest$request) => $request->page ?? 0,
+            function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
+                /* @phpstan-ignore-next-line */
+                $request->page = $offset;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request->limit ?? 0,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersPaginationResponse $response) => $response->data ?? [],
+            fn (ListUsersPaginationResponse $response) => $response->hasNextPage,
+        );
+    }
+
+    /**
+     * @param ListUsersExtendedRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listWithExtendedResultsInternal'],
+            function (ListUsersExtendedRequest $request, string $cursor) {
+                /* @phpstan-ignore-next-line */
+                $request->cursor = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersExtendedResponse $response) => $response->next ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersExtendedResponse $response) => $response->data?->users ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersExtendedRequestForOptionalData $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listWithExtendedResultsAndOptionalDataInternal'],
+            function (ListUsersExtendedRequestForOptionalData $request, string $cursor) {
+                /* @phpstan-ignore-next-line */
+                $request->cursor = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersExtendedOptionalListResponse $response) => $response->next ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (ListUsersExtendedOptionalListResponse $response) => $response->data?->users ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsernamesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            $request,
+            $options,
+            [$this, 'listUsernamesInternal'],
+            function (ListUsernamesRequest $request, string $cursor) {
+                /* @phpstan-ignore-next-line */
+                $request->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            fn (UsernameCursor $response) => $response->cursor?->after ?? null,
+            /* @phpstan-ignore-next-line */
+            fn (UsernameCursor $response) => $response->cursor?->data ?? [],
+        );
+    }
+
+    /**
+     * @param ListWithGlobalConfigRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            $request,
+            $options,
+            [$this, 'listWithGlobalConfigInternal'],
+            /* @phpstan-ignore-next-line */
+            fn (ListWithGlobalConfigRequest$request) => $request->offset ?? 0,
+            function (ListWithGlobalConfigRequest $request, int $offset) {
+                /* @phpstan-ignore-next-line */
+                $request->offset = $offset;
+            },
+            null,
+            /* @phpstan-ignore-next-line */
+            fn (UsernameContainer $response) => $response->results ?? [],
+            null,
+        );
+    }
+
+    /**
+     * @param ListUsersCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithCursorPaginationInternal(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -137,7 +467,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
+    private function listWithMixedTypeCursorPaginationInternal(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -191,7 +521,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithBodyCursorPaginationInternal(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -241,7 +571,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithOffsetPaginationInternal(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -304,7 +634,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithDoubleOffsetPaginationInternal(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -367,7 +697,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithBodyOffsetPaginationInternal(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -417,7 +747,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithOffsetStepPaginationInternal(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -477,7 +807,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function listWithOffsetPaginationHasNextPageInternal(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -537,7 +867,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
+    private function listWithExtendedResultsInternal(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -591,7 +921,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
+    private function listWithExtendedResultsAndOptionalDataInternal(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -645,7 +975,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
+    private function listUsernamesInternal(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -699,7 +1029,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
+    private function listWithGlobalConfigInternal(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
