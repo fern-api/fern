@@ -81,8 +81,7 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listWithCursorPaginationInternal'],
+            fn (ListUsersCursorPaginationRequest $request) => $this->listWithCursorPaginationInternal($request, $options),
             function (ListUsersCursorPaginationRequest $request, string $cursor) {
                 $request->startingAfter = $cursor;
             },
@@ -105,8 +104,7 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listWithMixedTypeCursorPaginationInternal'],
+            fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->listWithMixedTypeCursorPaginationInternal($request, $options),
             function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
                 $request->cursor = $cursor;
             },
@@ -129,8 +127,7 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listWithBodyCursorPaginationInternal'],
+            fn (ListUsersBodyCursorPaginationRequest $request) => $this->listWithBodyCursorPaginationInternal($request, $options),
             function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
@@ -153,8 +150,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithOffsetPaginationInternal'],
+            fn (ListUsersOffsetPaginationRequest $request) => $this->listWithOffsetPaginationInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListUsersOffsetPaginationRequest $request) => $request?->page ?? 0,
             function (ListUsersOffsetPaginationRequest $request, int $offset) {
@@ -179,8 +175,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithDoubleOffsetPaginationInternal'],
+            fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->listWithDoubleOffsetPaginationInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->page ?? 0,
             function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
@@ -205,8 +200,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithBodyOffsetPaginationInternal'],
+            fn (ListUsersBodyOffsetPaginationRequest $request) => $this->listWithBodyOffsetPaginationInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->pagination?->page ?? 0,
             function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
@@ -231,8 +225,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithOffsetStepPaginationInternal'],
+            fn (ListUsersOffsetStepPaginationRequest $request) => $this->listWithOffsetStepPaginationInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListUsersOffsetStepPaginationRequest $request) => $request?->page ?? 0,
             function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
@@ -258,8 +251,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithOffsetPaginationHasNextPageInternal'],
+            fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->listWithOffsetPaginationHasNextPageInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->page ?? 0,
             function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
@@ -286,9 +278,8 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listWithExtendedResultsInternal'],
-            function (ListUsersExtendedRequest $request, string $cursor) {
+            fn (ListUsersExtendedRequest $request) => $this->listWithExtendedResultsInternal($request, $options),
+            function (ListUsersExtendedRequest $request, ?string $cursor) {
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
@@ -310,9 +301,8 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listWithExtendedResultsAndOptionalDataInternal'],
-            function (ListUsersExtendedRequestForOptionalData $request, string $cursor) {
+            fn (ListUsersExtendedRequestForOptionalData $request) => $this->listWithExtendedResultsAndOptionalDataInternal($request, $options),
+            function (ListUsersExtendedRequestForOptionalData $request, ?string $cursor) {
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
@@ -334,9 +324,8 @@ class UsersClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'listUsernamesInternal'],
-            function (ListUsernamesRequest $request, string $cursor) {
+            fn (ListUsernamesRequest $request) => $this->listUsernamesInternal($request, $options),
+            function (ListUsernamesRequest $request, ?string $cursor) {
                 $request->startingAfter = $cursor;
             },
             /* @phpstan-ignore-next-line */
@@ -358,8 +347,7 @@ class UsersClient
     {
         return new OffsetPager(
             $request,
-            $options,
-            [$this, 'listWithGlobalConfigInternal'],
+            fn (ListWithGlobalConfigRequest $request) => $this->listWithGlobalConfigInternal($request, $options),
             /* @phpstan-ignore-next-line */
             fn (ListWithGlobalConfigRequest $request) => $request?->offset ?? 0,
             function (ListWithGlobalConfigRequest $request, int $offset) {

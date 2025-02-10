@@ -6,9 +6,9 @@ use Generator;
 
 /**
  * @template TRequest
- * @template TRequestOptions
  * @template TResponse
  * @template TItem
+ * @template TCursor
  * @extends Pager<TItem>
  * @internal Use the Pager class
  */
@@ -17,16 +17,13 @@ class CursorPager extends Pager
     /** @var TRequest */
     private $request;
 
-    /** @var ?TRequestOptions */
-    private $options;
-
-    /** @var callable(TRequest, ?TRequestOptions): TResponse */
+    /** @var callable(TRequest): TResponse */
     private $getNextPage;
 
-    /** @var callable(TRequest, string): void */
+    /** @var callable(TRequest, TCursor): void */
     private $setCursor;
 
-    /** @var callable(TResponse): ?string */
+    /** @var callable(TResponse): ?TCursor */
     private $getNextCursor;
 
     /** @var callable(TResponse): ?array<TItem> */
@@ -34,22 +31,19 @@ class CursorPager extends Pager
 
     /**
      * @param TRequest $request
-     * @param ?TRequestOptions $options
-     * @param callable(TRequest, ?TRequestOptions): TResponse $getNextPage
-     * @param callable(TRequest, string): void $setCursor
-     * @param callable(TResponse): ?string $getNextCursor
+     * @param callable(TRequest): TResponse $getNextPage
+     * @param callable(TRequest, TCursor): void $setCursor
+     * @param callable(TResponse): ?TCursor $getNextCursor
      * @param callable(TResponse): ?array<TItem> $getItems
      */
     public function __construct(
         $request,
-        $options,
         callable $getNextPage,
         callable $setCursor,
         callable $getNextCursor,
         callable $getItems
     ) {
         $this->request = clone $request;
-        $this->options = $options !== null ? clone $options : null;
         $this->getNextPage = $getNextPage;
         $this->setCursor = $setCursor;
         $this->getNextCursor = $getNextCursor;
@@ -62,7 +56,7 @@ class CursorPager extends Pager
     public function getPages(): Generator
     {
         do {
-            $response = ($this->getNextPage)($this->request, $this->options);
+            $response = ($this->getNextPage)($this->request);
             $items = ($this->getItems)($response);
             $nextCursor = ($this->getNextCursor)($response);
             if ($items !== null) {

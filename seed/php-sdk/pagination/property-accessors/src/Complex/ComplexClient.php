@@ -64,9 +64,8 @@ class ComplexClient
     {
         return new CursorPager(
             $request,
-            $options,
-            [$this, 'searchInternal'],
-            function (SearchRequest $request, string $cursor) {
+            fn (SearchRequest $request) => $this->searchInternal($request, $options),
+            function (SearchRequest $request, ?string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
