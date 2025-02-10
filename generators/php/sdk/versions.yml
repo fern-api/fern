@@ -27,21 +27,21 @@
 
         Which will result in the following composer.json file:
 
-        ```json composer.json
+        ```jsonc composer.json
         {
-          ...,
+          // ...,
           "description": "This is my PHP library",
           "keywords": [
             "myCustomTag",
-            ...,
+            // ...,
           ],
           "license": [
             "LGPL-2.1-only",
             "GPL-3.0-or-later"
           ],
-          ...,
+          // ...,
           "scripts": {
-            ...,
+            // ...,
             "hello": "echo hello"
           }
         }
