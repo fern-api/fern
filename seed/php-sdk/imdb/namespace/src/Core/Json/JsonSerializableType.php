@@ -16,6 +16,9 @@ use Fern\Core\Types\Union;
  */
 abstract class JsonSerializableType implements \JsonSerializable
 {
+    /** @var array<string, mixed> Extra properties from JSON that don't map to class properties */
+    private array $__additionalProperties = [];
+
     /**
      * Serializes the object to a JSON string.
      *
@@ -42,7 +45,6 @@ abstract class JsonSerializableType implements \JsonSerializable
     {
         $result = [];
         $reflectionClass = new \ReflectionClass($this);
-
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property);
             if ($jsonKey == null) {
@@ -82,7 +84,6 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $result[$jsonKey] = $value;
             }
         }
-
         return $result;
     }
 
@@ -114,58 +115,82 @@ abstract class JsonSerializableType implements \JsonSerializable
     {
         $reflectionClass = new \ReflectionClass(static::class);
         $constructor = $reflectionClass->getConstructor();
-
         if ($constructor === null) {
             throw new JsonException("No constructor found.");
         }
 
         $args = [];
+        $properties = [];
+        $additionalProperties = [];
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property) ?? $property->getName();
+            $properties[$jsonKey] = $property;
+        }
 
-            if (array_key_exists($jsonKey, $data)) {
-                $value = $data[$jsonKey];
+        foreach ($data as $jsonKey => $value) {
+            if (!isset($properties[$jsonKey])) {
+                // This JSON key doesn't map to any class property - add it to additionalProperties
+                $additionalProperties[$jsonKey] = $value;
+                continue;
+            }
 
-                // Handle Date annotation
-                $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
-                if ($dateTypeAttr) {
-                    $dateType = $dateTypeAttr->newInstance()->type;
-                    if (!is_string($value)) {
-                        throw new JsonException("Unexpected non-string type for date.");
-                    }
-                    $value = ($dateType === Date::TYPE_DATE)
-                        ? JsonDeserializer::deserializeDate($value)
-                        : JsonDeserializer::deserializeDateTime($value);
+            $property = $properties[$jsonKey];
+
+            // Handle Date annotation
+            $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
+            if ($dateTypeAttr) {
+                $dateType = $dateTypeAttr->newInstance()->type;
+                if (!is_string($value)) {
+                    throw new JsonException("Unexpected non-string type for date.");
                 }
+                $value = ($dateType === Date::TYPE_DATE)
+                    ? JsonDeserializer::deserializeDate($value)
+                    : JsonDeserializer::deserializeDateTime($value);
+            }
 
-                // Handle Array annotation
-                $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
-                if (is_array($value) && $arrayTypeAttr) {
-                    $arrayType = $arrayTypeAttr->newInstance()->type;
-                    $value = JsonDeserializer::deserializeArray($value, $arrayType);
-                }
+            // Handle Array annotation
+            $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
+            if (is_array($value) && $arrayTypeAttr) {
+                $arrayType = $arrayTypeAttr->newInstance()->type;
+                $value = JsonDeserializer::deserializeArray($value, $arrayType);
+            }
 
-                // Handle Union annotations
-                $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
-                if ($unionTypeAttr) {
-                    $unionType = $unionTypeAttr->newInstance();
-                    $value = JsonDeserializer::deserializeUnion($value, $unionType);
-                }
+            // Handle Union annotations
+            $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+            if ($unionTypeAttr) {
+                $unionType = $unionTypeAttr->newInstance();
+                $value = JsonDeserializer::deserializeUnion($value, $unionType);
+            }
 
-                // Handle object
-                $type = $property->getType();
-                if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
-                    $value = JsonDeserializer::deserializeObject($value, $type->getName());
-                }
+            // Handle object
+            $type = $property->getType();
+            if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
+                $value = JsonDeserializer::deserializeObject($value, $type->getName());
+            }
 
-                $args[$property->getName()] = $value;
-            } else {
-                $defaultValue = $property->getDefaultValue() ?? null;
-                $args[$property->getName()] = $defaultValue;
+            $args[$property->getName()] = $value;
+        }
+
+        // Fill in any missing properties with defaults
+        foreach ($properties as $property) {
+            if (!isset($args[$property->getName()])) {
+                $args[$property->getName()] = $property->getDefaultValue() ?? null;
             }
         }
+
         // @phpstan-ignore-next-line
-        return new static($args);
+        $result = new static($args);
+        $result->__additionalProperties = $additionalProperties;
+        return $result;
+    }
+
+    /**
+     * Get properties from JSON that weren't mapped to class fields
+     * @return array<string, mixed>
+     */
+    public function getAdditionalProperties(): array
+    {
+        return $this->__additionalProperties;
     }
 
     /**
