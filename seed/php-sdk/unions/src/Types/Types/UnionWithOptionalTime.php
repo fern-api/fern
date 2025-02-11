@@ -133,7 +133,7 @@ class UnionWithOptionalTime extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "date":
+            case 'date':
                 $asDate = $this->asDate();
                 if (is_null($asDate)) {
                     $value = $asDate;
@@ -142,7 +142,7 @@ class UnionWithOptionalTime extends JsonSerializableType
                 }
                 $result['date'] = $value;
                 break;
-            case "datetime":
+            case 'datetime':
                 $asDatetime = $this->asDatetime();
                 if (is_null($asDatetime)) {
                     $value = $asDatetime;
@@ -151,7 +151,7 @@ class UnionWithOptionalTime extends JsonSerializableType
                 }
                 $result['datetime'] = $value;
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -198,7 +198,7 @@ class UnionWithOptionalTime extends JsonSerializableType
         }
 
         switch ($type) {
-            case "date":
+            case 'date':
                 $args['type'] = 'date';
                 if (!array_key_exists('date', $data)) {
                     throw new Exception(
@@ -208,7 +208,7 @@ class UnionWithOptionalTime extends JsonSerializableType
 
                 $args['date'] = $data['date'];
                 break;
-            case "datetime":
+            case 'datetime':
                 $args['type'] = 'datetime';
                 if (!array_key_exists('datetime', $data)) {
                     throw new Exception(
@@ -218,7 +218,7 @@ class UnionWithOptionalTime extends JsonSerializableType
 
                 $args['datetime'] = $data['datetime'];
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

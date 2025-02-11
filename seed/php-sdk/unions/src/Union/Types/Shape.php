@@ -146,15 +146,15 @@ class Shape extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "circle":
+            case 'circle':
                 $value = $this->asCircle()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
-            case "square":
+            case 'square':
                 $value = $this->asSquare()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -213,15 +213,15 @@ class Shape extends JsonSerializableType
         }
 
         switch ($type) {
-            case "circle":
+            case 'circle':
                 $args['type'] = 'circle';
                 $args['circle'] = Circle::jsonDeserialize($data);
                 break;
-            case "square":
+            case 'square':
                 $args['type'] = 'square';
                 $args['square'] = Square::jsonDeserialize($data);
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

@@ -97,11 +97,11 @@ class UnionWithSingleElement extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "foo":
+            case 'foo':
                 $value = $this->asFoo()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -148,11 +148,11 @@ class UnionWithSingleElement extends JsonSerializableType
         }
 
         switch ($type) {
-            case "foo":
+            case 'foo':
                 $args['type'] = 'foo';
                 $args['foo'] = Foo::jsonDeserialize($data);
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

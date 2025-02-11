@@ -110,11 +110,11 @@ class UnionWithLiteral extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "fern":
+            case 'fern':
                 $value = $this->value;
                 $result['fern'] = $value;
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -173,7 +173,7 @@ class UnionWithLiteral extends JsonSerializableType
         }
 
         switch ($type) {
-            case "fern":
+            case 'fern':
                 $args['type'] = 'fern';
                 if (!array_key_exists('fern', $data)) {
                     throw new Exception(
@@ -183,7 +183,7 @@ class UnionWithLiteral extends JsonSerializableType
 
                 $args['fern'] = $data['fern'];
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

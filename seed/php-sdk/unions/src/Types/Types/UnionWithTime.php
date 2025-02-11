@@ -167,19 +167,19 @@ class UnionWithTime extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "value":
+            case 'value':
                 $value = $this->value;
                 $result['value'] = $value;
                 break;
-            case "date":
+            case 'date':
                 $value = JsonSerializer::serializeDate($this->asDate());
                 $result['date'] = $value;
                 break;
-            case "datetime":
+            case 'datetime':
                 $value = JsonSerializer::serializeDateTime($this->asDatetime());
                 $result['datetime'] = $value;
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -226,7 +226,7 @@ class UnionWithTime extends JsonSerializableType
         }
 
         switch ($type) {
-            case "value":
+            case 'value':
                 $args['type'] = 'value';
                 if (!array_key_exists('value', $data)) {
                     throw new Exception(
@@ -236,7 +236,7 @@ class UnionWithTime extends JsonSerializableType
 
                 $args['value'] = $data['value'];
                 break;
-            case "date":
+            case 'date':
                 $args['type'] = 'date';
                 if (!array_key_exists('date', $data)) {
                     throw new Exception(
@@ -246,7 +246,7 @@ class UnionWithTime extends JsonSerializableType
 
                 $args['date'] = $data['date'];
                 break;
-            case "datetime":
+            case 'datetime':
                 $args['type'] = 'datetime';
                 if (!array_key_exists('datetime', $data)) {
                     throw new Exception(
@@ -256,7 +256,7 @@ class UnionWithTime extends JsonSerializableType
 
                 $args['datetime'] = $data['datetime'];
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

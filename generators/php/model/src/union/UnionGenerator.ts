@@ -1250,16 +1250,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             for (const variant of this.unionTypeDeclaration.types) {
                 writer.write("case ");
-                writer.write('"');
-                writer.write(variant.discriminantValue.wireValue);
-                writer.write('"');
+                writer.write(`'${variant.discriminantValue.wireValue}'`);
                 writer.writeLine(":");
                 writer.indent();
                 writer.writeNode(caseMapper(variant));
                 writer.dedent();
             }
 
-            writer.writeLine('case "_unknown":');
+            writer.writeLine("case '_unknown':");
             writer.writeLine("default:");
             writer.indent();
             writer.writeNode(defaultHandler);

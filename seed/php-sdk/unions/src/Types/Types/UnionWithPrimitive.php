@@ -131,15 +131,15 @@ class UnionWithPrimitive extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "integer":
+            case 'integer':
                 $value = $this->value;
                 $result['integer'] = $value;
                 break;
-            case "string":
+            case 'string':
                 $value = $this->value;
                 $result['string'] = $value;
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -186,7 +186,7 @@ class UnionWithPrimitive extends JsonSerializableType
         }
 
         switch ($type) {
-            case "integer":
+            case 'integer':
                 $args['type'] = 'integer';
                 if (!array_key_exists('integer', $data)) {
                     throw new Exception(
@@ -196,7 +196,7 @@ class UnionWithPrimitive extends JsonSerializableType
 
                 $args['integer'] = $data['integer'];
                 break;
-            case "string":
+            case 'string':
                 $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
@@ -206,7 +206,7 @@ class UnionWithPrimitive extends JsonSerializableType
 
                 $args['string'] = $data['string'];
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }

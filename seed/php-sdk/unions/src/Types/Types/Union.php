@@ -134,15 +134,15 @@ class Union extends JsonSerializableType
         $result = array_merge($base, $result);
 
         switch ($this->type) {
-            case "foo":
+            case 'foo':
                 $value = $this->asFoo()->jsonSerialize();
                 $result['foo'] = $value;
                 break;
-            case "bar":
+            case 'bar':
                 $value = $this->asBar()->jsonSerialize();
                 $result['bar'] = $value;
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 if (is_null($this->value)) {
                     break;
@@ -189,7 +189,7 @@ class Union extends JsonSerializableType
         }
 
         switch ($type) {
-            case "foo":
+            case 'foo':
                 $args['type'] = 'foo';
                 if (!array_key_exists('foo', $data)) {
                     throw new Exception(
@@ -204,7 +204,7 @@ class Union extends JsonSerializableType
                 }
                 $args['foo'] = Foo::jsonDeserialize($data['foo']);
                 break;
-            case "bar":
+            case 'bar':
                 $args['type'] = 'bar';
                 if (!array_key_exists('bar', $data)) {
                     throw new Exception(
@@ -219,7 +219,7 @@ class Union extends JsonSerializableType
                 }
                 $args['bar'] = Bar::jsonDeserialize($data['bar']);
                 break;
-            case "_unknown":
+            case '_unknown':
             default:
                 $args['value'] = $data;
         }
