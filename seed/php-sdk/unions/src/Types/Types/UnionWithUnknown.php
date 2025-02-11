@@ -71,7 +71,7 @@ class UnionWithUnknown extends JsonSerializableType
      */
     public function isFoo(): bool
     {
-        return $this->value instanceof Foo && $this->type === "foo";
+        return $this->value instanceof Foo && $this->type === 'foo';
     }
 
     /**
@@ -79,7 +79,7 @@ class UnionWithUnknown extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo && $this->type === "foo")) {
+        if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
                 "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -93,7 +93,7 @@ class UnionWithUnknown extends JsonSerializableType
      */
     public function isUnknown(): bool
     {
-        return is_null($this->value) && $this->type === "unknown";
+        return is_null($this->value) && $this->type === 'unknown';
     }
 
     /**
@@ -110,7 +110,7 @@ class UnionWithUnknown extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

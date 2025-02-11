@@ -72,7 +72,7 @@ class UnionWithPrimitive extends JsonSerializableType
      */
     public function isInteger(): bool
     {
-        return is_int($this->value) && $this->type === "integer";
+        return is_int($this->value) && $this->type === 'integer';
     }
 
     /**
@@ -80,7 +80,7 @@ class UnionWithPrimitive extends JsonSerializableType
      */
     public function asInteger(): int
     {
-        if (!(is_int($this->value) && $this->type === "integer")) {
+        if (!(is_int($this->value) && $this->type === 'integer')) {
             throw new Exception(
                 "Expected integer; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -94,7 +94,7 @@ class UnionWithPrimitive extends JsonSerializableType
      */
     public function isString(): bool
     {
-        return is_string($this->value) && $this->type === "string";
+        return is_string($this->value) && $this->type === 'string';
     }
 
     /**
@@ -102,7 +102,7 @@ class UnionWithPrimitive extends JsonSerializableType
      */
     public function asString(): string
     {
-        if (!(is_string($this->value) && $this->type === "string")) {
+        if (!(is_string($this->value) && $this->type === 'string')) {
             throw new Exception(
                 "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -125,7 +125,7 @@ class UnionWithPrimitive extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

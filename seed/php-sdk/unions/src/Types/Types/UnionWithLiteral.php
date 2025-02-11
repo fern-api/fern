@@ -73,7 +73,7 @@ class UnionWithLiteral extends JsonSerializableType
      */
     public function isFern(): bool
     {
-        return is_string($this->value) && $this->type === "fern";
+        return is_string($this->value) && $this->type === 'fern';
     }
 
     /**
@@ -81,7 +81,7 @@ class UnionWithLiteral extends JsonSerializableType
      */
     public function asFern(): string
     {
-        if (!(is_string($this->value) && $this->type === "fern")) {
+        if (!(is_string($this->value) && $this->type === 'fern')) {
             throw new Exception(
                 "Expected fern; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -104,7 +104,7 @@ class UnionWithLiteral extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

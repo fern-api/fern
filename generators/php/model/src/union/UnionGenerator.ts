@@ -432,9 +432,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock((writer) => {
             writer.writeNode(variableGetter);
             writer.write(" === ");
-            writer.write('"');
-            writer.write(variant.discriminantValue.wireValue);
-            writer.write('"');
+            writer.write(`'${variant.discriminantValue.wireValue}'`);
         });
     }
 
@@ -556,7 +554,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeTextStatement("$result = []");
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
-                        _writer.write(`$result["${discriminant}"] = `);
+                        _writer.write(`$result['${discriminant}'] = `);
                         _writer.writeNode(this.typeGetter());
                     })
                 );

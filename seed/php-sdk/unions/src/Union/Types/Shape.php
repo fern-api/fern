@@ -87,7 +87,7 @@ class Shape extends JsonSerializableType
      */
     public function isCircle(): bool
     {
-        return $this->value instanceof Circle && $this->type === "circle";
+        return $this->value instanceof Circle && $this->type === 'circle';
     }
 
     /**
@@ -95,7 +95,7 @@ class Shape extends JsonSerializableType
      */
     public function asCircle(): Circle
     {
-        if (!($this->value instanceof Circle && $this->type === "circle")) {
+        if (!($this->value instanceof Circle && $this->type === 'circle')) {
             throw new Exception(
                 "Expected circle; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -109,7 +109,7 @@ class Shape extends JsonSerializableType
      */
     public function isSquare(): bool
     {
-        return $this->value instanceof Square && $this->type === "square";
+        return $this->value instanceof Square && $this->type === 'square';
     }
 
     /**
@@ -117,7 +117,7 @@ class Shape extends JsonSerializableType
      */
     public function asSquare(): Square
     {
-        if (!($this->value instanceof Square && $this->type === "square")) {
+        if (!($this->value instanceof Square && $this->type === 'square')) {
             throw new Exception(
                 "Expected square; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -140,7 +140,7 @@ class Shape extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

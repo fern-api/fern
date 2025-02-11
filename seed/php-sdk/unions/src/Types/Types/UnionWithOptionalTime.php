@@ -74,7 +74,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function isDate(): bool
     {
-        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === "date";
+        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'date';
     }
 
     /**
@@ -82,7 +82,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDate(): ?DateTime
     {
-        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === "date")) {
+        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'date')) {
             throw new Exception(
                 "Expected date; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -96,7 +96,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function isDatetime(): bool
     {
-        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === "datetime";
+        return (is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'datetime';
     }
 
     /**
@@ -104,7 +104,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      */
     public function asDatetime(): ?DateTime
     {
-        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === "datetime")) {
+        if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'datetime')) {
             throw new Exception(
                 "Expected datetime; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -127,7 +127,7 @@ class UnionWithOptionalTime extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);

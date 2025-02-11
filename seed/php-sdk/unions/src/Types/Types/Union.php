@@ -75,7 +75,7 @@ class Union extends JsonSerializableType
      */
     public function isFoo(): bool
     {
-        return $this->value instanceof Foo && $this->type === "foo";
+        return $this->value instanceof Foo && $this->type === 'foo';
     }
 
     /**
@@ -83,7 +83,7 @@ class Union extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo && $this->type === "foo")) {
+        if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
                 "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -97,7 +97,7 @@ class Union extends JsonSerializableType
      */
     public function isBar(): bool
     {
-        return $this->value instanceof Bar && $this->type === "bar";
+        return $this->value instanceof Bar && $this->type === 'bar';
     }
 
     /**
@@ -105,7 +105,7 @@ class Union extends JsonSerializableType
      */
     public function asBar(): Bar
     {
-        if (!($this->value instanceof Bar && $this->type === "bar")) {
+        if (!($this->value instanceof Bar && $this->type === 'bar')) {
             throw new Exception(
                 "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -128,7 +128,7 @@ class Union extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result["type"] = $this->type;
+        $result['type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
