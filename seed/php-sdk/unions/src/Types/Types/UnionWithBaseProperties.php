@@ -281,6 +281,7 @@ class UnionWithBaseProperties extends JsonSerializableType
             default:
                 $args['value'] = $data;
         }
+
         // @phpstan-ignore-next-line
         return new static($args);
     }
