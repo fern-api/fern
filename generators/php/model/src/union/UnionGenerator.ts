@@ -948,6 +948,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     this.jsonDeserializeDefaultHandler()
                 )
             );
+            writer.writeLine("// @phpstan-ignore-next-line");
+            writer.writeTextStatement("return new static($args)");
         });
 
         return php.method({
