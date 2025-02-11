@@ -110,7 +110,7 @@ navigation:
             icon: fa-regular fa-arrows-rotate
             path: ./pages/api-definition/openapi/automation.mdx            
           - section: Integrate your Server Framework
-            icon: fa-regular fa-globe
+            icon: fa-regular fa-server
             slug: frameworks
             contents:
               - page: FastAPI
