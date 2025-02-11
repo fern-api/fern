@@ -14,14 +14,14 @@ class UnionWithoutKey extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var mixed $value
+     * @var Foo|Bar|mixed $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: mixed,
+     *   value: Foo|Bar|mixed,
      * } $values
      */
     public function __construct(

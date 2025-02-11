@@ -14,14 +14,14 @@ class UnionWithPrimitive extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var mixed $value
+     * @var int|string|mixed $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: mixed,
+     *   value: int|string|mixed,
      * } $values
      */
     public function __construct(

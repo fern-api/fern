@@ -21,7 +21,7 @@ class Shape extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var mixed $value
+     * @var Circle|Square|mixed $value
      */
     public readonly mixed $value;
 
@@ -29,7 +29,7 @@ class Shape extends JsonSerializableType
      * @param array{
      *   id: string,
      *   type: string,
-     *   value: mixed,
+     *   value: Circle|Square|mixed,
      * } $values
      */
     public function __construct(

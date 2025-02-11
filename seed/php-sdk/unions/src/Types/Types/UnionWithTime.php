@@ -16,14 +16,14 @@ class UnionWithTime extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var mixed $value
+     * @var int|DateTime|mixed $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: mixed,
+     *   value: int|DateTime|mixed,
      * } $values
      */
     public function __construct(

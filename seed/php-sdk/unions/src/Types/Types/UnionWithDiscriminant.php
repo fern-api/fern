@@ -14,14 +14,14 @@ class UnionWithDiscriminant extends JsonSerializableType
     public readonly string $_type;
 
     /**
-     * @var mixed $value
+     * @var Foo|Bar|mixed $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   _type: string,
-     *   value: mixed,
+     *   value: Foo|Bar|mixed,
      * } $values
      */
     public function __construct(

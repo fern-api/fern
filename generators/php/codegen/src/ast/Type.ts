@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { GLOBAL_NAMESPACE } from "./core/Constant";
@@ -188,9 +189,19 @@ export class Type extends AstNode {
             }
             case "union": {
                 const types = this.getUniqueTypes({ types: this.internalType.types, comment, writer });
+
+                const hasMixed = types.filter((type) => type.internalType.type === "mixed").length > 0;
+                if (hasMixed && !comment) {
+                    writer.write("mixed");
+                    break;
+                }
+
                 types.forEach((type, index) => {
                     if (index > 0) {
                         writer.write("|");
+                    }
+                    if (hasMixed) {
+                        type = type.underlyingType();
                     }
                     type.write(writer, { comment });
                     index++;
@@ -399,13 +410,11 @@ export class Type extends AstNode {
     }): Type[] {
         const typeStrings = new Set();
         return types.filter((type) => {
-            if (comment) {
-                return true;
-            }
             const typeString = type.toString({
                 namespace: writer.namespace,
                 rootNamespace: writer.rootNamespace,
-                customConfig: writer.customConfig
+                customConfig: writer.customConfig,
+                comment
             });
             // handle potential duplicates, such as strings (due to enums) and arrays
             if (typeStrings.has(typeString)) {
@@ -414,6 +423,29 @@ export class Type extends AstNode {
             typeStrings.add(typeString);
             return true;
         });
+    }
+
+    /**
+     * Writes the type to a string.
+     */
+    public toString({
+        namespace,
+        rootNamespace,
+        customConfig,
+        comment
+    }: {
+        namespace: string;
+        rootNamespace: string;
+        customConfig: BasePhpCustomConfigSchema;
+        comment?: boolean;
+    }): string {
+        const writer = new Writer({
+            namespace,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer, { comment: comment ?? false });
+        return writer.toString();
     }
 }
 

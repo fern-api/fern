@@ -109,10 +109,18 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private getValueField(): php.Field {
         // TODO(ajgateno): Actually add the class references as a union rather than just mixed
+        const types: php.Type[] = [];
+
+        for (const variant of this.unionTypeDeclaration.types) {
+            types.push(this.getReturnType(variant));
+        }
+
+        types.push(php.Type.mixed());
+
         return php.field({
             // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
             name: "value",
-            type: php.Type.mixed(),
+            type: php.Type.union(types),
             access: "public",
             readonly_: true
         });
