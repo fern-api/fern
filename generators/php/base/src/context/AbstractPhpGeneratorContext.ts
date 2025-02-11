@@ -198,12 +198,23 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getExceptionClassReference(): php.ClassReference {
+        return php.classReference({
+            namespace: GLOBAL_NAMESPACE,
+            name: "Exception"
+        });
+    }
+
     public getDateAttributeClassReference(): php.ClassReference {
         return this.getCoreTypesClassReference("Date");
     }
 
     public getConstantClassReference(): php.ClassReference {
         return this.getCoreTypesClassReference("Constant");
+    }
+
+    public getJsonDecoderClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonDecoder");
     }
 
     public getJsonPropertyAttributeClassReference(): php.ClassReference {

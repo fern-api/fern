@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
-import { php } from "@fern-api/php-codegen";
+import { STATIC, php } from "@fern-api/php-codegen";
 
 import {
     DeclaredTypeName,
@@ -74,6 +74,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         clazz.addMethod(this.context.getToStringMethod());
 
         clazz.addMethod(this.jsonSerializeMethod());
+
+        clazz.addMethod(this.fromJsonMethod());
+
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
@@ -366,10 +369,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.write("throw ");
             writer.writeNode(
                 php.instantiateClass({
-                    classReference: php.classReference({
-                        name: "Exception",
-                        namespace: ""
-                    }),
+                    classReference: this.context.getExceptionClassReference(),
                     arguments_: [
                         php.codeblock((writer) => {
                             writer.writeNode(this.getTypeCheckErrorMessage(variant, variableGetter));
@@ -856,6 +856,60 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
 
             writer.endControlFlow();
+        });
+    }
+
+    private fromJsonMethod(): php.Method {
+        return php.method({
+            name: "fromJson",
+            access: "public",
+            parameters: [
+                php.parameter({
+                    name: "json",
+                    type: php.Type.string()
+                })
+            ],
+            return_: STATIC,
+            body: php.codeblock((writer) => {
+                writer.write("$decodedJson = ");
+                writer.writeNodeStatement(
+                    php.invokeMethod({
+                        method: "decode",
+                        arguments_: [php.codeblock("$json")],
+                        static_: true,
+                        on: this.context.getJsonDecoderClassReference()
+                    })
+                );
+
+                const negation = php.codeblock((_writer) => {
+                    _writer.write("!");
+                    _writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_array",
+                            arguments_: [php.codeblock("$decodedJson")],
+                            static_: true
+                        })
+                    );
+                });
+                writer.controlFlow("if", negation);
+                writer.writeNodeStatement(
+                    php.throwException({
+                        classReference: this.context.getExceptionClassReference(),
+                        arguments_: [php.codeblock("\"Unexpected non-array decoded type: \" . gettype($decodedJson)")]
+                    })
+                );
+                writer.endControlFlow();
+                writer.write("return ");
+                writer.writeNodeStatement(
+                    php.invokeMethod({
+                        method: "jsonDeserialize",
+                        arguments_: [php.codeblock("$decodedJson")],
+                        static_: true,
+                        on: php.codeblock("self")
+                    })
+                );
+            }),
+            static_: true
         });
     }
 
