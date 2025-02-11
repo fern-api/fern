@@ -53,6 +53,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Response
@@ -103,6 +106,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Response
@@ -153,6 +159,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return StringResponse
@@ -203,6 +212,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Response
@@ -253,6 +265,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ?Response
@@ -306,6 +321,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ?WithDocs
@@ -359,6 +377,9 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ?StringResponse

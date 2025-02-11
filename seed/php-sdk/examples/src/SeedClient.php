@@ -93,6 +93,9 @@ class SeedClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return string
@@ -143,6 +146,9 @@ class SeedClient
      * @param value-of<BasicType>|value-of<ComplexType> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Identifier

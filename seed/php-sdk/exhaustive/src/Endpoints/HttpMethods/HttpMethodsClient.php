@@ -53,6 +53,9 @@ class HttpMethodsClient
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return string
@@ -102,6 +105,9 @@ class HttpMethodsClient
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
@@ -153,6 +159,9 @@ class HttpMethodsClient
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
@@ -204,6 +213,9 @@ class HttpMethodsClient
      * @param ObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
@@ -254,6 +266,9 @@ class HttpMethodsClient
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return bool

@@ -55,6 +55,9 @@ class ServiceClient
      * @param GetFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return File

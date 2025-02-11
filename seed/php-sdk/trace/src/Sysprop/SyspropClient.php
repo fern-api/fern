@@ -54,6 +54,9 @@ class SyspropClient
      * @param int $numWarmInstances
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @throws SeedException
@@ -98,6 +101,9 @@ class SyspropClient
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<value-of<Language>, int>

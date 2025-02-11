@@ -56,6 +56,9 @@ class ComplexClient
      * @param SearchRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<Conversation>
@@ -79,6 +82,9 @@ class ComplexClient
      * @param SearchRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return PaginatedConversationResponse

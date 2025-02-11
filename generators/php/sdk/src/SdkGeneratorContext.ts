@@ -248,6 +248,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "headers";
     }
 
+    public getBodyPropertiesOptionName(): string {
+        return "bodyProperties";
+    }
+
+    public getQueryParametersOptionName(): string {
+        return "queryParameters";
+    }
+
     public getClientOptionsName(): string {
         return this.getOptionsName();
     }
@@ -296,6 +304,21 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 {
                     key: this.getBaseUrlOptionName(),
                     valueType: php.Type.string(),
+                    optional: true
+                },
+                {
+                    key: this.getHeadersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                    optional: true
+                },
+                {
+                    key: this.getBodyPropertiesOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
+                    optional: true
+                },
+                {
+                    key: this.getQueryParametersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
                     optional: true
                 },
                 {

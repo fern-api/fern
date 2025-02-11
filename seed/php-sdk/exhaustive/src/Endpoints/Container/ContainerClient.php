@@ -53,6 +53,9 @@ class ContainerClient
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<string>
@@ -103,6 +106,9 @@ class ContainerClient
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<ObjectWithRequiredField>
@@ -153,6 +159,9 @@ class ContainerClient
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<string>
@@ -203,6 +212,9 @@ class ContainerClient
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<ObjectWithRequiredField>
@@ -253,6 +265,9 @@ class ContainerClient
      * @param array<string, string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<string, string>
@@ -303,6 +318,9 @@ class ContainerClient
      * @param array<string, ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<string, ObjectWithRequiredField>
@@ -353,6 +371,9 @@ class ContainerClient
      * @param ?ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ?ObjectWithRequiredField

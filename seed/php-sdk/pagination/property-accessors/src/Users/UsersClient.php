@@ -73,6 +73,9 @@ class UsersClient
      * @param ListUsersCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -96,6 +99,9 @@ class UsersClient
      * @param ListUsersMixedTypeCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -119,6 +125,9 @@ class UsersClient
      * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -142,6 +151,9 @@ class UsersClient
      * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -168,6 +180,9 @@ class UsersClient
      * @param ListUsersDoubleOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -194,6 +209,9 @@ class UsersClient
      * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -220,6 +238,9 @@ class UsersClient
      * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -247,6 +268,9 @@ class UsersClient
      * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -274,6 +298,9 @@ class UsersClient
      * @param ListUsersExtendedRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -297,6 +324,9 @@ class UsersClient
      * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<User>
@@ -320,6 +350,9 @@ class UsersClient
      * @param ListUsernamesRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<string>
@@ -343,6 +376,9 @@ class UsersClient
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return Pager<string>
@@ -369,6 +405,9 @@ class UsersClient
      * @param ListUsersCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -432,6 +471,9 @@ class UsersClient
      * @param ListUsersMixedTypeCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersMixedTypePaginationResponse
@@ -486,6 +528,9 @@ class UsersClient
      * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -536,6 +581,9 @@ class UsersClient
      * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -599,6 +647,9 @@ class UsersClient
      * @param ListUsersDoubleOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -662,6 +713,9 @@ class UsersClient
      * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -712,6 +766,9 @@ class UsersClient
      * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -772,6 +829,9 @@ class UsersClient
      * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersPaginationResponse
@@ -832,6 +892,9 @@ class UsersClient
      * @param ListUsersExtendedRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersExtendedResponse
@@ -886,6 +949,9 @@ class UsersClient
      * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ListUsersExtendedOptionalListResponse
@@ -940,6 +1006,9 @@ class UsersClient
      * @param ListUsernamesRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return UsernameCursor
@@ -994,6 +1063,9 @@ class UsersClient
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return UsernameContainer

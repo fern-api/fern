@@ -56,6 +56,9 @@ class ObjectClient
      * @param ObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
@@ -106,6 +109,9 @@ class ObjectClient
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithRequiredField
@@ -156,6 +162,9 @@ class ObjectClient
      * @param ObjectWithMapOfMap $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return ObjectWithMapOfMap
@@ -206,6 +215,9 @@ class ObjectClient
      * @param NestedObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return NestedObjectWithOptionalField
@@ -257,6 +269,9 @@ class ObjectClient
      * @param NestedObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return NestedObjectWithRequiredField
@@ -307,6 +322,9 @@ class ObjectClient
      * @param array<NestedObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return NestedObjectWithRequiredField

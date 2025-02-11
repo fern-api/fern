@@ -54,6 +54,9 @@ class UnionClient
      * @param string|array<string>|int|array<int>|array<array<int>> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return string|array<string>|int|array<int>|array<array<int>>
@@ -103,6 +106,9 @@ class UnionClient
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   headers?: array<string, string>,
+     *   bodyProperties?: array<string, mixed>,
+     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
      * } $options
      * @return array<value-of<KeyType>|string, string>
