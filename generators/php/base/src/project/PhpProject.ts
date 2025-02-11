@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
+import { cloneDeep, isArray, mergeWith, template } from "lodash-es";
 import path from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
@@ -268,51 +268,68 @@ class ComposerJson {
         this.license = license;
     }
 
+    private build(): Record<string, unknown> {
+        let composerJson: Record<string, unknown> = {
+            name: this.context.getPackageName(),
+            version: this.context.version ?? "0.0.0",
+            description: `${this.projectName} PHP Library`,
+            keywords: [this.context.config.organization, "api", "sdk"],
+            license: this.license ?? [],
+            require: {
+                php: "^8.1",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.12"
+            },
+            autoload: {
+                "psr-4": {
+                    [`${this.projectName}\\`]: `${SRC_DIRECTORY_NAME}/`
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    [`\\${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}/`
+                }
+            },
+            scripts: {
+                build: [`@php -l ${SRC_DIRECTORY_NAME}`, `@php -l ${TESTS_DIRECTORY_NAME}`],
+                test: "phpunit",
+                analyze: "phpstan analyze src tests --memory-limit=1G"
+            }
+        };
+        composerJson = mergeExtraConfigs(composerJson, this.context.customConfig.composerJson);
+        return composerJson;
+    }
+
     public toString(): string {
-        return `
-{
-  "name": "${this.context.getPackageName()}",
-  "version": ${this.context.version != null ? `"${this.context.version}"` : '"0.0.0"'},
-  "description": "${this.projectName} PHP Library",
-  "keywords": [
-    "${this.context.config.organization}",
-    "api",
-    "sdk"
-  ],
-  "license": ${this.license != null ? `"${this.license}"` : "[]"},
-  "require": {
-    "php": "^8.1",
-    "ext-json": "*",
-    "guzzlehttp/guzzle": "^7.4"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.0",
-    "friendsofphp/php-cs-fixer": "3.5.0",
-    "phpstan/phpstan": "^1.12"
-  },
-  "autoload": {
-    "psr-4": {
-      "${this.projectName}\\\\": "${SRC_DIRECTORY_NAME}/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "\\\\${this.projectName}\\\\Tests\\\\": "${TESTS_DIRECTORY_NAME}/"
-    }
-  },
-  "scripts": {
-    "build": [
-      "@php -l ${SRC_DIRECTORY_NAME}",
-      "@php -l ${TESTS_DIRECTORY_NAME}"
-    ],
-    "test": "phpunit",
-    "analyze": "phpstan analyze src tests --memory-limit=1G"
-  }
-}
-`;
+        return JSON.stringify(this.build(), null, 2);
     }
 }
 
 function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
+}
+
+export function mergeExtraConfigs(
+    composerJson: Record<string, unknown>,
+    extraConfigs: Record<string, unknown> | undefined
+): Record<string, unknown> {
+    function customizer(objValue: unknown, srcValue: unknown) {
+        if (isArray(objValue) && isArray(srcValue)) {
+            return [...new Set(srcValue.concat(objValue))];
+        } else if (typeof objValue === "object" && typeof srcValue === "object") {
+            return {
+                ...objValue,
+                ...srcValue
+            };
+        } else {
+            return srcValue;
+        }
+    }
+
+    return mergeWith(cloneDeep(composerJson), extraConfigs ?? {}, customizer);
 }
