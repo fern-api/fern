@@ -233,13 +233,12 @@ class UnionWithBaseProperties extends JsonSerializableType
                 "Json data is missing property 'id'",
             );
         }
-        $id = $data['id'];
-        if (!(is_string($id))) {
+        if (!(is_string($data['id']))) {
             throw new Exception(
-                "Expected property 'id' in json data to be string, instead received " . get_debug_type($id),
+                "Expected property 'id' in json data to be string, instead received " . get_debug_type($data['id']),
             );
         }
-        $args['id'] = $id;
+        $args['id'] = $data['id'];
 
         if (!array_key_exists('type', $data)) {
             throw new Exception(
@@ -249,7 +248,7 @@ class UnionWithBaseProperties extends JsonSerializableType
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 

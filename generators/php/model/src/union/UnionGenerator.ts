@@ -421,7 +421,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.writeNode(
                 php.invokeMethod({
                     method: "get_debug_type",
-                    arguments_: [php.codeblock(this.context.getVariableName(propertyName.name))],
+                    arguments_: [php.codeblock(`$data['${propertyName.wireValue}']`)],
                     static_: true
                 })
             );
@@ -978,15 +978,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 );
                 writer.endControlFlow();
 
-                writer.writeTextStatement(
-                    `${this.context.getVariableName(property.name.name)} = $data['${property.name.wireValue}']`
-                );
-
                 const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-                const typeCheck = this.getTypeCheck(
-                    php.codeblock(this.context.getVariableName(property.name.name)),
-                    type
-                );
+                const typeCheck = this.getTypeCheck(php.codeblock(`$data['${property.name.wireValue}']`), type);
 
                 // TODO(ajgateno): We have to fix this or else we could be skipping base properties in deserialization.
                 if (typeCheck == null) {
@@ -1012,9 +1005,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 );
 
-                writer.writeTextStatement(
-                    `$args['${this.context.getPropertyName(property.name.name)}'] = ${this.context.getVariableName(property.name.name)}`
-                );
+                writer.writeTextStatement(`$args['${property.name.wireValue}'] = $data['${property.name.wireValue}']`);
 
                 writer.writeLine();
             }

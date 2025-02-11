@@ -181,7 +181,7 @@ class UnionWithDiscriminant extends JsonSerializableType
         $type = $data['_type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['_type']),
             );
         }
 

@@ -193,7 +193,7 @@ class UnionWithOptionalTime extends JsonSerializableType
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 

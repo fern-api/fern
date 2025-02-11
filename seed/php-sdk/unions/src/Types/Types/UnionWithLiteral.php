@@ -153,13 +153,12 @@ class UnionWithLiteral extends JsonSerializableType
                 "Json data is missing property 'base'",
             );
         }
-        $base = $data['base'];
-        if (!(is_string($base))) {
+        if (!(is_string($data['base']))) {
             throw new Exception(
-                "Expected property 'base' in json data to be string, instead received " . get_debug_type($base),
+                "Expected property 'base' in json data to be string, instead received " . get_debug_type($data['base']),
             );
         }
-        $args['base'] = $base;
+        $args['base'] = $data['base'];
 
         if (!array_key_exists('type', $data)) {
             throw new Exception(
@@ -169,7 +168,7 @@ class UnionWithLiteral extends JsonSerializableType
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 
