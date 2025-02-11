@@ -235,7 +235,7 @@ class UnionWithBaseProperties extends JsonSerializableType
         $id = $data['id'];
         if (!(is_string($id))) {
             throw new Exception(
-                "Expected property 'id' in json data to be underlyingType, instead received" . get_debug_type($id),
+                "Expected property 'id' in json data to be string, instead received" . get_debug_type($id),
             );
         }
 

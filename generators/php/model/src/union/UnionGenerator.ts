@@ -1003,7 +1003,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         _writer.controlFlow("if", isNotType);
                         _writer.writeNodeStatement(
                             this.getErrorThrow(
-                                this.getDeserliazationTypeCheckErrorMessage(property.name, type.underlyingType.name)
+                                this.getDeserliazationTypeCheckErrorMessage(property.name, type.internalType.type)
                             )
                         );
                         _writer.endControlFlow();
