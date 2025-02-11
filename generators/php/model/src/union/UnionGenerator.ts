@@ -941,6 +941,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.writeTextStatement("$args = []");
             writer.writeNode(this.jsonDeserializeBaseProperties());
             writer.writeNode(this.jsonDeserializeCheckDiscriminant());
+            writer.writeNode(
+                this.variantSwitchStatement(
+                    php.codeblock(this.context.getVariableName(this.unionTypeDeclaration.discriminant.name)),
+                    (variant) => this.jsonDeserializeCaseHandler(variant),
+                    this.jsonDeserializeDefaultHandler()
+                )
+            );
         });
 
         return php.method({
@@ -1039,7 +1046,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
 
             if (typeCheck == null) {
-                throw Error("Attmepted to get type check for string and got null; this is impossible");
+                throw new Error("Attempted to get type check for string and got null; this is impossible");
             }
 
             const isNotType = php.codeblock((_writer) => {
@@ -1061,6 +1068,173 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             writer.writeLine();
         });
+    }
+
+    private jsonDeserializeDefaultHandler(): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeTextStatement("$args['value'] = $data");
+        });
+    }
+
+    private jsonDeserializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
+        switch (variant.shape.propertiesType) {
+            case "samePropertiesAsObject":
+                return php.codeblock((writer) => {
+                    writer.writeTextStatement(
+                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                    );
+
+                    const type = this.getReturnType(variant);
+                    if (type.internalType.type !== "reference") {
+                        throw new Error("samePropertiesAsObject must be a reference type.");
+                    }
+
+                    writer.write(`$args['${variant.discriminantValue.wireValue}'] = `);
+                    writer.writeNodeStatement(
+                        php.invokeMethod({
+                            method: "jsonDeserialize",
+                            arguments_: [php.codeblock("$data")],
+                            static_: true,
+                            on: type.getClassReference()
+                        })
+                    );
+                    writer.writeTextStatement("break");
+                });
+            case "singleProperty":
+                return php.codeblock((writer) => {
+                    writer.writeTextStatement(
+                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                    );
+
+                    const arrayKeyDoesNotExist = php.codeblock((_writer) => {
+                        _writer.write("!");
+                        _writer.writeNode(
+                            php.invokeMethod({
+                                method: "array_key_exists",
+                                arguments_: [
+                                    php.codeblock(`'${variant.discriminantValue.wireValue}'`),
+                                    php.codeblock("$data")
+                                ]
+                            })
+                        );
+                    });
+
+                    writer.controlFlow("if", arrayKeyDoesNotExist);
+                    writer.writeNodeStatement(
+                        this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(variant.discriminantValue))
+                    );
+                    writer.endControlFlow();
+
+                    writer.writeLine();
+
+                    writer.writeNode(this.jsonDeserializeTypeCall(variant, this.getReturnType(variant)));
+
+                    writer.writeTextStatement("break");
+                });
+            case "noProperties":
+                return php.codeblock((writer) => {
+                    writer.writeTextStatement(
+                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                    );
+                    writer.writeTextStatement("$args['value'] = null");
+                    writer.writeTextStatement("break");
+                });
+            default:
+                return php.codeblock((writer) => {
+                    writer.writeTextStatement("break");
+                });
+        }
+    }
+
+    private jsonDeserializeTypeCall(variant: SingleUnionType, type: php.Type): php.CodeBlock {
+        const discriminantGetter = php.codeblock(`$data['${variant.discriminantValue.wireValue}']`);
+        const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.string());
+
+        if (typeCheck == null) {
+            throw new Error("Type check should never be null for string");
+        }
+
+        switch (type.internalType.type) {
+            case "reference":
+                return php.codeblock((writer) => {
+                    const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.array(php.Type.mixed()));
+
+                    if (typeCheck == null) {
+                        throw new Error("Attempted to get type check for array and got null; this is impossible");
+                    }
+
+                    const isNotType = php.codeblock((_writer) => {
+                        _writer.write("!");
+                        _writer.write("(");
+                        _writer.writeNode(typeCheck);
+                        _writer.write(")");
+                    });
+
+                    writer.writeNode(
+                        php.codeblock((_writer) => {
+                            _writer.controlFlow("if", isNotType);
+                            _writer.writeNodeStatement(
+                                this.getErrorThrow(
+                                    this.getDeserliazationTypeCheckErrorMessage(variant.discriminantValue, "array")
+                                )
+                            );
+                            _writer.endControlFlow();
+                        })
+                    );
+
+                    writer.write(`$args['${variant.discriminantValue.wireValue}'] = `);
+                    writer.writeNodeStatement(
+                        php.invokeMethod({
+                            method: "jsonDeserialize",
+                            arguments_: [discriminantGetter],
+                            static_: true,
+                            on: type.getClassReference()
+                        })
+                    );
+                });
+
+            case "optional":
+                return php.codeblock((writer) => {
+                    if (type.underlyingType().internalType.type === "reference") {
+                        writer.controlFlow(
+                            "if",
+                            php.invokeMethod({
+                                method: "is_null",
+                                arguments_: [discriminantGetter],
+                                static_: true
+                            })
+                        );
+                        writer.writeTextStatement(`$args['${variant.discriminantValue.wireValue}'] = null`);
+                        writer.alternativeControlFlow("else");
+                    }
+
+                    writer.writeNode(this.jsonDeserializeTypeCall(variant, type.underlyingType()));
+
+                    if (type.underlyingType().internalType.type === "reference") {
+                        writer.endControlFlow();
+                    }
+                });
+
+            case "date":
+            case "dateTime":
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            default:
+                return php.codeblock((writer) => {
+                    writer.write(`$args['${variant.discriminantValue.wireValue}'] = `);
+                    writer.writeNodeStatement(discriminantGetter);
+                });
+        }
     }
 
     private variantSwitchStatement(

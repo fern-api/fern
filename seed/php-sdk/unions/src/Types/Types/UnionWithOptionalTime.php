@@ -197,5 +197,30 @@ class UnionWithOptionalTime extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "date":
+                $args['type'] = 'date';
+                if (!array_key_exists('date', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'date'",
+                    );
+                }
+
+                $args['date'] = $data['date'];
+                break;
+            case "datetime":
+                $args['type'] = 'datetime';
+                if (!array_key_exists('datetime', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'datetime'",
+                    );
+                }
+
+                $args['datetime'] = $data['datetime'];
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

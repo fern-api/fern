@@ -185,5 +185,30 @@ class UnionWithPrimitive extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "integer":
+                $args['type'] = 'integer';
+                if (!array_key_exists('integer', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'integer'",
+                    );
+                }
+
+                $args['integer'] = $data['integer'];
+                break;
+            case "string":
+                $args['type'] = 'string';
+                if (!array_key_exists('string', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'string'",
+                    );
+                }
+
+                $args['string'] = $data['string'];
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

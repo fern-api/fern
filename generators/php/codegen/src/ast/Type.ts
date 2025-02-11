@@ -249,6 +249,14 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public getClassReference(): ClassReference {
+        if (this.internalType.type !== "reference") {
+            throw new Error("Cannot get class reference for non-reference type.");
+        }
+
+        return this.internalType.value;
+    }
+
     /* Static factory methods for creating a Type */
     public static int(): Type {
         return new this({

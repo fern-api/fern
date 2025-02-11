@@ -225,5 +225,40 @@ class UnionWithTime extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "value":
+                $args['type'] = 'value';
+                if (!array_key_exists('value', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'value'",
+                    );
+                }
+
+                $args['value'] = $data['value'];
+                break;
+            case "date":
+                $args['type'] = 'date';
+                if (!array_key_exists('date', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'date'",
+                    );
+                }
+
+                $args['date'] = $data['date'];
+                break;
+            case "datetime":
+                $args['type'] = 'datetime';
+                if (!array_key_exists('datetime', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'datetime'",
+                    );
+                }
+
+                $args['datetime'] = $data['datetime'];
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

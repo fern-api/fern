@@ -147,5 +147,14 @@ class UnionWithSingleElement extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "foo":
+                $args['type'] = 'foo';
+                $args['foo'] = Foo::jsonDeserialize($data);
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

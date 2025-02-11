@@ -217,6 +217,10 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreJsonClassReference("JsonDecoder");
     }
 
+    public getJsonDeserializerClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonDeserializer");
+    }
+
     public getJsonPropertyAttributeClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonProperty");
     }

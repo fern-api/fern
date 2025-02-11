@@ -172,5 +172,20 @@ class UnionWithLiteral extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "fern":
+                $args['type'] = 'fern';
+                if (!array_key_exists('fern', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'fern'",
+                    );
+                }
+
+                $args['fern'] = $data['fern'];
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

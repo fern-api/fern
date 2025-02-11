@@ -185,5 +185,18 @@ class UnionWithoutKey extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "foo":
+                $args['type'] = 'foo';
+                $args['foo'] = Foo::jsonDeserialize($data);
+                break;
+            case "bar":
+                $args['type'] = 'bar';
+                $args['bar'] = Bar::jsonDeserialize($data);
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

@@ -168,5 +168,18 @@ class UnionWithUnknown extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "foo":
+                $args['type'] = 'foo';
+                $args['foo'] = Foo::jsonDeserialize($data);
+                break;
+            case "unknown":
+                $args['type'] = 'unknown';
+                $args['value'] = null;
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

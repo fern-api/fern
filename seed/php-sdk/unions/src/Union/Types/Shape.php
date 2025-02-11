@@ -212,5 +212,18 @@ class Shape extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "circle":
+                $args['type'] = 'circle';
+                $args['circle'] = Circle::jsonDeserialize($data);
+                break;
+            case "square":
+                $args['type'] = 'square';
+                $args['square'] = Square::jsonDeserialize($data);
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }

@@ -185,5 +185,40 @@ class UnionWithDiscriminant extends JsonSerializableType
             );
         }
 
+        switch ($type) {
+            case "foo":
+                $args['_type'] = 'foo';
+                if (!array_key_exists('foo', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'foo'",
+                    );
+                }
+
+                if (!(is_array($data['foo']))) {
+                    throw new Exception(
+                        "Expected property 'foo' in json data to be array, instead received " . get_debug_type($data['foo']),
+                    );
+                }
+                $args['foo'] = Foo::jsonDeserialize($data['foo']);
+                break;
+            case "bar":
+                $args['_type'] = 'bar';
+                if (!array_key_exists('bar', $data)) {
+                    throw new Exception(
+                        "Json data is missing property 'bar'",
+                    );
+                }
+
+                if (!(is_array($data['bar']))) {
+                    throw new Exception(
+                        "Expected property 'bar' in json data to be array, instead received " . get_debug_type($data['bar']),
+                    );
+                }
+                $args['bar'] = Bar::jsonDeserialize($data['bar']);
+                break;
+            case "_unknown":
+            default:
+                $args['value'] = $data;
+        }
     }
 }
