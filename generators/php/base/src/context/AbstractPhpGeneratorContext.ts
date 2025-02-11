@@ -115,6 +115,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreNamespace()}\\Multipart`;
     }
 
+    public getCorePaginationNamespace(): string {
+        return `${this.getCoreNamespace()}\\Pagination`;
+    }
+
     public getCoreTypesNamespace(): string {
         return `${this.getCoreNamespace()}\\Types`;
     }

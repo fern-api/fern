@@ -31,7 +31,7 @@
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
-    "@fern-api/docs-parsers": "0.0.53",
+    "@fern-api/docs-parsers": "^0.0.54",
     "@fern-api/fdr-sdk": "0.130.0-8bf179148",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/ui-core-utils": "0.129.4-b6c699ad2",

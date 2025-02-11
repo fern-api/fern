@@ -65,6 +65,12 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  pagination:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
 scripts:
   - docker: composer:2.7.9
     commands:
@@ -87,8 +93,6 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
-  # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
-  - pagination
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default

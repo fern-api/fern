@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with 
+        better fallback logic for sparse requests.
+      type: fix
+  irVersion: 55
+  version: 0.51.37
+
+- changelogEntry:
+    - summary: |
         Type reference example generation now handles extends and base properties correctly, as well as in-lined Alias types.
       type: fix
   irVersion: 55

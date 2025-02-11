@@ -7,6 +7,7 @@ export type Arguments = NamedArgument[] | UnnamedArgument[];
 export interface NamedArgument {
     name: string;
     assignment: AbstractAstNode | string;
+    docs?: string;
 }
 
 export type UnnamedArgument = AbstractAstNode;
