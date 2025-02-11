@@ -1,3 +1,24 @@
+- version: 0.8.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add automatic pagination support for endpoints that return a paginated response.
+
+        Here's an example of how users can use paginated endpoints:
+
+        ```php
+        $items = $client->list($request);
+        foreach($items as $item){
+            echo $item;
+        }
+        $pages = $items->getPages();
+        foreach($pages as $page){
+            foreach($page as $item){
+                echo $item;
+            }
+        }
+        ```
+  irVersion: 55
 - version: 0.7.0
   changelogEntry:
     - type: feat
