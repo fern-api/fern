@@ -13,6 +13,7 @@ class DiscriminatedUnionTest extends TestCase
     {
         $expected_json = json_encode(
             [
+                'id' => 'abc123',
                 'type' => 'circle',
                 'radius' => 1.0,
             ],
@@ -33,6 +34,7 @@ class DiscriminatedUnionTest extends TestCase
     {
         $expected_json = json_encode(
             [
+                'id' => 'abc123',
                 'type' => 'square',
                 'square' => [
                     'length' => 1.0,
@@ -55,6 +57,7 @@ class DiscriminatedUnionTest extends TestCase
     {
         $expected_json = json_encode(
             [
+                'id' => 'abc123',
                 'type' => 'triangle',
             ],
             JSON_THROW_ON_ERROR

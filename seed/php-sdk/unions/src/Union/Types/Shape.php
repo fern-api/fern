@@ -5,11 +5,15 @@ namespace Seed\Union\Types;
 use JsonException;
 use Seed\Core\Json\JsonDecoder;
 use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Union\Types\Circle;
 use Seed\Union\Types\Square;
 
 class Shape extends JsonSerializableType
 {
+    #[JsonProperty('id')]
+    public string $id;
+
     /**
      * @var 'circle'|'square'|'triangle'|'_unknown' $type
      */
@@ -21,47 +25,58 @@ class Shape extends JsonSerializableType
     public mixed $value;
 
     /**
-     * @param ?array{
-     *    type?: 'circle'|'square'|'triangle'|'_unknown',
-     *    value?: Circle|Square|mixed,
+     * @param array{
+     *    id: string,
+     *    type: 'circle'|'square'|'triangle'|'_unknown',
+     *    value: Circle|Square|mixed,
      * } $options
      */
     public function __construct(
-        private readonly ?array $options = null
+        private readonly array $options
     ) {
+        $this->id = $this->options['id'];
         $this->type = $this->options['type'] ?? '_unknown';
         $this->value = $this->options['value'] ?? null;
     }
 
     public static function circle(
+        string $id,
         Circle $circle
     ): Shape {
         return new Shape([
+            'id' => $id,
             'type' => 'circle',
             'value' => $circle
         ]);
     }
 
     public static function square(
+        string $id,
         Square $square
     ): Shape {
         return new Shape([
+            'id' => $id,
             'type' => 'square',
             'value' => $square
         ]);
     }
 
-    public static function triangle(): Shape
+    public static function triangle(string $id): Shape
     {
         return new Shape([
+            'id' => $id,
             'type' => 'triangle',
+            'value' => null,
         ]);
     }
 
     public static function _unknown(
+        string $id,
         mixed $_unknown
     ): Shape {
         return new Shape([
+            'id' => $id,
+            'type' => '_unknown',
             'value' => $_unknown
         ]);
     }
@@ -103,6 +118,8 @@ class Shape extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
+        $result["id"] = $this->id;
+
         $result["type"] = $this->type;
 
         switch ($this->type) {
@@ -139,26 +156,45 @@ class Shape extends JsonSerializableType
 
     public static function jsonDeserialize(array $data): static
     {
+        if (!array_key_exists('id', $data)) {
+            throw new \Exception("Json data is missing property 'id'");
+        }
+
+        $id = $data['id'];
+
+        if (!is_string($id)) {
+            throw new \Exception("Expected property 'id' in json data to be string, instead received " . get_debug_type($id));
+        }
+
         if (!array_key_exists('type', $data)) {
             throw new \Exception("Attempted to deserialize into Shape without a type provided");
         }
 
+        $args = [];
+        $args['id'] = $id;
         $type = $data['type'];
+        $args['type'] = $type;
         switch ($type) {
             case 'circle':
-                return Shape::circle(Circle::jsonDeserialize($data));
+                $args['value'] = Circle::jsonDeserialize($data);
+                // @phpstan-ignore-next-line
+                return new static($args);
             case 'square':
                 if (!array_key_exists($type, $data)) {
                     throw new \Exception("Attempted to deserialize into ShapeSingleProperty without a " . $type . " value provided");
                 }
 
-                $value = $data[$type];
-                return Shape::square(Square::jsonDeserialize($value));
+                $args['value'] = Square::jsonDeserialize($data['square']);
+                // @phpstan-ignore-next-line
+                return new static($args);
             case 'triangle':
-                return Shape::triangle();
+                // @phpstan-ignore-next-line
+                return new static($args);
             case '_unknown':
             default:
-                return Shape::_unknown($data);
+                $args['value'] = $data;
+                // @phpstan-ignore-next-line
+                return new static($args);
         }
     }
 }
