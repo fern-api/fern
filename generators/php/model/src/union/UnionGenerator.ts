@@ -105,27 +105,11 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private discriminantGetter(): php.CodeBlock {
-        if (this.context.shouldGenerateGetterMethods()) {
-            const getterName = this.context.getGetterMethod({
-                name: this.unionTypeDeclaration.discriminant.name,
-                field: this.getDiscriminantField()
-            }).name;
-            return php.codeblock(`$this->${getterName}`);
-        }
-
         const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
         return php.codeblock("$this->" + discriminant);
     }
 
     private valueGetter(): php.CodeBlock {
-        if (this.context.shouldGenerateGetterMethods()) {
-            const getterName = this.context.getGetterMethod({
-                name: this.getValueFieldName(),
-                field: this.getValueField()
-            }).name;
-            return php.codeblock(`$this->${getterName}`);
-        }
-
         return php.codeblock("$this->value");
     }
 
