@@ -93,6 +93,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock("$this->" + discriminant);
     }
 
+    private valueGetter(): php.CodeBlock {
+        return php.codeblock("$this->value");
+    }
+
     private getTypeField(): php.Field {
         // TODO(ajgateno): Actually add the literals as a union rather than just string
         return php.field({
@@ -291,7 +295,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const methodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
         const returnType = this.getReturnType(variant);
 
-        const typeCheckConditional = this.getTypeCheckConditional(variant, php.codeblock("$this->value"), returnType);
+        const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter(), returnType);
 
         const body = php.codeblock((writer) => {
             if (typeCheckConditional) {
@@ -299,7 +303,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeLine();
             }
 
-            writer.writeTextStatement("return $this->value");
+            writer.write("return ");
+            writer.writeNodeStatement(this.valueGetter());
         });
 
         return php.method({
@@ -357,7 +362,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private isMethodCheck(variant: SingleUnionType): php.CodeBlock {
         const discriminantCheck = this.getDiscriminantCheck(this.typeGetter(), variant);
-        const typeCheck = this.getTypeCheck(php.codeblock("$this->value"), this.getReturnType(variant));
+        const typeCheck = this.getTypeCheck(this.valueGetter(), this.getReturnType(variant));
 
         return php.codeblock((writer) => {
             if (typeCheck) {
@@ -817,7 +822,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "enumString":
             case "union":
             default:
-                return php.codeblock((writer) => writer.writeTextStatement("$value = $this->value"));
+                return php.codeblock((writer) => {
+                    writer.write("$value = ");
+                    writer.writeNodeStatement(this.valueGetter());
+                });
         }
     }
 
@@ -827,7 +835,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 "if",
                 php.invokeMethod({
                     method: "is_null",
-                    arguments_: [php.codeblock("$this->value")],
+                    arguments_: [this.valueGetter()],
                     static_: true
                 })
             );
@@ -837,11 +845,20 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.controlFlow(
                 "if",
                 php.codeblock((_writer) => {
-                    _writer.write("$this->value instanceof ");
+                    _writer.writeNode(this.valueGetter());
+                    _writer.write(" instanceof ");
                     _writer.writeNode(php.classReference(this.context.getJsonSerializableTypeClassReference()));
                 })
             );
-            writer.writeTextStatement("$value = $this->value->jsonSerialize()");
+            writer.write("$value = ");
+            writer.writeNodeStatement(
+                php.invokeMethod({
+                    method: "jsonSerialize",
+                    arguments_: [],
+                    static_: false,
+                    on: this.valueGetter()
+                })
+            );
             writer.writeNodeStatement(
                 php.codeblock((_writer) => {
                     _writer.write("$result = ");
@@ -859,7 +876,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 "elseif",
                 php.invokeMethod({
                     method: "is_array",
-                    arguments_: [php.codeblock("$this->value")],
+                    arguments_: [this.valueGetter()],
                     static_: true
                 })
             );
@@ -869,7 +886,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     _writer.writeNode(
                         php.invokeMethod({
                             method: "array_merge",
-                            arguments_: [php.codeblock("$this->value"), php.codeblock("$result")],
+                            arguments_: [this.valueGetter(), php.codeblock("$result")],
                             static_: true
                         })
                     );
