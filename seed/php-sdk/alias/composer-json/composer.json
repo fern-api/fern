@@ -37,8 +37,7 @@
   "scripts": {
     "build": [
       "@php -l src",
-      "@php -l tests",
-      "@php -l legacy"
+      "@php -l tests"
     ],
     "test": "phpunit",
     "analyze": "echo skip",

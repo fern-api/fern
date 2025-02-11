@@ -89,7 +89,6 @@ fixtures:
             build:
             - "@php -l src"
             - "@php -l tests"
-            - "@php -l legacy"
             analyze: echo skip
             hello: echo hello
 
