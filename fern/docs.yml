@@ -62,6 +62,9 @@ navigation:
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/openapi/auth.mdx
+          - page: Servers
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/openapi/servers.mdx            
           - section: Endpoints
             icon: fa-regular fa-object-intersect
             slug: endpoints
