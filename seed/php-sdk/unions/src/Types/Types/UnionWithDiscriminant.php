@@ -172,5 +172,18 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public static function jsonDeserialize(array $data): static
     {
+        $args = [];
+        if (!array_key_exists('_type', $data)) {
+            throw new Exception(
+                "Json data is missing property '_type'",
+            );
+        }
+        $type = $data['_type'];
+        if (!(is_string($type))) {
+            throw new Exception(
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
+            );
+        }
+
     }
 }

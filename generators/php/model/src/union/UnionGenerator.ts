@@ -938,7 +938,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonDeserializeMethod(): php.Method {
         const body: php.CodeBlock = php.codeblock((writer) => {
+            writer.writeTextStatement("$args = []");
             writer.writeNode(this.jsonDeserializeBaseProperties());
+            writer.writeNode(this.jsonDeserializeCheckDiscriminant());
         });
 
         return php.method({
@@ -1010,8 +1012,63 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 );
 
+                writer.writeTextStatement(
+                    `$args['${this.context.getPropertyName(property.name.name)}'] = ${this.context.getVariableName(property.name.name)}`
+                );
+
                 writer.writeLine();
             }
+        });
+    }
+
+    private jsonDeserializeCheckDiscriminant(): php.CodeBlock {
+        const discriminant: NameAndWireValue = this.unionTypeDeclaration.discriminant;
+        return php.codeblock((writer) => {
+            const arrayKeyDoesNotExist = php.codeblock((_writer) => {
+                _writer.write("!");
+                _writer.writeNode(
+                    php.invokeMethod({
+                        method: "array_key_exists",
+                        arguments_: [php.codeblock(`'${discriminant.wireValue}'`), php.codeblock("$data")]
+                    })
+                );
+            });
+
+            writer.controlFlow("if", arrayKeyDoesNotExist);
+            writer.writeNodeStatement(
+                this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(discriminant))
+            );
+            writer.endControlFlow();
+            writer.writeTextStatement(
+                `${this.context.getVariableName(discriminant.name)} = $data['${discriminant.wireValue}']`
+            );
+            const typeCheck = this.getTypeCheck(
+                php.codeblock(this.context.getVariableName(discriminant.name)),
+                php.Type.string()
+            );
+
+            if (typeCheck == null) {
+                throw Error("Attmepted to get type check for string and got null; this is impossible");
+            }
+
+            const isNotType = php.codeblock((_writer) => {
+                _writer.write("!");
+                _writer.write("(");
+                _writer.writeNode(typeCheck);
+                _writer.write(")");
+            });
+
+            writer.writeNode(
+                php.codeblock((_writer) => {
+                    _writer.controlFlow("if", isNotType);
+                    _writer.writeNodeStatement(
+                        this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(discriminant, "string"))
+                    );
+                    _writer.endControlFlow();
+                })
+            );
+
+            writer.writeLine();
         });
     }
 

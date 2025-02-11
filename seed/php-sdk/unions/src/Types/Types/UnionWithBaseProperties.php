@@ -227,6 +227,7 @@ class UnionWithBaseProperties extends JsonSerializableType
      */
     public static function jsonDeserialize(array $data): static
     {
+        $args = [];
         if (!array_key_exists('id', $data)) {
             throw new Exception(
                 "Json data is missing property 'id'",
@@ -236,6 +237,19 @@ class UnionWithBaseProperties extends JsonSerializableType
         if (!(is_string($id))) {
             throw new Exception(
                 "Expected property 'id' in json data to be string, instead received " . get_debug_type($id),
+            );
+        }
+        $args['id'] = $id;
+
+        if (!array_key_exists('type', $data)) {
+            throw new Exception(
+                "Json data is missing property 'type'",
+            );
+        }
+        $type = $data['type'];
+        if (!(is_string($type))) {
+            throw new Exception(
+                "Expected property 'type' in json data to be string, instead received " . get_debug_type($type),
             );
         }
 
