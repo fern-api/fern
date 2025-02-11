@@ -26,7 +26,7 @@ function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Ar
     writer.writeLine("(");
     writer.indent();
     for (const argument of arguments_) {
-        writeArgument({ writer, argument });
+        writeArgument({ writer, argument, writeCompact: false });
         writer.writeLine(",");
     }
     writer.dedent();
@@ -39,13 +39,28 @@ function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Argu
         if (index > 0) {
             writer.write(", ");
         }
-        writeArgument({ writer, argument });
+        writeArgument({ writer, argument, writeCompact: true });
     });
     writer.write(")");
 }
 
-function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {
+function writeArgument({
+    writer,
+    argument,
+    writeCompact
+}: {
+    writer: Writer;
+    argument: Argument;
+    writeCompact: boolean;
+}): void {
     if (isNamedArgument(argument)) {
+        if (argument.docs) {
+            if (writeCompact) {
+                writer.write(`/* ${argument.docs} */ `);
+            } else {
+                writer.writeLine(`/* ${argument.docs} */`);
+            }
+        }
         writer.write(`${argument.name}: `);
         writer.writeNodeOrString(argument.assignment);
     } else {

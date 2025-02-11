@@ -70,8 +70,8 @@ class HasNextPageOffsetPagerTest extends TestCase
     {
         $responses = new ArrayIterator([
             new Response(new Data(['item1', 'item2']), true),
-            new Response(new Data(['item1', 'item2']), true),
-            new Response(new Data(['item1']), false),
+            new Response(new Data(['item3', 'item4']), true),
+            new Response(new Data(['item5']), false),
         ]);
 
         return new OffsetPager(

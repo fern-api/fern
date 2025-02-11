@@ -214,15 +214,15 @@ export class Type extends AstNode {
                 if (comment) {
                     writer.writeNode(this.internalType.value);
                     const generics = this.internalType.value.generics;
+
                     if (generics && generics.length > 0) {
                         writer.write("<");
-                        for (let genericIndex = 0; genericIndex < generics.length; genericIndex++) {
-                            const generic = generics[genericIndex];
-                            generic?.write(writer, { comment });
-                            if (genericIndex !== generics.length - 1) {
+                        generics.forEach((generic, index) => {
+                            if (index > 0) {
                                 writer.write(", ");
                             }
-                        }
+                            generic.write(writer, { comment });
+                        });
                         writer.write(">");
                     }
                 } else {

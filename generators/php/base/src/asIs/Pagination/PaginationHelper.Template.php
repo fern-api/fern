@@ -98,7 +98,6 @@ class PaginationHelper
                 }
                 /** @var ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType|null $type */
                 $type = $property->getType();
-                $name = $property->getName();
                 $value = self::getDefaultValueForType($type);
                 // if something is nullable, don't explicitly pass the null value as a parameter
                 if($value === null)
@@ -106,9 +105,9 @@ class PaginationHelper
                     continue;
                 }
 
-                $values[$name] = $value;
+                $values[$property->getName()] = $value;
             }
-            $args[0] = $values;
+            $args = [$values];
 
             /** @var T|null $instance */
             $instance = $reflectionClass->newInstanceArgs($args);
@@ -157,11 +156,11 @@ class PaginationHelper
                     'array' => [],
                     default => null,
                 };
-            } else {
-                /** @var class-string<object> $typeName */
-                $typeName = $type->getName();
-                return self::createInstanceWithDefaults($typeName);
             }
+
+            /** @var class-string<object> $typeName */
+            $typeName = $type->getName();
+            return self::createInstanceWithDefaults($typeName);
         }
 
         return null;

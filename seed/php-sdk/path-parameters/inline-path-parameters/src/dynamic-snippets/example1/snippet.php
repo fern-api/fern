@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Organizations\Requests\GetOrganizationUserRequest;
 
 $client = new SeedClient(
     options: [
@@ -10,7 +11,9 @@ $client = new SeedClient(
     ],
 );
 $client->organizations->getOrganizationUser(
-    'tenant_id',
-    'organization_id',
-    'user_id',
+    new GetOrganizationUserRequest([
+        'tenantId' => 'tenant_id',
+        'organizationId' => 'organization_id',
+        'userId' => 'user_id',
+    ]),
 );

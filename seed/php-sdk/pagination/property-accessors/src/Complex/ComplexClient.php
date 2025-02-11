@@ -63,15 +63,15 @@ class ComplexClient
     public function search(SearchRequest $request, ?array $options = null): Pager
     {
         return new CursorPager(
-            $request,
-            fn (SearchRequest $request) => $this->searchInternal($request, $options),
-            function (SearchRequest $request, ?string $cursor) {
+            request: $request,
+            getNextPage: fn (SearchRequest $request) => $this->__search($request, $options),
+            setCursor: function (SearchRequest $request, ?string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            fn (PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
+            getNextCursor: fn (PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
             /* @phpstan-ignore-next-line */
-            fn (PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
+            getItems: fn (PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
         );
     }
 
@@ -85,7 +85,7 @@ class ComplexClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function searchInternal(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function __search(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

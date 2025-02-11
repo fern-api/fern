@@ -68,7 +68,7 @@ class IntOffsetPagerTest extends TestCase
     {
         $responses = new ArrayIterator([
             new Response(new Data(['item1', 'item2'])),
-            new Response(new Data(['item1'])),
+            new Response(new Data(['item3'])),
             new Response(new Data([])),
         ]);
 

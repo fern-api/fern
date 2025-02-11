@@ -59,7 +59,7 @@ class CursorPagerTest extends TestCase
 {
     private const CURSOR1 = null;
     private const CURSOR2 = '00000000-0000-0000-0000-000000000001';
-    private const CURSOR3 = '00000000-0000-0000-0000-000000000001';
+    private const CURSOR3 = '00000000-0000-0000-0000-000000000002';
     private ?string $cursorCopy;
 
     public function testCursorPager(): void

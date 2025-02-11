@@ -268,8 +268,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             parameters,
                             unpagedEndpointResponseType,
                             writer,
-                            optionsParamName,
-                            optionsParamType,
                             unpagedEndpointMethodName
                         });
                         break;
@@ -280,8 +278,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             parameters,
                             unpagedEndpointResponseType,
                             writer,
-                            optionsParamName,
-                            optionsParamType,
                             unpagedEndpointMethodName
                         });
                         break;
@@ -298,8 +294,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters,
         unpagedEndpointResponseType,
         writer,
-        optionsParamName,
-        optionsParamType,
         unpagedEndpointMethodName
     }: {
         pagination: CursorPagination;
@@ -307,8 +301,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
-        optionsParamName: string;
-        optionsParamType: php.Type;
         unpagedEndpointMethodName: string;
     }) {
         const cursorPagerClassReference = this.context.getCursorPagerClassReference();
@@ -318,59 +310,69 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             php.instantiateClass({
                 classReference: cursorPagerClassReference,
                 arguments_: [
-                    // request param
-                    php.variable(requestParam.name),
-                    // get next page callback
-                    php.codeblock((writer) => {
-                        writer.write("fn(");
-                        writer.writeNode(requestParam.type);
-                        writer.write(" ");
-                        writer.writeNode(php.variable(requestParam.name));
-                        writer.write(") => ");
-                        writer.writeNode(
-                            php.invokeMethod({
-                                on: php.variable("this"),
-                                method: unpagedEndpointMethodName,
-                                arguments_: parameters.map((parameter) => php.variable(parameter.name))
-                            })
-                        );
-                    }),
-                    // set cursor on request callback
-                    php.codeblock((writer) => {
-                        writer.write("function (");
-                        writer.writeNode(requestParam.type);
-                        writer.write(" $request, ");
-                        writer.writeNode(cursorType);
-                        writer.writeLine(" $cursor) { ");
-                        writer.indent();
-                        writer.writeNodeStatement(
-                            this.context.deepSetPagination(
-                                php.variable("request"),
-                                this.getFullPropertyPath(pagination.page),
-                                php.variable("cursor")
-                            )
-                        );
-                        writer.dedent();
-                        writer.write("}");
-                    }),
-                    // get next cursor callback
-                    php.codeblock((writer) => {
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn (");
-                        writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(" $response) => ");
-                        writer.writeNode(this.nullableGet("$response", pagination.next));
-                        writer.write(" ?? null");
-                    }),
-                    // get results callback
-                    php.codeblock((writer) => {
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn (");
-                        writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(" $response) => ");
-                        writer.writeNode(this.nullableGet("$response", pagination.results));
-                        writer.write(" ?? []");
-                    })
+                    {
+                        name: "request",
+                        assignment: php.variable(requestParam.name)
+                    },
+                    {
+                        name: "getNextPage",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn(");
+                            writer.writeNode(requestParam.type);
+                            writer.write(" ");
+                            writer.writeNode(php.variable(requestParam.name));
+                            writer.write(") => ");
+                            writer.writeNode(
+                                php.invokeMethod({
+                                    on: php.variable("this"),
+                                    method: unpagedEndpointMethodName,
+                                    arguments_: parameters.map((parameter) => php.variable(parameter.name))
+                                })
+                            );
+                        })
+                    },
+                    {
+                        name: "setCursor",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("function (");
+                            writer.writeNode(requestParam.type);
+                            writer.write(" $request, ");
+                            writer.writeNode(cursorType);
+                            writer.writeLine(" $cursor) { ");
+                            writer.indent();
+                            writer.writeNodeStatement(
+                                this.context.deepSetPagination(
+                                    php.variable("request"),
+                                    this.getFullPropertyPath(pagination.page),
+                                    php.variable("cursor")
+                                )
+                            );
+                            writer.dedent();
+                            writer.write("}");
+                        })
+                    },
+                    {
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getNextCursor",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn (");
+                            writer.writeNode(unpagedEndpointResponseType);
+                            writer.write(" $response) => ");
+                            writer.writeNode(this.nullableGet("$response", pagination.next));
+                            writer.write(" ?? null");
+                        })
+                    },
+                    {
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getItems",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn (");
+                            writer.writeNode(unpagedEndpointResponseType);
+                            writer.write(" $response) => ");
+                            writer.writeNode(this.nullableGet("$response", pagination.results));
+                            writer.write(" ?? []");
+                        })
+                    }
                 ],
                 multiline: true
             })
@@ -383,8 +385,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters,
         unpagedEndpointResponseType,
         writer,
-        optionsParamName,
-        optionsParamType,
         unpagedEndpointMethodName
     }: {
         pagination: OffsetPagination;
@@ -392,8 +392,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
-        optionsParamName: string;
-        optionsParamType: php.Type;
         unpagedEndpointMethodName: string;
     }) {
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference();
@@ -402,82 +400,96 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             php.instantiateClass({
                 classReference: offsetPagerClassReference,
                 arguments_: [
-                    // request param
-                    php.variable(requestParam.name),
-                    // get next page callback
-                    php.codeblock((writer) => {
-                        writer.write("fn(");
-                        writer.writeNode(requestParam.type);
-                        writer.write(" ");
-                        writer.writeNode(php.variable(requestParam.name));
-                        writer.write(") => ");
-                        writer.writeNode(
-                            php.invokeMethod({
-                                on: php.variable("this"),
-                                method: unpagedEndpointMethodName,
-                                arguments_: parameters.map((parameter) => php.variable(parameter.name))
-                            })
-                        );
-                    }),
-                    // get page callback
-                    php.codeblock((writer) => {
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn(");
-                        writer.writeNode(requestParam.type);
-                        writer.write(" $request) => ");
-                        writer.writeNode(this.nullableGet("$request", pagination.page));
-                        writer.write(" ?? 0");
-                    }),
-                    // set page on request callback
-                    php.codeblock((writer) => {
-                        writer.write("function (");
-                        writer.writeNode(requestParam.type);
-                        writer.writeLine(" $request, int $offset) { ");
-                        writer.indent();
-                        writer.writeNodeStatement(
-                            this.context.deepSetPagination(
-                                php.variable("request"),
-                                this.getFullPropertyPath(pagination.page),
-                                php.variable("offset")
-                            )
-                        );
-                        writer.dedent();
-                        writer.write("}");
-                    }),
-                    // get step callback
-                    php.codeblock((writer) => {
-                        if (!pagination.step) {
-                            writer.write("null");
-                            return;
-                        }
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn(");
-                        writer.writeNode(requestParam.type);
-                        writer.write(" $request) => ");
-                        writer.writeNode(this.nullableGet("$request", pagination.step));
-                        writer.write(" ?? 0");
-                    }),
-                    // get results callback
-                    php.codeblock((writer) => {
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn(");
-                        writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(" $response) => ");
-                        writer.writeNode(this.nullableGet("$response", pagination.results));
-                        writer.write(" ?? []");
-                    }),
-                    // has next page callback
-                    php.codeblock((writer) => {
-                        if (!pagination.hasNextPage) {
-                            writer.write("null");
-                            return;
-                        }
-                        writer.writeLine("/* @phpstan-ignore-next-line */");
-                        writer.write("fn(");
-                        writer.writeNode(unpagedEndpointResponseType);
-                        writer.write(" $response) => ");
-                        writer.writeNode(this.nullableGet("$response", pagination.hasNextPage));
-                    })
+                    {
+                        name: "request",
+                        assignment: php.variable(requestParam.name)
+                    },
+                    {
+                        name: "getNextPage",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn(");
+                            writer.writeNode(requestParam.type);
+                            writer.write(" ");
+                            writer.writeNode(php.variable(requestParam.name));
+                            writer.write(") => ");
+                            writer.writeNode(
+                                php.invokeMethod({
+                                    on: php.variable("this"),
+                                    method: unpagedEndpointMethodName,
+                                    arguments_: parameters.map((parameter) => php.variable(parameter.name))
+                                })
+                            );
+                        })
+                    },
+                    {
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getOffset",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn(");
+                            writer.writeNode(requestParam.type);
+                            writer.write(" $request) => ");
+                            writer.writeNode(this.nullableGet("$request", pagination.page));
+                            writer.write(" ?? 0");
+                        })
+                    },
+                    {
+                        name: "setOffset",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("function (");
+                            writer.writeNode(requestParam.type);
+                            writer.writeLine(" $request, int $offset) { ");
+                            writer.indent();
+                            writer.writeNodeStatement(
+                                this.context.deepSetPagination(
+                                    php.variable("request"),
+                                    this.getFullPropertyPath(pagination.page),
+                                    php.variable("offset")
+                                )
+                            );
+                            writer.dedent();
+                            writer.write("}");
+                        })
+                    },
+                    {
+                        docs: pagination.step ? "@phpstan-ignore-next-line" : undefined,
+                        name: "getStep",
+                        assignment: php.codeblock((writer) => {
+                            if (!pagination.step) {
+                                writer.write("null");
+                                return;
+                            }
+                            writer.write("fn(");
+                            writer.writeNode(requestParam.type);
+                            writer.write(" $request) => ");
+                            writer.writeNode(this.nullableGet("$request", pagination.step));
+                            writer.write(" ?? 0");
+                        })
+                    },
+                    {
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getItems",
+                        assignment: php.codeblock((writer) => {
+                            writer.write("fn(");
+                            writer.writeNode(unpagedEndpointResponseType);
+                            writer.write(" $response) => ");
+                            writer.writeNode(this.nullableGet("$response", pagination.results));
+                            writer.write(" ?? []");
+                        })
+                    },
+                    {
+                        docs: "@phpstan-ignore-next-line",
+                        name: "hasNextPage",
+                        assignment: php.codeblock((writer) => {
+                            if (!pagination.hasNextPage) {
+                                writer.write("null");
+                                return;
+                            }
+                            writer.write("fn(");
+                            writer.writeNode(unpagedEndpointResponseType);
+                            writer.write(" $response) => ");
+                            writer.writeNode(this.nullableGet("$response", pagination.hasNextPage));
+                        })
+                    }
                 ],
                 multiline: true
             })
