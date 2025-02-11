@@ -155,7 +155,7 @@ class UnionWithLiteral extends JsonSerializableType
         $base = $data['base'];
         if (!(is_string($base))) {
             throw new Exception(
-                "Expected property 'base' in json data to be string, instead received" . get_debug_type($base),
+                "Expected property 'base' in json data to be string, instead received " . get_debug_type($base),
             );
         }
 

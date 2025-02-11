@@ -416,7 +416,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, typeName: string): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write(
-                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in json data to be ${typeName}, instead received" . `
+                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in json data to be ${typeName}, instead received " . `
             );
             writer.writeNode(
                 php.invokeMethod({
