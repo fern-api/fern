@@ -4,6 +4,7 @@ import { STATIC, php } from "@fern-api/php-codegen";
 
 import {
     DeclaredTypeName,
+    Name,
     NameAndWireValue,
     ObjectProperty,
     SingleUnionType,
@@ -50,11 +51,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             clazz.addField(field);
         }
 
-        const typeField = this.getTypeField();
-        clazz.addField(typeField);
+        const discriminantField = this.getDiscriminantField();
+        clazz.addField(discriminantField);
 
         const valueField = this.getValueField();
         clazz.addField(valueField);
+
+        if (includeGetter) {
+            clazz.addMethod(
+                this.context.getGetterMethod({
+                    name: this.unionTypeDeclaration.discriminant.name,
+                    field: discriminantField
+                })
+            );
+            clazz.addMethod(
+                this.context.getGetterMethod({
+                    name: this.getValueFieldName(),
+                    field: valueField
+                })
+            );
+        }
 
         for (const type of this.unionTypeDeclaration.types) {
             clazz.addMethod(this.staticConstructor(type));
@@ -88,27 +104,59 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private typeGetter(): php.CodeBlock {
+    private discriminantGetter(): php.CodeBlock {
+        if (this.context.shouldGenerateGetterMethods()) {
+            const getterName = this.context.getGetterMethod({
+                name: this.unionTypeDeclaration.discriminant.name,
+                field: this.getDiscriminantField()
+            }).name;
+            return php.codeblock(`$this->${getterName}`);
+        }
+
         const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
         return php.codeblock("$this->" + discriminant);
     }
 
     private valueGetter(): php.CodeBlock {
+        if (this.context.shouldGenerateGetterMethods()) {
+            const getterName = this.context.getGetterMethod({
+                name: this.getValueFieldName(),
+                field: this.getValueField()
+            }).name;
+            return php.codeblock(`$this->${getterName}`);
+        }
+
         return php.codeblock("$this->value");
     }
 
-    private getTypeField(): php.Field {
+    private getValueFieldName(): Name {
+        const safeUnsafeValue = {
+            safeName: "value",
+            unsafeName: "value"
+        };
+
+        return {
+            originalName: "value",
+            camelCase: safeUnsafeValue,
+            pascalCase: safeUnsafeValue,
+            snakeCase: safeUnsafeValue,
+            screamingSnakeCase: { safeName: "VALUE", unsafeName: "VALUE" }
+        };
+    }
+
+    private getDiscriminantField(): php.Field {
+        const includeGetter: boolean = this.context.shouldGenerateGetterMethods();
         // TODO(ajgateno): Actually add the literals as a union rather than just string
         return php.field({
             name: this.unionTypeDeclaration.discriminant.wireValue,
             type: php.Type.string(),
-            access: "public",
+            access: includeGetter ? "private" : "public",
             readonly_: true
         });
     }
 
     private getValueField(): php.Field {
-        // TODO(ajgateno): Actually add the class references as a union rather than just mixed
+        const includeGetter: boolean = this.context.shouldGenerateGetterMethods();
         const types: php.Type[] = [];
 
         for (const variant of this.unionTypeDeclaration.types) {
@@ -121,7 +169,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
             name: "value",
             type: php.Type.union(types),
-            access: "public",
+            access: includeGetter ? "private" : "public",
             readonly_: true
         });
     }
@@ -369,7 +417,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private isMethodCheck(variant: SingleUnionType): php.CodeBlock {
-        const discriminantCheck = this.getDiscriminantCheck(this.typeGetter(), variant);
+        const discriminantCheck = this.getDiscriminantCheck(this.discriminantGetter(), variant);
         const typeCheck = this.getTypeCheck(this.valueGetter(), this.getReturnType(variant));
 
         return php.codeblock((writer) => {
@@ -406,7 +454,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.write("; got ");
             writer.write('"');
             writer.write(" . ");
-            writer.writeNode(this.typeGetter());
+            writer.writeNode(this.discriminantGetter());
             writer.write(" . ");
             writer.write('"');
             writer.write("with value of type ");
@@ -568,7 +616,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
                         _writer.write(`$result['${discriminant}'] = `);
-                        _writer.writeNode(this.typeGetter());
+                        _writer.writeNode(this.discriminantGetter());
                     })
                 );
 
@@ -604,7 +652,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                 writer.writeNode(
                     this.variantSwitchStatement(
-                        this.typeGetter(),
+                        this.discriminantGetter(),
                         (variant) => this.jsonSerializeCaseHandler(variant),
                         this.jsonSerializeDefaultHandler()
                     )
