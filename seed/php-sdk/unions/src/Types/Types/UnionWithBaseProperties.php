@@ -221,4 +221,23 @@ class UnionWithBaseProperties extends JsonSerializableType
         }
         return self::jsonDeserialize($decodedJson);
     }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function jsonDeserialize(array $data): static
+    {
+        if (!array_key_exists('id', $data)) {
+            throw new Exception(
+                "Json data is missing property 'id'",
+            );
+        }
+        $id = $data['id'];
+        if (!(is_string($id))) {
+            throw new Exception(
+                "Expected property 'id' in json data to be underlyingType, instead received" . get_debug_type($id),
+            );
+        }
+
+    }
 }

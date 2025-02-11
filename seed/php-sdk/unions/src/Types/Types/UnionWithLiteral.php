@@ -141,4 +141,23 @@ class UnionWithLiteral extends JsonSerializableType
         }
         return self::jsonDeserialize($decodedJson);
     }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function jsonDeserialize(array $data): static
+    {
+        if (!array_key_exists('base', $data)) {
+            throw new Exception(
+                "Json data is missing property 'base'",
+            );
+        }
+        $base = $data['base'];
+        if (!(is_string($base))) {
+            throw new Exception(
+                "Expected property 'base' in json data to be underlyingType, instead received" . get_debug_type($base),
+            );
+        }
+
+    }
 }

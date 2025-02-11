@@ -4,6 +4,7 @@ import { STATIC, php } from "@fern-api/php-codegen";
 
 import {
     DeclaredTypeName,
+    NameAndWireValue,
     ObjectProperty,
     SingleUnionType,
     SingleUnionTypeProperty,
@@ -76,6 +77,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         clazz.addMethod(this.jsonSerializeMethod());
 
         clazz.addMethod(this.fromJsonMethod());
+
+        clazz.addMethod(this.jsonDeserializeMethod());
 
         return new PhpFile({
             clazz,
@@ -345,7 +348,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
         return php.codeblock((writer) => {
             writer.controlFlow("if", negation);
-            writer.writeNodeStatement(this.getTypeCheckErrorThrow(variant, variableGetter));
+            writer.writeNodeStatement(
+                this.getErrorThrow(this.getVariantTypeCheckErrorMessage(variant, variableGetter))
+            );
             writer.endControlFlow();
         });
     }
@@ -364,15 +369,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheckErrorThrow(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
+    private getErrorThrow(errorMessage: php.CodeBlock): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write("throw ");
             writer.writeNode(
-                php.instantiateClass({
+                php.throwException({
                     classReference: this.context.getExceptionClassReference(),
                     arguments_: [
                         php.codeblock((writer) => {
-                            writer.writeNode(this.getTypeCheckErrorMessage(variant, variableGetter));
+                            writer.writeNode(errorMessage);
                         })
                     ],
                     multiline: true
@@ -381,7 +385,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheckErrorMessage(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
+    private getVariantTypeCheckErrorMessage(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write('"');
             writer.write("Expected ");
@@ -399,6 +403,25 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 php.invokeMethod({
                     method: "get_debug_type",
                     arguments_: [variableGetter],
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private getDeserializationArrayKeyExistsErrorMessage(propertyName: NameAndWireValue): php.CodeBlock {
+        return php.codeblock(`"Json data is missing property '${propertyName.wireValue}'"`);
+    }
+
+    private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, typeName: string): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write(
+                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in json data to be ${typeName}, instead received" . `
+            );
+            writer.writeNode(
+                php.invokeMethod({
+                    method: "get_debug_type",
+                    arguments_: [php.codeblock(this.context.getVariableName(propertyName.name))],
                     static_: true
                 })
             );
@@ -895,7 +918,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeNodeStatement(
                     php.throwException({
                         classReference: this.context.getExceptionClassReference(),
-                        arguments_: [php.codeblock("\"Unexpected non-array decoded type: \" . gettype($decodedJson)")]
+                        arguments_: [php.codeblock('"Unexpected non-array decoded type: " . gettype($decodedJson)')]
                     })
                 );
                 writer.endControlFlow();
@@ -910,6 +933,85 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 );
             }),
             static_: true
+        });
+    }
+
+    private jsonDeserializeMethod(): php.Method {
+        const body: php.CodeBlock = php.codeblock((writer) => {
+            writer.writeNode(this.jsonDeserializeBaseProperties());
+        });
+
+        return php.method({
+            name: "jsonDeserialize",
+            access: "public",
+            parameters: [
+                php.parameter({
+                    name: "data",
+                    type: php.Type.map(php.Type.string(), php.Type.mixed())
+                })
+            ],
+            return_: STATIC,
+            body,
+            classReference: this.classReference,
+            static_: true
+        });
+    }
+
+    private jsonDeserializeBaseProperties(): php.CodeBlock {
+        return php.codeblock((writer) => {
+            for (const property of this.unionTypeDeclaration.baseProperties) {
+                const arrayKeyDoesNotExist = php.codeblock((_writer) => {
+                    _writer.write("!");
+                    _writer.writeNode(
+                        php.invokeMethod({
+                            method: "array_key_exists",
+                            arguments_: [php.codeblock(`'${property.name.wireValue}'`), php.codeblock("$data")]
+                        })
+                    );
+                });
+
+                writer.controlFlow("if", arrayKeyDoesNotExist);
+                writer.writeNodeStatement(
+                    this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(property.name))
+                );
+                writer.endControlFlow();
+
+                writer.writeTextStatement(
+                    `${this.context.getVariableName(property.name.name)} = $data['${property.name.wireValue}']`
+                );
+
+                const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
+                const typeCheck = this.getTypeCheck(
+                    php.codeblock(this.context.getVariableName(property.name.name)),
+                    type
+                );
+
+                // TODO(ajgateno): We have to fix this or else we could be skipping base properties in deserialization.
+                if (typeCheck == null) {
+                    continue;
+                }
+
+                const isNotType = php.codeblock((_writer) => {
+                    _writer.write("!");
+                    _writer.write("(");
+                    _writer.writeNode(typeCheck);
+                    _writer.write(")");
+                });
+
+                writer.writeNode(
+                    php.codeblock((_writer) => {
+                        _writer.controlFlow("if", isNotType);
+                        _writer.writeNodeStatement(
+                            this.getErrorThrow(
+                                this.getDeserliazationTypeCheckErrorMessage(property.name, type.underlyingType.name)
+                            )
+                        );
+                        _writer.endControlFlow();
+                    })
+                );
+
+                writer.writeLine();
+            }
         });
     }
 

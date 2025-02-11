@@ -169,4 +169,11 @@ class Union extends JsonSerializableType
         }
         return self::jsonDeserialize($decodedJson);
     }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function jsonDeserialize(array $data): static
+    {
+    }
 }
