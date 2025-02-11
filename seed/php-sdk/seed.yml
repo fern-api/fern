@@ -65,6 +65,38 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  pagination:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
+  alias:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: composer-json
+      customConfig:
+        composerJson:
+          name: fern/empty
+          version: 1.0.0
+          description: My Empty PHP Library
+          keywords:
+          - empty
+          license:
+          - "LGPL-2.1-only"
+          - "GPL-3.0-or-later"
+          require:
+            guzzlehttp/guzzle: "7.9.2"
+            guzzlehttp/promises: "2.0.4"
+          require-dev:
+            phpunit/phpunit: "12.0.2"
+            phpunit/php-timer: "8.0.0"
+          scripts:
+            build:
+            - "@php -l src"
+            - "@php -l tests"
+            analyze: echo skip
+            hello: echo hello
 scripts:
   - docker: composer:2.7.9
     commands:
@@ -88,7 +120,8 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
-  - pagination
+  - pagination:no-custom-config
+  - pagination:property-accessors
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default

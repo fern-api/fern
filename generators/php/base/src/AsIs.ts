@@ -27,7 +27,15 @@ export enum AsIsFiles {
     MultipartFormData = "Multipart/MultipartFormData.Template.php",
     MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
 
+    // Core/Pagination files.
+    CursorPager = "Pagination/CursorPager.Template.php",
+    OffsetPager = "Pagination/OffsetPager.Template.php",
+    Page = "Pagination/Page.Template.php",
+    Pager = "Pagination/Pager.Template.php",
+    PaginationHelper = "Pagination/PaginationHelper.Template.php",
+
     // Tests/Core/Json files.
+    AdditionalPropertiesTest = "Json/AdditionalPropertiesTest.Template.php",
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
     EnumTest = "Json/EnumTest.Template.php",
@@ -40,6 +48,16 @@ export enum AsIsFiles {
     TraitTest = "Json/TraitTest.Template.php",
     UnionArrayTest = "Json/UnionArrayTest.Template.php",
     UnionPropertyTest = "Json/UnionPropertyTest.Template.php",
+
+    // Tests/Core/Pagination files.
+    CursorPagerTest = "Pagination/CursorPagerTest/CursorPagerTest.Template.php",
+    HasNextPageOffsetPagerTest = "Pagination/HasNextPageOffsetPagerTest/HasNextPageOffsetPagerTest.Template.php",
+    IntOffsetPagerTest = "Pagination/IntOffsetPagerTest/IntOffsetPagerTest.Template.php",
+    StepOffsetPagerTest = "Pagination/StepOffsetPagerTest/StepOffsetPagerTest.Template.php",
+    GeneratorPagerTest = "Pagination/GeneratorPagerTest/GeneratorPagerTest.Template.php",
+    DeepSetTest = "Pagination/DeepSetTest.Template.php",
+    DeepSetAccessorsTest = "Pagination/DeepSetAccessorsTest.Template.php",
+    CreateRequestWithDefaultsTest = "Pagination/CreateRequestWithDefaultsTest.Template.php",
 
     // Core/Types files.
     ArrayType = "Types/ArrayType.Template.php",

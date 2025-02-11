@@ -9,8 +9,8 @@ import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorCont
 
 export abstract class AbstractPhpGeneratorCli<
     CustomConfig extends BasePhpCustomConfigSchema,
-    CsharpGeneratorContext extends AbstractPhpGeneratorContext<CustomConfig>
-> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, CsharpGeneratorContext> {
+    PhpGeneratorContext extends AbstractPhpGeneratorContext<CustomConfig>
+> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, PhpGeneratorContext> {
     /**
      * Parses the IR for the PHP generators
      * @param irFilepath
