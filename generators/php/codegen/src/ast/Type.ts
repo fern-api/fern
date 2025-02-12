@@ -203,7 +203,7 @@ export class Type extends AstNode {
                     break;
                 }
 
-                if (types.length > 0) {
+                if (types.length > 0 && comment) {
                     writer.write("(");
                     types.forEach((type, index) => {
                         if (index > 0) {
@@ -217,6 +217,17 @@ export class Type extends AstNode {
                         index++;
                     });
                     writer.write(")");
+                } else {
+                    types.forEach((type, index) => {
+                        if (index > 0) {
+                            writer.write("|");
+                        }
+                        if (hasMixed) {
+                            type = type.underlyingType();
+                        }
+                        type.write(writer, { comment });
+                        index++;
+                    });
                 }
                 break;
             }
