@@ -34,7 +34,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods//http-methods/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken
@@ -125,7 +125,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods//http-methods/{JsonUtils.SerializeAsString(id)}",
                     Body = request,
                     Options = options,
                 },
@@ -188,7 +188,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods//http-methods/{JsonUtils.SerializeAsString(id)}",
                     Body = request,
                     Options = options,
                 },
@@ -232,7 +232,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods//http-methods/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken

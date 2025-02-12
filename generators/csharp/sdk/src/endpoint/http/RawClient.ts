@@ -63,7 +63,8 @@ export class RawClient {
             {
                 name: "Path",
                 assignment: csharp.codeblock(
-                    `${this.getPathString({
+                    (writer) => `${this.writePathString({
+                        writer,
                         endpoint,
                         pathParameterReferences: pathParameterReferences ?? {}
                     })}`
@@ -157,14 +158,18 @@ export class RawClient {
         });
     }
 
-    private getPathString({
+    private writePathString({
+        writer,
         endpoint,
         pathParameterReferences
     }: {
+        writer: csharp.Writer;
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
-    }): string {
-        let path = endpoint.fullPath.head;
+    }): void {
+        const hasPathParameters = endpoint.pathParameters.length > 0;
+
+        writer.write(hasPathParameters ? `$"${endpoint.fullPath.head}` : `"${endpoint.fullPath.head}`);
         let pathParametersPresent = false;
         for (const part of endpoint.fullPath.parts) {
             pathParametersPresent = true;
@@ -174,11 +179,15 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `{${reference}}${part.tail}`;
+            writer.write(`${endpoint.fullPath.head}`);
+            writer.write("{");
+            writer.writeNode(this.context.getJsonUtilsClassReference());
+            writer.write(".SerializeAsString(");
+            writer.write(`${reference}`);
+            writer.write(")");
+            writer.write(`${part.tail}`);
+            writer.write("}");
         }
-        if (pathParametersPresent) {
-            return `$"${path}"`;
-        }
-        return `"${path}"`;
+        writer.write("\"");
     }
 }
