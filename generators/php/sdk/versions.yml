@@ -3,6 +3,7 @@
     - type: feat
       summary: Add support for discriminated unions.
   irVersion: 55
+
 - version: 0.11.0
   changelogEntry:
     - type: feat
