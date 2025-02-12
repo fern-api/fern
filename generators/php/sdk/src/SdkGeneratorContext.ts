@@ -319,7 +319,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 key: this.getQueryParametersOptionName(),
                 valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
                 optional: true
-            },
+            }
         ];
         if (!this.isMultipartEndpoint(endpoint)) {
             options.push({
@@ -607,7 +607,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     private getOrganizationPascalCase(): string {
         return `${upperFirst(camelCase(this.config.organization))}`;
     }
-    
+
     private isMultipartEndpoint(endpoint: HttpEndpoint): boolean {
         return endpoint.requestBody?.type === "fileUpload";
     }
