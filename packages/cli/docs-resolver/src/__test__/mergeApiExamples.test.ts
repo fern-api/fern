@@ -125,8 +125,11 @@ describe("mergeApiExamples", () => {
                     snippetTemplates: undefined,
                     description: undefined,
                     availability: undefined,
-                    namespace: undefined
-                } as FdrAPI.api.latest.EndpointDefinition
+                    namespace: undefined,
+                    protocol: {
+                        type: "http"
+                    }
+                }
             },
             websockets: {},
             webhooks: {},

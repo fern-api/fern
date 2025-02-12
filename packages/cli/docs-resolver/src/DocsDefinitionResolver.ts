@@ -672,10 +672,7 @@ export class DocsDefinitionResolver {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
 
             const apiV2Promise = (async () => {
-                const api = (await generateFdrFromOpenApiWorkspace(
-                    workspace,
-                    this.taskContext
-                )) as FdrAPI.api.latest.ApiDefinition;
+                const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
                 if (api == null) {
                     throw new Error("Failed to generate API Definition from OpenAPI workspace");
                 }
@@ -719,6 +716,7 @@ export class DocsDefinitionResolver {
             );
             return node.get();
         }
+
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
         const ir = generateIntermediateRepresentation({
