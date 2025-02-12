@@ -22,8 +22,8 @@ class ProblemClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -38,8 +38,8 @@ class ProblemClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -55,10 +55,10 @@ class ProblemClient
      *
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return array<LightweightProblemInfoV2>
      * @throws SeedException
@@ -108,10 +108,10 @@ class ProblemClient
      *
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return array<ProblemInfoV2>
      * @throws SeedException
@@ -162,10 +162,10 @@ class ProblemClient
      * @param string $problemId
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ProblemInfoV2
      * @throws SeedException
@@ -217,10 +217,10 @@ class ProblemClient
      * @param int $problemVersion
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ProblemInfoV2
      * @throws SeedException

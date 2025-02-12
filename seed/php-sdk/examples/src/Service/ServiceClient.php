@@ -23,8 +23,8 @@ class ServiceClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -39,8 +39,8 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -55,10 +55,10 @@ class ServiceClient
      * @param string $movieId
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Movie
      * @throws SeedException
@@ -107,10 +107,10 @@ class ServiceClient
      * @param Movie $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return string
      * @throws SeedException
@@ -160,10 +160,10 @@ class ServiceClient
      * @param GetMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return mixed
      * @throws SeedException
@@ -223,10 +223,10 @@ class ServiceClient
      * @param BigEntity $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Response
      * @throws SeedException

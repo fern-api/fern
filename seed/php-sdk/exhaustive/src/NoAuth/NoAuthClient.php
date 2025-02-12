@@ -19,8 +19,8 @@ class NoAuthClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -35,8 +35,8 @@ class NoAuthClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -53,10 +53,10 @@ class NoAuthClient
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return bool
      * @throws SeedException

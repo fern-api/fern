@@ -22,8 +22,8 @@ class OrganizationsClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -38,8 +38,8 @@ class OrganizationsClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -55,10 +55,10 @@ class OrganizationsClient
      * @param string $organizationId
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Organization
      * @throws SeedException
@@ -109,10 +109,10 @@ class OrganizationsClient
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return User
      * @throws SeedException
@@ -163,10 +163,10 @@ class OrganizationsClient
      * @param SearchOrganizationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return array<Organization>
      * @throws SeedException

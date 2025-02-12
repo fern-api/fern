@@ -23,8 +23,8 @@ class ServiceClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -39,8 +39,8 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -55,10 +55,9 @@ class ServiceClient
      * @param MyRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -141,10 +140,9 @@ class ServiceClient
      * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -192,10 +190,9 @@ class ServiceClient
      * @param JustFileWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -256,10 +253,9 @@ class ServiceClient
      * @param WithContentTypeRequest $request
      * @param ?array{
      *   baseUrl?: string,
-     *   headers?: array<string, string>,
-     *   bodyProperties?: array<string, mixed>,
-     *   queryParameters?: array<string, mixed>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException

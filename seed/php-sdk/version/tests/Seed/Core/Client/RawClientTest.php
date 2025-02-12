@@ -135,6 +135,75 @@ class RawClientTest extends TestCase
         $this->assertEquals(json_encode($body), (string)$lastRequest->getBody());
     }
 
+    public function testAdditionalHeaders(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = new JsonRequest([
+            'name' => 'john.doe'
+        ]);
+        $headers = [
+            'X-API-Version' => '1.0.0',
+        ];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            $headers,
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'headers' => [
+                    'X-Tenancy' => 'test'
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('1.0.0', $lastRequest->getHeaderLine('X-API-Version'));
+        $this->assertEquals('test', $lastRequest->getHeaderLine('X-Tenancy'));
+    }
+
+    public function testOverrideAdditionalHeaders(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = new JsonRequest([
+            'name' => 'john.doe'
+        ]);
+        $headers = [
+            'X-API-Version' => '1.0.0',
+        ];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            $headers,
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'headers' => [
+                    'X-API-Version' => '2.0.0'
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('2.0.0', $lastRequest->getHeaderLine('X-API-Version'));
+    }
+
     public function testAdditionalBodyProperties(): void
     {
         $this->mockHandler->append(new Response(200));
