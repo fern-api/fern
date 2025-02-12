@@ -282,13 +282,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     optional: true
                 },
                 {
-                    key: this.getHeadersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                    key: this.getMaxRetriesOptionName(),
+                    valueType: php.Type.int(),
                     optional: true
                 },
                 {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
+                    key: this.getHeadersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
                     optional: true
                 }
             ],
@@ -298,39 +298,39 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         );
     }
 
-    public getRequestOptionsType(): php.Type {
-        return php.Type.typeDict(
-            [
-                {
-                    key: this.getBaseUrlOptionName(),
-                    valueType: php.Type.string(),
-                    optional: true
-                },
-                {
-                    key: this.getHeadersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
-                    optional: true
-                },
-                {
-                    key: this.getBodyPropertiesOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
-                    optional: true
-                },
-                {
-                    key: this.getQueryParametersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
-                    optional: true
-                },
-                {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
-                    optional: true
-                }
-            ],
+    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const options = [
             {
-                multiline: true
-            }
-        );
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
+                optional: true
+            },
+            {
+                key: this.getMaxRetriesOptionName(),
+                valueType: php.Type.int(),
+                optional: true
+            },
+            {
+                key: this.getHeadersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                optional: true
+            },
+            {
+                key: this.getQueryParametersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
+                optional: true
+            },
+        ];
+        if (!this.isMultipartEndpoint(endpoint)) {
+            options.push({
+                key: this.getBodyPropertiesOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
+                optional: true
+            });
+        }
+        return php.Type.typeDict(options, {
+            multiline: true
+        });
     }
 
     public getEnvironmentAccess(name: Name): php.CodeBlock {
@@ -606,6 +606,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     private getOrganizationPascalCase(): string {
         return `${upperFirst(camelCase(this.config.organization))}`;
+    }
+    
+    private isMultipartEndpoint(endpoint: HttpEndpoint): boolean {
+        return endpoint.requestBody?.type === "fileUpload";
     }
 
     public hasPagination(): boolean {
