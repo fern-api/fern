@@ -1,7 +1,28 @@
-- version: 0.11.0
+- version: 0.12.0
   changelogEntry:
     - type: feat
       summary: Add support for discriminated unions.
+  irVersion: 55
+- version: 0.11.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        The SDK now supports a `bodyProperties` and `queryParameters` request option, which
+        can be used to add arbitrary properties to the request. This is useful for interacting
+        with alpha or undocumented functionality.
+
+        ```php
+        $response = $client->users->list(
+          new ListUsersRequest([
+            ...
+          ]),
+          [
+            'queryParameters' => [
+              'limit' => 100,
+            ],
+          ]
+        );
+        ```
   irVersion: 55
 
 - version: 0.10.0
