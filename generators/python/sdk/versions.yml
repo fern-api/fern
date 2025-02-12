@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.13
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now supports conditioning dependencies on the Python version.
+
 - version: 4.3.12
   irVersion: 53
   changelogEntry:
