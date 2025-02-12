@@ -13,6 +13,7 @@
     - type: fix
       summary: | 
         Support required literals. For example, if a field has a literal value of "foo", we will now set that value as the default value for the field.
+  irVersion: 53        
 - version: 1.9.16
   createdAt: "2025-02-06"
   changelogEntry:
