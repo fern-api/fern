@@ -169,7 +169,14 @@ export class Type extends AstNode {
                 }
                 if (this.internalType.multiline) {
                     writer.writeLine("array{");
-                    for (const entry of this.internalType.entries) {
+
+                    // NOTE: Put all required types before all optional parameters
+                    // since this is required by PHPStan
+                    const requiredTypes = this.internalType.entries.filter((entry) => !entry.valueType.isOptional());
+                    const optionalTypes = this.internalType.entries.filter((entry) => entry.valueType.isOptional());
+                    const orderedEntries = [...requiredTypes, ...optionalTypes];
+
+                    for (const entry of orderedEntries) {
                         writer.write(" *   ");
                         this.writeTypeDictEntry({ writer, entry, comment });
                         writer.writeLine(",");

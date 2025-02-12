@@ -58,7 +58,15 @@ export class Method extends AstNode {
     public write(writer: Writer): void {
         this.writeComment(writer);
         writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`);
-        this.parameters.forEach((parameter, index) => {
+
+        // NOTE: Put all required parameters before all optional parameters
+        // since this is required by PHPStan
+        const requiredParameters = this.parameters.filter((param) => !param.type.isOptional());
+        const optionalParameters = this.parameters.filter((param) => param.type.isOptional());
+
+        const orderedParameters = [...requiredParameters, ...optionalParameters];
+
+        orderedParameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");
             }

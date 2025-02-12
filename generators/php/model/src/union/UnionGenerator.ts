@@ -197,7 +197,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             for (const property of this.unionTypeDeclaration.baseProperties) {
                 constructorArgs.push({
-                    key: php.codeblock(`'${property.name.wireValue}'`),
+                    key: php.codeblock(`'${this.context.getPropertyName(property.name.name)}'`),
                     value: php.codeblock(this.context.getVariableName(property.name.name))
                 });
             }
@@ -276,7 +276,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             for (const property of this.unionTypeDeclaration.baseProperties) {
                 constructorArgs.push({
-                    key: php.codeblock(`'${property.name.wireValue}'`),
+                    key: php.codeblock(`'${this.context.getPropertyName(property.name.name)}'`),
                     value: php.codeblock(this.context.getVariableName(property.name.name))
                 });
             }
@@ -1070,7 +1070,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 );
 
-                writer.writeTextStatement(`$args['${property.name.wireValue}'] = $data['${property.name.wireValue}']`);
+                writer.writeTextStatement(
+                    `$args['${this.context.getPropertyName(property.name.name)}'] = $data['${property.name.wireValue}']`
+                );
 
                 writer.writeLine();
             }

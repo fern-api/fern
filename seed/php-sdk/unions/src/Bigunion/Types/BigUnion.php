@@ -43,9 +43,9 @@ class BigUnion extends JsonSerializableType
      * @param array{
      *   id: string,
      *   createdAt: DateTime,
-     *   archivedAt?: ?DateTime,
      *   type: string,
      *   value: NormalSweet|ThankfulFactor|JumboEnd|HastyPain|MistySnow|DistinctFailure|PracticalPrinciple|LimpingStep|VibrantExcitement|ActiveDiamond|PopularLimit|FalseMirror|PrimaryBlock|RotatingRatio|ColorfulCover|DisloyalValue|GruesomeCoach|TotalWork|HarmoniousPlay|UniqueStress|UnwillingSmoke|FrozenSleep|DiligentDeal|AttractiveScript|HoarseMouse|CircularCard|PotableBad|TriangularRepair|GaseousRoad|mixed,
+     *   archivedAt?: ?DateTime,
      * } $values
      */
     public function __construct(
@@ -65,12 +65,12 @@ class BigUnion extends JsonSerializableType
      * @param NormalSweet $normalSweet
      * @return BigUnion
      */
-    public static function normalSweet(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, NormalSweet $normalSweet): BigUnion
+    public static function normalSweet(string $id, DateTime $createdAt, NormalSweet $normalSweet, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'normalSweet',
             'value' => $normalSweet,
         ]);
@@ -83,12 +83,12 @@ class BigUnion extends JsonSerializableType
      * @param ThankfulFactor $thankfulFactor
      * @return BigUnion
      */
-    public static function thankfulFactor(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, ThankfulFactor $thankfulFactor): BigUnion
+    public static function thankfulFactor(string $id, DateTime $createdAt, ThankfulFactor $thankfulFactor, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'thankfulFactor',
             'value' => $thankfulFactor,
         ]);
@@ -101,12 +101,12 @@ class BigUnion extends JsonSerializableType
      * @param JumboEnd $jumboEnd
      * @return BigUnion
      */
-    public static function jumboEnd(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, JumboEnd $jumboEnd): BigUnion
+    public static function jumboEnd(string $id, DateTime $createdAt, JumboEnd $jumboEnd, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'jumboEnd',
             'value' => $jumboEnd,
         ]);
@@ -119,12 +119,12 @@ class BigUnion extends JsonSerializableType
      * @param HastyPain $hastyPain
      * @return BigUnion
      */
-    public static function hastyPain(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, HastyPain $hastyPain): BigUnion
+    public static function hastyPain(string $id, DateTime $createdAt, HastyPain $hastyPain, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'hastyPain',
             'value' => $hastyPain,
         ]);
@@ -137,12 +137,12 @@ class BigUnion extends JsonSerializableType
      * @param MistySnow $mistySnow
      * @return BigUnion
      */
-    public static function mistySnow(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, MistySnow $mistySnow): BigUnion
+    public static function mistySnow(string $id, DateTime $createdAt, MistySnow $mistySnow, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'mistySnow',
             'value' => $mistySnow,
         ]);
@@ -155,12 +155,12 @@ class BigUnion extends JsonSerializableType
      * @param DistinctFailure $distinctFailure
      * @return BigUnion
      */
-    public static function distinctFailure(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, DistinctFailure $distinctFailure): BigUnion
+    public static function distinctFailure(string $id, DateTime $createdAt, DistinctFailure $distinctFailure, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'distinctFailure',
             'value' => $distinctFailure,
         ]);
@@ -173,12 +173,12 @@ class BigUnion extends JsonSerializableType
      * @param PracticalPrinciple $practicalPrinciple
      * @return BigUnion
      */
-    public static function practicalPrinciple(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, PracticalPrinciple $practicalPrinciple): BigUnion
+    public static function practicalPrinciple(string $id, DateTime $createdAt, PracticalPrinciple $practicalPrinciple, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'practicalPrinciple',
             'value' => $practicalPrinciple,
         ]);
@@ -191,12 +191,12 @@ class BigUnion extends JsonSerializableType
      * @param LimpingStep $limpingStep
      * @return BigUnion
      */
-    public static function limpingStep(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, LimpingStep $limpingStep): BigUnion
+    public static function limpingStep(string $id, DateTime $createdAt, LimpingStep $limpingStep, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'limpingStep',
             'value' => $limpingStep,
         ]);
@@ -209,12 +209,12 @@ class BigUnion extends JsonSerializableType
      * @param VibrantExcitement $vibrantExcitement
      * @return BigUnion
      */
-    public static function vibrantExcitement(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, VibrantExcitement $vibrantExcitement): BigUnion
+    public static function vibrantExcitement(string $id, DateTime $createdAt, VibrantExcitement $vibrantExcitement, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'vibrantExcitement',
             'value' => $vibrantExcitement,
         ]);
@@ -227,12 +227,12 @@ class BigUnion extends JsonSerializableType
      * @param ActiveDiamond $activeDiamond
      * @return BigUnion
      */
-    public static function activeDiamond(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, ActiveDiamond $activeDiamond): BigUnion
+    public static function activeDiamond(string $id, DateTime $createdAt, ActiveDiamond $activeDiamond, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'activeDiamond',
             'value' => $activeDiamond,
         ]);
@@ -245,12 +245,12 @@ class BigUnion extends JsonSerializableType
      * @param PopularLimit $popularLimit
      * @return BigUnion
      */
-    public static function popularLimit(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, PopularLimit $popularLimit): BigUnion
+    public static function popularLimit(string $id, DateTime $createdAt, PopularLimit $popularLimit, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'popularLimit',
             'value' => $popularLimit,
         ]);
@@ -263,12 +263,12 @@ class BigUnion extends JsonSerializableType
      * @param FalseMirror $falseMirror
      * @return BigUnion
      */
-    public static function falseMirror(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, FalseMirror $falseMirror): BigUnion
+    public static function falseMirror(string $id, DateTime $createdAt, FalseMirror $falseMirror, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'falseMirror',
             'value' => $falseMirror,
         ]);
@@ -281,12 +281,12 @@ class BigUnion extends JsonSerializableType
      * @param PrimaryBlock $primaryBlock
      * @return BigUnion
      */
-    public static function primaryBlock(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, PrimaryBlock $primaryBlock): BigUnion
+    public static function primaryBlock(string $id, DateTime $createdAt, PrimaryBlock $primaryBlock, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'primaryBlock',
             'value' => $primaryBlock,
         ]);
@@ -299,12 +299,12 @@ class BigUnion extends JsonSerializableType
      * @param RotatingRatio $rotatingRatio
      * @return BigUnion
      */
-    public static function rotatingRatio(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, RotatingRatio $rotatingRatio): BigUnion
+    public static function rotatingRatio(string $id, DateTime $createdAt, RotatingRatio $rotatingRatio, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'rotatingRatio',
             'value' => $rotatingRatio,
         ]);
@@ -317,12 +317,12 @@ class BigUnion extends JsonSerializableType
      * @param ColorfulCover $colorfulCover
      * @return BigUnion
      */
-    public static function colorfulCover(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, ColorfulCover $colorfulCover): BigUnion
+    public static function colorfulCover(string $id, DateTime $createdAt, ColorfulCover $colorfulCover, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'colorfulCover',
             'value' => $colorfulCover,
         ]);
@@ -335,12 +335,12 @@ class BigUnion extends JsonSerializableType
      * @param DisloyalValue $disloyalValue
      * @return BigUnion
      */
-    public static function disloyalValue(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, DisloyalValue $disloyalValue): BigUnion
+    public static function disloyalValue(string $id, DateTime $createdAt, DisloyalValue $disloyalValue, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'disloyalValue',
             'value' => $disloyalValue,
         ]);
@@ -353,12 +353,12 @@ class BigUnion extends JsonSerializableType
      * @param GruesomeCoach $gruesomeCoach
      * @return BigUnion
      */
-    public static function gruesomeCoach(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, GruesomeCoach $gruesomeCoach): BigUnion
+    public static function gruesomeCoach(string $id, DateTime $createdAt, GruesomeCoach $gruesomeCoach, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'gruesomeCoach',
             'value' => $gruesomeCoach,
         ]);
@@ -371,12 +371,12 @@ class BigUnion extends JsonSerializableType
      * @param TotalWork $totalWork
      * @return BigUnion
      */
-    public static function totalWork(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, TotalWork $totalWork): BigUnion
+    public static function totalWork(string $id, DateTime $createdAt, TotalWork $totalWork, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'totalWork',
             'value' => $totalWork,
         ]);
@@ -389,12 +389,12 @@ class BigUnion extends JsonSerializableType
      * @param HarmoniousPlay $harmoniousPlay
      * @return BigUnion
      */
-    public static function harmoniousPlay(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, HarmoniousPlay $harmoniousPlay): BigUnion
+    public static function harmoniousPlay(string $id, DateTime $createdAt, HarmoniousPlay $harmoniousPlay, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'harmoniousPlay',
             'value' => $harmoniousPlay,
         ]);
@@ -407,12 +407,12 @@ class BigUnion extends JsonSerializableType
      * @param UniqueStress $uniqueStress
      * @return BigUnion
      */
-    public static function uniqueStress(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, UniqueStress $uniqueStress): BigUnion
+    public static function uniqueStress(string $id, DateTime $createdAt, UniqueStress $uniqueStress, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'uniqueStress',
             'value' => $uniqueStress,
         ]);
@@ -425,12 +425,12 @@ class BigUnion extends JsonSerializableType
      * @param UnwillingSmoke $unwillingSmoke
      * @return BigUnion
      */
-    public static function unwillingSmoke(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, UnwillingSmoke $unwillingSmoke): BigUnion
+    public static function unwillingSmoke(string $id, DateTime $createdAt, UnwillingSmoke $unwillingSmoke, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'unwillingSmoke',
             'value' => $unwillingSmoke,
         ]);
@@ -443,12 +443,12 @@ class BigUnion extends JsonSerializableType
      * @param FrozenSleep $frozenSleep
      * @return BigUnion
      */
-    public static function frozenSleep(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, FrozenSleep $frozenSleep): BigUnion
+    public static function frozenSleep(string $id, DateTime $createdAt, FrozenSleep $frozenSleep, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'frozenSleep',
             'value' => $frozenSleep,
         ]);
@@ -461,12 +461,12 @@ class BigUnion extends JsonSerializableType
      * @param DiligentDeal $diligentDeal
      * @return BigUnion
      */
-    public static function diligentDeal(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, DiligentDeal $diligentDeal): BigUnion
+    public static function diligentDeal(string $id, DateTime $createdAt, DiligentDeal $diligentDeal, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'diligentDeal',
             'value' => $diligentDeal,
         ]);
@@ -479,12 +479,12 @@ class BigUnion extends JsonSerializableType
      * @param AttractiveScript $attractiveScript
      * @return BigUnion
      */
-    public static function attractiveScript(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, AttractiveScript $attractiveScript): BigUnion
+    public static function attractiveScript(string $id, DateTime $createdAt, AttractiveScript $attractiveScript, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'attractiveScript',
             'value' => $attractiveScript,
         ]);
@@ -497,12 +497,12 @@ class BigUnion extends JsonSerializableType
      * @param HoarseMouse $hoarseMouse
      * @return BigUnion
      */
-    public static function hoarseMouse(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, HoarseMouse $hoarseMouse): BigUnion
+    public static function hoarseMouse(string $id, DateTime $createdAt, HoarseMouse $hoarseMouse, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'hoarseMouse',
             'value' => $hoarseMouse,
         ]);
@@ -515,12 +515,12 @@ class BigUnion extends JsonSerializableType
      * @param CircularCard $circularCard
      * @return BigUnion
      */
-    public static function circularCard(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, CircularCard $circularCard): BigUnion
+    public static function circularCard(string $id, DateTime $createdAt, CircularCard $circularCard, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'circularCard',
             'value' => $circularCard,
         ]);
@@ -533,12 +533,12 @@ class BigUnion extends JsonSerializableType
      * @param PotableBad $potableBad
      * @return BigUnion
      */
-    public static function potableBad(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, PotableBad $potableBad): BigUnion
+    public static function potableBad(string $id, DateTime $createdAt, PotableBad $potableBad, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'potableBad',
             'value' => $potableBad,
         ]);
@@ -551,12 +551,12 @@ class BigUnion extends JsonSerializableType
      * @param TriangularRepair $triangularRepair
      * @return BigUnion
      */
-    public static function triangularRepair(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, TriangularRepair $triangularRepair): BigUnion
+    public static function triangularRepair(string $id, DateTime $createdAt, TriangularRepair $triangularRepair, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'triangularRepair',
             'value' => $triangularRepair,
         ]);
@@ -569,12 +569,12 @@ class BigUnion extends JsonSerializableType
      * @param GaseousRoad $gaseousRoad
      * @return BigUnion
      */
-    public static function gaseousRoad(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, GaseousRoad $gaseousRoad): BigUnion
+    public static function gaseousRoad(string $id, DateTime $createdAt, GaseousRoad $gaseousRoad, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => 'gaseousRoad',
             'value' => $gaseousRoad,
         ]);
@@ -587,12 +587,12 @@ class BigUnion extends JsonSerializableType
      * @param mixed $_unknown
      * @return BigUnion
      */
-    public static function _unknown(string $id, DateTime $createdAt, ?DateTime $archivedAt = null, mixed $_unknown): BigUnion
+    public static function _unknown(string $id, DateTime $createdAt, mixed $_unknown, ?DateTime $archivedAt = null): BigUnion
     {
         return new BigUnion([
             'id' => $id,
-            'created-at' => $createdAt,
-            'archived-at' => $archivedAt,
+            'createdAt' => $createdAt,
+            'archivedAt' => $archivedAt,
             'type' => '_unknown',
             'value' => $_unknown,
         ]);
@@ -1428,7 +1428,7 @@ class BigUnion extends JsonSerializableType
                 "Expected property 'createdAt' in json data to be dateTime, instead received " . get_debug_type($data['created-at']),
             );
         }
-        $args['created-at'] = $data['created-at'];
+        $args['createdAt'] = $data['created-at'];
 
         if (!array_key_exists('archived-at', $data)) {
             throw new Exception(
@@ -1440,7 +1440,7 @@ class BigUnion extends JsonSerializableType
                 "Expected property 'archivedAt' in json data to be optional, instead received " . get_debug_type($data['archived-at']),
             );
         }
-        $args['archived-at'] = $data['archived-at'];
+        $args['archivedAt'] = $data['archived-at'];
 
         if (!array_key_exists('type', $data)) {
             throw new Exception(
