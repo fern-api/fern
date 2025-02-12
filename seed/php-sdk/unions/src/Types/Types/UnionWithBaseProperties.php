@@ -236,25 +236,25 @@ class UnionWithBaseProperties extends JsonSerializableType
         $args = [];
         if (!array_key_exists('id', $data)) {
             throw new Exception(
-                "Json data is missing property 'id'",
+                "JSON data is missing property 'id'",
             );
         }
         if (!(is_string($data['id']))) {
             throw new Exception(
-                "Expected property 'id' in json data to be string, instead received " . get_debug_type($data['id']),
+                "Expected property 'id' in JSON data to be string, instead received " . get_debug_type($data['id']),
             );
         }
         $args['id'] = $data['id'];
 
         if (!array_key_exists('type', $data)) {
             throw new Exception(
-                "Json data is missing property 'type'",
+                "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
+                "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 
@@ -263,7 +263,7 @@ class UnionWithBaseProperties extends JsonSerializableType
                 $args['type'] = 'integer';
                 if (!array_key_exists('integer', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'integer'",
+                        "JSON data is missing property 'integer'",
                     );
                 }
 
@@ -273,7 +273,7 @@ class UnionWithBaseProperties extends JsonSerializableType
                 $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'string'",
+                        "JSON data is missing property 'string'",
                     );
                 }
 

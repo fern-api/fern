@@ -182,13 +182,13 @@ class Union extends JsonSerializableType
         $args = [];
         if (!array_key_exists('type', $data)) {
             throw new Exception(
-                "Json data is missing property 'type'",
+                "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
+                "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 
@@ -197,13 +197,13 @@ class Union extends JsonSerializableType
                 $args['type'] = 'foo';
                 if (!array_key_exists('foo', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'foo'",
+                        "JSON data is missing property 'foo'",
                     );
                 }
 
                 if (!(is_array($data['foo']))) {
                     throw new Exception(
-                        "Expected property 'foo' in json data to be array, instead received " . get_debug_type($data['foo']),
+                        "Expected property 'foo' in JSON data to be array, instead received " . get_debug_type($data['foo']),
                     );
                 }
                 $args['foo'] = Foo::jsonDeserialize($data['foo']);
@@ -212,13 +212,13 @@ class Union extends JsonSerializableType
                 $args['type'] = 'bar';
                 if (!array_key_exists('bar', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'bar'",
+                        "JSON data is missing property 'bar'",
                     );
                 }
 
                 if (!(is_array($data['bar']))) {
                     throw new Exception(
-                        "Expected property 'bar' in json data to be array, instead received " . get_debug_type($data['bar']),
+                        "Expected property 'bar' in JSON data to be array, instead received " . get_debug_type($data['bar']),
                     );
                 }
                 $args['bar'] = Bar::jsonDeserialize($data['bar']);

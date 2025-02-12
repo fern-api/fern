@@ -1466,49 +1466,49 @@ class BigUnion extends JsonSerializableType
         $args = [];
         if (!array_key_exists('id', $data)) {
             throw new Exception(
-                "Json data is missing property 'id'",
+                "JSON data is missing property 'id'",
             );
         }
         if (!(is_string($data['id']))) {
             throw new Exception(
-                "Expected property 'id' in json data to be string, instead received " . get_debug_type($data['id']),
+                "Expected property 'id' in JSON data to be string, instead received " . get_debug_type($data['id']),
             );
         }
         $args['id'] = $data['id'];
 
         if (!array_key_exists('created-at', $data)) {
             throw new Exception(
-                "Json data is missing property 'created-at'",
+                "JSON data is missing property 'created-at'",
             );
         }
         if (!($data['created-at'] instanceof DateTime)) {
             throw new Exception(
-                "Expected property 'createdAt' in json data to be dateTime, instead received " . get_debug_type($data['created-at']),
+                "Expected property 'createdAt' in JSON data to be dateTime, instead received " . get_debug_type($data['created-at']),
             );
         }
         $args['createdAt'] = $data['created-at'];
 
         if (!array_key_exists('archived-at', $data)) {
             throw new Exception(
-                "Json data is missing property 'archived-at'",
+                "JSON data is missing property 'archived-at'",
             );
         }
         if (!((is_null($data['archived-at']) || $data['archived-at'] instanceof DateTime))) {
             throw new Exception(
-                "Expected property 'archivedAt' in json data to be optional, instead received " . get_debug_type($data['archived-at']),
+                "Expected property 'archivedAt' in JSON data to be optional, instead received " . get_debug_type($data['archived-at']),
             );
         }
         $args['archivedAt'] = $data['archived-at'];
 
         if (!array_key_exists('type', $data)) {
             throw new Exception(
-                "Json data is missing property 'type'",
+                "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['type']),
+                "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
 

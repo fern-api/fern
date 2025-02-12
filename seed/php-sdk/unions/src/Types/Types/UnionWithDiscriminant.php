@@ -9,9 +9,9 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithDiscriminant extends JsonSerializableType
 {
     /**
-     * @var string $_type
+     * @var string $type
      */
-    public readonly string $_type;
+    public readonly string $type;
 
     /**
      * @var (Foo|
@@ -22,7 +22,7 @@ class UnionWithDiscriminant extends JsonSerializableType
 
     /**
      * @param array{
-     *   _type: string,
+     *   type: string,
      *   value: (Foo|
      *    Bar|
      *    mixed),
@@ -31,7 +31,7 @@ class UnionWithDiscriminant extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->_type = $values['_type'];
+        $this->type = $values['type'];
         $this->value = $values['value'];
     }
 
@@ -42,7 +42,7 @@ class UnionWithDiscriminant extends JsonSerializableType
     public static function foo(Foo $foo): UnionWithDiscriminant
     {
         return new UnionWithDiscriminant([
-            '_type' => 'foo',
+            'type' => 'foo',
             'value' => $foo,
         ]);
     }
@@ -54,7 +54,7 @@ class UnionWithDiscriminant extends JsonSerializableType
     public static function bar(Bar $bar): UnionWithDiscriminant
     {
         return new UnionWithDiscriminant([
-            '_type' => 'bar',
+            'type' => 'bar',
             'value' => $bar,
         ]);
     }
@@ -66,7 +66,7 @@ class UnionWithDiscriminant extends JsonSerializableType
     public static function _unknown(mixed $_unknown): UnionWithDiscriminant
     {
         return new UnionWithDiscriminant([
-            '_type' => '_unknown',
+            'type' => '_unknown',
             'value' => $_unknown,
         ]);
     }
@@ -76,7 +76,7 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function isFoo(): bool
     {
-        return $this->value instanceof Foo && $this->_type === 'foo';
+        return $this->value instanceof Foo && $this->type === 'foo';
     }
 
     /**
@@ -84,9 +84,9 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function asFoo(): Foo
     {
-        if (!($this->value instanceof Foo && $this->_type === 'foo')) {
+        if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->_type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -98,7 +98,7 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function isBar(): bool
     {
-        return $this->value instanceof Bar && $this->_type === 'bar';
+        return $this->value instanceof Bar && $this->type === 'bar';
     }
 
     /**
@@ -106,9 +106,9 @@ class UnionWithDiscriminant extends JsonSerializableType
      */
     public function asBar(): Bar
     {
-        if (!($this->value instanceof Bar && $this->_type === 'bar')) {
+        if (!($this->value instanceof Bar && $this->type === 'bar')) {
             throw new Exception(
-                "Expected bar; got " . $this->_type . "with value of type " . get_debug_type($this->value),
+                "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -129,12 +129,12 @@ class UnionWithDiscriminant extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result['_type'] = $this->_type;
+        $result['_type'] = $this->type;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
 
-        switch ($this->_type) {
+        switch ($this->type) {
             case 'foo':
                 $value = $this->asFoo()->jsonSerialize();
                 $result['foo'] = $value;
@@ -179,50 +179,50 @@ class UnionWithDiscriminant extends JsonSerializableType
         $args = [];
         if (!array_key_exists('_type', $data)) {
             throw new Exception(
-                "Json data is missing property '_type'",
+                "JSON data is missing property '_type'",
             );
         }
         $type = $data['_type'];
         if (!(is_string($type))) {
             throw new Exception(
-                "Expected property 'type' in json data to be string, instead received " . get_debug_type($data['_type']),
+                "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['_type']),
             );
         }
 
         switch ($type) {
             case 'foo':
-                $args['_type'] = 'foo';
+                $args['type'] = 'foo';
                 if (!array_key_exists('foo', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'foo'",
+                        "JSON data is missing property 'foo'",
                     );
                 }
 
                 if (!(is_array($data['foo']))) {
                     throw new Exception(
-                        "Expected property 'foo' in json data to be array, instead received " . get_debug_type($data['foo']),
+                        "Expected property 'foo' in JSON data to be array, instead received " . get_debug_type($data['foo']),
                     );
                 }
                 $args['foo'] = Foo::jsonDeserialize($data['foo']);
                 break;
             case 'bar':
-                $args['_type'] = 'bar';
+                $args['type'] = 'bar';
                 if (!array_key_exists('bar', $data)) {
                     throw new Exception(
-                        "Json data is missing property 'bar'",
+                        "JSON data is missing property 'bar'",
                     );
                 }
 
                 if (!(is_array($data['bar']))) {
                     throw new Exception(
-                        "Expected property 'bar' in json data to be array, instead received " . get_debug_type($data['bar']),
+                        "Expected property 'bar' in JSON data to be array, instead received " . get_debug_type($data['bar']),
                     );
                 }
                 $args['bar'] = Bar::jsonDeserialize($data['bar']);
                 break;
             case '_unknown':
             default:
-                $args['_type'] = '_unknown';
+                $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
 

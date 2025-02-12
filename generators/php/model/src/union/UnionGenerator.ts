@@ -104,7 +104,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private discriminantGetter(): php.CodeBlock {
-        const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
+        const discriminant = this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name);
         return php.codeblock("$this->" + discriminant);
     }
 
@@ -126,7 +126,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getDiscriminantField(): php.Field {
         // TODO(ajgateno): Actually add the literals as a union rather than just string
         return php.field({
-            name: this.unionTypeDeclaration.discriminant.wireValue,
+            name: this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name),
             type: php.Type.string(),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -276,7 +276,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             }
 
             constructorArgs.push({
-                key: php.codeblock(`'${this.unionTypeDeclaration.discriminant.wireValue}'`),
+                key: php.codeblock(`'${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'`),
                 value: php.codeblock(`'${variant.discriminantValue.wireValue}'`)
             });
 
@@ -570,7 +570,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMethod(): php.Method {
-        const discriminant = this.unionTypeDeclaration.discriminant.wireValue;
         return php.method({
             name: "jsonSerialize",
             access: "public",
@@ -580,7 +579,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeTextStatement("$result = []");
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
-                        _writer.write(`$result['${discriminant}'] = `);
+                        _writer.write(`$result['${this.unionTypeDeclaration.discriminant.wireValue}'] = `);
                         _writer.writeNode(this.discriminantGetter());
                     })
                 );
@@ -1129,7 +1128,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonDeserializeDefaultHandler(): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.writeTextStatement(`$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '_unknown'`);
+            writer.writeTextStatement(
+                `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '_unknown'`
+            );
             writer.writeTextStatement("$args['value'] = $data");
         });
     }
@@ -1139,7 +1140,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "samePropertiesAsObject":
                 return php.codeblock((writer) => {
                     writer.writeTextStatement(
-                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                        `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '${variant.discriminantValue.wireValue}'`
                     );
 
                     const type = this.getReturnType(variant);
@@ -1161,7 +1162,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "singleProperty":
                 return php.codeblock((writer) => {
                     writer.writeTextStatement(
-                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                        `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '${variant.discriminantValue.wireValue}'`
                     );
 
                     const arrayKeyDoesNotExist = php.codeblock((_writer) => {
@@ -1192,7 +1193,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "noProperties":
                 return php.codeblock((writer) => {
                     writer.writeTextStatement(
-                        `$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '${variant.discriminantValue.wireValue}'`
+                        `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '${variant.discriminantValue.wireValue}'`
                     );
                     writer.writeTextStatement("$args['value'] = null");
                     writer.writeTextStatement("break");
