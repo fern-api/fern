@@ -81,15 +81,15 @@ class MyRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   maybeString?: ?string,
      *   integer: int,
      *   file: File,
      *   fileList: array<File>,
+     *   listOfObjects: array<MyObject>,
+     *   maybeString?: ?string,
      *   maybeFile?: ?File,
      *   maybeFileList?: ?array<File>,
      *   maybeInteger?: ?int,
      *   optionalListOfStrings?: ?array<string>,
-     *   listOfObjects: array<MyObject>,
      *   optionalMetadata?: mixed,
      *   optionalObjectType?: ?value-of<ObjectType>,
      *   optionalId?: ?string,

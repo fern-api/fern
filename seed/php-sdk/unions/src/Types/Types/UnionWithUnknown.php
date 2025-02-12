@@ -129,6 +129,7 @@ class UnionWithUnknown extends JsonSerializableType
                 $result = array_merge($value, $result);
                 break;
             case 'unknown':
+                $result['unknown'] = [];
                 break;
             case '_unknown':
             default:

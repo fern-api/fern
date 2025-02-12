@@ -15,15 +15,21 @@ class SearchRequest extends JsonSerializableType
     private ?StartingAfterPaging $pagination;
 
     /**
-     * @var SingleFilterSearchRequest|MultipleFilterSearchRequest $query
+     * @var (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * ) $query
      */
     #[JsonProperty('query'), Union(SingleFilterSearchRequest::class, MultipleFilterSearchRequest::class)]
     private SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
 
     /**
      * @param array{
+     *   query: (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * ),
      *   pagination?: ?StartingAfterPaging,
-     *   query: SingleFilterSearchRequest|MultipleFilterSearchRequest,
      * } $values
      */
     public function __construct(
@@ -51,7 +57,10 @@ class SearchRequest extends JsonSerializableType
     }
 
     /**
-     * @return SingleFilterSearchRequest|MultipleFilterSearchRequest
+     * @return (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * )
      */
     public function getQuery(): SingleFilterSearchRequest|MultipleFilterSearchRequest
     {
@@ -59,7 +68,10 @@ class SearchRequest extends JsonSerializableType
     }
 
     /**
-     * @param SingleFilterSearchRequest|MultipleFilterSearchRequest $value
+     * @param (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * ) $value
      */
     public function setQuery(SingleFilterSearchRequest|MultipleFilterSearchRequest $value): self
     {

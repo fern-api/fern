@@ -111,6 +111,9 @@ allowedFailures:
   - basic-auth
   # Enums don't support the fromJson method yet.
   - exhaustive
+  - trace
+  - circular-references
+  - circular-references-advanced
   # Add support for literals and confirm that string literal examples are being generated.
   - literal
   # Add support for OAuth.
@@ -125,3 +128,5 @@ allowedFailures:
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples

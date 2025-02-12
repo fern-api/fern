@@ -166,7 +166,6 @@ class Type extends JsonSerializableType
      *   ten: array<int>,
      *   eleven: array<float>,
      *   twelve: array<string, bool>,
-     *   thirteen?: ?int,
      *   fourteen: mixed,
      *   fifteen: array<array<int>>,
      *   sixteen: array<array<string, int>>,
@@ -177,6 +176,7 @@ class Type extends JsonSerializableType
      *   twentyone: int,
      *   twentytwo: float,
      *   twentythree: string,
+     *   thirteen?: ?int,
      * } $values
      */
     public function __construct(

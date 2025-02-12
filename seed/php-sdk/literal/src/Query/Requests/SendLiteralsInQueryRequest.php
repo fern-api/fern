@@ -54,13 +54,13 @@ class SendLiteralsInQueryRequest extends JsonSerializableType
     /**
      * @param array{
      *   prompt: string,
-     *   optionalPrompt?: ?string,
      *   aliasPrompt: string,
-     *   aliasOptionalPrompt?: ?string,
      *   query: string,
      *   stream: bool,
-     *   optionalStream?: ?bool,
      *   aliasStream: bool,
+     *   optionalPrompt?: ?string,
+     *   aliasOptionalPrompt?: ?string,
+     *   optionalStream?: ?bool,
      *   aliasOptionalStream?: ?bool,
      * } $values
      */

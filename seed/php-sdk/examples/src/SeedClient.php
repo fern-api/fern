@@ -143,7 +143,10 @@ class SeedClient
     }
 
     /**
-     * @param value-of<BasicType>|value-of<ComplexType> $request
+     * @param (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ) $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

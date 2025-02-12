@@ -49,7 +49,10 @@ class PathParamClient
 
     /**
      * @param value-of<Operand> $operand
-     * @param value-of<Color>|value-of<Operand> $operandOrColor
+     * @param (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ) $operandOrColor
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

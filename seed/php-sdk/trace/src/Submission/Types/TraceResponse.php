@@ -47,9 +47,9 @@ class TraceResponse extends JsonSerializableType
      * @param array{
      *   submissionId: string,
      *   lineNumber: int,
+     *   stack: StackInformation,
      *   returnValue?: mixed,
      *   expressionLocation?: ?ExpressionLocation,
-     *   stack: StackInformation,
      *   stdout?: ?string,
      * } $values
      */

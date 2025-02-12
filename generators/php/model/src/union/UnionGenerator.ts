@@ -543,17 +543,30 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             case "optional":
                 return php.codeblock((writer) => {
-                    writer.write("(");
-                    writer.writeNode(
-                        php.invokeMethod({
-                            method: "is_null",
-                            arguments_: [variableGetter],
-                            static_: true
-                        })
-                    );
-                    writer.write(" || ");
-                    writer.writeNode(this.getTypeCheck(variableGetter, type.underlyingType()));
-                    writer.write(")");
+                    if (
+                        type.underlyingType().internalType.type === "null" ||
+                        type.underlyingType().internalType.type === "mixed"
+                    ) {
+                        writer.writeNode(
+                            php.invokeMethod({
+                                method: "is_null",
+                                arguments_: [variableGetter],
+                                static_: true
+                            })
+                        );
+                    } else {
+                        writer.write("(");
+                        writer.writeNode(
+                            php.invokeMethod({
+                                method: "is_null",
+                                arguments_: [variableGetter],
+                                static_: true
+                            })
+                        );
+                        writer.write(" || ");
+                        writer.writeNode(this.getTypeCheck(variableGetter, type.underlyingType()));
+                        writer.write(")");
+                    }
                 });
 
             case "typeDict":
@@ -653,7 +666,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.writeTextStatement("break");
                 });
             case "noProperties":
-                return php.codeblock((writer) => writer.writeTextStatement("break"));
+                return php.codeblock((writer) => {
+                    writer.writeTextStatement(`$result['${variant.discriminantValue.wireValue}'] = []`);
+                    writer.writeTextStatement("break");
+                });
             default:
                 assertNever(variant.shape);
         }
@@ -796,8 +812,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             case "optional":
                 return php.codeblock((writer) => {
-                    writer.write("$" + asCastMethodName);
-                    writer.write(" = ");
+                    writer.write("$value = ");
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: asCastMethodName,
@@ -805,27 +820,30 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             on: php.codeblock("$this")
                         })
                     );
-                    writer.controlFlow(
-                        "if",
-                        php.invokeMethod({
-                            method: "is_null",
-                            arguments_: [php.codeblock("$" + asCastMethodName)],
-                            static_: true
-                        })
-                    );
-                    writer.write("$value = ");
-                    writer.writeTextStatement("$" + asCastMethodName);
+
                     if (this.typeSerializationNeedsAdditionalCall(type.underlyingType())) {
-                        writer.alternativeControlFlow("else");
+                        writer.controlFlow(
+                            "if",
+                            php.codeblock((_writer) => {
+                                _writer.write("!");
+                                _writer.writeNode(
+                                    php.invokeMethod({
+                                        method: "is_null",
+                                        arguments_: [php.codeblock("$value")],
+                                        static_: true
+                                    })
+                                );
+                            })
+                        );
                         writer.writeNode(
                             this.jsonSerializeValueCall({
-                                declaredVariableName: "$" + asCastMethodName,
+                                declaredVariableName: "$value",
                                 variant,
                                 type: type.underlyingType()
                             })
                         );
+                        writer.endControlFlow();
                     }
-                    writer.endControlFlow();
                 });
 
             case "int":
