@@ -56,6 +56,7 @@ class RawClient
     /**
      * @param BaseApiRequest $request
      * @param ?array{
+     *     maxRetries?: int,
      *     headers?: array<string, string>,
      *     queryParameters?: array<string, mixed>,
      *     bodyProperties?: array<string, mixed>,
@@ -69,7 +70,21 @@ class RawClient
     ): ResponseInterface {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
-        return $this->client->send($httpRequest, $opts);
+        return $this->client->send($httpRequest, $this->toGuzzleOptions($opts));
+    }
+
+    /**
+     * @param array{
+     *     maxRetries?: int,
+     * } $options
+     * @return array<string, mixed>
+     */
+    private function toGuzzleOptions(array $options): array {
+        $guzzleOptions = [];
+        if (isset($options['maxRetries'])) {
+            $guzzleOptions['maxRetries'] = $options['maxRetries'];
+        }
+        return $guzzleOptions;
     }
 
     /**
