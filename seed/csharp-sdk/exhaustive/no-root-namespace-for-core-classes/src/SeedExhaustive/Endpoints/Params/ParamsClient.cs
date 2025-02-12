@@ -35,7 +35,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/params/path//params/path/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
                     Options = options,
                 },
                 cancellationToken
@@ -82,7 +82,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/params/path//params/path/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
                     Options = options,
                 },
                 cancellationToken
@@ -220,8 +220,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/params/path-query//params/path-query/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
                     Query = _query,
                     Options = options,
                 },
@@ -266,8 +265,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/params/path-query//params/path-query/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
                     Query = _query,
                     Options = options,
                 },
@@ -307,7 +305,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/params/path//params/path/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
                     Body = request,
                     Options = options,
                 },
@@ -358,7 +356,7 @@ public partial class ParamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/params/path//params/path/{JsonUtils.SerializeAsString(param)}",
+                    Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
                     Body = request.Body,
                     Options = options,
                 },

@@ -285,7 +285,7 @@ public partial class ObjectClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path =
-                        $"/object/get-and-return-nested-with-required-field//object/get-and-return-nested-with-required-field/{JsonUtils.SerializeAsString(string_)}",
+                        $"/object/get-and-return-nested-with-required-field/{JsonUtils.SerializeAsString(string_)}",
                     Body = request,
                     Options = options,
                 },

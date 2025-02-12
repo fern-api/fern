@@ -179,7 +179,6 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            writer.write(`${endpoint.fullPath.head}`);
             writer.write("{");
             writer.writeNode(this.context.getJsonUtilsClassReference());
             writer.write(".SerializeAsString(");
