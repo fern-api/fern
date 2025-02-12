@@ -355,20 +355,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getReturnType(variant: SingleUnionType): php.Type {
-        return variant.shape._visit({
-            samePropertiesAsObject: (value: DeclaredTypeName) => {
-                return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(value));
-            },
-            singleProperty: (value: SingleUnionTypeProperty) => {
-                return this.context.phpTypeMapper.convert({ reference: value.type });
-            },
-            noProperties: () => {
+        switch (variant.shape.propertiesType) {
+            case "samePropertiesAsObject":
+                return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(variant.shape));
+            case "singleProperty":
+                return this.context.phpTypeMapper.convert({ reference: variant.shape.type });
+            case "noProperties":
                 return php.Type.null();
-            },
-            _other: (value) => {
-                throw new Error("Got unexpected union type: " + JSON.stringify(value));
-            }
-        });
+            default:
+                assertNever(variant.shape);
+        }
     }
 
     private getTypeCheckConditional(
