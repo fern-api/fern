@@ -88,7 +88,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     initializer: maybeLiteralInitializer != null 
                         ? csharp.codeblock(typeof maybeLiteralInitializer === "boolean" 
                             ? `${maybeLiteralInitializer.toString().toLowerCase()}`
-                            : `"${maybeLiteralInitializer}`)
+                            : `"${maybeLiteralInitializer}"`)
                         : undefined,
                 })
             );
