@@ -6,8 +6,7 @@ import {
     NameAndWireValue,
     ObjectProperty,
     ObjectTypeDeclaration,
-    TypeDeclaration,
-    TypeReference
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
@@ -29,37 +28,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         this.exampleGenerator = new ExampleGenerator(context);
     }
 
-    private maybeGetLiteral({ typeReference }: { typeReference: TypeReference }): string | boolean | undefined {
-        if (typeReference.type === "container" && typeReference.container.type === "literal") {
-            const literal = typeReference.container.literal;
-            switch (literal.type) {
-                case "string":
-                    return literal.string;
-                case "boolean":
-                    return literal.boolean;
-                default:
-                    return undefined;
-            }
-        }
-        if (typeReference.type === "named") {
-            const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
-            if (typeDeclaration.shape.type === "alias" && 
-                typeDeclaration.shape.resolvedType.type === "container" &&
-                typeDeclaration.shape.resolvedType.container.type === "literal") {
-                const literal = typeDeclaration.shape.resolvedType.container.literal;
-                switch (literal.type) {
-                    case "string":
-                        return literal.string;
-                    case "boolean":
-                        return literal.boolean;
-                    default:
-                        return undefined;
-                }
-            }
-        }
-        return undefined;
-    }
-
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.classReference,
@@ -73,7 +41,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         ];
         flattenedProperties.forEach((property) => {
             const fieldType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-            const maybeLiteralInitializer = this.maybeGetLiteral({ typeReference: property.valueType });
+            const maybeLiteralInitializer = this.context.getLiteralFromTypeReference({
+                typeReference: property.valueType
+            });
 
             class_.addField(
                 csharp.field({
@@ -85,11 +55,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
                     useRequired: true,
-                    initializer: maybeLiteralInitializer != null 
-                        ? csharp.codeblock(typeof maybeLiteralInitializer === "boolean" 
-                            ? `${maybeLiteralInitializer.toString().toLowerCase()}`
-                            : `"${maybeLiteralInitializer}"`)
-                        : undefined,
+                    initializer:
+                        maybeLiteralInitializer != null
+                            ? csharp.codeblock(
+                                  typeof maybeLiteralInitializer === "boolean"
+                                      ? `${maybeLiteralInitializer.toString().toLowerCase()}`
+                                      : `"${maybeLiteralInitializer}"`
+                              )
+                            : undefined
                 })
             );
         });

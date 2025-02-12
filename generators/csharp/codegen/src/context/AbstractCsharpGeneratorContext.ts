@@ -450,6 +450,46 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    /**
+     * Returns the literal value from a Type Reference (doesn't unbox containers to find a literal).
+     */
+    public getLiteralFromTypeReference({
+        typeReference
+    }: {
+        typeReference: TypeReference;
+    }): string | boolean | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            const literal = typeReference.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return literal.string;
+                case "boolean":
+                    return literal.boolean;
+                default:
+                    return undefined;
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (
+                typeDeclaration.shape.type === "alias" &&
+                typeDeclaration.shape.resolvedType.type === "container" &&
+                typeDeclaration.shape.resolvedType.container.type === "literal"
+            ) {
+                const literal = typeDeclaration.shape.resolvedType.container.literal;
+                switch (literal.type) {
+                    case "string":
+                        return literal.string;
+                    case "boolean":
+                        return literal.boolean;
+                    default:
+                        return undefined;
+                }
+            }
+        }
+        return undefined;
+    }
+
     public abstract getRawAsIsFiles(): string[];
 
     public abstract getCoreAsIsFiles(): string[];
