@@ -366,7 +366,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 return php.Type.null();
             },
             _other: (value) => {
-                throw new Error("Got unexpected union type: " + value);
+                throw new Error("Got unexpected union type: " + JSON.stringify(value));
             }
         });
     }
