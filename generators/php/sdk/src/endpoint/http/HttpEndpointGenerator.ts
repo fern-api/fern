@@ -75,7 +75,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters.push(
             php.parameter({
                 name: this.context.getRequestOptionsName(),
-                type: php.Type.optional(this.context.getRequestOptionsType())
+                type: php.Type.optional(this.context.getRequestOptionsType({ endpoint }))
             })
         );
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
@@ -212,7 +212,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         this.assertHasPagination(endpoint);
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        const requestOptionsType = this.context.getRequestOptionsType();
+        const requestOptionsType = this.context.getRequestOptionsType({ endpoint });
         const optionsParamName = this.context.getRequestOptionsName();
         const optionsParamType = php.Type.optional(requestOptionsType);
         parameters.push(

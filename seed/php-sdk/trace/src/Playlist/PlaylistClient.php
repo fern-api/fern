@@ -25,8 +25,8 @@ class PlaylistClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -41,8 +41,8 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -61,6 +61,9 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Playlist
      * @throws SeedException
@@ -120,6 +123,9 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return array<Playlist>
      * @throws SeedException
@@ -183,6 +189,9 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Playlist
      * @throws SeedException
@@ -236,6 +245,9 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?Playlist
      * @throws SeedException
@@ -292,6 +304,9 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException

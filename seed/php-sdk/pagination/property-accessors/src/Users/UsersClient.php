@@ -41,8 +41,8 @@ class UsersClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -57,8 +57,8 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -74,6 +74,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -97,6 +100,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -120,6 +126,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -143,6 +152,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -169,6 +181,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -195,6 +210,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -221,6 +239,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -248,6 +269,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -275,6 +299,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -298,6 +325,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<User>
      */
@@ -321,6 +351,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<string>
      */
@@ -344,6 +377,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return Pager<string>
      */
@@ -370,6 +406,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -433,6 +472,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersMixedTypePaginationResponse
      * @throws SeedException
@@ -487,6 +529,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -537,6 +582,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -600,6 +648,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -663,6 +714,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -713,6 +767,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -773,6 +830,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersPaginationResponse
      * @throws SeedException
@@ -833,6 +893,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersExtendedResponse
      * @throws SeedException
@@ -887,6 +950,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ListUsersExtendedOptionalListResponse
      * @throws SeedException
@@ -941,6 +1007,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return UsernameCursor
      * @throws SeedException
@@ -995,6 +1064,9 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return UsernameContainer
      * @throws SeedException
