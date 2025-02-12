@@ -13,6 +13,7 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
+import { assertNever } from "../../../../../packages/commons/core-utils/src";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -114,33 +115,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getValueFieldName(): Name {
-        const safeUnsafeValue = {
-            safeName: "value",
-            unsafeName: "value"
-        };
-
         return {
             originalName: "value",
-            camelCase: safeUnsafeValue,
-            pascalCase: safeUnsafeValue,
-            snakeCase: safeUnsafeValue,
+            camelCase: { safeName: "value", unsafeName: "value" },
+            pascalCase: { safeName: "value", unsafeName: "value" },
+            snakeCase: { safeName: "value", unsafeName: "value" },
             screamingSnakeCase: { safeName: "VALUE", unsafeName: "VALUE" }
         };
     }
 
     private getDiscriminantField(): php.Field {
-        const includeGetter: boolean = this.context.shouldGenerateGetterMethods();
         // TODO(ajgateno): Actually add the literals as a union rather than just string
         return php.field({
             name: this.unionTypeDeclaration.discriminant.wireValue,
             type: php.Type.string(),
-            access: includeGetter ? "private" : "public",
+            access: this.context.getPropertyAccess(),
             readonly_: true
         });
     }
 
     private getValueField(): php.Field {
-        const includeGetter: boolean = this.context.shouldGenerateGetterMethods();
         const types: php.Type[] = [];
 
         for (const variant of this.unionTypeDeclaration.types) {
@@ -153,7 +147,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
             name: "value",
             type: php.Type.union(types),
-            access: includeGetter ? "private" : "public",
+            access: this.context.getPropertyAccess(),
             readonly_: true
         });
     }
@@ -163,7 +157,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
-            access: "public",
+            access: this.context.getPropertyAccess(),
             docs: property.docs,
             attributes: this.context.phpAttributeMapper.convert({
                 type: convertedType,
@@ -203,7 +197,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             }
 
             constructorArgs.push({
-                key: php.codeblock(`'${this.unionTypeDeclaration.discriminant.wireValue}'`),
+                key: php.codeblock(`'${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'`),
                 value: php.codeblock("'_unknown'")
             });
             constructorArgs.push({
@@ -264,7 +258,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 );
                 break;
             case "noProperties":
+                break;
             default:
+                assertNever(variant.shape);
         }
 
         return parameters;
@@ -295,11 +291,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     });
                     break;
                 case "noProperties":
-                default:
                     constructorArgs.push({
                         key: php.codeblock("'value'"),
                         value: php.codeblock("null")
                     });
+                    break;
+                default:
+                    assertNever(variant.shape);
             }
 
             const constructorCall = php.instantiateClass({
@@ -455,13 +453,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getDeserializationArrayKeyExistsErrorMessage(propertyName: NameAndWireValue): php.CodeBlock {
-        return php.codeblock(`"Json data is missing property '${propertyName.wireValue}'"`);
+        return php.codeblock(`"JSON data is missing property '${propertyName.wireValue}'"`);
     }
 
     private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, typeName: string): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write(
-                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in json data to be ${typeName}, instead received " . `
+                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${typeName}, instead received " . `
             );
             writer.writeNode(
                 php.invokeMethod({
@@ -583,8 +581,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
-            default:
                 return null;
+            default:
+                assertNever(type.internalType);
         }
     }
 
@@ -675,7 +674,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "noProperties":
                 return php.codeblock((writer) => writer.writeTextStatement("break"));
             default:
-                return php.codeblock("");
+                assertNever(variant.shape);
         }
     }
 
@@ -737,7 +736,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
-            default:
                 return php.codeblock((writer) => {
                     writer.write("$result");
                     writer.write("['");
@@ -745,6 +743,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.write("']");
                     writer.writeTextStatement(" = $value");
                 });
+            default:
+                assertNever(type.internalType);
         }
     }
 
@@ -861,11 +861,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
-            default:
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(this.valueGetter());
                 });
+            default:
+                assertNever(type.internalType);
         }
     }
 
@@ -1201,9 +1202,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.writeTextStatement("break");
                 });
             default:
-                return php.codeblock((writer) => {
-                    writer.writeTextStatement("break");
-                });
+                assertNever(variant.shape);
         }
     }
 
@@ -1290,11 +1289,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
-            default:
                 return php.codeblock((writer) => {
                     writer.write(`$args['${variant.discriminantValue.wireValue}'] = `);
                     writer.writeNodeStatement(discriminantGetter);
                 });
+            default:
+                assertNever(type.internalType);
         }
     }
 
