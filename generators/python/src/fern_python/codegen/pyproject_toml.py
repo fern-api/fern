@@ -7,8 +7,18 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
-from fern.generator_exec import BasicLicense, GithubOutputMode, LicenseConfig, LicenseId, PypiMetadata
-from fern_python.codegen.ast.dependency.dependency import Dependency, DependencyCompatibility
+from fern.generator_exec import (
+    BasicLicense,
+    GithubOutputMode,
+    LicenseConfig,
+    LicenseId,
+    PypiMetadata,
+)
+
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
 from fern_python.codegen.dependency_manager import DependencyManager
 
 

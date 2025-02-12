@@ -7,6 +7,7 @@ from uuid import uuid4
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
+
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
@@ -16,10 +17,16 @@ from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
-from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import EndpointMetadataCollector
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
-from fern_python.generators.sdk.context.sdk_generator_context_impl import SdkGeneratorContextImpl
-from fern_python.generators.sdk.core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from fern_python.generators.sdk.context.sdk_generator_context_impl import (
+    SdkGeneratorContextImpl,
+)
+from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
+    ClientWrapperGenerator,
+)
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
@@ -29,7 +36,11 @@ from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
-from .custom_config import BaseDependencyCustomConfig, DependencyCustomConfig, SDKCustomConfig
+from .custom_config import (
+    BaseDependencyCustomConfig,
+    DependencyCustomConfig,
+    SDKCustomConfig,
+)
 from .environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -145,9 +156,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
-            None
-        )
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
