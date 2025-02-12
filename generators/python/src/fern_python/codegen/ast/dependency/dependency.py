@@ -16,6 +16,7 @@ class Dependency:
     name: DependencyName
     version: DependencyVersion
     # Using a tuple here to ensure immutability and make it hashable
+    python: Optional[str] = None
     extras: Optional[Tuple[str, ...]] = None
     compatibility: DependencyCompatibility = DependencyCompatibility.EXACT
     optional: bool = False
