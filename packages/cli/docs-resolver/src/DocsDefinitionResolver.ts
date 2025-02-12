@@ -198,10 +198,8 @@ export class DocsDefinitionResolver {
         const basePath = this.getDocsBasePath();
 
         // TODO: include more (canonical) slugs from the navigation tree
-        const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
-        this.markdownFilesToFullSlugs.forEach((value, key) => {
-            markdownFilesToPathName[key] = urlJoin(basePath, value);
-        });
+        const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
+            await this.getMarkdownFilesToFullyQualifiedPathNames(basePath);
 
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
@@ -284,6 +282,11 @@ export class DocsDefinitionResolver {
         return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 
+    /**
+     * Creates a map of markdown files to their full slugs specified in the frontmatter only
+     * @param pages - the pages to convert to slugs
+     * @returns a map of markdown files to their full slugs
+     */
     private async getMarkdownFilesToFullSlugs(
         pages: Record<RelativeFilePath, string>
     ): Promise<Map<AbsoluteFilePath, string>> {
@@ -295,7 +298,18 @@ export class DocsDefinitionResolver {
                 mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
             }
         }
+        return mdxFilePathToSlug;
+    }
 
+    /**
+     * Creates a map of markdown files to their fully qualified pathnames, based on the entire navigation tree
+     * @param basePath - the base path of the docs
+     * @returns a map of markdown files to their fully qualified pathnames
+     */
+    private async getMarkdownFilesToFullyQualifiedPathNames(
+        basePath: string
+    ): Promise<Record<AbsoluteFilePath, string>> {
+        const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
         const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(await this.toRootNode());
 
         // all the page slugs in the docs:
@@ -311,10 +325,9 @@ export class DocsDefinitionResolver {
             }
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            mdxFilePathToSlug.set(absoluteFilePath, slug);
+            markdownFilesToPathName[absoluteFilePath] = urlJoin(basePath, slug);
         });
-
-        return mdxFilePathToSlug;
+        return markdownFilesToPathName;
     }
 
     private getDocsBasePath(): string {

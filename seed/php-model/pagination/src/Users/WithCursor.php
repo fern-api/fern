@@ -23,4 +23,12 @@ class WithCursor extends JsonSerializableType
     ) {
         $this->cursor = $values['cursor'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

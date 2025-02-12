@@ -1,0 +1,6 @@
+*
+!generators/typescript/express/cli/docker/cache_heavy_dependencies.sh
+!generators/typescript/asIs/
+!generators/typescript/utils/core-utilities/zurg/src/
+!generators/typescript/utils/core-utilities/base/src/
+!generators/typescript/express/cli/docker/dist/cli.cjs

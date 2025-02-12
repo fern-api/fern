@@ -28,7 +28,7 @@ exports[`Swift Language > makes function 1`] = `
 
 exports[`Swift Language > makes import 1`] = `"import ExamplePackage"`;
 
-exports[`Swift Language > makes primatives 1`] = `" let count: Int"`;
+exports[`Swift Language > makes primitives 1`] = `" let count: Int"`;
 
 exports[`Swift Language > makes struct 1`] = `"public struct TopGun: Movie { let description: String}"`;
 

@@ -6,21 +6,22 @@ import { GLOBAL_NAMESPACE } from "./core/Constant";
 import { Writer } from "./core/Writer";
 
 type InternalType =
-    | Int
-    | String_
+    | Array_
     | Bool
-    | Float
     | Date
     | DateTime
-    | Mixed
-    | Object_
-    | Array_
+    | EnumString
+    | Float
+    | Int
     | Map
-    | TypeDict
-    | Union
+    | Mixed
+    | Null
+    | Object_
     | Optional
     | Reference
-    | EnumString;
+    | String_
+    | TypeDict
+    | Union;
 
 interface Int {
     type: "int";
@@ -44,6 +45,10 @@ interface Date {
 
 interface DateTime {
     type: "dateTime";
+}
+
+interface Null {
+    type: "null";
 }
 
 interface Mixed {
@@ -152,6 +157,10 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             }
+            case "null": {
+                writer.write("null");
+                break;
+            }
             case "typeDict": {
                 if (!comment) {
                     writer.write("array");
@@ -196,12 +205,29 @@ export class Type extends AstNode {
                 }
                 this.internalType.value.write(writer, { comment });
                 if (isUnion) {
-                    writer.write("|null");
+                    writer.write("|");
+                    writer.writeNode(Type.null());
                 }
                 break;
             }
             case "reference":
-                writer.writeNode(this.internalType.value);
+                if (comment) {
+                    writer.writeNode(this.internalType.value);
+                    const generics = this.internalType.value.generics;
+
+                    if (generics && generics.length > 0) {
+                        writer.write("<");
+                        generics.forEach((generic, index) => {
+                            if (index > 0) {
+                                writer.write(", ");
+                            }
+                            generic.write(writer, { comment });
+                        });
+                        writer.write(">");
+                    }
+                } else {
+                    writer.writeNode(this.internalType.value);
+                }
                 break;
             case "enumString":
                 if (comment) {
@@ -326,6 +352,12 @@ export class Type extends AstNode {
         return new this({
             type: "optional",
             value
+        });
+    }
+
+    public static null(): Type {
+        return new this({
+            type: "null"
         });
     }
 

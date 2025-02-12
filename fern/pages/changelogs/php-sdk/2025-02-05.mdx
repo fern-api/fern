@@ -1,0 +1,15 @@
+## 0.3.1
+**`(fix):`** Improve multiline parameter docs by writing them above the tag, e.g.
+```php class UpdateUserRequest extends JsonSerializableType {
+    /**
+    * The user to update.
+    *
+    * See [User](https://acme.co/user) for more information.
+    *
+    * @var ?User $user
+    */
+    public ?User $user;
+} ```
+
+**`(fix):`** Add .idea to the generated .gitignore file.
+

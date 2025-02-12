@@ -45,6 +45,7 @@
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "GetOrganizationUserResponse",
               },
               "source": {
@@ -127,6 +128,7 @@
       response:
         docs: Successful response
         type: GetOrganizationUserResponse
+        status-code: 200
       examples:
         - path-parameters:
             organization_id: organization_id
@@ -162,6 +164,7 @@ types:
                 {
                   "path-parameters": {
                     "id": "id",
+                    "organization_id": "organization_id",
                   },
                   "request": {},
                   "response": {
@@ -190,11 +193,13 @@ types:
                 "name": "SearchRequest",
                 "path-parameters": {
                   "id": "string",
+                  "organization_id": "string",
                 },
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "SearchResponse",
               },
               "source": {
@@ -260,6 +265,7 @@ service:
         name: SearchRequest
         path-parameters:
           id: string
+          organization_id: string
         body:
           properties:
             access:
@@ -269,9 +275,11 @@ service:
       response:
         docs: Successful response
         type: SearchResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id
+            organization_id: organization_id
           request: {}
           response:
             body:

@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences;
 
 public partial class RequestOptions : IRequestOptions

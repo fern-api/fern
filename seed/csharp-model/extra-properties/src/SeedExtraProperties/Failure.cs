@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedExtraProperties.Core;
 
-#nullable enable
-
 namespace SeedExtraProperties;
 
 public record Failure

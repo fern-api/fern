@@ -62,11 +62,11 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 };
 
 function getErrorsByFilepath(workspace: FernWorkspace) {
-    const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
+    const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
     visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const errorsForFile = new Set<ErrorName>();
-        erorrsByFilepath[relativeFilepath] = errorsForFile;
+        errorsByFilepath[relativeFilepath] = errorsForFile;
 
         visitDefinitionFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
@@ -75,5 +75,5 @@ function getErrorsByFilepath(workspace: FernWorkspace) {
         });
     });
 
-    return erorrsByFilepath;
+    return errorsByFilepath;
 }

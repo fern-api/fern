@@ -181,8 +181,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     protected map(mapType: MapType, params: ConvertTypeReferenceParams): T {
-        const resolvdKeyType = this.context.type.resolveTypeReference(mapType.keyType);
-        if (resolvdKeyType.type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
+        const resolvedKeyType = this.context.type.resolveTypeReference(mapType.keyType);
+        if (resolvedKeyType.type === "named" && resolvedKeyType.shape === ShapeType.Enum) {
             return this.mapWithEnumKeys(mapType, params);
         } else {
             return this.mapWithNonEnumKeys(mapType, params);

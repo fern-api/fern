@@ -31,4 +31,12 @@ class ExpressionLocation extends JsonSerializableType
         $this->start = $values['start'];
         $this->offset = $values['offset'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

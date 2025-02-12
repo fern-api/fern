@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedCustomAuth.Core;
 
-#nullable enable
-
 namespace SeedCustomAuth;
 
 public partial class ClientOptions

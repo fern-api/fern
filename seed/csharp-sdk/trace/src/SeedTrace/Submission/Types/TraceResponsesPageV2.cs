@@ -1,14 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public record TraceResponsesPageV2
 {
     /// <summary>
-    /// If present, use this to load subseqent pages.
+    /// If present, use this to load subsequent pages.
     /// The offset is the id of the next trace response to load.
     /// </summary>
     [JsonPropertyName("offset")]

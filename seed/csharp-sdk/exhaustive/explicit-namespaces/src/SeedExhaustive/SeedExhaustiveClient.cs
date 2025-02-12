@@ -7,19 +7,18 @@ using SeedExhaustive.NoReqBody;
 using SeedExhaustive.ReqWithHeaders;
 using SeedExhaustive.Types;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public partial class SeedExhaustiveClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExhaustive" },
                 { "X-Fern-SDK-Version", Version.Current },

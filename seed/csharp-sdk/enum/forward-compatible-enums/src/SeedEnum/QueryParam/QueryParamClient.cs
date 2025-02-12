@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public partial class QueryParamClient
@@ -40,17 +38,19 @@ public partial class QueryParamClient
         {
             _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "query",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "query",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -71,7 +71,7 @@ public partial class QueryParamClient
     ///         Operand = [Operand.GreaterThan],
     ///         MaybeOperand = [Operand.GreaterThan],
     ///         OperandOrColor = [Color.Red],
-    ///         MaybeOperandOrColor = [null],
+    ///         MaybeOperandOrColor = [Color.Red],
     ///     }
     /// );
     /// </code>
@@ -91,17 +91,19 @@ public partial class QueryParamClient
         _query["maybeOperandOrColor"] = request
             .MaybeOperandOrColor.Select(_value => JsonUtils.Serialize(_value))
             .ToList();
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "query-list",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "query-list",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

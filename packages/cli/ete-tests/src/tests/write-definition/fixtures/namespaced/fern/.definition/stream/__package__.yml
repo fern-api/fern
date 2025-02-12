@@ -104,10 +104,10 @@ types:
       timestamp:
         docs: >-
           The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
+          compatibility reasons). We recommend using the timestamps field
           instead.
         type: double
-      timestampms:
+      timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
       type: literal<"update">

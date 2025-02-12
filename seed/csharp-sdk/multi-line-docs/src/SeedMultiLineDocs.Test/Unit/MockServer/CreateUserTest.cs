@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
 
-#nullable enable
-
 namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
 [TestFixture]

@@ -4672,12 +4672,12 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "numer: $FERN_INPUT",
+                                        "templateString": "number: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "numer",
+                                                "path": "number",
                                                 "type": "payload"
                                             }
                                         ],

@@ -139,6 +139,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -398,13 +399,6 @@
               "contract": {
                 "value": {
                   "value": {
-                    "employment_type": {
-                      "value": {
-                        "value": "FULL_TIME",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "contract_oid": {
                       "value": {
                         "value": "pdcMQe0cXCCXWTkqkdytw",
@@ -415,6 +409,20 @@
                     "start_date": {
                       "value": {
                         "value": "1999-12-31",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "part_time_percentage": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "employment_type": {
+                      "value": {
+                        "value": "PART_TIME",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -546,13 +554,6 @@
                     "contract": {
                       "value": {
                         "value": {
-                          "employment_type": {
-                            "value": {
-                              "value": "FULL_TIME",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "contract_oid": {
                             "value": {
                               "value": "pdcMQe0cXCCXWTkqkdytw",
@@ -577,6 +578,20 @@
                           "end_date": {
                             "value": {
                               "value": "1999-12-31",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "part_time_percentage": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "employment_type": {
+                            "value": {
+                              "value": "PART_TIME",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -674,6 +689,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1105,6 +1121,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1522,6 +1539,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -2414,6 +2432,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -3295,6 +3314,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -4176,6 +4196,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -5282,6 +5303,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5684,6 +5706,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -6575,6 +6598,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7378,6 +7402,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7662,7 +7687,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -7687,6 +7713,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7965,7 +7992,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -7990,6 +8018,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8533,6 +8562,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8878,6 +8908,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -9176,6 +9207,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9426,6 +9458,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -9820,6 +9853,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -10208,6 +10242,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10511,6 +10546,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -10813,6 +10849,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -11122,6 +11159,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -11413,6 +11451,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 204,
         "type": "json"
       },
       "errors": {
@@ -11565,20 +11604,7 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {
-                "data": {
-                  "properties": {
-                    "updated": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
-                }
-              },
+              "properties": {},
               "type": "object"
             },
             "type": "withoutStreaming"
@@ -11656,6 +11682,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -11954,6 +11981,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12378,6 +12406,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12873,6 +12902,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13251,6 +13281,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13572,6 +13603,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13952,6 +13984,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14271,6 +14304,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -14588,6 +14622,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -14888,6 +14923,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15287,6 +15323,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15601,6 +15638,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16005,6 +16043,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -16314,6 +16353,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16697,6 +16737,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16955,6 +16996,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17244,6 +17286,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17757,6 +17800,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -18449,6 +18493,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -19132,6 +19177,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19494,6 +19540,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19979,6 +20026,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -20307,6 +20355,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20856,6 +20905,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21148,6 +21198,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21464,6 +21515,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -21753,6 +21805,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -22236,6 +22289,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22958,6 +23012,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23473,6 +23528,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -23820,6 +23876,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24112,6 +24169,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24421,6 +24479,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -24710,6 +24769,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -24981,6 +25041,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25249,6 +25310,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25551,6 +25613,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25852,6 +25915,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26144,6 +26208,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26409,6 +26474,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26668,6 +26734,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26925,6 +26992,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27202,6 +27270,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27509,6 +27578,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27829,6 +27899,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28079,6 +28150,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28375,6 +28447,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28879,6 +28952,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29237,6 +29311,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29531,6 +29606,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29818,6 +29894,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30194,6 +30271,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30517,6 +30595,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31058,6 +31137,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31399,6 +31479,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31740,6 +31821,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -32108,6 +32190,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32705,6 +32788,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33077,6 +33161,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33924,7 +34009,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -34065,7 +34150,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34108,7 +34193,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34193,7 +34278,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34236,7 +34321,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -37088,7 +37173,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -40882,7 +40967,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -40925,7 +41010,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -40968,7 +41053,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41286,7 +41371,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41329,7 +41414,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41372,7 +41457,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -42790,7 +42875,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -57682,7 +57767,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -59667,7 +59752,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },

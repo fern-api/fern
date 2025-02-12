@@ -130,7 +130,7 @@ func (c *Client) Post(
 
 func (c *Client) JustFile(
 	ctx context.Context,
-	request *fileuploadgo.JustFileRequet,
+	request *fileuploadgo.JustFileRequest,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
@@ -173,7 +173,7 @@ func (c *Client) JustFile(
 
 func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
-	request *fileuploadgo.JustFileWithQueryParamsRequet,
+	request *fileuploadgo.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)

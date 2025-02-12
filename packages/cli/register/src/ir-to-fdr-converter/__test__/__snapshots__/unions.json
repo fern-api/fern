@@ -380,7 +380,7 @@
             }
           },
           {
-            "discriminantValue": "dateimte",
+            "discriminantValue": "datetime",
             "additionalProperties": {
               "extends": [],
               "properties": [
@@ -645,13 +645,15 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "circle",
-                "radius": 1.1
+                "radius": 1.1,
+                "id": "id"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "circle",
-                  "radius": 1.1
+                  "radius": 1.1,
+                  "id": "id"
                 }
               },
               "codeSamples": []
@@ -712,13 +714,15 @@
               "headers": {},
               "requestBody": {
                 "type": "circle",
-                "radius": 1.1
+                "radius": 1.1,
+                "id": "id"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "circle",
-                  "radius": 1.1
+                  "radius": 1.1,
+                  "id": "id"
                 }
               },
               "responseStatusCode": 200,

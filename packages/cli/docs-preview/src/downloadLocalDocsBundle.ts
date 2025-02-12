@@ -47,9 +47,9 @@ export function getPathToEtagFile(): AbsoluteFilePath {
 }
 
 export declare namespace DownloadLocalBundle {
-    type Result = SuccesResult | FailureResult;
+    type Result = SuccessResult | FailureResult;
 
-    interface SuccesResult {
+    interface SuccessResult {
         type: "success";
     }
 

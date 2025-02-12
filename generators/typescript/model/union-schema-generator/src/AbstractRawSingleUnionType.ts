@@ -13,11 +13,11 @@ export declare namespace AbstractRawSingleUnionType {
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private disciminant: NameAndWireValue;
+    private discriminant: NameAndWireValue;
     private discriminantValueWithAllCasings: NameAndWireValue;
 
     constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
-        this.disciminant = discriminant;
+        this.discriminant = discriminant;
         this.discriminantValueWithAllCasings = discriminantValue;
     }
 
@@ -31,7 +31,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
-                    name: `"${this.disciminant.wireValue}"`,
+                    name: `"${this.discriminant.wireValue}"`,
                     type: `"${this.discriminantValue}"`
                 },
                 ...this.getNonDiscriminantPropertiesForInterface(context)

@@ -90,7 +90,6 @@ export class Enum extends AstNode {
                 })
             );
         }
-
         writer.writeNewLineIfLastLineNot();
         writer.dedent();
         writer.writeLine("}");

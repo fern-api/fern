@@ -136,7 +136,7 @@ export class MockServer {
     }
 
     public async keepAlive(): Promise<void> {
-        // await infiinitely
+        // await infinitely
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         await new Promise(() => {});
     }

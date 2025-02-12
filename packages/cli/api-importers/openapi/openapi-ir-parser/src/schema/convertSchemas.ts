@@ -685,7 +685,7 @@ export function convertSchemaObject(
         }
     }
 
-    // treat anyOf as undiscrminated unions
+    // treat anyOf as undiscriminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
             const convertedSchema = convertSchema(

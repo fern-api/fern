@@ -673,7 +673,7 @@ func (u *UnionWithLiteral) validate() error {
 type UnionWithOptionalTime struct {
 	Type     string
 	Date     *time.Time
-	Dateimte *time.Time
+	Datetime *time.Time
 }
 
 func (u *UnionWithOptionalTime) GetType() string {
@@ -690,11 +690,11 @@ func (u *UnionWithOptionalTime) GetDate() *time.Time {
 	return u.Date
 }
 
-func (u *UnionWithOptionalTime) GetDateimte() *time.Time {
+func (u *UnionWithOptionalTime) GetDatetime() *time.Time {
 	if u == nil {
 		return nil
 	}
-	return u.Dateimte
+	return u.Datetime
 }
 
 func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
@@ -717,14 +717,14 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.Date = valueUnmarshaler.Date.TimePtr()
-	case "dateimte":
+	case "datetime":
 		var valueUnmarshaler struct {
-			Dateimte *internal.DateTime `json:"value,omitempty"`
+			Datetime *internal.DateTime `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		u.Dateimte = valueUnmarshaler.Dateimte.TimePtr()
+		u.Datetime = valueUnmarshaler.Datetime.TimePtr()
 	}
 	return nil
 }
@@ -743,13 +743,13 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
-	if u.Dateimte != nil {
+	if u.Datetime != nil {
 		var marshaler = struct {
 			Type     string             `json:"type"`
-			Dateimte *internal.DateTime `json:"value,omitempty"`
+			Datetime *internal.DateTime `json:"value,omitempty"`
 		}{
-			Type:     "dateimte",
-			Dateimte: internal.NewOptionalDateTime(u.Dateimte),
+			Type:     "datetime",
+			Datetime: internal.NewOptionalDateTime(u.Datetime),
 		}
 		return json.Marshal(marshaler)
 	}
@@ -758,15 +758,15 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 
 type UnionWithOptionalTimeVisitor interface {
 	VisitDate(*time.Time) error
-	VisitDateimte(*time.Time) error
+	VisitDatetime(*time.Time) error
 }
 
 func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) error {
 	if u.Date != nil {
 		return visitor.VisitDate(u.Date)
 	}
-	if u.Dateimte != nil {
-		return visitor.VisitDateimte(u.Dateimte)
+	if u.Datetime != nil {
+		return visitor.VisitDatetime(u.Datetime)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -779,8 +779,8 @@ func (u *UnionWithOptionalTime) validate() error {
 	if u.Date != nil {
 		fields = append(fields, "date")
 	}
-	if u.Dateimte != nil {
-		fields = append(fields, "dateimte")
+	if u.Datetime != nil {
+		fields = append(fields, "datetime")
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {

@@ -50,8 +50,14 @@ exports[`Method > toString > should generate a method with multiple arguments 1`
 "
 `;
 
-exports[`Method > toString > should generate a method with one argument 1`] = `
+exports[`Method > toString > should generate a method with one argument including types 1`] = `
 "def one_arg(arg1: str):
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with one argument without a type 1`] = `
+"def one_arg(arg1):
     pass
 "
 `;

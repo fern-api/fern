@@ -67,7 +67,7 @@ export function convertUndiscriminatedOneOf({
         if (
             !isReferenceObject(schema) &&
             schema.enum != null &&
-            context.options.cooerceEnumsToLiterals &&
+            context.options.coerceEnumsToLiterals &&
             schema.type === "string"
         ) {
             return schema.enum.map((enumValue) => {
@@ -148,7 +148,7 @@ export function convertUndiscriminatedOneOf({
         return uniqueSubtypes[0];
     }
 
-    return wrapUndiscriminantedOneOf({
+    return wrapUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -282,7 +282,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         return uniqueSubtypes[0];
     }
 
-    return wrapUndiscriminantedOneOf({
+    return wrapUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -355,7 +355,7 @@ function getUniqueSubTypeNames({
     return prefixes;
 }
 
-export function wrapUndiscriminantedOneOf({
+export function wrapUndiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,
@@ -384,7 +384,7 @@ export function wrapUndiscriminantedOneOf({
             generatedName,
             title,
             value: SchemaWithExample.oneOf(
-                OneOfSchemaWithExample.undisciminated({
+                OneOfSchemaWithExample.undiscriminated({
                     description,
                     availability,
                     nameOverride,
@@ -404,7 +404,7 @@ export function wrapUndiscriminantedOneOf({
         });
     }
     return SchemaWithExample.oneOf(
-        OneOfSchemaWithExample.undisciminated({
+        OneOfSchemaWithExample.undiscriminated({
             description,
             availability,
             nameOverride,

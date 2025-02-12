@@ -43,7 +43,7 @@ public final class CreateUserRequest {
 
   /**
    * @return The age of the user.
-   * This propery is not required.
+   * This property is not required.
    */
   @JsonProperty("age")
   public Optional<Integer> getAge() {
@@ -120,7 +120,7 @@ public final class CreateUserRequest {
 
     /**
      * <p>The age of the user.
-     * This propery is not required.</p>
+     * This property is not required.</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override

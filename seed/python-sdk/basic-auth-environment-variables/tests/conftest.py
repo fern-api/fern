@@ -10,7 +10,7 @@ from seed import AsyncSeedBasicAuthEnvironmentVariables
 def client() -> SeedBasicAuthEnvironmentVariables:
     return SeedBasicAuthEnvironmentVariables(
         username=os.getenv("ENV_USERNAME", "username"),
-        password=os.getenv("ENV_PASSWORD", "password"),
+        access_token=os.getenv("ENV_ACCESS_TOKEN", "access_token"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )
 
@@ -19,6 +19,6 @@ def client() -> SeedBasicAuthEnvironmentVariables:
 def async_client() -> AsyncSeedBasicAuthEnvironmentVariables:
     return AsyncSeedBasicAuthEnvironmentVariables(
         username=os.getenv("ENV_USERNAME", "username"),
-        password=os.getenv("ENV_PASSWORD", "password"),
+        access_token=os.getenv("ENV_ACCESS_TOKEN", "access_token"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )

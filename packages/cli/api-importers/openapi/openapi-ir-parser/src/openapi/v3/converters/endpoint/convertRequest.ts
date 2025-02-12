@@ -144,7 +144,8 @@ export function convertRequest({
                         schema: MultipartSchema.file({ isOptional: false, isArray: false }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false
                     });
                     continue;
                 }
@@ -160,7 +161,8 @@ export function convertRequest({
                         schema: MultipartSchema.file({ isOptional: true, isArray: false }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false
                     });
                     continue;
                 }
@@ -176,7 +178,8 @@ export function convertRequest({
                         schema: MultipartSchema.file({ isOptional: false, isArray: true }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false
                     });
                     continue;
                 }
@@ -193,7 +196,8 @@ export function convertRequest({
                         schema: MultipartSchema.file({ isOptional: true, isArray: true }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false
                     });
                     continue;
                 }
@@ -202,7 +206,8 @@ export function convertRequest({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
-                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined
                 });
             }
         }

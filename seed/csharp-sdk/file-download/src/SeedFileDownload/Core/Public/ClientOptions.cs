@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedFileDownload.Core;
 
-#nullable enable
-
 namespace SeedFileDownload;
 
 public partial class ClientOptions

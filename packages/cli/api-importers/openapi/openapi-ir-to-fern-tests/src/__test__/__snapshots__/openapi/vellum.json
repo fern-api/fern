@@ -91,14 +91,9 @@ Executes a deployed Workflow and streams back its results.",
                   "request": {
                     "inputs": [
                       {
-                        "name": "inputs",
-                        "type": "CHAT_HISTORY",
-                        "value": [
-                          {
-                            "role": "SYSTEM",
-                            "text": "text",
-                          },
-                        ],
+                        "name": "name",
+                        "type": "STRING",
+                        "value": "value",
                       },
                     ],
                   },
@@ -106,34 +101,25 @@ Executes a deployed Workflow and streams back its results.",
                     "stream": [
                       {
                         "data": {
-                          "data": {
-                            "data": {
-                              "output": {
-                                "name": "output",
-                                "type": "CHAT_HISTORY",
-                                "value": [
-                                  {
-                                    "role": "SYSTEM",
-                                    "text": "text",
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "TERMINAL",
-                          },
                           "error": {
                             "code": "WORKFLOW_INITIALIZATION",
                             "message": "message",
                           },
                           "id": "id",
-                          "node_id": "node_id",
-                          "node_result_id": "node_result_id",
+                          "output": {
+                            "delta": "delta",
+                            "name": "name",
+                            "node_id": "node_id",
+                            "state": "INITIATED",
+                            "type": "STRING",
+                            "value": "value",
+                          },
                           "state": "INITIATED",
                           "ts": "2024-01-15T09:30:00Z",
                         },
-                        "external_id": "string",
-                        "run_id": "string",
-                        "type": "NODE",
+                        "external_id": "external_id",
+                        "run_id": "run_id",
+                        "type": "WORKFLOW",
                       },
                     ],
                   },
@@ -294,6 +280,7 @@ Generate a completion using a previously defined deployment.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "GenerateResponse",
               },
               "source": {
@@ -485,6 +472,7 @@ Perform a search against a document index.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "SearchResponse",
               },
               "source": {
@@ -2647,34 +2635,28 @@ Used to submit feedback regarding the quality of previously generated completion
       examples:
         - request:
             inputs:
-              - type: CHAT_HISTORY
-                name: inputs
-                value:
-                  - text: text
-                    role: SYSTEM
+              - name: name
+                value: value
+                type: STRING
           response:
             stream:
-              - type: NODE
-                run_id: string
-                external_id: string
+              - run_id: run_id
+                external_id: external_id
                 data:
                   id: id
-                  node_id: node_id
-                  node_result_id: node_result_id
                   state: INITIATED
                   ts: '2024-01-15T09:30:00Z'
-                  data:
-                    type: TERMINAL
-                    data:
-                      output:
-                        type: CHAT_HISTORY
-                        name: output
-                        value:
-                          - text: text
-                            role: SYSTEM
+                  output:
+                    name: name
+                    state: INITIATED
+                    node_id: node_id
+                    delta: delta
+                    value: value
+                    type: STRING
                   error:
                     message: message
                     code: WORKFLOW_INITIALIZATION
+                type: WORKFLOW
     generate:
       path: /v1/generate
       method: POST
@@ -2722,6 +2704,7 @@ Used to submit feedback regarding the quality of previously generated completion
       response:
         docs: ''
         type: GenerateResponse
+        status-code: 200
       url: Predict
       errors:
         - BadRequestError
@@ -2859,6 +2842,7 @@ Used to submit feedback regarding the quality of previously generated completion
       response:
         docs: ''
         type: SearchResponse
+        status-code: 200
       url: Predict
       errors:
         - BadRequestError
@@ -4340,6 +4324,7 @@ Used to retrieve a deployment given its ID or name.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DeploymentRead",
               },
               "source": {
@@ -4379,6 +4364,7 @@ service:
       response:
         docs: ''
         type: root.DeploymentRead
+        status-code: 200
       url: Default
       examples:
         - path-parameters:
@@ -4586,6 +4572,7 @@ Creates a new document index.",
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.DocumentIndexRead",
               },
               "source": {
@@ -4663,6 +4650,7 @@ service:
       response:
         docs: ''
         type: root.DocumentIndexRead
+        status-code: 201
       url: Default
       examples:
         - name: Index Using Instructor Model
@@ -4822,6 +4810,7 @@ Used to list documents. Optionally filter on supported fields.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedSlimDocumentList",
               },
               "source": {
@@ -4901,6 +4890,7 @@ Upload a document to be indexed and used for search.
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.UploadDocumentResponse",
               },
               "source": {
@@ -4956,6 +4946,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedSlimDocumentList
+        status-code: 200
       url: Default
       examples:
         - response:
@@ -5025,6 +5016,7 @@ service:
       response:
         docs: ''
         type: root.UploadDocumentResponse
+        status-code: 201
       url: Documents
       errors:
         - root.BadRequestError
@@ -5101,6 +5093,7 @@ Compiles the prompt backing the model version using the provided input values.",
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ModelVersionCompilePromptResponse",
               },
               "source": {
@@ -5183,6 +5176,7 @@ Used to retrieve a model version given its ID.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ModelVersionRead",
               },
               "source": {
@@ -5222,6 +5216,7 @@ service:
       response:
         docs: ''
         type: root.ModelVersionRead
+        status-code: 200
       url: Default
       examples:
         - path-parameters:
@@ -5292,6 +5287,7 @@ service:
       response:
         docs: ''
         type: root.ModelVersionCompilePromptResponse
+        status-code: 200
       url: Default
       examples:
         - path-parameters:
@@ -5458,6 +5454,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RegisterPromptResponse",
               },
               "source": {
@@ -5547,6 +5544,7 @@ service:
       response:
         docs: ''
         type: root.RegisterPromptResponse
+        status-code: 200
       url: Default
       errors:
         - root.ConflictError
@@ -5781,6 +5779,7 @@ or overwritten with default values.",
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.SandboxScenario",
               },
               "source": {
@@ -5851,6 +5850,7 @@ service:
       response:
         docs: ''
         type: root.SandboxScenario
+        status-code: 200
       url: Default
       examples:
         - name: Basic Example
@@ -6056,6 +6056,7 @@ or overwritten with default values.",
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TestSuiteTestCase",
               },
               "source": {
@@ -6132,6 +6133,7 @@ service:
       response:
         docs: ''
         type: root.TestSuiteTestCase
+        status-code: 200
       url: Default
       examples:
         - path-parameters:

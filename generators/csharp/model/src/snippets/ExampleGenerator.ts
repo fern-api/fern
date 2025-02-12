@@ -70,6 +70,7 @@ export class ExampleGenerator {
         }
         return csharp.InstantiatedPrimitive.null();
     }
+
     private getSnippetForNamed(exampleNamedType: ExampleNamedType, parseDatetimes: boolean): csharp.AstNode {
         return exampleNamedType.shape._visit<csharp.AstNode>({
             alias: (exampleAliasType) =>

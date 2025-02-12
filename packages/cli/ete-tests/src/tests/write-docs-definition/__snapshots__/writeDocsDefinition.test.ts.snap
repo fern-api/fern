@@ -23,7 +23,7 @@ exports[`write-docs-definition > petstore 1`] = `
               "paginated": false,
               "slug": "api-reference",
               "hideTitle": false,
-              "showErrors": false,
+              "showErrors": true,
               "children": [
                 {
                   "id": "api-2:subpackage_pets",

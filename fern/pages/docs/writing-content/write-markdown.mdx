@@ -69,6 +69,32 @@ Read the [Introduction](/learn/overview/introduction).
 
 You can use locally stored images or URLs to include images in your Markdown pages. Use either [Markdown syntax](https://www.markdownguide.org/basic-syntax/#images-1) or the [`<img>` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) to insert the image.
 
+<Tabs>
+  <Tab title="Markdown">
+    ```markdown
+    ![Alt text](./path/to/image.png "Optional title")
+    ```
+  </Tab>
+  <Tab title="HTML">
+    ```html
+    <img src="../assets/images/overview.png" width="500px" height="auto" />
+    ```
+  </Tab>
+</Tabs>
+
+Common image attributes:
+
+| Attribute | Description |
+| --------- | ----------- |
+| `src` | URL or path to the image file |
+| `alt` | Alternative text for accessibility |
+| `title` | Tooltip text shown on hover |
+| `width` and `height` | Dimensions of the image in pixels |
+
+<Note>
+For more details about the HTML image element and its attributes, see the [MDN documentation on the img element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img).
+</Note>
+
 ## Embedding local assets
 
 You can embed local assets in your Markdown pages using the [`<embed>` component](/learn/docs/content/components/embed). This is useful for displaying PDFs, images, videos, OpenAPI files, and other assets into your docs.

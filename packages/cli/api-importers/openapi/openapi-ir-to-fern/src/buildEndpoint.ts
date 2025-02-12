@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -188,6 +188,9 @@ export function buildEndpoint({
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference)
                 };
+                if (jsonResponse.statusCode != null) {
+                    convertedEndpoint.response["status-code"] = jsonResponse.statusCode;
+                }
                 if (jsonResponse.responseProperty != null) {
                     convertedEndpoint.response.property = jsonResponse.responseProperty;
                 }
@@ -223,7 +226,8 @@ export function buildEndpoint({
             file: (fileResponse) => {
                 convertedEndpoint.response = {
                     docs: fileResponse.description ?? undefined,
-                    type: "file"
+                    type: "file",
+                    "status-code": fileResponse.statusCode
                 };
             },
             streamingText: (textResponse) => {
@@ -235,7 +239,8 @@ export function buildEndpoint({
             text: (textResponse) => {
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
-                    type: "text"
+                    type: "text",
+                    "status-code": textResponse.statusCode
                 };
             },
             _other: () => {
@@ -601,15 +606,22 @@ function getRequest({
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
                     });
-                    if (property.contentType != null) {
-                        if (typeof propertyTypeReference === "string") {
-                            propertyTypeReference = {
-                                type: propertyTypeReference,
-                                "content-type": property.contentType
-                            };
-                        } else {
-                            propertyTypeReference["content-type"] = property.contentType;
+
+                    if (property.contentType != null || property.exploded) {
+                        const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                            typeof propertyTypeReference === "string"
+                                ? { type: propertyTypeReference }
+                                : propertyTypeReference;
+
+                        if (property.contentType != null) {
+                            propertySchema["content-type"] = property.contentType;
                         }
+
+                        if (property.exploded) {
+                            propertySchema.style = "exploded";
+                        }
+
+                        propertyTypeReference = propertySchema;
                     }
                     return [property.key, propertyTypeReference];
                 }

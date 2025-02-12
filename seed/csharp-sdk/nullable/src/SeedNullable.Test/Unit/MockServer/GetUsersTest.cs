@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable.Test.Unit.MockServer;
 
 [TestFixture]
@@ -53,6 +51,7 @@ public class GetUsersTest : BaseMockServerTest
                     .WithPath("/users")
                     .WithParam("usernames", "usernames")
                     .WithParam("avatar", "avatar")
+                    .WithParam("tags", "tags")
                     .UsingGet()
             )
             .RespondWith(
@@ -68,8 +67,8 @@ public class GetUsersTest : BaseMockServerTest
                 Usernames = ["usernames"],
                 Avatar = "avatar",
                 Activated = [true],
-                Tags = [null],
-                Extra = null,
+                Tags = ["tags"],
+                Extra = true,
             },
             RequestOptions
         );

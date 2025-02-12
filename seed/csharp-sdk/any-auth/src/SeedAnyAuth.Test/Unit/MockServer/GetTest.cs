@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAnyAuth.Core;
 
-#nullable enable
-
 namespace SeedAnyAuth.Test.Unit.MockServer;
 
 [TestFixture]

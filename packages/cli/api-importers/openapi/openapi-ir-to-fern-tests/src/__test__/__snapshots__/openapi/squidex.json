@@ -7927,6 +7927,7 @@ types:
               },
               "response": {
                 "docs": "Client deleted.",
+                "status-code": 200,
                 "type": "root.ClientsDto",
               },
               "source": {
@@ -7994,6 +7995,7 @@ types:
               },
               "response": {
                 "docs": "Contributor removed.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -8055,6 +8057,7 @@ types:
               },
               "response": {
                 "docs": "App image removed.",
+                "status-code": 200,
                 "type": "root.AppDto",
               },
               "source": {
@@ -8121,6 +8124,7 @@ types:
               },
               "response": {
                 "docs": "Language deleted.",
+                "status-code": 200,
                 "type": "root.AppLanguagesDto",
               },
               "source": {
@@ -8183,6 +8187,7 @@ types:
               },
               "response": {
                 "docs": "Contributor removed.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -8252,6 +8257,7 @@ types:
               },
               "response": {
                 "docs": "Role deleted.",
+                "status-code": 200,
                 "type": "root.RolesDto",
               },
               "source": {
@@ -8323,6 +8329,7 @@ types:
               },
               "response": {
                 "docs": "Workflow deleted.",
+                "status-code": 200,
                 "type": "root.WorkflowsDto",
               },
               "source": {
@@ -8383,6 +8390,7 @@ types:
               },
               "response": {
                 "docs": "Apps returned.",
+                "status-code": 200,
                 "type": "root.AppDto",
               },
               "source": {
@@ -8435,6 +8443,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "path": "/api/apps",
               "response": {
                 "docs": "Apps returned.",
+                "status-code": 200,
                 "type": "list<root.AppDto>",
               },
               "source": {
@@ -8486,6 +8495,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Asset scripts returned.",
+                "status-code": 200,
                 "type": "root.AssetScriptsDto",
               },
               "source": {
@@ -8546,6 +8556,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Clients returned.",
+                "status-code": 200,
                 "type": "root.ClientsDto",
               },
               "source": {
@@ -8607,6 +8618,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Contributors returned.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -8632,6 +8644,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "App image found and content or (resized) image returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -8692,6 +8705,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Languages returned.",
+                "status-code": 200,
                 "type": "root.AppLanguagesDto",
               },
               "source": {
@@ -8729,6 +8743,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "App permissions returned.",
+                "status-code": 200,
                 "type": "list<string>",
               },
               "source": {
@@ -8792,6 +8807,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Roles returned.",
+                "status-code": 200,
                 "type": "root.RolesDto",
               },
               "source": {
@@ -8851,6 +8867,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "App settings returned.",
+                "status-code": 200,
                 "type": "root.AppSettingsDto",
               },
               "source": {
@@ -8912,6 +8929,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Apps returned.",
+                "status-code": 200,
                 "type": "list<root.AppDto>",
               },
               "source": {
@@ -8977,6 +8995,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Workflows returned.",
+                "status-code": 200,
                 "type": "root.WorkflowsDto",
               },
               "source": {
@@ -9058,6 +9077,7 @@ You will be assigned as owner of the new app automatically.",
               },
               "response": {
                 "docs": "App created.",
+                "status-code": 201,
                 "type": "root.AppDto",
               },
               "source": {
@@ -9144,6 +9164,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Client created.",
+                "status-code": 201,
                 "type": "root.ClientsDto",
               },
               "source": {
@@ -9213,6 +9234,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Contributor assigned to app.",
+                "status-code": 201,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -9298,6 +9320,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Language created.",
+                "status-code": 201,
                 "type": "root.AppLanguagesDto",
               },
               "source": {
@@ -9386,6 +9409,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Role created.",
+                "status-code": 201,
                 "type": "root.RolesDto",
               },
               "source": {
@@ -9476,6 +9500,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Workflow created.",
+                "status-code": 200,
                 "type": "root.WorkflowsDto",
               },
               "source": {
@@ -9557,6 +9582,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "App updated.",
+                "status-code": 200,
                 "type": "root.AppDto",
               },
               "source": {
@@ -9634,6 +9660,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "App transferred.",
+                "status-code": 200,
                 "type": "root.AppDto",
               },
               "source": {
@@ -9726,6 +9753,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Asset scripts updated.",
+                "status-code": 200,
                 "type": "root.AssetScriptsDto",
               },
               "source": {
@@ -9830,6 +9858,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Client updated.",
+                "status-code": 200,
                 "type": "root.ClientsDto",
               },
               "source": {
@@ -9920,6 +9949,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Language updated.",
+                "status-code": 200,
                 "type": "root.AppLanguagesDto",
               },
               "source": {
@@ -10013,6 +10043,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Role updated.",
+                "status-code": 200,
                 "type": "root.RolesDto",
               },
               "source": {
@@ -10114,6 +10145,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "App updated.",
+                "status-code": 200,
                 "type": "root.AppSettingsDto",
               },
               "source": {
@@ -10224,6 +10256,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "Workflow updated.",
+                "status-code": 200,
                 "type": "root.WorkflowsDto",
               },
               "source": {
@@ -10298,6 +10331,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "response": {
                 "docs": "App image uploaded.",
+                "status-code": 200,
                 "type": "root.AppDto",
               },
               "source": {
@@ -10330,6 +10364,7 @@ service:
       response:
         docs: Asset scripts returned.
         type: root.AssetScriptsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -10391,6 +10426,7 @@ service:
       response:
         docs: Asset scripts updated.
         type: root.AssetScriptsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10429,6 +10465,7 @@ service:
       response:
         docs: Clients returned.
         type: root.ClientsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -10484,6 +10521,7 @@ service:
       response:
         docs: Client created.
         type: root.ClientsDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10557,6 +10595,7 @@ service:
       response:
         docs: Client updated.
         type: root.ClientsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10605,6 +10644,7 @@ service:
       response:
         docs: Client deleted.
         type: root.ClientsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10646,6 +10686,7 @@ service:
       response:
         docs: Contributors returned.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -10688,6 +10729,7 @@ service:
       response:
         docs: Contributor assigned to app.
         type: root.ContributorsDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10730,6 +10772,7 @@ service:
       response:
         docs: Contributor removed.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10773,6 +10816,7 @@ service:
       response:
         docs: Contributor removed.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10814,6 +10858,7 @@ service:
       response:
         docs: App image found and content or (resized) image returned.
         type: file
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -10837,6 +10882,7 @@ service:
       response:
         docs: App image uploaded.
         type: root.AppDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10881,6 +10927,7 @@ service:
       response:
         docs: App image removed.
         type: root.AppDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -10924,6 +10971,7 @@ service:
       response:
         docs: Languages returned.
         type: root.AppLanguagesDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -10972,6 +11020,7 @@ service:
       response:
         docs: Language created.
         type: root.AppLanguagesDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11030,6 +11079,7 @@ service:
       response:
         docs: Language updated.
         type: root.AppLanguagesDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11074,6 +11124,7 @@ service:
       response:
         docs: Language deleted.
         type: root.AppLanguagesDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11114,6 +11165,7 @@ service:
       response:
         docs: Roles returned.
         type: root.RolesDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -11164,6 +11216,7 @@ service:
       response:
         docs: Role created.
         type: root.RolesDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11207,6 +11260,7 @@ service:
       response:
         docs: App permissions returned.
         type: list<string>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -11244,6 +11298,7 @@ service:
       response:
         docs: Role updated.
         type: root.RolesDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11292,6 +11347,7 @@ service:
       response:
         docs: Role deleted.
         type: root.RolesDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11335,6 +11391,7 @@ service:
       response:
         docs: Apps returned.
         type: list<root.AppDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -11388,6 +11445,7 @@ service:
       response:
         docs: App created.
         type: root.AppDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.ConflictError
@@ -11436,6 +11494,7 @@ service:
       response:
         docs: Apps returned.
         type: list<root.AppDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -11476,6 +11535,7 @@ service:
       response:
         docs: Apps returned.
         type: root.AppDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -11529,6 +11589,7 @@ service:
       response:
         docs: App updated.
         type: root.AppDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11599,6 +11660,7 @@ service:
       response:
         docs: App transferred.
         type: root.AppDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11643,6 +11705,7 @@ service:
       response:
         docs: App settings returned.
         type: root.AppSettingsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -11697,6 +11760,7 @@ service:
       response:
         docs: App updated.
         type: root.AppSettingsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11742,6 +11806,7 @@ service:
       response:
         docs: Workflows returned.
         type: root.WorkflowsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -11793,6 +11858,7 @@ service:
       response:
         docs: Workflow created.
         type: root.WorkflowsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11859,6 +11925,7 @@ service:
       response:
         docs: Workflow updated.
         type: root.WorkflowsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -11909,6 +11976,7 @@ service:
       response:
         docs: Workflow deleted.
         type: root.WorkflowsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -12026,6 +12094,7 @@ service:
               },
               "response": {
                 "docs": "Assets created, update or delete.",
+                "status-code": 200,
                 "type": "list<root.BulkResultDto>",
               },
               "source": {
@@ -12185,6 +12254,7 @@ service:
               },
               "response": {
                 "docs": "Asset found.",
+                "status-code": 200,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -12272,6 +12342,7 @@ service:
               },
               "response": {
                 "docs": "Asset found and content or (resized) image returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -12366,6 +12437,7 @@ service:
               },
               "response": {
                 "docs": "Asset found and content or (resized) image returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -12451,6 +12523,7 @@ service:
               },
               "response": {
                 "docs": "Asset folders returned.",
+                "status-code": 200,
                 "type": "root.AssetFoldersDto",
               },
               "source": {
@@ -12568,6 +12641,7 @@ service:
               },
               "response": {
                 "docs": "Assets returned.",
+                "status-code": 200,
                 "type": "root.AssetsDto",
               },
               "source": {
@@ -12658,6 +12732,7 @@ service:
               },
               "response": {
                 "docs": "Assets returned.",
+                "status-code": 200,
                 "type": "root.AssetsDto",
               },
               "source": {
@@ -12695,6 +12770,7 @@ service:
               },
               "response": {
                 "docs": "Assets tags returned.",
+                "status-code": 200,
                 "type": "map<string, integer>",
               },
               "source": {
@@ -12796,6 +12872,7 @@ service:
               },
               "response": {
                 "docs": "Asset created.",
+                "status-code": 201,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -12872,6 +12949,7 @@ service:
               },
               "response": {
                 "docs": "Asset folder created.",
+                "status-code": 201,
                 "type": "root.AssetFolderDto",
               },
               "source": {
@@ -12974,6 +13052,7 @@ service:
               },
               "response": {
                 "docs": "Asset created or updated.",
+                "status-code": 200,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -13085,6 +13164,7 @@ service:
               },
               "response": {
                 "docs": "Asset updated.",
+                "status-code": 200,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -13178,6 +13258,7 @@ service:
               },
               "response": {
                 "docs": "Asset updated.",
+                "status-code": 200,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -13255,6 +13336,7 @@ service:
               },
               "response": {
                 "docs": "Asset folder updated.",
+                "status-code": 200,
                 "type": "root.AssetFolderDto",
               },
               "source": {
@@ -13324,6 +13406,7 @@ service:
               },
               "response": {
                 "docs": "Asset folder moved.",
+                "status-code": 200,
                 "type": "root.AssetFolderDto",
               },
               "source": {
@@ -13419,6 +13502,7 @@ service:
               },
               "response": {
                 "docs": "Asset moved.",
+                "status-code": 200,
                 "type": "root.AssetDto",
               },
               "source": {
@@ -13486,6 +13570,7 @@ service:
               },
               "response": {
                 "docs": "Asset tag renamed and new tags returned.",
+                "status-code": 200,
                 "type": "map<string, integer>",
               },
               "source": {
@@ -13571,6 +13656,7 @@ service:
       response:
         docs: Asset found and content or (resized) image returned.
         type: file
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -13633,6 +13719,7 @@ service:
       response:
         docs: Asset found and content or (resized) image returned.
         type: file
+        status-code: 200
       availability: deprecated
       errors:
         - root.NotFoundError
@@ -13661,6 +13748,7 @@ service:
       response:
         docs: Asset folders returned.
         type: root.AssetFoldersDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -13720,6 +13808,7 @@ service:
       response:
         docs: Asset folder created.
         type: root.AssetFolderDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -13767,6 +13856,7 @@ service:
       response:
         docs: Asset folder updated.
         type: root.AssetFolderDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -13835,6 +13925,7 @@ service:
       response:
         docs: Asset folder moved.
         type: root.AssetFolderDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -13870,6 +13961,7 @@ service:
       response:
         docs: Assets tags returned.
         type: map<string, integer>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -13906,6 +13998,7 @@ service:
       response:
         docs: Asset tag renamed and new tags returned.
         type: map<string, integer>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -13958,6 +14051,7 @@ service:
       response:
         docs: Assets returned.
         type: root.AssetsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -14037,6 +14131,7 @@ service:
       response:
         docs: Asset created.
         type: root.AssetDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14098,6 +14193,7 @@ service:
       response:
         docs: Assets returned.
         type: root.AssetsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14163,6 +14259,7 @@ service:
       response:
         docs: Asset found.
         type: root.AssetDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -14237,6 +14334,7 @@ service:
       response:
         docs: Asset created or updated.
         type: root.AssetDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14318,6 +14416,7 @@ service:
       response:
         docs: Asset updated.
         type: root.AssetDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14425,6 +14524,7 @@ service:
       response:
         docs: Assets created, update or delete.
         type: list<root.BulkResultDto>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14470,6 +14570,7 @@ service:
       response:
         docs: Asset updated.
         type: root.AssetDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14539,6 +14640,7 @@ service:
       response:
         docs: Asset moved.
         type: root.AssetDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -14653,6 +14755,7 @@ service:
               },
               "response": {
                 "docs": "Backup found and content returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -14692,6 +14795,7 @@ service:
               },
               "response": {
                 "docs": "Backup found and content returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -14751,6 +14855,7 @@ service:
               },
               "response": {
                 "docs": "Backups returned.",
+                "status-code": 200,
                 "type": "root.BackupJobsDto",
               },
               "source": {
@@ -14784,6 +14889,7 @@ service:
               "path": "/api/apps/restore",
               "response": {
                 "docs": "Status returned.",
+                "status-code": 200,
                 "type": "root.RestoreJobDto",
               },
               "source": {
@@ -14901,6 +15007,7 @@ service:
       response:
         docs: Backup found and content returned.
         type: file
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -14950,6 +15057,7 @@ service:
       response:
         docs: Backup found and content returned.
         type: file
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -14967,6 +15075,7 @@ service:
       response:
         docs: Backups returned.
         type: root.BackupJobsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -15019,6 +15128,7 @@ service:
       response:
         docs: Status returned.
         type: root.RestoreJobDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -15179,6 +15289,7 @@ service:
               },
               "response": {
                 "docs": "Comments returned.",
+                "status-code": 200,
                 "type": "root.CommentsDto",
               },
               "source": {
@@ -15220,6 +15331,7 @@ service:
               },
               "response": {
                 "docs": "Watching users returned.",
+                "status-code": 200,
                 "type": "list<string>",
               },
               "source": {
@@ -15274,6 +15386,7 @@ service:
               },
               "response": {
                 "docs": "Comment created.",
+                "status-code": 201,
                 "type": "root.CommentDto",
               },
               "source": {
@@ -15355,6 +15468,7 @@ service:
       response:
         docs: Watching users returned.
         type: list<string>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -15389,6 +15503,7 @@ service:
       response:
         docs: Comments returned.
         type: root.CommentsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -15433,6 +15548,7 @@ service:
       response:
         docs: Comment created.
         type: root.CommentDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -15617,6 +15733,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.BulkResultDto>",
               },
               "source": {
@@ -15688,8 +15805,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -15741,6 +15857,7 @@ service:
               },
               "response": {
                 "docs": "Content draft created.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -15864,8 +15981,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -15917,6 +16033,7 @@ service:
               },
               "response": {
                 "docs": "Content status change cancelled.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -15988,8 +16105,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16041,6 +16157,7 @@ service:
               },
               "response": {
                 "docs": "Content draft deleted.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16115,8 +16232,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16125,8 +16241,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -16179,6 +16294,7 @@ service:
               },
               "response": {
                 "docs": "Content returned.",
+                "status-code": 200,
                 "type": "root.ContentDto",
               },
               "source": {
@@ -16256,6 +16372,7 @@ service:
               },
               "response": {
                 "docs": "Content version returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -16325,8 +16442,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16387,6 +16503,7 @@ service:
               },
               "response": {
                 "docs": "Contents returned.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16458,8 +16575,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16511,6 +16627,7 @@ service:
               },
               "response": {
                 "docs": "Contents returned.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16581,8 +16698,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16643,6 +16759,7 @@ service:
               },
               "response": {
                 "docs": "Contents returned.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16713,8 +16830,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16775,6 +16891,7 @@ service:
               },
               "response": {
                 "docs": "Content returned.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16851,8 +16968,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16908,6 +17024,7 @@ service:
               },
               "response": {
                 "docs": "Content patched.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -16983,8 +17100,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17051,6 +17167,7 @@ service:
               },
               "response": {
                 "docs": "Content created.",
+                "status-code": 201,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -17146,6 +17263,7 @@ service:
               },
               "response": {
                 "docs": "Contents created.",
+                "status-code": 200,
                 "type": "list<root.BulkResultDto>",
               },
               "source": {
@@ -17222,8 +17340,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17294,6 +17411,7 @@ service:
               },
               "response": {
                 "docs": "Content created or updated.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -17370,8 +17488,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17427,6 +17544,7 @@ service:
               },
               "response": {
                 "docs": "Content updated.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -17501,8 +17619,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17583,6 +17700,7 @@ service:
               },
               "response": {
                 "docs": "Content status changed.",
+                "status-code": 200,
                 "type": "root.ContentsDto",
               },
               "source": {
@@ -17630,6 +17748,7 @@ service:
       response:
         docs: Contents returned.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -17686,8 +17805,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -17730,6 +17848,7 @@ service:
       response:
         docs: Content created.
         type: root.ContentsDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -17790,8 +17909,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -17823,6 +17941,7 @@ service:
       response:
         docs: Contents returned.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -17881,8 +18000,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -17921,6 +18039,7 @@ service:
       response:
         docs: Content returned.
         type: root.ContentDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -17972,8 +18091,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -17988,8 +18106,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18032,6 +18149,7 @@ service:
       response:
         docs: Content created or updated.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18093,8 +18211,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18129,6 +18246,7 @@ service:
       response:
         docs: Content updated.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18190,8 +18308,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18264,6 +18381,7 @@ service:
       response:
         docs: Content patched.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18325,8 +18443,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18393,6 +18510,7 @@ service:
       response:
         docs: Contents returned.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -18450,8 +18568,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18489,6 +18606,7 @@ service:
       response:
         docs: Content returned.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -18546,8 +18664,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18582,6 +18699,7 @@ service:
       response:
         docs: Content version returned.
         type: file
+        status-code: 200
       availability: deprecated
       errors:
         - root.NotFoundError
@@ -18626,6 +18744,7 @@ service:
       response:
         docs: Contents created.
         type: list<root.BulkResultDto>
+        status-code: 200
       availability: deprecated
       errors:
         - root.BadRequestError
@@ -18701,6 +18820,7 @@ service:
       response:
         docs: ''
         type: list<root.BulkResultDto>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18764,6 +18884,7 @@ service:
       response:
         docs: Content status changed.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18824,8 +18945,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18857,6 +18977,7 @@ service:
       response:
         docs: Content status change cancelled.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -18915,8 +19036,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18948,6 +19068,7 @@ service:
       response:
         docs: Content draft created.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -19006,8 +19127,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19039,6 +19159,7 @@ service:
       response:
         docs: Content draft deleted.
         type: root.ContentsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -19097,8 +19218,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19250,6 +19370,7 @@ service:
               "path": "/api/event-consumers",
               "response": {
                 "docs": "Event consumers returned.",
+                "status-code": 200,
                 "type": "root.EventConsumersDto",
               },
               "source": {
@@ -19300,6 +19421,7 @@ service:
               },
               "response": {
                 "docs": "Event consumer resetted asynchronously.",
+                "status-code": 200,
                 "type": "root.EventConsumerDto",
               },
               "source": {
@@ -19350,6 +19472,7 @@ service:
               },
               "response": {
                 "docs": "Event consumer started asynchronously.",
+                "status-code": 200,
                 "type": "root.EventConsumerDto",
               },
               "source": {
@@ -19400,6 +19523,7 @@ service:
               },
               "response": {
                 "docs": "Event consumer stopped asynchronously.",
+                "status-code": 200,
                 "type": "root.EventConsumerDto",
               },
               "source": {
@@ -19428,6 +19552,7 @@ service:
       response:
         docs: Event consumers returned.
         type: root.EventConsumersDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -19463,6 +19588,7 @@ service:
       response:
         docs: Event consumer started asynchronously.
         type: root.EventConsumerDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -19497,6 +19623,7 @@ service:
       response:
         docs: Event consumer stopped asynchronously.
         type: root.EventConsumerDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -19531,6 +19658,7 @@ service:
       response:
         docs: Event consumer resetted asynchronously.
         type: root.EventConsumerDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -19612,6 +19740,7 @@ service:
               },
               "response": {
                 "docs": "Events returned.",
+                "status-code": 200,
                 "type": "list<root.HistoryEventDto>",
               },
               "source": {
@@ -19665,6 +19794,7 @@ service:
               },
               "response": {
                 "docs": "Events returned.",
+                "status-code": 200,
                 "type": "list<root.HistoryEventDto>",
               },
               "source": {
@@ -19703,6 +19833,7 @@ service:
       response:
         docs: Events returned.
         type: list<root.HistoryEventDto>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -19737,6 +19868,7 @@ service:
       response:
         docs: Events returned.
         type: list<root.HistoryEventDto>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -19790,6 +19922,7 @@ service:
               "path": "/api/languages",
               "response": {
                 "docs": "Supported language codes returned.",
+                "status-code": 200,
                 "type": "list<root.LanguageDto>",
               },
               "source": {
@@ -19821,6 +19954,7 @@ service:
       response:
         docs: Supported language codes returned.
         type: list<root.LanguageDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -19880,6 +20014,7 @@ service:
               },
               "response": {
                 "docs": "Latest features returned.",
+                "status-code": 200,
                 "type": "root.FeaturesDto",
               },
               "source": {
@@ -19915,6 +20050,7 @@ service:
       response:
         docs: Latest features returned.
         type: root.FeaturesDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -20033,6 +20169,7 @@ service:
               },
               "response": {
                 "docs": "All comments returned.",
+                "status-code": 200,
                 "type": "root.CommentsDto",
               },
               "source": {
@@ -20073,6 +20210,7 @@ service:
       response:
         docs: All comments returned.
         type: root.CommentsDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -20179,6 +20317,7 @@ service:
               "path": "/api/info",
               "response": {
                 "docs": "Infos returned.",
+                "status-code": 200,
                 "type": "root.ExposedValues",
               },
               "source": {
@@ -20224,6 +20363,7 @@ service:
       response:
         docs: Infos returned.
         type: root.ExposedValues
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -20327,6 +20467,7 @@ service:
               },
               "response": {
                 "docs": "App plan information returned.",
+                "status-code": 200,
                 "type": "root.PlansDto",
               },
               "source": {
@@ -20387,6 +20528,7 @@ service:
               },
               "response": {
                 "docs": "Team plan information returned.",
+                "status-code": 200,
                 "type": "root.PlansDto",
               },
               "source": {
@@ -20432,6 +20574,7 @@ service:
               },
               "response": {
                 "docs": "Plan changed or redirect url returned.",
+                "status-code": 200,
                 "type": "root.PlanChangedDto",
               },
               "source": {
@@ -20477,6 +20620,7 @@ service:
               },
               "response": {
                 "docs": "Plan changed or redirect url returned.",
+                "status-code": 200,
                 "type": "root.PlanChangedDto",
               },
               "source": {
@@ -20509,6 +20653,7 @@ service:
       response:
         docs: App plan information returned.
         type: root.PlansDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -20554,6 +20699,7 @@ service:
       response:
         docs: Plan changed or redirect url returned.
         type: root.PlanChangedDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -20580,6 +20726,7 @@ service:
       response:
         docs: Team plan information returned.
         type: root.PlansDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -20625,6 +20772,7 @@ service:
       response:
         docs: Plan changed or redirect url returned.
         type: root.PlanChangedDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -20833,13 +20981,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -20852,9 +20999,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -20876,6 +21022,7 @@ service:
               },
               "response": {
                 "docs": "Rule disabled.",
+                "status-code": 200,
                 "type": "root.RuleDto",
               },
               "source": {
@@ -20907,13 +21054,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -20926,9 +21072,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -20950,6 +21095,7 @@ service:
               },
               "response": {
                 "docs": "Rule enabled.",
+                "status-code": 200,
                 "type": "root.RuleDto",
               },
               "source": {
@@ -20993,6 +21139,7 @@ service:
               "path": "/api/rules/actions",
               "response": {
                 "docs": "Rule actions returned.",
+                "status-code": 200,
                 "type": "map<string, root.RuleElementDto>",
               },
               "source": {
@@ -21030,6 +21177,7 @@ service:
               },
               "response": {
                 "docs": "Rule event type found.",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21057,6 +21205,7 @@ service:
               "path": "/api/rules/eventtypes",
               "response": {
                 "docs": "Rule events returned.",
+                "status-code": 200,
                 "type": "list<string>",
               },
               "source": {
@@ -21139,6 +21288,7 @@ service:
               },
               "response": {
                 "docs": "Rule events returned.",
+                "status-code": 200,
                 "type": "root.RuleEventsDto",
               },
               "source": {
@@ -21176,13 +21326,12 @@ service:
                             },
                           },
                           "action": {
-                            "actionType": "Webhook",
-                            "headers": "action",
-                            "method": "POST",
-                            "payload": "action",
-                            "payloadType": "action",
-                            "sharedSecret": "action",
-                            "url": "action",
+                            "actionType": "Algolia",
+                            "apiKey": "apiKey",
+                            "appId": "appId",
+                            "delete": "delete",
+                            "document": "document",
+                            "indexName": "indexName",
                           },
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
@@ -21195,8 +21344,7 @@ service:
                           "numFailed": 1000000,
                           "numSucceeded": 1000000,
                           "trigger": {
-                            "limit": 1,
-                            "triggerType": "Usage",
+                            "triggerType": "AssetChanged",
                           },
                           "version": 1000000,
                         },
@@ -21217,6 +21365,7 @@ service:
               },
               "response": {
                 "docs": "Rules returned.",
+                "status-code": 200,
                 "type": "root.RulesDto",
               },
               "source": {
@@ -21239,17 +21388,15 @@ service:
                   },
                   "request": {
                     "action": {
-                      "actionType": "Webhook",
-                      "headers": "action",
-                      "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "actionType": "Algolia",
+                      "apiKey": "apiKey",
+                      "appId": "appId",
+                      "delete": "delete",
+                      "document": "document",
+                      "indexName": "indexName",
                     },
                     "trigger": {
-                      "limit": 1,
-                      "triggerType": "Usage",
+                      "triggerType": "AssetChanged",
                     },
                   },
                   "response": {
@@ -21262,13 +21409,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21281,9 +21427,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21305,6 +21450,7 @@ service:
               },
               "response": {
                 "docs": "Rule created.",
+                "status-code": 201,
                 "type": "root.RuleDto",
               },
               "source": {
@@ -21371,13 +21517,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21390,9 +21535,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21441,6 +21585,7 @@ service:
               },
               "response": {
                 "docs": "Rule updated.",
+                "status-code": 200,
                 "type": "root.RuleDto",
               },
               "source": {
@@ -21552,6 +21697,7 @@ service:
               },
               "response": {
                 "docs": "Rule simulated.",
+                "status-code": 200,
                 "type": "root.SimulatedRuleEventsDto",
               },
               "source": {
@@ -21574,17 +21720,15 @@ service:
                   },
                   "request": {
                     "action": {
-                      "actionType": "Webhook",
-                      "headers": "action",
-                      "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "actionType": "Algolia",
+                      "apiKey": "apiKey",
+                      "appId": "appId",
+                      "delete": "delete",
+                      "document": "document",
+                      "indexName": "indexName",
                     },
                     "trigger": {
-                      "limit": 1,
-                      "triggerType": "Usage",
+                      "triggerType": "AssetChanged",
                     },
                   },
                   "response": {
@@ -21635,6 +21779,7 @@ service:
               },
               "response": {
                 "docs": "Rule simulated.",
+                "status-code": 200,
                 "type": "root.SimulatedRuleEventsDto",
               },
               "source": {
@@ -21697,6 +21842,7 @@ service:
       response:
         docs: Rule actions returned.
         type: map<string, root.RuleElementDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -21729,6 +21875,7 @@ service:
       response:
         docs: Rules returned.
         type: root.RulesDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -21756,16 +21903,14 @@ service:
                   isEnabled: true
                   name: name
                   trigger:
-                    triggerType: Usage
-                    limit: 1
+                    triggerType: AssetChanged
                   action:
-                    actionType: Webhook
-                    url: action
-                    method: POST
-                    payload: action
-                    payloadType: action
-                    headers: action
-                    sharedSecret: action
+                    appId: appId
+                    apiKey: apiKey
+                    indexName: indexName
+                    document: document
+                    delete: delete
+                    actionType: Algolia
                   numSucceeded: 1000000
                   numFailed: 1000000
                   lastExecuted: '2024-01-15T09:30:00Z'
@@ -21787,6 +21932,7 @@ service:
       response:
         docs: Rule created.
         type: root.RuleDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -21796,16 +21942,14 @@ service:
             app: app
           request:
             trigger:
-              triggerType: Usage
-              limit: 1
+              triggerType: AssetChanged
             action:
-              actionType: Webhook
-              url: action
-              method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              actionType: Algolia
           response:
             body:
               _links:
@@ -21822,17 +21966,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -21887,6 +22029,7 @@ service:
       response:
         docs: Rule updated.
         type: root.RuleDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -21912,17 +22055,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -21965,6 +22106,7 @@ service:
       response:
         docs: Rule enabled.
         type: root.RuleDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -21989,17 +22131,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22020,6 +22160,7 @@ service:
       response:
         docs: Rule disabled.
         type: root.RuleDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -22044,17 +22185,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22146,6 +22285,7 @@ service:
       response:
         docs: Rule simulated.
         type: root.SimulatedRuleEventsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -22155,16 +22295,14 @@ service:
             app: app
           request:
             trigger:
-              triggerType: Usage
-              limit: 1
+              triggerType: AssetChanged
             action:
-              actionType: Webhook
-              url: action
-              method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              actionType: Algolia
           response:
             body:
               _links:
@@ -22203,6 +22341,7 @@ service:
       response:
         docs: Rule simulated.
         type: root.SimulatedRuleEventsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -22259,6 +22398,7 @@ service:
       response:
         docs: Rule events returned.
         type: root.RuleEventsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -22358,6 +22498,7 @@ service:
       response:
         docs: Rule events returned.
         type: list<string>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -22378,6 +22519,7 @@ service:
       response:
         docs: Rule event type found.
         type: unknown
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -22463,8 +22605,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22473,8 +22614,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -22540,6 +22680,7 @@ service:
               },
               "response": {
                 "docs": "Schema field deleted.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -22609,8 +22750,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22619,8 +22759,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -22690,6 +22829,7 @@ service:
               },
               "response": {
                 "docs": "Schema field deleted.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -22792,8 +22932,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22802,8 +22941,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -22869,6 +23007,7 @@ service:
               },
               "response": {
                 "docs": "Schema field disabled.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -22938,8 +23077,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22948,8 +23086,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23019,6 +23156,7 @@ service:
               },
               "response": {
                 "docs": "Schema field disabled.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23087,8 +23225,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23097,8 +23234,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23164,6 +23300,7 @@ service:
               },
               "response": {
                 "docs": "Schema field enabled.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23233,8 +23370,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23243,8 +23379,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23314,6 +23449,7 @@ service:
               },
               "response": {
                 "docs": "Schema field enabled.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23380,8 +23516,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23390,8 +23525,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23453,6 +23587,7 @@ service:
               },
               "response": {
                 "docs": "Schema found.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23513,8 +23648,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23559,6 +23693,7 @@ service:
               },
               "response": {
                 "docs": "Schemas returned.",
+                "status-code": 200,
                 "type": "root.SchemasDto",
               },
               "source": {
@@ -23627,8 +23762,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23637,8 +23771,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23704,6 +23837,7 @@ service:
               },
               "response": {
                 "docs": "Schema field hidden.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23773,8 +23907,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23783,8 +23916,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23854,6 +23986,7 @@ service:
               },
               "response": {
                 "docs": "Schema field hidden.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -23922,8 +24055,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23932,8 +24064,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23999,6 +24130,7 @@ service:
               },
               "response": {
                 "docs": "Schema field shown.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24068,8 +24200,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24078,8 +24209,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24149,6 +24279,7 @@ service:
               },
               "response": {
                 "docs": "Schema field hidden.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24174,8 +24305,7 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -24227,8 +24357,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24237,8 +24366,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24304,6 +24432,7 @@ service:
               },
               "response": {
                 "docs": "Schema field created.",
+                "status-code": 201,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24330,8 +24459,7 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -24383,8 +24511,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24393,8 +24520,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24464,6 +24590,7 @@ service:
               },
               "response": {
                 "docs": "Schema field created.",
+                "status-code": 201,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24536,8 +24663,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24546,8 +24672,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24638,6 +24763,7 @@ service:
               },
               "response": {
                 "docs": "Schema created.",
+                "status-code": 201,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24705,8 +24831,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24715,8 +24840,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24778,6 +24902,7 @@ service:
               },
               "response": {
                 "docs": "Schema published.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24846,8 +24971,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24856,8 +24980,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24934,6 +25057,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -24958,8 +25082,7 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -25011,8 +25134,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25021,8 +25143,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25092,6 +25213,7 @@ service:
               },
               "response": {
                 "docs": "Schema field updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25117,8 +25239,7 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -25170,8 +25291,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25180,8 +25300,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25255,6 +25374,7 @@ service:
               },
               "response": {
                 "docs": "Schema field updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25328,8 +25448,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25338,8 +25457,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25409,6 +25527,7 @@ service:
               },
               "response": {
                 "docs": "Schema fields reordered.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25479,8 +25598,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25489,8 +25607,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25556,6 +25673,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25624,8 +25742,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25634,8 +25751,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25712,6 +25828,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25782,8 +25899,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25792,8 +25908,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25906,6 +26021,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -25978,8 +26094,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25988,8 +26103,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26055,6 +26169,7 @@ service:
               },
               "response": {
                 "docs": "Schema fields reordered.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26127,8 +26242,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26137,8 +26251,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26222,6 +26335,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26290,8 +26404,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26300,8 +26413,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26382,6 +26494,7 @@ service:
               },
               "response": {
                 "docs": "Schema UI fields defined.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26450,8 +26563,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26460,8 +26572,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26527,6 +26638,7 @@ service:
               },
               "response": {
                 "docs": "Schema updated.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26595,8 +26707,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26605,8 +26716,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26672,6 +26782,7 @@ service:
               },
               "response": {
                 "docs": "Schema field shown.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26741,8 +26852,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26751,8 +26861,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26822,6 +26931,7 @@ service:
               },
               "response": {
                 "docs": "Schema field shown.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -26889,8 +26999,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26899,8 +27008,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26962,6 +27070,7 @@ service:
               },
               "response": {
                 "docs": "Schema unpublished.",
+                "status-code": 200,
                 "type": "root.SchemaDto",
               },
               "source": {
@@ -27000,6 +27109,7 @@ service:
       response:
         docs: Schema field created.
         type: root.SchemaDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27012,8 +27122,7 @@ service:
           request:
             name: name
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27073,8 +27182,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27089,8 +27197,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27117,6 +27224,7 @@ service:
       response:
         docs: Schema field created.
         type: root.SchemaDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27130,8 +27238,7 @@ service:
           request:
             name: name
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27191,8 +27298,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27207,8 +27313,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27240,6 +27345,7 @@ service:
       response:
         docs: Schema UI fields defined.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27305,8 +27411,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27321,8 +27426,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27346,6 +27450,7 @@ service:
       response:
         docs: Schema fields reordered.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27413,8 +27518,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27429,8 +27533,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27457,6 +27560,7 @@ service:
       response:
         docs: Schema fields reordered.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27525,8 +27629,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27541,8 +27644,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27569,6 +27671,7 @@ service:
       response:
         docs: Schema field updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27580,8 +27683,7 @@ service:
             id: 1000000
           request:
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27641,8 +27743,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27657,8 +27758,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27682,6 +27782,7 @@ service:
       response:
         docs: Schema field deleted.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27747,8 +27848,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27763,8 +27863,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27794,6 +27893,7 @@ service:
       response:
         docs: Schema field updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27806,8 +27906,7 @@ service:
             id: 1000000
           request:
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27867,8 +27966,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27883,8 +27981,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27911,6 +28008,7 @@ service:
       response:
         docs: Schema field deleted.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -27977,8 +28075,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27993,8 +28090,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28019,6 +28115,7 @@ service:
       response:
         docs: Schema field shown.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28084,8 +28181,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28100,8 +28196,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28129,6 +28224,7 @@ service:
       response:
         docs: Schema field hidden.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28195,8 +28291,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28211,8 +28306,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28239,6 +28333,7 @@ service:
       response:
         docs: Schema field hidden.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28304,8 +28399,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28320,8 +28414,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28351,6 +28444,7 @@ service:
       response:
         docs: Schema field hidden.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28417,8 +28511,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28433,8 +28526,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28461,6 +28553,7 @@ service:
       response:
         docs: Schema field shown.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28526,8 +28619,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28542,8 +28634,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28573,6 +28664,7 @@ service:
       response:
         docs: Schema field shown.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28639,8 +28731,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28655,8 +28746,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28683,6 +28773,7 @@ service:
       response:
         docs: Schema field enabled.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28748,8 +28839,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28764,8 +28854,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28795,6 +28884,7 @@ service:
       response:
         docs: Schema field enabled.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28861,8 +28951,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28877,8 +28966,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28905,6 +28993,7 @@ service:
       response:
         docs: Schema field disabled.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -28970,8 +29059,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28986,8 +29074,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29017,6 +29104,7 @@ service:
       response:
         docs: Schema field disabled.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29083,8 +29171,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29099,8 +29186,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29118,6 +29204,7 @@ service:
       response:
         docs: Schemas returned.
         type: root.SchemasDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -29171,8 +29258,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29210,6 +29296,7 @@ service:
       response:
         docs: Schema created.
         type: root.SchemaDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.ConflictError
@@ -29278,8 +29365,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29294,8 +29380,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29316,6 +29401,7 @@ service:
       response:
         docs: Schema found.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -29379,8 +29465,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29395,8 +29480,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29449,6 +29533,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29515,8 +29600,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29531,8 +29615,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29588,6 +29671,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29656,8 +29740,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29672,8 +29755,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29702,6 +29784,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29767,8 +29850,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29783,8 +29865,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29808,6 +29889,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29874,8 +29956,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29890,8 +29971,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29915,6 +29995,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -29980,8 +30061,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29996,8 +30076,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30026,6 +30105,7 @@ service:
       response:
         docs: Schema updated.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -30091,8 +30171,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30107,8 +30186,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30129,6 +30207,7 @@ service:
       response:
         docs: Schema published.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -30193,8 +30272,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30209,8 +30287,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30231,6 +30308,7 @@ service:
       response:
         docs: Schema unpublished.
         type: root.SchemaDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -30295,8 +30373,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30311,8 +30388,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30380,6 +30456,7 @@ service:
               },
               "response": {
                 "docs": "Search results returned.",
+                "status-code": 200,
                 "type": "list<root.SearchResultDto>",
               },
               "source": {
@@ -30418,6 +30495,7 @@ service:
       response:
         docs: Search results returned.
         type: list<root.SearchResultDto>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30479,6 +30557,7 @@ service:
               },
               "response": {
                 "docs": "Storage usage returned.",
+                "status-code": 200,
                 "type": "root.CurrentStorageDto",
               },
               "source": {
@@ -30516,6 +30595,7 @@ service:
               },
               "response": {
                 "docs": "Usage tracking results returned.",
+                "status-code": 200,
                 "type": "root.LogDownloadDto",
               },
               "source": {
@@ -30567,6 +30647,7 @@ service:
               },
               "response": {
                 "docs": "Storage usage returned.",
+                "status-code": 200,
                 "type": "list<root.StorageUsagePerDateDto>",
               },
               "source": {
@@ -30618,6 +30699,7 @@ service:
               },
               "response": {
                 "docs": "Storage usage returned.",
+                "status-code": 200,
                 "type": "list<root.StorageUsagePerDateDto>",
               },
               "source": {
@@ -30656,6 +30738,7 @@ service:
               },
               "response": {
                 "docs": "Storage usage returned.",
+                "status-code": 200,
                 "type": "root.CurrentStorageDto",
               },
               "source": {
@@ -30720,6 +30803,7 @@ service:
               },
               "response": {
                 "docs": "API call returned.",
+                "status-code": 200,
                 "type": "root.CallsUsageDtoDto",
               },
               "source": {
@@ -30784,6 +30868,7 @@ service:
               },
               "response": {
                 "docs": "API call returned.",
+                "status-code": 200,
                 "type": "root.CallsUsageDtoDto",
               },
               "source": {
@@ -30816,6 +30901,7 @@ service:
       response:
         docs: Usage tracking results returned.
         type: root.LogDownloadDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30845,6 +30931,7 @@ service:
       response:
         docs: API call returned.
         type: root.CallsUsageDtoDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30889,6 +30976,7 @@ service:
       response:
         docs: API call returned.
         type: root.CallsUsageDtoDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30927,6 +31015,7 @@ service:
       response:
         docs: Storage usage returned.
         type: root.CurrentStorageDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30951,6 +31040,7 @@ service:
       response:
         docs: Storage usage returned.
         type: root.CurrentStorageDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -30981,6 +31071,7 @@ service:
       response:
         docs: Storage usage returned.
         type: list<root.StorageUsagePerDateDto>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -31014,6 +31105,7 @@ service:
       response:
         docs: Storage usage returned.
         type: list<root.StorageUsagePerDateDto>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -31102,6 +31194,7 @@ service:
               },
               "response": {
                 "docs": "Contributor removed.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -31164,6 +31257,7 @@ service:
               },
               "response": {
                 "docs": "Contributor removed.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -31225,6 +31319,7 @@ service:
               },
               "response": {
                 "docs": "Contributors returned.",
+                "status-code": 200,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -31274,6 +31369,7 @@ service:
               },
               "response": {
                 "docs": "Teams returned.",
+                "status-code": 200,
                 "type": "root.TeamDto",
               },
               "source": {
@@ -31315,6 +31411,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               "path": "/api/teams",
               "response": {
                 "docs": "Teams returned.",
+                "status-code": 200,
                 "type": "list<root.TeamDto>",
               },
               "source": {
@@ -31384,6 +31481,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
               "response": {
                 "docs": "Contributor assigned to team.",
+                "status-code": 201,
                 "type": "root.ContributorsDto",
               },
               "source": {
@@ -31450,6 +31548,7 @@ You will be assigned as owner of the new team automatically.",
               },
               "response": {
                 "docs": "Team created.",
+                "status-code": 201,
                 "type": "root.TeamDto",
               },
               "source": {
@@ -31524,6 +31623,7 @@ You will be assigned as owner of the new team automatically.",
               },
               "response": {
                 "docs": "Team updated.",
+                "status-code": 200,
                 "type": "root.TeamDto",
               },
               "source": {
@@ -31556,6 +31656,7 @@ service:
       response:
         docs: Contributors returned.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -31598,6 +31699,7 @@ service:
       response:
         docs: Contributor assigned to team.
         type: root.ContributorsDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -31640,6 +31742,7 @@ service:
       response:
         docs: Contributor removed.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -31683,6 +31786,7 @@ service:
       response:
         docs: Contributor removed.
         type: root.ContributorsDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -31725,6 +31829,7 @@ service:
       response:
         docs: Teams returned.
         type: list<root.TeamDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -31765,6 +31870,7 @@ service:
       response:
         docs: Team created.
         type: root.TeamDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.ConflictError
@@ -31799,6 +31905,7 @@ service:
       response:
         docs: Teams returned.
         type: root.TeamDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -31842,6 +31949,7 @@ service:
       response:
         docs: Team updated.
         type: root.TeamDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -31916,6 +32024,7 @@ service:
               },
               "response": {
                 "docs": "Template returned.",
+                "status-code": 200,
                 "type": "root.TemplateDetailsDto",
               },
               "source": {
@@ -31963,6 +32072,7 @@ service:
               "path": "/api/templates",
               "response": {
                 "docs": "Templates returned.",
+                "status-code": 200,
                 "type": "root.TemplatesDto",
               },
               "source": {
@@ -31991,6 +32101,7 @@ service:
       response:
         docs: Templates returned.
         type: root.TemplatesDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -32024,6 +32135,7 @@ service:
       response:
         docs: Template returned.
         type: root.TemplateDetailsDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -32123,6 +32235,7 @@ service:
               },
               "response": {
                 "docs": "Text translated.",
+                "status-code": 200,
                 "type": "root.TranslationDto",
               },
               "source": {
@@ -32173,6 +32286,7 @@ service:
       response:
         docs: Text translated.
         type: root.TranslationDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.InternalServerError
@@ -32274,6 +32388,7 @@ service:
               },
               "response": {
                 "docs": "User returned.",
+                "status-code": 200,
                 "type": "root.UserDto",
               },
               "source": {
@@ -32344,6 +32459,7 @@ service:
               },
               "response": {
                 "docs": "Users returned.",
+                "status-code": 200,
                 "type": "root.UsersDto",
               },
               "source": {
@@ -32396,6 +32512,7 @@ service:
               },
               "response": {
                 "docs": "User locked.",
+                "status-code": 200,
                 "type": "root.UserDto",
               },
               "source": {
@@ -32490,6 +32607,7 @@ service:
               },
               "response": {
                 "docs": "User created.",
+                "status-code": 201,
                 "type": "root.UserDto",
               },
               "source": {
@@ -32587,6 +32705,7 @@ service:
               },
               "response": {
                 "docs": "User created.",
+                "status-code": 200,
                 "type": "root.UserDto",
               },
               "source": {
@@ -32639,6 +32758,7 @@ service:
               },
               "response": {
                 "docs": "User unlocked.",
+                "status-code": 200,
                 "type": "root.UserDto",
               },
               "source": {
@@ -32681,6 +32801,7 @@ service:
       response:
         docs: Users returned.
         type: root.UsersDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -32736,6 +32857,7 @@ service:
       response:
         docs: User created.
         type: root.UserDto
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.InternalServerError
@@ -32773,6 +32895,7 @@ service:
       response:
         docs: User returned.
         type: root.UserDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -32827,6 +32950,7 @@ service:
       response:
         docs: User created.
         type: root.UserDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -32885,6 +33009,7 @@ service:
       response:
         docs: User locked.
         type: root.UserDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -32920,6 +33045,7 @@ service:
       response:
         docs: User unlocked.
         type: root.UserDto
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -32999,6 +33125,7 @@ service:
               },
               "response": {
                 "docs": "User found.",
+                "status-code": 200,
                 "type": "root.UserDto",
               },
               "source": {
@@ -33024,6 +33151,7 @@ service:
               },
               "response": {
                 "docs": "User found and image or fallback returned.",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -33057,6 +33185,7 @@ service:
               "path": "/api",
               "response": {
                 "docs": "User resources returned.",
+                "status-code": 200,
                 "type": "root.ResourcesDto",
               },
               "source": {
@@ -33107,6 +33236,7 @@ service:
               },
               "response": {
                 "docs": "Users returned.",
+                "status-code": 200,
                 "type": "list<root.UserDto>",
               },
               "source": {
@@ -33135,6 +33265,7 @@ service:
       response:
         docs: User resources returned.
         type: root.ResourcesDto
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -33164,6 +33295,7 @@ service:
       response:
         docs: Users returned.
         type: list<root.UserDto>
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -33193,6 +33325,7 @@ service:
       response:
         docs: User found.
         type: root.UserDto
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError
@@ -33226,6 +33359,7 @@ service:
       response:
         docs: User found and image or fallback returned.
         type: file
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.InternalServerError

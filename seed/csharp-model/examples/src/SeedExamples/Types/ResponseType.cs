@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedExamples.Core;
 
-#nullable enable
-
 namespace SeedExamples;
 
 public record ResponseType

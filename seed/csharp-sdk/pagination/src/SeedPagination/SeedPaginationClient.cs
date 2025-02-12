@@ -1,18 +1,17 @@
 using SeedPagination.Core;
 
-#nullable enable
-
 namespace SeedPagination;
 
 public partial class SeedPaginationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPagination" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -28,8 +27,11 @@ public partial class SeedPaginationClient
             }
         }
         _client = new RawClient(clientOptions);
+        Complex = new ComplexClient(_client);
         Users = new UsersClient(_client);
     }
+
+    public ComplexClient Complex { get; init; }
 
     public UsersClient Users { get; init; }
 }

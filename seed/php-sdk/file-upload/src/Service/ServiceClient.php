@@ -2,6 +2,7 @@
 
 namespace Seed\Service;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
@@ -10,13 +11,24 @@ use Seed\Core\Multipart\MultipartFormData;
 use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\JustFileRequet;
-use Seed\Service\Requests\JustFileWithQueryParamsRequet;
+use Seed\Service\Requests\JustFileRequest;
+use Seed\Service\Requests\JustFileWithQueryParamsRequest;
 use Seed\Service\Requests\WithContentTypeRequest;
 
 class ServiceClient
 {
+    /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     * } $options
+     */
+    private array $options;
+
     /**
      * @var RawClient $client
      */
@@ -24,23 +36,35 @@ class ServiceClient
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param MyRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         if ($request->maybeString != null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
@@ -86,11 +110,22 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -102,15 +137,19 @@ class ServiceClient
     }
 
     /**
-     * @param JustFileRequet $request
+     * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justFile(JustFileRequet $request, ?array $options = null): void
+    public function justFile(JustFileRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
@@ -121,11 +160,22 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -137,15 +187,19 @@ class ServiceClient
     }
 
     /**
-     * @param JustFileWithQueryParamsRequet $request
+     * @param JustFileWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justFileWithQueryParams(JustFileWithQueryParamsRequet $request, ?array $options = null): void
+    public function justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['integer'] = $request->integer;
         $query['listOfStrings'] = $request->listOfStrings;
@@ -169,11 +223,22 @@ class ServiceClient
                     query: $query,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -188,12 +253,16 @@ class ServiceClient
      * @param WithContentTypeRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart(
             $request->file->toMultipartFormDataPart(
@@ -222,11 +291,22 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

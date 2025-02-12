@@ -101,7 +101,7 @@ export class CliContext {
 
     public async exit(): Promise<never> {
         if (!this._suppressUpgradeMessage) {
-            await this.nudgeUpgradeIfAvaialable();
+            await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
@@ -109,7 +109,7 @@ export class CliContext {
         this.exitProgram();
     }
 
-    private async nudgeUpgradeIfAvaialable() {
+    private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),

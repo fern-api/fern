@@ -31,22 +31,30 @@ class Patient extends JsonSerializableType
 
     /**
      * @param array{
-     *   resourceType: string,
-     *   name: string,
-     *   scripts: array<Script>,
      *   id: string,
      *   relatedResources: array<Account|Patient|Practitioner|Script>,
      *   memo: Memo,
+     *   resourceType: string,
+     *   name: string,
+     *   scripts: array<Script>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->resourceType = $values['resourceType'];
-        $this->name = $values['name'];
-        $this->scripts = $values['scripts'];
         $this->id = $values['id'];
         $this->relatedResources = $values['relatedResources'];
         $this->memo = $values['memo'];
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
+        $this->scripts = $values['scripts'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

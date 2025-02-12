@@ -657,6 +657,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListAccountsResponse",
               },
               "source": {
@@ -734,6 +735,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListGamesResponse",
               },
               "source": {
@@ -820,6 +822,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListGroupsResponse",
               },
               "source": {
@@ -861,6 +864,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListLocationsResponse",
               },
               "source": {
@@ -907,6 +911,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListPhotosResponse",
               },
               "source": {
@@ -959,6 +964,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListPlayersResponse",
               },
               "source": {
@@ -993,6 +999,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Room",
               },
               "source": {
@@ -1079,6 +1086,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Game",
               },
               "source": {
@@ -1179,6 +1187,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Group",
               },
               "source": {
@@ -1213,6 +1222,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Room",
               },
               "source": {
@@ -1257,6 +1267,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Photo",
               },
               "source": {
@@ -1306,6 +1317,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Player",
               },
               "source": {
@@ -1599,6 +1611,7 @@ service:
       response:
         docs: ''
         type: ListAccountsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1623,6 +1636,7 @@ service:
       response:
         docs: ''
         type: root.Room
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1659,6 +1673,7 @@ service:
       response:
         docs: ''
         type: ListGamesResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1711,6 +1726,7 @@ service:
       response:
         docs: ''
         type: root.Game
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1764,6 +1780,7 @@ service:
       response:
         docs: ''
         type: ListGroupsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1818,6 +1835,7 @@ service:
       response:
         docs: ''
         type: root.Group
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1879,6 +1897,7 @@ service:
       response:
         docs: ''
         type: ListPlayersResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1911,6 +1930,7 @@ service:
       response:
         docs: ''
         type: root.Player
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1946,6 +1966,7 @@ service:
       response:
         docs: ''
         type: ListLocationsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1970,6 +1991,7 @@ service:
       response:
         docs: ''
         type: root.Room
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1994,6 +2016,7 @@ service:
       response:
         docs: ''
         type: ListPhotosResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -2020,6 +2043,7 @@ service:
       response:
         docs: ''
         type: root.Photo
+        status-code: 200
       examples:
         - path-parameters:
             photo_id: photo_id

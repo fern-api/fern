@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedNoEnvironment.Core;
 
-#nullable enable
-
 namespace SeedNoEnvironment;
 
 public partial class ClientOptions

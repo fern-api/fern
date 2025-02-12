@@ -1,7 +1,5 @@
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public record TestRequest

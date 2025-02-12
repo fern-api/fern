@@ -5,16 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDeclarationWithContentTypeSchema } from "./TypeReferenceDeclarationWithContentTypeSchema";
+import { HttpInlineFileRequestBodyPropertySchema } from "./HttpInlineFileRequestBodyPropertySchema";
 
 export const HttpInlineRequestBodyPropertySchema: core.serialization.Schema<
     serializers.HttpInlineRequestBodyPropertySchema.Raw,
     FernDefinition.HttpInlineRequestBodyPropertySchema
-> = core.serialization.undiscriminatedUnion([
-    core.serialization.string(),
-    TypeReferenceDeclarationWithContentTypeSchema,
-]);
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), HttpInlineFileRequestBodyPropertySchema]);
 
 export declare namespace HttpInlineRequestBodyPropertySchema {
-    export type Raw = string | TypeReferenceDeclarationWithContentTypeSchema.Raw;
+    export type Raw = string | HttpInlineFileRequestBodyPropertySchema.Raw;
 }

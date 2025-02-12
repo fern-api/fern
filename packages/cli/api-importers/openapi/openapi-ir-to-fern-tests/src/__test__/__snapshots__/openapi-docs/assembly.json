@@ -4980,6 +4980,7 @@ types:
               },
               "response": {
                 "docs": "File uploaded successfully",
+                "status-code": 200,
                 "type": "root.UploadedFile",
               },
               "source": {
@@ -5014,6 +5015,7 @@ service:
       response:
         docs: File uploaded successfully
         type: root.UploadedFile
+        status-code: 200
       errors:
         - root.FilesUploadRequestBadRequestError
         - root.FilesUploadRequestUnauthorizedError
@@ -5075,6 +5077,7 @@ service:
               },
               "response": {
                 "docs": "LeMUR action items response",
+                "status-code": 200,
                 "type": "root.LemurActionItemsResponse",
               },
               "source": {
@@ -5121,6 +5124,7 @@ The LLM response data, as well as any context provided in the original request w
               },
               "response": {
                 "docs": "LeMUR request data deleted.",
+                "status-code": 200,
                 "type": "root.PurgeLemurRequestDataResponse",
               },
               "source": {
@@ -5188,6 +5192,7 @@ The LLM response data, as well as any context provided in the original request w
               },
               "response": {
                 "docs": "LeMUR question & answer response",
+                "status-code": 200,
                 "type": "root.LemurQuestionAnswerResponse",
               },
               "source": {
@@ -5246,6 +5251,7 @@ The LLM response data, as well as any context provided in the original request w
               },
               "response": {
                 "docs": "LeMUR summary response",
+                "status-code": 200,
                 "type": "root.LemurSummaryResponse",
               },
               "source": {
@@ -5304,6 +5310,7 @@ The LLM response data, as well as any context provided in the original request w
               },
               "response": {
                 "docs": "LeMUR task response",
+                "status-code": 200,
                 "type": "root.LemurTaskResponse",
               },
               "source": {
@@ -5349,6 +5356,7 @@ service:
       response:
         docs: LeMUR summary response
         type: root.LemurSummaryResponse
+        status-code: 200
       errors:
         - root.LemurSummaryRequestBadRequestError
         - root.LemurSummaryRequestUnauthorizedError
@@ -5391,6 +5399,7 @@ service:
       response:
         docs: LeMUR question & answer response
         type: root.LemurQuestionAnswerResponse
+        status-code: 200
       errors:
         - root.LemurQuestionAnswerRequestBadRequestError
         - root.LemurQuestionAnswerRequestUnauthorizedError
@@ -5425,6 +5434,7 @@ service:
       response:
         docs: LeMUR action items response
         type: root.LemurActionItemsResponse
+        status-code: 200
       errors:
         - root.LemurActionItemsRequestBadRequestError
         - root.LemurActionItemsRequestUnauthorizedError
@@ -5466,6 +5476,7 @@ service:
       response:
         docs: LeMUR task response
         type: root.LemurTaskResponse
+        status-code: 200
       errors:
         - root.LemurTaskRequestBadRequestError
         - root.LemurTaskRequestUnauthorizedError
@@ -5504,6 +5515,7 @@ service:
       response:
         docs: LeMUR request data deleted.
         type: root.PurgeLemurRequestDataResponse
+        status-code: 200
       errors:
         - root.LemurPurgeRequestDataRequestBadRequestError
         - root.LemurPurgeRequestDataRequestUnauthorizedError
@@ -5590,6 +5602,7 @@ docs: LeMUR related operations
               },
               "response": {
                 "docs": "Temporary authentication token generated.",
+                "status-code": 200,
                 "type": "root.RealtimeTemporaryTokenResponse",
               },
               "source": {
@@ -5629,6 +5642,7 @@ service:
       response:
         docs: Temporary authentication token generated.
         type: root.RealtimeTemporaryTokenResponse
+        status-code: 200
       errors:
         - root.RealtimeCreateTemporaryTokenRequestBadRequestError
         - root.RealtimeCreateTemporaryTokenRequestUnauthorizedError
@@ -5878,6 +5892,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "Transcript created and queued for processing.",
+                "status-code": 201,
                 "type": "root.Transcript",
               },
               "source": {
@@ -6089,6 +6104,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "The deleted transcript response.",
+                "status-code": 200,
                 "type": "root.Transcript",
               },
               "source": {
@@ -6300,6 +6316,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "The transcript resource",
+                "status-code": 200,
                 "type": "root.Transcript",
               },
               "source": {
@@ -6360,6 +6377,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "Exported paragraphs",
+                "status-code": 200,
                 "type": "root.ParagraphsResponse",
               },
               "source": {
@@ -6403,6 +6421,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "The redacted audio object containing the status and URL to the redacted audio.",
+                "status-code": 200,
                 "type": "root.RedactedAudioResponse",
               },
               "source": {
@@ -6463,6 +6482,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "Exported sentences",
+                "status-code": 200,
                 "type": "root.SentencesResponse",
               },
               "source": {
@@ -6506,6 +6526,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "The exported captions as text",
+                "status-code": 200,
                 "type": "text",
               },
               "source": {
@@ -6591,6 +6612,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "A list of transcripts filtered by `limit` and `status`",
+                "status-code": 200,
                 "type": "root.TranscriptList",
               },
               "source": {
@@ -6631,6 +6653,7 @@ docs: Real-time transcription
               },
               "response": {
                 "docs": "Word search response",
+                "status-code": 200,
                 "type": "root.WordSearchResponse",
               },
               "source": {
@@ -6727,6 +6750,7 @@ service:
       response:
         docs: A list of transcripts filtered by `limit` and `status`
         type: root.TranscriptList
+        status-code: 200
       errors:
         - root.TranscriptListRequestBadRequestError
         - root.TranscriptListRequestUnauthorizedError
@@ -6774,6 +6798,7 @@ service:
       response:
         docs: Transcript created and queued for processing.
         type: root.Transcript
+        status-code: 201
       errors:
         - root.TranscriptCreateRequestBadRequestError
         - root.TranscriptCreateRequestUnauthorizedError
@@ -6926,6 +6951,7 @@ service:
       response:
         docs: The transcript resource
         type: root.Transcript
+        status-code: 200
       errors:
         - root.TranscriptGetRequestBadRequestError
         - root.TranscriptGetRequestUnauthorizedError
@@ -7076,6 +7102,7 @@ service:
       response:
         docs: The deleted transcript response.
         type: root.Transcript
+        status-code: 200
       errors:
         - root.TranscriptDeleteRequestBadRequestError
         - root.TranscriptDeleteRequestUnauthorizedError
@@ -7237,6 +7264,7 @@ service:
       response:
         docs: The exported captions as text
         type: text
+        status-code: 200
       errors:
         - root.TranscriptGetSubtitlesRequestBadRequestError
         - root.TranscriptGetSubtitlesRequestUnauthorizedError
@@ -7263,6 +7291,7 @@ service:
       response:
         docs: Exported sentences
         type: root.SentencesResponse
+        status-code: 200
       errors:
         - root.TranscriptGetSentencesRequestBadRequestError
         - root.TranscriptGetSentencesRequestUnauthorizedError
@@ -7307,6 +7336,7 @@ service:
       response:
         docs: Exported paragraphs
         type: root.ParagraphsResponse
+        status-code: 200
       errors:
         - root.TranscriptGetParagraphsRequestBadRequestError
         - root.TranscriptGetParagraphsRequestUnauthorizedError
@@ -7358,6 +7388,7 @@ service:
       response:
         docs: Word search response
         type: root.WordSearchResponse
+        status-code: 200
       errors:
         - root.TranscriptWordSearchRequestBadRequestError
         - root.TranscriptWordSearchRequestUnauthorizedError
@@ -7387,6 +7418,7 @@ service:
           The redacted audio object containing the status and URL to the
           redacted audio.
         type: root.RedactedAudioResponse
+        status-code: 200
       errors:
         - root.TranscriptGetRedactedAudioRequestBadRequestError
         - root.TranscriptGetRedactedAudioRequestUnauthorizedError

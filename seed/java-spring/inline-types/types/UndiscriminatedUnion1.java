@@ -153,7 +153,7 @@ public final class UndiscriminatedUnion1 {
     }
 
     @java.lang.Override
-    public UndiscriminatedUnion1 deserialize(JsonParser p, DeserializationContext ctxt) throws
+    public UndiscriminatedUnion1 deserialize(JsonParser p, DeserializationContext context) throws
         IOException {
       Object value = p.readValueAs(Object.class);
       try {

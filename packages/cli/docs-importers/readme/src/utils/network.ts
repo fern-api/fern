@@ -90,7 +90,7 @@ export async function fetchPageHtml({ url, browser }: { url: string | URL; brows
         if (res) {
             return res;
         }
-        throw new Error("An unknown error occured.");
+        throw new Error("An unknown error occurred.");
     } catch (error) {
         throw new Error(`Error retrieving HTML for ${url.toString()}`);
     }

@@ -75,7 +75,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
             return;
         }
 
-        JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions(options);
+        var jsonSerializerOptions = new JsonSerializerOptions(options);
         jsonSerializerOptions.Converters.Clear();
         jsonSerializerOptions.Converters.Add(Activator.CreateInstance<TConverterType>());
 

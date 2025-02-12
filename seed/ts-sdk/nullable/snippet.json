@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedNullableClient } from \"@fern/nullable\";\n\nconst client = new SeedNullableClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullable.getUsers({\n    usernames: \"usernames\",\n    avatar: \"avatar\",\n    activated: true,\n    tags: null,\n    extra: null\n});\n"
+                "client": "import { SeedNullableClient } from \"@fern/nullable\";\n\nconst client = new SeedNullableClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullable.getUsers({\n    usernames: \"usernames\",\n    avatar: \"avatar\",\n    activated: true,\n    tags: \"tags\",\n    extra: true\n});\n"
             }
         },
         {

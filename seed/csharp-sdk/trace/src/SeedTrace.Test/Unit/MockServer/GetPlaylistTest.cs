@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
@@ -16,6 +14,11 @@ public class GetPlaylistTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "name": "name",
+              "problems": [
+                "problems",
+                "problems"
+              ],
               "playlist_id": "playlist_id",
               "owner-id": "owner-id"
             }

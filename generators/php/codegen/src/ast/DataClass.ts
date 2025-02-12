@@ -5,7 +5,6 @@ import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { Trait } from "./Trait";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -37,8 +36,8 @@ export class DataClass extends AstNode {
     public addMethod(method: Method): void {
         this.class_.addMethod(method);
     }
-    public addTrait(traitClassRefeference: ClassReference): void {
-        this.class_.addTrait(traitClassRefeference);
+    public addTrait(traitClassReference: ClassReference): void {
+        this.class_.addTrait(traitClassReference);
     }
 
     public write(writer: Writer): void {

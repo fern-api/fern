@@ -50,4 +50,12 @@ class Type extends JsonSerializableType
         $this->name = $values['name'];
         $this->shape = $values['shape'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

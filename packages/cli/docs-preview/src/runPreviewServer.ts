@@ -259,7 +259,7 @@ export async function runPreviewServer({
 
     context.logger.info(`Running server on http://localhost:${port}`);
 
-    // await infiinitely
+    // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
 }

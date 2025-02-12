@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedCsharpNamespaceConflict.Core;
 
-#nullable enable
-
 namespace SeedCsharpNamespaceConflict;
 
 public partial class RequestOptions : IRequestOptions

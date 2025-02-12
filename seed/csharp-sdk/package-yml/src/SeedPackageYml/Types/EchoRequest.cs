@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedPackageYml.Core;
 
-#nullable enable
-
 namespace SeedPackageYml;
 
 public record EchoRequest

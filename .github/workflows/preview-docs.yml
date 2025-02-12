@@ -1,12 +1,12 @@
-name: preview-docs
+name: Preview Docs
 
 on:
   pull_request_target:
     branches:
       - main
-    paths: 
-      - 'fern/**'
-      - 'packages/cli/docs-**'
+    paths:
+      - "fern/**"
+      - "packages/cli/docs-**"
   workflow_dispatch:
     inputs:
       prNumber:
@@ -18,8 +18,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write  # Only for commenting
-      contents: read       # For checking out code
+      pull-requests: write # Only for commenting
+      contents: read # For checking out code
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -67,4 +67,3 @@ jobs:
               -X PATCH \
               -f "body"="🌿 Preview your docs: [$PREVIEW_URL]($PREVIEW_URL)"
           fi
-

@@ -25,4 +25,12 @@ class GetBasicSolutionFileResponse extends JsonSerializableType
     ) {
         $this->solutionFileByLanguage = $values['solutionFileByLanguage'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

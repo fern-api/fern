@@ -101,8 +101,6 @@ export class Writer extends AbstractWriter {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
-    #nullable enable
-
     ${this.buffer}`;
             }
         }

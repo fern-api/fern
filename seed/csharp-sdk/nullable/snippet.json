@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [null],\n        Extra = null,\n    }\n);\n"
+                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [\"tags\"],\n        Extra = true,\n    }\n);\n"
             }
         },
         {

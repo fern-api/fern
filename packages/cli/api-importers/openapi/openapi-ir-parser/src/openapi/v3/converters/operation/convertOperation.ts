@@ -62,7 +62,7 @@ export function convertOperation({
 }): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
-        context.logger.info(
+        context.logger.debug(
             `${pathItemContext.method.toUpperCase()} ${pathItemContext.path} is marked with x-fern-ignore. Skipping.`
         );
         return undefined;

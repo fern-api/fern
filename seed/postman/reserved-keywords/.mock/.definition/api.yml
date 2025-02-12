@@ -1,0 +1,4 @@
+error-discrimination:
+  property-name: errorName
+  strategy: property
+name: nursery-api

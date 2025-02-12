@@ -37,10 +37,8 @@
                           ],
                         },
                         "source": {
-                          "content_type": "source",
-                          "filename": "source",
-                          "md5sum": "source",
-                          "type": "file",
+                          "type": "url",
+                          "url": "url",
                         },
                       },
                     ],
@@ -55,6 +53,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<SourceResult>",
               },
               "source": {
@@ -85,10 +84,7 @@
                         },
                         "state": {
                           "created_timestamp_ms": 1000000,
-                          "ended_timestamp_ms": 1000000,
-                          "message": "state",
-                          "started_timestamp_ms": 1000000,
-                          "status": "FAILED",
+                          "status": "QUEUED",
                         },
                         "user_id": "user_id",
                       },
@@ -132,6 +128,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<JobRequest>",
               },
               "source": {
@@ -185,6 +182,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "JobId",
               },
               "source": {
@@ -1356,6 +1354,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: list<JobRequest>
+        status-code: 200
       examples:
         - response:
             body:
@@ -1369,11 +1368,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   files:
                     - md5sum: md5sum
                 state:
-                  status: FAILED
                   created_timestamp_ms: 1000000
-                  started_timestamp_ms: 1000000
-                  ended_timestamp_ms: 1000000
-                  message: state
+                  status: QUEUED
     Start Job:
       path: /v0/batch/jobs
       method: POST
@@ -1415,6 +1411,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: JobId
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -1433,16 +1430,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: list<SourceResult>
+        status-code: 200
       examples:
         - path-parameters:
             id: id
           response:
             body:
               - source:
-                  type: file
-                  filename: source
-                  content_type: source
-                  md5sum: source
+                  url: url
+                  type: url
                 results:
                   predictions:
                     - file: file
@@ -2278,10 +2274,7 @@ types:
                       },
                       "state": {
                         "created_timestamp_ms": 1000000,
-                        "ended_timestamp_ms": 1000000,
-                        "message": "state",
-                        "started_timestamp_ms": 1000000,
-                        "status": "FAILED",
+                        "status": "QUEUED",
                       },
                       "user_id": "user_id",
                     },
@@ -2296,6 +2289,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.JobRequest",
               },
               "source": {
@@ -2314,6 +2308,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -2343,6 +2338,7 @@ types:
       response:
         docs: ''
         type: file
+        status-code: 200
     get_job:
       path: /v0/batch/jobs/{id}
       method: GET
@@ -2356,6 +2352,7 @@ types:
       response:
         docs: ''
         type: root.JobRequest
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -2378,11 +2375,8 @@ types:
                 files:
                   - md5sum: md5sum
               state:
-                status: FAILED
                 created_timestamp_ms: 1000000
-                started_timestamp_ms: 1000000
-                ended_timestamp_ms: 1000000
-                message: state
+                status: QUEUED
   source:
     openapi: ../openapi.yaml
   display-name: Get Job Predictions

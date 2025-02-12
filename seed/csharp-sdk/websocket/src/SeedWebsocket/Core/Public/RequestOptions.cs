@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedWebsocket.Core;
 
-#nullable enable
-
 namespace SeedWebsocket;
 
 public partial class RequestOptions : IRequestOptions

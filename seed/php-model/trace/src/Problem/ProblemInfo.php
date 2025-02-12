@@ -98,4 +98,12 @@ class ProblemInfo extends JsonSerializableType
         $this->methodName = $values['methodName'];
         $this->supportsCustomTestCases = $values['supportsCustomTestCases'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

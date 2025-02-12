@@ -21,7 +21,7 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
-/** All errrors are currently declared in __package__.yml */
+/** All errors are currently declared in __package__.yml */
 export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 function addSchemas({

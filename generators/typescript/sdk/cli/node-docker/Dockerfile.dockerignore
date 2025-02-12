@@ -1,0 +1,11 @@
+*
+!generators/typescript/asIs/
+!generators/typescript/utils/core-utilities/fetcher/src/
+!generators/typescript/utils/core-utilities/callback-queue/src/
+!generators/typescript/utils/core-utilities/auth/src/
+!generators/typescript/utils/core-utilities/zurg/src/
+!generators/typescript/utils/core-utilities/base/src/
+!generators/typescript/utils/core-utilities/utils/src/
+!generators/typescript/utils/scripts/
+!generators/typescript/sdk/features.yml
+!generators/typescript/sdk/cli/node-docker/dist/nodeCli.cjs

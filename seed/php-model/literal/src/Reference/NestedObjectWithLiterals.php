@@ -39,4 +39,12 @@ class NestedObjectWithLiterals extends JsonSerializableType
         $this->literal2 = $values['literal2'];
         $this->strProp = $values['strProp'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

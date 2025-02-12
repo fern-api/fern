@@ -316,7 +316,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             undefined,
                             ts.factory.createAwaitExpression(
                                 context.coreUtilities.formDataUtils.getRequest({
-                                    referencetoFormData: ts.factory.createIdentifier(
+                                    referenceToFormData: ts.factory.createIdentifier(
                                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                                     )
                                 })
@@ -339,12 +339,12 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
             requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
-                referencetoFormData: ts.factory.createIdentifier(
+                referenceToFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                 )
             }),
             duplex: context.coreUtilities.formDataUtils.getDuplexSetting({
-                referencetoFormData: ts.factory.createIdentifier(
+                referenceToFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                 )
             })
@@ -361,7 +361,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             endpoint: this.endpoint,
             additionalSpreadHeaders: [
                 context.coreUtilities.formDataUtils.getHeaders({
-                    referencetoFormData: ts.factory.createIdentifier(
+                    referenceToFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                     )
                 })

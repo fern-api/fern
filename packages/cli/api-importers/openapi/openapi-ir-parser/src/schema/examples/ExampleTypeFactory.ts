@@ -1,4 +1,4 @@
-import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject, noop } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -190,7 +190,7 @@ export class ExampleTypeFactory {
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        // Pick the union variant from the example, othwerise try each of them until one works
+                        // Pick the union variant from the example, otherwise try each of them until one works
                         const unionVariants = [];
 
                         const schemaFromExample = this.getDiscriminatedUnionVariantSchema(schema.value, fullExample);
@@ -213,15 +213,22 @@ export class ExampleTypeFactory {
                                 );
                                 break;
                             } else {
-                                const objectSchema = this.getObjectSchema(unionVariant[1]);
-                                if (objectSchema == null) {
-                                    continue;
+                                const example = this.buildExampleHelper({
+                                    exampleId,
+                                    schema: unionVariant[1],
+                                    example: undefined,
+                                    visitedSchemaIds,
+                                    depth,
+                                    options,
+                                    skipReadonly
+                                });
+                                if (example != null) {
+                                    this.mergeExampleWith(example, result);
+                                    result[schema.value.discriminantProperty] = FullExample.primitive(
+                                        PrimitiveExample.string(unionVariant[0])
+                                    );
+                                    break;
                                 }
-                                allProperties = this.getAllProperties(objectSchema);
-                                requiredProperties = this.getAllRequiredProperties(objectSchema);
-                                result[schema.value.discriminantProperty] = FullExample.primitive(
-                                    PrimitiveExample.string(unionVariant[0])
-                                );
                             }
                         }
 
@@ -269,7 +276,7 @@ export class ExampleTypeFactory {
                         }
                         return FullExample.oneOf(FullOneOfExample.discriminated(result));
                     }
-                    case "undisciminated": {
+                    case "undiscriminated": {
                         const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example);
                         if (unionVariantSchema != null) {
                             // TODO (we should select the oneOf schema based on the example)
@@ -510,6 +517,40 @@ export class ExampleTypeFactory {
             default:
                 assertNever(schema);
         }
+    }
+
+    private mergeExampleWith(example: FullExample, result: Record<string, FullExample>): void {
+        example._visit({
+            array: noop,
+            enum: noop,
+            literal: noop,
+            map: (example) => {
+                for (const kvPair of example) {
+                    const key = kvPair.key;
+                    if (key.type !== "string") {
+                        continue;
+                    }
+                    result[key.value] = kvPair.value;
+                }
+            },
+            object: (example) => {
+                for (const [property, value] of Object.entries(example.properties)) {
+                    result[property] = value;
+                }
+            },
+            oneOf: (example) => {
+                if (example.type === "discriminated") {
+                    for (const [property, value] of Object.entries(example.value)) {
+                        result[property] = value;
+                    }
+                } else {
+                    this.mergeExampleWith(example.value, result);
+                }
+            },
+            primitive: noop,
+            unknown: noop,
+            _other: noop
+        });
     }
 
     private getObjectSchema(

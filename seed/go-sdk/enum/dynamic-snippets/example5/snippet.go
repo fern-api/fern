@@ -21,6 +21,9 @@ func do() () {
             OperandOrColor: &fern.ColorOrOperand{
                 Color: fern.ColorRed,
             },
+            MaybeOperandOrColor: &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
         },
     )
 }

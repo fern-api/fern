@@ -1,11 +1,22 @@
 import { OpenAPI } from "openapi-types";
 
 import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
+import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
+
+// NOTE: This will affect any property that is explicitly named with this. This will preserve null values underneath
+// the key or any descendants. This is an extreme edge case, but if we want to strip these, we will have to change
+// mergeWithOverrides with a more specific grammar.
+const OPENAPI_EXAMPLES_KEYS = [
+    "examples",
+    "example",
+    FernOpenAPIExtension.EXAMPLES,
+    OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
+    OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB
+];
 
 export async function loadOpenAPI({
     context,
@@ -39,12 +50,14 @@ export async function loadOpenAPI({
         const merged = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed
+            data: parsed,
+            allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
         // Run the merged document through the parser again to ensure that any override
         // references are resolved.
         return await parseOpenAPI({
             absolutePathToOpenAPI,
+            absolutePathToOpenAPIOverrides,
             parsed: merged
         });
     }

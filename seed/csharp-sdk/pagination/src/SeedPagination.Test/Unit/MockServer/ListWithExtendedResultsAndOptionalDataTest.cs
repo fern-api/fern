@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination;
 
-#nullable enable
-
 namespace SeedPagination.Test.Unit.MockServer;
 
 [TestFixture]
@@ -14,6 +12,19 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "data": {
+                "users": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "total_count": 1
             }
             """;

@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedEnum;
 
-#nullable enable
-
 namespace SeedEnum.Test.Unit.MockServer;
 
 [TestFixture]
@@ -19,6 +17,7 @@ public class SendTest : BaseMockServerTest
                     .WithParam("operand", ">")
                     .WithParam("maybeOperand", ">")
                     .WithParam("operandOrColor", "red")
+                    .WithParam("maybeOperandOrColor", "red")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -31,7 +30,7 @@ public class SendTest : BaseMockServerTest
                         Operand = Operand.GreaterThan,
                         MaybeOperand = Operand.GreaterThan,
                         OperandOrColor = Color.Red,
-                        MaybeOperandOrColor = null,
+                        MaybeOperandOrColor = Color.Red,
                     },
                     RequestOptions
                 )

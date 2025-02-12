@@ -90,7 +90,7 @@ export function convertDiscriminatedOneOf({
                 schema
             };
         });
-    return wrapDiscriminantedOneOf({
+    return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -188,7 +188,7 @@ export function convertDiscriminatedOneOfWithVariants({
                 schema
             };
         });
-    return wrapDiscriminantedOneOf({
+    return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -203,7 +203,7 @@ export function convertDiscriminatedOneOfWithVariants({
     });
 }
 
-export function wrapDiscriminantedOneOf({
+export function wrapDiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,

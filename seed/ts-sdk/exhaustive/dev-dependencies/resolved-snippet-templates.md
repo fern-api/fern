@@ -480,7 +480,7 @@ const client = new FiddleClient({
 });
 await client.endpoints.params.getWithAllowMultipleQuery({
   query: "query",
-  numer: 1,
+  number: 1,
 });
 
 ```

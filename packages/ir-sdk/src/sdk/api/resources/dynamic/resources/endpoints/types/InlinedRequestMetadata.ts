@@ -15,7 +15,7 @@ export interface InlinedRequestMetadata {
      * If true, the path parameters are the only parameters specified in the
      * inlined request.
      *
-     * In combination with inludePathParameters, this influences whether or not the
+     * In combination with includePathParameters, this influences whether or not the
      * inlined request type should be generated at all.
      */
     onlyPathParameters: boolean;

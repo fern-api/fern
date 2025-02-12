@@ -23,4 +23,12 @@ class FolderCFoo extends JsonSerializableType
     ) {
         $this->barProperty = $values['barProperty'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -1,0 +1,63 @@
+name: ci
+
+on: [push]
+jobs:
+  compile:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+      - name: Compile
+        run: poetry run mypy .
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Install Fern
+        run: npm install -g fern-api
+      - name: Test
+        run: fern test --command "poetry run pytest -rP ."
+
+  publish:
+    needs: [compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+      - name: Publish to pypi
+        run: |
+          poetry config repositories.remote 
+          poetry --no-interaction -v publish --build --repository remote --username "$" --password "$"
+        env:
+          : ${{ secrets. }}
+          : ${{ secrets. }}

@@ -2,11 +2,16 @@ name: Update Seed
 
 on:
   schedule:
-    - cron: "0 * * * *" # Run every hour
+    - cron: "0 0 * * 0" # Run every hour
   workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
   ruby-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,6 +27,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -30,7 +36,16 @@ jobs:
           branch: update-ruby-model-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   ruby-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -46,6 +61,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -54,7 +70,16 @@ jobs:
           branch: update-ruby-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   pydantic-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -70,6 +95,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -78,7 +104,16 @@ jobs:
           branch: update-pydantic-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   python-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -94,6 +129,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -102,7 +138,16 @@ jobs:
           branch: update-python-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   fastapi:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -118,6 +163,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -126,7 +172,16 @@ jobs:
           branch: update-fastapi-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   openapi:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -142,6 +197,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -150,7 +206,16 @@ jobs:
           branch: update-openapi-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   postman:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -166,6 +231,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -174,7 +240,16 @@ jobs:
           branch: update-postman-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   java-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -190,6 +265,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -198,7 +274,16 @@ jobs:
           branch: update-java-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   java-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -214,6 +299,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -222,7 +308,16 @@ jobs:
           branch: update-java-model-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   java-spring:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -238,6 +333,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -246,7 +342,16 @@ jobs:
           branch: update-java-spring-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   typescript-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -262,6 +367,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -270,7 +376,16 @@ jobs:
           branch: update-typescript-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   typescript-express:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -286,6 +401,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -294,7 +410,16 @@ jobs:
           branch: update-typescript-express-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   go-fiber:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -310,6 +435,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -318,7 +444,16 @@ jobs:
           branch: update-go-fiber-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   go-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -334,6 +469,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -342,7 +478,16 @@ jobs:
           branch: update-go-model-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   go-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -358,6 +503,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -366,7 +512,16 @@ jobs:
           branch: update-go-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   csharp-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -382,6 +537,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -390,7 +546,16 @@ jobs:
           branch: update-csharp-model-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   csharp-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -406,6 +571,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -414,7 +580,16 @@ jobs:
           branch: update-csharp-sdk-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   php-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -430,6 +605,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -438,7 +614,16 @@ jobs:
           branch: update-php-model-seed
           delete-branch: true
 
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
   php-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -454,6 +639,7 @@ jobs:
           validate-git-diff: false
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
@@ -461,3 +647,11 @@ jobs:
           title: "chore(php): update php-sdk seed"
           branch: update-php-sdk-seed
           delete-branch: true
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash

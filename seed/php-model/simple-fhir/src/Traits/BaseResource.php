@@ -2,15 +2,20 @@
 
 namespace Seed\Traits;
 
-use Seed\Core\Json\JsonProperty;
 use Seed\Account;
 use Seed\Patient;
 use Seed\Practitioner;
 use Seed\Script;
+use Seed\Memo;
+use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
-use Seed\Memo;
 
+/**
+ * @property string $id
+ * @property array<Account|Patient|Practitioner|Script> $relatedResources
+ * @property Memo $memo
+ */
 trait BaseResource
 {
     /**

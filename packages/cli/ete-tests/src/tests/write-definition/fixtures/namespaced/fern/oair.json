@@ -9854,7 +9854,7 @@
             "market": {
                 "type": "oneOf",
                 "value": {
-                    "type": "undisciminated",
+                    "type": "undiscriminated",
                     "schemas": [
                         {
                             "type": "reference",
@@ -10068,7 +10068,7 @@
                                 "exclusiveMaximum": null,
                                 "multipleOf": null
                             },
-                            "description": "The timestamp in seconds for this group of events (included for compatibility reasons). We recommend using the timestampms field instead.",
+                            "description": "The timestamp in seconds for this group of events (included for compatibility reasons). We recommend using the timestamps field instead.",
                             "generatedName": "UpdateTimestamp",
                             "nameOverride": null,
                             "groupName": [
@@ -10085,8 +10085,8 @@
                     },
                     {
                         "conflict": {},
-                        "generatedName": "updateTimestampms",
-                        "key": "timestampms",
+                        "generatedName": "updateTimestamps",
+                        "key": "timestamps",
                         "schema": {
                             "type": "primitive",
                             "schema": {
@@ -10099,7 +10099,7 @@
                                 "multipleOf": null
                             },
                             "description": "The timestamp in milliseconds for this group of events.",
-                            "generatedName": "UpdateTimestampms",
+                            "generatedName": "UpdateTimestamps",
                             "nameOverride": null,
                             "groupName": [
                                 {

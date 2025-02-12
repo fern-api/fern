@@ -10,7 +10,7 @@ import * as SeedEnum from "../../../../index";
  *         operand: ">",
  *         maybeOperand: ">",
  *         operandOrColor: "red",
- *         maybeOperandOrColor: undefined
+ *         maybeOperandOrColor: "red"
  *     }
  */
 export interface SendEnumListAsQueryParamRequest {

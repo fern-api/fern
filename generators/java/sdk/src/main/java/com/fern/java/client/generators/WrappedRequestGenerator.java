@@ -253,7 +253,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestBodyGetter _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+            throw new RuntimeException("Encountered unknown http request body: " + unknownType);
         }
     }
 
@@ -324,7 +324,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public List<ObjectProperty> _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+            throw new RuntimeException("Encountered unknown http request body: " + unknownType);
         }
     }
 }

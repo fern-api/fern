@@ -87,7 +87,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
+              "body": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1,\n    \"id\": \"id\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -117,7 +117,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
+              "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1,\n    \"id\": \"id\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -152,7 +152,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1\n}",
+                  "raw": "{\n    \"type\": \"circle\",\n    \"radius\": 1.1,\n    \"id\": \"id\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"

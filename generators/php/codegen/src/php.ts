@@ -1,4 +1,4 @@
-import { Ternary } from "@fern-api/base-generator";
+import { Ternary } from "@fern-api/browser-compatible-base-generator";
 
 import {
     Array as Array_,
@@ -16,6 +16,9 @@ import {
     Trait
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
+import { MergeArrays } from "./ast/MergeArrays";
+import { AstNode } from "./ast/core/AstNode";
+import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName";
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
@@ -61,6 +64,13 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
 }
 
+export function throwException(args: ClassInstantiation.Args): AstNode {
+    return codeblock((writer) => {
+        writer.write("throw ");
+        writer.writeNode(instantiateClass(args));
+    });
+}
+
 export function map(args: Map.Args): Map {
     return new Map(args);
 }
@@ -77,15 +87,44 @@ export function ternary(args: Ternary.Args): Ternary {
     return new Ternary(args);
 }
 
+export function assignVariable(variableRef: AstNode, variableValue: string | AstNode): AstNode {
+    return codeblock((writer) => {
+        writer.writeNodeOrString(variableRef);
+        writer.write(" = ");
+        writer.writeNodeOrString(variableValue);
+    });
+}
+
+export function variable(name: string): AstNode {
+    return codeblock(convertToPhpVariableName(name));
+}
+
+export function string(stringValue: string): AstNode {
+    return codeblock(`"${stringValue}"`);
+}
+
+export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
+    return new MergeArrays(args);
+}
+
+export function this_(): AstNode {
+    return new CodeBlock((writer) => {
+        writer.write("$this");
+    });
+}
+
 export { AstNode } from "./ast/core/AstNode";
 export {
+    Access,
     Array,
     Attribute,
     Class,
+    type ConstructorField,
     Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    DataClass,
     Enum,
     Field,
     Map,
@@ -93,5 +132,6 @@ export {
     MethodInvocation,
     Parameter,
     Type,
+    TypeLiteral,
     Writer
 } from "./ast";

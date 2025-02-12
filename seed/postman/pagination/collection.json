@@ -30,6 +30,93 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Conversations",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Search conversations",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/conversations/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "conversations",
+                "search"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/conversations/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations",
+                    "search"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"conversations\": [\n        {\n            \"foo\": \"foo\"\n        },\n        {\n            \"foo\": \"foo\"\n        }\n    ],\n    \"pages\": {\n        \"next\": {\n            \"per_page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"page\": 1,\n        \"per_page\": 1,\n        \"total_pages\": 1,\n        \"type\": \"pages\"\n    },\n    \"total_count\": 1,\n    \"type\": \"conversation.list\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Users",
       "item": [
         {
@@ -595,7 +682,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -640,7 +727,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {
@@ -689,7 +776,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -734,7 +821,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {
@@ -831,7 +918,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -905,7 +992,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]

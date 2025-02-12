@@ -1283,22 +1283,22 @@
           "requestBody": {
             "type": "fileUpload",
             "name": {
-              "originalName": "JustFileRequet",
+              "originalName": "JustFileRequest",
               "camelCase": {
-                "unsafeName": "justFileRequet",
-                "safeName": "justFileRequet"
+                "unsafeName": "justFileRequest",
+                "safeName": "justFileRequest"
               },
               "snakeCase": {
-                "unsafeName": "just_file_requet",
-                "safeName": "just_file_requet"
+                "unsafeName": "just_file_request",
+                "safeName": "just_file_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "JUST_FILE_REQUET",
-                "safeName": "JUST_FILE_REQUET"
+                "unsafeName": "JUST_FILE_REQUEST",
+                "safeName": "JUST_FILE_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "JustFileRequet",
-                "safeName": "JustFileRequet"
+                "unsafeName": "JustFileRequest",
+                "safeName": "JustFileRequest"
               }
             },
             "properties": [
@@ -1339,22 +1339,22 @@
             "shape": {
               "type": "wrapper",
               "wrapperName": {
-                "originalName": "JustFileRequet",
+                "originalName": "JustFileRequest",
                 "camelCase": {
-                  "unsafeName": "justFileRequet",
-                  "safeName": "justFileRequet"
+                  "unsafeName": "justFileRequest",
+                  "safeName": "justFileRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "just_file_requet",
-                  "safeName": "just_file_requet"
+                  "unsafeName": "just_file_request",
+                  "safeName": "just_file_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "JUST_FILE_REQUET",
-                  "safeName": "JUST_FILE_REQUET"
+                  "unsafeName": "JUST_FILE_REQUEST",
+                  "safeName": "JUST_FILE_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "JustFileRequet",
-                  "safeName": "JustFileRequet"
+                  "unsafeName": "JustFileRequest",
+                  "safeName": "JustFileRequest"
                 }
               },
               "bodyKey": {
@@ -1663,22 +1663,22 @@
           "requestBody": {
             "type": "fileUpload",
             "name": {
-              "originalName": "JustFileWithQueryParamsRequet",
+              "originalName": "JustFileWithQueryParamsRequest",
               "camelCase": {
-                "unsafeName": "justFileWithQueryParamsRequet",
-                "safeName": "justFileWithQueryParamsRequet"
+                "unsafeName": "justFileWithQueryParamsRequest",
+                "safeName": "justFileWithQueryParamsRequest"
               },
               "snakeCase": {
-                "unsafeName": "just_file_with_query_params_requet",
-                "safeName": "just_file_with_query_params_requet"
+                "unsafeName": "just_file_with_query_params_request",
+                "safeName": "just_file_with_query_params_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
-                "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET"
+                "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST",
+                "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "JustFileWithQueryParamsRequet",
-                "safeName": "JustFileWithQueryParamsRequet"
+                "unsafeName": "JustFileWithQueryParamsRequest",
+                "safeName": "JustFileWithQueryParamsRequest"
               }
             },
             "properties": [
@@ -1719,22 +1719,22 @@
             "shape": {
               "type": "wrapper",
               "wrapperName": {
-                "originalName": "JustFileWithQueryParamsRequet",
+                "originalName": "JustFileWithQueryParamsRequest",
                 "camelCase": {
-                  "unsafeName": "justFileWithQueryParamsRequet",
-                  "safeName": "justFileWithQueryParamsRequet"
+                  "unsafeName": "justFileWithQueryParamsRequest",
+                  "safeName": "justFileWithQueryParamsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "just_file_with_query_params_requet",
-                  "safeName": "just_file_with_query_params_requet"
+                  "unsafeName": "just_file_with_query_params_request",
+                  "safeName": "just_file_with_query_params_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
-                  "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET"
+                  "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST",
+                  "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "JustFileWithQueryParamsRequet",
-                  "safeName": "JustFileWithQueryParamsRequet"
+                  "unsafeName": "JustFileWithQueryParamsRequest",
+                  "safeName": "JustFileWithQueryParamsRequest"
                 }
               },
               "bodyKey": {
@@ -3110,22 +3110,22 @@
           "type": "inlined",
           "declaration": {
             "name": {
-              "originalName": "JustFileRequet",
+              "originalName": "JustFileRequest",
               "camelCase": {
-                "unsafeName": "justFileRequet",
-                "safeName": "justFileRequet"
+                "unsafeName": "justFileRequest",
+                "safeName": "justFileRequest"
               },
               "snakeCase": {
-                "unsafeName": "just_file_requet",
-                "safeName": "just_file_requet"
+                "unsafeName": "just_file_request",
+                "safeName": "just_file_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "JUST_FILE_REQUET",
-                "safeName": "JUST_FILE_REQUET"
+                "unsafeName": "JUST_FILE_REQUEST",
+                "safeName": "JUST_FILE_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "JustFileRequet",
-                "safeName": "JustFileRequet"
+                "unsafeName": "JustFileRequest",
+                "safeName": "JustFileRequest"
               }
             },
             "fernFilepath": {
@@ -3286,22 +3286,22 @@
           "type": "inlined",
           "declaration": {
             "name": {
-              "originalName": "JustFileWithQueryParamsRequet",
+              "originalName": "JustFileWithQueryParamsRequest",
               "camelCase": {
-                "unsafeName": "justFileWithQueryParamsRequet",
-                "safeName": "justFileWithQueryParamsRequet"
+                "unsafeName": "justFileWithQueryParamsRequest",
+                "safeName": "justFileWithQueryParamsRequest"
               },
               "snakeCase": {
-                "unsafeName": "just_file_with_query_params_requet",
-                "safeName": "just_file_with_query_params_requet"
+                "unsafeName": "just_file_with_query_params_request",
+                "safeName": "just_file_with_query_params_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
-                "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET"
+                "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST",
+                "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "JustFileWithQueryParamsRequet",
-                "safeName": "JustFileWithQueryParamsRequet"
+                "unsafeName": "JustFileWithQueryParamsRequest",
+                "safeName": "JustFileWithQueryParamsRequest"
               }
             },
             "fernFilepath": {

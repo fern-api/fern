@@ -17,15 +17,17 @@ class GetPlaylistsRequest extends JsonSerializableType
     public string $otherField;
 
     /**
-     * @var string $multiLineDocs I'm a multiline
-    description
+     * I'm a multiline
+     * description
+     *
+     * @var string $multiLineDocs
      */
     public string $multiLineDocs;
 
     /**
-     * @var array<?string> $optionalMultipleField
+     * @var ?array<string> $optionalMultipleField
      */
-    public array $optionalMultipleField;
+    public ?array $optionalMultipleField;
 
     /**
      * @var array<string> $multipleField
@@ -37,7 +39,7 @@ class GetPlaylistsRequest extends JsonSerializableType
      *   limit?: ?int,
      *   otherField: string,
      *   multiLineDocs: string,
-     *   optionalMultipleField: array<?string>,
+     *   optionalMultipleField?: ?array<string>,
      *   multipleField: array<string>,
      * } $values
      */
@@ -47,7 +49,7 @@ class GetPlaylistsRequest extends JsonSerializableType
         $this->limit = $values['limit'] ?? null;
         $this->otherField = $values['otherField'];
         $this->multiLineDocs = $values['multiLineDocs'];
-        $this->optionalMultipleField = $values['optionalMultipleField'];
+        $this->optionalMultipleField = $values['optionalMultipleField'] ?? null;
         $this->multipleField = $values['multipleField'];
     }
 }

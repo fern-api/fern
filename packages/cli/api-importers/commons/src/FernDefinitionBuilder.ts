@@ -470,7 +470,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 };
             }
 
-            // subsitute definition files
+            // substitute definition files
             for (const file of Object.values(definitionFiles)) {
                 if (file.service != null) {
                     file.service = {

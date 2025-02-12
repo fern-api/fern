@@ -67,7 +67,7 @@ features:
   websocket: false
   streamingJson: false
   fileUpload: true
-  fileDownlaod: true
+  fileDownload: true
   snippets: false
   snippetTests: false
   errors: false

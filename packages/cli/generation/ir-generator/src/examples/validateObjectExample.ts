@@ -59,7 +59,7 @@ export function validateObjectExample({
         (property) => !property.isOptional && property.resolvedPropertyType._type !== "unknown"
     );
     for (const requiredProperty of requiredProperties) {
-        // dont error on literal properties
+        // don't error on literal properties
         if (
             requiredProperty.resolvedPropertyType._type === "container" &&
             requiredProperty.resolvedPropertyType.container._type === "literal"

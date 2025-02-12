@@ -227,7 +227,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
 				if typeImportPath != referencedImportPath {
 					return nil, fmt.Errorf(
-						"%s referneces %s from another package, but a generator import path was not specified",
+						"%s references %s from another package, but a generator import path was not specified",
 						typeDeclaration.Name.TypeId,
 						referencedType.TypeId,
 					)
@@ -358,6 +358,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	case ModeFiber:
 		break
 	case ModeClient:
+		// TODO: Re-enable the go-v2 SDK generator.
+		//
+		// If we're running in SDK mode, start by running the go-v2 SDK generator.
+		// v2 := gov2.New(g.coordinator)
+		// if err := v2.Run(); err != nil {
+		// 	return nil, err
+		// }
 		var (
 			generatedAuth        *GeneratedAuth
 			generatedEnvironment *GeneratedEnvironment
@@ -1039,7 +1046,7 @@ func (g *Generator) generateReadme(
 	)
 }
 
-// readIR reads the *InermediateRepresentation from the given filename.
+// readIR reads the *IntermediateRepresentation from the given filename.
 func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	bytes, err := os.ReadFile(irFilename)
 	if err != nil {

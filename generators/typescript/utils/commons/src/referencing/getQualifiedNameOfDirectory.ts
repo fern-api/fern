@@ -19,7 +19,7 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     constructQualifiedName,
     prefix
 }: getQualifiedNameOfDirectory.Args<QualifiedName>): QualifiedName {
-    const { initial, remainingDirectories } = splitQualifieidName({ convertToQualifiedName, prefix, pathToDirectory });
+    const { initial, remainingDirectories } = splitQualifiedName({ convertToQualifiedName, prefix, pathToDirectory });
 
     let qualifiedReference = initial;
 
@@ -59,7 +59,7 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     return qualifiedReference;
 }
 
-function splitQualifieidName<QualifiedName>({
+function splitQualifiedName<QualifiedName>({
     convertToQualifiedName,
     pathToDirectory,
     prefix

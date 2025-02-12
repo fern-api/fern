@@ -98,4 +98,12 @@ class ProblemInfoV2 extends JsonSerializableType
         $this->testcases = $values['testcases'];
         $this->isPublic = $values['isPublic'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

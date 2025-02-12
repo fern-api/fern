@@ -39,10 +39,10 @@ class QueryEndpointParameter(EndpointParameter):
     def get_list_wrapped_type_hint(self) -> AST.TypeHint:
         query_param_type = self._query_parameter.value_type.get_as_union()
         if query_param_type.type == "container":
-            contaner_type = query_param_type.container.get_as_union()
-            if contaner_type.type == "optional":
+            container_type = query_param_type.container.get_as_union()
+            if container_type.type == "optional":
                 return AST.TypeHint.optional(
-                    AST.TypeHint.list(convert_to_singular_type(self._context, contaner_type.optional))
+                    AST.TypeHint.list(convert_to_singular_type(self._context, container_type.optional))
                 )
         return AST.TypeHint.list(convert_to_singular_type(self._context, self._query_parameter.value_type))
 

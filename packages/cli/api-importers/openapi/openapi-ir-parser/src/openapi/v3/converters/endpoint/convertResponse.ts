@@ -5,7 +5,6 @@ import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir
 
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
-import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -65,7 +64,8 @@ export function convertResponse({
                 responseBreadcrumbs,
                 streamFormat,
                 source,
-                namespace: context.namespace
+                namespace: context.namespace,
+                statusCode: typeof statusCode === "string" ? parseInt(statusCode) : statusCode
             });
         }
     }
@@ -121,7 +121,8 @@ function convertResolvedResponse({
     context,
     responseBreadcrumbs,
     source,
-    namespace
+    namespace,
+    statusCode
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
@@ -130,11 +131,12 @@ function convertResolvedResponse({
     responseBreadcrumbs: string[];
     source: Source;
     namespace: string | undefined;
+    statusCode?: number;
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
     if (resolvedResponse.content != null) {
-        const isdownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
+        const isDownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
             if (mediaObject.schema == null) {
                 return false;
             }
@@ -143,8 +145,8 @@ function convertResolvedResponse({
                 : mediaObject.schema;
             return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
         });
-        if (isdownloadFile) {
-            return ResponseWithExample.file({ description: resolvedResponse.description, source });
+        if (isDownloadFile) {
+            return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
     }
 
@@ -153,6 +155,7 @@ function convertResolvedResponse({
         switch (streamFormat) {
             case "json":
                 return ResponseWithExample.streamingJson({
+                    statusCode,
                     description: resolvedResponse.description,
                     responseProperty: getExtension<string>(
                         operationContext.operation,
@@ -182,7 +185,8 @@ function convertResolvedResponse({
                         source,
                         namespace
                     ),
-                    source
+                    source,
+                    statusCode
                 });
         }
     }
@@ -204,7 +208,8 @@ function convertResolvedResponse({
                             source,
                             namespace
                         ),
-                        source
+                        source,
+                        statusCode
                     });
                 case "sse":
                     return ResponseWithExample.streamingSse({
@@ -219,7 +224,8 @@ function convertResolvedResponse({
                             source,
                             namespace
                         ),
-                        source
+                        source,
+                        statusCode
                     });
             }
         }
@@ -228,7 +234,8 @@ function convertResolvedResponse({
             schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             fullExamples: jsonMediaObject.examples,
-            source
+            source,
+            statusCode
         });
     }
 
@@ -245,21 +252,21 @@ function convertResolvedResponse({
             mimeType.isImage() ||
             mimeType.isVideo()
         ) {
-            return ResponseWithExample.file({ description: resolvedResponse.description, source });
+            return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
 
         if (mimeType.isPlainText()) {
             const textPlainSchema = mediaObject.schema;
             if (textPlainSchema == null) {
-                return ResponseWithExample.text({ description: resolvedResponse.description, source });
+                return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
             }
             const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
                 ? context.resolveSchemaReference(textPlainSchema)
                 : textPlainSchema;
             if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
-                return ResponseWithExample.file({ description: resolvedResponse.description, source });
+                return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
             }
-            return ResponseWithExample.text({ description: resolvedResponse.description, source });
+            return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
         }
     }
 

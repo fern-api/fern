@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedFileUpload.Core;
 
-#nullable enable
-
 namespace SeedFileUpload;
 
 public record MyObject

@@ -23,4 +23,12 @@ class MyObject extends JsonSerializableType
     ) {
         $this->unknown = $values['unknown'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

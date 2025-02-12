@@ -8,17 +8,21 @@ use Seed\Core\Json\JsonProperty;
 class CreateUserRequest extends JsonSerializableType
 {
     /**
-     * @var string $name The name of the user to create.
-    This name is unique to each user.
-
+     * The name of the user to create.
+     * This name is unique to each user.
+     *
+     *
+     * @var string $name
      */
     #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var ?int $age The age of the user.
-    This propery is not required.
-
+     * The age of the user.
+     * This property is not required.
+     *
+     *
+     * @var ?int $age
      */
     #[JsonProperty('age')]
     public ?int $age;

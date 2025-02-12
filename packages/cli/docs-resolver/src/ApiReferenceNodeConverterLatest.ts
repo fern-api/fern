@@ -38,6 +38,81 @@ function getLatestWebhookUrlSlug(webhook: FdrAPI.api.latest.webhook.WebhookDefin
     slugParts.push(kebabCase(webhook.id.split(".").pop() ?? ""));
     return webhook.operationId != null ? kebabCase(webhook.operationId) : urlJoin(slugParts);
 }
+
+export function getOaiLocator(locator: string): string {
+    return locator
+        .split("/")
+        .map((part) => (part.startsWith(":") ? `{${part.slice(1)}}` : part))
+        .join("/");
+}
+
+export function findSubpackageByLocator(
+    locator: string,
+    subpackages: Record<FdrAPI.api.v1.SubpackageId, FdrAPI.api.latest.SubpackageMetadata> | undefined
+): FdrAPI.api.latest.SubpackageMetadata | undefined {
+    return (
+        subpackages?.[FdrAPI.api.v1.SubpackageId(locator)] ??
+        subpackages?.[
+            FdrAPI.api.v1.SubpackageId(locator.replace(".yml", "").replace(".yaml", "").split(".").pop() ?? "")
+        ] ??
+        subpackages?.[FdrAPI.api.v1.SubpackageId(locator.split("/").pop() ?? "")]
+    );
+}
+
+export function findEndpointByLocator(
+    locator: string,
+    endpoints: Record<FdrAPI.EndpointId, FdrAPI.api.latest.endpoint.EndpointDefinition> | undefined
+): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
+    const oaiLocator = getOaiLocator(locator);
+    return (
+        endpoints?.[FdrAPI.EndpointId(locator)] ??
+        endpoints?.[FdrAPI.EndpointId(locator.split(".").pop() ?? "")] ??
+        endpoints?.[FdrAPI.EndpointId(locator.split("/").pop() ?? "")] ??
+        Object.values(endpoints ?? {}).find((endpoint) => endpoint.id.includes(locator)) ??
+        Object.values(endpoints ?? {}).find(
+            (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === locator
+        ) ??
+        Object.values(endpoints ?? {}).find(
+            (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === locator
+        ) ??
+        Object.values(endpoints ?? {}).find(
+            (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
+        ) ??
+        Object.values(endpoints ?? {}).find(
+            (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
+        )
+    );
+}
+
+export function findWebSocketByLocator(
+    locator: string,
+    websockets: Record<FdrAPI.WebSocketId, FdrAPI.api.latest.websocket.WebSocketChannel> | undefined
+): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
+    const oaiLocator = getOaiLocator(locator);
+    return (
+        websockets?.[FdrAPI.WebSocketId(locator)] ??
+        websockets?.[FdrAPI.WebSocketId(locator.split(".").pop() ?? "")] ??
+        websockets?.[FdrAPI.WebSocketId(locator.split("/").pop() ?? "")] ??
+        Object.values(websockets ?? {}).find((websocket) => websocket.id.includes(locator)) ??
+        Object.values(websockets ?? {}).find(
+            (websocket) => `STREAM ${stringifyEndpointPathParts(websocket.path)}` === oaiLocator
+        )
+    );
+}
+
+export function findWebhookByLocator(
+    locator: string,
+    webhooks: Record<FdrAPI.WebhookId, FdrAPI.api.latest.webhook.WebhookDefinition> | undefined
+): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
+    const oaiLocator = getOaiLocator(locator);
+    return (
+        webhooks?.[FdrAPI.WebhookId(locator)] ??
+        webhooks?.[FdrAPI.WebhookId(locator.split(".").pop() ?? "")] ??
+        webhooks?.[FdrAPI.WebhookId(locator.split("/").pop() ?? "")] ??
+        Object.values(webhooks ?? {}).find((webhook) => webhook.id.includes(locator)) ??
+        Object.values(webhooks ?? {}).find((webhook) => `${webhook.method} ${webhook.path.join("/")}` === oaiLocator)
+    );
+}
 // END TODO
 
 export class ApiReferenceNodeConverterLatest {
@@ -140,46 +215,19 @@ export class ApiReferenceNodeConverterLatest {
     }
 
     #findSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
-        return (
-            this.#api?.subpackages[FdrAPI.api.v1.SubpackageId(locator)] ??
-            this.#api?.subpackages[
-                FdrAPI.api.v1.SubpackageId(locator.replace(".yml", "").replace(".yaml", "").split(".").pop() ?? "")
-            ] ??
-            this.#api?.subpackages[FdrAPI.api.v1.SubpackageId(locator.split("/").pop() ?? "")]
-        );
+        return findSubpackageByLocator(locator, this.#api?.subpackages);
     }
 
     #findEndpointByLocator(locator: string): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
-        return (
-            this.#api?.endpoints[FdrAPI.EndpointId(locator)] ??
-            this.#api?.endpoints[FdrAPI.EndpointId(locator.split(".").pop() ?? "")] ??
-            this.#api?.endpoints[FdrAPI.EndpointId(locator.split("/").pop() ?? "")] ??
-            Object.values(this.#api?.endpoints ?? {}).find((endpoint) => endpoint.id.includes(locator)) ??
-            Object.values(this.#api?.endpoints ?? {}).find(
-                (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === locator
-            ) ??
-            Object.values(this.#api?.endpoints ?? {}).find(
-                (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === locator
-            )
-        );
+        return findEndpointByLocator(locator, this.#api?.endpoints);
     }
 
     #findWebSocketByLocator(locator: string): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
-        return (
-            this.#api?.websockets[FdrAPI.WebSocketId(locator)] ??
-            this.#api?.websockets[FdrAPI.WebSocketId(locator.split(".").pop() ?? "")] ??
-            this.#api?.websockets[FdrAPI.WebSocketId(locator.split("/").pop() ?? "")] ??
-            Object.values(this.#api?.websockets ?? {}).find((endpoint) => endpoint.id.includes(locator))
-        );
+        return findWebSocketByLocator(locator, this.#api?.websockets);
     }
 
     #findWebhookByLocator(locator: string): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
-        return (
-            this.#api?.webhooks[FdrAPI.WebhookId(locator)] ??
-            this.#api?.webhooks[FdrAPI.WebhookId(locator.split(".").pop() ?? "")] ??
-            this.#api?.webhooks[FdrAPI.WebhookId(locator.split("/").pop() ?? "")] ??
-            Object.values(this.#api?.webhooks ?? {}).find((endpoint) => endpoint.id.includes(locator))
-        );
+        return findWebhookByLocator(locator, this.#api?.webhooks);
     }
 
     // Step 1
@@ -359,7 +407,7 @@ export class ApiReferenceNodeConverterLatest {
             urlSlug
         });
         const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, slug);
-        return {
+        const sectionNode: FernNavigation.V1.ApiPackageNode = {
             id: nodeId,
             type: "apiPackage",
             children: convertedItems,
@@ -378,6 +426,12 @@ export class ApiReferenceNodeConverterLatest {
             orphaned: section.orphaned,
             featureFlags: section.featureFlags
         };
+
+        subpackageIds.forEach((subpackageId) => {
+            this.#topLevelSubpackages.set(subpackageId, sectionNode);
+        });
+
+        return sectionNode;
     }
 
     #convertUnknownIdentifier(
@@ -616,6 +670,7 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined,
                 featureFlags: undefined
             };
+
             this.#topLevelSubpackages.set(subpackageId, subpackageNode);
             additionalChildren.push(subpackageNode);
         });

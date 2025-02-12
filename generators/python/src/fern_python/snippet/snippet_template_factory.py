@@ -101,7 +101,7 @@ class SnippetTemplateFactory:
     ) -> str:
         snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
-        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        # For some reason we're appending newlines to snippets, so we need to strip them for templates
         return snippet.to_str(should_format_override=False).strip()
 
     def _expression_to_snippet_str_and_imports(
@@ -113,7 +113,7 @@ class SnippetTemplateFactory:
         snippet_full = snippet.to_str(should_format_override=False)
         snippet_without_imports = snippet.to_str(should_format_override=False, include_imports=False)
 
-        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        # For some reason we're appending newlines to snippets, so we need to strip them for templates
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
     def _generate_client(self, is_async: Optional[bool] = False) -> Template:

@@ -49,7 +49,7 @@ export async function getLatestGeneratorVersion({
 }
 
 // HACK: Since none of the image names are really standardized, we need to manually map them to the language and generator type
-// This should be removed in CLI v2, where langauge and type are codified within the config directly, without a docker image name
+// This should be removed in CLI v2, where language and type are codified within the config directly, without a docker image name
 //
 // Ideally we just do a lookup that's sdk type and language, but we need to do this for now, but we're looking to keep our options
 // open when it comes to handling generators by some ID (and don't necessarily want to disallow multiple generators of the same type in the same language)

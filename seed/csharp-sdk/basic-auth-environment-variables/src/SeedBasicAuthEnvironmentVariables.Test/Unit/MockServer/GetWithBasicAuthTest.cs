@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBasicAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer;
 
 [TestFixture]

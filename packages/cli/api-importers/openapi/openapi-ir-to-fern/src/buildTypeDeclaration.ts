@@ -172,13 +172,13 @@ export function buildObjectTypeDeclaration({
                 continue; // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
-                    const parentSchemasToInine = getAllParentSchemasToInline({
+                    const parentSchemasToInline = getAllParentSchemasToInline({
                         property: property.key,
                         schemaId,
                         context,
                         namespace
                     });
-                    parentSchemasToInine.forEach((schemaToInline) => {
+                    parentSchemasToInline.forEach((schemaToInline) => {
                         schemasToInline.add(schemaToInline);
                     });
                 });
@@ -218,7 +218,7 @@ export function buildObjectTypeDeclaration({
             continue;
         }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
-            continue; // dont extend from schemas that need to be inlined
+            continue; // don't extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
             schema: Schema.reference(allOf),
@@ -248,7 +248,7 @@ export function buildObjectTypeDeclaration({
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             if (schemasToInline.has(extendedSchema.schema)) {
-                continue; // dont extend from schemas that need to be inlined
+                continue; // don't extend from schemas that need to be inlined
             }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),

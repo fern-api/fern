@@ -207,12 +207,12 @@ export class Service {
 
     /**
      * @param {File | fs.ReadStream | Blob} file
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
-        request: SeedFileUpload.JustFileWithQueryParamsRequet,
+        request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};

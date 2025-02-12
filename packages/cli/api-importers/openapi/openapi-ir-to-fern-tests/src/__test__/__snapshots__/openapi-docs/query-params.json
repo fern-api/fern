@@ -40,6 +40,7 @@
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "SearchResponse",
               },
               "source": {
@@ -165,6 +166,7 @@ service:
       response:
         docs: Successful response
         type: SearchResponse
+        status-code: 200
       examples:
         - response:
             body:

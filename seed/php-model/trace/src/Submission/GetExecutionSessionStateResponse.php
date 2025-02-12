@@ -40,4 +40,12 @@ class GetExecutionSessionStateResponse extends JsonSerializableType
         $this->numWarmingInstances = $values['numWarmingInstances'] ?? null;
         $this->warmingSessionIds = $values['warmingSessionIds'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -25,7 +25,7 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedSpringServerInterface extends AbstractGeneratedJavaFile {
 
-    public abstract List<AbstractGeneratedJavaFile> geenratedRequestBodyFiles();
+    public abstract List<AbstractGeneratedJavaFile> generatedRequestBodyFiles();
 
     public static ImmutableGeneratedSpringServerInterface.ClassNameBuildStage builder() {
         return ImmutableGeneratedSpringServerInterface.builder();

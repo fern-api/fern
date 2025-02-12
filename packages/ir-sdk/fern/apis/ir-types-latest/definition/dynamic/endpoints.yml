@@ -22,15 +22,15 @@ types:
 
   Request:
     docs: |
-      Reperesents the request parameters required to call a specific endpoiont.
+      Represents the request parameters required to call a specific endpoint.
     union:
       body: BodyRequest
       inlined: InlinedRequest
-  
+
   Response:
     docs: |
-      Reperesents the response returned by a specific endpoint.
-      
+      Represents the response returned by a specific endpoint.
+
       For now, we only support json responses, but this is set up to support a
       variety of other endpoint response types (e.g. file download, pagination,
       streaming, etc).
@@ -41,7 +41,7 @@ types:
     properties:
       pathParameters: optional<list<types.NamedParameter>>
       body: optional<ReferencedRequestBodyType>
- 
+
   InlinedRequest:
     properties:
       declaration: declaration.Declaration
@@ -66,7 +66,7 @@ types:
           If true, the path parameters are the only parameters specified in the
           inlined request.
 
-          In combination with inludePathParameters, this influences whether or not the
+          In combination with includePathParameters, this influences whether or not the
           inlined request type should be generated at all.
         type: boolean
 
@@ -75,7 +75,7 @@ types:
       properties: list<types.NamedParameter>
       referenced: ReferencedRequestBody
       fileUpload: FileUploadRequestBody
-  
+
   ReferencedRequestBody:
     properties:
       bodyKey: commons.Name

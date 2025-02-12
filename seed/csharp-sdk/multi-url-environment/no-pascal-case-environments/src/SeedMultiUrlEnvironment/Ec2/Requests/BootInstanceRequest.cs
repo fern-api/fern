@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedMultiUrlEnvironment.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironment;
 
 public record BootInstanceRequest

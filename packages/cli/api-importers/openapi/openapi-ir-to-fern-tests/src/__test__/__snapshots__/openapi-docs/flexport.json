@@ -10860,6 +10860,7 @@ errors:
               },
               "response": {
                 "docs": "collection of bookings",
+                "status-code": 200,
                 "type": "BookingsIndexResponse",
               },
               "source": {
@@ -11306,6 +11307,7 @@ errors:
               },
               "response": {
                 "docs": "The created booking",
+                "status-code": 200,
                 "type": "BookingCreateResponse",
               },
               "source": {
@@ -11584,6 +11586,7 @@ errors:
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "BookingShowResponse",
               },
               "source": {
@@ -11866,6 +11869,7 @@ service:
       response:
         docs: collection of bookings
         type: BookingsIndexResponse
+        status-code: 200
       errors:
         - root.BookingsIndexRequestBadRequestError
       examples:
@@ -12147,6 +12151,7 @@ service:
       response:
         docs: The created booking
         type: BookingCreateResponse
+        status-code: 200
       errors:
         - root.BookingCreateRequestBadRequestError
       examples:
@@ -12428,6 +12433,7 @@ service:
       response:
         docs: Success
         type: BookingShowResponse
+        status-code: 200
       errors:
         - root.BookingShowRequestBadRequestError
       examples:
@@ -12927,6 +12933,7 @@ docs: Endpoints relating to Booking objects
               },
               "response": {
                 "docs": "The created booking amendment",
+                "status-code": 200,
                 "type": "BookingAmendmentCreateResponse",
               },
               "source": {
@@ -13042,6 +13049,7 @@ service:
       response:
         docs: The created booking amendment
         type: BookingAmendmentCreateResponse
+        status-code: 200
       errors:
         - root.BookingAmendmentCreateRequestBadRequestError
       examples:
@@ -13294,6 +13302,7 @@ docs: >-
               },
               "response": {
                 "docs": "The created booking line item",
+                "status-code": 200,
                 "type": "BookingLineItemCreateResponse",
               },
               "source": {
@@ -13400,6 +13409,7 @@ docs: >-
               },
               "response": {
                 "docs": "collection of booking line items",
+                "status-code": 200,
                 "type": "BookingLineItemIndexResponse",
               },
               "source": {
@@ -13456,6 +13466,7 @@ docs: >-
               },
               "response": {
                 "docs": "A collection of booking line items",
+                "status-code": 200,
                 "type": "BookingLineItemShowResponse",
               },
               "source": {
@@ -13624,6 +13635,7 @@ service:
       response:
         docs: collection of booking line items
         type: BookingLineItemIndexResponse
+        status-code: 200
       errors:
         - root.BookingLineItemIndexRequestBadRequestError
       examples:
@@ -13684,6 +13696,7 @@ service:
       response:
         docs: The created booking line item
         type: BookingLineItemCreateResponse
+        status-code: 200
       errors:
         - root.BookingLineItemCreateRequestBadRequestError
       examples:
@@ -13726,6 +13739,7 @@ service:
       response:
         docs: A collection of booking line items
         type: BookingLineItemShowResponse
+        status-code: 200
       errors:
         - root.BookingLineItemShowRequestBadRequestError
       examples:
@@ -13891,6 +13905,7 @@ docs: >-
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "CarbonCalculationCreateResponse",
               },
               "source": {
@@ -14120,6 +14135,7 @@ service:
       response:
         docs: Success
         type: CarbonCalculationCreateResponse
+        status-code: 200
       errors:
         - root.CarbonCalculationCreateRequestBadRequestError
       examples:
@@ -14352,6 +14368,7 @@ docs: Endpoints relating to Carbon Calculations
               },
               "response": {
                 "docs": "The created commercial invoice",
+                "status-code": 200,
                 "type": "CommercialInvoicesCreateResponse",
               },
               "source": {
@@ -14535,6 +14552,7 @@ docs: Endpoints relating to Carbon Calculations
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "CommercialInvoicesIndexResponse",
               },
               "source": {
@@ -14684,6 +14702,7 @@ docs: Endpoints relating to Carbon Calculations
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "CommercialInvoicesShowResponse",
               },
               "source": {
@@ -14852,6 +14871,7 @@ docs: Endpoints relating to Carbon Calculations
               },
               "response": {
                 "docs": "The updated commercial invoice",
+                "status-code": 200,
                 "type": "CommercialInvoicesUpdateResponse",
               },
               "source": {
@@ -15020,6 +15040,7 @@ service:
       response:
         docs: Success
         type: CommercialInvoicesIndexResponse
+        status-code: 200
       examples:
         - name: Success
           query-parameters:
@@ -15166,6 +15187,7 @@ service:
       response:
         docs: The created commercial invoice
         type: CommercialInvoicesCreateResponse
+        status-code: 200
       errors:
         - root.CommercialInvoicesCreateRequestBadRequestError
       examples:
@@ -15308,6 +15330,7 @@ service:
       response:
         docs: The updated commercial invoice
         type: CommercialInvoicesUpdateResponse
+        status-code: 200
       errors:
         - root.CommercialInvoicesUpdateRequestBadRequestError
       examples:
@@ -15417,6 +15440,7 @@ service:
       response:
         docs: Success
         type: CommercialInvoicesShowResponse
+        status-code: 200
       errors:
         - root.CommercialInvoicesShowRequestBadRequestError
       examples:
@@ -15629,6 +15653,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
               "response": {
                 "docs": "The created company",
+                "status-code": 200,
                 "type": "NetworkCompanyCreateResponse",
               },
               "source": {
@@ -15755,6 +15780,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
               "response": {
                 "docs": "collection of companies",
+                "status-code": 200,
                 "type": "NetworkCompanyIndexResponse",
               },
               "source": {
@@ -15838,6 +15864,7 @@ docs: Endpoints relating to Commercial Invoice objects
               "path": "/network/me/companies",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkCompanyMeResponse",
               },
               "source": {
@@ -15922,6 +15949,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkCompanyShowResponse",
               },
               "source": {
@@ -16034,6 +16062,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
               "response": {
                 "docs": "The updated company",
+                "status-code": 200,
                 "type": "NetworkCompanyUpdateResponse",
               },
               "source": {
@@ -16224,6 +16253,7 @@ service:
       response:
         docs: collection of companies
         type: NetworkCompanyIndexResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyIndexRequestBadRequestError
       examples:
@@ -16298,6 +16328,7 @@ service:
       response:
         docs: The created company
         type: NetworkCompanyCreateResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyCreateRequestBadRequestError
       examples:
@@ -16366,6 +16397,7 @@ service:
       response:
         docs: Success
         type: NetworkCompanyShowResponse
+        status-code: 200
       examples:
         - name: Success
           path-parameters:
@@ -16437,6 +16469,7 @@ service:
       response:
         docs: The updated company
         type: NetworkCompanyUpdateResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyUpdateRequestBadRequestError
       examples:
@@ -16502,6 +16535,7 @@ service:
       response:
         docs: Success
         type: NetworkCompanyMeResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyMeRequestBadRequestError
       examples:
@@ -16671,6 +16705,7 @@ docs: Endpoints relating to Company objects
               },
               "response": {
                 "docs": "collection of company entities",
+                "status-code": 200,
                 "type": "CompanyEntityIndexResponse",
               },
               "source": {
@@ -16766,6 +16801,7 @@ docs: Endpoints relating to Company objects
               },
               "response": {
                 "docs": "The created company entity",
+                "status-code": 200,
                 "type": "NetworkCompanyEntityCreateResponse",
               },
               "source": {
@@ -16831,6 +16867,7 @@ docs: Endpoints relating to Company objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkCompanyEntityShowResponse",
               },
               "source": {
@@ -16921,6 +16958,7 @@ docs: Endpoints relating to Company objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkCompanyEntityUpdateResponse",
               },
               "source": {
@@ -17088,6 +17126,7 @@ service:
       response:
         docs: collection of company entities
         type: CompanyEntityIndexResponse
+        status-code: 200
       errors:
         - root.CompanyEntityIndexRequestBadRequestError
       examples:
@@ -17169,6 +17208,7 @@ service:
       response:
         docs: The created company entity
         type: NetworkCompanyEntityCreateResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyEntityCreateRequestBadRequestError
       examples:
@@ -17217,6 +17257,7 @@ service:
       response:
         docs: Success
         type: NetworkCompanyEntityShowResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyEntityShowRequestBadRequestError
       examples:
@@ -17280,6 +17321,7 @@ service:
       response:
         docs: Success
         type: NetworkCompanyEntityUpdateResponse
+        status-code: 200
       errors:
         - root.NetworkCompanyEntityUpdateRequestBadRequestError
       examples:
@@ -17405,6 +17447,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
               "response": {
                 "docs": "The created contact",
+                "status-code": 200,
                 "type": "NetworkContactCreateResponse",
               },
               "source": {
@@ -17505,6 +17548,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
               "response": {
                 "docs": "collection of contacts",
+                "status-code": 200,
                 "type": "NetworkContactIndexResponse",
               },
               "source": {
@@ -17562,6 +17606,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkContactShowResponse",
               },
               "source": {
@@ -17643,6 +17688,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
               "response": {
                 "docs": "The updated contact",
+                "status-code": 200,
                 "type": "NetworkContactUpdateResponse",
               },
               "source": {
@@ -17810,6 +17856,7 @@ service:
       response:
         docs: collection of contacts
         type: NetworkContactIndexResponse
+        status-code: 200
       errors:
         - root.NetworkContactIndexRequestBadRequestError
       examples:
@@ -17871,6 +17918,7 @@ service:
       response:
         docs: The created contact
         type: NetworkContactCreateResponse
+        status-code: 200
       errors:
         - root.NetworkContactCreateRequestBadRequestError
       examples:
@@ -17916,6 +17964,7 @@ service:
       response:
         docs: Success
         type: NetworkContactShowResponse
+        status-code: 200
       errors:
         - root.NetworkContactShowRequestBadRequestError
       examples:
@@ -17971,6 +18020,7 @@ service:
       response:
         docs: The updated contact
         type: NetworkContactUpdateResponse
+        status-code: 200
       errors:
         - root.NetworkContactUpdateRequestBadRequestError
       examples:
@@ -18158,6 +18208,7 @@ docs: Endpoints relating to Contact objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ContainerListResponse",
               },
               "source": {
@@ -18262,6 +18313,7 @@ docs: Endpoints relating to Contact objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ContainerShowResponse",
               },
               "source": {
@@ -18394,6 +18446,7 @@ service:
       response:
         docs: Success
         type: ContainerListResponse
+        status-code: 200
       errors:
         - root.ContainerListRequestBadRequestError
       examples:
@@ -18480,6 +18533,7 @@ service:
       response:
         docs: Success
         type: ContainerShowResponse
+        status-code: 200
       errors:
         - root.ContainerShowRequestBadRequestError
       examples:
@@ -18661,6 +18715,7 @@ docs: Endpoints relating to Container objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "OceanContainerLegsIndexResponse",
               },
               "source": {
@@ -18720,6 +18775,7 @@ docs: Endpoints relating to Container objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "OceanContainerLegsShowResponse",
               },
               "source": {
@@ -18848,6 +18904,7 @@ service:
       response:
         docs: Success
         type: OceanContainerLegsIndexResponse
+        status-code: 200
       errors:
         - root.OceanContainerLegsIndexRequestBadRequestError
       examples:
@@ -18892,6 +18949,7 @@ service:
       response:
         docs: Success
         type: OceanContainerLegsShowResponse
+        status-code: 200
       errors:
         - root.OceanContainerLegsShowRequestBadRequestError
       examples:
@@ -19015,6 +19073,7 @@ docs: Endpoints relating to ContainerLeg objects
               },
               "response": {
                 "docs": "collection of customs entries",
+                "status-code": 200,
                 "type": "CustomsEntryIndexResponse",
               },
               "source": {
@@ -19067,6 +19126,7 @@ docs: Endpoints relating to ContainerLeg objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "CustomsEntriesShowResponse",
               },
               "source": {
@@ -19184,6 +19244,7 @@ service:
       response:
         docs: collection of customs entries
         type: CustomsEntryIndexResponse
+        status-code: 200
       errors:
         - root.CustomsEntryIndexRequestBadRequestError
       examples:
@@ -19225,6 +19286,7 @@ service:
       response:
         docs: Success
         type: CustomsEntriesShowResponse
+        status-code: 200
       errors:
         - root.CustomsEntriesShowRequestBadRequestError
       examples:
@@ -19309,6 +19371,7 @@ docs: Endpoints relating to Customs Entry objects
               },
               "response": {
                 "docs": "Created",
+                "status-code": 200,
                 "type": "DocumentsCreateResponse",
               },
               "source": {
@@ -19333,6 +19396,7 @@ docs: Endpoints relating to Customs Entry objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -19449,6 +19513,7 @@ docs: Endpoints relating to Customs Entry objects
               },
               "response": {
                 "docs": "collection of documents",
+                "status-code": 200,
                 "type": "DocumentsIndexResponse",
               },
               "source": {
@@ -19506,6 +19571,7 @@ docs: Endpoints relating to Customs Entry objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "DocumentsShowResponse",
               },
               "source": {
@@ -19672,6 +19738,7 @@ service:
       response:
         docs: collection of documents
         type: DocumentsIndexResponse
+        status-code: 200
       errors:
         - root.DocumentsIndexRequestBadRequestError
       examples:
@@ -19717,6 +19784,7 @@ service:
       response:
         docs: Created
         type: DocumentsCreateResponse
+        status-code: 200
       errors:
         - root.DocumentsCreateRequestBadRequestError
       examples:
@@ -19755,6 +19823,7 @@ service:
       response:
         docs: Success
         type: DocumentsShowResponse
+        status-code: 200
       errors:
         - root.DocumentsShowRequestBadRequestError
       examples:
@@ -19798,6 +19867,7 @@ service:
       response:
         docs: Success
         type: file
+        status-code: 200
       errors:
         - root.DocumentsDownloadRequestBadRequestError
   source:
@@ -19886,6 +19956,7 @@ docs: Endpoints relating to Document objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "EventsIndexResponse",
               },
               "source": {
@@ -20010,6 +20081,7 @@ docs: Endpoints relating to Document objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "EventsShowResponse",
               },
               "source": {
@@ -20176,6 +20248,7 @@ service:
       response:
         docs: Success
         type: EventsIndexResponse
+        status-code: 200
       errors:
         - root.EventsIndexRequestBadRequestError
       examples:
@@ -20214,6 +20287,7 @@ service:
       response:
         docs: Success
         type: EventsShowResponse
+        status-code: 200
       errors:
         - root.EventsShowRequestBadRequestError
       examples:
@@ -20666,6 +20740,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               },
               "response": {
                 "docs": "collection of invoices",
+                "status-code": 200,
                 "type": "InvoiceIndexResponse",
               },
               "source": {
@@ -20929,6 +21004,7 @@ Other details about this invoice",
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "InvoicesShowResponse",
               },
               "source": {
@@ -21142,6 +21218,7 @@ service:
       response:
         docs: collection of invoices
         type: InvoiceIndexResponse
+        status-code: 200
       errors:
         - root.InvoiceIndexRequestBadRequestError
       examples:
@@ -21357,6 +21434,7 @@ service:
       response:
         docs: Success
         type: InvoicesShowResponse
+        status-code: 200
       errors:
         - root.InvoicesShowRequestBadRequestError
       examples:
@@ -21677,6 +21755,7 @@ docs: Endpoints relating to Invoice objects
               },
               "response": {
                 "docs": "collection of locations",
+                "status-code": 200,
                 "type": "LocationIndexResponse",
               },
               "source": {
@@ -21779,6 +21858,7 @@ docs: Endpoints relating to Invoice objects
               },
               "response": {
                 "docs": "The created location",
+                "status-code": 200,
                 "type": "NetworkLocationCreateResponse",
               },
               "source": {
@@ -21853,6 +21933,7 @@ docs: Endpoints relating to Invoice objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "NetworkLocationShowResponse",
               },
               "source": {
@@ -21955,6 +22036,7 @@ docs: Endpoints relating to Invoice objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "LocationUpdateResponse",
               },
               "source": {
@@ -22133,6 +22215,7 @@ service:
       response:
         docs: collection of locations
         type: LocationIndexResponse
+        status-code: 200
       errors:
         - root.LocationIndexRequestBadRequestError
       examples:
@@ -22211,6 +22294,7 @@ service:
       response:
         docs: The created location
         type: NetworkLocationCreateResponse
+        status-code: 200
       errors:
         - root.NetworkLocationCreateRequestBadRequestError
       examples:
@@ -22270,6 +22354,7 @@ service:
       response:
         docs: Success
         type: NetworkLocationShowResponse
+        status-code: 200
       errors:
         - root.NetworkLocationShowRequestBadRequestError
       examples:
@@ -22348,6 +22433,7 @@ service:
       response:
         docs: Success
         type: LocationUpdateResponse
+        status-code: 200
       errors:
         - root.LocationUpdateRequestBadRequestError
       examples:
@@ -22542,6 +22628,7 @@ docs: Endpoints relating to Location objects
               },
               "response": {
                 "docs": "collection of ports",
+                "status-code": 200,
                 "type": "PortsIndexResponse",
               },
               "source": {
@@ -22662,6 +22749,7 @@ service:
       response:
         docs: collection of ports
         type: PortsIndexResponse
+        status-code: 200
       errors:
         - root.PortsIndexRequestBadRequestError
       examples:
@@ -22853,6 +22941,7 @@ docs: Endpoints relating to Ports objects
               },
               "response": {
                 "docs": "Created",
+                "status-code": 200,
                 "type": "ProductCreateResponse",
               },
               "source": {
@@ -22941,6 +23030,7 @@ docs: Endpoints relating to Ports objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ProductIndexResponse",
               },
               "source": {
@@ -23014,6 +23104,7 @@ docs: Endpoints relating to Ports objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ProductShowResponse",
               },
               "source": {
@@ -23135,6 +23226,7 @@ docs: Endpoints relating to Ports objects
               },
               "response": {
                 "docs": "Updated",
+                "status-code": 200,
                 "type": "ProductUpdateResponse",
               },
               "source": {
@@ -23294,6 +23386,7 @@ service:
       response:
         docs: Success
         type: ProductIndexResponse
+        status-code: 200
       errors:
         - root.ProductIndexRequestBadRequestError
       examples:
@@ -23381,6 +23474,7 @@ service:
       response:
         docs: Created
         type: ProductCreateResponse
+        status-code: 200
       errors:
         - root.ProductCreateRequestBadRequestError
       examples:
@@ -23433,6 +23527,7 @@ service:
       response:
         docs: Success
         type: ProductShowResponse
+        status-code: 200
       errors:
         - root.ProductShowRequestBadRequestError
       examples:
@@ -23521,6 +23616,7 @@ service:
       response:
         docs: Updated
         type: ProductUpdateResponse
+        status-code: 200
       errors:
         - root.ProductUpdateRequestBadRequestError
       examples:
@@ -23857,6 +23953,7 @@ docs: Endpoints relating to Product objects
               },
               "response": {
                 "docs": "The created purchase order",
+                "status-code": 200,
                 "type": "root.PurchaseOrder",
               },
               "source": {
@@ -24182,6 +24279,7 @@ docs: Endpoints relating to Product objects
               },
               "response": {
                 "docs": "collection of purchase orders",
+                "status-code": 200,
                 "type": "PurchaseOrderIndexResponse",
               },
               "source": {
@@ -24334,6 +24432,7 @@ docs: Endpoints relating to Product objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "PurchaseOrderShowResponse",
               },
               "source": {
@@ -24562,6 +24661,7 @@ docs: Endpoints relating to Product objects
               },
               "response": {
                 "docs": "The update purchase order",
+                "status-code": 200,
                 "type": "root.PurchaseOrder",
               },
               "source": {
@@ -24798,6 +24898,7 @@ service:
       response:
         docs: collection of purchase orders
         type: PurchaseOrderIndexResponse
+        status-code: 200
       errors:
         - root.PurchaseOrderIndexRequestBadRequestError
       examples:
@@ -24973,6 +25074,7 @@ service:
       response:
         docs: The created purchase order
         type: root.PurchaseOrder
+        status-code: 200
       errors:
         - root.PurchaseOrderCreateRequestBadRequestError
       examples:
@@ -25204,6 +25306,7 @@ service:
       response:
         docs: Success
         type: PurchaseOrderShowResponse
+        status-code: 200
       errors:
         - root.PurchaseOrderShowRequestBadRequestError
       examples:
@@ -25316,6 +25419,7 @@ service:
       response:
         docs: The update purchase order
         type: root.PurchaseOrder
+        status-code: 200
       errors:
         - root.PurchaseOrderUpdateRequestBadRequestError
       examples:
@@ -25682,6 +25786,7 @@ docs: >-
               },
               "response": {
                 "docs": "collection of purchase order line items",
+                "status-code": 200,
                 "type": "PurchaseOrderLineItemIndexResponse",
               },
               "source": {
@@ -25822,6 +25927,7 @@ docs: >-
               },
               "response": {
                 "docs": "collection of purchase order line items",
+                "status-code": 200,
                 "type": "PurchaseOrderLineItemShowResponse",
               },
               "source": {
@@ -25972,6 +26078,7 @@ service:
       response:
         docs: collection of purchase order line items
         type: PurchaseOrderLineItemIndexResponse
+        status-code: 200
       errors:
         - root.PurchaseOrderLineItemIndexRequestBadRequestError
       examples:
@@ -26084,6 +26191,7 @@ service:
       response:
         docs: collection of purchase order line items
         type: PurchaseOrderLineItemShowResponse
+        status-code: 200
       errors:
         - root.PurchaseOrderLineItemShowRequestBadRequestError
       examples:
@@ -26644,6 +26752,7 @@ docs: >-
               },
               "response": {
                 "docs": "collection of shipments",
+                "status-code": 200,
                 "type": "ShipmentIndexResponse",
               },
               "source": {
@@ -26710,6 +26819,7 @@ docs: >-
               },
               "response": {
                 "docs": "collection of shipments shareable status url",
+                "status-code": 200,
                 "type": "ShipmentsShareableResponse",
               },
               "source": {
@@ -27017,6 +27127,7 @@ docs: >-
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ShipmentShowResponse",
               },
               "source": {
@@ -27355,6 +27466,7 @@ docs: >-
               },
               "response": {
                 "docs": "The updated shipment",
+                "status-code": 200,
                 "type": "ShipmentUpdateResponse",
               },
               "source": {
@@ -27721,6 +27833,7 @@ service:
       response:
         docs: collection of shipments
         type: ShipmentIndexResponse
+        status-code: 200
       errors:
         - root.ShipmentIndexRequestBadRequestError
       examples:
@@ -27970,6 +28083,7 @@ service:
       response:
         docs: Success
         type: ShipmentShowResponse
+        status-code: 200
       errors:
         - root.ShipmentShowRequestBadRequestError
       examples:
@@ -28221,6 +28335,7 @@ service:
       response:
         docs: The updated shipment
         type: ShipmentUpdateResponse
+        status-code: 200
       errors:
         - root.ShipmentUpdateRequestBadRequestError
       examples:
@@ -28480,6 +28595,7 @@ service:
       response:
         docs: collection of shipments shareable status url
         type: ShipmentsShareableResponse
+        status-code: 200
       errors:
         - root.ShipmentsShareableRequestBadRequestError
       examples:
@@ -28723,6 +28839,7 @@ docs: Endpoints relating to Shipment objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ShipmentLegIndexResponse",
               },
               "source": {
@@ -28900,6 +29017,7 @@ docs: Endpoints relating to Shipment objects
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "ShipmentLegShowResponse",
               },
               "source": {
@@ -29026,6 +29144,7 @@ service:
       response:
         docs: Success
         type: ShipmentLegIndexResponse
+        status-code: 200
       errors:
         - root.ShipmentLegIndexRequestBadRequestError
       examples:
@@ -29165,6 +29284,7 @@ service:
       response:
         docs: Success
         type: ShipmentLegShowResponse
+        status-code: 200
       errors:
         - root.ShipmentLegShowRequestBadRequestError
       examples:

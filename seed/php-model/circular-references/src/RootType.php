@@ -23,4 +23,12 @@ class RootType extends JsonSerializableType
     ) {
         $this->s = $values['s'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

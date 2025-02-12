@@ -3,6 +3,7 @@ export * from "./WithSource";
 export * from "./WithEncoding";
 export * from "./WithDescription";
 export * from "./WithAvailability";
+export * from "./WithStatusCode";
 export * from "./WithName";
 export * from "./WithInline";
 export * from "./Source";

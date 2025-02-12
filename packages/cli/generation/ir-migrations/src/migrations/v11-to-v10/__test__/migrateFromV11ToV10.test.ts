@@ -8,7 +8,7 @@ import { V11_TO_V10_MIGRATION } from "../migrateFromV11ToV10";
 const runMigration = createMigrationTester(V11_TO_V10_MIGRATION);
 
 describe("migrateFromV11ToV10", () => {
-    it("tranforms auth header correctly", async () => {
+    it("transforms auth header correctly", async () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });

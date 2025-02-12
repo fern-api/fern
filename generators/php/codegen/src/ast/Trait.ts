@@ -64,6 +64,9 @@ export class Trait extends AstNode {
         }
 
         this.writeFields({ writer, fields: orderByAccess(this.fields) });
+        if (this.fields.length > 0 && this.methods.length > 0) {
+            writer.newLine();
+        }
         this.writeMethods({ writer, methods: orderByAccess(this.methods) });
 
         writer.dedent();
@@ -72,10 +75,14 @@ export class Trait extends AstNode {
     }
 
     private writeComment(writer: Writer): void {
-        if (this.docs == null) {
-            return undefined;
-        }
         const comment = new Comment({ docs: this.docs });
+        for (const field of this.fields) {
+            comment.addTag({
+                tagType: "property",
+                type: field.type,
+                name: field.name
+            });
+        }
         comment.write(writer);
     }
 
