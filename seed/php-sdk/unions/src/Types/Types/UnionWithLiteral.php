@@ -21,7 +21,8 @@ class UnionWithLiteral extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var string|mixed $value
+     * @var (string|
+     *    mixed) $value
      */
     public readonly mixed $value;
 
@@ -29,7 +30,8 @@ class UnionWithLiteral extends JsonSerializableType
      * @param array{
      *   base: string,
      *   type: string,
-     *   value: string|mixed,
+     *   value: (string|
+     *    mixed),
      * } $values
      */
     public function __construct(

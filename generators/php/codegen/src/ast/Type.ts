@@ -203,16 +203,21 @@ export class Type extends AstNode {
                     break;
                 }
 
-                types.forEach((type, index) => {
-                    if (index > 0) {
-                        writer.write("|");
-                    }
-                    if (hasMixed) {
-                        type = type.underlyingType();
-                    }
-                    type.write(writer, { comment });
-                    index++;
-                });
+                if (types.length > 0) {
+                    writer.write("(");
+                    types.forEach((type, index) => {
+                        if (index > 0) {
+                            writer.writeLine("|");
+                            writer.write(" *    ");
+                        }
+                        if (hasMixed) {
+                            type = type.underlyingType();
+                        }
+                        type.write(writer, { comment });
+                        index++;
+                    });
+                    writer.write(")");
+                }
                 break;
             }
             case "optional": {

@@ -14,14 +14,16 @@ class UnionWithSingleElement extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var Foo|mixed $value
+     * @var (Foo|
+     *    mixed) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: Foo|mixed,
+     *   value: (Foo|
+     *    mixed),
      * } $values
      */
     public function __construct(

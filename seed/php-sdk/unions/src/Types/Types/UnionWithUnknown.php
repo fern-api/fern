@@ -14,14 +14,18 @@ class UnionWithUnknown extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var Foo|null|mixed $value
+     * @var (Foo|
+     *    null|
+     *    mixed) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: Foo|null|mixed,
+     *   value: (Foo|
+     *    null|
+     *    mixed),
      * } $values
      */
     public function __construct(
