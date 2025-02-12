@@ -74,14 +74,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         flattenedProperties.forEach((property) => {
             const fieldType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
             const maybeLiteralInitializer = this.maybeGetLiteral({ typeReference: property.valueType });
-            const isLiteral = maybeLiteralInitializer != null;
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
                     type: fieldType,
                     access: csharp.Access.Public,
                     get: true,
-                    set: !isLiteral,
+                    set: true,
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
                     useRequired: true,
