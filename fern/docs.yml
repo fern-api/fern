@@ -519,6 +519,9 @@ navigation:
           - page: Generate Webhook Reference
             icon: fa-regular fa-webhook
             path: ./pages/docs/api-references/generate-webhook-ref.mdx
+          - page: OpenAPI v2 Parser
+            icon: fa-regular fa-code
+            path: ./pages/docs/api-references/v2-parser.mdx
 
       - section: Integrations
         slug: integrations
