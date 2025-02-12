@@ -834,9 +834,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     );
                     writer.write("$value = ");
                     writer.writeTextStatement("$" + asCastMethodName);
-                    if (
-                        ["reference", "dateTime", "date", "optional"].includes(type.underlyingType().internalType.type)
-                    ) {
+                    if (this.typeSerializationNeedsAdditionalCall(type.underlyingType())) {
                         writer.alternativeControlFlow("else");
                         writer.writeNode(
                             this.jsonSerializeValueCall({
@@ -865,6 +863,31 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.write("$value = ");
                     writer.writeNodeStatement(this.valueGetter());
                 });
+            default:
+                assertNever(type.internalType);
+        }
+    }
+
+    private typeSerializationNeedsAdditionalCall(type: php.Type) {
+        switch (type.internalType.type) {
+            case "date":
+            case "dateTime":
+            case "reference":
+            case "optional":
+                return true;
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+                return false;
             default:
                 assertNever(type.internalType);
         }
