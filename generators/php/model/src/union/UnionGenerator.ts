@@ -1130,6 +1130,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonDeserializeDefaultHandler(): php.CodeBlock {
         return php.codeblock((writer) => {
+            writer.writeTextStatement(`$args['${this.unionTypeDeclaration.discriminant.wireValue}'] = '_unknown'`);
             writer.writeTextStatement("$args['value'] = $data");
         });
     }

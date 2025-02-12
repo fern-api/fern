@@ -154,6 +154,7 @@ class UnionWithSingleElement extends JsonSerializableType
                 break;
             case '_unknown':
             default:
+                $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
 

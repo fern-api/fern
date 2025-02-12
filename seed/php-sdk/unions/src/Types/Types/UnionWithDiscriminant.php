@@ -218,6 +218,7 @@ class UnionWithDiscriminant extends JsonSerializableType
                 break;
             case '_unknown':
             default:
+                $args['_type'] = '_unknown';
                 $args['value'] = $data;
         }
 
