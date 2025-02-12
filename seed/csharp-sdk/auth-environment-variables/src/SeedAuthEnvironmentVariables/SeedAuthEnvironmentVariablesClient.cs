@@ -19,6 +19,7 @@ public partial class SeedAuthEnvironmentVariablesClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "X-Another-Header", xAnotherHeader },
                 { "X-FERN-API-KEY", apiKey },
                 { "X-API-Version", "01-01-2000" },
                 { "X-Fern-Language", "C#" },
