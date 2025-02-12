@@ -300,11 +300,34 @@ export class Type extends AstNode {
     }
 
     public getClassReference(): ClassReference {
-        if (this.internalType.type !== "reference") {
-            throw new Error("Cannot get class reference for non-reference type.");
-        }
+        switch (this.internalType.type) {
+            case "date":
+            case "dateTime":
+                return new ClassReference({
+                    name: "DateTime",
+                    namespace: GLOBAL_NAMESPACE
+                });
 
-        return this.internalType.value;
+            case "enumString":
+            case "reference":
+                return this.internalType.value;
+
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "optional":
+            case "typeDict":
+            case "union":
+                throw new Error("Cannot get class reference for " + this.internalType.type);
+            default:
+                assertNever(this.internalType);
+        }
     }
 
     /* Static factory methods for creating a Type */

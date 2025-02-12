@@ -3,12 +3,10 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { STATIC, php } from "@fern-api/php-codegen";
 
 import {
-    DeclaredTypeName,
     Name,
     NameAndWireValue,
     ObjectProperty,
     SingleUnionType,
-    SingleUnionTypeProperty,
     TypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
@@ -115,6 +113,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getValueFieldName(): Name {
+        // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
         return {
             originalName: "value",
             camelCase: { safeName: "value", unsafeName: "value" },
@@ -144,8 +143,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         types.push(php.Type.mixed());
 
         return php.field({
-            // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
-            name: "value",
+            name: this.getValueFieldName().camelCase.safeName,
             type: php.Type.union(types),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -333,7 +331,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const methodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
         const returnType = this.getReturnType(variant);
 
-        const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter(), returnType);
+        const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter());
 
         const body = php.codeblock((writer) => {
             if (typeCheckConditional) {
@@ -367,17 +365,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         }
     }
 
-    private getTypeCheckConditional(
-        variant: SingleUnionType,
-        variableGetter: php.CodeBlock,
-        type: php.Type
-    ): php.CodeBlock | null {
-        const typeCheck = this.getTypeCheck(variableGetter, type);
-
-        if (typeCheck == null) {
-            return null;
-        }
-
+    private getTypeCheckConditional(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock | null {
         const negation = php.codeblock((writer) => {
             writer.write("!");
             writer.write("(");
@@ -475,8 +463,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock | null {
-        let underlyingTypeCheck: php.CodeBlock | null = null;
+    private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock {
         switch (type.internalType.type) {
             case "int":
                 return php.codeblock((writer) =>
@@ -546,18 +533,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
             case "date":
             case "dateTime":
+            case "enumString":
             case "reference":
                 return php.codeblock((writer) => {
                     writer.writeNode(variableGetter);
                     writer.write(" instanceof ");
-                    writer.writeNode(type);
+                    writer.writeNode(type.getClassReference());
                 });
 
             case "optional":
-                underlyingTypeCheck = this.getTypeCheck(variableGetter, type.underlyingType());
-                if (underlyingTypeCheck == null) {
-                    return null;
-                }
                 return php.codeblock((writer) => {
                     writer.write("(");
                     writer.writeNode(
@@ -568,16 +552,18 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         })
                     );
                     writer.write(" || ");
-
-                    // NOTE: Casting because LSP was complaining here
-                    writer.writeNode(underlyingTypeCheck as php.CodeBlock);
+                    writer.writeNode(this.getTypeCheck(variableGetter, type.underlyingType()));
                     writer.write(")");
                 });
 
             case "typeDict":
-            case "enumString":
+                throw new Error(
+                    "Cannot get type check for type dict value because properties should never be typeDicts"
+                );
             case "union":
-                return null;
+                throw new Error(
+                    "Cannot get type check for type dict value because properties should never be raw unions"
+                );
             default:
                 assertNever(type.internalType);
         }
@@ -1066,11 +1052,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
                 const typeCheck = this.getTypeCheck(php.codeblock(`$data['${property.name.wireValue}']`), type);
 
-                // TODO(ajgateno): We have to fix this or else we could be skipping base properties in deserialization.
-                if (typeCheck == null) {
-                    continue;
-                }
-
                 const isNotType = php.codeblock((_writer) => {
                     _writer.write("!");
                     _writer.write("(");
@@ -1124,10 +1105,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 php.codeblock(this.context.getVariableName(discriminant.name)),
                 php.Type.string()
             );
-
-            if (typeCheck == null) {
-                throw new Error("Attempted to get type check for string and got null; this is impossible");
-            }
 
             const isNotType = php.codeblock((_writer) => {
                 _writer.write("!");
@@ -1227,20 +1204,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonDeserializeTypeCall(variant: SingleUnionType, type: php.Type): php.CodeBlock {
         const discriminantGetter = php.codeblock(`$data['${variant.discriminantValue.wireValue}']`);
-        const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.string());
-
-        if (typeCheck == null) {
-            throw new Error("Type check should never be null for string");
-        }
-
         switch (type.internalType.type) {
             case "reference":
                 return php.codeblock((writer) => {
                     const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.array(php.Type.mixed()));
-
-                    if (typeCheck == null) {
-                        throw new Error("Attempted to get type check for array and got null; this is impossible");
-                    }
 
                     const isNotType = php.codeblock((_writer) => {
                         _writer.write("!");
