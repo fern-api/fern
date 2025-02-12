@@ -58,7 +58,7 @@ public record Type
     public IEnumerable<string> Seventeen { get; set; } = new List<string>();
 
     [JsonPropertyName("eighteen")]
-    public required string Eighteen { get; set; }
+    public string Eighteen { get; set; } = "eighteen";
 
     [JsonPropertyName("nineteen")]
     public required Name Nineteen { get; set; }

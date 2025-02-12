@@ -7,6 +7,12 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.17
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Support required literals. For example, if a field has a literal value of "movie", we will now set that value as the default value for the field.
 - version: 1.9.16
   createdAt: "2025-02-06"
   changelogEntry:
