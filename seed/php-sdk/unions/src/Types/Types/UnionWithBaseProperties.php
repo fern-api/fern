@@ -21,10 +21,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var (int|
-     *    string|
-     *    Foo|
-     *    mixed) $value
+     * @var (
+     *    int
+     *   |string
+     *   |Foo
+     *   |mixed
+     * ) $value
      */
     public readonly mixed $value;
 
@@ -32,10 +34,12 @@ class UnionWithBaseProperties extends JsonSerializableType
      * @param array{
      *   id: string,
      *   type: string,
-     *   value: (int|
-     *    string|
-     *    Foo|
-     *    mixed),
+     *   value: (
+     *    int
+     *   |string
+     *   |Foo
+     *   |mixed
+     * ),
      * } $values
      */
     public function __construct(

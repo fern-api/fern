@@ -16,16 +16,20 @@ class UnionWithOptionalTime extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var (DateTime|
-     *    mixed) $value
+     * @var (
+     *    DateTime
+     *   |mixed
+     * ) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
      *   type: string,
-     *   value: (DateTime|
-     *    mixed),
+     *   value: (
+     *    DateTime
+     *   |mixed
+     * ),
      * } $values
      */
     public function __construct(

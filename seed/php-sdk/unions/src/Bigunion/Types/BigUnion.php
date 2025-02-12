@@ -35,36 +35,38 @@ class BigUnion extends JsonSerializableType
     public readonly string $type;
 
     /**
-     * @var (NormalSweet|
-     *    ThankfulFactor|
-     *    JumboEnd|
-     *    HastyPain|
-     *    MistySnow|
-     *    DistinctFailure|
-     *    PracticalPrinciple|
-     *    LimpingStep|
-     *    VibrantExcitement|
-     *    ActiveDiamond|
-     *    PopularLimit|
-     *    FalseMirror|
-     *    PrimaryBlock|
-     *    RotatingRatio|
-     *    ColorfulCover|
-     *    DisloyalValue|
-     *    GruesomeCoach|
-     *    TotalWork|
-     *    HarmoniousPlay|
-     *    UniqueStress|
-     *    UnwillingSmoke|
-     *    FrozenSleep|
-     *    DiligentDeal|
-     *    AttractiveScript|
-     *    HoarseMouse|
-     *    CircularCard|
-     *    PotableBad|
-     *    TriangularRepair|
-     *    GaseousRoad|
-     *    mixed) $value
+     * @var (
+     *    NormalSweet
+     *   |ThankfulFactor
+     *   |JumboEnd
+     *   |HastyPain
+     *   |MistySnow
+     *   |DistinctFailure
+     *   |PracticalPrinciple
+     *   |LimpingStep
+     *   |VibrantExcitement
+     *   |ActiveDiamond
+     *   |PopularLimit
+     *   |FalseMirror
+     *   |PrimaryBlock
+     *   |RotatingRatio
+     *   |ColorfulCover
+     *   |DisloyalValue
+     *   |GruesomeCoach
+     *   |TotalWork
+     *   |HarmoniousPlay
+     *   |UniqueStress
+     *   |UnwillingSmoke
+     *   |FrozenSleep
+     *   |DiligentDeal
+     *   |AttractiveScript
+     *   |HoarseMouse
+     *   |CircularCard
+     *   |PotableBad
+     *   |TriangularRepair
+     *   |GaseousRoad
+     *   |mixed
+     * ) $value
      */
     public readonly mixed $value;
 
@@ -73,36 +75,38 @@ class BigUnion extends JsonSerializableType
      *   id: string,
      *   createdAt: DateTime,
      *   type: string,
-     *   value: (NormalSweet|
-     *    ThankfulFactor|
-     *    JumboEnd|
-     *    HastyPain|
-     *    MistySnow|
-     *    DistinctFailure|
-     *    PracticalPrinciple|
-     *    LimpingStep|
-     *    VibrantExcitement|
-     *    ActiveDiamond|
-     *    PopularLimit|
-     *    FalseMirror|
-     *    PrimaryBlock|
-     *    RotatingRatio|
-     *    ColorfulCover|
-     *    DisloyalValue|
-     *    GruesomeCoach|
-     *    TotalWork|
-     *    HarmoniousPlay|
-     *    UniqueStress|
-     *    UnwillingSmoke|
-     *    FrozenSleep|
-     *    DiligentDeal|
-     *    AttractiveScript|
-     *    HoarseMouse|
-     *    CircularCard|
-     *    PotableBad|
-     *    TriangularRepair|
-     *    GaseousRoad|
-     *    mixed),
+     *   value: (
+     *    NormalSweet
+     *   |ThankfulFactor
+     *   |JumboEnd
+     *   |HastyPain
+     *   |MistySnow
+     *   |DistinctFailure
+     *   |PracticalPrinciple
+     *   |LimpingStep
+     *   |VibrantExcitement
+     *   |ActiveDiamond
+     *   |PopularLimit
+     *   |FalseMirror
+     *   |PrimaryBlock
+     *   |RotatingRatio
+     *   |ColorfulCover
+     *   |DisloyalValue
+     *   |GruesomeCoach
+     *   |TotalWork
+     *   |HarmoniousPlay
+     *   |UniqueStress
+     *   |UnwillingSmoke
+     *   |FrozenSleep
+     *   |DiligentDeal
+     *   |AttractiveScript
+     *   |HoarseMouse
+     *   |CircularCard
+     *   |PotableBad
+     *   |TriangularRepair
+     *   |GaseousRoad
+     *   |mixed
+     * ),
      *   archivedAt?: ?DateTime,
      * } $values
      */
