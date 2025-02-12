@@ -179,7 +179,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         );
 
         const headerEntries: csharp.Dictionary.MapEntry[] = [];
-        for (const param of optionalParameters) {
+        for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 headerEntries.push({
                     key: csharp.codeblock(`"${param.header.name}"`),
@@ -226,6 +226,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 entries: headerEntries
             }
         });
+
         return {
             access: csharp.Access.Public,
             parameters,

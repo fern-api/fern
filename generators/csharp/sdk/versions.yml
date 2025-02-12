@@ -6,6 +6,15 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.9.16
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Required client parameters that are headers are now sent when making API requests. For example if a bearer token is required to 
+        instantiate the client, we will ensure that it is sent when making API requests. 
+  irVersion: 53
 - version: 1.9.15
   createdAt: "2025-02-06"
   changelogEntry:
