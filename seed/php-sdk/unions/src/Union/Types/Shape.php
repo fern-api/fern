@@ -16,7 +16,11 @@ class Shape extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -32,7 +36,11 @@ class Shape extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Circle
      *   |Square

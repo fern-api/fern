@@ -10,19 +10,22 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithLiteral extends JsonSerializableType
 {
     /**
-     * @var string $base
+     * @var 'base' $base
      */
     #[JsonProperty('base')]
     public string $base;
 
     /**
-     * @var string $type
+     * @var (
+     *    'fern'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
-     *    string
+     *    'fern'
      *   |mixed
      * ) $value
      */
@@ -30,10 +33,13 @@ class UnionWithLiteral extends JsonSerializableType
 
     /**
      * @param array{
-     *   base: string,
-     *   type: string,
+     *   base: 'base',
+     *   type: (
+     *    'fern'
+     *   |'_unknown'
+     * ),
      *   value: (
-     *    string
+     *    'fern'
      *   |mixed
      * ),
      * } $values
@@ -41,27 +47,24 @@ class UnionWithLiteral extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->base = $values['base'];
+        $this->base = 'base';
         $this->type = $values['type'];
         $this->value = $values['value'];
     }
 
     /**
-     * @param string $base
-     * @param string $fern
      * @return UnionWithLiteral
      */
-    public static function fern(string $base, string $fern): UnionWithLiteral
+    public static function fern(): UnionWithLiteral
     {
         return new UnionWithLiteral([
-            'base' => $base,
             'type' => 'fern',
-            'value' => $fern,
+            'value' => 'fern',
         ]);
     }
 
     /**
-     * @param string $base
+     * @param 'base' $base
      * @param mixed $_unknown
      * @return UnionWithLiteral
      */
@@ -79,15 +82,15 @@ class UnionWithLiteral extends JsonSerializableType
      */
     public function isFern(): bool
     {
-        return is_string($this->value) && $this->type === 'fern';
+        return $this->value === 'fern' && $this->type === 'fern';
     }
 
     /**
-     * @return string
+     * @return 'fern'
      */
     public function asFern(): string
     {
-        if (!(is_string($this->value) && $this->type === 'fern')) {
+        if (!($this->value === 'fern' && $this->type === 'fern')) {
             throw new Exception(
                 "Expected fern; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -159,9 +162,9 @@ class UnionWithLiteral extends JsonSerializableType
                 "JSON data is missing property 'base'",
             );
         }
-        if (!(is_string($data['base']))) {
+        if (!($data['base'] === 'base')) {
             throw new Exception(
-                "Expected property 'base' in JSON data to be string, instead received " . get_debug_type($data['base']),
+                "Expected property 'base' in JSON data to be literal, instead received " . get_debug_type($data['base']),
             );
         }
         $args['base'] = $data['base'];

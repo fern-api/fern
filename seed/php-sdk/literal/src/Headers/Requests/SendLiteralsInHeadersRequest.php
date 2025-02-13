@@ -8,12 +8,12 @@ use Seed\Core\Json\JsonProperty;
 class SendLiteralsInHeadersRequest extends JsonSerializableType
 {
     /**
-     * @var string $endpointVersion
+     * @var '02-12-2024' $endpointVersion
      */
     public string $endpointVersion;
 
     /**
-     * @var bool $async
+     * @var true $async
      */
     public bool $async;
 
@@ -25,16 +25,12 @@ class SendLiteralsInHeadersRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   endpointVersion: string,
-     *   async: bool,
      *   query: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->endpointVersion = $values['endpointVersion'];
-        $this->async = $values['async'];
         $this->query = $values['query'];
     }
 }

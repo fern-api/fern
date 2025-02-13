@@ -10,5 +10,5 @@ $client = new SeedClient(
     ],
 );
 $client->path->send(
-    '123',
+    ,
 );

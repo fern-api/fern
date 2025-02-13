@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithPrimitive extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integer'
+     *   |'string'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class UnionWithPrimitive extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integer'
+     *   |'string'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |string

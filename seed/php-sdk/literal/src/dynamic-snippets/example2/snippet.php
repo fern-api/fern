@@ -15,16 +15,9 @@ $client = new SeedClient(
 $client->inlined->send(
     new SendLiteralsInlinedRequest([
         'temperature' => 10.1,
-        'prompt' => 'You are a helpful assistant',
-        'context' => 'You\'re super wise',
-        'aliasedContext' => 'You\'re super wise',
-        'maybeContext' => 'You\'re super wise',
         'objectWithLiteral' => new ATopLevelLiteral([
-            'nestedLiteral' => new ANestedLiteral([
-                'myLiteral' => 'How super cool',
-            ]),
+            'nestedLiteral' => new ANestedLiteral([]),
         ]),
-        'stream' => false,
         'query' => 'What is the weather today',
     ]),
 );

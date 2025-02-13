@@ -41,22 +41,29 @@ export class DataClass extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const orderedFields = orderByAccess(this.class_.fields).map(
-            (field) =>
-                ({
-                    ...field,
-                    name: convertFromPhpVariableName(field.name)
-                }) as Field
-        );
+        const orderedFields = orderByAccess(this.class_.fields)
+            .map(
+                (field) =>
+                    ({
+                        ...field,
+                        name: convertFromPhpVariableName(field.name)
+                    }) as Field
+            )
+            .filter((field) => field.type.internalType.type !== "literal");
         if (orderedFields.length > 0) {
             this.class_.addConstructor({
                 access: "public",
                 parameters: this.getConstructorParameters({ orderedFields }),
                 body: php.codeblock((writer) => {
                     for (const field of orderedFields) {
-                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
-                        if (field.type.isOptional()) {
-                            writer.write(" ?? null");
+                        if (field.type.internalType.type === "literal") {
+                            writer.write(`$this->${field.name} = `);
+                            writer.writeNode(field.type.internalType.value);
+                        } else {
+                            writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
+                            if (field.type.isOptional()) {
+                                writer.write(" ?? null");
+                            }
                         }
                         writer.write(";");
                     }
