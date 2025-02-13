@@ -104,7 +104,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseResultWithStdout && $this->type === 'graded')) {
             throw new Exception(
-                "Expected graded; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected graded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +126,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseGrade && $this->type === 'gradedV2')) {
             throw new Exception(
-                "Expected gradedV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gradedV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +148,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     {
         if (!($this->value instanceof TracedTestCase && $this->type === 'traced')) {
             throw new Exception(
-                "Expected traced; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected traced; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

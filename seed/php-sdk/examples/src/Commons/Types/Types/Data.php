@@ -88,7 +88,7 @@ class Data extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'string')) {
             throw new Exception(
-                "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected string; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +110,7 @@ class Data extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'base64')) {
             throw new Exception(
-                "Expected base64; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected base64; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

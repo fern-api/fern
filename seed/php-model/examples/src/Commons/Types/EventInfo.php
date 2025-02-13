@@ -90,7 +90,7 @@ class EventInfo extends JsonSerializableType
     {
         if (!($this->value instanceof Metadata && $this->type === 'metadata')) {
             throw new Exception(
-                "Expected metadata; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected metadata; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class EventInfo extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'tag')) {
             throw new Exception(
-                "Expected tag; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected tag; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

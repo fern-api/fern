@@ -104,7 +104,7 @@ class FieldValue extends JsonSerializableType
     {
         if (!($this->value instanceof PrimitiveValue && $this->type === 'primitive_value')) {
             throw new Exception(
-                "Expected primitive_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected primitive_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +126,7 @@ class FieldValue extends JsonSerializableType
     {
         if (!($this->value instanceof ObjectValue && $this->type === 'object_value')) {
             throw new Exception(
-                "Expected object_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected object_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +148,7 @@ class FieldValue extends JsonSerializableType
     {
         if (!($this->value instanceof ContainerValue && $this->type === 'container_value')) {
             throw new Exception(
-                "Expected container_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected container_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

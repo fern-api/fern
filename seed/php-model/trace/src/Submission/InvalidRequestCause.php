@@ -104,7 +104,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof SubmissionIdNotFound && $this->type === 'submissionIdNotFound')) {
             throw new Exception(
-                "Expected submissionIdNotFound; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected submissionIdNotFound; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +126,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof CustomTestCasesUnsupported && $this->type === 'customTestCasesUnsupported')) {
             throw new Exception(
-                "Expected customTestCasesUnsupported; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected customTestCasesUnsupported; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +148,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof UnexpectedLanguageError && $this->type === 'unexpectedLanguage')) {
             throw new Exception(
-                "Expected unexpectedLanguage; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected unexpectedLanguage; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

@@ -90,7 +90,7 @@ class Animal extends JsonSerializableType
     {
         if (!($this->value instanceof Dog && $this->animal === 'dog')) {
             throw new Exception(
-                "Expected dog; got " . $this->animal . "with value of type " . get_debug_type($this->value),
+                "Expected dog; got " . $this->animal . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class Animal extends JsonSerializableType
     {
         if (!($this->value instanceof Cat && $this->animal === 'cat')) {
             throw new Exception(
-                "Expected cat; got " . $this->animal . "with value of type " . get_debug_type($this->value),
+                "Expected cat; got " . $this->animal . " with value of type " . get_debug_type($this->value),
             );
         }
 

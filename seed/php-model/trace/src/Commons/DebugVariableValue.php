@@ -238,7 +238,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_int($this->value) && $this->type === 'integerValue')) {
             throw new Exception(
-                "Expected integerValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected integerValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -260,7 +260,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'booleanValue')) {
             throw new Exception(
-                "Expected booleanValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected booleanValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -282,7 +282,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_float($this->value) && $this->type === 'doubleValue')) {
             throw new Exception(
-                "Expected doubleValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected doubleValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -304,7 +304,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'stringValue')) {
             throw new Exception(
-                "Expected stringValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected stringValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -326,7 +326,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'charValue')) {
             throw new Exception(
-                "Expected charValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected charValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -348,7 +348,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof DebugMapValue && $this->type === 'mapValue')) {
             throw new Exception(
-                "Expected mapValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected mapValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -370,7 +370,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!(is_array($this->value) && $this->type === 'listValue')) {
             throw new Exception(
-                "Expected listValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected listValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -392,7 +392,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof BinaryTreeNodeAndTreeValue && $this->type === 'binaryTreeNodeValue')) {
             throw new Exception(
-                "Expected binaryTreeNodeValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected binaryTreeNodeValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -414,7 +414,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof SinglyLinkedListNodeAndListValue && $this->type === 'singlyLinkedListNodeValue')) {
             throw new Exception(
-                "Expected singlyLinkedListNodeValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected singlyLinkedListNodeValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -436,7 +436,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof DoublyLinkedListNodeAndListValue && $this->type === 'doublyLinkedListNodeValue')) {
             throw new Exception(
-                "Expected doublyLinkedListNodeValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected doublyLinkedListNodeValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -474,7 +474,7 @@ class DebugVariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof GenericValue && $this->type === 'genericValue')) {
             throw new Exception(
-                "Expected genericValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected genericValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

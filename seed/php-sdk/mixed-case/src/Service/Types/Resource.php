@@ -105,7 +105,7 @@ class Resource extends JsonSerializableType
     {
         if (!($this->value instanceof User && $this->resourceType === 'user')) {
             throw new Exception(
-                "Expected user; got " . $this->resourceType . "with value of type " . get_debug_type($this->value),
+                "Expected user; got " . $this->resourceType . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -127,7 +127,7 @@ class Resource extends JsonSerializableType
     {
         if (!($this->value instanceof Organization && $this->resourceType === 'Organization')) {
             throw new Exception(
-                "Expected Organization; got " . $this->resourceType . "with value of type " . get_debug_type($this->value),
+                "Expected Organization; got " . $this->resourceType . " with value of type " . get_debug_type($this->value),
             );
         }
 

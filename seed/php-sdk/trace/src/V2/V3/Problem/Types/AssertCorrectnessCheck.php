@@ -90,7 +90,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
     {
         if (!($this->value instanceof DeepEqualityCorrectnessCheck && $this->type === 'deepEquality')) {
             throw new Exception(
-                "Expected deepEquality; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected deepEquality; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionDefinitionThatTakesActualResult && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

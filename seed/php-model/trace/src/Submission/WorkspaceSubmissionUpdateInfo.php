@@ -153,7 +153,7 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
-                "Expected running; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -175,7 +175,7 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceRunDetails && $this->type === 'ran')) {
             throw new Exception(
-                "Expected ran; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected ran; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -213,7 +213,7 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceTracedUpdate && $this->type === 'tracedV2')) {
             throw new Exception(
-                "Expected tracedV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected tracedV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -235,7 +235,7 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
-                "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

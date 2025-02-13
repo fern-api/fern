@@ -150,7 +150,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'problemInitialized')) {
             throw new Exception(
-                "Expected problemInitialized; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected problemInitialized; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -180,7 +180,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionInfo && $this->type === 'serverErrored')) {
             throw new Exception(
-                "Expected serverErrored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected serverErrored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -202,7 +202,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!($this->value instanceof CodeExecutionUpdate && $this->type === 'codeExecutionUpdate')) {
             throw new Exception(
-                "Expected codeExecutionUpdate; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected codeExecutionUpdate; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -224,7 +224,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!($this->value instanceof TerminatedResponse && $this->type === 'terminated')) {
             throw new Exception(
-                "Expected terminated; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected terminated; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

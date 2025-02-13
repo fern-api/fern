@@ -103,7 +103,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'html')) {
             throw new Exception(
-                "Expected html; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -125,7 +125,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
     {
         if (!($this->value instanceof VariableValue && $this->type === 'variable')) {
             throw new Exception(
-                "Expected variable; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected variable; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -147,7 +147,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'testCaseId')) {
             throw new Exception(
-                "Expected testCaseId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected testCaseId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

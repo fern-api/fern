@@ -131,7 +131,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof InitializeProblemRequest && $this->type === 'initializeProblemRequest')) {
             throw new Exception(
-                "Expected initializeProblemRequest; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected initializeProblemRequest; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -161,7 +161,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof SubmitRequestV2 && $this->type === 'submitV2')) {
             throw new Exception(
-                "Expected submitV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected submitV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -183,7 +183,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceSubmitRequest && $this->type === 'workspaceSubmit')) {
             throw new Exception(
-                "Expected workspaceSubmit; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected workspaceSubmit; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -205,7 +205,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof StopRequest && $this->type === 'stop')) {
             throw new Exception(
-                "Expected stop; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected stop; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

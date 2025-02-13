@@ -220,7 +220,7 @@ class VariableType extends JsonSerializableType
     {
         if (!($this->value instanceof ListType && $this->type === 'listType')) {
             throw new Exception(
-                "Expected listType; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected listType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -242,7 +242,7 @@ class VariableType extends JsonSerializableType
     {
         if (!($this->value instanceof MapType && $this->type === 'mapType')) {
             throw new Exception(
-                "Expected mapType; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected mapType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
