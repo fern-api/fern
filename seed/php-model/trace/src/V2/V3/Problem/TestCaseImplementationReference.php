@@ -193,20 +193,19 @@ class TestCaseImplementationReference extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'templateId':
-                $args['type'] = 'templateId';
                 if (!array_key_exists('templateId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'templateId'",
                     );
                 }
 
-                $args['templateId'] = $data['templateId'];
+                $args['value'] = $data['templateId'];
                 break;
             case 'implementation':
-                $args['type'] = 'implementation';
-                $args['implementation'] = TestCaseImplementation::jsonDeserialize($data);
+                $args['value'] = TestCaseImplementation::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:
