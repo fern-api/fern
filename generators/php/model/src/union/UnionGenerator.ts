@@ -65,7 +65,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
             clazz.addMethod(
                 this.context.getGetterMethod({
-                    name: this.getValueFieldName(),
+                    name: this.getValueName(),
                     field: valueField
                 })
             );
@@ -112,7 +112,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock("$this->value");
     }
 
-    private getValueFieldName(): Name {
+    private getValueName(): Name {
         // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
         return {
             originalName: "value",
@@ -121,6 +121,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             snakeCase: { safeName: "value", unsafeName: "value" },
             screamingSnakeCase: { safeName: "VALUE", unsafeName: "VALUE" }
         };
+    }
+
+    private getValueFieldName(): string {
+        return this.context.getFieldName(this.getValueName());
     }
 
     private getDiscriminantField(): php.Field {
@@ -143,7 +147,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         types.push(php.Type.mixed());
 
         return php.field({
-            name: this.getValueFieldName().camelCase.safeName,
+            name: this.getValueName().camelCase.safeName,
             type: php.Type.union(types),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -199,7 +203,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 value: php.codeblock("'_unknown'")
             });
             constructorArgs.push({
-                key: php.codeblock("'value'"),
+                key: php.codeblock(`'${this.getValueFieldName()}'`),
                 value: php.codeblock("$_unknown")
             });
 
@@ -284,13 +288,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 case "samePropertiesAsObject":
                 case "singleProperty":
                     constructorArgs.push({
-                        key: php.codeblock("'value'"),
+                        key: php.codeblock(`'${this.getValueFieldName()}'`),
                         value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
                     });
                     break;
                 case "noProperties":
                     constructorArgs.push({
-                        key: php.codeblock("'value'"),
+                        key: php.codeblock(`'${this.getValueFieldName()}'`),
                         value: php.codeblock("null")
                     });
                     break;
@@ -1153,7 +1157,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.writeTextStatement(
                 `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '_unknown'`
             );
-            writer.writeTextStatement("$args['value'] = $data");
+            writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = $data`);
         });
     }
 
@@ -1166,7 +1170,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         throw new Error("samePropertiesAsObject must be a reference type.");
                     }
 
-                    writer.write("$args['value'] = ");
+                    writer.write(`$args['${this.getValueFieldName()}'] = `);
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: "jsonDeserialize",
@@ -1206,7 +1210,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 });
             case "noProperties":
                 return php.codeblock((writer) => {
-                    writer.writeTextStatement("$args['value'] = null");
+                    writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = null`);
                     writer.writeTextStatement("break");
                 });
             default:
@@ -1240,7 +1244,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         })
                     );
 
-                    writer.write("$args['value'] = ");
+                    writer.write(`$args['${this.getValueFieldName()}'] = `);
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: "jsonDeserialize",
@@ -1262,7 +1266,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                                 static_: true
                             })
                         );
-                        writer.writeTextStatement("$args['value'] = null");
+                        writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = null`);
                         writer.alternativeControlFlow("else");
                     }
 
@@ -1288,7 +1292,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "enumString":
             case "union":
                 return php.codeblock((writer) => {
-                    writer.write("$args['value'] = ");
+                    writer.write(`$args['${this.getValueFieldName()}'] = `);
                     writer.writeNodeStatement(discriminantGetter);
                 });
             default:

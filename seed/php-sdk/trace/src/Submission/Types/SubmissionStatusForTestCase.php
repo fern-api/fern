@@ -233,13 +233,12 @@ class SubmissionStatusForTestCase extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'graded':
-                $args['type'] = 'graded';
-                $args['graded'] = TestCaseResultWithStdout::jsonDeserialize($data);
+                $args['value'] = TestCaseResultWithStdout::jsonDeserialize($data);
                 break;
             case 'gradedV2':
-                $args['type'] = 'gradedV2';
                 if (!array_key_exists('gradedV2', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'gradedV2'",
@@ -251,11 +250,10 @@ class SubmissionStatusForTestCase extends JsonSerializableType
                         "Expected property 'gradedV2' in JSON data to be array, instead received " . get_debug_type($data['gradedV2']),
                     );
                 }
-                $args['gradedV2'] = TestCaseGrade::jsonDeserialize($data['gradedV2']);
+                $args['value'] = TestCaseGrade::jsonDeserialize($data['gradedV2']);
                 break;
             case 'traced':
-                $args['type'] = 'traced';
-                $args['traced'] = TracedTestCase::jsonDeserialize($data);
+                $args['value'] = TracedTestCase::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

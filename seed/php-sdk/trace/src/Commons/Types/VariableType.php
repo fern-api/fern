@@ -371,45 +371,36 @@ class VariableType extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integerType':
-                $args['type'] = 'integerType';
                 $args['value'] = null;
                 break;
             case 'doubleType':
-                $args['type'] = 'doubleType';
                 $args['value'] = null;
                 break;
             case 'booleanType':
-                $args['type'] = 'booleanType';
                 $args['value'] = null;
                 break;
             case 'stringType':
-                $args['type'] = 'stringType';
                 $args['value'] = null;
                 break;
             case 'charType':
-                $args['type'] = 'charType';
                 $args['value'] = null;
                 break;
             case 'listType':
-                $args['type'] = 'listType';
-                $args['listType'] = ListType::jsonDeserialize($data);
+                $args['value'] = ListType::jsonDeserialize($data);
                 break;
             case 'mapType':
-                $args['type'] = 'mapType';
-                $args['mapType'] = MapType::jsonDeserialize($data);
+                $args['value'] = MapType::jsonDeserialize($data);
                 break;
             case 'binaryTreeType':
-                $args['type'] = 'binaryTreeType';
                 $args['value'] = null;
                 break;
             case 'singlyLinkedListType':
-                $args['type'] = 'singlyLinkedListType';
                 $args['value'] = null;
                 break;
             case 'doublyLinkedListType':
-                $args['type'] = 'doublyLinkedListType';
                 $args['value'] = null;
                 break;
             case '_unknown':

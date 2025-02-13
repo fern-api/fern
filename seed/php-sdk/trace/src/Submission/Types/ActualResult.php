@@ -234,9 +234,9 @@ class ActualResult extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'value':
-                $args['type'] = 'value';
                 if (!array_key_exists('value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'value'",
@@ -251,11 +251,9 @@ class ActualResult extends JsonSerializableType
                 $args['value'] = VariableValue::jsonDeserialize($data['value']);
                 break;
             case 'exception':
-                $args['type'] = 'exception';
-                $args['exception'] = ExceptionInfo::jsonDeserialize($data);
+                $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'exceptionV2':
-                $args['type'] = 'exceptionV2';
                 if (!array_key_exists('exceptionV2', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'exceptionV2'",
@@ -267,7 +265,7 @@ class ActualResult extends JsonSerializableType
                         "Expected property 'exceptionV2' in JSON data to be array, instead received " . get_debug_type($data['exceptionV2']),
                     );
                 }
-                $args['exceptionV2'] = ExceptionV2::jsonDeserialize($data['exceptionV2']);
+                $args['value'] = ExceptionV2::jsonDeserialize($data['exceptionV2']);
                 break;
             case '_unknown':
             default:

@@ -233,18 +233,16 @@ class InvalidRequestCause extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'submissionIdNotFound':
-                $args['type'] = 'submissionIdNotFound';
-                $args['submissionIdNotFound'] = SubmissionIdNotFound::jsonDeserialize($data);
+                $args['value'] = SubmissionIdNotFound::jsonDeserialize($data);
                 break;
             case 'customTestCasesUnsupported':
-                $args['type'] = 'customTestCasesUnsupported';
-                $args['customTestCasesUnsupported'] = CustomTestCasesUnsupported::jsonDeserialize($data);
+                $args['value'] = CustomTestCasesUnsupported::jsonDeserialize($data);
                 break;
             case 'unexpectedLanguage':
-                $args['type'] = 'unexpectedLanguage';
-                $args['unexpectedLanguage'] = UnexpectedLanguageError::jsonDeserialize($data);
+                $args['value'] = UnexpectedLanguageError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

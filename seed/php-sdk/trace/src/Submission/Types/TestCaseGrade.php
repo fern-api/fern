@@ -193,14 +193,13 @@ class TestCaseGrade extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'hidden':
-                $args['type'] = 'hidden';
-                $args['hidden'] = TestCaseHiddenGrade::jsonDeserialize($data);
+                $args['value'] = TestCaseHiddenGrade::jsonDeserialize($data);
                 break;
             case 'nonHidden':
-                $args['type'] = 'nonHidden';
-                $args['nonHidden'] = TestCaseNonHiddenGrade::jsonDeserialize($data);
+                $args['value'] = TestCaseNonHiddenGrade::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

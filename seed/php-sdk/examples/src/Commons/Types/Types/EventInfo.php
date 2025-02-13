@@ -193,20 +193,19 @@ class EventInfo extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'metadata':
-                $args['type'] = 'metadata';
-                $args['metadata'] = Metadata::jsonDeserialize($data);
+                $args['value'] = Metadata::jsonDeserialize($data);
                 break;
             case 'tag':
-                $args['type'] = 'tag';
                 if (!array_key_exists('tag', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'tag'",
                     );
                 }
 
-                $args['tag'] = $data['tag'];
+                $args['value'] = $data['tag'];
                 break;
             case '_unknown':
             default:
