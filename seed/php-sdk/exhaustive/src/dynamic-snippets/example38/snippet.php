@@ -3,6 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\Union\Types\Animal;
+use Seed\Types\Union\Types\Dog;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,5 +13,8 @@ $client = new SeedClient(
     ],
 );
 $client->endpoints->union->getAndReturnUnion(
-    'todo',
+    Animal::dog(new Dog([
+        'name' => 'name',
+        'likesToWoof' => true,
+    ])),
 );

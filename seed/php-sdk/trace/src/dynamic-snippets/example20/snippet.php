@@ -5,6 +5,7 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
 use Seed\Problem\Types\VariableTypeAndName;
+use Seed\Commons\Types\VariableType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -16,15 +17,15 @@ $client->problem->getDefaultStarterFiles(
     new GetDefaultStarterFilesRequest([
         'inputParams' => [
             new VariableTypeAndName([
-                'variableType' => 'todo',
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
             new VariableTypeAndName([
-                'variableType' => 'todo',
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
         ],
-        'outputType' => 'todo',
+        'outputType' => VariableType::integerType(),
         'methodName' => 'methodName',
     ]),
 );

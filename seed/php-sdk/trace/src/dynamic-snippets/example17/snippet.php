@@ -5,12 +5,15 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Problem\Types\CreateProblemRequest;
 use Seed\Problem\Types\ProblemDescription;
+use Seed\Problem\Types\ProblemDescriptionBoard;
 use Seed\Commons\Types\Language;
 use Seed\Problem\Types\ProblemFiles;
 use Seed\Commons\Types\FileInfo;
 use Seed\Problem\Types\VariableTypeAndName;
+use Seed\Commons\Types\VariableType;
 use Seed\Commons\Types\TestCaseWithExpectedResult;
 use Seed\Commons\Types\TestCase;
+use Seed\Commons\Types\VariableValue;
 
 $client = new SeedClient(
     token: '<token>',
@@ -23,8 +26,8 @@ $client->problem->createProblem(
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
             'boards' => [
-                'todo',
-                'todo',
+                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html(),
             ],
         ]),
         'files' => [
@@ -47,35 +50,35 @@ $client->problem->createProblem(
         ],
         'inputParams' => [
             new VariableTypeAndName([
-                'variableType' => 'todo',
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
             new VariableTypeAndName([
-                'variableType' => 'todo',
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
         ],
-        'outputType' => 'todo',
+        'outputType' => VariableType::integerType(),
         'testcases' => [
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        'todo',
-                        'todo',
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
                     ],
                 ]),
-                'expectedResult' => 'todo',
+                'expectedResult' => VariableValue::integerValue(),
             ]),
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        'todo',
-                        'todo',
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
                     ],
                 ]),
-                'expectedResult' => 'todo',
+                'expectedResult' => VariableValue::integerValue(),
             ]),
         ],
         'methodName' => 'methodName',
