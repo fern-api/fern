@@ -67,7 +67,7 @@ class RawClient
      */
     public function sendRequest(
         BaseApiRequest $request,
-        ?array $options = null,
+        ?array         $options = null,
     ): ResponseInterface {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
@@ -104,7 +104,7 @@ class RawClient
      */
     private function buildRequest(
         BaseApiRequest $request,
-        array $options
+        array          $options
     ): Request {
         $url = $this->buildUrl($request, $options);
         $headers = $this->encodeHeaders($request, $options);
@@ -126,7 +126,7 @@ class RawClient
      */
     private function encodeHeaders(
         BaseApiRequest $request,
-        array $options,
+        array          $options,
     ): array {
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
@@ -153,7 +153,7 @@ class RawClient
      */
     private function encodeRequestBody(
         BaseApiRequest $request,
-        array $options,
+        array          $options,
     ): ?StreamInterface {
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body === null ? null : Utils::streamFor(
@@ -181,7 +181,7 @@ class RawClient
         array $options,
     ): mixed {
         $overrideProperties = $options['bodyProperties'] ?? [];
-        if (is_array($body) && self::isSequential($body)) {
+        if (is_array($body) && (empty($body) || self::isSequential($body))) {
             return array_merge($body, $overrideProperties);
         }
 
@@ -210,7 +210,7 @@ class RawClient
      */
     private function buildUrl(
         BaseApiRequest $request,
-        array $options,
+        array          $options,
     ): string {
         $baseUrl = $request->baseUrl;
         $trimmedBaseUrl = rtrim($baseUrl, '/');
@@ -262,13 +262,14 @@ class RawClient
 
     /**
      * Check if an array is sequential, not associative.
-     * @param array $arr
+     * @param mixed[] $arr
      * @return bool
      */
-    private static function isSequential(array $arr): bool // @phpstan-ignore-line
-    {if (empty($arr)) {
-        return false;
-    }
+    private static function isSequential(array $arr): bool
+    {
+        if (empty($arr)) {
+            return false;
+        }
         $length = count($arr);
         $keys = array_keys($arr);
         for ($i = 0; $i < $length; $i++) {

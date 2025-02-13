@@ -37,7 +37,8 @@ class RawClient
      */
     public function __construct(
         public readonly ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $this->options['client']
             ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
@@ -67,8 +68,9 @@ class RawClient
      */
     public function sendRequest(
         BaseApiRequest $request,
-        ?array $options = null,
-    ): ResponseInterface {
+        ?array         $options = null,
+    ): ResponseInterface
+    {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
         return $this->client->send($httpRequest, $this->toGuzzleOptions($opts));
@@ -104,8 +106,9 @@ class RawClient
      */
     private function buildRequest(
         BaseApiRequest $request,
-        array $options
-    ): Request {
+        array          $options
+    ): Request
+    {
         $url = $this->buildUrl($request, $options);
         $headers = $this->encodeHeaders($request, $options);
         $body = $this->encodeRequestBody($request, $options);
@@ -126,8 +129,9 @@ class RawClient
      */
     private function encodeHeaders(
         BaseApiRequest $request,
-        array $options,
-    ): array {
+        array          $options,
+    ): array
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
                 ["Content-Type" => "application/json"],
@@ -153,8 +157,9 @@ class RawClient
      */
     private function encodeRequestBody(
         BaseApiRequest $request,
-        array $options,
-    ): ?StreamInterface {
+        array          $options,
+    ): ?StreamInterface
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body === null ? null : Utils::streamFor(
                 json_encode(
@@ -182,19 +187,18 @@ class RawClient
     ): mixed
     {
         $overrideProperties = $options['bodyProperties'] ?? [];
-        if(is_array($body) && self::isSequential($body)){
+        if (is_array($body) && (empty($body) || self::isSequential($body))) {
             return array_merge($body, $overrideProperties);
         }
 
         if ($body instanceof JsonSerializable) {
             $result = $body->jsonSerialize();
-        }
-        else{
+        } else {
             $result = $body;
         }
-        if(is_array($result)){
+        if (is_array($result)) {
             $result = array_merge($result, $overrideProperties);
-            if(empty($result)){
+            if (empty($result)) {
                 // force to be serialized as {} instead of []
                 return (object)($result);
             }
@@ -212,8 +216,9 @@ class RawClient
      */
     private function buildUrl(
         BaseApiRequest $request,
-        array $options,
-    ): string {
+        array          $options,
+    ): string
+    {
         $baseUrl = $request->baseUrl;
         $trimmedBaseUrl = rtrim($baseUrl, '/');
         $trimmedBasePath = ltrim($request->path, '/');
@@ -264,10 +269,11 @@ class RawClient
 
     /**
      * Check if an array is sequential, not associative.
-     * @param array $arr
+     * @param mixed[] $arr
      * @return bool
      */
-    private static function isSequential(array $arr): bool { // @phpstan-ignore-line
+    private static function isSequential(array $arr): bool
+    {
         if (empty($arr)) return false;
         $length = count($arr);
         $keys = array_keys($arr);
