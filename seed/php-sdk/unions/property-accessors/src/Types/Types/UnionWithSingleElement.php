@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithSingleElement extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'foo'
+     *   |'_unknown'
+     * ) $type
      */
     private readonly string $type;
 
@@ -23,7 +26,10 @@ class UnionWithSingleElement extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'foo'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Foo
      *   |mixed
@@ -38,7 +44,10 @@ class UnionWithSingleElement extends JsonSerializableType
     }
 
     /**
-     * @return string
+     * @return (
+     *    'foo'
+     *   |'_unknown'
+     * )
      */
     public function getType(): string
     {

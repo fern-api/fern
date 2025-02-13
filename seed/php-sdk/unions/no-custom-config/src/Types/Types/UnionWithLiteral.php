@@ -33,7 +33,6 @@ class UnionWithLiteral extends JsonSerializableType
 
     /**
      * @param array{
-     *   base: 'base',
      *   type: (
      *    'fern'
      *   |'_unknown'
@@ -47,7 +46,6 @@ class UnionWithLiteral extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->base = 'base';
         $this->type = $values['type'];
         $this->value = $values['value'];
     }
