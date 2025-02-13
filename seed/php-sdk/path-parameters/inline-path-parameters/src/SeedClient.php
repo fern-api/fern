@@ -24,6 +24,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -39,6 +40,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

@@ -25,6 +25,7 @@ class ComplexClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -41,6 +42,7 @@ class ComplexClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -57,6 +59,7 @@ class ComplexClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -67,7 +70,7 @@ class ComplexClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (SearchRequest $request) => $this->__search($request, $options),
+            getNextPage: fn (SearchRequest $request) => $this->_search($request, $options),
             setCursor: function (SearchRequest $request, ?string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
@@ -83,6 +86,7 @@ class ComplexClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -91,7 +95,7 @@ class ComplexClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __search(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function _search(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

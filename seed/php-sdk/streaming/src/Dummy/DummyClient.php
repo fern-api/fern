@@ -22,6 +22,7 @@ class DummyClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -38,6 +39,7 @@ class DummyClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -54,6 +56,7 @@ class DummyClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -100,6 +103,7 @@ class DummyClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,

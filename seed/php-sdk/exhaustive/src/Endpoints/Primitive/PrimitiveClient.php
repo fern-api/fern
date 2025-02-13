@@ -22,6 +22,7 @@ class PrimitiveClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -38,6 +39,7 @@ class PrimitiveClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -54,6 +56,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -107,6 +110,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -160,6 +164,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -213,6 +218,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -266,6 +272,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -319,6 +326,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -372,6 +380,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -425,6 +434,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -478,6 +488,7 @@ class PrimitiveClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,

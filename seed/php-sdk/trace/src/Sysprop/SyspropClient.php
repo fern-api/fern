@@ -22,6 +22,7 @@ class SyspropClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -38,6 +39,7 @@ class SyspropClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -55,6 +57,7 @@ class SyspropClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -102,6 +105,7 @@ class SyspropClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,

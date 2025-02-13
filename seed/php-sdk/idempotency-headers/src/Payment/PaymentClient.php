@@ -21,6 +21,7 @@ class PaymentClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -37,6 +38,7 @@ class PaymentClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -53,6 +55,7 @@ class PaymentClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -106,6 +109,7 @@ class PaymentClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
