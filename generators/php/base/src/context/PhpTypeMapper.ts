@@ -132,9 +132,8 @@ export class PhpTypeMapper {
             case "enum":
                 return preserveEnums ? php.Type.reference(classReference) : php.Type.enumString(classReference);
             case "object":
-                return php.Type.reference(classReference);
             case "union":
-                return php.Type.mixed();
+                return php.Type.reference(classReference);
             case "undiscriminatedUnion": {
                 return php.Type.union(
                     // need to dedupe because lists and sets are both represented as array
