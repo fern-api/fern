@@ -453,11 +453,23 @@ export abstract class AbstractCsharpGeneratorContext<
     /**
      * Returns the literal value from a Type Reference (doesn't unbox containers to find a literal).
      */
-    public getLiteralFromTypeReference({
+    public getLiteralInitializerFromTypeReference({
         typeReference
     }: {
         typeReference: TypeReference;
-    }): string | boolean | undefined {
+    }): csharp.CodeBlock | undefined {
+        const literalValue = this.getLiteralValue(typeReference);
+        if (literalValue != null) {
+            return csharp.codeblock(
+                typeof literalValue === "boolean" 
+                    ? `${literalValue.toString().toLowerCase()}`
+                    : `"${literalValue}"`
+            );
+        }
+        return undefined;
+    }
+
+    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {

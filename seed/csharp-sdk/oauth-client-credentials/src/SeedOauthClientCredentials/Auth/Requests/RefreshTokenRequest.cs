@@ -15,10 +15,10 @@ public record RefreshTokenRequest
     public required string RefreshToken { get; set; }
 
     [JsonPropertyName("audience")]
-    public required string Audience { get; set; }
+    public string Audience { get; set; } = "https://api.example.com";
 
     [JsonPropertyName("grant_type")]
-    public required string GrantType { get; set; }
+    public string GrantType { get; set; } = "refresh_token";
 
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
