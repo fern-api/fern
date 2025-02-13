@@ -32,7 +32,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/resource/{resourceId}",
+                    Path = $"/resource/{JsonUtils.SerializeAsString(resourceId)}",
                     Options = options,
                 },
                 cancellationToken

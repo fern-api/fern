@@ -36,7 +36,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/check/{id}",
+                    Path = $"/check/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken

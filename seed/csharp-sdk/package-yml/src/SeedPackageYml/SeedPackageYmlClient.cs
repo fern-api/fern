@@ -53,7 +53,7 @@ public partial class SeedPackageYmlClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{id}/",
+                    Path = $"/{JsonUtils.SerializeAsString(id)}/",
                     Body = request,
                     Options = options,
                 },

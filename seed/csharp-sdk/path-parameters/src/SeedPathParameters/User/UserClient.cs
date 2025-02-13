@@ -34,7 +34,8 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{tenantId}/user/{userId}",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
                     Options = options,
                 },
                 cancellationToken
@@ -85,7 +86,7 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{tenantId}/user/",
+                    Path = $"/{JsonUtils.SerializeAsString(tenantId)}/user/",
                     Body = request,
                     Options = options,
                 },
@@ -142,7 +143,8 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"/{tenantId}/user/{userId}",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
                     Body = request.Body,
                     Options = options,
                 },
@@ -193,7 +195,8 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{tenantId}/user/{userId}/search",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}/search",
                     Query = _query,
                     Options = options,
                 },

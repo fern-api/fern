@@ -63,10 +63,12 @@ export class RawClient {
             {
                 name: "Path",
                 assignment: csharp.codeblock(
-                    `${this.getPathString({
-                        endpoint,
-                        pathParameterReferences: pathParameterReferences ?? {}
-                    })}`
+                    (writer) =>
+                        `${this.writePathString({
+                            writer,
+                            endpoint,
+                            pathParameterReferences: pathParameterReferences ?? {}
+                        })}`
                 )
             }
         ];
@@ -157,28 +159,31 @@ export class RawClient {
         });
     }
 
-    private getPathString({
+    private writePathString({
+        writer,
         endpoint,
         pathParameterReferences
     }: {
+        writer: csharp.Writer;
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
-    }): string {
-        let path = endpoint.fullPath.head;
-        let pathParametersPresent = false;
+    }): void {
+        const hasPathParameters = endpoint.fullPath.parts.some((part) => part.pathParameter != null);
+
+        writer.write(hasPathParameters ? `$"${endpoint.fullPath.head}` : `"${endpoint.fullPath.head}`);
         for (const part of endpoint.fullPath.parts) {
-            pathParametersPresent = true;
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw new Error(
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `{${reference}}${part.tail}`;
+            writer.write("{");
+            writer.writeNode(this.context.getJsonUtilsClassReference());
+            writer.write(`.SerializeAsString(${reference})`);
+            writer.write("}");
+            writer.write(part.tail);
         }
-        if (pathParametersPresent) {
-            return `$"${path}"`;
-        }
-        return `"${path}"`;
+        writer.write('"');
     }
 }

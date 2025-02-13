@@ -32,7 +32,7 @@ public partial class UnionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{id}",
+                    Path = $"/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken

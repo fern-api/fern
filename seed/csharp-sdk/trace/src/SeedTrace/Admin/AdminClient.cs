@@ -35,7 +35,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-test-submission-status/{submissionId}",
+                    Path =
+                        $"/admin/store-test-submission-status/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
@@ -79,7 +80,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-test-submission-status-v2/{submissionId}",
+                    Path =
+                        $"/admin/store-test-submission-status-v2/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
@@ -119,7 +121,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-workspace-submission-status/{submissionId}",
+                    Path =
+                        $"/admin/store-workspace-submission-status/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
@@ -163,7 +166,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
+                    Path =
+                        $"/admin/store-workspace-submission-status-v2/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
@@ -277,7 +281,7 @@ public partial class AdminClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path =
-                        $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                        $"/admin/store-test-trace/submission/{JsonUtils.SerializeAsString(submissionId)}/testCase/{JsonUtils.SerializeAsString(testCaseId)}",
                     Body = request,
                     Options = options,
                 },
@@ -380,7 +384,7 @@ public partial class AdminClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path =
-                        $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                        $"/admin/store-test-trace-v2/submission/{JsonUtils.SerializeAsString(submissionId)}/testCase/{JsonUtils.SerializeAsString(testCaseId)}",
                     Body = request,
                     Options = options,
                 },
@@ -497,7 +501,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-workspace-trace/submission/{submissionId}",
+                    Path =
+                        $"/admin/store-workspace-trace/submission/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
@@ -597,7 +602,8 @@ public partial class AdminClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
+                    Path =
+                        $"/admin/store-workspace-trace-v2/submission/{JsonUtils.SerializeAsString(submissionId)}",
                     Body = request,
                     Options = options,
                 },
