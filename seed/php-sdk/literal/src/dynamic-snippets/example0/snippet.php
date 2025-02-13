@@ -12,6 +12,8 @@ $client = new SeedClient(
 );
 $client->headers->send(
     new SendLiteralsInHeadersRequest([
+        'endpointVersion' => '02-12-2024',
+        'async' => true,
         'query' => 'What is the weather today',
     ]),
 );
