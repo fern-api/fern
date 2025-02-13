@@ -21,8 +21,8 @@ class FilteredType extends JsonSerializableType
 
     /**
      * @param array{
-     *   publicProperty?: ?string,
      *   privateProperty: int,
+     *   publicProperty?: ?string,
      * } $values
      */
     public function __construct(

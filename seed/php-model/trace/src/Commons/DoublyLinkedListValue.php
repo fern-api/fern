@@ -22,8 +22,8 @@ class DoublyLinkedListValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   head?: ?string,
      *   nodes: array<string, DoublyLinkedListNodeValue>,
+     *   head?: ?string,
      * } $values
      */
     public function __construct(

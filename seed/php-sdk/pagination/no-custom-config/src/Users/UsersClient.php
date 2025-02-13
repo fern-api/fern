@@ -42,6 +42,7 @@ class UsersClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -58,6 +59,7 @@ class UsersClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -74,6 +76,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -84,7 +87,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsersCursorPaginationRequest $request) => $this->__listWithCursorPagination($request, $options),
+            getNextPage: fn (ListUsersCursorPaginationRequest $request) => $this->_listWithCursorPagination($request, $options),
             setCursor: function (ListUsersCursorPaginationRequest $request, string $cursor) {
                 $request->startingAfter = $cursor;
             },
@@ -100,6 +103,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -110,7 +114,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->__listWithMixedTypeCursorPagination($request, $options),
+            getNextPage: fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->_listWithMixedTypeCursorPagination($request, $options),
             setCursor: function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
                 $request->cursor = $cursor;
             },
@@ -126,6 +130,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -136,7 +141,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsersBodyCursorPaginationRequest $request) => $this->__listWithBodyCursorPagination($request, $options),
+            getNextPage: fn (ListUsersBodyCursorPaginationRequest $request) => $this->_listWithBodyCursorPagination($request, $options),
             setCursor: function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
@@ -152,6 +157,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -162,7 +168,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListUsersOffsetPaginationRequest $request) => $this->__listWithOffsetPagination($request, $options),
+            getNextPage: fn (ListUsersOffsetPaginationRequest $request) => $this->_listWithOffsetPagination($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->page ?? 0,
             setOffset: function (ListUsersOffsetPaginationRequest $request, int $offset) {
@@ -181,6 +187,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -191,7 +198,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->__listWithDoubleOffsetPagination($request, $options),
+            getNextPage: fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->_listWithDoubleOffsetPagination($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->page ?? 0,
             setOffset: function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
@@ -210,6 +217,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -220,7 +228,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListUsersBodyOffsetPaginationRequest $request) => $this->__listWithBodyOffsetPagination($request, $options),
+            getNextPage: fn (ListUsersBodyOffsetPaginationRequest $request) => $this->_listWithBodyOffsetPagination($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->pagination?->page ?? 0,
             setOffset: function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
@@ -239,6 +247,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -249,7 +258,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListUsersOffsetStepPaginationRequest $request) => $this->__listWithOffsetStepPagination($request, $options),
+            getNextPage: fn (ListUsersOffsetStepPaginationRequest $request) => $this->_listWithOffsetStepPagination($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->page ?? 0,
             setOffset: function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
@@ -269,6 +278,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -279,7 +289,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->__listWithOffsetPaginationHasNextPage($request, $options),
+            getNextPage: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->_listWithOffsetPaginationHasNextPage($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->page ?? 0,
             setOffset: function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
@@ -299,6 +309,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -309,7 +320,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsersExtendedRequest $request) => $this->__listWithExtendedResults($request, $options),
+            getNextPage: fn (ListUsersExtendedRequest $request) => $this->_listWithExtendedResults($request, $options),
             setCursor: function (ListUsersExtendedRequest $request, ?string $cursor) {
                 $request->cursor = $cursor;
             },
@@ -325,6 +336,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -335,7 +347,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsersExtendedRequestForOptionalData $request) => $this->__listWithExtendedResultsAndOptionalData($request, $options),
+            getNextPage: fn (ListUsersExtendedRequestForOptionalData $request) => $this->_listWithExtendedResultsAndOptionalData($request, $options),
             setCursor: function (ListUsersExtendedRequestForOptionalData $request, ?string $cursor) {
                 $request->cursor = $cursor;
             },
@@ -351,6 +363,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -361,7 +374,7 @@ class UsersClient
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (ListUsernamesRequest $request) => $this->__listUsernames($request, $options),
+            getNextPage: fn (ListUsernamesRequest $request) => $this->_listUsernames($request, $options),
             setCursor: function (ListUsernamesRequest $request, ?string $cursor) {
                 $request->startingAfter = $cursor;
             },
@@ -377,6 +390,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -387,7 +401,7 @@ class UsersClient
     {
         return new OffsetPager(
             request: $request,
-            getNextPage: fn (ListWithGlobalConfigRequest $request) => $this->__listWithGlobalConfig($request, $options),
+            getNextPage: fn (ListWithGlobalConfigRequest $request) => $this->_listWithGlobalConfig($request, $options),
             /* @phpstan-ignore-next-line */
             getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->offset ?? 0,
             setOffset: function (ListWithGlobalConfigRequest $request, int $offset) {
@@ -406,6 +420,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -414,7 +429,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -472,6 +487,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -480,7 +496,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
+    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -529,6 +545,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -537,7 +554,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -582,6 +599,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -590,7 +608,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -648,6 +666,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -656,7 +675,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -714,6 +733,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -722,7 +742,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -767,6 +787,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -775,7 +796,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -830,6 +851,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -838,7 +860,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -893,6 +915,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -901,7 +924,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
+    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -950,6 +973,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -958,7 +982,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
+    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1007,6 +1031,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -1015,7 +1040,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
+    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1064,6 +1089,7 @@ class UsersClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
@@ -1072,7 +1098,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function __listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
+    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -71,15 +71,15 @@ class Movie extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   prequel?: ?string,
      *   title: string,
      *   from: string,
      *   rating: float,
      *   type: string,
      *   tag: string,
-     *   book?: ?string,
      *   metadata: array<string, mixed>,
      *   revenue: int,
+     *   prequel?: ?string,
+     *   book?: ?string,
      * } $values
      */
     public function __construct(

@@ -56,8 +56,8 @@ class SendRequest extends JsonSerializableType
      *   stream: bool,
      *   ending: string,
      *   context: string,
-     *   maybeContext?: ?string,
      *   containerObject: ContainerObject,
+     *   maybeContext?: ?string,
      * } $values
      */
     public function __construct(

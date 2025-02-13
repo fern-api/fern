@@ -8,7 +8,10 @@ use Seed\Core\Json\JsonProperty;
 class Identifier extends JsonSerializableType
 {
     /**
-     * @var value-of<BasicType>|value-of<ComplexType> $type
+     * @var (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ) $type
      */
     #[JsonProperty('type')]
     public string $type;
@@ -27,7 +30,10 @@ class Identifier extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: value-of<BasicType>|value-of<ComplexType>,
+     *   type: (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ),
      *   value: string,
      *   label: string,
      * } $values

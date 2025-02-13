@@ -109,6 +109,8 @@ allowedFailures:
   - auth-environment-variables
   # Basic auth is not supported yet.
   - basic-auth
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
   # Enums don't support the fromJson method yet.
   - exhaustive
   - trace
@@ -128,5 +130,3 @@ allowedFailures:
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default
-  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
-  - examples

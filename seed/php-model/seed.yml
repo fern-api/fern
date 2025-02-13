@@ -30,4 +30,11 @@ scripts:
       - composer build
       - composer analyze
       - composer test
-allowedFailures: []
+
+allowedFailures:
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
+  # Enums don't support the fromJson method yet.
+  - trace
+  - circular-references
+  - circular-references-advanced

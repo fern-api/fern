@@ -54,9 +54,9 @@ class TraceResponseV2 extends JsonSerializableType
      *   submissionId: string,
      *   lineNumber: int,
      *   file: TracedFile,
+     *   stack: StackInformation,
      *   returnValue?: mixed,
      *   expressionLocation?: ?ExpressionLocation,
-     *   stack: StackInformation,
      *   stdout?: ?string,
      * } $values
      */

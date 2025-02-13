@@ -10,7 +10,11 @@ use Seed\Commons\Types\Metadata;
 class BigEntity extends JsonSerializableType
 {
     /**
-     * @var Actor|Actress|StuntDouble|null $castMember
+     * @var (
+     *    Actor
+     *   |Actress
+     *   |StuntDouble
+     * )|null $castMember
      */
     #[JsonProperty('castMember'), Union(Actor::class, Actress::class, StuntDouble::class, 'null')]
     public Actor|Actress|StuntDouble|null $castMember;
@@ -89,7 +93,11 @@ class BigEntity extends JsonSerializableType
 
     /**
      * @param array{
-     *   castMember?: Actor|Actress|StuntDouble|null,
+     *   castMember?: (
+     *    Actor
+     *   |Actress
+     *   |StuntDouble
+     * )|null,
      *   extendedMovie?: ?ExtendedMovie,
      *   entity?: ?Entity,
      *   metadata?: mixed,
