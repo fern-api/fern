@@ -179,11 +179,9 @@ export class RawClient {
             }
             writer.write("{");
             writer.writeNode(this.context.getJsonUtilsClassReference());
-            writer.write(".SerializeAsString(");
-            writer.write(`${reference}`);
-            writer.write(")");
-            writer.write(`${part.tail}`);
+            writer.write(`.SerializeAsString(${reference})`);
             writer.write("}");
+            writer.write(part.tail);
         }
         writer.write("\"");
     }

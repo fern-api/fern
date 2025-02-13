@@ -188,7 +188,7 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/problem-crud/update/{problemId}",
+                    Path = $"/problem-crud/update/{JsonUtils.SerializeAsString(problemId)}",
                     Body = request,
                     Options = options,
                 },
@@ -235,7 +235,7 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/problem-crud/delete/{problemId}",
+                    Path = $"/problem-crud/delete/{JsonUtils.SerializeAsString(problemId)}",
                     Options = options,
                 },
                 cancellationToken

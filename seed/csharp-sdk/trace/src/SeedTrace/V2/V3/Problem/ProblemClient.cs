@@ -126,7 +126,7 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/problems-v2/problem-info/{problemId}",
+                    Path = $"/problems-v2/problem-info/{JsonUtils.SerializeAsString(problemId)}",
                     Options = options,
                 },
                 cancellationToken
@@ -173,7 +173,8 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                    Path =
+                        $"/problems-v2/problem-info/{JsonUtils.SerializeAsString(problemId)}/version/{JsonUtils.SerializeAsString(problemVersion)}",
                     Options = options,
                 },
                 cancellationToken

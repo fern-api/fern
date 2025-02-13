@@ -33,7 +33,8 @@ public partial class SyspropClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                    Path =
+                        $"/sysprop/num-warm-instances/{JsonUtils.SerializeAsString(language)}/{JsonUtils.SerializeAsString(numWarmInstances)}",
                     Options = options,
                 },
                 cancellationToken

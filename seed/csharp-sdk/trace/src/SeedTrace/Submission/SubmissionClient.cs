@@ -35,7 +35,7 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/sessions/create-session/{language}",
+                    Path = $"/sessions/create-session/{JsonUtils.SerializeAsString(language)}",
                     Options = options,
                 },
                 cancellationToken
@@ -81,7 +81,7 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/sessions/{sessionId}",
+                    Path = $"/sessions/{JsonUtils.SerializeAsString(sessionId)}",
                     Options = options,
                 },
                 cancellationToken
@@ -127,7 +127,7 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/sessions/stop/{sessionId}",
+                    Path = $"/sessions/stop/{JsonUtils.SerializeAsString(sessionId)}",
                     Options = options,
                 },
                 cancellationToken

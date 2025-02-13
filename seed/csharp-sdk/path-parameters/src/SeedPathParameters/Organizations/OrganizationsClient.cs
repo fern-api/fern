@@ -33,7 +33,8 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{tenantId}/organizations/{organizationId}/",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/",
                     Options = options,
                 },
                 cancellationToken
@@ -84,7 +85,8 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{tenantId}/organizations/{organizationId}/users/{userId}",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/users/{JsonUtils.SerializeAsString(userId)}",
                     Options = options,
                 },
                 cancellationToken
@@ -138,7 +140,8 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{tenantId}/organizations/{organizationId}/search",
+                    Path =
+                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/search",
                     Query = _query,
                     Options = options,
                 },
