@@ -20,7 +20,7 @@ class DebugVariableValue extends JsonSerializableType
      *   |float
      *   |string
      *   |DebugMapValue
-     *   |array<mixed>
+     *   |array<DebugVariableValue>
      *   |BinaryTreeNodeAndTreeValue
      *   |SinglyLinkedListNodeAndListValue
      *   |DoublyLinkedListNodeAndListValue
@@ -40,7 +40,7 @@ class DebugVariableValue extends JsonSerializableType
      *   |float
      *   |string
      *   |DebugMapValue
-     *   |array<mixed>
+     *   |array<DebugVariableValue>
      *   |BinaryTreeNodeAndTreeValue
      *   |SinglyLinkedListNodeAndListValue
      *   |DoublyLinkedListNodeAndListValue
@@ -130,7 +130,7 @@ class DebugVariableValue extends JsonSerializableType
     }
 
     /**
-     * @param array<mixed> $listValue
+     * @param array<DebugVariableValue> $listValue
      * @return DebugVariableValue
      */
     public static function listValue(array $listValue): DebugVariableValue
@@ -364,7 +364,7 @@ class DebugVariableValue extends JsonSerializableType
     }
 
     /**
-     * @return array<mixed>
+     * @return array<DebugVariableValue>
      */
     public function asListValue(): array
     {
