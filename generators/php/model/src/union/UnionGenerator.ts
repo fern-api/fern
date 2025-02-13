@@ -310,7 +310,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             case "string":
                             case "boolean":
                                 constructorArgs.push({
-                                    key: php.codeblock(`'${this.getValueFieldName().originalName}'`),
+                                    key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
                                     value: type.internalType.value
                                 });
                                 break;
@@ -319,14 +319,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         }
                     } else {
                         constructorArgs.push({
-                            key: php.codeblock(`'${this.getValueFieldName().originalName}'`),
+                            key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
                             value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
                         });
                     }
                     break;
                 case "noProperties":
                     constructorArgs.push({
-                        key: php.codeblock(`'${this.getValueFieldName().originalName}'`),
+                        key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
                         value: php.codeblock("null")
                     });
                     break;
