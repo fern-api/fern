@@ -44,7 +44,7 @@ export class DynamicTypeLiteralMapper {
             case "set":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal":
-                return php.TypeLiteral.nop();
+                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value });
             case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {

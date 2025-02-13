@@ -41,7 +41,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             if (includeGetter) {
                 clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
             }
-            if (includeSetter && field.type.internalType.type !== "literal") {
+            if (includeSetter) {
                 clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
             }
             clazz.addField(field);

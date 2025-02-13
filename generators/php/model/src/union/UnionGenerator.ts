@@ -44,7 +44,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             if (includeGetter) {
                 clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
             }
-            if (includeSetter && field.type.internalType.type !== "literal") {
+            if (includeSetter) {
                 clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
             }
             clazz.addField(field);
@@ -241,33 +241,23 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const parameters: php.Parameter[] = [];
 
         for (const property of this.unionTypeDeclaration.baseProperties) {
-            const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-
-            if (type.internalType.type === "literal") {
-                continue;
-            }
-
             parameters.push(
                 php.parameter({
                     name: this.context.getPropertyName(property.name.name),
-                    type
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType })
                 })
             );
         }
 
-        const type = this.getReturnType(variant);
-
         switch (variant.shape.propertiesType) {
             case "samePropertiesAsObject":
             case "singleProperty":
-                if (type.internalType.type !== "literal") {
-                    parameters.push(
-                        php.parameter({
-                            name: this.context.getPropertyName(variant.discriminantValue.name),
-                            type: this.getReturnType(variant)
-                        })
-                    );
-                }
+                parameters.push(
+                    php.parameter({
+                        name: this.context.getPropertyName(variant.discriminantValue.name),
+                        type: this.getReturnType(variant)
+                    })
+                );
                 break;
             case "noProperties":
                 break;
@@ -283,12 +273,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             const constructorArgs: php.Map.Entry[] = [];
 
             for (const property of this.unionTypeDeclaration.baseProperties) {
-                const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-
-                if (type.internalType.type === "literal") {
-                    continue;
-                }
-
                 constructorArgs.push({
                     key: php.codeblock(`'${this.context.getPropertyName(property.name.name)}'`),
                     value: php.codeblock(this.context.getVariableName(property.name.name))
@@ -300,29 +284,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 value: php.codeblock(`'${variant.discriminantValue.wireValue}'`)
             });
 
-            const type = this.getReturnType(variant);
-
             switch (variant.shape.propertiesType) {
                 case "samePropertiesAsObject":
                 case "singleProperty":
-                    if (type.internalType.type === "literal") {
-                        switch (type.internalType.value.internalType.type) {
-                            case "string":
-                            case "boolean":
-                                constructorArgs.push({
-                                    key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
-                                    value: type.internalType.value
-                                });
-                                break;
-                            default:
-                                assertNever(type.internalType.value.internalType);
-                        }
-                    } else {
-                        constructorArgs.push({
-                            key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
-                            value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
-                        });
-                    }
+                    constructorArgs.push({
+                        key: php.codeblock(`'${this.context.getPropertyName(this.getValueFieldName())}'`),
+                        value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
+                    });
                     break;
                 case "noProperties":
                     constructorArgs.push({
