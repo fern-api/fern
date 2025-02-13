@@ -90,7 +90,7 @@ class TestCaseImplementationReference extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'templateId')) {
             throw new Exception(
-                "Expected templateId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected templateId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class TestCaseImplementationReference extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseImplementation && $this->type === 'implementation')) {
             throw new Exception(
-                "Expected implementation; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected implementation; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

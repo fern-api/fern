@@ -104,7 +104,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionSignature && $this->type === 'void')) {
             throw new Exception(
-                "Expected void; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected void; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +126,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof NonVoidFunctionSignature && $this->type === 'nonVoid')) {
             throw new Exception(
-                "Expected nonVoid; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected nonVoid; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +148,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionSignatureThatTakesActualResult && $this->type === 'voidThatTakesActualResult')) {
             throw new Exception(
-                "Expected voidThatTakesActualResult; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected voidThatTakesActualResult; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

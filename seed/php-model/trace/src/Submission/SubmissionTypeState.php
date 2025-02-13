@@ -90,7 +90,7 @@ class SubmissionTypeState extends JsonSerializableType
     {
         if (!($this->value instanceof TestSubmissionState && $this->type === 'test')) {
             throw new Exception(
-                "Expected test; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected test; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class SubmissionTypeState extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceSubmissionState && $this->type === 'workspace')) {
             throw new Exception(
-                "Expected workspace; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected workspace; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

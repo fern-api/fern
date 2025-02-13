@@ -423,7 +423,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             writer.writeNode(this.discriminantGetter());
             writer.write(" . ");
             writer.write('"');
-            writer.write("with value of type ");
+            writer.write(" with value of type ");
             writer.write('"');
             writer.write(" . ");
             writer.writeNode(

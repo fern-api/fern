@@ -76,7 +76,7 @@ class CreateProblemError extends JsonSerializableType
     {
         if (!($this->value instanceof GenericCreateProblemError && $this->errorType === 'generic')) {
             throw new Exception(
-                "Expected generic; got " . $this->errorType . "with value of type " . get_debug_type($this->value),
+                "Expected generic; got " . $this->errorType . " with value of type " . get_debug_type($this->value),
             );
         }
 

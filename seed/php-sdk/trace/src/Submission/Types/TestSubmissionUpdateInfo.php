@@ -142,7 +142,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
-                "Expected running; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -172,7 +172,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
-                "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -194,7 +194,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof GradedTestCaseUpdate && $this->type === 'gradedTestCase')) {
             throw new Exception(
-                "Expected gradedTestCase; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gradedTestCase; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -216,7 +216,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     {
         if (!($this->value instanceof RecordedTestCaseUpdate && $this->type === 'recordedTestCase')) {
             throw new Exception(
-                "Expected recordedTestCase; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected recordedTestCase; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

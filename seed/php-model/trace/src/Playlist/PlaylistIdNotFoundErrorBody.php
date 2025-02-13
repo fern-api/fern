@@ -76,7 +76,7 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'playlistId')) {
             throw new Exception(
-                "Expected playlistId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected playlistId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
