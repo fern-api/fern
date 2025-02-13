@@ -63,11 +63,12 @@ export class RawClient {
             {
                 name: "Path",
                 assignment: csharp.codeblock(
-                    (writer) => `${this.writePathString({
-                        writer,
-                        endpoint,
-                        pathParameterReferences: pathParameterReferences ?? {}
-                    })}`
+                    (writer) =>
+                        `${this.writePathString({
+                            writer,
+                            endpoint,
+                            pathParameterReferences: pathParameterReferences ?? {}
+                        })}`
                 )
             }
         ];
@@ -183,6 +184,6 @@ export class RawClient {
             writer.write("}");
             writer.write(part.tail);
         }
-        writer.write("\"");
+        writer.write('"');
     }
 }
