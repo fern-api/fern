@@ -2409,6 +2409,115 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "method": "PATCH",
+          "id": "update-many",
+          "originalEndpointId": "endpoint_bigunion.update-many",
+          "name": "Update Many",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/many"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_bigunion:BigUnion"
+                  }
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/many",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": [
+                {
+                  "type": "normalSweet",
+                  "value": "value",
+                  "id": "id",
+                  "created-at": "2024-01-15T09:30:00Z"
+                },
+                {
+                  "type": "normalSweet",
+                  "value": "value",
+                  "id": "id",
+                  "created-at": "2024-01-15T09:30:00Z"
+                }
+              ],
+              "requestBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "type": "normalSweet",
+                    "value": "value",
+                    "id": "id",
+                    "created-at": "2024-01-15T09:30:00Z"
+                  },
+                  {
+                    "type": "normalSweet",
+                    "value": "value",
+                    "id": "id",
+                    "created-at": "2024-01-15T09:30:00Z"
+                  }
+                ]
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "string": true
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "string": true
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
