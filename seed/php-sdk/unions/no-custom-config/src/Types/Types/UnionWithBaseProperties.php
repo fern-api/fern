@@ -52,7 +52,7 @@ class UnionWithBaseProperties extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -99,20 +99,6 @@ class UnionWithBaseProperties extends JsonSerializableType
             'id' => $id,
             'type' => 'foo',
             'value' => $foo,
-        ]);
-    }
-
-    /**
-     * @param string $id
-     * @param mixed $_unknown
-     * @return UnionWithBaseProperties
-     */
-    public static function _unknown(string $id, mixed $_unknown): UnionWithBaseProperties
-    {
-        return new UnionWithBaseProperties([
-            'id' => $id,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -272,30 +258,28 @@ class UnionWithBaseProperties extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integer':
-                $args['type'] = 'integer';
                 if (!array_key_exists('integer', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'integer'",
                     );
                 }
 
-                $args['integer'] = $data['integer'];
+                $args['value'] = $data['integer'];
                 break;
             case 'string':
-                $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'string'",
                     );
                 }
 
-                $args['string'] = $data['string'];
+                $args['value'] = $data['string'];
                 break;
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

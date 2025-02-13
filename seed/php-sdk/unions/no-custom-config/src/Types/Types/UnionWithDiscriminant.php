@@ -40,7 +40,7 @@ class UnionWithDiscriminant extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -68,18 +68,6 @@ class UnionWithDiscriminant extends JsonSerializableType
         return new UnionWithDiscriminant([
             'type' => 'bar',
             'value' => $bar,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithDiscriminant
-     */
-    public static function _unknown(mixed $_unknown): UnionWithDiscriminant
-    {
-        return new UnionWithDiscriminant([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -201,9 +189,9 @@ class UnionWithDiscriminant extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
                 if (!array_key_exists('foo', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'foo'",
@@ -215,10 +203,9 @@ class UnionWithDiscriminant extends JsonSerializableType
                         "Expected property 'foo' in JSON data to be array, instead received " . get_debug_type($data['foo']),
                     );
                 }
-                $args['foo'] = Foo::jsonDeserialize($data['foo']);
+                $args['value'] = Foo::jsonDeserialize($data['foo']);
                 break;
             case 'bar':
-                $args['type'] = 'bar';
                 if (!array_key_exists('bar', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'bar'",
@@ -230,7 +217,7 @@ class UnionWithDiscriminant extends JsonSerializableType
                         "Expected property 'bar' in JSON data to be array, instead received " . get_debug_type($data['bar']),
                     );
                 }
-                $args['bar'] = Bar::jsonDeserialize($data['bar']);
+                $args['value'] = Bar::jsonDeserialize($data['bar']);
                 break;
             case '_unknown':
             default:

@@ -257,13 +257,12 @@ class TestSubmissionStatus extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'stopped':
-                $args['type'] = 'stopped';
                 $args['value'] = null;
                 break;
             case 'errored':
-                $args['type'] = 'errored';
                 if (!array_key_exists('errored', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'errored'",
@@ -275,27 +274,25 @@ class TestSubmissionStatus extends JsonSerializableType
                         "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
                     );
                 }
-                $args['errored'] = ErrorInfo::jsonDeserialize($data['errored']);
+                $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
-                $args['type'] = 'running';
                 if (!array_key_exists('running', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
 
-                $args['running'] = $data['running'];
+                $args['value'] = $data['running'];
                 break;
             case 'testCaseIdToState':
-                $args['type'] = 'testCaseIdToState';
                 if (!array_key_exists('testCaseIdToState', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'testCaseIdToState'",
                     );
                 }
 
-                $args['testCaseIdToState'] = $data['testCaseIdToState'];
+                $args['value'] = $data['testCaseIdToState'];
                 break;
             case '_unknown':
             default:

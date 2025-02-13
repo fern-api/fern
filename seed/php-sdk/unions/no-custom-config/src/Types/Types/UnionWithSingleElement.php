@@ -36,7 +36,7 @@ class UnionWithSingleElement extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -52,18 +52,6 @@ class UnionWithSingleElement extends JsonSerializableType
         return new UnionWithSingleElement([
             'type' => 'foo',
             'value' => $foo,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithSingleElement
-     */
-    public static function _unknown(mixed $_unknown): UnionWithSingleElement
-    {
-        return new UnionWithSingleElement([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -159,10 +147,10 @@ class UnionWithSingleElement extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -40,7 +40,7 @@ class UnionWithPrimitive extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -92,18 +92,6 @@ class UnionWithPrimitive extends JsonSerializableType
         return new UnionWithPrimitive([
             'type' => 'string',
             'value' => $string,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithPrimitive
-     */
-    public static function _unknown(mixed $_unknown): UnionWithPrimitive
-    {
-        return new UnionWithPrimitive([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -225,26 +213,25 @@ class UnionWithPrimitive extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integer':
-                $args['type'] = 'integer';
                 if (!array_key_exists('integer', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'integer'",
                     );
                 }
 
-                $args['integer'] = $data['integer'];
+                $args['value'] = $data['integer'];
                 break;
             case 'string':
-                $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'string'",
                     );
                 }
 
-                $args['string'] = $data['string'];
+                $args['value'] = $data['string'];
                 break;
             case '_unknown':
             default:

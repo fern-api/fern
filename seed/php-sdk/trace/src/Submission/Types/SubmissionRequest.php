@@ -297,26 +297,22 @@ class SubmissionRequest extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'initializeProblemRequest':
-                $args['type'] = 'initializeProblemRequest';
-                $args['initializeProblemRequest'] = InitializeProblemRequest::jsonDeserialize($data);
+                $args['value'] = InitializeProblemRequest::jsonDeserialize($data);
                 break;
             case 'initializeWorkspaceRequest':
-                $args['type'] = 'initializeWorkspaceRequest';
                 $args['value'] = null;
                 break;
             case 'submitV2':
-                $args['type'] = 'submitV2';
-                $args['submitV2'] = SubmitRequestV2::jsonDeserialize($data);
+                $args['value'] = SubmitRequestV2::jsonDeserialize($data);
                 break;
             case 'workspaceSubmit':
-                $args['type'] = 'workspaceSubmit';
-                $args['workspaceSubmit'] = WorkspaceSubmitRequest::jsonDeserialize($data);
+                $args['value'] = WorkspaceSubmitRequest::jsonDeserialize($data);
                 break;
             case 'stop':
-                $args['type'] = 'stop';
-                $args['stop'] = StopRequest::jsonDeserialize($data);
+                $args['value'] = StopRequest::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

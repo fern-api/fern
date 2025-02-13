@@ -147,6 +147,10 @@ export abstract class AbstractPhpGeneratorContext<
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
+    public getFieldName(name: Name): string {
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
     public getPropertyName(name: Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }

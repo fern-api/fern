@@ -233,18 +233,16 @@ class ErrorInfo extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'compileError':
-                $args['type'] = 'compileError';
-                $args['compileError'] = CompileError::jsonDeserialize($data);
+                $args['value'] = CompileError::jsonDeserialize($data);
                 break;
             case 'runtimeError':
-                $args['type'] = 'runtimeError';
-                $args['runtimeError'] = RuntimeError::jsonDeserialize($data);
+                $args['value'] = RuntimeError::jsonDeserialize($data);
                 break;
             case 'internalError':
-                $args['type'] = 'internalError';
-                $args['internalError'] = InternalError::jsonDeserialize($data);
+                $args['value'] = InternalError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

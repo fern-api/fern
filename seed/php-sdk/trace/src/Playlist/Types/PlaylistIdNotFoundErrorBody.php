@@ -153,16 +153,16 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'playlistId':
-                $args['type'] = 'playlistId';
                 if (!array_key_exists('playlistId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'playlistId'",
                     );
                 }
 
-                $args['playlistId'] = $data['playlistId'];
+                $args['value'] = $data['playlistId'];
                 break;
             case '_unknown':
             default:

@@ -191,26 +191,25 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'html':
-                $args['type'] = 'html';
                 if (!array_key_exists('html', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
 
-                $args['html'] = $data['html'];
+                $args['value'] = $data['html'];
                 break;
             case 'paramId':
-                $args['type'] = 'paramId';
                 if (!array_key_exists('paramId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'paramId'",
                     );
                 }
 
-                $args['paramId'] = $data['paramId'];
+                $args['value'] = $data['paramId'];
                 break;
             case '_unknown':
             default:

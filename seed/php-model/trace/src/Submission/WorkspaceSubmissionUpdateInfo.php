@@ -341,35 +341,30 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'running':
-                $args['type'] = 'running';
                 if (!array_key_exists('running', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
 
-                $args['running'] = $data['running'];
+                $args['value'] = $data['running'];
                 break;
             case 'ran':
-                $args['type'] = 'ran';
-                $args['ran'] = WorkspaceRunDetails::jsonDeserialize($data);
+                $args['value'] = WorkspaceRunDetails::jsonDeserialize($data);
                 break;
             case 'stopped':
-                $args['type'] = 'stopped';
                 $args['value'] = null;
                 break;
             case 'traced':
-                $args['type'] = 'traced';
                 $args['value'] = null;
                 break;
             case 'tracedV2':
-                $args['type'] = 'tracedV2';
-                $args['tracedV2'] = WorkspaceTracedUpdate::jsonDeserialize($data);
+                $args['value'] = WorkspaceTracedUpdate::jsonDeserialize($data);
                 break;
             case 'errored':
-                $args['type'] = 'errored';
                 if (!array_key_exists('errored', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'errored'",
@@ -381,10 +376,9 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
                         "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
                     );
                 }
-                $args['errored'] = ErrorInfo::jsonDeserialize($data['errored']);
+                $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'finished':
-                $args['type'] = 'finished';
                 $args['value'] = null;
                 break;
             case '_unknown':

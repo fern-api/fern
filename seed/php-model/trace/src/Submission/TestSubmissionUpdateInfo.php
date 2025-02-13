@@ -319,23 +319,21 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'running':
-                $args['type'] = 'running';
                 if (!array_key_exists('running', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
 
-                $args['running'] = $data['running'];
+                $args['value'] = $data['running'];
                 break;
             case 'stopped':
-                $args['type'] = 'stopped';
                 $args['value'] = null;
                 break;
             case 'errored':
-                $args['type'] = 'errored';
                 if (!array_key_exists('errored', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'errored'",
@@ -347,18 +345,15 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
                         "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
                     );
                 }
-                $args['errored'] = ErrorInfo::jsonDeserialize($data['errored']);
+                $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'gradedTestCase':
-                $args['type'] = 'gradedTestCase';
-                $args['gradedTestCase'] = GradedTestCaseUpdate::jsonDeserialize($data);
+                $args['value'] = GradedTestCaseUpdate::jsonDeserialize($data);
                 break;
             case 'recordedTestCase':
-                $args['type'] = 'recordedTestCase';
-                $args['recordedTestCase'] = RecordedTestCaseUpdate::jsonDeserialize($data);
+                $args['value'] = RecordedTestCaseUpdate::jsonDeserialize($data);
                 break;
             case 'finished':
-                $args['type'] = 'finished';
                 $args['value'] = null;
                 break;
             case '_unknown':

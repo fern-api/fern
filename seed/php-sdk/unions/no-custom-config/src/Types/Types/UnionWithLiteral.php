@@ -44,7 +44,7 @@ class UnionWithLiteral extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->base = $values['base'];
@@ -63,20 +63,6 @@ class UnionWithLiteral extends JsonSerializableType
             'base' => $base,
             'type' => 'fern',
             'value' => $fern,
-        ]);
-    }
-
-    /**
-     * @param 'base' $base
-     * @param mixed $_unknown
-     * @return UnionWithLiteral
-     */
-    public static function _unknown(string $base, mixed $_unknown): UnionWithLiteral
-    {
-        return new UnionWithLiteral([
-            'base' => $base,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -184,16 +170,16 @@ class UnionWithLiteral extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'fern':
-                $args['type'] = 'fern';
                 if (!array_key_exists('fern', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'fern'",
                     );
                 }
 
-                $args['fern'] = $data['fern'];
+                $args['value'] = $data['fern'];
                 break;
             case '_unknown':
             default:

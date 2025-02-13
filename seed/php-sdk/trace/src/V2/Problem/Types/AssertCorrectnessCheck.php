@@ -193,14 +193,13 @@ class AssertCorrectnessCheck extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'deepEquality':
-                $args['type'] = 'deepEquality';
-                $args['deepEquality'] = DeepEqualityCorrectnessCheck::jsonDeserialize($data);
+                $args['value'] = DeepEqualityCorrectnessCheck::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
-                $args['custom'] = VoidFunctionDefinitionThatTakesActualResult::jsonDeserialize($data);
+                $args['value'] = VoidFunctionDefinitionThatTakesActualResult::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -233,18 +233,16 @@ class FunctionSignature extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'void':
-                $args['type'] = 'void';
-                $args['void'] = VoidFunctionSignature::jsonDeserialize($data);
+                $args['value'] = VoidFunctionSignature::jsonDeserialize($data);
                 break;
             case 'nonVoid':
-                $args['type'] = 'nonVoid';
-                $args['nonVoid'] = NonVoidFunctionSignature::jsonDeserialize($data);
+                $args['value'] = NonVoidFunctionSignature::jsonDeserialize($data);
                 break;
             case 'voidThatTakesActualResult':
-                $args['type'] = 'voidThatTakesActualResult';
-                $args['voidThatTakesActualResult'] = VoidFunctionSignatureThatTakesActualResult::jsonDeserialize($data);
+                $args['value'] = VoidFunctionSignatureThatTakesActualResult::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

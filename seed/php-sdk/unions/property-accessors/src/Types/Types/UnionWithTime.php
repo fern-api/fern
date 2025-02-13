@@ -44,7 +44,7 @@ class UnionWithTime extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -109,18 +109,6 @@ class UnionWithTime extends JsonSerializableType
         return new UnionWithTime([
             'type' => 'datetime',
             'value' => $datetime,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithTime
-     */
-    public static function _unknown(mixed $_unknown): UnionWithTime
-    {
-        return new UnionWithTime([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -268,9 +256,9 @@ class UnionWithTime extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'value':
-                $args['type'] = 'value';
                 if (!array_key_exists('value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'value'",
@@ -280,24 +268,22 @@ class UnionWithTime extends JsonSerializableType
                 $args['value'] = $data['value'];
                 break;
             case 'date':
-                $args['type'] = 'date';
                 if (!array_key_exists('date', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'date'",
                     );
                 }
 
-                $args['date'] = $data['date'];
+                $args['value'] = $data['date'];
                 break;
             case 'datetime':
-                $args['type'] = 'datetime';
                 if (!array_key_exists('datetime', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'datetime'",
                     );
                 }
 
-                $args['datetime'] = $data['datetime'];
+                $args['value'] = $data['datetime'];
                 break;
             case '_unknown':
             default:

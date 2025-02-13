@@ -597,94 +597,82 @@ class DebugVariableValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integerValue':
-                $args['type'] = 'integerValue';
                 if (!array_key_exists('integerValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'integerValue'",
                     );
                 }
 
-                $args['integerValue'] = $data['integerValue'];
+                $args['value'] = $data['integerValue'];
                 break;
             case 'booleanValue':
-                $args['type'] = 'booleanValue';
                 if (!array_key_exists('booleanValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'booleanValue'",
                     );
                 }
 
-                $args['booleanValue'] = $data['booleanValue'];
+                $args['value'] = $data['booleanValue'];
                 break;
             case 'doubleValue':
-                $args['type'] = 'doubleValue';
                 if (!array_key_exists('doubleValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'doubleValue'",
                     );
                 }
 
-                $args['doubleValue'] = $data['doubleValue'];
+                $args['value'] = $data['doubleValue'];
                 break;
             case 'stringValue':
-                $args['type'] = 'stringValue';
                 if (!array_key_exists('stringValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'stringValue'",
                     );
                 }
 
-                $args['stringValue'] = $data['stringValue'];
+                $args['value'] = $data['stringValue'];
                 break;
             case 'charValue':
-                $args['type'] = 'charValue';
                 if (!array_key_exists('charValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'charValue'",
                     );
                 }
 
-                $args['charValue'] = $data['charValue'];
+                $args['value'] = $data['charValue'];
                 break;
             case 'mapValue':
-                $args['type'] = 'mapValue';
-                $args['mapValue'] = DebugMapValue::jsonDeserialize($data);
+                $args['value'] = DebugMapValue::jsonDeserialize($data);
                 break;
             case 'listValue':
-                $args['type'] = 'listValue';
                 if (!array_key_exists('listValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'listValue'",
                     );
                 }
 
-                $args['listValue'] = $data['listValue'];
+                $args['value'] = $data['listValue'];
                 break;
             case 'binaryTreeNodeValue':
-                $args['type'] = 'binaryTreeNodeValue';
-                $args['binaryTreeNodeValue'] = BinaryTreeNodeAndTreeValue::jsonDeserialize($data);
+                $args['value'] = BinaryTreeNodeAndTreeValue::jsonDeserialize($data);
                 break;
             case 'singlyLinkedListNodeValue':
-                $args['type'] = 'singlyLinkedListNodeValue';
-                $args['singlyLinkedListNodeValue'] = SinglyLinkedListNodeAndListValue::jsonDeserialize($data);
+                $args['value'] = SinglyLinkedListNodeAndListValue::jsonDeserialize($data);
                 break;
             case 'doublyLinkedListNodeValue':
-                $args['type'] = 'doublyLinkedListNodeValue';
-                $args['doublyLinkedListNodeValue'] = DoublyLinkedListNodeAndListValue::jsonDeserialize($data);
+                $args['value'] = DoublyLinkedListNodeAndListValue::jsonDeserialize($data);
                 break;
             case 'undefinedValue':
-                $args['type'] = 'undefinedValue';
                 $args['value'] = null;
                 break;
             case 'nullValue':
-                $args['type'] = 'nullValue';
                 $args['value'] = null;
                 break;
             case 'genericValue':
-                $args['type'] = 'genericValue';
-                $args['genericValue'] = GenericValue::jsonDeserialize($data);
+                $args['value'] = GenericValue::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:
