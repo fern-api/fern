@@ -16,6 +16,7 @@ class CreateProblemResponse extends JsonSerializableType
     /**
      * @var (
      *    string
+     *   |CreateProblemError
      *   |mixed
      * ) $value
      */
@@ -26,6 +27,7 @@ class CreateProblemResponse extends JsonSerializableType
      *   type: string,
      *   value: (
      *    string
+     *   |CreateProblemError
      *   |mixed
      * ),
      * } $values
@@ -50,10 +52,10 @@ class CreateProblemResponse extends JsonSerializableType
     }
 
     /**
-     * @param mixed $error
+     * @param CreateProblemError $error
      * @return CreateProblemResponse
      */
-    public static function error(mixed $error): CreateProblemResponse
+    public static function error(CreateProblemError $error): CreateProblemResponse
     {
         return new CreateProblemResponse([
             'type' => 'error',
@@ -100,15 +102,15 @@ class CreateProblemResponse extends JsonSerializableType
      */
     public function isError(): bool
     {
-        return is_null($this->value) && $this->type === 'error';
+        return $this->value instanceof CreateProblemError && $this->type === 'error';
     }
 
     /**
-     * @return mixed
+     * @return CreateProblemError
      */
-    public function asError(): mixed
+    public function asError(): CreateProblemError
     {
-        if (!(is_null($this->value) && $this->type === 'error')) {
+        if (!($this->value instanceof CreateProblemError && $this->type === 'error')) {
             throw new Exception(
                 "Expected error; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -142,7 +144,7 @@ class CreateProblemResponse extends JsonSerializableType
                 $result['success'] = $value;
                 break;
             case 'error':
-                $value = $this->value;
+                $value = $this->asError()->jsonSerialize();
                 $result['error'] = $value;
                 break;
             case '_unknown':
@@ -210,7 +212,12 @@ class CreateProblemResponse extends JsonSerializableType
                     );
                 }
 
-                $args['error'] = $data['error'];
+                if (!(is_array($data['error']))) {
+                    throw new Exception(
+                        "Expected property 'error' in JSON data to be array, instead received " . get_debug_type($data['error']),
+                    );
+                }
+                $args['error'] = CreateProblemError::jsonDeserialize($data['error']);
                 break;
             case '_unknown':
             default:
