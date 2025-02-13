@@ -71,6 +71,12 @@ fixtures:
     - outputFolder: property-accessors
       customConfig:
         propertyAccess: private
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
   alias:
     - outputFolder: no-custom-config
       customConfig: null

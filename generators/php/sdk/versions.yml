@@ -1,3 +1,10 @@
+- version: 0.13.5
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Change discriminated union method name from `->getvalue()` to `->getValue()`.
+  irVersion: 55
+
 - version: 0.13.4
   changelogEntry:
     - type: fix

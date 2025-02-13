@@ -117,7 +117,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return {
             originalName: "value",
             camelCase: { safeName: "value", unsafeName: "value" },
-            pascalCase: { safeName: "value", unsafeName: "value" },
+            pascalCase: { safeName: "Value", unsafeName: "Value" },
             snakeCase: { safeName: "value", unsafeName: "value" },
             screamingSnakeCase: { safeName: "VALUE", unsafeName: "VALUE" }
         };
