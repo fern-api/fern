@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithUnknown extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'foo'
+     *   |'unknown'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class UnionWithUnknown extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'foo'
+     *   |'unknown'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Foo
      *   |null
@@ -32,7 +40,7 @@ class UnionWithUnknown extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -59,18 +67,6 @@ class UnionWithUnknown extends JsonSerializableType
         return new UnionWithUnknown([
             'type' => 'unknown',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithUnknown
-     */
-    public static function _unknown(mixed $_unknown): UnionWithUnknown
-    {
-        return new UnionWithUnknown([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

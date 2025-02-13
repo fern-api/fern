@@ -23,7 +23,11 @@ class Metadata extends JsonSerializableType
     public array $tags;
 
     /**
-     * @var string $type
+     * @var (
+     *    'html'
+     *   |'markdown'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -39,14 +43,18 @@ class Metadata extends JsonSerializableType
      * @param array{
      *   extra: array<string, string>,
      *   tags: array<string>,
-     *   type: string,
+     *   type: (
+     *    'html'
+     *   |'markdown'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->extra = $values['extra'];
@@ -84,22 +92,6 @@ class Metadata extends JsonSerializableType
             'tags' => $tags,
             'type' => 'markdown',
             'value' => $markdown,
-        ]);
-    }
-
-    /**
-     * @param array<string, string> $extra
-     * @param array<string> $tags
-     * @param mixed $_unknown
-     * @return Metadata
-     */
-    public static function _unknown(array $extra, array $tags, mixed $_unknown): Metadata
-    {
-        return new Metadata([
-            'extra' => $extra,
-            'tags' => $tags,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class PlaylistIdNotFoundErrorBody extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'playlistId'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +26,17 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'playlistId'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -46,18 +52,6 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
         return new PlaylistIdNotFoundErrorBody([
             'type' => 'playlistId',
             'value' => $playlistId,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return PlaylistIdNotFoundErrorBody
-     */
-    public static function _unknown(mixed $_unknown): PlaylistIdNotFoundErrorBody
-    {
-        return new PlaylistIdNotFoundErrorBody([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

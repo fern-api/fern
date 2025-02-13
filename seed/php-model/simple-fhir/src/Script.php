@@ -11,7 +11,7 @@ class Script extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var string $resourceType
+     * @var 'Script' $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -32,7 +32,7 @@ class Script extends JsonSerializableType
      *   |Script
      * )>,
      *   memo: Memo,
-     *   resourceType: string,
+     *   resourceType: 'Script',
      *   name: string,
      * } $values
      */

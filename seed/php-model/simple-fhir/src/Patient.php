@@ -12,7 +12,7 @@ class Patient extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var string $resourceType
+     * @var 'Patient' $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -39,7 +39,7 @@ class Patient extends JsonSerializableType
      *   |Script
      * )>,
      *   memo: Memo,
-     *   resourceType: string,
+     *   resourceType: 'Patient',
      *   name: string,
      *   scripts: array<Script>,
      * } $values

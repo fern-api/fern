@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class ExceptionV2 extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'generic'
+     *   |'timeout'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class ExceptionV2 extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'generic'
+     *   |'timeout'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    ExceptionInfo
      *   |null
@@ -32,7 +40,7 @@ class ExceptionV2 extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -59,18 +67,6 @@ class ExceptionV2 extends JsonSerializableType
         return new ExceptionV2([
             'type' => 'timeout',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ExceptionV2
-     */
-    public static function _unknown(mixed $_unknown): ExceptionV2
-    {
-        return new ExceptionV2([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

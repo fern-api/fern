@@ -9,7 +9,15 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionResponse extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'serverInitialized'
+     *   |'problemInitialized'
+     *   |'workspaceInitialized'
+     *   |'serverErrored'
+     *   |'codeExecutionUpdate'
+     *   |'terminated'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -27,7 +35,15 @@ class SubmissionResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'serverInitialized'
+     *   |'problemInitialized'
+     *   |'workspaceInitialized'
+     *   |'serverErrored'
+     *   |'codeExecutionUpdate'
+     *   |'terminated'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
      *   |string
@@ -38,7 +54,7 @@ class SubmissionResponse extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -112,18 +128,6 @@ class SubmissionResponse extends JsonSerializableType
         return new SubmissionResponse([
             'type' => 'terminated',
             'value' => $terminated,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return SubmissionResponse
-     */
-    public static function _unknown(mixed $_unknown): SubmissionResponse
-    {
-        return new SubmissionResponse([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

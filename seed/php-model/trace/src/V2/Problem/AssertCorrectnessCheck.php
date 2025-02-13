@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class AssertCorrectnessCheck extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'deepEquality'
+     *   |'custom'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class AssertCorrectnessCheck extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'deepEquality'
+     *   |'custom'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    DeepEqualityCorrectnessCheck
      *   |VoidFunctionDefinitionThatTakesActualResult
@@ -32,7 +40,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class AssertCorrectnessCheck extends JsonSerializableType
         return new AssertCorrectnessCheck([
             'type' => 'custom',
             'value' => $custom,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return AssertCorrectnessCheck
-     */
-    public static function _unknown(mixed $_unknown): AssertCorrectnessCheck
-    {
-        return new AssertCorrectnessCheck([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

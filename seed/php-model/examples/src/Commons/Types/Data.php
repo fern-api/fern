@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Data extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'string'
+     *   |'base64'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class Data extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'string'
+     *   |'base64'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -58,18 +66,6 @@ class Data extends JsonSerializableType
         return new Data([
             'type' => 'base64',
             'value' => $base64,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return Data
-     */
-    public static function _unknown(mixed $_unknown): Data
-    {
-        return new Data([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

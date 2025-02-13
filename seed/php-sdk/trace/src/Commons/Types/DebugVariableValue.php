@@ -9,7 +9,22 @@ use Seed\Core\Json\JsonDecoder;
 class DebugVariableValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeNodeValue'
+     *   |'singlyLinkedListNodeValue'
+     *   |'doublyLinkedListNodeValue'
+     *   |'undefinedValue'
+     *   |'nullValue'
+     *   |'genericValue'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -33,7 +48,22 @@ class DebugVariableValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeNodeValue'
+     *   |'singlyLinkedListNodeValue'
+     *   |'doublyLinkedListNodeValue'
+     *   |'undefinedValue'
+     *   |'nullValue'
+     *   |'genericValue'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |bool
@@ -50,7 +80,7 @@ class DebugVariableValue extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -208,18 +238,6 @@ class DebugVariableValue extends JsonSerializableType
         return new DebugVariableValue([
             'type' => 'genericValue',
             'value' => $genericValue,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return DebugVariableValue
-     */
-    public static function _unknown(mixed $_unknown): DebugVariableValue
-    {
-        return new DebugVariableValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

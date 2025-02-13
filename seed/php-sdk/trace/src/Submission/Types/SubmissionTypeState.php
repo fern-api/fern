@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionTypeState extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'test'
+     *   |'workspace'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class SubmissionTypeState extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'test'
+     *   |'workspace'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestSubmissionState
      *   |WorkspaceSubmissionState
@@ -32,7 +40,7 @@ class SubmissionTypeState extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class SubmissionTypeState extends JsonSerializableType
         return new SubmissionTypeState([
             'type' => 'workspace',
             'value' => $workspace,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return SubmissionTypeState
-     */
-    public static function _unknown(mixed $_unknown): SubmissionTypeState
-    {
-        return new SubmissionTypeState([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

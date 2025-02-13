@@ -9,7 +9,15 @@ use Seed\Core\Json\JsonDecoder;
 class TestSubmissionUpdateInfo extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'running'
+     *   |'stopped'
+     *   |'errored'
+     *   |'gradedTestCase'
+     *   |'recordedTestCase'
+     *   |'finished'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -27,7 +35,15 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'running'
+     *   |'stopped'
+     *   |'errored'
+     *   |'gradedTestCase'
+     *   |'recordedTestCase'
+     *   |'finished'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    value-of<RunningSubmissionState>
      *   |null
@@ -38,7 +54,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -112,18 +128,6 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
         return new TestSubmissionUpdateInfo([
             'type' => 'finished',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return TestSubmissionUpdateInfo
-     */
-    public static function _unknown(mixed $_unknown): TestSubmissionUpdateInfo
-    {
-        return new TestSubmissionUpdateInfo([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

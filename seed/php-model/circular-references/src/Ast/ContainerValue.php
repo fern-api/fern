@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class ContainerValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'list'
+     *   |'optional'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class ContainerValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'list'
+     *   |'optional'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    array<FieldValue>
      *   |FieldValue
@@ -32,7 +40,7 @@ class ContainerValue extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class ContainerValue extends JsonSerializableType
         return new ContainerValue([
             'type' => 'optional',
             'value' => $optional,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ContainerValue
-     */
-    public static function _unknown(mixed $_unknown): ContainerValue
-    {
-        return new ContainerValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

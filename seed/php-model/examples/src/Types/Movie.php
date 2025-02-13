@@ -39,7 +39,7 @@ class Movie extends JsonSerializableType
     public float $rating;
 
     /**
-     * @var string $type
+     * @var 'movie' $type
      */
     #[JsonProperty('type')]
     public string $type;
@@ -74,7 +74,7 @@ class Movie extends JsonSerializableType
      *   title: string,
      *   from: string,
      *   rating: float,
-     *   type: string,
+     *   type: 'movie',
      *   tag: string,
      *   metadata: array<string, mixed>,
      *   revenue: int,

@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class ErrorInfo extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'compileError'
+     *   |'runtimeError'
+     *   |'internalError'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class ErrorInfo extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'compileError'
+     *   |'runtimeError'
+     *   |'internalError'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    CompileError
      *   |RuntimeError
@@ -34,7 +44,7 @@ class ErrorInfo extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -74,18 +84,6 @@ class ErrorInfo extends JsonSerializableType
         return new ErrorInfo([
             'type' => 'internalError',
             'value' => $internalError,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ErrorInfo
-     */
-    public static function _unknown(mixed $_unknown): ErrorInfo
-    {
-        return new ErrorInfo([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

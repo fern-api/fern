@@ -9,7 +9,19 @@ use Seed\Core\Json\JsonDecoder;
 class VariableType extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integerType'
+     *   |'doubleType'
+     *   |'booleanType'
+     *   |'stringType'
+     *   |'charType'
+     *   |'listType'
+     *   |'mapType'
+     *   |'binaryTreeType'
+     *   |'singlyLinkedListType'
+     *   |'doublyLinkedListType'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +37,19 @@ class VariableType extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integerType'
+     *   |'doubleType'
+     *   |'booleanType'
+     *   |'stringType'
+     *   |'charType'
+     *   |'listType'
+     *   |'mapType'
+     *   |'binaryTreeType'
+     *   |'singlyLinkedListType'
+     *   |'doublyLinkedListType'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
      *   |ListType
@@ -34,7 +58,7 @@ class VariableType extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -150,18 +174,6 @@ class VariableType extends JsonSerializableType
         return new VariableType([
             'type' => 'doublyLinkedListType',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return VariableType
-     */
-    public static function _unknown(mixed $_unknown): VariableType
-    {
-        return new VariableType([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

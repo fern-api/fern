@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseImplementationReference extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'templateId'
+     *   |'implementation'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class TestCaseImplementationReference extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'templateId'
+     *   |'implementation'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |TestCaseImplementation
@@ -32,7 +40,7 @@ class TestCaseImplementationReference extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class TestCaseImplementationReference extends JsonSerializableType
         return new TestCaseImplementationReference([
             'type' => 'implementation',
             'value' => $implementation,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return TestCaseImplementationReference
-     */
-    public static function _unknown(mixed $_unknown): TestCaseImplementationReference
-    {
-        return new TestCaseImplementationReference([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

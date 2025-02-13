@@ -16,7 +16,11 @@ class Shape extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -32,7 +36,11 @@ class Shape extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Circle
      *   |Square
@@ -40,7 +48,7 @@ class Shape extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -73,20 +81,6 @@ class Shape extends JsonSerializableType
             'id' => $id,
             'type' => 'square',
             'value' => $square,
-        ]);
-    }
-
-    /**
-     * @param string $id
-     * @param mixed $_unknown
-     * @return Shape
-     */
-    public static function _unknown(string $id, mixed $_unknown): Shape
-    {
-        return new Shape([
-            'id' => $id,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

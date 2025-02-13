@@ -11,7 +11,7 @@ use Seed\Core\Types\ArrayType;
  * @property string $title
  * @property string $from
  * @property float $rating
- * @property string $type
+ * @property 'movie' $type
  * @property string $tag
  * @property ?string $book
  * @property array<string, mixed> $metadata
@@ -50,7 +50,7 @@ trait Movie
     public float $rating;
 
     /**
-     * @var string $type
+     * @var 'movie' $type
      */
     #[JsonProperty('type')]
     public string $type;

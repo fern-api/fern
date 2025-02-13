@@ -30,7 +30,38 @@ class BigUnion extends JsonSerializableType
     public ?DateTime $archivedAt;
 
     /**
-     * @var string $type
+     * @var (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -74,7 +105,38 @@ class BigUnion extends JsonSerializableType
      * @param array{
      *   id: string,
      *   createdAt: DateTime,
-     *   type: string,
+     *   type: (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    NormalSweet
      *   |ThankfulFactor
@@ -110,7 +172,7 @@ class BigUnion extends JsonSerializableType
      *   archivedAt?: ?DateTime,
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -639,24 +701,6 @@ class BigUnion extends JsonSerializableType
             'archivedAt' => $archivedAt,
             'type' => 'gaseousRoad',
             'value' => $gaseousRoad,
-        ]);
-    }
-
-    /**
-     * @param string $id
-     * @param DateTime $createdAt
-     * @param ?DateTime $archivedAt
-     * @param mixed $_unknown
-     * @return BigUnion
-     */
-    public static function _unknown(string $id, DateTime $createdAt, mixed $_unknown, ?DateTime $archivedAt = null): BigUnion
-    {
-        return new BigUnion([
-            'id' => $id,
-            'createdAt' => $createdAt,
-            'archivedAt' => $archivedAt,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

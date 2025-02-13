@@ -10,7 +10,12 @@ use Seed\Core\Json\JsonDecoder;
 class ProblemDescriptionBoard extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'html'
+     *   |'variable'
+     *   |'testCaseId'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class ProblemDescriptionBoard extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'html'
+     *   |'variable'
+     *   |'testCaseId'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |VariableValue
@@ -33,7 +43,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -73,18 +83,6 @@ class ProblemDescriptionBoard extends JsonSerializableType
         return new ProblemDescriptionBoard([
             'type' => 'testCaseId',
             'value' => $testCaseId,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ProblemDescriptionBoard
-     */
-    public static function _unknown(mixed $_unknown): ProblemDescriptionBoard
-    {
-        return new ProblemDescriptionBoard([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

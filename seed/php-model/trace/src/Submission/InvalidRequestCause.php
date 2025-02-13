@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class InvalidRequestCause extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'submissionIdNotFound'
+     *   |'customTestCasesUnsupported'
+     *   |'unexpectedLanguage'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class InvalidRequestCause extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'submissionIdNotFound'
+     *   |'customTestCasesUnsupported'
+     *   |'unexpectedLanguage'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    SubmissionIdNotFound
      *   |CustomTestCasesUnsupported
@@ -34,7 +44,7 @@ class InvalidRequestCause extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -74,18 +84,6 @@ class InvalidRequestCause extends JsonSerializableType
         return new InvalidRequestCause([
             'type' => 'unexpectedLanguage',
             'value' => $unexpectedLanguage,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return InvalidRequestCause
-     */
-    public static function _unknown(mixed $_unknown): InvalidRequestCause
-    {
-        return new InvalidRequestCause([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
