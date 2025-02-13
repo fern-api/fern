@@ -168,3 +168,9 @@ service:
       request: BigUnion
       response: boolean
 
+    update-many:
+      path: /many
+      method: PATCH
+      request: list<BigUnion>
+      response: map<string, boolean>
+

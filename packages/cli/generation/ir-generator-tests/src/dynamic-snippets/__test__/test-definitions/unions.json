@@ -8743,6 +8743,94 @@
                 "type": "json"
             }
         },
+        "endpoint_bigunion.update-many": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "update-many",
+                    "camelCase": {
+                        "unsafeName": "updateMany",
+                        "safeName": "updateMany"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_many",
+                        "safeName": "update_many"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_MANY",
+                        "safeName": "UPDATE_MANY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateMany",
+                        "safeName": "UpdateMany"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "bigunion",
+                            "camelCase": {
+                                "unsafeName": "bigunion",
+                                "safeName": "bigunion"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "bigunion",
+                                "safeName": "bigunion"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BIGUNION",
+                                "safeName": "BIGUNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Bigunion",
+                                "safeName": "Bigunion"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "bigunion",
+                        "camelCase": {
+                            "unsafeName": "bigunion",
+                            "safeName": "bigunion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bigunion",
+                            "safeName": "bigunion"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BIGUNION",
+                            "safeName": "BIGUNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bigunion",
+                            "safeName": "Bigunion"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "PATCH",
+                "path": "/many"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_bigunion:BigUnion"
+                        }
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
         "endpoint_union.get": {
             "auth": null,
             "declaration": {
