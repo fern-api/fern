@@ -14,15 +14,15 @@ class TestCaseWithExpectedResult extends JsonSerializableType
     public TestCase $testCase;
 
     /**
-     * @var mixed $expectedResult
+     * @var VariableValue $expectedResult
      */
     #[JsonProperty('expectedResult')]
-    public mixed $expectedResult;
+    public VariableValue $expectedResult;
 
     /**
      * @param array{
      *   testCase: TestCase,
-     *   expectedResult: mixed,
+     *   expectedResult: VariableValue,
      * } $values
      */
     public function __construct(

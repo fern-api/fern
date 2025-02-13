@@ -8,14 +8,14 @@ use Seed\Core\Json\JsonProperty;
 class GetFunctionSignatureRequest extends JsonSerializableType
 {
     /**
-     * @var mixed $functionSignature
+     * @var FunctionSignature $functionSignature
      */
     #[JsonProperty('functionSignature')]
-    public mixed $functionSignature;
+    public FunctionSignature $functionSignature;
 
     /**
      * @param array{
-     *   functionSignature: mixed,
+     *   functionSignature: FunctionSignature,
      * } $values
      */
     public function __construct(
