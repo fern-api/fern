@@ -39,6 +39,7 @@ import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { mergeApiExamples } from "./utils/mergeApiExamples";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -669,10 +670,36 @@ export class DocsDefinitionResolver {
 
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
-            if (api == null) {
-                throw new Error("Failed to generate API Definition from OpenAPI workspace");
-            }
+
+            const apiV2Promise = (async () => {
+                const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
+                if (api == null) {
+                    throw new Error("Failed to generate API Definition from OpenAPI workspace");
+                }
+                return api;
+            })();
+
+            // START EXAMPLE MERGING HACK
+            const fernWorkspace = this.getFernWorkspaceForApiSection(item);
+            const ir = generateIntermediateRepresentation({
+                workspace: fernWorkspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, fernWorkspace)
+            });
+            const fernApi = convertIrToApiDefinition(ir, "", { oauth: item.playground?.oauth });
+            const api = await apiV2Promise;
+
+            mergeApiExamples(fernApi, api);
+            // END EXAMPLE MERGING HACK
+
             await this.registerApiV2({
                 api,
                 apiName: item.apiName
@@ -689,6 +716,7 @@ export class DocsDefinitionResolver {
             );
             return node.get();
         }
+
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
         const ir = generateIntermediateRepresentation({
@@ -711,6 +739,7 @@ export class DocsDefinitionResolver {
             apiName: item.apiName
         });
         const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+
         const node = new ApiReferenceNodeConverter(
             item,
             api,
