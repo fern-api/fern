@@ -1,3 +1,10 @@
+- version: 0.13.7
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Make constructor private for union types and remove static unknown constructor
+  irVersion: 55
+
 - version: 0.13.6
   changelogEntry:
     - type: fix

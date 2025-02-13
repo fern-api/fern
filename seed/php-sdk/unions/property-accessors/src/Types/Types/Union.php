@@ -35,7 +35,7 @@ class Union extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -83,18 +83,6 @@ class Union extends JsonSerializableType
         return new Union([
             'type' => 'bar',
             'value' => $bar,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return Union
-     */
-    public static function _unknown(mixed $_unknown): Union
-    {
-        return new Union([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

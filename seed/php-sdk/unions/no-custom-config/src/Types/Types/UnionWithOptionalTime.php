@@ -32,7 +32,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +60,6 @@ class UnionWithOptionalTime extends JsonSerializableType
         return new UnionWithOptionalTime([
             'type' => 'datetime',
             'value' => $datetime,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithOptionalTime
-     */
-    public static function _unknown(mixed $_unknown): UnionWithOptionalTime
-    {
-        return new UnionWithOptionalTime([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

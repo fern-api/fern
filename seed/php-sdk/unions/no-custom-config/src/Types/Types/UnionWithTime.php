@@ -34,7 +34,7 @@ class UnionWithTime extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -74,18 +74,6 @@ class UnionWithTime extends JsonSerializableType
         return new UnionWithTime([
             'type' => 'datetime',
             'value' => $datetime,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithTime
-     */
-    public static function _unknown(mixed $_unknown): UnionWithTime
-    {
-        return new UnionWithTime([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

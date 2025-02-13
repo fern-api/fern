@@ -32,7 +32,7 @@ class UnionWithPrimitive extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -80,18 +80,6 @@ class UnionWithPrimitive extends JsonSerializableType
         return new UnionWithPrimitive([
             'type' => 'string',
             'value' => $string,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithPrimitive
-     */
-    public static function _unknown(mixed $_unknown): UnionWithPrimitive
-    {
-        return new UnionWithPrimitive([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
