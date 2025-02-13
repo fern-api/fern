@@ -3,6 +3,7 @@
 namespace Seed\Problem\Types;
 
 use Seed\Core\Json\JsonSerializableType;
+use Seed\Commons\Types\VariableValue;
 use Exception;
 use Seed\Core\Json\JsonDecoder;
 
@@ -16,6 +17,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
     /**
      * @var (
      *    string
+     *   |VariableValue
      *   |mixed
      * ) $value
      */
@@ -26,6 +28,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
      *   type: string,
      *   value: (
      *    string
+     *   |VariableValue
      *   |mixed
      * ),
      * } $values
@@ -50,10 +53,10 @@ class ProblemDescriptionBoard extends JsonSerializableType
     }
 
     /**
-     * @param mixed $variable
+     * @param VariableValue $variable
      * @return ProblemDescriptionBoard
      */
-    public static function variable(mixed $variable): ProblemDescriptionBoard
+    public static function variable(VariableValue $variable): ProblemDescriptionBoard
     {
         return new ProblemDescriptionBoard([
             'type' => 'variable',
@@ -112,15 +115,15 @@ class ProblemDescriptionBoard extends JsonSerializableType
      */
     public function isVariable(): bool
     {
-        return is_null($this->value) && $this->type === 'variable';
+        return $this->value instanceof VariableValue && $this->type === 'variable';
     }
 
     /**
-     * @return mixed
+     * @return VariableValue
      */
-    public function asVariable(): mixed
+    public function asVariable(): VariableValue
     {
-        if (!(is_null($this->value) && $this->type === 'variable')) {
+        if (!($this->value instanceof VariableValue && $this->type === 'variable')) {
             throw new Exception(
                 "Expected variable; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -176,7 +179,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
                 $result['html'] = $value;
                 break;
             case 'variable':
-                $value = $this->value;
+                $value = $this->asVariable()->jsonSerialize();
                 $result['variable'] = $value;
                 break;
             case 'testCaseId':
@@ -248,7 +251,12 @@ class ProblemDescriptionBoard extends JsonSerializableType
                     );
                 }
 
-                $args['variable'] = $data['variable'];
+                if (!(is_array($data['variable']))) {
+                    throw new Exception(
+                        "Expected property 'variable' in JSON data to be array, instead received " . get_debug_type($data['variable']),
+                    );
+                }
+                $args['variable'] = VariableValue::jsonDeserialize($data['variable']);
                 break;
             case 'testCaseId':
                 $args['type'] = 'testCaseId';

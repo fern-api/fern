@@ -5,6 +5,13 @@
         Fix issue where an empty request would be JSON serialized as an empty array instead of an empty object.
   irVersion: 55
 
+- version: 0.13.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix a bug where literal global headers could not be overridden in the root client constructor.
+  irVersion: 55
+
 - version: 0.13.1
   changelogEntry:
     - type: fix

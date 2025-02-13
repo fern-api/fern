@@ -16,9 +16,10 @@ class TestSubmissionStatus extends JsonSerializableType
     /**
      * @var (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
-     *   |array<string, mixed>
+     *   |array<string, SubmissionStatusForTestCase>
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
@@ -28,9 +29,10 @@ class TestSubmissionStatus extends JsonSerializableType
      *   type: string,
      *   value: (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
-     *   |array<string, mixed>
+     *   |array<string, SubmissionStatusForTestCase>
+     *   |mixed
      * ),
      * } $values
      */
@@ -53,10 +55,10 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param mixed $errored
+     * @param ErrorInfo $errored
      * @return TestSubmissionStatus
      */
-    public static function errored(mixed $errored): TestSubmissionStatus
+    public static function errored(ErrorInfo $errored): TestSubmissionStatus
     {
         return new TestSubmissionStatus([
             'type' => 'errored',
@@ -77,7 +79,7 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param array<string, mixed> $testCaseIdToState
+     * @param array<string, SubmissionStatusForTestCase> $testCaseIdToState
      * @return TestSubmissionStatus
      */
     public static function testCaseIdToState(array $testCaseIdToState): TestSubmissionStatus
@@ -113,15 +115,15 @@ class TestSubmissionStatus extends JsonSerializableType
      */
     public function isErrored(): bool
     {
-        return is_null($this->value) && $this->type === 'errored';
+        return $this->value instanceof ErrorInfo && $this->type === 'errored';
     }
 
     /**
-     * @return mixed
+     * @return ErrorInfo
      */
-    public function asErrored(): mixed
+    public function asErrored(): ErrorInfo
     {
-        if (!(is_null($this->value) && $this->type === 'errored')) {
+        if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
                 "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -161,7 +163,7 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, SubmissionStatusForTestCase>
      */
     public function asTestCaseIdToState(): array
     {
@@ -198,7 +200,7 @@ class TestSubmissionStatus extends JsonSerializableType
                 $result['stopped'] = [];
                 break;
             case 'errored':
-                $value = $this->value;
+                $value = $this->asErrored()->jsonSerialize();
                 $result['errored'] = $value;
                 break;
             case 'running':
@@ -268,7 +270,12 @@ class TestSubmissionStatus extends JsonSerializableType
                     );
                 }
 
-                $args['errored'] = $data['errored'];
+                if (!(is_array($data['errored']))) {
+                    throw new Exception(
+                        "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
+                    );
+                }
+                $args['errored'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
                 $args['type'] = 'running';

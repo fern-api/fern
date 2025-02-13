@@ -29,16 +29,16 @@ class GetSubmissionStateResponse extends JsonSerializableType
     public string $language;
 
     /**
-     * @var mixed $submissionTypeState
+     * @var SubmissionTypeState $submissionTypeState
      */
     #[JsonProperty('submissionTypeState')]
-    public mixed $submissionTypeState;
+    public SubmissionTypeState $submissionTypeState;
 
     /**
      * @param array{
      *   submission: string,
      *   language: value-of<Language>,
-     *   submissionTypeState: mixed,
+     *   submissionTypeState: SubmissionTypeState,
      *   timeSubmitted?: ?DateTime,
      * } $values
      */
