@@ -9,14 +9,14 @@ use Seed\Core\Types\ArrayType;
 class ProblemDescription extends JsonSerializableType
 {
     /**
-     * @var array<mixed> $boards
+     * @var array<ProblemDescriptionBoard> $boards
      */
-    #[JsonProperty('boards'), ArrayType(['mixed'])]
+    #[JsonProperty('boards'), ArrayType([ProblemDescriptionBoard::class])]
     public array $boards;
 
     /**
      * @param array{
-     *   boards: array<mixed>,
+     *   boards: array<ProblemDescriptionBoard>,
      * } $values
      */
     public function __construct(

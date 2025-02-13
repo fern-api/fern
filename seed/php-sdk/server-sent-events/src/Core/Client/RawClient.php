@@ -181,15 +181,24 @@ class RawClient
         array $options,
     ): mixed {
         $overrideProperties = $options['bodyProperties'] ?? [];
-        if ($body instanceof JsonSerializable) {
-            $serialized = $body->jsonSerialize();
-            return is_array($serialized)
-                ? array_merge($serialized, $overrideProperties)
-                : $serialized;
+        if (is_array($body) && self::isSequential($body)) {
+            return array_merge($body, $overrideProperties);
         }
-        return is_array($body)
-            ? array_merge($body, $overrideProperties)
-            : $body;
+
+        if ($body instanceof JsonSerializable) {
+            $result = $body->jsonSerialize();
+        } else {
+            $result = $body;
+        }
+        if (is_array($result)) {
+            $result = array_merge($result, $overrideProperties);
+            if (empty($result)) {
+                // force to be serialized as {} instead of []
+                return (object)($result);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -249,5 +258,24 @@ class RawClient
         }
         // Unreachable, but included for a best effort.
         return urlencode(strval(json_encode($value)));
+    }
+
+    /**
+     * Check if an array is sequential, not associative.
+     * @param array $arr
+     * @return bool
+     */
+    private static function isSequential(array $arr): bool // @phpstan-ignore-line
+    {if (empty($arr)) {
+        return false;
+    }
+        $length = count($arr);
+        $keys = array_keys($arr);
+        for ($i = 0; $i < $length; $i++) {
+            if ($keys[$i] !== $i) {
+                return false;
+            }
+        }
+        return true;
     }
 }
