@@ -11,7 +11,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithOptionalTime extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +29,11 @@ class UnionWithOptionalTime extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    DateTime
      *   |mixed

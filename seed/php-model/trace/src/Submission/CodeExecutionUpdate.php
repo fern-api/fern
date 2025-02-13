@@ -9,7 +9,20 @@ use Seed\Core\Json\JsonDecoder;
 class CodeExecutionUpdate extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'buildingExecutor'
+     *   |'running'
+     *   |'errored'
+     *   |'stopped'
+     *   |'graded'
+     *   |'gradedV2'
+     *   |'workspaceRan'
+     *   |'recording'
+     *   |'recorded'
+     *   |'invalidRequest'
+     *   |'finished'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -33,7 +46,20 @@ class CodeExecutionUpdate extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'buildingExecutor'
+     *   |'running'
+     *   |'errored'
+     *   |'stopped'
+     *   |'graded'
+     *   |'gradedV2'
+     *   |'workspaceRan'
+     *   |'recording'
+     *   |'recorded'
+     *   |'invalidRequest'
+     *   |'finished'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    BuildingExecutorResponse
      *   |RunningResponse
@@ -50,7 +76,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -186,18 +212,6 @@ class CodeExecutionUpdate extends JsonSerializableType
         return new CodeExecutionUpdate([
             'type' => 'finished',
             'value' => $finished,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return CodeExecutionUpdate
-     */
-    public static function _unknown(mixed $_unknown): CodeExecutionUpdate
-    {
-        return new CodeExecutionUpdate([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

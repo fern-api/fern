@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class EventInfo extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'metadata'
+     *   |'tag'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class EventInfo extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'metadata'
+     *   |'tag'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Metadata
      *   |string
@@ -32,7 +40,7 @@ class EventInfo extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class EventInfo extends JsonSerializableType
         return new EventInfo([
             'type' => 'tag',
             'value' => $tag,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return EventInfo
-     */
-    public static function _unknown(mixed $_unknown): EventInfo
-    {
-        return new EventInfo([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

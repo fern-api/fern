@@ -16,7 +16,11 @@ class Resource extends JsonSerializableType
     public string $status;
 
     /**
-     * @var string $resourceType
+     * @var (
+     *    'user'
+     *   |'Organization'
+     *   |'_unknown'
+     * ) $resourceType
      */
     public readonly string $resourceType;
 
@@ -32,7 +36,11 @@ class Resource extends JsonSerializableType
     /**
      * @param array{
      *   status: value-of<ResourceStatus>,
-     *   resourceType: string,
+     *   resourceType: (
+     *    'user'
+     *   |'Organization'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    User
      *   |Organization
@@ -40,7 +48,7 @@ class Resource extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->status = $values['status'];
@@ -73,20 +81,6 @@ class Resource extends JsonSerializableType
             'status' => $status,
             'resourceType' => 'Organization',
             'value' => $organization,
-        ]);
-    }
-
-    /**
-     * @param value-of<ResourceStatus> $status
-     * @param mixed $_unknown
-     * @return Resource
-     */
-    public static function _unknown(string $status, mixed $_unknown): Resource
-    {
-        return new Resource([
-            'status' => $status,
-            'resourceType' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

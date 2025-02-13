@@ -16,7 +16,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -33,7 +38,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |string

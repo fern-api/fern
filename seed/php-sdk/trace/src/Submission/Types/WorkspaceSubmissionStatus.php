@@ -9,7 +9,14 @@ use Seed\Core\Json\JsonDecoder;
 class WorkspaceSubmissionStatus extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'ran'
+     *   |'traced'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -26,7 +33,14 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'ran'
+     *   |'traced'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
      *   |ErrorInfo
@@ -36,7 +50,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -99,18 +113,6 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
         return new WorkspaceSubmissionStatus([
             'type' => 'traced',
             'value' => $traced,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return WorkspaceSubmissionStatus
-     */
-    public static function _unknown(mixed $_unknown): WorkspaceSubmissionStatus
-    {
-        return new WorkspaceSubmissionStatus([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

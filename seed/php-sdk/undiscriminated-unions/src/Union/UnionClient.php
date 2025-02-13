@@ -129,7 +129,7 @@ class UnionClient
      * } $options
      * @return array<(
      *    value-of<KeyType>
-     *   |string
+     *   |'default'
      * ), string>
      * @throws SeedException
      * @throws SeedApiException

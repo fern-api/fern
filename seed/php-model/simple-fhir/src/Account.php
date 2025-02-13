@@ -11,7 +11,7 @@ class Account extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var string $resourceType
+     * @var 'Account' $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -44,7 +44,7 @@ class Account extends JsonSerializableType
      *   |Script
      * )>,
      *   memo: Memo,
-     *   resourceType: string,
+     *   resourceType: 'Account',
      *   name: string,
      *   patient?: ?Patient,
      *   practitioner?: ?Practitioner,

@@ -9,7 +9,20 @@ use Seed\Core\Json\JsonDecoder;
 class VariableValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeValue'
+     *   |'singlyLinkedListValue'
+     *   |'doublyLinkedListValue'
+     *   |'nullValue'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -32,7 +45,20 @@ class VariableValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeValue'
+     *   |'singlyLinkedListValue'
+     *   |'doublyLinkedListValue'
+     *   |'nullValue'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |bool
@@ -48,7 +74,7 @@ class VariableValue extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -183,18 +209,6 @@ class VariableValue extends JsonSerializableType
         return new VariableValue([
             'type' => 'nullValue',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return VariableValue
-     */
-    public static function _unknown(mixed $_unknown): VariableValue
-    {
-        return new VariableValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

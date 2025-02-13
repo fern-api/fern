@@ -127,10 +127,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getDiscriminantField(): php.Field {
-        // TODO(ajgateno): Actually add the literals as a union rather than just string
+        const discriminantValues = [];
+        this.unionTypeDeclaration.types.forEach((variant) =>
+            discriminantValues.push(variant.discriminantValue.wireValue)
+        );
+        discriminantValues.push("_unknown");
         return php.field({
             name: this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name),
-            type: php.Type.string(),
+            type: php.Type.union(discriminantValues.map((value) => php.Type.literalString(value))),
             access: this.context.getPropertyAccess(),
             readonly_: true
         });
@@ -386,11 +390,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock(`"JSON data is missing property '${propertyName.wireValue}'"`);
     }
 
-    private getDeserializationTypeCheckErrorMessage(propertyName: NameAndWireValue, typeName: string): php.CodeBlock {
+    private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, type: php.Type): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write(
-                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${typeName}, instead received " . `
-            );
+            if (type.internalType.type === "literal") {
+                writer.write(
+                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be `
+                );
+                writer.writeNode(type.internalType.value);
+                writer.write(', instead received " . ');
+            } else {
+                writer.write(
+                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${type.internalType.type}, instead received " . `
+                );
+            }
             writer.writeNode(
                 php.invokeMethod({
                     method: "get_debug_type",
@@ -519,10 +531,35 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 throw new Error(
                     "Cannot get type check for type dict value because properties should never be typeDicts"
                 );
-            case "union":
-                throw new Error(
-                    "Cannot get type check for type dict value because properties should never be raw unions"
-                );
+            case "union": {
+                const checks: php.CodeBlock[] = type.internalType.types.map((item, index) => {
+                    return php.codeblock((writer) => {
+                        if (index > 0) {
+                            writer.write("|| ");
+                        }
+                        writer.writeNode(this.getTypeCheck(variableGetter, item));
+                    });
+                });
+                return php.codeblock((writer) => {
+                    if (checks.length > 1) {
+                        writer.write("(");
+                    }
+
+                    checks.forEach((check) => writer.writeNode(check));
+
+                    if (checks.length > 1) {
+                        writer.write(")");
+                    }
+                });
+            }
+            case "literal": {
+                const literalValue = type.internalType.value;
+                return php.codeblock((writer) => {
+                    writer.writeNode(variableGetter);
+                    writer.write(" === ");
+                    writer.writeNode(literalValue);
+                });
+            }
             default:
                 assertNever(type.internalType);
         }
@@ -679,6 +716,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
+            case "literal":
                 return php.codeblock((writer) => {
                     writer.write("$result");
                     writer.write("['");
@@ -804,6 +842,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
+            case "literal":
                 return php.codeblock((writer) => {
                     writer.write("$value = ");
                     writer.writeNodeStatement(this.valueGetter());
@@ -832,6 +871,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
+            case "literal":
                 return false;
             default:
                 assertNever(type.internalType);
@@ -1030,9 +1070,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     php.codeblock((_writer) => {
                         _writer.controlFlow("if", isNotType);
                         _writer.writeNodeStatement(
-                            this.getErrorThrow(
-                                this.getDeserializationTypeCheckErrorMessage(property.name, type.internalType.type)
-                            )
+                            this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(property.name, type))
                         );
                         _writer.endControlFlow();
                     })
@@ -1084,7 +1122,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 php.codeblock((_writer) => {
                     _writer.controlFlow("if", isNotType);
                     _writer.writeNodeStatement(
-                        this.getErrorThrow(this.getDeserializationTypeCheckErrorMessage(discriminant, "string"))
+                        this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(discriminant, php.Type.string()))
                     );
                     _writer.endControlFlow();
                 })
@@ -1179,7 +1217,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             _writer.controlFlow("if", isNotType);
                             _writer.writeNodeStatement(
                                 this.getErrorThrow(
-                                    this.getDeserializationTypeCheckErrorMessage(variant.discriminantValue, "array")
+                                    this.getDeserliazationTypeCheckErrorMessage(
+                                        variant.discriminantValue,
+                                        php.Type.array(php.Type.mixed())
+                                    )
                                 )
                             );
                             _writer.endControlFlow();
@@ -1233,6 +1274,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "typeDict":
             case "enumString":
             case "union":
+            case "literal":
                 return php.codeblock((writer) => {
                     writer.write(`$args['${this.getValueFieldName()}'] = `);
                     writer.writeNodeStatement(discriminantGetter);

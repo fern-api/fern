@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class CreateProblemError extends JsonSerializableType
 {
     /**
-     * @var string $errorType
+     * @var (
+     *    'generic'
+     *   |'_unknown'
+     * ) $errorType
      */
     public readonly string $errorType;
 
@@ -23,14 +26,17 @@ class CreateProblemError extends JsonSerializableType
 
     /**
      * @param array{
-     *   errorType: string,
+     *   errorType: (
+     *    'generic'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    GenericCreateProblemError
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->errorType = $values['errorType'];
@@ -46,18 +52,6 @@ class CreateProblemError extends JsonSerializableType
         return new CreateProblemError([
             'errorType' => 'generic',
             'value' => $generic,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return CreateProblemError
-     */
-    public static function _unknown(mixed $_unknown): CreateProblemError
-    {
-        return new CreateProblemError([
-            'errorType' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Animal extends JsonSerializableType
 {
     /**
-     * @var string $animal
+     * @var (
+     *    'dog'
+     *   |'cat'
+     *   |'_unknown'
+     * ) $animal
      */
     public readonly string $animal;
 
@@ -24,7 +28,11 @@ class Animal extends JsonSerializableType
 
     /**
      * @param array{
-     *   animal: string,
+     *   animal: (
+     *    'dog'
+     *   |'cat'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Dog
      *   |Cat
@@ -32,7 +40,7 @@ class Animal extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->animal = $values['animal'];
@@ -60,18 +68,6 @@ class Animal extends JsonSerializableType
         return new Animal([
             'animal' => 'cat',
             'value' => $cat,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return Animal
-     */
-    public static function _unknown(mixed $_unknown): Animal
-    {
-        return new Animal([
-            'animal' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

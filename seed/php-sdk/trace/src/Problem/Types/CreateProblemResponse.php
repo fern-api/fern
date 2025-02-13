@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class CreateProblemResponse extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'success'
+     *   |'error'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class CreateProblemResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'success'
+     *   |'error'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |CreateProblemError
@@ -32,7 +40,7 @@ class CreateProblemResponse extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class CreateProblemResponse extends JsonSerializableType
         return new CreateProblemResponse([
             'type' => 'error',
             'value' => $error,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return CreateProblemResponse
-     */
-    public static function _unknown(mixed $_unknown): CreateProblemResponse
-    {
-        return new CreateProblemResponse([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

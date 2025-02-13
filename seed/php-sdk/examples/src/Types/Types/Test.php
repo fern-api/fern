@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Test extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'and'
+     *   |'or'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class Test extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'and'
+     *   |'or'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    bool
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -58,18 +66,6 @@ class Test extends JsonSerializableType
         return new Test([
             'type' => 'or',
             'value' => $or,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return Test
-     */
-    public static function _unknown(mixed $_unknown): Test
-    {
-        return new Test([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

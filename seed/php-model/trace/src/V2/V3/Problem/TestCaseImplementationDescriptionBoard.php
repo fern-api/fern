@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseImplementationDescriptionBoard extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'html'
+     *   |'paramId'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'html'
+     *   |'paramId'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -58,18 +66,6 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
         return new TestCaseImplementationDescriptionBoard([
             'type' => 'paramId',
             'value' => $paramId,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return TestCaseImplementationDescriptionBoard
-     */
-    public static function _unknown(mixed $_unknown): TestCaseImplementationDescriptionBoard
-    {
-        return new TestCaseImplementationDescriptionBoard([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseGrade extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'hidden'
+     *   |'nonHidden'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class TestCaseGrade extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'hidden'
+     *   |'nonHidden'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestCaseHiddenGrade
      *   |TestCaseNonHiddenGrade
@@ -32,7 +40,7 @@ class TestCaseGrade extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -60,18 +68,6 @@ class TestCaseGrade extends JsonSerializableType
         return new TestCaseGrade([
             'type' => 'nonHidden',
             'value' => $nonHidden,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return TestCaseGrade
-     */
-    public static function _unknown(mixed $_unknown): TestCaseGrade
-    {
-        return new TestCaseGrade([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

@@ -10,7 +10,12 @@ use Seed\Core\Json\JsonDecoder;
 class ActualResult extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'value'
+     *   |'exception'
+     *   |'exceptionV2'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -26,7 +31,12 @@ class ActualResult extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'value'
+     *   |'exception'
+     *   |'exceptionV2'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    VariableValue
      *   |ExceptionInfo
@@ -35,7 +45,7 @@ class ActualResult extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -75,18 +85,6 @@ class ActualResult extends JsonSerializableType
         return new ActualResult([
             'type' => 'exceptionV2',
             'value' => $exceptionV2,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ActualResult
-     */
-    public static function _unknown(mixed $_unknown): ActualResult
-    {
-        return new ActualResult([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

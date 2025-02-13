@@ -56,9 +56,9 @@ export class PhpTypeMapper {
     public convertLiteral({ literal }: { literal: Literal }): php.Type {
         switch (literal.type) {
             case "boolean":
-                return php.Type.bool();
+                return php.Type.literalBoolean(literal.boolean);
             case "string":
-                return php.Type.string();
+                return php.Type.literalString(literal.string);
         }
     }
 

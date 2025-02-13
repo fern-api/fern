@@ -16,7 +16,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -33,7 +38,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |string
@@ -42,7 +52,7 @@ class UnionWithBaseProperties extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -89,20 +99,6 @@ class UnionWithBaseProperties extends JsonSerializableType
             'id' => $id,
             'type' => 'foo',
             'value' => $foo,
-        ]);
-    }
-
-    /**
-     * @param string $id
-     * @param mixed $_unknown
-     * @return UnionWithBaseProperties
-     */
-    public static function _unknown(string $id, mixed $_unknown): UnionWithBaseProperties
-    {
-        return new UnionWithBaseProperties([
-            'id' => $id,
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

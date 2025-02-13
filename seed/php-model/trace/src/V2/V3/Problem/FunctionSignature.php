@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class FunctionSignature extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'void'
+     *   |'nonVoid'
+     *   |'voidThatTakesActualResult'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class FunctionSignature extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'void'
+     *   |'nonVoid'
+     *   |'voidThatTakesActualResult'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    VoidFunctionSignature
      *   |NonVoidFunctionSignature
@@ -34,7 +44,7 @@ class FunctionSignature extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -74,18 +84,6 @@ class FunctionSignature extends JsonSerializableType
         return new FunctionSignature([
             'type' => 'voidThatTakesActualResult',
             'value' => $voidThatTakesActualResult,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return FunctionSignature
-     */
-    public static function _unknown(mixed $_unknown): FunctionSignature
-    {
-        return new FunctionSignature([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

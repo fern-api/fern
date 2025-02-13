@@ -10,7 +10,11 @@ use Seed\Core\Json\JsonDecoder;
 class CustomFiles extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'basic'
+     *   |'custom'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +29,11 @@ class CustomFiles extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'basic'
+     *   |'custom'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    BasicCustomFiles
      *   |array<value-of<Language>, Files>
@@ -33,7 +41,7 @@ class CustomFiles extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -61,18 +69,6 @@ class CustomFiles extends JsonSerializableType
         return new CustomFiles([
             'type' => 'custom',
             'value' => $custom,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return CustomFiles
-     */
-    public static function _unknown(mixed $_unknown): CustomFiles
-    {
-        return new CustomFiles([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

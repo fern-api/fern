@@ -9,13 +9,13 @@ use Seed\Inlined\Types\ATopLevelLiteral;
 class SendLiteralsInlinedRequest extends JsonSerializableType
 {
     /**
-     * @var string $prompt
+     * @var 'You are a helpful assistant' $prompt
      */
     #[JsonProperty('prompt')]
     public string $prompt;
 
     /**
-     * @var ?string $context
+     * @var ?"You're super wise" $context
      */
     #[JsonProperty('context')]
     public ?string $context;
@@ -33,19 +33,19 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
     public ?float $temperature;
 
     /**
-     * @var bool $stream
+     * @var false $stream
      */
     #[JsonProperty('stream')]
     public bool $stream;
 
     /**
-     * @var string $aliasedContext
+     * @var "You're super wise" $aliasedContext
      */
     #[JsonProperty('aliasedContext')]
     public string $aliasedContext;
 
     /**
-     * @var ?string $maybeContext
+     * @var ?"You're super wise" $maybeContext
      */
     #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
@@ -58,14 +58,14 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   prompt: string,
+     *   prompt: 'You are a helpful assistant',
      *   query: string,
-     *   stream: bool,
-     *   aliasedContext: string,
+     *   stream: false,
+     *   aliasedContext: "You're super wise",
      *   objectWithLiteral: ATopLevelLiteral,
-     *   context?: ?string,
+     *   context?: ?"You're super wise",
      *   temperature?: ?float,
-     *   maybeContext?: ?string,
+     *   maybeContext?: ?"You're super wise",
      * } $values
      */
     public function __construct(

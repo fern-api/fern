@@ -9,7 +9,16 @@ use Seed\Core\Json\JsonDecoder;
 class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'running'
+     *   |'ran'
+     *   |'stopped'
+     *   |'traced'
+     *   |'tracedV2'
+     *   |'errored'
+     *   |'finished'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -27,7 +36,16 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'running'
+     *   |'ran'
+     *   |'stopped'
+     *   |'traced'
+     *   |'tracedV2'
+     *   |'errored'
+     *   |'finished'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    value-of<RunningSubmissionState>
      *   |WorkspaceRunDetails
@@ -38,7 +56,7 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -123,18 +141,6 @@ class WorkspaceSubmissionUpdateInfo extends JsonSerializableType
         return new WorkspaceSubmissionUpdateInfo([
             'type' => 'finished',
             'value' => null,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return WorkspaceSubmissionUpdateInfo
-     */
-    public static function _unknown(mixed $_unknown): WorkspaceSubmissionUpdateInfo
-    {
-        return new WorkspaceSubmissionUpdateInfo([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 

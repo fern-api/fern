@@ -23,7 +23,7 @@ class ExtendedMovie extends JsonSerializableType
      *   title: string,
      *   from: string,
      *   rating: float,
-     *   type: string,
+     *   type: 'movie',
      *   tag: string,
      *   metadata: array<string, mixed>,
      *   revenue: int,

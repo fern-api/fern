@@ -30,7 +30,38 @@ class BigUnion extends JsonSerializableType
     public ?DateTime $archivedAt;
 
     /**
-     * @var string $type
+     * @var (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -74,7 +105,38 @@ class BigUnion extends JsonSerializableType
      * @param array{
      *   id: string,
      *   createdAt: DateTime,
-     *   type: string,
+     *   type: (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    NormalSweet
      *   |ThankfulFactor

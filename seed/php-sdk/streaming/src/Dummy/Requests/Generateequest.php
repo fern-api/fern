@@ -8,7 +8,7 @@ use Seed\Core\Json\JsonProperty;
 class Generateequest extends JsonSerializableType
 {
     /**
-     * @var bool $stream
+     * @var false $stream
      */
     #[JsonProperty('stream')]
     public bool $stream;
@@ -21,7 +21,7 @@ class Generateequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   stream: bool,
+     *   stream: false,
      *   numEvents: int,
      * } $values
      */

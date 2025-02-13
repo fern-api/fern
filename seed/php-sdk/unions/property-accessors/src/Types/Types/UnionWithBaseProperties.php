@@ -16,7 +16,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     private string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ) $type
      */
     private readonly string $type;
 
@@ -33,7 +38,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |string
@@ -68,7 +78,12 @@ class UnionWithBaseProperties extends JsonSerializableType
     }
 
     /**
-     * @return string
+     * @return (
+     *    'integer'
+     *   |'string'
+     *   |'foo'
+     *   |'_unknown'
+     * )
      */
     public function getType(): string
     {

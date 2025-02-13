@@ -11,7 +11,12 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithTime extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'value'
+     *   |'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -26,7 +31,12 @@ class UnionWithTime extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'value'
+     *   |'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |DateTime
@@ -34,7 +44,7 @@ class UnionWithTime extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -74,18 +84,6 @@ class UnionWithTime extends JsonSerializableType
         return new UnionWithTime([
             'type' => 'datetime',
             'value' => $datetime,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return UnionWithTime
-     */
-    public static function _unknown(mixed $_unknown): UnionWithTime
-    {
-        return new UnionWithTime([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
