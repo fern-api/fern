@@ -58,7 +58,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
-
             class_.addField(
                 csharp.field({
                     name: propertyName,
@@ -67,7 +66,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     get: true,
                     set: true,
                     summary: query.docs,
-                    useRequired: true
+                    useRequired: true,
+                    initializer: this.context.getLiteralInitializerFromTypeReference({
+                        typeReference: query.valueType
+                    })
                 })
             );
 
@@ -89,7 +91,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     get: true,
                     set: true,
                     summary: header.docs,
-                    useRequired: true
+                    useRequired: true,
+                    initializer: this.context.getLiteralInitializerFromTypeReference({
+                        typeReference: header.valueType
+                    })
                 })
             );
         }

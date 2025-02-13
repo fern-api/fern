@@ -7,6 +7,14 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.21
+  createdAt: "2025-02-06"
+  irVersion: 53          
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Support literals in query parameters and headers. For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include body properties. 
 - version: 1.9.20
   createdAt: "2025-02-06"
   irVersion: 53          
@@ -14,7 +22,7 @@
     - type: fix
       summary: | 
         Support literals in wrapped requests (). For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
-        Note that wrapped requests are just a bag of properties that include query parameters, body properties, and headers. 
+        Note that wrapped requests are just a bag of properties that include body properties. 
 - version: 1.9.19
   createdAt: "2025-02-06"
   changelogEntry:
