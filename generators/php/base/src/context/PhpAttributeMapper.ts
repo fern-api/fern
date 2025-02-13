@@ -149,24 +149,20 @@ export class PhpAttributeMapper {
             case "enumString":
                 return php.codeblock("'string'");
             case "literal":
-                return this.getLiteralArgument(type);
+                {
+                    switch (type.internalType.value.internalType.type) {
+                        case "string":
+                            return php.codeblock("'string'");
+                        case "boolean":
+                            return php.codeblock("'bool'");
+                        default:
+                            assertNever(type.internalType.value.internalType);
+                    }
+                }
+                // NOTE: The linter complains if we don't have this here
+                break;
             default:
                 assertNever(type.internalType);
-        }
-    }
-
-    private getLiteralArgument(type: php.Type) {
-        if (type.internalType.type !== "literal") {
-            throw new Error("Expected provided type to be a literal.");
-        }
-
-        switch (type.internalType.value.internalType.type) {
-            case "string":
-                return php.codeblock("'string'");
-            case "boolean":
-                return php.codeblock("'bool'");
-            default:
-                assertNever(type.internalType.value.internalType);
         }
     }
 }
