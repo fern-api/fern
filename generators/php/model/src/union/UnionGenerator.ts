@@ -444,11 +444,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock(`"JSON data is missing property '${propertyName.wireValue}'"`);
     }
 
-    private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, typeName: string): php.CodeBlock {
+    private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, type: php.Type): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write(
-                `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${typeName}, instead received " . `
-            );
+            if (type.internalType.type === "literal") {
+                writer.write(
+                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be `
+                );
+                writer.writeNode(type.internalType.value);
+                writer.write(", instead received \" . ");
+            } else {
+                writer.write(
+                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${type.internalType.type}, instead received " . `
+                );
+            }
             writer.writeNode(
                 php.invokeMethod({
                     method: "get_debug_type",
@@ -1112,9 +1120,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     php.codeblock((_writer) => {
                         _writer.controlFlow("if", isNotType);
                         _writer.writeNodeStatement(
-                            this.getErrorThrow(
-                                this.getDeserliazationTypeCheckErrorMessage(property.name, type.internalType.type)
-                            )
+                            this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(property.name, type))
                         );
                         _writer.endControlFlow();
                     })
@@ -1166,7 +1172,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 php.codeblock((_writer) => {
                     _writer.controlFlow("if", isNotType);
                     _writer.writeNodeStatement(
-                        this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(discriminant, "string"))
+                        this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(discriminant, php.Type.string()))
                     );
                     _writer.endControlFlow();
                 })
@@ -1272,7 +1278,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             _writer.controlFlow("if", isNotType);
                             _writer.writeNodeStatement(
                                 this.getErrorThrow(
-                                    this.getDeserliazationTypeCheckErrorMessage(variant.discriminantValue, "array")
+                                    this.getDeserliazationTypeCheckErrorMessage(
+                                        variant.discriminantValue,
+                                        php.Type.array(php.Type.mixed())
+                                    )
                                 )
                             );
                             _writer.endControlFlow();
