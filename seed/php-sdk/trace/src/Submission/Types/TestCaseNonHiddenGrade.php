@@ -4,6 +4,7 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Types\VariableValue;
 
 class TestCaseNonHiddenGrade extends JsonSerializableType
 {
@@ -14,16 +15,16 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
     public bool $passed;
 
     /**
-     * @var mixed $actualResult
+     * @var ?VariableValue $actualResult
      */
     #[JsonProperty('actualResult')]
-    public mixed $actualResult;
+    public ?VariableValue $actualResult;
 
     /**
-     * @var mixed $exception
+     * @var ?ExceptionV2 $exception
      */
     #[JsonProperty('exception')]
-    public mixed $exception;
+    public ?ExceptionV2 $exception;
 
     /**
      * @var string $stdout
@@ -35,8 +36,8 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
      * @param array{
      *   passed: bool,
      *   stdout: string,
-     *   actualResult?: mixed,
-     *   exception?: mixed,
+     *   actualResult?: ?VariableValue,
+     *   exception?: ?ExceptionV2,
      * } $values
      */
     public function __construct(

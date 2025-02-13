@@ -16,9 +16,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     /**
      * @var (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
      *   |WorkspaceRunDetails
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
@@ -28,9 +29,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      *   type: string,
      *   value: (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
      *   |WorkspaceRunDetails
+     *   |mixed
      * ),
      * } $values
      */
@@ -53,10 +55,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param mixed $errored
+     * @param ErrorInfo $errored
      * @return WorkspaceSubmissionStatus
      */
-    public static function errored(mixed $errored): WorkspaceSubmissionStatus
+    public static function errored(ErrorInfo $errored): WorkspaceSubmissionStatus
     {
         return new WorkspaceSubmissionStatus([
             'type' => 'errored',
@@ -125,15 +127,15 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      */
     public function isErrored(): bool
     {
-        return is_null($this->value) && $this->type === 'errored';
+        return $this->value instanceof ErrorInfo && $this->type === 'errored';
     }
 
     /**
-     * @return mixed
+     * @return ErrorInfo
      */
-    public function asErrored(): mixed
+    public function asErrored(): ErrorInfo
     {
-        if (!(is_null($this->value) && $this->type === 'errored')) {
+        if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
                 "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -232,7 +234,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                 $result['stopped'] = [];
                 break;
             case 'errored':
-                $value = $this->value;
+                $value = $this->asErrored()->jsonSerialize();
                 $result['errored'] = $value;
                 break;
             case 'running':
@@ -306,7 +308,12 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                     );
                 }
 
-                $args['errored'] = $data['errored'];
+                if (!(is_array($data['errored']))) {
+                    throw new Exception(
+                        "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
+                    );
+                }
+                $args['errored'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
                 $args['type'] = 'running';

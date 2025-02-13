@@ -37,7 +37,8 @@ class RawClient
      */
     public function __construct(
         public readonly ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $this->options['client']
             ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
@@ -67,8 +68,9 @@ class RawClient
      */
     public function sendRequest(
         BaseApiRequest $request,
-        ?array $options = null,
-    ): ResponseInterface {
+        ?array         $options = null,
+    ): ResponseInterface
+    {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
         return $this->client->send($httpRequest, $this->toGuzzleOptions($opts));
@@ -81,7 +83,8 @@ class RawClient
      * } $options
      * @return array<string, mixed>
      */
-    private function toGuzzleOptions(array $options): array {
+    private function toGuzzleOptions(array $options): array
+    {
         $guzzleOptions = [];
         if (isset($options['maxRetries'])) {
             $guzzleOptions['maxRetries'] = $options['maxRetries'];
@@ -103,8 +106,9 @@ class RawClient
      */
     private function buildRequest(
         BaseApiRequest $request,
-        array $options
-    ): Request {
+        array          $options
+    ): Request
+    {
         $url = $this->buildUrl($request, $options);
         $headers = $this->encodeHeaders($request, $options);
         $body = $this->encodeRequestBody($request, $options);
@@ -125,8 +129,9 @@ class RawClient
      */
     private function encodeHeaders(
         BaseApiRequest $request,
-        array $options,
-    ): array {
+        array          $options,
+    ): array
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
                 ["Content-Type" => "application/json"],
@@ -152,8 +157,9 @@ class RawClient
      */
     private function encodeRequestBody(
         BaseApiRequest $request,
-        array $options,
-    ): ?StreamInterface {
+        array          $options,
+    ): ?StreamInterface
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body === null ? null : Utils::streamFor(
                 json_encode(
@@ -178,17 +184,27 @@ class RawClient
     private function buildJsonBody(
         mixed $body,
         array $options,
-    ): mixed {
+    ): mixed
+    {
         $overrideProperties = $options['bodyProperties'] ?? [];
-        if ($body instanceof JsonSerializable) {
-            $serialized = $body->jsonSerialize();
-            return is_array($serialized)
-                ? array_merge($serialized, $overrideProperties)
-                : $serialized;
+        if (is_array($body) && (empty($body) || self::isSequential($body))) {
+            return array_merge($body, $overrideProperties);
         }
-        return is_array($body)
-            ? array_merge($body, $overrideProperties)
-            : $body;
+
+        if ($body instanceof JsonSerializable) {
+            $result = $body->jsonSerialize();
+        } else {
+            $result = $body;
+        }
+        if (is_array($result)) {
+            $result = array_merge($result, $overrideProperties);
+            if (empty($result)) {
+                // force to be serialized as {} instead of []
+                return (object)($result);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -200,8 +216,9 @@ class RawClient
      */
     private function buildUrl(
         BaseApiRequest $request,
-        array $options,
-    ): string {
+        array          $options,
+    ): string
+    {
         $baseUrl = $request->baseUrl;
         $trimmedBaseUrl = rtrim($baseUrl, '/');
         $trimmedBasePath = ltrim($request->path, '/');
@@ -220,7 +237,8 @@ class RawClient
      * @param array<string, mixed> $query
      * @return string
      */
-    private function encodeQuery(array $query): string {
+    private function encodeQuery(array $query): string
+    {
         $parts = [];
         foreach ($query as $key => $value) {
             if (is_array($value)) {
@@ -234,7 +252,8 @@ class RawClient
         return implode('&', $parts);
     }
 
-    private function encodeQueryValue(mixed $value): string {
+    private function encodeQueryValue(mixed $value): string
+    {
         if (is_string($value)) {
             return urlencode($value);
         }
@@ -246,5 +265,23 @@ class RawClient
         }
         // Unreachable, but included for a best effort.
         return urlencode(strval(json_encode($value)));
+    }
+
+    /**
+     * Check if an array is sequential, not associative.
+     * @param mixed[] $arr
+     * @return bool
+     */
+    private static function isSequential(array $arr): bool
+    {
+        if (empty($arr)) return false;
+        $length = count($arr);
+        $keys = array_keys($arr);
+        for ($i = 0; $i < $length; $i++) {
+            if ($keys[$i] !== $i) {
+                return false;
+            }
+        }
+        return true;
     }
 }

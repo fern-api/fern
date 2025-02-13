@@ -4,6 +4,7 @@ namespace Seed\V2\V3\Problem;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\VariableType;
 
 class Parameter extends JsonSerializableType
 {
@@ -20,16 +21,16 @@ class Parameter extends JsonSerializableType
     public string $name;
 
     /**
-     * @var mixed $variableType
+     * @var VariableType $variableType
      */
     #[JsonProperty('variableType')]
-    public mixed $variableType;
+    public VariableType $variableType;
 
     /**
      * @param array{
      *   parameterId: string,
      *   name: string,
-     *   variableType: mixed,
+     *   variableType: VariableType,
      * } $values
      */
     public function __construct(

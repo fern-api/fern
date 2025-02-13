@@ -14,15 +14,15 @@ class TestCaseImplementation extends JsonSerializableType
     public TestCaseImplementationDescription $description;
 
     /**
-     * @var mixed $function
+     * @var TestCaseFunction $function
      */
     #[JsonProperty('function')]
-    public mixed $function;
+    public TestCaseFunction $function;
 
     /**
      * @param array{
      *   description: TestCaseImplementationDescription,
-     *   function: mixed,
+     *   function: TestCaseFunction,
      * } $values
      */
     public function __construct(

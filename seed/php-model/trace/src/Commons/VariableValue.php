@@ -20,7 +20,7 @@ class VariableValue extends JsonSerializableType
      *   |float
      *   |string
      *   |MapValue
-     *   |array<mixed>
+     *   |array<VariableValue>
      *   |BinaryTreeValue
      *   |SinglyLinkedListValue
      *   |DoublyLinkedListValue
@@ -39,7 +39,7 @@ class VariableValue extends JsonSerializableType
      *   |float
      *   |string
      *   |MapValue
-     *   |array<mixed>
+     *   |array<VariableValue>
      *   |BinaryTreeValue
      *   |SinglyLinkedListValue
      *   |DoublyLinkedListValue
@@ -128,7 +128,7 @@ class VariableValue extends JsonSerializableType
     }
 
     /**
-     * @param array<mixed> $listValue
+     * @param array<VariableValue> $listValue
      * @return VariableValue
      */
     public static function listValue(array $listValue): VariableValue
@@ -339,7 +339,7 @@ class VariableValue extends JsonSerializableType
     }
 
     /**
-     * @return array<mixed>
+     * @return array<VariableValue>
      */
     public function asListValue(): array
     {

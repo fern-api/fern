@@ -18,8 +18,9 @@ class SubmissionResponse extends JsonSerializableType
      *    null
      *   |string
      *   |ExceptionInfo
-     *   |mixed
+     *   |CodeExecutionUpdate
      *   |TerminatedResponse
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
@@ -31,8 +32,9 @@ class SubmissionResponse extends JsonSerializableType
      *    null
      *   |string
      *   |ExceptionInfo
-     *   |mixed
+     *   |CodeExecutionUpdate
      *   |TerminatedResponse
+     *   |mixed
      * ),
      * } $values
      */
@@ -90,10 +92,10 @@ class SubmissionResponse extends JsonSerializableType
     }
 
     /**
-     * @param mixed $codeExecutionUpdate
+     * @param CodeExecutionUpdate $codeExecutionUpdate
      * @return SubmissionResponse
      */
-    public static function codeExecutionUpdate(mixed $codeExecutionUpdate): SubmissionResponse
+    public static function codeExecutionUpdate(CodeExecutionUpdate $codeExecutionUpdate): SubmissionResponse
     {
         return new SubmissionResponse([
             'type' => 'codeExecutionUpdate',
@@ -190,15 +192,15 @@ class SubmissionResponse extends JsonSerializableType
      */
     public function isCodeExecutionUpdate(): bool
     {
-        return is_null($this->value) && $this->type === 'codeExecutionUpdate';
+        return $this->value instanceof CodeExecutionUpdate && $this->type === 'codeExecutionUpdate';
     }
 
     /**
-     * @return mixed
+     * @return CodeExecutionUpdate
      */
-    public function asCodeExecutionUpdate(): mixed
+    public function asCodeExecutionUpdate(): CodeExecutionUpdate
     {
-        if (!(is_null($this->value) && $this->type === 'codeExecutionUpdate')) {
+        if (!($this->value instanceof CodeExecutionUpdate && $this->type === 'codeExecutionUpdate')) {
             throw new Exception(
                 "Expected codeExecutionUpdate; got " . $this->type . "with value of type " . get_debug_type($this->value),
             );
@@ -264,7 +266,7 @@ class SubmissionResponse extends JsonSerializableType
                 $result = array_merge($value, $result);
                 break;
             case 'codeExecutionUpdate':
-                $value = $this->value;
+                $value = $this->asCodeExecutionUpdate()->jsonSerialize();
                 $result['codeExecutionUpdate'] = $value;
                 break;
             case 'terminated':
@@ -348,7 +350,12 @@ class SubmissionResponse extends JsonSerializableType
                     );
                 }
 
-                $args['codeExecutionUpdate'] = $data['codeExecutionUpdate'];
+                if (!(is_array($data['codeExecutionUpdate']))) {
+                    throw new Exception(
+                        "Expected property 'codeExecutionUpdate' in JSON data to be array, instead received " . get_debug_type($data['codeExecutionUpdate']),
+                    );
+                }
+                $args['codeExecutionUpdate'] = CodeExecutionUpdate::jsonDeserialize($data['codeExecutionUpdate']);
                 break;
             case 'terminated':
                 $args['type'] = 'terminated';

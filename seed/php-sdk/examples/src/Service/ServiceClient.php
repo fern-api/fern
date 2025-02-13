@@ -14,6 +14,7 @@ use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
 use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Types\Types\Metadata;
 use Seed\Types\Types\BigEntity;
 use Seed\Types\Types\Response;
 
@@ -170,11 +171,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return mixed
+     * @return Metadata
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
+    public function getMetadata(GetMetadataRequest $request, ?array $options = null): Metadata
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -200,7 +201,7 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeMixed($json);
+                return Metadata::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
