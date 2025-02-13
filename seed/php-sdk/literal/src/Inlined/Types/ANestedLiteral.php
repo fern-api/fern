@@ -14,6 +14,17 @@ class ANestedLiteral extends JsonSerializableType
     public string $myLiteral;
 
     /**
+     * @param array{
+     *   myLiteral: 'How super cool',
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->myLiteral = $values['myLiteral'];
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string

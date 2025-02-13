@@ -58,7 +58,10 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   prompt: 'You are a helpful assistant',
      *   query: string,
+     *   stream: false,
+     *   aliasedContext: "You're super wise",
      *   objectWithLiteral: ATopLevelLiteral,
      *   context?: ?"You're super wise",
      *   temperature?: ?float,
@@ -68,9 +71,12 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->prompt = $values['prompt'];
         $this->context = $values['context'] ?? null;
         $this->query = $values['query'];
         $this->temperature = $values['temperature'] ?? null;
+        $this->stream = $values['stream'];
+        $this->aliasedContext = $values['aliasedContext'];
         $this->maybeContext = $values['maybeContext'] ?? null;
         $this->objectWithLiteral = $values['objectWithLiteral'];
     }

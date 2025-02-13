@@ -51,7 +51,11 @@ class SendRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   prompt: 'You are a helpful assistant',
      *   query: string,
+     *   stream: false,
+     *   ending: '$ending',
+     *   context: "You're super wise",
      *   containerObject: ContainerObject,
      *   maybeContext?: ?"You're super wise",
      * } $values
@@ -59,7 +63,11 @@ class SendRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->prompt = $values['prompt'];
         $this->query = $values['query'];
+        $this->stream = $values['stream'];
+        $this->ending = $values['ending'];
+        $this->context = $values['context'];
         $this->maybeContext = $values['maybeContext'] ?? null;
         $this->containerObject = $values['containerObject'];
     }

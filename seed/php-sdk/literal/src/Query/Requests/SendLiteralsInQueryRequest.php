@@ -53,7 +53,11 @@ class SendLiteralsInQueryRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   prompt: 'You are a helpful assistant',
+     *   aliasPrompt: 'You are a helpful assistant',
      *   query: string,
+     *   stream: false,
+     *   aliasStream: false,
      *   optionalPrompt?: ?'You are a helpful assistant',
      *   aliasOptionalPrompt?: ?'You are a helpful assistant',
      *   optionalStream?: ?false,
@@ -63,10 +67,14 @@ class SendLiteralsInQueryRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        $this->prompt = $values['prompt'];
         $this->optionalPrompt = $values['optionalPrompt'] ?? null;
+        $this->aliasPrompt = $values['aliasPrompt'];
         $this->aliasOptionalPrompt = $values['aliasOptionalPrompt'] ?? null;
         $this->query = $values['query'];
+        $this->stream = $values['stream'];
         $this->optionalStream = $values['optionalStream'] ?? null;
+        $this->aliasStream = $values['aliasStream'];
         $this->aliasOptionalStream = $values['aliasOptionalStream'] ?? null;
     }
 }

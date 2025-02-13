@@ -29,6 +29,7 @@ class SendResponse extends JsonSerializableType
      * @param array{
      *   message: string,
      *   status: int,
+     *   success: true,
      * } $values
      */
     public function __construct(
@@ -36,6 +37,7 @@ class SendResponse extends JsonSerializableType
     ) {
         $this->message = $values['message'];
         $this->status = $values['status'];
+        $this->success = $values['success'];
     }
 
     /**
