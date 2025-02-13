@@ -41,7 +41,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         ];
         flattenedProperties.forEach((property) => {
             const fieldType = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-            const maybeLiteralInitializer = this.context.getLiteralFromTypeReference({
+            const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
                 typeReference: property.valueType
             });
 
@@ -55,14 +55,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
                     useRequired: true,
-                    initializer:
-                        maybeLiteralInitializer != null
-                            ? csharp.codeblock(
-                                  typeof maybeLiteralInitializer === "boolean"
-                                      ? `${maybeLiteralInitializer.toString().toLowerCase()}`
-                                      : `"${maybeLiteralInitializer}"`
-                              )
-                            : undefined
+                    initializer: maybeLiteralInitializer
                 })
             );
         });

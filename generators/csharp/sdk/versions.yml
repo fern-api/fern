@@ -12,6 +12,13 @@
   changelogEntry:
     - type: fix
       summary: | 
+        Support literals in wrapped requests (). For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include query parameters, body properties, and headers. 
+- version: 1.9.19
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: | 
         Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are 
         correctly serialized using their wire value.
   irVersion: 53          
