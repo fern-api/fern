@@ -90,7 +90,7 @@ class TestCaseFunction extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseWithActualResultImplementation && $this->type === 'withActualResult')) {
             throw new Exception(
-                "Expected withActualResult; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected withActualResult; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class TestCaseFunction extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionDefinition && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

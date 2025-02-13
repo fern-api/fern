@@ -89,7 +89,7 @@ class ExceptionV2 extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionInfo && $this->type === 'generic')) {
             throw new Exception(
-                "Expected generic; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

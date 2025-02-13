@@ -88,7 +88,7 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'html')) {
             throw new Exception(
-                "Expected html; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +110,7 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'paramId')) {
             throw new Exception(
-                "Expected paramId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected paramId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

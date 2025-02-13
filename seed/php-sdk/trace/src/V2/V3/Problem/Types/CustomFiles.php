@@ -91,7 +91,7 @@ class CustomFiles extends JsonSerializableType
     {
         if (!($this->value instanceof BasicCustomFiles && $this->type === 'basic')) {
             throw new Exception(
-                "Expected basic; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected basic; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -113,7 +113,7 @@ class CustomFiles extends JsonSerializableType
     {
         if (!(is_array($this->value) && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

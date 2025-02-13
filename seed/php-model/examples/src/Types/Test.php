@@ -88,7 +88,7 @@ class Test extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'and')) {
             throw new Exception(
-                "Expected and; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected and; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +110,7 @@ class Test extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'or')) {
             throw new Exception(
-                "Expected or; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected or; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

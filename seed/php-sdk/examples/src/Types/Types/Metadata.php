@@ -118,7 +118,7 @@ class Metadata extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'html')) {
             throw new Exception(
-                "Expected html; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -140,7 +140,7 @@ class Metadata extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'markdown')) {
             throw new Exception(
-                "Expected markdown; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected markdown; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

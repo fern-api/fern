@@ -97,7 +97,7 @@ class UnionWithUnknown extends JsonSerializableType
     {
         if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

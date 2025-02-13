@@ -95,7 +95,7 @@ class UnionWithLiteral extends JsonSerializableType
     {
         if (!($this->value === 'fern' && $this->type === 'fern')) {
             throw new Exception(
-                "Expected fern; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected fern; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

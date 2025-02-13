@@ -90,7 +90,7 @@ class TestCaseGrade extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseHiddenGrade && $this->type === 'hidden')) {
             throw new Exception(
-                "Expected hidden; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected hidden; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class TestCaseGrade extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseNonHiddenGrade && $this->type === 'nonHidden')) {
             throw new Exception(
-                "Expected nonHidden; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected nonHidden; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

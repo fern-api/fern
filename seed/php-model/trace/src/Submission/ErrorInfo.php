@@ -104,7 +104,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof CompileError && $this->type === 'compileError')) {
             throw new Exception(
-                "Expected compileError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected compileError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +126,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof RuntimeError && $this->type === 'runtimeError')) {
             throw new Exception(
-                "Expected runtimeError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected runtimeError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +148,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof InternalError && $this->type === 'internalError')) {
             throw new Exception(
-                "Expected internalError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected internalError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

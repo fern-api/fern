@@ -105,7 +105,7 @@ class ActualResult extends JsonSerializableType
     {
         if (!($this->value instanceof VariableValue && $this->type === 'value')) {
             throw new Exception(
-                "Expected value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -127,7 +127,7 @@ class ActualResult extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionInfo && $this->type === 'exception')) {
             throw new Exception(
-                "Expected exception; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected exception; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -149,7 +149,7 @@ class ActualResult extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionV2 && $this->type === 'exceptionV2')) {
             throw new Exception(
-                "Expected exceptionV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected exceptionV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

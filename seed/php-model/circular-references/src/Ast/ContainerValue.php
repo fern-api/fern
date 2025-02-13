@@ -90,7 +90,7 @@ class ContainerValue extends JsonSerializableType
     {
         if (!(is_array($this->value) && $this->type === 'list')) {
             throw new Exception(
-                "Expected list; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected list; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class ContainerValue extends JsonSerializableType
     {
         if (!((is_null($this->value) || $this->value instanceof FieldValue) && $this->type === 'optional')) {
             throw new Exception(
-                "Expected optional; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected optional; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

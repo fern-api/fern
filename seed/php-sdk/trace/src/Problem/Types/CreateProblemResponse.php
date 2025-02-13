@@ -90,7 +90,7 @@ class CreateProblemResponse extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'success')) {
             throw new Exception(
-                "Expected success; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected success; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +112,7 @@ class CreateProblemResponse extends JsonSerializableType
     {
         if (!($this->value instanceof CreateProblemError && $this->type === 'error')) {
             throw new Exception(
-                "Expected error; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected error; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

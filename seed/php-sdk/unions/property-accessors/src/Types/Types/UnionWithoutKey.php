@@ -122,7 +122,7 @@ class UnionWithoutKey extends JsonSerializableType
     {
         if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -144,7 +144,7 @@ class UnionWithoutKey extends JsonSerializableType
     {
         if (!($this->value instanceof Bar && $this->type === 'bar')) {
             throw new Exception(
-                "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected bar; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 

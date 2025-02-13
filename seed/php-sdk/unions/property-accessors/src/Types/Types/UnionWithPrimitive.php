@@ -122,7 +122,7 @@ class UnionWithPrimitive extends JsonSerializableType
     {
         if (!(is_int($this->value) && $this->type === 'integer')) {
             throw new Exception(
-                "Expected integer; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected integer; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -144,7 +144,7 @@ class UnionWithPrimitive extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'string')) {
             throw new Exception(
-                "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected string; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
