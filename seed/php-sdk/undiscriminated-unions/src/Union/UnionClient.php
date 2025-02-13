@@ -51,7 +51,13 @@ class UnionClient
     }
 
     /**
-     * @param string|array<string>|int|array<int>|array<array<int>> $request
+     * @param (
+     *    string
+     *   |array<string>
+     *   |int
+     *   |array<int>
+     *   |array<array<int>>
+     * ) $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -59,7 +65,13 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string|array<string>|int|array<int>|array<array<int>>
+     * @return (
+     *    string
+     *   |array<string>
+     *   |int
+     *   |array<int>
+     *   |array<array<int>>
+     * )
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -111,7 +123,10 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<value-of<KeyType>|string, string>
+     * @return array<(
+     *    value-of<KeyType>
+     *   |string
+     * ), string>
      * @throws SeedException
      * @throws SeedApiException
      */

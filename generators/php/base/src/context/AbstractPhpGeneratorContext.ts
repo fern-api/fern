@@ -151,6 +151,10 @@ export abstract class AbstractPhpGeneratorContext<
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
+    public getVariableName(name: Name): string {
+        return "$" + this.getPropertyName(name);
+    }
+
     public getPropertyGetterName(name: Name): string {
         return `get${name.pascalCase.unsafeName}`;
     }
@@ -198,6 +202,13 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getExceptionClassReference(): php.ClassReference {
+        return php.classReference({
+            namespace: GLOBAL_NAMESPACE,
+            name: "Exception"
+        });
+    }
+
     public getDateAttributeClassReference(): php.ClassReference {
         return this.getCoreTypesClassReference("Date");
     }
@@ -206,12 +217,24 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreTypesClassReference("Constant");
     }
 
+    public getJsonDecoderClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonDecoder");
+    }
+
+    public getJsonDeserializerClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonDeserializer");
+    }
+
     public getJsonPropertyAttributeClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonProperty");
     }
 
     public getJsonSerializableTypeClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonSerializableType");
+    }
+
+    public getJsonSerializerClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonSerializer");
     }
 
     public getUnionClassReference(): php.ClassReference {
@@ -605,13 +628,13 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.ArrayType,
             AsIsFiles.Constant,
             AsIsFiles.Date,
+            AsIsFiles.JsonEncoder,
+            AsIsFiles.JsonDecoder,
+            AsIsFiles.JsonDeserializer,
             AsIsFiles.JsonProperty,
             AsIsFiles.JsonSerializableType,
-            AsIsFiles.Union,
-            AsIsFiles.JsonDecoder,
-            AsIsFiles.JsonEncoder,
-            AsIsFiles.JsonDeserializer,
             AsIsFiles.JsonSerializer,
+            AsIsFiles.Union,
             AsIsFiles.Utils
         ];
     }

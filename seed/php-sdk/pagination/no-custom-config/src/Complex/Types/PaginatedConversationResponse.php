@@ -35,9 +35,9 @@ class PaginatedConversationResponse extends JsonSerializableType
     /**
      * @param array{
      *   conversations: array<Conversation>,
-     *   pages?: ?CursorPages,
      *   totalCount: int,
      *   type: string,
+     *   pages?: ?CursorPages,
      * } $values
      */
     public function __construct(

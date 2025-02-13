@@ -34,9 +34,9 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
     /**
      * @param array{
      *   passed: bool,
+     *   stdout: string,
      *   actualResult?: mixed,
      *   exception?: mixed,
-     *   stdout: string,
      * } $values
      */
     public function __construct(

@@ -36,11 +36,11 @@ class GetPlaylistsRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   limit?: ?int,
      *   otherField: string,
      *   multiLineDocs: string,
-     *   optionalMultipleField?: ?array<string>,
      *   multipleField: array<string>,
+     *   limit?: ?int,
+     *   optionalMultipleField?: ?array<string>,
      * } $values
      */
     public function __construct(

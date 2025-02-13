@@ -87,8 +87,9 @@ export class AbstractWriter {
     }
 
     /**
-     * Writes text but then suffixes with a `;`
-     * @param node
+     * Starts a control flow block
+     * @param prefix
+     * @param statement
      */
     public controlFlow(prefix: string, statement: AbstractAstNode): void {
         const codeBlock = new CodeBlock(prefix);
@@ -101,12 +102,42 @@ export class AbstractWriter {
     }
 
     /**
-     * Writes text but then suffixes with a `;`
-     * @param node
+     * Ends a control flow block
      */
     public endControlFlow(): void {
         this.dedent();
         this.writeLine("}");
+    }
+
+    /**
+     * Starts a control flow without a newline from the previous control flow block
+     * @param prefix
+     * @param statement
+     */
+    public contiguousControlFlow(prefix: string, statement: AbstractAstNode): void {
+        this.dedent();
+        this.write("} ");
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" (");
+        this.writeNode(statement);
+        this.write(") {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
+     * Starts a control flow alternative block
+     * @param prefix
+     */
+    public alternativeControlFlow(prefix: string): void {
+        this.dedent();
+        this.write("} ");
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
     }
 
     /**

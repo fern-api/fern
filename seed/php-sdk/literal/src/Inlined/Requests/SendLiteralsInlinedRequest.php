@@ -59,13 +59,13 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
     /**
      * @param array{
      *   prompt: string,
-     *   context?: ?string,
      *   query: string,
-     *   temperature?: ?float,
      *   stream: bool,
      *   aliasedContext: string,
-     *   maybeContext?: ?string,
      *   objectWithLiteral: ATopLevelLiteral,
+     *   context?: ?string,
+     *   temperature?: ?float,
+     *   maybeContext?: ?string,
      * } $values
      */
     public function __construct(

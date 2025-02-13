@@ -15,7 +15,10 @@ class MultipleFilterSearchRequest extends JsonSerializableType
     private ?string $operator;
 
     /**
-     * @var array<MultipleFilterSearchRequest>|array<SingleFilterSearchRequest>|null $value
+     * @var (
+     *    array<MultipleFilterSearchRequest>
+     *   |array<SingleFilterSearchRequest>
+     * )|null $value
      */
     #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class], [SingleFilterSearchRequest::class], 'null')]
     private array|null $value;
@@ -23,7 +26,10 @@ class MultipleFilterSearchRequest extends JsonSerializableType
     /**
      * @param array{
      *   operator?: ?value-of<MultipleFilterSearchRequestOperator>,
-     *   value?: array<MultipleFilterSearchRequest>|array<SingleFilterSearchRequest>|null,
+     *   value?: (
+     *    array<MultipleFilterSearchRequest>
+     *   |array<SingleFilterSearchRequest>
+     * )|null,
      * } $values
      */
     public function __construct(
@@ -51,7 +57,10 @@ class MultipleFilterSearchRequest extends JsonSerializableType
     }
 
     /**
-     * @return array<MultipleFilterSearchRequest>|array<SingleFilterSearchRequest>|null
+     * @return (
+     *    array<MultipleFilterSearchRequest>
+     *   |array<SingleFilterSearchRequest>
+     * )|null
      */
     public function getValue(): array|null
     {
@@ -59,7 +68,10 @@ class MultipleFilterSearchRequest extends JsonSerializableType
     }
 
     /**
-     * @param array<MultipleFilterSearchRequest>|array<SingleFilterSearchRequest>|null $value
+     * @param (
+     *    array<MultipleFilterSearchRequest>
+     *   |array<SingleFilterSearchRequest>
+     * )|null $value
      */
     public function setValue(array|null $value = null): self
     {

@@ -21,8 +21,8 @@ class GetGeneratedTestCaseFileRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   template?: ?TestCaseTemplate,
      *   testCase: TestCaseV2,
+     *   template?: ?TestCaseTemplate,
      * } $values
      */
     public function __construct(

@@ -5,7 +5,7 @@ import { Comment } from "./Comment";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
-import { SELF } from "./core/Constant";
+import { SELF, STATIC } from "./core/Constant";
 import { Writer } from "./core/Writer";
 
 export declare namespace Method {
@@ -19,13 +19,15 @@ export declare namespace Method {
         /* The exceptions that can be thrown, if any */
         throws?: ClassReference[];
         /* The return type of the method */
-        return_?: Type | typeof SELF;
+        return_?: Type | typeof STATIC | typeof SELF;
         /* The body of the method */
         body?: CodeBlock;
         /* Documentation for the method */
         docs?: string;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
+        /* Whether this method is static */
+        static_?: boolean;
     }
 }
 
@@ -34,12 +36,13 @@ export class Method extends AstNode {
     public readonly access: Access;
     public readonly parameters: Parameter[];
     public readonly throws: ClassReference[];
-    public readonly return_: Type | typeof SELF | undefined;
+    public readonly return_: Type | typeof STATIC | typeof SELF | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly classReference: ClassReference | undefined;
+    public readonly static_: boolean;
 
-    constructor({ name, access, parameters, throws, return_, body, docs, classReference }: Method.Args) {
+    constructor({ name, access, parameters, throws, return_, body, docs, classReference, static_ }: Method.Args) {
         super();
         this.name = name;
         this.access = access;
@@ -49,12 +52,21 @@ export class Method extends AstNode {
         this.body = body;
         this.docs = docs;
         this.classReference = classReference;
+        this.static_ = static_ ?? false;
     }
 
     public write(writer: Writer): void {
         this.writeComment(writer);
-        writer.write(`${this.access} function ${this.name}(`);
-        this.parameters.forEach((parameter, index) => {
+        writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`);
+
+        // NOTE: Put all required parameters before all optional parameters
+        // since this is required by PHPStan
+        const requiredParameters = this.parameters.filter((param) => !param.type.isOptional());
+        const optionalParameters = this.parameters.filter((param) => param.type.isOptional());
+
+        const orderedParameters = [...requiredParameters, ...optionalParameters];
+
+        orderedParameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");
             }
@@ -85,7 +97,7 @@ export class Method extends AstNode {
                 docs: parameter.docs
             });
         }
-        if (this.return_ != null && this.return_ !== SELF) {
+        if (this.return_ != null && this.return_ !== SELF && this.return_ !== STATIC) {
             comment.addTag({
                 tagType: "return",
                 type: this.return_

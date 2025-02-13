@@ -22,8 +22,8 @@ class UsernamePage extends JsonSerializableType
 
     /**
      * @param array{
-     *   after?: ?string,
      *   data: array<string>,
+     *   after?: ?string,
      * } $values
      */
     public function __construct(
