@@ -14,10 +14,9 @@ import { orderByAccess } from "./utils/orderByAccess";
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 
 export declare namespace DataClass {
-    interface DataClassArgs {
+    interface Args extends Class.Args {
         constructorAccess?: Access;
     }
-    type Args = Class.Args & DataClassArgs;
 }
 
 export class DataClass extends AstNode {
