@@ -194,7 +194,7 @@ export class DynamicTypeLiteralMapper {
                     php.invokeMethod({
                         on: php.classReference({
                             name: this.context.getClassName(discriminatedUnion.declaration.name),
-                            namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath),
+                            namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath)
                         }),
                         method: this.context.getMethodName(unionVariant.discriminantValue.name),
                         arguments_: this.convertDiscriminatedUnionVariantArgs({
@@ -202,7 +202,7 @@ export class DynamicTypeLiteralMapper {
                             unionVariant,
                             unionProperties
                         }),
-                        static_: true,
+                        static_: true
                     })
                 );
             })
@@ -311,7 +311,7 @@ export class DynamicTypeLiteralMapper {
                         namespace: this.context.getTypesNamespace(named.declaration.fernFilepath)
                     }),
                     fields: unionProperties
-                }),
+                })
             ];
         }
         return baseFields;
@@ -335,13 +335,12 @@ export class DynamicTypeLiteralMapper {
         return properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
             try {
-                return this.convert(property)
+                return this.convert(property);
             } finally {
                 this.context.errors.unscope();
             }
         });
     }
-
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
         const properties = this.context.associateByWireValue({
