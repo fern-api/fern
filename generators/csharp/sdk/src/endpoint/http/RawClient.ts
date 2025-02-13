@@ -167,12 +167,10 @@ export class RawClient {
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): void {
-        const hasPathParameters = endpoint.pathParameters.length > 0;
+        const hasPathParameters = endpoint.fullPath.parts.some((part) => part.pathParameter != null);
 
         writer.write(hasPathParameters ? `$"${endpoint.fullPath.head}` : `"${endpoint.fullPath.head}`);
-        let pathParametersPresent = false;
         for (const part of endpoint.fullPath.parts) {
-            pathParametersPresent = true;
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw new Error(

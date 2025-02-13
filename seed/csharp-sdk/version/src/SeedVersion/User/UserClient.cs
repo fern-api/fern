@@ -32,7 +32,7 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/users/{userId}",
+                    Path = $"/users/{JsonUtils.SerializeAsString(userId)}",
                     Options = options,
                 },
                 cancellationToken
