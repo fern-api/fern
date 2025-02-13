@@ -241,7 +241,7 @@ class PhpProjectFilepaths {
     }
 
     public getCoreTestsDirectory(): RelativeFilePath {
-        return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
+        return join(this.getTestsDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
     public getUtilsDirectory(): RelativeFilePath {
@@ -292,7 +292,7 @@ class ComposerJson {
             },
             "autoload-dev": {
                 "psr-4": {
-                    [`\\${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}/`
+                    [`${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}/`
                 }
             },
             scripts: {

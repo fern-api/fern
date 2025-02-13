@@ -1,3 +1,11 @@
+- version: 0.13.4
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Flatten test directory structure from `tests/package-name/**` to `tests/**` so it matches the psr-4 structure defined in composer.json.
+        Without this change, you cannot reference classes within the `tests` directory from your tests, for example, a `Helpers` class for common test utilities.
+  irVersion: 55
+
 - version: 0.13.3
   changelogEntry:
     - type: fix
