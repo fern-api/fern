@@ -170,7 +170,7 @@ jobs:
             exit 1
           }
           cd windows
-          & $cliPath generate --docs
+          node $cliPath generate --docs
           if ($LASTEXITCODE -ne 0) {
             Write-Error "Command failed with exit code $LASTEXITCODE"
             exit $LASTEXITCODE
