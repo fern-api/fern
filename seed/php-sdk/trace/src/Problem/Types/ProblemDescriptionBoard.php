@@ -232,19 +232,18 @@ class ProblemDescriptionBoard extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'html':
-                $args['type'] = 'html';
                 if (!array_key_exists('html', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
 
-                $args['html'] = $data['html'];
+                $args['value'] = $data['html'];
                 break;
             case 'variable':
-                $args['type'] = 'variable';
                 if (!array_key_exists('variable', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'variable'",
@@ -256,17 +255,16 @@ class ProblemDescriptionBoard extends JsonSerializableType
                         "Expected property 'variable' in JSON data to be array, instead received " . get_debug_type($data['variable']),
                     );
                 }
-                $args['variable'] = VariableValue::jsonDeserialize($data['variable']);
+                $args['value'] = VariableValue::jsonDeserialize($data['variable']);
                 break;
             case 'testCaseId':
-                $args['type'] = 'testCaseId';
                 if (!array_key_exists('testCaseId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'testCaseId'",
                     );
                 }
 
-                $args['testCaseId'] = $data['testCaseId'];
+                $args['value'] = $data['testCaseId'];
                 break;
             case '_unknown':
             default:

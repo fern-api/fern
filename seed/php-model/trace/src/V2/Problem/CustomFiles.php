@@ -194,20 +194,19 @@ class CustomFiles extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'basic':
-                $args['type'] = 'basic';
-                $args['basic'] = BasicCustomFiles::jsonDeserialize($data);
+                $args['value'] = BasicCustomFiles::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
                 if (!array_key_exists('custom', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'custom'",
                     );
                 }
 
-                $args['custom'] = $data['custom'];
+                $args['value'] = $data['custom'];
                 break;
             case '_unknown':
             default:

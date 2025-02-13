@@ -220,14 +220,13 @@ class Resource extends JsonSerializableType
             );
         }
 
+        $args['resourceType'] = $resourceType;
         switch ($resourceType) {
             case 'user':
-                $args['resourceType'] = 'user';
-                $args['user'] = User::jsonDeserialize($data);
+                $args['value'] = User::jsonDeserialize($data);
                 break;
             case 'Organization':
-                $args['resourceType'] = 'Organization';
-                $args['Organization'] = Organization::jsonDeserialize($data);
+                $args['value'] = Organization::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

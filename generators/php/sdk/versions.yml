@@ -1,3 +1,10 @@
+- version: 0.13.6
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the value field of the deserialized discriminated union was null.
+  irVersion: 55
+
 - version: 0.13.5
   changelogEntry:
     - type: fix

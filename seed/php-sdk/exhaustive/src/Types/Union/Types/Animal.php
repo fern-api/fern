@@ -193,14 +193,13 @@ class Animal extends JsonSerializableType
             );
         }
 
+        $args['animal'] = $animal;
         switch ($animal) {
             case 'dog':
-                $args['animal'] = 'dog';
-                $args['dog'] = Dog::jsonDeserialize($data);
+                $args['value'] = Dog::jsonDeserialize($data);
                 break;
             case 'cat':
-                $args['animal'] = 'cat';
-                $args['cat'] = Cat::jsonDeserialize($data);
+                $args['value'] = Cat::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

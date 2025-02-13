@@ -241,9 +241,9 @@ class UnionWithTime extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'value':
-                $args['type'] = 'value';
                 if (!array_key_exists('value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'value'",
@@ -253,24 +253,22 @@ class UnionWithTime extends JsonSerializableType
                 $args['value'] = $data['value'];
                 break;
             case 'date':
-                $args['type'] = 'date';
                 if (!array_key_exists('date', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'date'",
                     );
                 }
 
-                $args['date'] = $data['date'];
+                $args['value'] = $data['date'];
                 break;
             case 'datetime':
-                $args['type'] = 'datetime';
                 if (!array_key_exists('datetime', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'datetime'",
                     );
                 }
 
-                $args['datetime'] = $data['datetime'];
+                $args['value'] = $data['datetime'];
                 break;
             case '_unknown':
             default:

@@ -201,14 +201,13 @@ class UnionWithoutKey extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case 'bar':
-                $args['type'] = 'bar';
-                $args['bar'] = Bar::jsonDeserialize($data);
+                $args['value'] = Bar::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -191,26 +191,25 @@ class Data extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'string':
-                $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'string'",
                     );
                 }
 
-                $args['string'] = $data['string'];
+                $args['value'] = $data['string'];
                 break;
             case 'base64':
-                $args['type'] = 'base64';
                 if (!array_key_exists('base64', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'base64'",
                     );
                 }
 
-                $args['base64'] = $data['base64'];
+                $args['value'] = $data['base64'];
                 break;
             case '_unknown':
             default:

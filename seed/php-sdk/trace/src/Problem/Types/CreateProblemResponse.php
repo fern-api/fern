@@ -193,19 +193,18 @@ class CreateProblemResponse extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'success':
-                $args['type'] = 'success';
                 if (!array_key_exists('success', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'success'",
                     );
                 }
 
-                $args['success'] = $data['success'];
+                $args['value'] = $data['success'];
                 break;
             case 'error':
-                $args['type'] = 'error';
                 if (!array_key_exists('error', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'error'",
@@ -217,7 +216,7 @@ class CreateProblemResponse extends JsonSerializableType
                         "Expected property 'error' in JSON data to be array, instead received " . get_debug_type($data['error']),
                     );
                 }
-                $args['error'] = CreateProblemError::jsonDeserialize($data['error']);
+                $args['value'] = CreateProblemError::jsonDeserialize($data['error']);
                 break;
             case '_unknown':
             default:
