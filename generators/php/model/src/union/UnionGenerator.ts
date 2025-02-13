@@ -451,7 +451,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be `
                 );
                 writer.writeNode(type.internalType.value);
-                writer.write(", instead received \" . ");
+                writer.write(', instead received " . ');
             } else {
                 writer.write(
                     `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${type.internalType.type}, instead received " . `
