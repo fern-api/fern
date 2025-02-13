@@ -161,6 +161,17 @@ export class TypeLiteral extends AstNode {
         }
     }
 
+    public isClass(): this is Class_ {
+        return (this.internalType as Class_).type === "class";
+    }
+
+    public asClassOrThrow(): Class_ {
+        if (this.isClass()) {
+            return this.internalType as Class_;
+        }
+        throw new Error("Internal error; ts.TypeLiteral is not a class");
+    }
+
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {
         writer.writeLine("<<<EOT");
         writer.writeNoIndent(value);

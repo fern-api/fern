@@ -8,9 +8,14 @@ use Seed\Types\Types\Actor;
 use Seed\Types\Types\ExtendedMovie;
 use Seed\Types\Types\Entity;
 use Seed\Types\BasicType;
-use Seed\Commons\Types\Types\Metadata;
+use Seed\Types\Types\Metadata;
+use Seed\Commons\Types\Types\EventInfo;
+use Seed\Commons\Types\Types\Data;
 use Seed\Types\Types\Migration;
 use Seed\Types\Types\MigrationStatus;
+use Seed\Types\Types\Exception;
+use Seed\Types\Types\ExceptionInfo;
+use Seed\Types\Types\Test;
 use Seed\Types\Types\Node;
 use Seed\Types\Types\Tree;
 use Seed\Types\Types\Directory;
@@ -54,22 +59,36 @@ $client->service->createBigEntity(
             'type' => BasicType::Primitive->value,
             'name' => 'name',
         ]),
-        'metadata' => 'todo',
-        'commonMetadata' => new Metadata([
+        'metadata' => Metadata::html([
+            'extra' => 'extra',
+        ], [
+            'tags',
+        ]),
+        'commonMetadata' => new \Seed\Commons\Types\Types\Metadata([
             'id' => 'id',
             'data' => [
                 'data' => 'data',
             ],
             'jsonString' => 'jsonString',
         ]),
-        'eventInfo' => 'todo',
-        'data' => 'todo',
+        'eventInfo' => EventInfo::metadata(new \Seed\Commons\Types\Types\Metadata([
+            'id' => 'id',
+            'data' => [
+                'data' => 'data',
+            ],
+            'jsonString' => 'jsonString',
+        ])),
+        'data' => Data::string(),
         'migration' => new Migration([
             'name' => 'name',
             'status' => MigrationStatus::Running->value,
         ]),
-        'exception' => 'todo',
-        'test' => 'todo',
+        'exception' => Exception::generic(new ExceptionInfo([
+            'exceptionType' => 'exceptionType',
+            'exceptionMessage' => 'exceptionMessage',
+            'exceptionStacktrace' => 'exceptionStacktrace',
+        ])),
+        'test' => Test::and_(),
         'node' => new Node([
             'name' => 'name',
             'nodes' => [
