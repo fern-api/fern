@@ -36,10 +36,10 @@ class GetSubmissionStateResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   timeSubmitted?: ?DateTime,
      *   submission: string,
      *   language: value-of<Language>,
      *   submissionTypeState: mixed,
+     *   timeSubmitted?: ?DateTime,
      * } $values
      */
     public function __construct(

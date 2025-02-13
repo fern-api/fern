@@ -27,9 +27,9 @@ class WorkspaceRunDetails extends JsonSerializableType
 
     /**
      * @param array{
+     *   stdout: string,
      *   exceptionV2?: mixed,
      *   exception?: ?ExceptionInfo,
-     *   stdout: string,
      * } $values
      */
     public function __construct(

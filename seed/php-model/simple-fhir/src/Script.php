@@ -25,7 +25,12 @@ class Script extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   relatedResources: array<Account|Patient|Practitioner|Script>,
+     *   relatedResources: array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )>,
      *   memo: Memo,
      *   resourceType: string,
      *   name: string,

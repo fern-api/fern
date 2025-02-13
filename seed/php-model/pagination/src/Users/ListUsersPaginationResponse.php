@@ -34,10 +34,10 @@ class ListUsersPaginationResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   hasNextPage?: ?bool,
-     *   page?: ?Page,
      *   totalCount: int,
      *   data: array<User>,
+     *   hasNextPage?: ?bool,
+     *   page?: ?Page,
      * } $values
      */
     public function __construct(
