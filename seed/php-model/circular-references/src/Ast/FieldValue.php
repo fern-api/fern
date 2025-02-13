@@ -233,23 +233,21 @@ class FieldValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'primitive_value':
-                $args['type'] = 'primitive_value';
                 if (!array_key_exists('primitive_value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'primitive_value'",
                     );
                 }
 
-                $args['primitive_value'] = $data['primitive_value'];
+                $args['value'] = $data['primitive_value'];
                 break;
             case 'object_value':
-                $args['type'] = 'object_value';
-                $args['object_value'] = ObjectValue::jsonDeserialize($data);
+                $args['value'] = ObjectValue::jsonDeserialize($data);
                 break;
             case 'container_value':
-                $args['type'] = 'container_value';
                 if (!array_key_exists('container_value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'container_value'",
@@ -261,7 +259,7 @@ class FieldValue extends JsonSerializableType
                         "Expected property 'containerValue' in JSON data to be array, instead received " . get_debug_type($data['container_value']),
                     );
                 }
-                $args['container_value'] = ContainerValue::jsonDeserialize($data['container_value']);
+                $args['value'] = ContainerValue::jsonDeserialize($data['container_value']);
                 break;
             case '_unknown':
             default:

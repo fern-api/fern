@@ -245,26 +245,25 @@ class Metadata extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'html':
-                $args['type'] = 'html';
                 if (!array_key_exists('html', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
 
-                $args['html'] = $data['html'];
+                $args['value'] = $data['html'];
                 break;
             case 'markdown':
-                $args['type'] = 'markdown';
                 if (!array_key_exists('markdown', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'markdown'",
                     );
                 }
 
-                $args['markdown'] = $data['markdown'];
+                $args['value'] = $data['markdown'];
                 break;
             case '_unknown':
             default:

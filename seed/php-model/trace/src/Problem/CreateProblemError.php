@@ -153,10 +153,10 @@ class CreateProblemError extends JsonSerializableType
             );
         }
 
+        $args['errorType'] = $errorType;
         switch ($errorType) {
             case 'generic':
-                $args['errorType'] = 'generic';
-                $args['generic'] = GenericCreateProblemError::jsonDeserialize($data);
+                $args['value'] = GenericCreateProblemError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

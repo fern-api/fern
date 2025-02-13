@@ -193,14 +193,13 @@ class TestCaseFunction extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'withActualResult':
-                $args['type'] = 'withActualResult';
-                $args['withActualResult'] = TestCaseWithActualResultImplementation::jsonDeserialize($data);
+                $args['value'] = TestCaseWithActualResultImplementation::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
-                $args['custom'] = VoidFunctionDefinition::jsonDeserialize($data);
+                $args['value'] = VoidFunctionDefinition::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

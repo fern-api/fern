@@ -553,50 +553,40 @@ class CodeExecutionUpdate extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'buildingExecutor':
-                $args['type'] = 'buildingExecutor';
-                $args['buildingExecutor'] = BuildingExecutorResponse::jsonDeserialize($data);
+                $args['value'] = BuildingExecutorResponse::jsonDeserialize($data);
                 break;
             case 'running':
-                $args['type'] = 'running';
-                $args['running'] = RunningResponse::jsonDeserialize($data);
+                $args['value'] = RunningResponse::jsonDeserialize($data);
                 break;
             case 'errored':
-                $args['type'] = 'errored';
-                $args['errored'] = ErroredResponse::jsonDeserialize($data);
+                $args['value'] = ErroredResponse::jsonDeserialize($data);
                 break;
             case 'stopped':
-                $args['type'] = 'stopped';
-                $args['stopped'] = StoppedResponse::jsonDeserialize($data);
+                $args['value'] = StoppedResponse::jsonDeserialize($data);
                 break;
             case 'graded':
-                $args['type'] = 'graded';
-                $args['graded'] = GradedResponse::jsonDeserialize($data);
+                $args['value'] = GradedResponse::jsonDeserialize($data);
                 break;
             case 'gradedV2':
-                $args['type'] = 'gradedV2';
-                $args['gradedV2'] = GradedResponseV2::jsonDeserialize($data);
+                $args['value'] = GradedResponseV2::jsonDeserialize($data);
                 break;
             case 'workspaceRan':
-                $args['type'] = 'workspaceRan';
-                $args['workspaceRan'] = WorkspaceRanResponse::jsonDeserialize($data);
+                $args['value'] = WorkspaceRanResponse::jsonDeserialize($data);
                 break;
             case 'recording':
-                $args['type'] = 'recording';
-                $args['recording'] = RecordingResponseNotification::jsonDeserialize($data);
+                $args['value'] = RecordingResponseNotification::jsonDeserialize($data);
                 break;
             case 'recorded':
-                $args['type'] = 'recorded';
-                $args['recorded'] = RecordedResponseNotification::jsonDeserialize($data);
+                $args['value'] = RecordedResponseNotification::jsonDeserialize($data);
                 break;
             case 'invalidRequest':
-                $args['type'] = 'invalidRequest';
-                $args['invalidRequest'] = InvalidRequestResponse::jsonDeserialize($data);
+                $args['value'] = InvalidRequestResponse::jsonDeserialize($data);
                 break;
             case 'finished':
-                $args['type'] = 'finished';
-                $args['finished'] = FinishedResponse::jsonDeserialize($data);
+                $args['value'] = FinishedResponse::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -196,19 +196,18 @@ class ContainerValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'list':
-                $args['type'] = 'list';
                 if (!array_key_exists('list', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'list'",
                     );
                 }
 
-                $args['list'] = $data['list'];
+                $args['value'] = $data['list'];
                 break;
             case 'optional':
-                $args['type'] = 'optional';
                 if (!array_key_exists('optional', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'optional'",
@@ -216,14 +215,14 @@ class ContainerValue extends JsonSerializableType
                 }
 
                 if (is_null($data['optional'])) {
-                    $args['optional'] = null;
+                    $args['value'] = null;
                 } else {
                     if (!(is_array($data['optional']))) {
                         throw new Exception(
                             "Expected property 'optional' in JSON data to be array, instead received " . get_debug_type($data['optional']),
                         );
                     }
-                    $args['optional'] = FieldValue::jsonDeserialize($data['optional']);
+                    $args['value'] = FieldValue::jsonDeserialize($data['optional']);
                 }
                 break;
             case '_unknown':

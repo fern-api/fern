@@ -1516,122 +1516,94 @@ class BigUnion extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'normalSweet':
-                $args['type'] = 'normalSweet';
-                $args['normalSweet'] = NormalSweet::jsonDeserialize($data);
+                $args['value'] = NormalSweet::jsonDeserialize($data);
                 break;
             case 'thankfulFactor':
-                $args['type'] = 'thankfulFactor';
-                $args['thankfulFactor'] = ThankfulFactor::jsonDeserialize($data);
+                $args['value'] = ThankfulFactor::jsonDeserialize($data);
                 break;
             case 'jumboEnd':
-                $args['type'] = 'jumboEnd';
-                $args['jumboEnd'] = JumboEnd::jsonDeserialize($data);
+                $args['value'] = JumboEnd::jsonDeserialize($data);
                 break;
             case 'hastyPain':
-                $args['type'] = 'hastyPain';
-                $args['hastyPain'] = HastyPain::jsonDeserialize($data);
+                $args['value'] = HastyPain::jsonDeserialize($data);
                 break;
             case 'mistySnow':
-                $args['type'] = 'mistySnow';
-                $args['mistySnow'] = MistySnow::jsonDeserialize($data);
+                $args['value'] = MistySnow::jsonDeserialize($data);
                 break;
             case 'distinctFailure':
-                $args['type'] = 'distinctFailure';
-                $args['distinctFailure'] = DistinctFailure::jsonDeserialize($data);
+                $args['value'] = DistinctFailure::jsonDeserialize($data);
                 break;
             case 'practicalPrinciple':
-                $args['type'] = 'practicalPrinciple';
-                $args['practicalPrinciple'] = PracticalPrinciple::jsonDeserialize($data);
+                $args['value'] = PracticalPrinciple::jsonDeserialize($data);
                 break;
             case 'limpingStep':
-                $args['type'] = 'limpingStep';
-                $args['limpingStep'] = LimpingStep::jsonDeserialize($data);
+                $args['value'] = LimpingStep::jsonDeserialize($data);
                 break;
             case 'vibrantExcitement':
-                $args['type'] = 'vibrantExcitement';
-                $args['vibrantExcitement'] = VibrantExcitement::jsonDeserialize($data);
+                $args['value'] = VibrantExcitement::jsonDeserialize($data);
                 break;
             case 'activeDiamond':
-                $args['type'] = 'activeDiamond';
-                $args['activeDiamond'] = ActiveDiamond::jsonDeserialize($data);
+                $args['value'] = ActiveDiamond::jsonDeserialize($data);
                 break;
             case 'popularLimit':
-                $args['type'] = 'popularLimit';
-                $args['popularLimit'] = PopularLimit::jsonDeserialize($data);
+                $args['value'] = PopularLimit::jsonDeserialize($data);
                 break;
             case 'falseMirror':
-                $args['type'] = 'falseMirror';
-                $args['falseMirror'] = FalseMirror::jsonDeserialize($data);
+                $args['value'] = FalseMirror::jsonDeserialize($data);
                 break;
             case 'primaryBlock':
-                $args['type'] = 'primaryBlock';
-                $args['primaryBlock'] = PrimaryBlock::jsonDeserialize($data);
+                $args['value'] = PrimaryBlock::jsonDeserialize($data);
                 break;
             case 'rotatingRatio':
-                $args['type'] = 'rotatingRatio';
-                $args['rotatingRatio'] = RotatingRatio::jsonDeserialize($data);
+                $args['value'] = RotatingRatio::jsonDeserialize($data);
                 break;
             case 'colorfulCover':
-                $args['type'] = 'colorfulCover';
-                $args['colorfulCover'] = ColorfulCover::jsonDeserialize($data);
+                $args['value'] = ColorfulCover::jsonDeserialize($data);
                 break;
             case 'disloyalValue':
-                $args['type'] = 'disloyalValue';
-                $args['disloyalValue'] = DisloyalValue::jsonDeserialize($data);
+                $args['value'] = DisloyalValue::jsonDeserialize($data);
                 break;
             case 'gruesomeCoach':
-                $args['type'] = 'gruesomeCoach';
-                $args['gruesomeCoach'] = GruesomeCoach::jsonDeserialize($data);
+                $args['value'] = GruesomeCoach::jsonDeserialize($data);
                 break;
             case 'totalWork':
-                $args['type'] = 'totalWork';
-                $args['totalWork'] = TotalWork::jsonDeserialize($data);
+                $args['value'] = TotalWork::jsonDeserialize($data);
                 break;
             case 'harmoniousPlay':
-                $args['type'] = 'harmoniousPlay';
-                $args['harmoniousPlay'] = HarmoniousPlay::jsonDeserialize($data);
+                $args['value'] = HarmoniousPlay::jsonDeserialize($data);
                 break;
             case 'uniqueStress':
-                $args['type'] = 'uniqueStress';
-                $args['uniqueStress'] = UniqueStress::jsonDeserialize($data);
+                $args['value'] = UniqueStress::jsonDeserialize($data);
                 break;
             case 'unwillingSmoke':
-                $args['type'] = 'unwillingSmoke';
-                $args['unwillingSmoke'] = UnwillingSmoke::jsonDeserialize($data);
+                $args['value'] = UnwillingSmoke::jsonDeserialize($data);
                 break;
             case 'frozenSleep':
-                $args['type'] = 'frozenSleep';
-                $args['frozenSleep'] = FrozenSleep::jsonDeserialize($data);
+                $args['value'] = FrozenSleep::jsonDeserialize($data);
                 break;
             case 'diligentDeal':
-                $args['type'] = 'diligentDeal';
-                $args['diligentDeal'] = DiligentDeal::jsonDeserialize($data);
+                $args['value'] = DiligentDeal::jsonDeserialize($data);
                 break;
             case 'attractiveScript':
-                $args['type'] = 'attractiveScript';
-                $args['attractiveScript'] = AttractiveScript::jsonDeserialize($data);
+                $args['value'] = AttractiveScript::jsonDeserialize($data);
                 break;
             case 'hoarseMouse':
-                $args['type'] = 'hoarseMouse';
-                $args['hoarseMouse'] = HoarseMouse::jsonDeserialize($data);
+                $args['value'] = HoarseMouse::jsonDeserialize($data);
                 break;
             case 'circularCard':
-                $args['type'] = 'circularCard';
-                $args['circularCard'] = CircularCard::jsonDeserialize($data);
+                $args['value'] = CircularCard::jsonDeserialize($data);
                 break;
             case 'potableBad':
-                $args['type'] = 'potableBad';
-                $args['potableBad'] = PotableBad::jsonDeserialize($data);
+                $args['value'] = PotableBad::jsonDeserialize($data);
                 break;
             case 'triangularRepair':
-                $args['type'] = 'triangularRepair';
-                $args['triangularRepair'] = TriangularRepair::jsonDeserialize($data);
+                $args['value'] = TriangularRepair::jsonDeserialize($data);
                 break;
             case 'gaseousRoad':
-                $args['type'] = 'gaseousRoad';
-                $args['gaseousRoad'] = GaseousRoad::jsonDeserialize($data);
+                $args['value'] = GaseousRoad::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

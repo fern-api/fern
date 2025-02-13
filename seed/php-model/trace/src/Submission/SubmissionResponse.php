@@ -319,31 +319,27 @@ class SubmissionResponse extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'serverInitialized':
-                $args['type'] = 'serverInitialized';
                 $args['value'] = null;
                 break;
             case 'problemInitialized':
-                $args['type'] = 'problemInitialized';
                 if (!array_key_exists('problemInitialized', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'problemInitialized'",
                     );
                 }
 
-                $args['problemInitialized'] = $data['problemInitialized'];
+                $args['value'] = $data['problemInitialized'];
                 break;
             case 'workspaceInitialized':
-                $args['type'] = 'workspaceInitialized';
                 $args['value'] = null;
                 break;
             case 'serverErrored':
-                $args['type'] = 'serverErrored';
-                $args['serverErrored'] = ExceptionInfo::jsonDeserialize($data);
+                $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'codeExecutionUpdate':
-                $args['type'] = 'codeExecutionUpdate';
                 if (!array_key_exists('codeExecutionUpdate', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'codeExecutionUpdate'",
@@ -355,11 +351,10 @@ class SubmissionResponse extends JsonSerializableType
                         "Expected property 'codeExecutionUpdate' in JSON data to be array, instead received " . get_debug_type($data['codeExecutionUpdate']),
                     );
                 }
-                $args['codeExecutionUpdate'] = CodeExecutionUpdate::jsonDeserialize($data['codeExecutionUpdate']);
+                $args['value'] = CodeExecutionUpdate::jsonDeserialize($data['codeExecutionUpdate']);
                 break;
             case 'terminated':
-                $args['type'] = 'terminated';
-                $args['terminated'] = TerminatedResponse::jsonDeserialize($data);
+                $args['value'] = TerminatedResponse::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

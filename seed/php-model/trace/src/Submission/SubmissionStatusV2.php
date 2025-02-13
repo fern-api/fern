@@ -193,14 +193,13 @@ class SubmissionStatusV2 extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'test':
-                $args['type'] = 'test';
-                $args['test'] = TestSubmissionStatusV2::jsonDeserialize($data);
+                $args['value'] = TestSubmissionStatusV2::jsonDeserialize($data);
                 break;
             case 'workspace':
-                $args['type'] = 'workspace';
-                $args['workspace'] = WorkspaceSubmissionStatusV2::jsonDeserialize($data);
+                $args['value'] = WorkspaceSubmissionStatusV2::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

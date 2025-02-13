@@ -191,26 +191,25 @@ class Test extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'and':
-                $args['type'] = 'and';
                 if (!array_key_exists('and', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'and'",
                     );
                 }
 
-                $args['and'] = $data['and'];
+                $args['value'] = $data['and'];
                 break;
             case 'or':
-                $args['type'] = 'or';
                 if (!array_key_exists('or', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'or'",
                     );
                 }
 
-                $args['or'] = $data['or'];
+                $args['value'] = $data['or'];
                 break;
             case '_unknown':
             default:

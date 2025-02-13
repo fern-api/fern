@@ -166,13 +166,12 @@ class Exception extends JsonSerializableType
             );
         }
         
+        $args['type'] = $type;
         switch ($type) {
             case 'generic':
-                $args['type'] = 'generic';
-                $args['generic'] = ExceptionInfo::jsonDeserialize($data);
+                $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'timeout':
-                $args['type'] = 'timeout';
                 $args['value'] = null;
                 break;
             case '_unknown':
