@@ -89,7 +89,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getUnpagedEndpointMethodName(endpoint: HttpEndpoint): string {
-        return `__${this.getEndpointMethodName(endpoint)}`;
+        return `_${this.getEndpointMethodName(endpoint)}`;
     }
 
     public getPagedEndpointMethodName(endpoint: HttpEndpoint): string {

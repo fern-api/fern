@@ -221,7 +221,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 type: optionsParamType
             })
         );
-        const itemType = this.getPaginationItemType(endpoint);
         const return_ = this.getPagerReturnType(endpoint);
         return php.method({
             name: this.context.getPagedEndpointMethodName(endpoint),
@@ -498,18 +497,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getFullPropertyPath(property: RequestProperty | ResponseProperty): Name[] {
         return [...(property.propertyPath ?? []), property.property.name.name];
-    }
-
-    private get(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): php.AstNode {
-        return php.codeblock((writer) => {
-            writer.writeNode(php.variable(variableName));
-            if (propertyPath) {
-                for (const propertyPathElement of propertyPath) {
-                    return this.context.getTypeGetter(propertyPathElement);
-                }
-            }
-            return this.context.getTypeGetter(property.name.name);
-        });
     }
 
     private nullableGet(
