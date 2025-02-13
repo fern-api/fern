@@ -57,6 +57,7 @@ class RawClient
      * @param BaseApiRequest $request
      * @param ?array{
      *     maxRetries?: int,
+     *     timeout?: float,
      *     headers?: array<string, string>,
      *     queryParameters?: array<string, mixed>,
      *     bodyProperties?: array<string, mixed>,
@@ -76,6 +77,7 @@ class RawClient
     /**
      * @param array{
      *     maxRetries?: int,
+     *     timeout?: float,
      * } $options
      * @return array<string, mixed>
      */
@@ -83,6 +85,9 @@ class RawClient
         $guzzleOptions = [];
         if (isset($options['maxRetries'])) {
             $guzzleOptions['maxRetries'] = $options['maxRetries'];
+        }
+        if (isset($options['timeout'])) {
+            $guzzleOptions['timeout'] = $options['timeout'];
         }
         return $guzzleOptions;
     }

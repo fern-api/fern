@@ -11,7 +11,6 @@ import {
     HttpMethod,
     HttpService,
     Name,
-    RequestProperty,
     SdkRequestWrapper,
     ServiceId,
     Subpackage,
@@ -256,6 +255,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "queryParameters";
     }
 
+    public getTimeoutOptionName(): string {
+        return "timeout";
+    }
+
     public getClientOptionsName(): string {
         return this.getOptionsName();
     }
@@ -287,6 +290,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     optional: true
                 },
                 {
+                    key: this.getTimeoutOptionName(),
+                    valueType: php.Type.float(),
+                    optional: true
+                },
+                {
                     key: this.getHeadersOptionName(),
                     valueType: php.Type.map(php.Type.string(), php.Type.string()),
                     optional: true
@@ -308,6 +316,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
+                optional: true
+            },
+            {
+                key: this.getTimeoutOptionName(),
+                valueType: php.Type.float(),
                 optional: true
             },
             {
