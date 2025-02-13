@@ -568,6 +568,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return name.name.pascalCase.safeName;
     }
 
+    public getDeserializeMethodName(): string {
+        if (this.customConfig["skip-response-validation"]) {
+            return `DeserializeWithFallback`
+        } else {
+            return `Deserialize`
+        }
+    }
+
     private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
         return `_${protobufService.name.camelCase.safeName}`;
     }

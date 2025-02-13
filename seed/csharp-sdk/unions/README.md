@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedUnions;
 
 var client = new SeedUnionsClient();
-await client.Union.GetAsync("id");
+await client.Bigunion.GetAsync("id");
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 using SeedUnions;
 
 try {
-    var response = await client.Union.GetAsync(...);
+    var response = await client.Bigunion.GetAsync(...);
 } catch (SeedUnionsApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -55,7 +55,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Union.GetAsync(
+var response = await client.Bigunion.GetAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -68,7 +68,7 @@ var response = await client.Union.GetAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Union.GetAsync(
+var response = await client.Bigunion.GetAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

@@ -6,6 +6,7 @@ namespace SeedVersion.Core;
 internal static partial class JsonOptions
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions;
+    public static readonly JsonSerializerOptions JsonSerializerOptionsWithFallback;
 
     static JsonOptions()
     {
@@ -17,6 +18,24 @@ internal static partial class JsonOptions
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
+
+        JsonSerializerOptionsWithFallback = new JsonSerializerOptions(options)
+        {
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver
+            {
+                Modifiers =
+                {
+                    static typeInfo =>
+                    {
+                        foreach (var propertyInfo in typeInfo.Properties)
+                        {
+                            // Strip IsRequired constraint from every property.
+                            propertyInfo.IsRequired = false;
+                        }
+                    },
+                },
+            },
+        };
     }
 
     static partial void ConfigureJsonSerializerOptions(JsonSerializerOptions defaultOptions);
@@ -38,5 +57,10 @@ internal static class JsonUtils
     public static T Deserialize<T>(string json)
     {
         return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
+    }
+
+    public static T DeserializeWithFallback<T>(string json)
+    {
+        return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptionsWithFallback)!;
     }
 }
