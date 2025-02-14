@@ -85,6 +85,9 @@ fixtures:
     - customConfig:
         generate-error-types: false
       outputFolder: no-generate-error-types
+    - customConfig:
+        skip-response-validation: true
+      outputFolder: skip-response-validation
   optional:
     - customConfig:
         simplify-object-dictionaries: false

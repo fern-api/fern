@@ -570,9 +570,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getDeserializeMethodName(): string {
         if (this.customConfig["skip-response-validation"]) {
-            return `DeserializeWithFallback`
+            return "DeserializeWithFallback";
         } else {
-            return `Deserialize`
+            return "Deserialize";
         }
     }
 
