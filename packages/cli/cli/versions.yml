@@ -4,6 +4,13 @@
         better fallback logic for sparse requests.
       type: fix
   irVersion: 55
+  version: 0.51.38
+
+- changelogEntry:
+    - summary: |
+        Fixed handling of Windows filepaths in the docs generator by ensuring consistent path separators and proper absolute path handling.
+      type: fix
+  irVersion: 55
   version: 0.51.37
 
 - changelogEntry:

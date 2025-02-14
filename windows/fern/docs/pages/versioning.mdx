@@ -1,0 +1,21 @@
+---
+title: "Enterprise API Versioning"
+slug: versioning
+---
+
+The Pied Piper Enterprise API Platform implements a robust versioning strategy through the **`x-api-version`** header, enabling enterprise clients to maintain stable integrations while allowing for platform evolution.
+
+## Version Control Strategy
+Our enterprise versioning system ensures:
+- Backward compatibility for existing integrations
+- Predictable API behavior across your enterprise systems
+- Controlled migration paths for version updates
+- Risk mitigation for breaking changes
+
+## Implementation
+When developing enterprise integrations, specify the desired API version using the **`x-api-version`** header with the current date. This practice establishes a fixed integration point, protecting your enterprise systems from potential breaking changes in future releases.
+
+If the version header is omitted, the system will automatically route requests to the latest stable API version. However, for production enterprise deployments, we strongly recommend explicitly setting the version header to ensure consistent behavior.
+
+## Header Format Specification
+The **`x-api-version`** header must follow the ISO 8601 date format: `YYYY-MM-DD`
