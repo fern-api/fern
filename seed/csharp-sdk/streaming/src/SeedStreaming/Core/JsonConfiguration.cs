@@ -6,7 +6,7 @@ namespace SeedStreaming.Core;
 internal static partial class JsonOptions
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions;
-    public static readonly JsonSerializerOptions JsonSerializerOptionsWithFallback;
+    internal static readonly JsonSerializerOptions JsonSerializerOptionsWithFallback;
 
     static JsonOptions()
     {
@@ -59,7 +59,7 @@ internal static class JsonUtils
         return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
     }
 
-    public static T DeserializeWithFallback<T>(string json)
+    internal static T DeserializeWithFallback<T>(string json)
     {
         return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptionsWithFallback)!;
     }
