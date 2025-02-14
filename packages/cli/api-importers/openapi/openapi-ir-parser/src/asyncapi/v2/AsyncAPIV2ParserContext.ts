@@ -17,6 +17,6 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIParserContext<Async
         if (resolvedMessage == null) {
             throw new Error(`${message.$ref} is undefined`);
         }
-        return resolvedMessage;
+        return resolvedMessage as AsyncAPIV2.MessageV2;
     }
 }

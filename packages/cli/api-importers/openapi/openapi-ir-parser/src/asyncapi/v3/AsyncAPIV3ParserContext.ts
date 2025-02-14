@@ -13,11 +13,12 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             const channelPath = parts[2];
             const messageKey = parts[4];
 
-            if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]?.messages) {
+            if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]) {
                 throw new Error(`Failed to resolve message reference ${message.$ref} in channel ${channelPath}`);
             }
 
-            const resolvedInChannel = this.document.channels[channelPath].messages![messageKey];
+            const channel = this.document.channels[channelPath] as AsyncAPIV3.Channel;
+            const resolvedInChannel = (channel as AsyncAPIV3.Channel).messages?.[messageKey];
             if (resolvedInChannel == null) {
                 throw new Error(`${message.$ref} is undefined`);
             }

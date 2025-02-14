@@ -1,3 +1,4 @@
 api:
   specs:
     - openapi: ../openapi.yaml
+    - asyncapi: ../asyncapi.json

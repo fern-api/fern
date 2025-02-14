@@ -8,9 +8,11 @@ import { ParseOpenAPIOptions } from "../options";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
+import { AsyncAPIV2 } from "./v2";
+import { AsyncAPIV3 } from "./v3";
 
 export abstract class AbstractAsyncAPIParserContext<TDocument extends object> implements SchemaParserContext {
-    public readonly document: TDocument;
+    public readonly document: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
     public readonly taskContext: TaskContext;
     public readonly logger: Logger;
     public readonly DUMMY: SchemaParserContext;
@@ -25,7 +27,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         options,
         namespace
     }: {
-        document: TDocument;
+        document: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
         namespace: string | undefined;
@@ -80,7 +82,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
         const splitSchemaKey = schemaKey.split("/");
 
-        const components = (this.document as any).components;
+        const components = (this.document as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3).components;
         if (components == null || components.schemas == null) {
             throw new Error("Document does not have components.schemas.");
         }
