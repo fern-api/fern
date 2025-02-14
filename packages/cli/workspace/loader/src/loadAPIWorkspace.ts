@@ -75,6 +75,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                     useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                     coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
@@ -126,6 +127,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                 coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,

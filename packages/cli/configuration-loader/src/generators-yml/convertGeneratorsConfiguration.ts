@@ -12,6 +12,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+    shouldUseIdiomaticRequestNames: undefined,
     asyncApiMessageNaming: undefined,
     onlyIncludeReferencedSchemas: undefined,
     shouldUseOptionalAdditionalProperties: undefined,
@@ -134,6 +135,7 @@ async function parseAPIConfigurationToApiLocations(
                             ...UNDEFINED_API_DEFINITION_SETTINGS,
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
+                            shouldUseIdiomaticRequestNames: definition.settings?.["idiomatic-request-names"],
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
                             onlyIncludeReferencedSchemas: definition.settings?.["only-include-referenced-schemas"]
                         }
@@ -153,6 +155,7 @@ async function parseAPIConfigurationToApiLocations(
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
+                    shouldUseIdiomaticRequestNames: apiConfiguration.settings?.["idiomatic-request-names"],
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
                     onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"]
                 }
@@ -177,6 +180,7 @@ async function parseAPIConfigurationToApiLocations(
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
                     onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
                 }
             });
@@ -193,6 +197,7 @@ async function parseAPIConfigurationToApiLocations(
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    shouldUseIdiomaticRequestNames: openapi.settings?.["idiomatic-request-names"],
                     onlyIncludeReferencedSchemas: openapi.settings?.["only-include-referenced-schemas"]
                 }
             });
@@ -211,6 +216,7 @@ async function parseAPIConfigurationToApiLocations(
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
                     asyncApiMessageNaming: settings?.["message-naming"],
                     onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
                 }
@@ -275,6 +281,7 @@ async function parseApiConfigurationV2Schema({
                     shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         spec.settings?.["prefer-undiscriminated-unions-with-literals"] ?? false,
+                    shouldUseIdiomaticRequestNames: spec.settings?.["idiomatic-request-names"],
                     asyncApiMessageNaming: undefined,
                     onlyIncludeReferencedSchemas: spec.settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
