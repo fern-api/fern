@@ -28,7 +28,7 @@ public abstract class UnionSubType {
 
     private final ClassName unionClassName;
     private final ParameterizedTypeName visitorInterfaceClassName;
-    private final UnionTypeDeclaration unionTypeDeclaration;
+    protected final UnionTypeDeclaration unionTypeDeclaration;
 
     protected final PoetTypeNameMapper poetTypeNameMapper;
 

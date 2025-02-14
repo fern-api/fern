@@ -53,13 +53,6 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.overriddenTypeDeclarations =
                 overriddenTypeDeclarations(className, generatorContext, unionTypeDeclaration, reservedTypeNames);
-        this.reservedTypeNames = new HashSet<>(reservedTypeNames);
-        this.reservedTypeNames.addAll(unionTypeDeclaration.getTypes().stream()
-                .map(SingleUnionType::getDiscriminantValue)
-                .map(NameAndWireValue::getName)
-                .map(Name::getPascalCase)
-                .map(SafeAndUnsafeString::getSafeName)
-                .collect(Collectors.toList()));
     }
 
     @Override
@@ -251,7 +244,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             return unionBuilder
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     // Passing an empty string here because we don't want a prefix before "Value"
-                    .addMethod(MethodSpec.methodBuilder("get" + valueClassName("", reservedTypeNames))
+                    .addMethod(MethodSpec.methodBuilder(
+                                    "get" + valueClassName("", reservedTypeNames, unionTypeDeclaration))
                             .addAnnotation(JsonValue.class)
                             .addModifiers(Modifier.PRIVATE)
                             .returns(getValueInterfaceClassName())
@@ -261,7 +255,15 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         }
     }
 
-    private static String valueClassName(String name, Set<String> reservedTypeNames) {
+    private static String valueClassName(
+            String name, Set<String> reservedTypeNames, UnionTypeDeclaration unionTypeDeclaration) {
+        reservedTypeNames = new HashSet<>(reservedTypeNames);
+        reservedTypeNames.addAll(unionTypeDeclaration.getTypes().stream()
+                .map(SingleUnionType::getDiscriminantValue)
+                .map(NameAndWireValue::getName)
+                .map(Name::getPascalCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .collect(Collectors.toList()));
         return reservedTypeNames.contains(name + VALUE_CLASS_NAME)
                 ? name + VALUE_CLASS_NAME_UNDERSCORE
                 : name + VALUE_CLASS_NAME;
@@ -345,7 +347,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                     .getName()
                                     .getPascalCase()
                                     .getSafeName(),
-                            reservedTypeNames));
+                            reservedTypeNames,
+                            unionTypeDeclaration));
         }
 
         @Override
