@@ -3,89 +3,61 @@
 service: 
    base-path: /sdk
    auth: true
+   audiences: 
+    - external
    endpoints: 
-     generateSDK: 
-       method: POST
-       path: /generate
-       docs: Generate an SDK for a specified API definition in one of the supported languages.
-       request: GenerateSDKRequest
-       response: GenerateSDKResponse
-       errors:
-        - InvalidRequest
-        - Unauthorized
-        - FailedToPublish
+      generate: 
+        method: POST
+        display-name: Generate SDK
+        path: /generate
+        docs: Generate an SDK for your API definition in one of our supported languages.
+        request:
+          name: GenerateSDKRequest
+          body: 
+            properties: 
+              api:
+                type: APIDefinition
+                docs: The API definition to use as input for SDK generation.
+              language: 
+                type: SDKLanguage
+                docs: The target programming language for the generated SDK.
+              publishing:
+                type: SDKPublishingConfiguration
+                docs: Configuration options for publishing the generated SDK.          
+        response: GenerateSDKResponse
+      
+      getStatus:
+        method: GET
+        display-name: Get SDK Generation Status
+        path: /status/{jobId}
+        docs: Get the status of an SDK generation job.
+        path-parameters:
+          jobId:
+            type: string
+            docs: The ID of the SDK generation job to check the status of
+        response: SDKGenerationStatus
 
 types:
-  GenerateSDKRequest:
-    properties:
-      apiDefinition:
-        type: APIDefinitionSchema
-        docs: The API definition used as input to the SDK generation process.
-      language: 
-        type: TargetLanguage
-        docs: The target programming language for the SDK.
-      output:
-        type: OutputConfiguration
-        docs: The configuration for the output of the SDK generation process.
-      metadata:
-        type: optional<MetadataConfiguration>
-        docs: Metadata configuration for the generated SDK.
-      apiSettings:
-        type: optional<APISettings>
-        docs: API-specific configuration settings.
-      options:
-        type: optional<GeneratorOptions>
-        docs: Additional generator options and configuration.
   GenerateSDKResponse:
     properties:
-      sdkUrl:
+      jobId:
         type: string
-        docs: The URL where the generated SDK can be downloaded.
-      packageMetadata: PackageMetadataSchema
+        docs: The ID of the SDK generation job that was created
 
-  APIDefinitionSchema: 
-    enum:
-      - openapi
-      - postman
-      - ferndef
-
-  PackageMetadataSchema:
-    properties:
-      packageName:
-        type: string
-        docs: The name of the generated package.
-      version:
-        type: string
-        docs: The version of the generated SDK.
-
-  OutputConfiguration:
-    properties:
-      location: 
-        type: OutputConfigurationLocation
-        docs: The destination where the SDK should be published.
-      path:
-        type: optional<string>
-        docs: The local file system path (required if 'local-file-system' is chosen).
-      repository:
-        type: optional<string>
-        docs: The repository where the SDK should be pushed (required if GitHub, GitLab, BitBucket is chosen).
-      packageName:
-        type: optional<string>
-        docs: The name of the package (if publishing to a public or private package registry).
-      token:
-        type: optional<string>
-        docs: The environment secret used to publish the package to a public or private package registry.
-
-  OutputConfigurationLocation:
-    enum:
-      - public_registry
-      - private_registry
-      - local_file_system
-      - github
-      - gitlab
-      - bitbucket
-
-  TargetLanguage:
+  APIDefinition: 
+    union: 
+      openapi: 
+        type: unknown 
+        docs: An OpenAPI specification to generate SDKs from.
+      postman: 
+        type: unknown 
+        docs: A Postman Collection to generate SDKs from.  
+      fern: 
+        type: unknown 
+        docs: A Fern Definition to generate SDKs from.
+  
+  SDKLanguage:
+    docs: The programming language to generate the SDK in
     enum:
       - typescript
       - python
@@ -94,65 +66,145 @@ types:
       - csharp
       - ruby
       - php
-
-  MetadataConfiguration:
+  
+  SDKPublishingConfiguration: 
     properties:
-      description:
-        type: optional<string>
-        docs: A description of the SDK.
-      authors:
-        type: optional<list<string>>
-        docs: List of authors for the SDK.
-      keywords:
-        type: optional<list<string>>
-        docs: Keywords associated with the SDK.
-      license: 
-        type: LicenseType
-        docs: License type for the SDK.
-      documentationLink:
-        type: optional<string>
-        docs: A URL pointing to the SDK documentation.
+      repository: 
+        type: optional<Repository>
+        docs: Repository to sync the generated SDK to (e.g. GitHub, GitLab)
+      registry: 
+        type: optional<Registry> 
+        docs: Package registry where the SDK should be published
 
-  APISettings:
+  Registry: 
+    union:
+      npm: NpmPublishingConfiguration
+      pypi: PypiPublishingConfiguration
+      maven: MavenPublshingConfiguration
+      nuget: NugetPublishingConfiguration
+      rubyGems: RubyGemsPublishingConfiguration
+      packagist: PackagistPublishingConfiguration
+
+  NpmPublishingConfiguration: 
+    properties: 
+      url: 
+        type: optional<string>
+        docs: Registry URL (defaults to public NPM registry)
+      packageName: 
+        type: string
+        docs: Name of the package to publish
+      token: 
+        type: optional<string>
+        docs: NPM authentication token for publishing
+  
+  PypiPublishingConfiguration:
     properties:
-      useTitle:
-        type: optional<boolean>
-        docs: Whether to use the title from the API definition.
-      respectNullableSchemas:
-        type: optional<boolean>
-        docs: Whether to respect nullable properties in schemas.
-      inlinePathParameters:
-        type: optional<boolean>
-        docs: Whether to inline path parameters.
-
-  GeneratorOptions:
-    properties:
-      disableExamples:
-        type: optional<boolean>
-        docs: Disable generating examples in the SDK.
-      version:
+      url:
         type: optional<string>
-        docs: The version of the SDK to generate.
-      config:
-        type: optional<map<string, unknown>>
-        docs: Additional generator-specific configuration.
+        docs: Registry URL (defaults to public PyPI registry)
+      packageName:
+        type: string
+        docs: Name of the package to publish
+      token:
+        type: optional<string>
+        docs: PyPI authentication token for publishing
 
-  LicenseType:
-    enum:
-      - MIT
-      - value: Apache
-        docs: Apache 2.0
-      - Custom
+  MavenPublshingConfiguration:
+    properties:
+      url:
+        type: optional<string>
+        docs: Registry URL (defaults to Maven Central)
+      coordinate:
+        type: string
+        docs: Maven coordinate for the package (e.g. com.company:sdk)
+      username:
+        type: string
+        docs: Maven username for publishing
+      password:
+        type: string
+        docs: Maven password for publishing
 
-errors:
-  InvalidRequest: 
-    status-code: 400
-    docs: The request was malformed or contained invalid parameters.
+  NugetPublishingConfiguration:
+    properties:
+      url:
+        type: optional<string>
+        docs: Registry URL (defaults to public NuGet registry)
+      packageName:
+        type: string
+        docs: Name of the package to publish
+      token:
+        type: optional<string>
+        docs: NuGet authentication token for publishing
 
-  Unauthorized:
-    status-code: 401
-    docs: Authentication failed or missing credentials.
+  RubyGemsPublishingConfiguration:
+    properties:
+      url:
+        type: optional<string>
+        docs: Registry URL (defaults to public RubyGems registry)
+      packageName:
+        type: string
+        docs: Name of the package to publish
+      token:
+        type: optional<string>
+        docs: RubyGems authentication token for publishing
 
-  FailedToPublish:
-    status-code: 500
-    docs: Failed to publish the SDK.
+  PackagistPublishingConfiguration:
+    properties:
+      url:
+        type: optional<string>
+        docs: Registry URL (defaults to public Packagist registry)
+      packageName:
+        type: string
+        docs: Name of the package to publish
+      token:
+        type: optional<string>
+        docs: Packagist authentication token for publishing
+  
+  Repository: 
+    union: 
+      github: GitHubRepository
+      gitlab: GitLabRepository
+
+  GitHubRepository: 
+    properties:
+      repository: 
+        type: string
+        docs: | 
+          GitHub repository to sync to (format: owner/repo)
+    
+  GitLabRepository:
+    properties:
+      repository:
+        type: string
+        docs: | 
+          GitLab repository to sync to (format: owner/repo)
+  
+  SDKGenerationStatus:
+    union:
+      running: RunningSDKGenerationStatus
+      completed: CompletedSDKGenerationStatus  
+      failed: FailedSDKGenerationStatus
+
+  RunningSDKGenerationStatus:
+    properties:
+      estimatedTimeRemainingSeconds:
+        type: optional<integer>
+        docs: Estimated number of seconds remaining until SDK generation completes
+
+  CompletedSDKGenerationStatus:
+    properties:
+      downloadUrl:
+        type: string
+        docs: URL to download the raw source code of the generated SDK
+      repository: 
+        type: optional<Repository>
+        docs: Repository to sync the generated SDK to (e.g. GitHub, GitLab)
+      registry: 
+        type: optional<Registry> 
+        docs: Package registry where the SDK should be published      
+
+  FailedSDKGenerationStatus:
+    properties:
+      error:
+        type: string
+        docs: Error message explaining why generation failed
