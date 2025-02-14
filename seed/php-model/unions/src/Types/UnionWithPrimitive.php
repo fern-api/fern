@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithPrimitive extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integer'
+     *   |'string'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class UnionWithPrimitive extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integer'
+     *   |'string'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |string
@@ -32,7 +40,7 @@ class UnionWithPrimitive extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return UnionWithPrimitive
-     */
-    public static function _unknown(mixed $_unknown): UnionWithPrimitive
-    {
-        return new UnionWithPrimitive([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isInteger(): bool
@@ -90,7 +86,7 @@ class UnionWithPrimitive extends JsonSerializableType
     {
         if (!(is_int($this->value) && $this->type === 'integer')) {
             throw new Exception(
-                "Expected integer; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected integer; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class UnionWithPrimitive extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'string')) {
             throw new Exception(
-                "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected string; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,26 +189,25 @@ class UnionWithPrimitive extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integer':
-                $args['type'] = 'integer';
                 if (!array_key_exists('integer', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'integer'",
                     );
                 }
 
-                $args['integer'] = $data['integer'];
+                $args['value'] = $data['integer'];
                 break;
             case 'string':
-                $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'string'",
                     );
                 }
 
-                $args['string'] = $data['string'];
+                $args['value'] = $data['string'];
                 break;
             case '_unknown':
             default:

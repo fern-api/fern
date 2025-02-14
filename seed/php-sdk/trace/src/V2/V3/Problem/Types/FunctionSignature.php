@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class FunctionSignature extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'void'
+     *   |'nonVoid'
+     *   |'voidThatTakesActualResult'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class FunctionSignature extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'void'
+     *   |'nonVoid'
+     *   |'voidThatTakesActualResult'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    VoidFunctionSignature
      *   |NonVoidFunctionSignature
@@ -34,7 +44,7 @@ class FunctionSignature extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -78,18 +88,6 @@ class FunctionSignature extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return FunctionSignature
-     */
-    public static function _unknown(mixed $_unknown): FunctionSignature
-    {
-        return new FunctionSignature([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isVoid(): bool
@@ -104,7 +102,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionSignature && $this->type === 'void')) {
             throw new Exception(
-                "Expected void; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected void; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +124,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof NonVoidFunctionSignature && $this->type === 'nonVoid')) {
             throw new Exception(
-                "Expected nonVoid; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected nonVoid; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +146,7 @@ class FunctionSignature extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionSignatureThatTakesActualResult && $this->type === 'voidThatTakesActualResult')) {
             throw new Exception(
-                "Expected voidThatTakesActualResult; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected voidThatTakesActualResult; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -233,18 +231,16 @@ class FunctionSignature extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'void':
-                $args['type'] = 'void';
-                $args['void'] = VoidFunctionSignature::jsonDeserialize($data);
+                $args['value'] = VoidFunctionSignature::jsonDeserialize($data);
                 break;
             case 'nonVoid':
-                $args['type'] = 'nonVoid';
-                $args['nonVoid'] = NonVoidFunctionSignature::jsonDeserialize($data);
+                $args['value'] = NonVoidFunctionSignature::jsonDeserialize($data);
                 break;
             case 'voidThatTakesActualResult':
-                $args['type'] = 'voidThatTakesActualResult';
-                $args['voidThatTakesActualResult'] = VoidFunctionSignatureThatTakesActualResult::jsonDeserialize($data);
+                $args['value'] = VoidFunctionSignatureThatTakesActualResult::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

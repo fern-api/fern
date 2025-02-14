@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class AssertCorrectnessCheck extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'deepEquality'
+     *   |'custom'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class AssertCorrectnessCheck extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'deepEquality'
+     *   |'custom'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    DeepEqualityCorrectnessCheck
      *   |VoidFunctionDefinitionThatTakesActualResult
@@ -32,7 +40,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class AssertCorrectnessCheck extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return AssertCorrectnessCheck
-     */
-    public static function _unknown(mixed $_unknown): AssertCorrectnessCheck
-    {
-        return new AssertCorrectnessCheck([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isDeepEquality(): bool
@@ -90,7 +86,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
     {
         if (!($this->value instanceof DeepEqualityCorrectnessCheck && $this->type === 'deepEquality')) {
             throw new Exception(
-                "Expected deepEquality; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected deepEquality; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class AssertCorrectnessCheck extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionDefinitionThatTakesActualResult && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class AssertCorrectnessCheck extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'deepEquality':
-                $args['type'] = 'deepEquality';
-                $args['deepEquality'] = DeepEqualityCorrectnessCheck::jsonDeserialize($data);
+                $args['value'] = DeepEqualityCorrectnessCheck::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
-                $args['custom'] = VoidFunctionDefinitionThatTakesActualResult::jsonDeserialize($data);
+                $args['value'] = VoidFunctionDefinitionThatTakesActualResult::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

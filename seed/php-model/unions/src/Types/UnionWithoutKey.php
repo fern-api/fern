@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithoutKey extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'foo'
+     *   |'bar'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class UnionWithoutKey extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'foo'
+     *   |'bar'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Foo
      *   |Bar
@@ -32,7 +40,7 @@ class UnionWithoutKey extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class UnionWithoutKey extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return UnionWithoutKey
-     */
-    public static function _unknown(mixed $_unknown): UnionWithoutKey
-    {
-        return new UnionWithoutKey([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isFoo(): bool
@@ -90,7 +86,7 @@ class UnionWithoutKey extends JsonSerializableType
     {
         if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class UnionWithoutKey extends JsonSerializableType
     {
         if (!($this->value instanceof Bar && $this->type === 'bar')) {
             throw new Exception(
-                "Expected bar; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected bar; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class UnionWithoutKey extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case 'bar':
-                $args['type'] = 'bar';
-                $args['bar'] = Bar::jsonDeserialize($data);
+                $args['value'] = Bar::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

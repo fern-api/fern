@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionStatusV2 extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'test'
+     *   |'workspace'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class SubmissionStatusV2 extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'test'
+     *   |'workspace'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestSubmissionStatusV2
      *   |WorkspaceSubmissionStatusV2
@@ -32,7 +40,7 @@ class SubmissionStatusV2 extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class SubmissionStatusV2 extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return SubmissionStatusV2
-     */
-    public static function _unknown(mixed $_unknown): SubmissionStatusV2
-    {
-        return new SubmissionStatusV2([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isTest(): bool
@@ -90,7 +86,7 @@ class SubmissionStatusV2 extends JsonSerializableType
     {
         if (!($this->value instanceof TestSubmissionStatusV2 && $this->type === 'test')) {
             throw new Exception(
-                "Expected test; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected test; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class SubmissionStatusV2 extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceSubmissionStatusV2 && $this->type === 'workspace')) {
             throw new Exception(
-                "Expected workspace; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected workspace; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class SubmissionStatusV2 extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'test':
-                $args['type'] = 'test';
-                $args['test'] = TestSubmissionStatusV2::jsonDeserialize($data);
+                $args['value'] = TestSubmissionStatusV2::jsonDeserialize($data);
                 break;
             case 'workspace':
-                $args['type'] = 'workspace';
-                $args['workspace'] = WorkspaceSubmissionStatusV2::jsonDeserialize($data);
+                $args['value'] = WorkspaceSubmissionStatusV2::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

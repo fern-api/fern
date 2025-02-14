@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Data extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'string'
+     *   |'base64'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class Data extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'string'
+     *   |'base64'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -62,18 +70,6 @@ class Data extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return Data
-     */
-    public static function _unknown(mixed $_unknown): Data
-    {
-        return new Data([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isString(): bool
@@ -88,7 +84,7 @@ class Data extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'string')) {
             throw new Exception(
-                "Expected string; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected string; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +106,7 @@ class Data extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'base64')) {
             throw new Exception(
-                "Expected base64; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected base64; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -191,26 +187,25 @@ class Data extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'string':
-                $args['type'] = 'string';
                 if (!array_key_exists('string', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'string'",
                     );
                 }
 
-                $args['string'] = $data['string'];
+                $args['value'] = $data['string'];
                 break;
             case 'base64':
-                $args['type'] = 'base64';
                 if (!array_key_exists('base64', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'base64'",
                     );
                 }
 
-                $args['base64'] = $data['base64'];
+                $args['value'] = $data['base64'];
                 break;
             case '_unknown':
             default:

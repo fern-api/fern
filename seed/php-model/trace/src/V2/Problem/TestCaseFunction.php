@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseFunction extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'withActualResult'
+     *   |'custom'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class TestCaseFunction extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'withActualResult'
+     *   |'custom'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestCaseWithActualResultImplementation
      *   |VoidFunctionDefinition
@@ -32,7 +40,7 @@ class TestCaseFunction extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class TestCaseFunction extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return TestCaseFunction
-     */
-    public static function _unknown(mixed $_unknown): TestCaseFunction
-    {
-        return new TestCaseFunction([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isWithActualResult(): bool
@@ -90,7 +86,7 @@ class TestCaseFunction extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseWithActualResultImplementation && $this->type === 'withActualResult')) {
             throw new Exception(
-                "Expected withActualResult; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected withActualResult; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class TestCaseFunction extends JsonSerializableType
     {
         if (!($this->value instanceof VoidFunctionDefinition && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class TestCaseFunction extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'withActualResult':
-                $args['type'] = 'withActualResult';
-                $args['withActualResult'] = TestCaseWithActualResultImplementation::jsonDeserialize($data);
+                $args['value'] = TestCaseWithActualResultImplementation::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
-                $args['custom'] = VoidFunctionDefinition::jsonDeserialize($data);
+                $args['value'] = VoidFunctionDefinition::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

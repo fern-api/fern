@@ -31,7 +31,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "\\Seed\\Tests\\": "tests/"
+      "Seed\\Tests\\": "tests/"
     }
   },
   "scripts": {

@@ -8,12 +8,12 @@ use Seed\Core\Json\JsonProperty;
 class SendLiteralsInHeadersRequest extends JsonSerializableType
 {
     /**
-     * @var string $endpointVersion
+     * @var '02-12-2024' $endpointVersion
      */
     public string $endpointVersion;
 
     /**
-     * @var bool $async
+     * @var true $async
      */
     public bool $async;
 
@@ -25,8 +25,8 @@ class SendLiteralsInHeadersRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   endpointVersion: string,
-     *   async: bool,
+     *   endpointVersion: '02-12-2024',
+     *   async: true,
      *   query: string,
      * } $values
      */

@@ -9,13 +9,18 @@ use Seed\Core\Json\JsonDecoder;
 class CreateProblemResponse extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'success'
+     *   |'error'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
      *    string
+     *   |CreateProblemError
      *   |mixed
      * ) $value
      */
@@ -23,14 +28,19 @@ class CreateProblemResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'success'
+     *   |'error'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
+     *   |CreateProblemError
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -50,26 +60,14 @@ class CreateProblemResponse extends JsonSerializableType
     }
 
     /**
-     * @param mixed $error
+     * @param CreateProblemError $error
      * @return CreateProblemResponse
      */
-    public static function error(mixed $error): CreateProblemResponse
+    public static function error(CreateProblemError $error): CreateProblemResponse
     {
         return new CreateProblemResponse([
             'type' => 'error',
             'value' => $error,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return CreateProblemResponse
-     */
-    public static function _unknown(mixed $_unknown): CreateProblemResponse
-    {
-        return new CreateProblemResponse([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -88,7 +86,7 @@ class CreateProblemResponse extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'success')) {
             throw new Exception(
-                "Expected success; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected success; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -100,17 +98,17 @@ class CreateProblemResponse extends JsonSerializableType
      */
     public function isError(): bool
     {
-        return is_null($this->value) && $this->type === 'error';
+        return $this->value instanceof CreateProblemError && $this->type === 'error';
     }
 
     /**
-     * @return mixed
+     * @return CreateProblemError
      */
-    public function asError(): mixed
+    public function asError(): CreateProblemError
     {
-        if (!(is_null($this->value) && $this->type === 'error')) {
+        if (!($this->value instanceof CreateProblemError && $this->type === 'error')) {
             throw new Exception(
-                "Expected error; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected error; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -142,7 +140,7 @@ class CreateProblemResponse extends JsonSerializableType
                 $result['success'] = $value;
                 break;
             case 'error':
-                $value = $this->value;
+                $value = $this->asError()->jsonSerialize();
                 $result['error'] = $value;
                 break;
             case '_unknown':
@@ -191,26 +189,30 @@ class CreateProblemResponse extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'success':
-                $args['type'] = 'success';
                 if (!array_key_exists('success', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'success'",
                     );
                 }
 
-                $args['success'] = $data['success'];
+                $args['value'] = $data['success'];
                 break;
             case 'error':
-                $args['type'] = 'error';
                 if (!array_key_exists('error', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'error'",
                     );
                 }
 
-                $args['error'] = $data['error'];
+                if (!(is_array($data['error']))) {
+                    throw new Exception(
+                        "Expected property 'error' in JSON data to be array, instead received " . get_debug_type($data['error']),
+                    );
+                }
+                $args['value'] = CreateProblemError::jsonDeserialize($data['error']);
                 break;
             case '_unknown':
             default:

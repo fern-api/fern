@@ -30,7 +30,38 @@ class BigUnion extends JsonSerializableType
     public ?DateTime $archivedAt;
 
     /**
-     * @var string $type
+     * @var (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -74,7 +105,38 @@ class BigUnion extends JsonSerializableType
      * @param array{
      *   id: string,
      *   createdAt: DateTime,
-     *   type: string,
+     *   type: (
+     *    'normalSweet'
+     *   |'thankfulFactor'
+     *   |'jumboEnd'
+     *   |'hastyPain'
+     *   |'mistySnow'
+     *   |'distinctFailure'
+     *   |'practicalPrinciple'
+     *   |'limpingStep'
+     *   |'vibrantExcitement'
+     *   |'activeDiamond'
+     *   |'popularLimit'
+     *   |'falseMirror'
+     *   |'primaryBlock'
+     *   |'rotatingRatio'
+     *   |'colorfulCover'
+     *   |'disloyalValue'
+     *   |'gruesomeCoach'
+     *   |'totalWork'
+     *   |'harmoniousPlay'
+     *   |'uniqueStress'
+     *   |'unwillingSmoke'
+     *   |'frozenSleep'
+     *   |'diligentDeal'
+     *   |'attractiveScript'
+     *   |'hoarseMouse'
+     *   |'circularCard'
+     *   |'potableBad'
+     *   |'triangularRepair'
+     *   |'gaseousRoad'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    NormalSweet
      *   |ThankfulFactor
@@ -110,7 +172,7 @@ class BigUnion extends JsonSerializableType
      *   archivedAt?: ?DateTime,
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -643,24 +705,6 @@ class BigUnion extends JsonSerializableType
     }
 
     /**
-     * @param string $id
-     * @param DateTime $createdAt
-     * @param ?DateTime $archivedAt
-     * @param mixed $_unknown
-     * @return BigUnion
-     */
-    public static function _unknown(string $id, DateTime $createdAt, mixed $_unknown, ?DateTime $archivedAt = null): BigUnion
-    {
-        return new BigUnion([
-            'id' => $id,
-            'createdAt' => $createdAt,
-            'archivedAt' => $archivedAt,
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isNormalSweet(): bool
@@ -675,7 +719,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof NormalSweet && $this->type === 'normalSweet')) {
             throw new Exception(
-                "Expected normalSweet; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected normalSweet; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -697,7 +741,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof ThankfulFactor && $this->type === 'thankfulFactor')) {
             throw new Exception(
-                "Expected thankfulFactor; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected thankfulFactor; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -719,7 +763,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof JumboEnd && $this->type === 'jumboEnd')) {
             throw new Exception(
-                "Expected jumboEnd; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected jumboEnd; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -741,7 +785,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof HastyPain && $this->type === 'hastyPain')) {
             throw new Exception(
-                "Expected hastyPain; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected hastyPain; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -763,7 +807,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof MistySnow && $this->type === 'mistySnow')) {
             throw new Exception(
-                "Expected mistySnow; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected mistySnow; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -785,7 +829,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof DistinctFailure && $this->type === 'distinctFailure')) {
             throw new Exception(
-                "Expected distinctFailure; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected distinctFailure; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -807,7 +851,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof PracticalPrinciple && $this->type === 'practicalPrinciple')) {
             throw new Exception(
-                "Expected practicalPrinciple; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected practicalPrinciple; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -829,7 +873,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof LimpingStep && $this->type === 'limpingStep')) {
             throw new Exception(
-                "Expected limpingStep; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected limpingStep; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -851,7 +895,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof VibrantExcitement && $this->type === 'vibrantExcitement')) {
             throw new Exception(
-                "Expected vibrantExcitement; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected vibrantExcitement; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -873,7 +917,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof ActiveDiamond && $this->type === 'activeDiamond')) {
             throw new Exception(
-                "Expected activeDiamond; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected activeDiamond; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -895,7 +939,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof PopularLimit && $this->type === 'popularLimit')) {
             throw new Exception(
-                "Expected popularLimit; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected popularLimit; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -917,7 +961,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof FalseMirror && $this->type === 'falseMirror')) {
             throw new Exception(
-                "Expected falseMirror; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected falseMirror; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -939,7 +983,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof PrimaryBlock && $this->type === 'primaryBlock')) {
             throw new Exception(
-                "Expected primaryBlock; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected primaryBlock; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -961,7 +1005,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof RotatingRatio && $this->type === 'rotatingRatio')) {
             throw new Exception(
-                "Expected rotatingRatio; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected rotatingRatio; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -983,7 +1027,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof ColorfulCover && $this->type === 'colorfulCover')) {
             throw new Exception(
-                "Expected colorfulCover; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected colorfulCover; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1005,7 +1049,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof DisloyalValue && $this->type === 'disloyalValue')) {
             throw new Exception(
-                "Expected disloyalValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected disloyalValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1027,7 +1071,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof GruesomeCoach && $this->type === 'gruesomeCoach')) {
             throw new Exception(
-                "Expected gruesomeCoach; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gruesomeCoach; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1049,7 +1093,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof TotalWork && $this->type === 'totalWork')) {
             throw new Exception(
-                "Expected totalWork; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected totalWork; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1071,7 +1115,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof HarmoniousPlay && $this->type === 'harmoniousPlay')) {
             throw new Exception(
-                "Expected harmoniousPlay; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected harmoniousPlay; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1093,7 +1137,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof UniqueStress && $this->type === 'uniqueStress')) {
             throw new Exception(
-                "Expected uniqueStress; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected uniqueStress; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1115,7 +1159,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof UnwillingSmoke && $this->type === 'unwillingSmoke')) {
             throw new Exception(
-                "Expected unwillingSmoke; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected unwillingSmoke; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1137,7 +1181,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof FrozenSleep && $this->type === 'frozenSleep')) {
             throw new Exception(
-                "Expected frozenSleep; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected frozenSleep; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1159,7 +1203,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof DiligentDeal && $this->type === 'diligentDeal')) {
             throw new Exception(
-                "Expected diligentDeal; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected diligentDeal; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1181,7 +1225,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof AttractiveScript && $this->type === 'attractiveScript')) {
             throw new Exception(
-                "Expected attractiveScript; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected attractiveScript; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1203,7 +1247,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof HoarseMouse && $this->type === 'hoarseMouse')) {
             throw new Exception(
-                "Expected hoarseMouse; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected hoarseMouse; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1225,7 +1269,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof CircularCard && $this->type === 'circularCard')) {
             throw new Exception(
-                "Expected circularCard; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected circularCard; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1247,7 +1291,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof PotableBad && $this->type === 'potableBad')) {
             throw new Exception(
-                "Expected potableBad; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected potableBad; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1269,7 +1313,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof TriangularRepair && $this->type === 'triangularRepair')) {
             throw new Exception(
-                "Expected triangularRepair; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected triangularRepair; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1291,7 +1335,7 @@ class BigUnion extends JsonSerializableType
     {
         if (!($this->value instanceof GaseousRoad && $this->type === 'gaseousRoad')) {
             throw new Exception(
-                "Expected gaseousRoad; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gaseousRoad; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1516,122 +1560,94 @@ class BigUnion extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'normalSweet':
-                $args['type'] = 'normalSweet';
-                $args['normalSweet'] = NormalSweet::jsonDeserialize($data);
+                $args['value'] = NormalSweet::jsonDeserialize($data);
                 break;
             case 'thankfulFactor':
-                $args['type'] = 'thankfulFactor';
-                $args['thankfulFactor'] = ThankfulFactor::jsonDeserialize($data);
+                $args['value'] = ThankfulFactor::jsonDeserialize($data);
                 break;
             case 'jumboEnd':
-                $args['type'] = 'jumboEnd';
-                $args['jumboEnd'] = JumboEnd::jsonDeserialize($data);
+                $args['value'] = JumboEnd::jsonDeserialize($data);
                 break;
             case 'hastyPain':
-                $args['type'] = 'hastyPain';
-                $args['hastyPain'] = HastyPain::jsonDeserialize($data);
+                $args['value'] = HastyPain::jsonDeserialize($data);
                 break;
             case 'mistySnow':
-                $args['type'] = 'mistySnow';
-                $args['mistySnow'] = MistySnow::jsonDeserialize($data);
+                $args['value'] = MistySnow::jsonDeserialize($data);
                 break;
             case 'distinctFailure':
-                $args['type'] = 'distinctFailure';
-                $args['distinctFailure'] = DistinctFailure::jsonDeserialize($data);
+                $args['value'] = DistinctFailure::jsonDeserialize($data);
                 break;
             case 'practicalPrinciple':
-                $args['type'] = 'practicalPrinciple';
-                $args['practicalPrinciple'] = PracticalPrinciple::jsonDeserialize($data);
+                $args['value'] = PracticalPrinciple::jsonDeserialize($data);
                 break;
             case 'limpingStep':
-                $args['type'] = 'limpingStep';
-                $args['limpingStep'] = LimpingStep::jsonDeserialize($data);
+                $args['value'] = LimpingStep::jsonDeserialize($data);
                 break;
             case 'vibrantExcitement':
-                $args['type'] = 'vibrantExcitement';
-                $args['vibrantExcitement'] = VibrantExcitement::jsonDeserialize($data);
+                $args['value'] = VibrantExcitement::jsonDeserialize($data);
                 break;
             case 'activeDiamond':
-                $args['type'] = 'activeDiamond';
-                $args['activeDiamond'] = ActiveDiamond::jsonDeserialize($data);
+                $args['value'] = ActiveDiamond::jsonDeserialize($data);
                 break;
             case 'popularLimit':
-                $args['type'] = 'popularLimit';
-                $args['popularLimit'] = PopularLimit::jsonDeserialize($data);
+                $args['value'] = PopularLimit::jsonDeserialize($data);
                 break;
             case 'falseMirror':
-                $args['type'] = 'falseMirror';
-                $args['falseMirror'] = FalseMirror::jsonDeserialize($data);
+                $args['value'] = FalseMirror::jsonDeserialize($data);
                 break;
             case 'primaryBlock':
-                $args['type'] = 'primaryBlock';
-                $args['primaryBlock'] = PrimaryBlock::jsonDeserialize($data);
+                $args['value'] = PrimaryBlock::jsonDeserialize($data);
                 break;
             case 'rotatingRatio':
-                $args['type'] = 'rotatingRatio';
-                $args['rotatingRatio'] = RotatingRatio::jsonDeserialize($data);
+                $args['value'] = RotatingRatio::jsonDeserialize($data);
                 break;
             case 'colorfulCover':
-                $args['type'] = 'colorfulCover';
-                $args['colorfulCover'] = ColorfulCover::jsonDeserialize($data);
+                $args['value'] = ColorfulCover::jsonDeserialize($data);
                 break;
             case 'disloyalValue':
-                $args['type'] = 'disloyalValue';
-                $args['disloyalValue'] = DisloyalValue::jsonDeserialize($data);
+                $args['value'] = DisloyalValue::jsonDeserialize($data);
                 break;
             case 'gruesomeCoach':
-                $args['type'] = 'gruesomeCoach';
-                $args['gruesomeCoach'] = GruesomeCoach::jsonDeserialize($data);
+                $args['value'] = GruesomeCoach::jsonDeserialize($data);
                 break;
             case 'totalWork':
-                $args['type'] = 'totalWork';
-                $args['totalWork'] = TotalWork::jsonDeserialize($data);
+                $args['value'] = TotalWork::jsonDeserialize($data);
                 break;
             case 'harmoniousPlay':
-                $args['type'] = 'harmoniousPlay';
-                $args['harmoniousPlay'] = HarmoniousPlay::jsonDeserialize($data);
+                $args['value'] = HarmoniousPlay::jsonDeserialize($data);
                 break;
             case 'uniqueStress':
-                $args['type'] = 'uniqueStress';
-                $args['uniqueStress'] = UniqueStress::jsonDeserialize($data);
+                $args['value'] = UniqueStress::jsonDeserialize($data);
                 break;
             case 'unwillingSmoke':
-                $args['type'] = 'unwillingSmoke';
-                $args['unwillingSmoke'] = UnwillingSmoke::jsonDeserialize($data);
+                $args['value'] = UnwillingSmoke::jsonDeserialize($data);
                 break;
             case 'frozenSleep':
-                $args['type'] = 'frozenSleep';
-                $args['frozenSleep'] = FrozenSleep::jsonDeserialize($data);
+                $args['value'] = FrozenSleep::jsonDeserialize($data);
                 break;
             case 'diligentDeal':
-                $args['type'] = 'diligentDeal';
-                $args['diligentDeal'] = DiligentDeal::jsonDeserialize($data);
+                $args['value'] = DiligentDeal::jsonDeserialize($data);
                 break;
             case 'attractiveScript':
-                $args['type'] = 'attractiveScript';
-                $args['attractiveScript'] = AttractiveScript::jsonDeserialize($data);
+                $args['value'] = AttractiveScript::jsonDeserialize($data);
                 break;
             case 'hoarseMouse':
-                $args['type'] = 'hoarseMouse';
-                $args['hoarseMouse'] = HoarseMouse::jsonDeserialize($data);
+                $args['value'] = HoarseMouse::jsonDeserialize($data);
                 break;
             case 'circularCard':
-                $args['type'] = 'circularCard';
-                $args['circularCard'] = CircularCard::jsonDeserialize($data);
+                $args['value'] = CircularCard::jsonDeserialize($data);
                 break;
             case 'potableBad':
-                $args['type'] = 'potableBad';
-                $args['potableBad'] = PotableBad::jsonDeserialize($data);
+                $args['value'] = PotableBad::jsonDeserialize($data);
                 break;
             case 'triangularRepair':
-                $args['type'] = 'triangularRepair';
-                $args['triangularRepair'] = TriangularRepair::jsonDeserialize($data);
+                $args['value'] = TriangularRepair::jsonDeserialize($data);
                 break;
             case 'gaseousRoad':
-                $args['type'] = 'gaseousRoad';
-                $args['gaseousRoad'] = GaseousRoad::jsonDeserialize($data);
+                $args['value'] = GaseousRoad::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

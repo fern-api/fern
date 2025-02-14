@@ -9,7 +9,20 @@ use Seed\Core\Json\JsonDecoder;
 class CodeExecutionUpdate extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'buildingExecutor'
+     *   |'running'
+     *   |'errored'
+     *   |'stopped'
+     *   |'graded'
+     *   |'gradedV2'
+     *   |'workspaceRan'
+     *   |'recording'
+     *   |'recorded'
+     *   |'invalidRequest'
+     *   |'finished'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -33,7 +46,20 @@ class CodeExecutionUpdate extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'buildingExecutor'
+     *   |'running'
+     *   |'errored'
+     *   |'stopped'
+     *   |'graded'
+     *   |'gradedV2'
+     *   |'workspaceRan'
+     *   |'recording'
+     *   |'recorded'
+     *   |'invalidRequest'
+     *   |'finished'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    BuildingExecutorResponse
      *   |RunningResponse
@@ -50,7 +76,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -190,18 +216,6 @@ class CodeExecutionUpdate extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return CodeExecutionUpdate
-     */
-    public static function _unknown(mixed $_unknown): CodeExecutionUpdate
-    {
-        return new CodeExecutionUpdate([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isBuildingExecutor(): bool
@@ -216,7 +230,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof BuildingExecutorResponse && $this->type === 'buildingExecutor')) {
             throw new Exception(
-                "Expected buildingExecutor; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected buildingExecutor; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -238,7 +252,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof RunningResponse && $this->type === 'running')) {
             throw new Exception(
-                "Expected running; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -260,7 +274,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof ErroredResponse && $this->type === 'errored')) {
             throw new Exception(
-                "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -282,7 +296,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof StoppedResponse && $this->type === 'stopped')) {
             throw new Exception(
-                "Expected stopped; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected stopped; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -304,7 +318,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof GradedResponse && $this->type === 'graded')) {
             throw new Exception(
-                "Expected graded; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected graded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -326,7 +340,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof GradedResponseV2 && $this->type === 'gradedV2')) {
             throw new Exception(
-                "Expected gradedV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gradedV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -348,7 +362,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceRanResponse && $this->type === 'workspaceRan')) {
             throw new Exception(
-                "Expected workspaceRan; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected workspaceRan; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -370,7 +384,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof RecordingResponseNotification && $this->type === 'recording')) {
             throw new Exception(
-                "Expected recording; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected recording; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -392,7 +406,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof RecordedResponseNotification && $this->type === 'recorded')) {
             throw new Exception(
-                "Expected recorded; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected recorded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -414,7 +428,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof InvalidRequestResponse && $this->type === 'invalidRequest')) {
             throw new Exception(
-                "Expected invalidRequest; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected invalidRequest; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -436,7 +450,7 @@ class CodeExecutionUpdate extends JsonSerializableType
     {
         if (!($this->value instanceof FinishedResponse && $this->type === 'finished')) {
             throw new Exception(
-                "Expected finished; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected finished; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -553,50 +567,40 @@ class CodeExecutionUpdate extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'buildingExecutor':
-                $args['type'] = 'buildingExecutor';
-                $args['buildingExecutor'] = BuildingExecutorResponse::jsonDeserialize($data);
+                $args['value'] = BuildingExecutorResponse::jsonDeserialize($data);
                 break;
             case 'running':
-                $args['type'] = 'running';
-                $args['running'] = RunningResponse::jsonDeserialize($data);
+                $args['value'] = RunningResponse::jsonDeserialize($data);
                 break;
             case 'errored':
-                $args['type'] = 'errored';
-                $args['errored'] = ErroredResponse::jsonDeserialize($data);
+                $args['value'] = ErroredResponse::jsonDeserialize($data);
                 break;
             case 'stopped':
-                $args['type'] = 'stopped';
-                $args['stopped'] = StoppedResponse::jsonDeserialize($data);
+                $args['value'] = StoppedResponse::jsonDeserialize($data);
                 break;
             case 'graded':
-                $args['type'] = 'graded';
-                $args['graded'] = GradedResponse::jsonDeserialize($data);
+                $args['value'] = GradedResponse::jsonDeserialize($data);
                 break;
             case 'gradedV2':
-                $args['type'] = 'gradedV2';
-                $args['gradedV2'] = GradedResponseV2::jsonDeserialize($data);
+                $args['value'] = GradedResponseV2::jsonDeserialize($data);
                 break;
             case 'workspaceRan':
-                $args['type'] = 'workspaceRan';
-                $args['workspaceRan'] = WorkspaceRanResponse::jsonDeserialize($data);
+                $args['value'] = WorkspaceRanResponse::jsonDeserialize($data);
                 break;
             case 'recording':
-                $args['type'] = 'recording';
-                $args['recording'] = RecordingResponseNotification::jsonDeserialize($data);
+                $args['value'] = RecordingResponseNotification::jsonDeserialize($data);
                 break;
             case 'recorded':
-                $args['type'] = 'recorded';
-                $args['recorded'] = RecordedResponseNotification::jsonDeserialize($data);
+                $args['value'] = RecordedResponseNotification::jsonDeserialize($data);
                 break;
             case 'invalidRequest':
-                $args['type'] = 'invalidRequest';
-                $args['invalidRequest'] = InvalidRequestResponse::jsonDeserialize($data);
+                $args['value'] = InvalidRequestResponse::jsonDeserialize($data);
                 break;
             case 'finished':
-                $args['type'] = 'finished';
-                $args['finished'] = FinishedResponse::jsonDeserialize($data);
+                $args['value'] = FinishedResponse::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

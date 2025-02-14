@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class FieldValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'primitive_value'
+     *   |'object_value'
+     *   |'container_value'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -17,6 +22,7 @@ class FieldValue extends JsonSerializableType
      * @var (
      *    value-of<PrimitiveValue>
      *   |ObjectValue
+     *   |ContainerValue
      *   |mixed
      * ) $value
      */
@@ -24,15 +30,21 @@ class FieldValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'primitive_value'
+     *   |'object_value'
+     *   |'container_value'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    value-of<PrimitiveValue>
      *   |ObjectValue
+     *   |ContainerValue
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,26 +76,14 @@ class FieldValue extends JsonSerializableType
     }
 
     /**
-     * @param mixed $containerValue
+     * @param ContainerValue $containerValue
      * @return FieldValue
      */
-    public static function containerValue(mixed $containerValue): FieldValue
+    public static function containerValue(ContainerValue $containerValue): FieldValue
     {
         return new FieldValue([
             'type' => 'container_value',
             'value' => $containerValue,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return FieldValue
-     */
-    public static function _unknown(mixed $_unknown): FieldValue
-    {
-        return new FieldValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -102,7 +102,7 @@ class FieldValue extends JsonSerializableType
     {
         if (!($this->value instanceof PrimitiveValue && $this->type === 'primitive_value')) {
             throw new Exception(
-                "Expected primitive_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected primitive_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -124,7 +124,7 @@ class FieldValue extends JsonSerializableType
     {
         if (!($this->value instanceof ObjectValue && $this->type === 'object_value')) {
             throw new Exception(
-                "Expected object_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected object_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -136,17 +136,17 @@ class FieldValue extends JsonSerializableType
      */
     public function isContainerValue(): bool
     {
-        return is_null($this->value) && $this->type === 'container_value';
+        return $this->value instanceof ContainerValue && $this->type === 'container_value';
     }
 
     /**
-     * @return mixed
+     * @return ContainerValue
      */
-    public function asContainerValue(): mixed
+    public function asContainerValue(): ContainerValue
     {
-        if (!(is_null($this->value) && $this->type === 'container_value')) {
+        if (!($this->value instanceof ContainerValue && $this->type === 'container_value')) {
             throw new Exception(
-                "Expected container_value; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected container_value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -182,7 +182,7 @@ class FieldValue extends JsonSerializableType
                 $result = array_merge($value, $result);
                 break;
             case 'container_value':
-                $value = $this->value;
+                $value = $this->asContainerValue()->jsonSerialize();
                 $result['container_value'] = $value;
                 break;
             case '_unknown':
@@ -231,30 +231,33 @@ class FieldValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'primitive_value':
-                $args['type'] = 'primitive_value';
                 if (!array_key_exists('primitive_value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'primitive_value'",
                     );
                 }
 
-                $args['primitive_value'] = $data['primitive_value'];
+                $args['value'] = $data['primitive_value'];
                 break;
             case 'object_value':
-                $args['type'] = 'object_value';
-                $args['object_value'] = ObjectValue::jsonDeserialize($data);
+                $args['value'] = ObjectValue::jsonDeserialize($data);
                 break;
             case 'container_value':
-                $args['type'] = 'container_value';
                 if (!array_key_exists('container_value', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'container_value'",
                     );
                 }
 
-                $args['container_value'] = $data['container_value'];
+                if (!(is_array($data['container_value']))) {
+                    throw new Exception(
+                        "Expected property 'containerValue' in JSON data to be array, instead received " . get_debug_type($data['container_value']),
+                    );
+                }
+                $args['value'] = ContainerValue::jsonDeserialize($data['container_value']);
                 break;
             case '_unknown':
             default:

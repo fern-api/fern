@@ -9,7 +9,14 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionRequest extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'initializeProblemRequest'
+     *   |'initializeWorkspaceRequest'
+     *   |'submitV2'
+     *   |'workspaceSubmit'
+     *   |'stop'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -27,7 +34,14 @@ class SubmissionRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'initializeProblemRequest'
+     *   |'initializeWorkspaceRequest'
+     *   |'submitV2'
+     *   |'workspaceSubmit'
+     *   |'stop'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    InitializeProblemRequest
      *   |null
@@ -38,7 +52,7 @@ class SubmissionRequest extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -105,18 +119,6 @@ class SubmissionRequest extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return SubmissionRequest
-     */
-    public static function _unknown(mixed $_unknown): SubmissionRequest
-    {
-        return new SubmissionRequest([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isInitializeProblemRequest(): bool
@@ -131,7 +133,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof InitializeProblemRequest && $this->type === 'initializeProblemRequest')) {
             throw new Exception(
-                "Expected initializeProblemRequest; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected initializeProblemRequest; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -161,7 +163,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof SubmitRequestV2 && $this->type === 'submitV2')) {
             throw new Exception(
-                "Expected submitV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected submitV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -183,7 +185,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceSubmitRequest && $this->type === 'workspaceSubmit')) {
             throw new Exception(
-                "Expected workspaceSubmit; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected workspaceSubmit; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -205,7 +207,7 @@ class SubmissionRequest extends JsonSerializableType
     {
         if (!($this->value instanceof StopRequest && $this->type === 'stop')) {
             throw new Exception(
-                "Expected stop; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected stop; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -297,26 +299,22 @@ class SubmissionRequest extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'initializeProblemRequest':
-                $args['type'] = 'initializeProblemRequest';
-                $args['initializeProblemRequest'] = InitializeProblemRequest::jsonDeserialize($data);
+                $args['value'] = InitializeProblemRequest::jsonDeserialize($data);
                 break;
             case 'initializeWorkspaceRequest':
-                $args['type'] = 'initializeWorkspaceRequest';
                 $args['value'] = null;
                 break;
             case 'submitV2':
-                $args['type'] = 'submitV2';
-                $args['submitV2'] = SubmitRequestV2::jsonDeserialize($data);
+                $args['value'] = SubmitRequestV2::jsonDeserialize($data);
                 break;
             case 'workspaceSubmit':
-                $args['type'] = 'workspaceSubmit';
-                $args['workspaceSubmit'] = WorkspaceSubmitRequest::jsonDeserialize($data);
+                $args['value'] = WorkspaceSubmitRequest::jsonDeserialize($data);
                 break;
             case 'stop':
-                $args['type'] = 'stop';
-                $args['stop'] = StopRequest::jsonDeserialize($data);
+                $args['value'] = StopRequest::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -53,6 +53,15 @@ export class PhpTypeMapper {
         }
     }
 
+    public convertLiteral({ literal }: { literal: Literal }): php.Type {
+        switch (literal.type) {
+            case "boolean":
+                return php.Type.literalBoolean(literal.boolean);
+            case "string":
+                return php.Type.literalString(literal.string);
+        }
+    }
+
     public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
@@ -112,15 +121,6 @@ export class PhpTypeMapper {
             bigInteger: () => php.Type.string(),
             _other: () => php.Type.mixed()
         });
-    }
-
-    private convertLiteral({ literal }: { literal: Literal }): php.Type {
-        switch (literal.type) {
-            case "boolean":
-                return php.Type.bool();
-            case "string":
-                return php.Type.string();
-        }
     }
 
     private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): php.Type {

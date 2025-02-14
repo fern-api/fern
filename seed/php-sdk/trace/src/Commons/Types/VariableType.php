@@ -9,7 +9,19 @@ use Seed\Core\Json\JsonDecoder;
 class VariableType extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integerType'
+     *   |'doubleType'
+     *   |'booleanType'
+     *   |'stringType'
+     *   |'charType'
+     *   |'listType'
+     *   |'mapType'
+     *   |'binaryTreeType'
+     *   |'singlyLinkedListType'
+     *   |'doublyLinkedListType'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +37,19 @@ class VariableType extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integerType'
+     *   |'doubleType'
+     *   |'booleanType'
+     *   |'stringType'
+     *   |'charType'
+     *   |'listType'
+     *   |'mapType'
+     *   |'binaryTreeType'
+     *   |'singlyLinkedListType'
+     *   |'doublyLinkedListType'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
      *   |ListType
@@ -34,7 +58,7 @@ class VariableType extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -154,18 +178,6 @@ class VariableType extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return VariableType
-     */
-    public static function _unknown(mixed $_unknown): VariableType
-    {
-        return new VariableType([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isIntegerType(): bool
@@ -220,7 +232,7 @@ class VariableType extends JsonSerializableType
     {
         if (!($this->value instanceof ListType && $this->type === 'listType')) {
             throw new Exception(
-                "Expected listType; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected listType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -242,7 +254,7 @@ class VariableType extends JsonSerializableType
     {
         if (!($this->value instanceof MapType && $this->type === 'mapType')) {
             throw new Exception(
-                "Expected mapType; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected mapType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -371,45 +383,36 @@ class VariableType extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integerType':
-                $args['type'] = 'integerType';
                 $args['value'] = null;
                 break;
             case 'doubleType':
-                $args['type'] = 'doubleType';
                 $args['value'] = null;
                 break;
             case 'booleanType':
-                $args['type'] = 'booleanType';
                 $args['value'] = null;
                 break;
             case 'stringType':
-                $args['type'] = 'stringType';
                 $args['value'] = null;
                 break;
             case 'charType':
-                $args['type'] = 'charType';
                 $args['value'] = null;
                 break;
             case 'listType':
-                $args['type'] = 'listType';
-                $args['listType'] = ListType::jsonDeserialize($data);
+                $args['value'] = ListType::jsonDeserialize($data);
                 break;
             case 'mapType':
-                $args['type'] = 'mapType';
-                $args['mapType'] = MapType::jsonDeserialize($data);
+                $args['value'] = MapType::jsonDeserialize($data);
                 break;
             case 'binaryTreeType':
-                $args['type'] = 'binaryTreeType';
                 $args['value'] = null;
                 break;
             case 'singlyLinkedListType':
-                $args['type'] = 'singlyLinkedListType';
                 $args['value'] = null;
                 break;
             case 'doublyLinkedListType':
-                $args['type'] = 'doublyLinkedListType';
                 $args['value'] = null;
                 break;
             case '_unknown':

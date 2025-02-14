@@ -143,7 +143,11 @@ export class TypeLiteral extends AstNode {
                     this.writeStringWithHeredoc({ writer, value: this.internalType.value });
                     break;
                 }
-                writer.write(`'${this.internalType.value.replaceAll("'", "\\'")}'`);
+                if (this.internalType.value.includes("'")) {
+                    writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
+                    break;
+                }
+                writer.write(`'${this.internalType.value}'`);
                 break;
             }
             case "unknown": {

@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseGrade extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'hidden'
+     *   |'nonHidden'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class TestCaseGrade extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'hidden'
+     *   |'nonHidden'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestCaseHiddenGrade
      *   |TestCaseNonHiddenGrade
@@ -32,7 +40,7 @@ class TestCaseGrade extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class TestCaseGrade extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return TestCaseGrade
-     */
-    public static function _unknown(mixed $_unknown): TestCaseGrade
-    {
-        return new TestCaseGrade([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isHidden(): bool
@@ -90,7 +86,7 @@ class TestCaseGrade extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseHiddenGrade && $this->type === 'hidden')) {
             throw new Exception(
-                "Expected hidden; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected hidden; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class TestCaseGrade extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseNonHiddenGrade && $this->type === 'nonHidden')) {
             throw new Exception(
-                "Expected nonHidden; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected nonHidden; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class TestCaseGrade extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'hidden':
-                $args['type'] = 'hidden';
-                $args['hidden'] = TestCaseHiddenGrade::jsonDeserialize($data);
+                $args['value'] = TestCaseHiddenGrade::jsonDeserialize($data);
                 break;
             case 'nonHidden':
-                $args['type'] = 'nonHidden';
-                $args['nonHidden'] = TestCaseNonHiddenGrade::jsonDeserialize($data);
+                $args['value'] = TestCaseNonHiddenGrade::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

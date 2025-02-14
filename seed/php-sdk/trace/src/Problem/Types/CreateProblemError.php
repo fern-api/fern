@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class CreateProblemError extends JsonSerializableType
 {
     /**
-     * @var string $errorType
+     * @var (
+     *    'generic'
+     *   |'_unknown'
+     * ) $errorType
      */
     public readonly string $errorType;
 
@@ -23,14 +26,17 @@ class CreateProblemError extends JsonSerializableType
 
     /**
      * @param array{
-     *   errorType: string,
+     *   errorType: (
+     *    'generic'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    GenericCreateProblemError
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->errorType = $values['errorType'];
@@ -50,18 +56,6 @@ class CreateProblemError extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return CreateProblemError
-     */
-    public static function _unknown(mixed $_unknown): CreateProblemError
-    {
-        return new CreateProblemError([
-            'errorType' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isGeneric(): bool
@@ -76,7 +70,7 @@ class CreateProblemError extends JsonSerializableType
     {
         if (!($this->value instanceof GenericCreateProblemError && $this->errorType === 'generic')) {
             throw new Exception(
-                "Expected generic; got " . $this->errorType . "with value of type " . get_debug_type($this->value),
+                "Expected generic; got " . $this->errorType . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -153,10 +147,10 @@ class CreateProblemError extends JsonSerializableType
             );
         }
 
+        $args['errorType'] = $errorType;
         switch ($errorType) {
             case 'generic':
-                $args['errorType'] = 'generic';
-                $args['generic'] = GenericCreateProblemError::jsonDeserialize($data);
+                $args['value'] = GenericCreateProblemError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

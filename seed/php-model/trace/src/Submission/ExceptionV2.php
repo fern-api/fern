@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class ExceptionV2 extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'generic'
+     *   |'timeout'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class ExceptionV2 extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'generic'
+     *   |'timeout'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    ExceptionInfo
      *   |null
@@ -32,7 +40,7 @@ class ExceptionV2 extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -63,18 +71,6 @@ class ExceptionV2 extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return ExceptionV2
-     */
-    public static function _unknown(mixed $_unknown): ExceptionV2
-    {
-        return new ExceptionV2([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isGeneric(): bool
@@ -89,7 +85,7 @@ class ExceptionV2 extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionInfo && $this->type === 'generic')) {
             throw new Exception(
-                "Expected generic; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -177,13 +173,12 @@ class ExceptionV2 extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'generic':
-                $args['type'] = 'generic';
-                $args['generic'] = ExceptionInfo::jsonDeserialize($data);
+                $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'timeout':
-                $args['type'] = 'timeout';
                 $args['value'] = null;
                 break;
             case '_unknown':

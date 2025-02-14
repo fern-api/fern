@@ -11,7 +11,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithOptionalTime extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,14 +29,18 @@ class UnionWithOptionalTime extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'date'
+     *   |'datetime'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    DateTime
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return UnionWithOptionalTime
-     */
-    public static function _unknown(mixed $_unknown): UnionWithOptionalTime
-    {
-        return new UnionWithOptionalTime([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isDate(): bool
@@ -90,7 +86,7 @@ class UnionWithOptionalTime extends JsonSerializableType
     {
         if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'date')) {
             throw new Exception(
-                "Expected date; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected date; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class UnionWithOptionalTime extends JsonSerializableType
     {
         if (!((is_null($this->value) || $this->value instanceof DateTime) && $this->type === 'datetime')) {
             throw new Exception(
-                "Expected datetime; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected datetime; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -199,26 +195,25 @@ class UnionWithOptionalTime extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'date':
-                $args['type'] = 'date';
                 if (!array_key_exists('date', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'date'",
                     );
                 }
 
-                $args['date'] = $data['date'];
+                $args['value'] = $data['date'];
                 break;
             case 'datetime':
-                $args['type'] = 'datetime';
                 if (!array_key_exists('datetime', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'datetime'",
                     );
                 }
 
-                $args['datetime'] = $data['datetime'];
+                $args['value'] = $data['datetime'];
                 break;
             case '_unknown':
             default:

@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseImplementationDescriptionBoard extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'html'
+     *   |'paramId'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'html'
+     *   |'paramId'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -62,18 +70,6 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return TestCaseImplementationDescriptionBoard
-     */
-    public static function _unknown(mixed $_unknown): TestCaseImplementationDescriptionBoard
-    {
-        return new TestCaseImplementationDescriptionBoard([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isHtml(): bool
@@ -88,7 +84,7 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'html')) {
             throw new Exception(
-                "Expected html; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +106,7 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'paramId')) {
             throw new Exception(
-                "Expected paramId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected paramId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -191,26 +187,25 @@ class TestCaseImplementationDescriptionBoard extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'html':
-                $args['type'] = 'html';
                 if (!array_key_exists('html', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
 
-                $args['html'] = $data['html'];
+                $args['value'] = $data['html'];
                 break;
             case 'paramId':
-                $args['type'] = 'paramId';
                 if (!array_key_exists('paramId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'paramId'",
                     );
                 }
 
-                $args['paramId'] = $data['paramId'];
+                $args['value'] = $data['paramId'];
                 break;
             case '_unknown':
             default:

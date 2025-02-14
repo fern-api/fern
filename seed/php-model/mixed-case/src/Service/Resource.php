@@ -16,7 +16,11 @@ class Resource extends JsonSerializableType
     public string $status;
 
     /**
-     * @var string $resourceType
+     * @var (
+     *    'user'
+     *   |'Organization'
+     *   |'_unknown'
+     * ) $resourceType
      */
     public readonly string $resourceType;
 
@@ -32,7 +36,11 @@ class Resource extends JsonSerializableType
     /**
      * @param array{
      *   status: value-of<ResourceStatus>,
-     *   resourceType: string,
+     *   resourceType: (
+     *    'user'
+     *   |'Organization'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    User
      *   |Organization
@@ -40,7 +48,7 @@ class Resource extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->status = $values['status'];
@@ -77,20 +85,6 @@ class Resource extends JsonSerializableType
     }
 
     /**
-     * @param value-of<ResourceStatus> $status
-     * @param mixed $_unknown
-     * @return Resource
-     */
-    public static function _unknown(string $status, mixed $_unknown): Resource
-    {
-        return new Resource([
-            'status' => $status,
-            'resourceType' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isUser(): bool
@@ -105,7 +99,7 @@ class Resource extends JsonSerializableType
     {
         if (!($this->value instanceof User && $this->resourceType === 'user')) {
             throw new Exception(
-                "Expected user; got " . $this->resourceType . "with value of type " . get_debug_type($this->value),
+                "Expected user; got " . $this->resourceType . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -127,7 +121,7 @@ class Resource extends JsonSerializableType
     {
         if (!($this->value instanceof Organization && $this->resourceType === 'Organization')) {
             throw new Exception(
-                "Expected Organization; got " . $this->resourceType . "with value of type " . get_debug_type($this->value),
+                "Expected Organization; got " . $this->resourceType . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -220,14 +214,13 @@ class Resource extends JsonSerializableType
             );
         }
 
+        $args['resourceType'] = $resourceType;
         switch ($resourceType) {
             case 'user':
-                $args['resourceType'] = 'user';
-                $args['user'] = User::jsonDeserialize($data);
+                $args['value'] = User::jsonDeserialize($data);
                 break;
             case 'Organization':
-                $args['resourceType'] = 'Organization';
-                $args['Organization'] = Organization::jsonDeserialize($data);
+                $args['value'] = Organization::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

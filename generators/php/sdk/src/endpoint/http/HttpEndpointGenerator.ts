@@ -698,6 +698,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case "date":
             case "dateTime":
             case "mixed":
+            case "literal":
                 return this.decodeJsonResponseForPrimitive({
                     arguments_,
                     methodSuffix: upperFirst(internalType.type)

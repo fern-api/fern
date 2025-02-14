@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Test extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'and'
+     *   |'or'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +27,18 @@ class Test extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'and'
+     *   |'or'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    bool
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -62,18 +70,6 @@ class Test extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return Test
-     */
-    public static function _unknown(mixed $_unknown): Test
-    {
-        return new Test([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isAnd_(): bool
@@ -88,7 +84,7 @@ class Test extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'and')) {
             throw new Exception(
-                "Expected and; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected and; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -110,7 +106,7 @@ class Test extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'or')) {
             throw new Exception(
-                "Expected or; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected or; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -191,26 +187,25 @@ class Test extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'and':
-                $args['type'] = 'and';
                 if (!array_key_exists('and', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'and'",
                     );
                 }
 
-                $args['and'] = $data['and'];
+                $args['value'] = $data['and'];
                 break;
             case 'or':
-                $args['type'] = 'or';
                 if (!array_key_exists('or', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'or'",
                     );
                 }
 
-                $args['or'] = $data['or'];
+                $args['value'] = $data['or'];
                 break;
             case '_unknown':
             default:

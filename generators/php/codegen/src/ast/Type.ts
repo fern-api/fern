@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
+import { TypeLiteral } from "./TypeLiteral";
 import { AstNode } from "./core/AstNode";
 import { GLOBAL_NAMESPACE } from "./core/Constant";
 import { Writer } from "./core/Writer";
@@ -22,7 +23,8 @@ type InternalType =
     | Reference
     | String_
     | TypeDict
-    | Union;
+    | Union
+    | Literal;
 
 interface Int {
     type: "int";
@@ -101,6 +103,27 @@ interface Reference {
 interface EnumString {
     type: "enumString";
     value: ClassReference;
+}
+
+type LiteralString = TypeLiteral & {
+    internalType: {
+        type: "string";
+        value: string;
+    };
+};
+
+type LiteralBoolean = TypeLiteral & {
+    internalType: {
+        type: "boolean";
+        value: boolean;
+    };
+};
+
+type LiteralValue = LiteralString | LiteralBoolean;
+
+interface Literal {
+    type: "literal";
+    value: LiteralValue;
 }
 
 /* A PHP parameter to a method */
@@ -274,6 +297,22 @@ export class Type extends AstNode {
                     writer.write("string");
                 }
                 break;
+            case "literal":
+                if (comment) {
+                    writer.writeNode(this.internalType.value);
+                } else {
+                    switch (this.internalType.value.internalType.type) {
+                        case "string":
+                            writer.write("string");
+                            break;
+                        case "boolean":
+                            writer.write("bool");
+                            break;
+                        default:
+                            assertNever(this.internalType.value.internalType);
+                    }
+                }
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -326,6 +365,7 @@ export class Type extends AstNode {
             case "optional":
             case "typeDict":
             case "union":
+            case "literal":
                 throw new Error("Cannot get class reference for " + this.internalType.type);
             default:
                 assertNever(this.internalType);
@@ -439,6 +479,20 @@ export class Type extends AstNode {
         return new this({
             type: "enumString",
             value
+        });
+    }
+
+    public static literalString(value: string): Type {
+        return new this({
+            type: "literal",
+            value: TypeLiteral.string(value) as LiteralString
+        });
+    }
+
+    public static literalBoolean(value: boolean): Type {
+        return new this({
+            type: "literal",
+            value: TypeLiteral.boolean(value) as LiteralBoolean
         });
     }
 

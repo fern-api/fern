@@ -71,6 +71,12 @@ fixtures:
     - outputFolder: property-accessors
       customConfig:
         propertyAccess: private
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
   alias:
     - outputFolder: no-custom-config
       customConfig: null
@@ -131,4 +137,5 @@ allowedFailures:
   - multi-url-environment
   - multi-url-environment-no-default
   # Fix union dynamic snippets (i.e. BigUnion).
-  - unions
+  - unions:no-custom-config
+  - unions:property-accessors

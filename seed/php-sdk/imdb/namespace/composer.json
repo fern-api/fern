@@ -25,7 +25,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "\\Fern\\Tests\\": "tests/"
+      "Fern\\Tests\\": "tests/"
     }
   },
   "scripts": {

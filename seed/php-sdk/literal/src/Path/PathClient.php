@@ -50,7 +50,7 @@ class PathClient
     }
 
     /**
-     * @param string $id
+     * @param '123' $id
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

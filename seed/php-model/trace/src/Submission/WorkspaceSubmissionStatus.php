@@ -9,32 +9,48 @@ use Seed\Core\Json\JsonDecoder;
 class WorkspaceSubmissionStatus extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'ran'
+     *   |'traced'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
      *   |WorkspaceRunDetails
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'ran'
+     *   |'traced'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
      *   |WorkspaceRunDetails
+     *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -53,10 +69,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param mixed $errored
+     * @param ErrorInfo $errored
      * @return WorkspaceSubmissionStatus
      */
-    public static function errored(mixed $errored): WorkspaceSubmissionStatus
+    public static function errored(ErrorInfo $errored): WorkspaceSubmissionStatus
     {
         return new WorkspaceSubmissionStatus([
             'type' => 'errored',
@@ -101,18 +117,6 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return WorkspaceSubmissionStatus
-     */
-    public static function _unknown(mixed $_unknown): WorkspaceSubmissionStatus
-    {
-        return new WorkspaceSubmissionStatus([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isStopped(): bool
@@ -125,17 +129,17 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      */
     public function isErrored(): bool
     {
-        return is_null($this->value) && $this->type === 'errored';
+        return $this->value instanceof ErrorInfo && $this->type === 'errored';
     }
 
     /**
-     * @return mixed
+     * @return ErrorInfo
      */
-    public function asErrored(): mixed
+    public function asErrored(): ErrorInfo
     {
-        if (!(is_null($this->value) && $this->type === 'errored')) {
+        if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
-                "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -157,7 +161,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
-                "Expected running; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -179,7 +183,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceRunDetails && $this->type === 'ran')) {
             throw new Exception(
-                "Expected ran; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected ran; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -201,7 +205,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     {
         if (!($this->value instanceof WorkspaceRunDetails && $this->type === 'traced')) {
             throw new Exception(
-                "Expected traced; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected traced; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -232,7 +236,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                 $result['stopped'] = [];
                 break;
             case 'errored':
-                $value = $this->value;
+                $value = $this->asErrored()->jsonSerialize();
                 $result['errored'] = $value;
                 break;
             case 'running':
@@ -293,38 +297,39 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'stopped':
-                $args['type'] = 'stopped';
                 $args['value'] = null;
                 break;
             case 'errored':
-                $args['type'] = 'errored';
                 if (!array_key_exists('errored', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'errored'",
                     );
                 }
 
-                $args['errored'] = $data['errored'];
+                if (!(is_array($data['errored']))) {
+                    throw new Exception(
+                        "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
+                    );
+                }
+                $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
-                $args['type'] = 'running';
                 if (!array_key_exists('running', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
 
-                $args['running'] = $data['running'];
+                $args['value'] = $data['running'];
                 break;
             case 'ran':
-                $args['type'] = 'ran';
-                $args['ran'] = WorkspaceRunDetails::jsonDeserialize($data);
+                $args['value'] = WorkspaceRunDetails::jsonDeserialize($data);
                 break;
             case 'traced':
-                $args['type'] = 'traced';
-                $args['traced'] = WorkspaceRunDetails::jsonDeserialize($data);
+                $args['value'] = WorkspaceRunDetails::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

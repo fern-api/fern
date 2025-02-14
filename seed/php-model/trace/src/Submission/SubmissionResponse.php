@@ -9,7 +9,15 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionResponse extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'serverInitialized'
+     *   |'problemInitialized'
+     *   |'workspaceInitialized'
+     *   |'serverErrored'
+     *   |'codeExecutionUpdate'
+     *   |'terminated'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -18,25 +26,35 @@ class SubmissionResponse extends JsonSerializableType
      *    null
      *   |string
      *   |ExceptionInfo
-     *   |mixed
+     *   |CodeExecutionUpdate
      *   |TerminatedResponse
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'serverInitialized'
+     *   |'problemInitialized'
+     *   |'workspaceInitialized'
+     *   |'serverErrored'
+     *   |'codeExecutionUpdate'
+     *   |'terminated'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
      *   |string
      *   |ExceptionInfo
-     *   |mixed
+     *   |CodeExecutionUpdate
      *   |TerminatedResponse
+     *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -90,10 +108,10 @@ class SubmissionResponse extends JsonSerializableType
     }
 
     /**
-     * @param mixed $codeExecutionUpdate
+     * @param CodeExecutionUpdate $codeExecutionUpdate
      * @return SubmissionResponse
      */
-    public static function codeExecutionUpdate(mixed $codeExecutionUpdate): SubmissionResponse
+    public static function codeExecutionUpdate(CodeExecutionUpdate $codeExecutionUpdate): SubmissionResponse
     {
         return new SubmissionResponse([
             'type' => 'codeExecutionUpdate',
@@ -110,18 +128,6 @@ class SubmissionResponse extends JsonSerializableType
         return new SubmissionResponse([
             'type' => 'terminated',
             'value' => $terminated,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return SubmissionResponse
-     */
-    public static function _unknown(mixed $_unknown): SubmissionResponse
-    {
-        return new SubmissionResponse([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -148,7 +154,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'problemInitialized')) {
             throw new Exception(
-                "Expected problemInitialized; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected problemInitialized; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -178,7 +184,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!($this->value instanceof ExceptionInfo && $this->type === 'serverErrored')) {
             throw new Exception(
-                "Expected serverErrored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected serverErrored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -190,17 +196,17 @@ class SubmissionResponse extends JsonSerializableType
      */
     public function isCodeExecutionUpdate(): bool
     {
-        return is_null($this->value) && $this->type === 'codeExecutionUpdate';
+        return $this->value instanceof CodeExecutionUpdate && $this->type === 'codeExecutionUpdate';
     }
 
     /**
-     * @return mixed
+     * @return CodeExecutionUpdate
      */
-    public function asCodeExecutionUpdate(): mixed
+    public function asCodeExecutionUpdate(): CodeExecutionUpdate
     {
-        if (!(is_null($this->value) && $this->type === 'codeExecutionUpdate')) {
+        if (!($this->value instanceof CodeExecutionUpdate && $this->type === 'codeExecutionUpdate')) {
             throw new Exception(
-                "Expected codeExecutionUpdate; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected codeExecutionUpdate; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -222,7 +228,7 @@ class SubmissionResponse extends JsonSerializableType
     {
         if (!($this->value instanceof TerminatedResponse && $this->type === 'terminated')) {
             throw new Exception(
-                "Expected terminated; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected terminated; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -264,7 +270,7 @@ class SubmissionResponse extends JsonSerializableType
                 $result = array_merge($value, $result);
                 break;
             case 'codeExecutionUpdate':
-                $value = $this->value;
+                $value = $this->asCodeExecutionUpdate()->jsonSerialize();
                 $result['codeExecutionUpdate'] = $value;
                 break;
             case 'terminated':
@@ -317,42 +323,42 @@ class SubmissionResponse extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'serverInitialized':
-                $args['type'] = 'serverInitialized';
                 $args['value'] = null;
                 break;
             case 'problemInitialized':
-                $args['type'] = 'problemInitialized';
                 if (!array_key_exists('problemInitialized', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'problemInitialized'",
                     );
                 }
 
-                $args['problemInitialized'] = $data['problemInitialized'];
+                $args['value'] = $data['problemInitialized'];
                 break;
             case 'workspaceInitialized':
-                $args['type'] = 'workspaceInitialized';
                 $args['value'] = null;
                 break;
             case 'serverErrored':
-                $args['type'] = 'serverErrored';
-                $args['serverErrored'] = ExceptionInfo::jsonDeserialize($data);
+                $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'codeExecutionUpdate':
-                $args['type'] = 'codeExecutionUpdate';
                 if (!array_key_exists('codeExecutionUpdate', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'codeExecutionUpdate'",
                     );
                 }
 
-                $args['codeExecutionUpdate'] = $data['codeExecutionUpdate'];
+                if (!(is_array($data['codeExecutionUpdate']))) {
+                    throw new Exception(
+                        "Expected property 'codeExecutionUpdate' in JSON data to be array, instead received " . get_debug_type($data['codeExecutionUpdate']),
+                    );
+                }
+                $args['value'] = CodeExecutionUpdate::jsonDeserialize($data['codeExecutionUpdate']);
                 break;
             case 'terminated':
-                $args['type'] = 'terminated';
-                $args['terminated'] = TerminatedResponse::jsonDeserialize($data);
+                $args['value'] = TerminatedResponse::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

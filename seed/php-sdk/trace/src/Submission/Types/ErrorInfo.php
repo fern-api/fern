@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class ErrorInfo extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'compileError'
+     *   |'runtimeError'
+     *   |'internalError'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class ErrorInfo extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'compileError'
+     *   |'runtimeError'
+     *   |'internalError'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    CompileError
      *   |RuntimeError
@@ -34,7 +44,7 @@ class ErrorInfo extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -78,18 +88,6 @@ class ErrorInfo extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return ErrorInfo
-     */
-    public static function _unknown(mixed $_unknown): ErrorInfo
-    {
-        return new ErrorInfo([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isCompileError(): bool
@@ -104,7 +102,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof CompileError && $this->type === 'compileError')) {
             throw new Exception(
-                "Expected compileError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected compileError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +124,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof RuntimeError && $this->type === 'runtimeError')) {
             throw new Exception(
-                "Expected runtimeError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected runtimeError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +146,7 @@ class ErrorInfo extends JsonSerializableType
     {
         if (!($this->value instanceof InternalError && $this->type === 'internalError')) {
             throw new Exception(
-                "Expected internalError; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected internalError; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -233,18 +231,16 @@ class ErrorInfo extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'compileError':
-                $args['type'] = 'compileError';
-                $args['compileError'] = CompileError::jsonDeserialize($data);
+                $args['value'] = CompileError::jsonDeserialize($data);
                 break;
             case 'runtimeError':
-                $args['type'] = 'runtimeError';
-                $args['runtimeError'] = RuntimeError::jsonDeserialize($data);
+                $args['value'] = RuntimeError::jsonDeserialize($data);
                 break;
             case 'internalError':
-                $args['type'] = 'internalError';
-                $args['internalError'] = InternalError::jsonDeserialize($data);
+                $args['value'] = InternalError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

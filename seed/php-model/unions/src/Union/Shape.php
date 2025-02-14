@@ -16,7 +16,11 @@ class Shape extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $type
+     * @var (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -32,7 +36,11 @@ class Shape extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   type: string,
+     *   type: (
+     *    'circle'
+     *   |'square'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Circle
      *   |Square
@@ -40,7 +48,7 @@ class Shape extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
@@ -77,20 +85,6 @@ class Shape extends JsonSerializableType
     }
 
     /**
-     * @param string $id
-     * @param mixed $_unknown
-     * @return Shape
-     */
-    public static function _unknown(string $id, mixed $_unknown): Shape
-    {
-        return new Shape([
-            'id' => $id,
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isCircle(): bool
@@ -105,7 +99,7 @@ class Shape extends JsonSerializableType
     {
         if (!($this->value instanceof Circle && $this->type === 'circle')) {
             throw new Exception(
-                "Expected circle; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected circle; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -127,7 +121,7 @@ class Shape extends JsonSerializableType
     {
         if (!($this->value instanceof Square && $this->type === 'square')) {
             throw new Exception(
-                "Expected square; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected square; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -220,14 +214,13 @@ class Shape extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'circle':
-                $args['type'] = 'circle';
-                $args['circle'] = Circle::jsonDeserialize($data);
+                $args['value'] = Circle::jsonDeserialize($data);
                 break;
             case 'square':
-                $args['type'] = 'square';
-                $args['square'] = Square::jsonDeserialize($data);
+                $args['value'] = Square::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

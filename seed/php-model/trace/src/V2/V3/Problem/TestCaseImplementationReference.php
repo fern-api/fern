@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class TestCaseImplementationReference extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'templateId'
+     *   |'implementation'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class TestCaseImplementationReference extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'templateId'
+     *   |'implementation'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |TestCaseImplementation
@@ -32,7 +40,7 @@ class TestCaseImplementationReference extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -64,18 +72,6 @@ class TestCaseImplementationReference extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return TestCaseImplementationReference
-     */
-    public static function _unknown(mixed $_unknown): TestCaseImplementationReference
-    {
-        return new TestCaseImplementationReference([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isTemplateId(): bool
@@ -90,7 +86,7 @@ class TestCaseImplementationReference extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'templateId')) {
             throw new Exception(
-                "Expected templateId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected templateId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class TestCaseImplementationReference extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseImplementation && $this->type === 'implementation')) {
             throw new Exception(
-                "Expected implementation; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected implementation; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,20 +189,19 @@ class TestCaseImplementationReference extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'templateId':
-                $args['type'] = 'templateId';
                 if (!array_key_exists('templateId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'templateId'",
                     );
                 }
 
-                $args['templateId'] = $data['templateId'];
+                $args['value'] = $data['templateId'];
                 break;
             case 'implementation':
-                $args['type'] = 'implementation';
-                $args['implementation'] = TestCaseImplementation::jsonDeserialize($data);
+                $args['value'] = TestCaseImplementation::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

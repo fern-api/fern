@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class Animal extends JsonSerializableType
 {
     /**
-     * @var string $animal
+     * @var (
+     *    'dog'
+     *   |'cat'
+     *   |'_unknown'
+     * ) $animal
      */
     public readonly string $animal;
 
@@ -24,7 +28,11 @@ class Animal extends JsonSerializableType
 
     /**
      * @param array{
-     *   animal: string,
+     *   animal: (
+     *    'dog'
+     *   |'cat'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Dog
      *   |Cat
@@ -32,7 +40,7 @@ class Animal extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->animal = $values['animal'];
@@ -64,18 +72,6 @@ class Animal extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return Animal
-     */
-    public static function _unknown(mixed $_unknown): Animal
-    {
-        return new Animal([
-            'animal' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isDog(): bool
@@ -90,7 +86,7 @@ class Animal extends JsonSerializableType
     {
         if (!($this->value instanceof Dog && $this->animal === 'dog')) {
             throw new Exception(
-                "Expected dog; got " . $this->animal . "with value of type " . get_debug_type($this->value),
+                "Expected dog; got " . $this->animal . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -112,7 +108,7 @@ class Animal extends JsonSerializableType
     {
         if (!($this->value instanceof Cat && $this->animal === 'cat')) {
             throw new Exception(
-                "Expected cat; got " . $this->animal . "with value of type " . get_debug_type($this->value),
+                "Expected cat; got " . $this->animal . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,14 +189,13 @@ class Animal extends JsonSerializableType
             );
         }
 
+        $args['animal'] = $animal;
         switch ($animal) {
             case 'dog':
-                $args['animal'] = 'dog';
-                $args['dog'] = Dog::jsonDeserialize($data);
+                $args['value'] = Dog::jsonDeserialize($data);
                 break;
             case 'cat':
-                $args['animal'] = 'cat';
-                $args['cat'] = Cat::jsonDeserialize($data);
+                $args['value'] = Cat::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

@@ -96,8 +96,8 @@ class SeedClient
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-        if ($$xRandomHeader != null) {
-            $defaultHeaders['X-Random-Header'] = $$xRandomHeader;
+        if ($xRandomHeader != null) {
+            $defaultHeaders['X-Random-Header'] = $xRandomHeader;
         }
 
         $this->options = $options ?? [];

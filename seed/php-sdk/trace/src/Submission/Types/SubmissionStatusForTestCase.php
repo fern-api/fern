@@ -9,30 +9,42 @@ use Seed\Core\Json\JsonDecoder;
 class SubmissionStatusForTestCase extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'graded'
+     *   |'gradedV2'
+     *   |'traced'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
      *    TestCaseResultWithStdout
-     *   |mixed
+     *   |TestCaseGrade
      *   |TracedTestCase
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'graded'
+     *   |'gradedV2'
+     *   |'traced'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    TestCaseResultWithStdout
-     *   |mixed
+     *   |TestCaseGrade
      *   |TracedTestCase
+     *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -52,10 +64,10 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     }
 
     /**
-     * @param mixed $gradedV2
+     * @param TestCaseGrade $gradedV2
      * @return SubmissionStatusForTestCase
      */
-    public static function gradedV2(mixed $gradedV2): SubmissionStatusForTestCase
+    public static function gradedV2(TestCaseGrade $gradedV2): SubmissionStatusForTestCase
     {
         return new SubmissionStatusForTestCase([
             'type' => 'gradedV2',
@@ -76,18 +88,6 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return SubmissionStatusForTestCase
-     */
-    public static function _unknown(mixed $_unknown): SubmissionStatusForTestCase
-    {
-        return new SubmissionStatusForTestCase([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isGraded(): bool
@@ -102,7 +102,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     {
         if (!($this->value instanceof TestCaseResultWithStdout && $this->type === 'graded')) {
             throw new Exception(
-                "Expected graded; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected graded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -114,17 +114,17 @@ class SubmissionStatusForTestCase extends JsonSerializableType
      */
     public function isGradedV2(): bool
     {
-        return is_null($this->value) && $this->type === 'gradedV2';
+        return $this->value instanceof TestCaseGrade && $this->type === 'gradedV2';
     }
 
     /**
-     * @return mixed
+     * @return TestCaseGrade
      */
-    public function asGradedV2(): mixed
+    public function asGradedV2(): TestCaseGrade
     {
-        if (!(is_null($this->value) && $this->type === 'gradedV2')) {
+        if (!($this->value instanceof TestCaseGrade && $this->type === 'gradedV2')) {
             throw new Exception(
-                "Expected gradedV2; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected gradedV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -146,7 +146,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
     {
         if (!($this->value instanceof TracedTestCase && $this->type === 'traced')) {
             throw new Exception(
-                "Expected traced; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected traced; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -178,7 +178,7 @@ class SubmissionStatusForTestCase extends JsonSerializableType
                 $result = array_merge($value, $result);
                 break;
             case 'gradedV2':
-                $value = $this->value;
+                $value = $this->asGradedV2()->jsonSerialize();
                 $result['gradedV2'] = $value;
                 break;
             case 'traced':
@@ -231,24 +231,27 @@ class SubmissionStatusForTestCase extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'graded':
-                $args['type'] = 'graded';
-                $args['graded'] = TestCaseResultWithStdout::jsonDeserialize($data);
+                $args['value'] = TestCaseResultWithStdout::jsonDeserialize($data);
                 break;
             case 'gradedV2':
-                $args['type'] = 'gradedV2';
                 if (!array_key_exists('gradedV2', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'gradedV2'",
                     );
                 }
 
-                $args['gradedV2'] = $data['gradedV2'];
+                if (!(is_array($data['gradedV2']))) {
+                    throw new Exception(
+                        "Expected property 'gradedV2' in JSON data to be array, instead received " . get_debug_type($data['gradedV2']),
+                    );
+                }
+                $args['value'] = TestCaseGrade::jsonDeserialize($data['gradedV2']);
                 break;
             case 'traced':
-                $args['type'] = 'traced';
-                $args['traced'] = TracedTestCase::jsonDeserialize($data);
+                $args['value'] = TracedTestCase::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

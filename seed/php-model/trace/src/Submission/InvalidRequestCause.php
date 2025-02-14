@@ -9,7 +9,12 @@ use Seed\Core\Json\JsonDecoder;
 class InvalidRequestCause extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'submissionIdNotFound'
+     *   |'customTestCasesUnsupported'
+     *   |'unexpectedLanguage'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +30,12 @@ class InvalidRequestCause extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'submissionIdNotFound'
+     *   |'customTestCasesUnsupported'
+     *   |'unexpectedLanguage'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    SubmissionIdNotFound
      *   |CustomTestCasesUnsupported
@@ -34,7 +44,7 @@ class InvalidRequestCause extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -78,18 +88,6 @@ class InvalidRequestCause extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return InvalidRequestCause
-     */
-    public static function _unknown(mixed $_unknown): InvalidRequestCause
-    {
-        return new InvalidRequestCause([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isSubmissionIdNotFound(): bool
@@ -104,7 +102,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof SubmissionIdNotFound && $this->type === 'submissionIdNotFound')) {
             throw new Exception(
-                "Expected submissionIdNotFound; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected submissionIdNotFound; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -126,7 +124,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof CustomTestCasesUnsupported && $this->type === 'customTestCasesUnsupported')) {
             throw new Exception(
-                "Expected customTestCasesUnsupported; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected customTestCasesUnsupported; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -148,7 +146,7 @@ class InvalidRequestCause extends JsonSerializableType
     {
         if (!($this->value instanceof UnexpectedLanguageError && $this->type === 'unexpectedLanguage')) {
             throw new Exception(
-                "Expected unexpectedLanguage; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected unexpectedLanguage; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -233,18 +231,16 @@ class InvalidRequestCause extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'submissionIdNotFound':
-                $args['type'] = 'submissionIdNotFound';
-                $args['submissionIdNotFound'] = SubmissionIdNotFound::jsonDeserialize($data);
+                $args['value'] = SubmissionIdNotFound::jsonDeserialize($data);
                 break;
             case 'customTestCasesUnsupported':
-                $args['type'] = 'customTestCasesUnsupported';
-                $args['customTestCasesUnsupported'] = CustomTestCasesUnsupported::jsonDeserialize($data);
+                $args['value'] = CustomTestCasesUnsupported::jsonDeserialize($data);
                 break;
             case 'unexpectedLanguage':
-                $args['type'] = 'unexpectedLanguage';
-                $args['unexpectedLanguage'] = UnexpectedLanguageError::jsonDeserialize($data);
+                $args['value'] = UnexpectedLanguageError::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

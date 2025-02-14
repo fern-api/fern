@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class PlaylistIdNotFoundErrorBody extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'playlistId'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +26,17 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'playlistId'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    string
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -50,18 +56,6 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return PlaylistIdNotFoundErrorBody
-     */
-    public static function _unknown(mixed $_unknown): PlaylistIdNotFoundErrorBody
-    {
-        return new PlaylistIdNotFoundErrorBody([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isPlaylistId(): bool
@@ -76,7 +70,7 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'playlistId')) {
             throw new Exception(
-                "Expected playlistId; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected playlistId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -153,16 +147,16 @@ class PlaylistIdNotFoundErrorBody extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'playlistId':
-                $args['type'] = 'playlistId';
                 if (!array_key_exists('playlistId', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'playlistId'",
                     );
                 }
 
-                $args['playlistId'] = $data['playlistId'];
+                $args['value'] = $data['playlistId'];
                 break;
             case '_unknown':
             default:

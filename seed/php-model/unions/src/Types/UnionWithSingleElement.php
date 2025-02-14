@@ -9,7 +9,10 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithSingleElement extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'foo'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -23,14 +26,17 @@ class UnionWithSingleElement extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'foo'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Foo
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -50,18 +56,6 @@ class UnionWithSingleElement extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return UnionWithSingleElement
-     */
-    public static function _unknown(mixed $_unknown): UnionWithSingleElement
-    {
-        return new UnionWithSingleElement([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isFoo(): bool
@@ -76,7 +70,7 @@ class UnionWithSingleElement extends JsonSerializableType
     {
         if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -153,10 +147,10 @@ class UnionWithSingleElement extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

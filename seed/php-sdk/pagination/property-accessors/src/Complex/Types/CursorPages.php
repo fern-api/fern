@@ -32,14 +32,14 @@ class CursorPages extends JsonSerializableType
     private ?int $totalPages;
 
     /**
-     * @var string $type
+     * @var 'pages' $type
      */
     #[JsonProperty('type')]
     private string $type;
 
     /**
      * @param array{
-     *   type: string,
+     *   type: 'pages',
      *   next?: ?StartingAfterPaging,
      *   page?: ?int,
      *   perPage?: ?int,
@@ -125,7 +125,7 @@ class CursorPages extends JsonSerializableType
     }
 
     /**
-     * @return string
+     * @return 'pages'
      */
     public function getType(): string
     {
@@ -133,7 +133,7 @@ class CursorPages extends JsonSerializableType
     }
 
     /**
-     * @param string $value
+     * @param 'pages' $value
      */
     public function setType(string $value): self
     {

@@ -9,13 +9,18 @@ use Seed\Core\Json\JsonDecoder;
 class ContainerValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'list'
+     *   |'optional'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
-     *    array<mixed>
+     *    array<FieldValue>
+     *   |FieldValue
      *   |mixed
      * ) $value
      */
@@ -23,14 +28,19 @@ class ContainerValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'list'
+     *   |'optional'
+     *   |'_unknown'
+     * ),
      *   value: (
-     *    array<mixed>
+     *    array<FieldValue>
+     *   |FieldValue
      *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -38,7 +48,7 @@ class ContainerValue extends JsonSerializableType
     }
 
     /**
-     * @param array<mixed> $list
+     * @param array<FieldValue> $list
      * @return ContainerValue
      */
     public static function list(array $list): ContainerValue
@@ -50,26 +60,14 @@ class ContainerValue extends JsonSerializableType
     }
 
     /**
-     * @param mixed $optional
+     * @param ?FieldValue $optional
      * @return ContainerValue
      */
-    public static function optional(mixed $optional = null): ContainerValue
+    public static function optional(?FieldValue $optional = null): ContainerValue
     {
         return new ContainerValue([
             'type' => 'optional',
             'value' => $optional,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return ContainerValue
-     */
-    public static function _unknown(mixed $_unknown): ContainerValue
-    {
-        return new ContainerValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -82,13 +80,13 @@ class ContainerValue extends JsonSerializableType
     }
 
     /**
-     * @return array<mixed>
+     * @return array<FieldValue>
      */
     public function asList_(): array
     {
         if (!(is_array($this->value) && $this->type === 'list')) {
             throw new Exception(
-                "Expected list; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected list; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -100,17 +98,17 @@ class ContainerValue extends JsonSerializableType
      */
     public function isOptional(): bool
     {
-        return is_null($this->value) && $this->type === 'optional';
+        return (is_null($this->value) || $this->value instanceof FieldValue) && $this->type === 'optional';
     }
 
     /**
-     * @return mixed
+     * @return ?FieldValue
      */
-    public function asOptional(): mixed
+    public function asOptional(): ?FieldValue
     {
-        if (!(is_null($this->value) && $this->type === 'optional')) {
+        if (!((is_null($this->value) || $this->value instanceof FieldValue) && $this->type === 'optional')) {
             throw new Exception(
-                "Expected optional; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected optional; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -143,6 +141,9 @@ class ContainerValue extends JsonSerializableType
                 break;
             case 'optional':
                 $value = $this->asOptional();
+                if (!is_null($value)) {
+                    $value = $value->jsonSerialize();
+                }
                 $result['optional'] = $value;
                 break;
             case '_unknown':
@@ -191,26 +192,34 @@ class ContainerValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'list':
-                $args['type'] = 'list';
                 if (!array_key_exists('list', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'list'",
                     );
                 }
 
-                $args['list'] = $data['list'];
+                $args['value'] = $data['list'];
                 break;
             case 'optional':
-                $args['type'] = 'optional';
                 if (!array_key_exists('optional', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'optional'",
                     );
                 }
 
-                $args['optional'] = $data['optional'];
+                if (is_null($data['optional'])) {
+                    $args['value'] = null;
+                } else {
+                    if (!(is_array($data['optional']))) {
+                        throw new Exception(
+                            "Expected property 'optional' in JSON data to be array, instead received " . get_debug_type($data['optional']),
+                        );
+                    }
+                    $args['value'] = FieldValue::jsonDeserialize($data['optional']);
+                }
                 break;
             case '_unknown':
             default:

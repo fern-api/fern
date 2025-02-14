@@ -10,7 +10,11 @@ use Seed\Core\Json\JsonDecoder;
 class CustomFiles extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'basic'
+     *   |'custom'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -25,7 +29,11 @@ class CustomFiles extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'basic'
+     *   |'custom'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    BasicCustomFiles
      *   |array<value-of<Language>, Files>
@@ -33,7 +41,7 @@ class CustomFiles extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -65,18 +73,6 @@ class CustomFiles extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return CustomFiles
-     */
-    public static function _unknown(mixed $_unknown): CustomFiles
-    {
-        return new CustomFiles([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isBasic(): bool
@@ -91,7 +87,7 @@ class CustomFiles extends JsonSerializableType
     {
         if (!($this->value instanceof BasicCustomFiles && $this->type === 'basic')) {
             throw new Exception(
-                "Expected basic; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected basic; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -113,7 +109,7 @@ class CustomFiles extends JsonSerializableType
     {
         if (!(is_array($this->value) && $this->type === 'custom')) {
             throw new Exception(
-                "Expected custom; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected custom; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -194,20 +190,19 @@ class CustomFiles extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'basic':
-                $args['type'] = 'basic';
-                $args['basic'] = BasicCustomFiles::jsonDeserialize($data);
+                $args['value'] = BasicCustomFiles::jsonDeserialize($data);
                 break;
             case 'custom':
-                $args['type'] = 'custom';
                 if (!array_key_exists('custom', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'custom'",
                     );
                 }
 
-                $args['custom'] = $data['custom'];
+                $args['value'] = $data['custom'];
                 break;
             case '_unknown':
             default:

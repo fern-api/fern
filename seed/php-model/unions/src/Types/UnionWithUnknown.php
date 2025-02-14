@@ -9,7 +9,11 @@ use Seed\Core\Json\JsonDecoder;
 class UnionWithUnknown extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'foo'
+     *   |'unknown'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -24,7 +28,11 @@ class UnionWithUnknown extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'foo'
+     *   |'unknown'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    Foo
      *   |null
@@ -32,7 +40,7 @@ class UnionWithUnknown extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -63,18 +71,6 @@ class UnionWithUnknown extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return UnionWithUnknown
-     */
-    public static function _unknown(mixed $_unknown): UnionWithUnknown
-    {
-        return new UnionWithUnknown([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isFoo(): bool
@@ -89,7 +85,7 @@ class UnionWithUnknown extends JsonSerializableType
     {
         if (!($this->value instanceof Foo && $this->type === 'foo')) {
             throw new Exception(
-                "Expected foo; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected foo; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -177,13 +173,12 @@ class UnionWithUnknown extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'foo':
-                $args['type'] = 'foo';
-                $args['foo'] = Foo::jsonDeserialize($data);
+                $args['value'] = Foo::jsonDeserialize($data);
                 break;
             case 'unknown':
-                $args['type'] = 'unknown';
                 $args['value'] = null;
                 break;
             case '_unknown':

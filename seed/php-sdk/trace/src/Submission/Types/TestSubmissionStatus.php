@@ -9,32 +9,46 @@ use Seed\Core\Json\JsonDecoder;
 class TestSubmissionStatus extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'testCaseIdToState'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
     /**
      * @var (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
-     *   |array<string, mixed>
+     *   |array<string, SubmissionStatusForTestCase>
+     *   |mixed
      * ) $value
      */
     public readonly mixed $value;
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'stopped'
+     *   |'errored'
+     *   |'running'
+     *   |'testCaseIdToState'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    null
-     *   |mixed
+     *   |ErrorInfo
      *   |value-of<RunningSubmissionState>
-     *   |array<string, mixed>
+     *   |array<string, SubmissionStatusForTestCase>
+     *   |mixed
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -53,10 +67,10 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param mixed $errored
+     * @param ErrorInfo $errored
      * @return TestSubmissionStatus
      */
-    public static function errored(mixed $errored): TestSubmissionStatus
+    public static function errored(ErrorInfo $errored): TestSubmissionStatus
     {
         return new TestSubmissionStatus([
             'type' => 'errored',
@@ -77,7 +91,7 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param array<string, mixed> $testCaseIdToState
+     * @param array<string, SubmissionStatusForTestCase> $testCaseIdToState
      * @return TestSubmissionStatus
      */
     public static function testCaseIdToState(array $testCaseIdToState): TestSubmissionStatus
@@ -85,18 +99,6 @@ class TestSubmissionStatus extends JsonSerializableType
         return new TestSubmissionStatus([
             'type' => 'testCaseIdToState',
             'value' => $testCaseIdToState,
-        ]);
-    }
-
-    /**
-     * @param mixed $_unknown
-     * @return TestSubmissionStatus
-     */
-    public static function _unknown(mixed $_unknown): TestSubmissionStatus
-    {
-        return new TestSubmissionStatus([
-            'type' => '_unknown',
-            'value' => $_unknown,
         ]);
     }
 
@@ -113,17 +115,17 @@ class TestSubmissionStatus extends JsonSerializableType
      */
     public function isErrored(): bool
     {
-        return is_null($this->value) && $this->type === 'errored';
+        return $this->value instanceof ErrorInfo && $this->type === 'errored';
     }
 
     /**
-     * @return mixed
+     * @return ErrorInfo
      */
-    public function asErrored(): mixed
+    public function asErrored(): ErrorInfo
     {
-        if (!(is_null($this->value) && $this->type === 'errored')) {
+        if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
             throw new Exception(
-                "Expected errored; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -145,7 +147,7 @@ class TestSubmissionStatus extends JsonSerializableType
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
-                "Expected running; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -161,13 +163,13 @@ class TestSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, SubmissionStatusForTestCase>
      */
     public function asTestCaseIdToState(): array
     {
         if (!(is_array($this->value) && $this->type === 'testCaseIdToState')) {
             throw new Exception(
-                "Expected testCaseIdToState; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected testCaseIdToState; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -198,7 +200,7 @@ class TestSubmissionStatus extends JsonSerializableType
                 $result['stopped'] = [];
                 break;
             case 'errored':
-                $value = $this->value;
+                $value = $this->asErrored()->jsonSerialize();
                 $result['errored'] = $value;
                 break;
             case 'running':
@@ -255,40 +257,42 @@ class TestSubmissionStatus extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'stopped':
-                $args['type'] = 'stopped';
                 $args['value'] = null;
                 break;
             case 'errored':
-                $args['type'] = 'errored';
                 if (!array_key_exists('errored', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'errored'",
                     );
                 }
 
-                $args['errored'] = $data['errored'];
+                if (!(is_array($data['errored']))) {
+                    throw new Exception(
+                        "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
+                    );
+                }
+                $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
-                $args['type'] = 'running';
                 if (!array_key_exists('running', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
 
-                $args['running'] = $data['running'];
+                $args['value'] = $data['running'];
                 break;
             case 'testCaseIdToState':
-                $args['type'] = 'testCaseIdToState';
                 if (!array_key_exists('testCaseIdToState', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'testCaseIdToState'",
                     );
                 }
 
-                $args['testCaseIdToState'] = $data['testCaseIdToState'];
+                $args['value'] = $data['testCaseIdToState'];
                 break;
             case '_unknown':
             default:

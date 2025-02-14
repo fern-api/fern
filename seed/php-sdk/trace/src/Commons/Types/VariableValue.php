@@ -9,7 +9,20 @@ use Seed\Core\Json\JsonDecoder;
 class VariableValue extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeValue'
+     *   |'singlyLinkedListValue'
+     *   |'doublyLinkedListValue'
+     *   |'nullValue'
+     *   |'_unknown'
+     * ) $type
      */
     public readonly string $type;
 
@@ -20,7 +33,7 @@ class VariableValue extends JsonSerializableType
      *   |float
      *   |string
      *   |MapValue
-     *   |array<mixed>
+     *   |array<VariableValue>
      *   |BinaryTreeValue
      *   |SinglyLinkedListValue
      *   |DoublyLinkedListValue
@@ -32,14 +45,27 @@ class VariableValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
+     *   type: (
+     *    'integerValue'
+     *   |'booleanValue'
+     *   |'doubleValue'
+     *   |'stringValue'
+     *   |'charValue'
+     *   |'mapValue'
+     *   |'listValue'
+     *   |'binaryTreeValue'
+     *   |'singlyLinkedListValue'
+     *   |'doublyLinkedListValue'
+     *   |'nullValue'
+     *   |'_unknown'
+     * ),
      *   value: (
      *    int
      *   |bool
      *   |float
      *   |string
      *   |MapValue
-     *   |array<mixed>
+     *   |array<VariableValue>
      *   |BinaryTreeValue
      *   |SinglyLinkedListValue
      *   |DoublyLinkedListValue
@@ -48,7 +74,7 @@ class VariableValue extends JsonSerializableType
      * ),
      * } $values
      */
-    public function __construct(
+    private function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
@@ -128,7 +154,7 @@ class VariableValue extends JsonSerializableType
     }
 
     /**
-     * @param array<mixed> $listValue
+     * @param array<VariableValue> $listValue
      * @return VariableValue
      */
     public static function listValue(array $listValue): VariableValue
@@ -187,18 +213,6 @@ class VariableValue extends JsonSerializableType
     }
 
     /**
-     * @param mixed $_unknown
-     * @return VariableValue
-     */
-    public static function _unknown(mixed $_unknown): VariableValue
-    {
-        return new VariableValue([
-            'type' => '_unknown',
-            'value' => $_unknown,
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isIntegerValue(): bool
@@ -213,7 +227,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!(is_int($this->value) && $this->type === 'integerValue')) {
             throw new Exception(
-                "Expected integerValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected integerValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -235,7 +249,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!(is_bool($this->value) && $this->type === 'booleanValue')) {
             throw new Exception(
-                "Expected booleanValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected booleanValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -257,7 +271,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!(is_float($this->value) && $this->type === 'doubleValue')) {
             throw new Exception(
-                "Expected doubleValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected doubleValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -279,7 +293,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'stringValue')) {
             throw new Exception(
-                "Expected stringValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected stringValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -301,7 +315,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!(is_string($this->value) && $this->type === 'charValue')) {
             throw new Exception(
-                "Expected charValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected charValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -323,7 +337,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof MapValue && $this->type === 'mapValue')) {
             throw new Exception(
-                "Expected mapValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected mapValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -339,13 +353,13 @@ class VariableValue extends JsonSerializableType
     }
 
     /**
-     * @return array<mixed>
+     * @return array<VariableValue>
      */
     public function asListValue(): array
     {
         if (!(is_array($this->value) && $this->type === 'listValue')) {
             throw new Exception(
-                "Expected listValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected listValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -367,7 +381,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof BinaryTreeValue && $this->type === 'binaryTreeValue')) {
             throw new Exception(
-                "Expected binaryTreeValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected binaryTreeValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -389,7 +403,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof SinglyLinkedListValue && $this->type === 'singlyLinkedListValue')) {
             throw new Exception(
-                "Expected singlyLinkedListValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected singlyLinkedListValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -411,7 +425,7 @@ class VariableValue extends JsonSerializableType
     {
         if (!($this->value instanceof DoublyLinkedListValue && $this->type === 'doublyLinkedListValue')) {
             throw new Exception(
-                "Expected doublyLinkedListValue; got " . $this->type . "with value of type " . get_debug_type($this->value),
+                "Expected doublyLinkedListValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -535,85 +549,75 @@ class VariableValue extends JsonSerializableType
             );
         }
 
+        $args['type'] = $type;
         switch ($type) {
             case 'integerValue':
-                $args['type'] = 'integerValue';
                 if (!array_key_exists('integerValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'integerValue'",
                     );
                 }
 
-                $args['integerValue'] = $data['integerValue'];
+                $args['value'] = $data['integerValue'];
                 break;
             case 'booleanValue':
-                $args['type'] = 'booleanValue';
                 if (!array_key_exists('booleanValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'booleanValue'",
                     );
                 }
 
-                $args['booleanValue'] = $data['booleanValue'];
+                $args['value'] = $data['booleanValue'];
                 break;
             case 'doubleValue':
-                $args['type'] = 'doubleValue';
                 if (!array_key_exists('doubleValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'doubleValue'",
                     );
                 }
 
-                $args['doubleValue'] = $data['doubleValue'];
+                $args['value'] = $data['doubleValue'];
                 break;
             case 'stringValue':
-                $args['type'] = 'stringValue';
                 if (!array_key_exists('stringValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'stringValue'",
                     );
                 }
 
-                $args['stringValue'] = $data['stringValue'];
+                $args['value'] = $data['stringValue'];
                 break;
             case 'charValue':
-                $args['type'] = 'charValue';
                 if (!array_key_exists('charValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'charValue'",
                     );
                 }
 
-                $args['charValue'] = $data['charValue'];
+                $args['value'] = $data['charValue'];
                 break;
             case 'mapValue':
-                $args['type'] = 'mapValue';
-                $args['mapValue'] = MapValue::jsonDeserialize($data);
+                $args['value'] = MapValue::jsonDeserialize($data);
                 break;
             case 'listValue':
-                $args['type'] = 'listValue';
                 if (!array_key_exists('listValue', $data)) {
                     throw new Exception(
                         "JSON data is missing property 'listValue'",
                     );
                 }
 
-                $args['listValue'] = $data['listValue'];
+                $args['value'] = $data['listValue'];
                 break;
             case 'binaryTreeValue':
-                $args['type'] = 'binaryTreeValue';
-                $args['binaryTreeValue'] = BinaryTreeValue::jsonDeserialize($data);
+                $args['value'] = BinaryTreeValue::jsonDeserialize($data);
                 break;
             case 'singlyLinkedListValue':
-                $args['type'] = 'singlyLinkedListValue';
-                $args['singlyLinkedListValue'] = SinglyLinkedListValue::jsonDeserialize($data);
+                $args['value'] = SinglyLinkedListValue::jsonDeserialize($data);
                 break;
             case 'doublyLinkedListValue':
-                $args['type'] = 'doublyLinkedListValue';
-                $args['doublyLinkedListValue'] = DoublyLinkedListValue::jsonDeserialize($data);
+                $args['value'] = DoublyLinkedListValue::jsonDeserialize($data);
                 break;
             case 'nullValue':
-                $args['type'] = 'nullValue';
                 $args['value'] = null;
                 break;
             case '_unknown':

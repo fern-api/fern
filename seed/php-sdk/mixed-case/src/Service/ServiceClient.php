@@ -4,16 +4,17 @@ namespace Seed\Service;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Service\Types\Resource;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
-use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\ListResourcesRequest;
 use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonDecoder;
 
 class ServiceClient
 {
@@ -61,11 +62,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return mixed
+     * @return Resource
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, ?array $options = null): mixed
+    public function getResource(string $resourceId, ?array $options = null): Resource
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,7 +81,7 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeMixed($json);
+                return Resource::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -114,7 +115,7 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<mixed>
+     * @return array<Resource>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -137,7 +138,7 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ['mixed']);
+                return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
