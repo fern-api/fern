@@ -1,21 +1,15 @@
 import { OpenAPIV3 } from "openapi-types";
 
-export type ChannelId = string;
+import { ChannelId } from "../sharedTypes";
 
-export interface Document {
+export interface DocumentV2 {
+    asyncapi: string;
     channels?: Record<ChannelId, Channel>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
-        messages?: Record<string, Message>;
+        messages?: Record<string, MessageV2>;
     };
     tags?: Tag[];
-}
-
-export interface Message {
-    messageId: string;
-    name?: string;
-    summary?: string;
-    payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
 
 export interface Channel {
@@ -43,10 +37,17 @@ export interface WebSocketBindings {
     query?: OpenAPIV3.SchemaObject;
 }
 
+export interface MessageV2 {
+    messageId: string;
+    name?: string;
+    summary?: string;
+    payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+}
+
 export interface PublishEvent {
     description?: string;
     operationId?: string;
-    message: OpenAPIV3.SchemaObject;
+    message: OpenAPIV3.SchemaObject | MessageV2;
 }
 
 export interface SubscribeEvent {

@@ -379,7 +379,7 @@ export function generateIr({
         },
         endpoints,
         webhooks,
-        channel: [],
+        channels: {},
         groupedSchemas: getSchemas(namespace, schemas),
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),

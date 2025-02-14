@@ -1,4 +1,3 @@
-import { Logger } from "@fern-api/logger";
 import {
     HeaderExample,
     QueryParameterExample,
@@ -9,13 +8,13 @@ import {
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
-import { convertSchema } from "../schema/convertSchemas";
-import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
-import { isReferenceObject } from "../schema/utils/isReferenceObject";
-import { isSchemaRequired } from "../schema/utils/isSchemaRequired";
-import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
-import { WebsocketSessionExampleExtension } from "./getFernExamples";
+import { isExamplePrimitive } from "../../openapi/v3/converters/ExampleEndpointFactory";
+import { convertSchema } from "../../schema/convertSchemas";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject";
+import { isSchemaRequired } from "../../schema/utils/isSchemaRequired";
+import { WebsocketSessionExampleExtension } from "../getFernExamples";
+import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
 
 export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;

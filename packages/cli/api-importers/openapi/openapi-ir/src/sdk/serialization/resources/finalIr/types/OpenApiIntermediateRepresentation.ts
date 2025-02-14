@@ -33,7 +33,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     hasEndpointsMarkedInternal: core.serialization.boolean(),
     endpoints: core.serialization.list(Endpoint),
     webhooks: core.serialization.list(Webhook),
-    channel: core.serialization.list(WebsocketChannel),
+    channels: core.serialization.record(core.serialization.string(), WebsocketChannel),
     groupedSchemas: Schemas,
     variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
@@ -54,7 +54,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         hasEndpointsMarkedInternal: boolean;
         endpoints: Endpoint.Raw[];
         webhooks: Webhook.Raw[];
-        channel: WebsocketChannel.Raw[];
+        channels: Record<string, WebsocketChannel.Raw>;
         groupedSchemas: Schemas.Raw;
         variables: Record<string, PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];
