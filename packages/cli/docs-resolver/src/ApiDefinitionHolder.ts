@@ -309,7 +309,7 @@ export class ApiDefinitionHolder {
     }
 }
 
-function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
+export function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
     if (environment == null) {
         return undefined;
     }
