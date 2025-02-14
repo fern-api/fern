@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-await client.Complex.SearchAsync(
+var pager = await client.Complex.SearchAsync(
     new SearchRequest
     {
         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
@@ -31,6 +31,11 @@ await client.Complex.SearchAsync(
         },
     }
 );
+
+await foreach (var item in pager)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling
@@ -46,6 +51,33 @@ try {
 } catch (SeedPaginationApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+}
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
+
+```csharp
+using SeedPagination;
+
+var client = new SeedPaginationClient("TOKEN");
+var pager = await client.Complex.SearchAsync(
+    new SearchRequest
+    {
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
+        {
+            Field = "field",
+            Operator = SingleFilterSearchRequestOperator.Equals,
+            Value = "value",
+        },
+    }
+);
+
+await foreach (var item in pager)
+{
+    // do something with item
 }
 ```
 
