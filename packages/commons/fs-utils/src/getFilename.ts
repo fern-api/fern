@@ -5,7 +5,7 @@ export function getFilename(path: RelativeFilePath | AbsoluteFilePath): Relative
     if (!path.includes(".")) {
         return undefined;
     }
-    const segments = path.split("/");
+    const segments = path.split(/[/\\]/);
     const finalSegment = segments[segments.length - 1];
     if (finalSegment == null) {
         return undefined;
