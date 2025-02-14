@@ -235,7 +235,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeNode(this.context.getExceptionClassReference(fullError.name));
         writer.write("(");
         writer.writeNode(this.context.getJsonUtilsClassReference());
-        writer.write(".Deserialize<");
+        writer.write(`.${this.context.getDeserializeMethodName()}<`);
         writer.writeNode(
             fullError.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
@@ -278,7 +278,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.indent();
                     writer.write("return ");
                     writer.writeNode(this.context.getJsonUtilsClassReference());
-                    writer.write(".Deserialize<");
+                    writer.write(`.${this.context.getDeserializeMethodName()}<`);
                     writer.writeNode(astType);
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
                     // nullable.

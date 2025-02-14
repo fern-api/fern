@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const SdkCustomConfigSchema = z.strictObject({
     namespace: z.string().optional(),
+    "skip-response-validation": z.boolean().optional(),
     "simplify-object-dictionaries": z.boolean().optional(),
     "base-api-exception-class-name": z.string().optional(),
     "base-exception-class-name": z.string().optional(),

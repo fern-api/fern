@@ -26,9 +26,12 @@ public partial class SeedUnionsClient
             }
         }
         _client = new RawClient(clientOptions);
+        Bigunion = new BigunionClient(_client);
         Types = new TypesClient(_client);
         Union = new UnionClient(_client);
     }
+
+    public BigunionClient Bigunion { get; init; }
 
     public TypesClient Types { get; init; }
 

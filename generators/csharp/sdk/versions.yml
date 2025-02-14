@@ -7,6 +7,25 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+
+- version: 1.9.22
+  createdAt: "2025-02-06"
+  irVersion: 53          
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Add new configuration `skipResponseValidation` to skip response validation. When set to true, 
+        the generated client will fail fast if the response schema does not match the generated code. 
+
+        This is particularly useful if you are concerned about your API Definition (e.g. OpenAPI, AsyncAPI)
+        not being entirely correct. 
+        
+        ```
+        - name: fernapi/fern-csharp-sdk
+          version: 1.9.22
+          config: 
+            skip-response-validation: true
+        ```
 - version: 1.9.21
   createdAt: "2025-02-06"
   irVersion: 53          
