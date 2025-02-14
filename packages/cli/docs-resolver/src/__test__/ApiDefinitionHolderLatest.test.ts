@@ -23,7 +23,8 @@ it.skip("finds subpackage by exact match", () => {
         webhooks: {},
         types: {},
         auths: {},
-        globalHeaders: []
+        globalHeaders: [],
+        snippetsConfiguration: undefined
     });
     expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
@@ -47,7 +48,8 @@ it.skip("finds subpackage from yaml/yml files", () => {
         webhooks: {},
         types: {},
         auths: {},
-        globalHeaders: []
+        globalHeaders: [],
+        snippetsConfiguration: undefined
     });
 
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
@@ -95,7 +97,8 @@ it.skip("finds endpoint by id and by path/method", () => {
         webhooks: {},
         types: {},
         auths: {},
-        globalHeaders: []
+        globalHeaders: [],
+        snippetsConfiguration: undefined
     });
     expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined();
@@ -129,7 +132,8 @@ it.skip("finds websocket by id and by path", () => {
         webhooks: {},
         types: {},
         auths: {},
-        globalHeaders: []
+        globalHeaders: [],
+        snippetsConfiguration: undefined
     });
     expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined();
@@ -153,12 +157,14 @@ it.skip("finds webhook by id and by path/method", () => {
                 description: "description",
                 availability: undefined,
                 namespace: [],
-                operationId: "userCreated"
+                operationId: "userCreated",
+                queryParameters: []
             }
         },
         types: {},
         auths: {},
-        globalHeaders: []
+        globalHeaders: [],
+        snippetsConfiguration: undefined
     });
     expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined();
