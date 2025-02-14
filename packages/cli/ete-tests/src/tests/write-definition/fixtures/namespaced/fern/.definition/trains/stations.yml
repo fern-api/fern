@@ -1,0 +1,69 @@
+imports:
+  trainsRoot: __package__.yml
+types:
+  GetStationsResponse:
+    properties:
+      data: optional<list<trainsRoot.Station>>
+      links: optional<GetStationsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetStationsResponseLinks:
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    inline: true
+    properties: {}
+    source:
+      openapi: openapi/trains/openapi.yml
+docs: |
+  Find and filter train stations across Europe, including their location
+  and local timezone.
+service:
+  auth: false
+  base-path: ''
+  display-name: Stations
+  endpoints:
+    get-stations:
+      auth: true
+      display-name: Get a list of train stations
+      docs: Returns a list of all train stations in the system.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - response:
+            body:
+              data:
+                - address: Invalidenstraße 10557 Berlin, Germany
+                  country_code: DE
+                  id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  name: Berlin Hauptbahnhof
+                  pet:
+                    id: 1000000
+                    name: name
+                  timezone: Europe/Berlin
+                - address: 18 Rue de Dunkerque 75010 Paris, France
+                  country_code: FR
+                  id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  name: Paris Gare du Nord
+                  pet:
+                    id: 1000000
+                    name: name
+                  timezone: Europe/Paris
+              links:
+                next: https://api.example.com/stations?page=3
+                prev: https://api.example.com/stations?page=1
+                self: https://api.example.com/stations&page=2
+      method: GET
+      path: /stations
+      response:
+        docs: A list of train stations
+        status-code: 200
+        type: GetStationsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
+  source:
+    openapi: openapi/trains/openapi.yml

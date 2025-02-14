@@ -1,0 +1,9 @@
+types:
+  OauthScope:
+    enum:
+      - docs: Read access
+        value: read
+      - docs: Write access
+        value: write
+    source:
+      openapi: openapi/trains/openapi.yml

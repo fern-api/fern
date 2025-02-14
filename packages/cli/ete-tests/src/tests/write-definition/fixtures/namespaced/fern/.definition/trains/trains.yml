@@ -1,0 +1,37 @@
+imports:
+  trainsRoot: __package__.yml
+types:
+  NewBookingPayload:
+    extends:
+      - trainsRoot.Booking
+    properties:
+      links: optional<NewBookingPayloadLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayloadLinks:
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    inline: true
+    properties: {}
+    source:
+      openapi: openapi/trains/openapi.yml
+webhooks:
+  new-booking:
+    display-name: New Booking
+    docs: >
+      Subscribe to new bookings being created, to update integrations for your
+      users.  Related data is available via the links provided in the request.
+    examples:
+      - payload:
+          has_bicycle: true
+          has_dog: true
+          id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+          links:
+            self: >-
+              https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+          passenger_name: John Doe
+          trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+    headers: {}
+    method: POST
+    payload: NewBookingPayload

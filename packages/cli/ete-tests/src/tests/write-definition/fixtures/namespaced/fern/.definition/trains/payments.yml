@@ -1,0 +1,200 @@
+imports:
+  trainsRoot: __package__.yml
+types:
+  CreateBookingPaymentResponse:
+    extends:
+      - trainsRoot.BookingPayment
+    properties:
+      links: optional<trainsRoot.LinksBooking>
+    source:
+      openapi: openapi/trains/openapi.yml
+docs: |
+  Pay for bookings using a card or bank account, and view payment
+  status and history.
+
+  > warn
+  > Bookings usually expire within 1 hour so you'll need to make your payment
+  > before the expiry date 
+service:
+  auth: false
+  base-path: ''
+  display-name: Payments
+  endpoints:
+    create-booking-payment:
+      auth: true
+      display-name: Pay for a Booking
+      docs: >-
+        A payment is an attempt to pay for the booking, which will confirm the
+        booking for the user and enable them to get their tickets.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - name: Card Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              address_city: London
+              address_country: gb
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_post_code: N12 9XX
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              name: J. Doe
+              number: '4242424242424242'
+              object: card
+          response:
+            body:
+              amount: 49.99
+              currency: gbp
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+              source:
+                address_city: source
+                address_country: gb
+                address_line1: source
+                address_line2: source
+                address_post_code: N12 9XX
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                name: J. Doe
+                number: '************4242'
+                object: card
+              status: succeeded
+        - name: Bank Account Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 100.5
+            currency: gbp
+            source:
+              account_type: individual
+              bank_name: Starling Bank
+              country: gb
+              name: J. Doe
+              number: '00012345'
+              object: bank_account
+              sort_code: '000123'
+          response:
+            body:
+              amount: 49.99
+              currency: gbp
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+              source:
+                address_city: source
+                address_country: gb
+                address_line1: source
+                address_line2: source
+                address_post_code: N12 9XX
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                name: J. Doe
+                number: '************4242'
+                object: card
+              status: succeeded
+        - name: Card Payment 2
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              address_city: London
+              address_country: gb
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_post_code: N12 9XX
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              name: J. Doe
+              number: '4242424242424242'
+              object: card
+          response:
+            body:
+              amount: 49.99
+              currency: gbp
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+              source:
+                address_city: source
+                address_country: gb
+                address_line1: source
+                address_line2: source
+                address_post_code: N12 9XX
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                name: J. Doe
+                number: '************4242'
+                object: card
+              status: succeeded
+        - name: Bank Account Payment 2
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              address_city: London
+              address_country: gb
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_post_code: N12 9XX
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              name: J. Doe
+              number: '4242424242424242'
+              object: card
+          response:
+            body:
+              amount: 100.5
+              currency: gbp
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+              source:
+                account_type: individual
+                bank_name: Starling Bank
+                country: gb
+                name: J. Doe
+                number: '*********2345'
+                object: bank_account
+                sort_code: '000123'
+              status: succeeded
+      method: POST
+      path: /bookings/{bookingId}/payment
+      path-parameters:
+        bookingId:
+          docs: The ID of the booking to pay for.
+          type: string
+      request:
+        body: trainsRoot.BookingPayment
+        content-type: application/json
+      response:
+        docs: Payment successful
+        status-code: 200
+        type: CreateBookingPaymentResponse
+      source:
+        openapi: openapi/trains/openapi.yml
+  source:
+    openapi: openapi/trains/openapi.yml
