@@ -15,7 +15,18 @@ Options:
           [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]"
 `;
 
-exports[`fern generator upgrade > fern generator help commands 2`] = `
+exports[`fern generator upgrade > fern generator upgrade list 1`] = `
+"              ╭──────────────────────────────────────────────────╮
+              │                                                  │
+              │                Generator Upgrades                │
+              │                                                  │
+              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.7   │
+              │                                                  │
+              │                                                  │
+              ╰──────────────────────────────────────────────────╯"
+`;
+
+exports[`fern generator upgrade > fern generator upgrade majors 1`] = `
 "fern-dev generator upgrade
 
 Upgrades the specified generator in generators.yml to the latest stable version.
@@ -38,17 +49,6 @@ Options:
   --list           When specified, a list of available upgrades will be
                    displayed, but no upgrade will be taken.
                                                       [boolean] [default: false]"
-`;
-
-exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"              ╭──────────────────────────────────────────────────╮
-              │                                                  │
-              │                Generator Upgrades                │
-              │                                                  │
-              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.7   │
-              │                                                  │
-              │                                                  │
-              ╰──────────────────────────────────────────────────╯"
 `;
 
 exports[`fern generator upgrade > fern generator upgrade message 1`] = `

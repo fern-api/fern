@@ -382,7 +382,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

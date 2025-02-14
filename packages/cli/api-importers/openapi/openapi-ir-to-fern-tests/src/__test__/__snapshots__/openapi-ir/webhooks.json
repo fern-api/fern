@@ -77,7 +77,7 @@
       }
     }
   ],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Pet": {
