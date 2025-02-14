@@ -15,31 +15,12 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
+import { getLatestEndpointUrlSlug, getLatestWebSocketUrlSlug, getLatestWebhookUrlSlug } from "./utils/getLatestUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
-
-function getLatestUrlSlug<T extends { namespace?: string[]; id: string; operationId?: string }>(item: T) {
-    const slugParts = item.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
-    slugParts.push(kebabCase(item.id.split(".").pop() ?? ""));
-    return item.operationId != null ? kebabCase(item.operationId) : urlJoin(slugParts);
-}
-
-function getLatestEndpointUrlSlug(endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition) {
-    return getLatestUrlSlug(endpoint);
-}
-
-function getLatestWebSocketUrlSlug(webSocket: FdrAPI.api.latest.websocket.WebSocketChannel) {
-    return getLatestUrlSlug(webSocket);
-}
-
-function getLatestWebhookUrlSlug(webhook: FdrAPI.api.latest.webhook.WebhookDefinition) {
-    return getLatestUrlSlug(webhook);
-}
-
-// END TODO
 
 export class ApiReferenceNodeConverterLatest {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -138,22 +119,6 @@ export class ApiReferenceNodeConverterLatest {
             featureFlags: this.apiSection.featureFlags
         };
     }
-
-    // #findSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
-    //     return findSubpackageByLocator(locator, this.#api?.subpackages);
-    // }
-
-    // #findEndpointByLocator(locator: string, apiDefinitionPackageId: string | undefined): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
-    //     return findEndpointByLocator(locator, apiDefinitionPackageId, this.#api?.endpoints);
-    // }
-
-    // #findWebSocketByLocator(locator: string, apiDefinitionPackageId: string | undefined): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
-    //     return findWebSocketByLocator(locator, apiDefinitionPackageId, this.#api?.websockets);
-    // }
-
-    // #findWebhookByLocator(locator: string, apiDefinitionPackageId: string | undefined): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
-    //     return findWebhookByLocator(locator, apiDefinitionPackageId, this.#api?.webhooks);
-    // }
 
     // Step 1
 
