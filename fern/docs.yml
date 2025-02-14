@@ -602,9 +602,9 @@ navigation:
           - page: Overview
             path: ./pages/cli-api/api-get-started.mdx
           - endpoint: sdk.generate
-            hidden: true
+            # hidden: true
           - endpoint: sdk.getStatus
-            hidden: true
+            # hidden: true
 
 
 navbar-links:

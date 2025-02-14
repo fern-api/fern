@@ -10,6 +10,7 @@ service:
         method: POST
         display-name: Generate SDK
         path: /generate
+        availability: pre-release
         docs: Generate an SDK for your API definition in one of our supported languages.
         request:
           name: GenerateSDKRequest
@@ -30,6 +31,7 @@ service:
         method: GET
         display-name: Get SDK Generation Status
         path: /status/{jobId}
+        availability: pre-release
         docs: Get the status of an SDK generation job.
         path-parameters:
           jobId:
