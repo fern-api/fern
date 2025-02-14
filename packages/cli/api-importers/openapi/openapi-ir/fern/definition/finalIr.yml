@@ -23,7 +23,7 @@ types:
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
-      channel: list<WebsocketChannel>
+      channels: map<string, WebsocketChannel>
       groupedSchemas: Schemas
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:

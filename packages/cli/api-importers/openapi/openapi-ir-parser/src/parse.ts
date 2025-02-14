@@ -7,6 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
+import { AsyncAPIV3 } from "./asyncapi/v3";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
 import { ParseOpenAPIOptions, getParseOptions } from "./options";
 
@@ -22,7 +23,7 @@ export interface OpenAPIDocument {
 
 export interface AsyncAPIDocument {
     type: "asyncapi";
-    value: AsyncAPIV2.Document;
+    value: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
     source?: OpenApiIrSource;
     namespace?: string;
     settings?: ParseOpenAPIOptions;
@@ -50,7 +51,7 @@ export function parse({
         hasEndpointsMarkedInternal: false,
         endpoints: [],
         webhooks: [],
-        channel: [],
+        channels: {},
         groupedSchemas: {
             rootSchemas: {},
             namespacedSchemas: {}
@@ -85,8 +86,11 @@ export function parse({
                     asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
                     namespace: document.namespace
                 });
-                if (parsedAsyncAPI.channel != null) {
-                    ir.channel.push(parsedAsyncAPI.channel);
+                if (parsedAsyncAPI.channels != null) {
+                    ir.channels = {
+                        ...ir.channels,
+                        ...parsedAsyncAPI.channels
+                    };
                 }
                 if (parsedAsyncAPI.groupedSchemas != null) {
                     ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
@@ -138,7 +142,10 @@ function merge(
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
-        channel: [...ir1.channel, ...ir2.channel],
+        channels: {
+            ...ir1.channels,
+            ...ir2.channels
+        },
         groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
         variables: {
             ...ir1.variables,

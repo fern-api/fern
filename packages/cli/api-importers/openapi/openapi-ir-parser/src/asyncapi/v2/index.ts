@@ -1,1 +1,1 @@
-export * as AsyncAPIV2 from "./asyncapi";
+export * as AsyncAPIV2 from "./types";
