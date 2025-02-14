@@ -82,7 +82,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
         const splitSchemaKey = schemaKey.split("/");
 
-        const components = (this.document as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3).components;
+        const components = (this.document as any).components;
         if (components == null || components.schemas == null) {
             throw new Error("Document does not have components.schemas.");
         }
@@ -132,6 +132,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let resolved: any = this.document;
         for (const key of keys) {
             if (typeof resolved !== "object" || resolved == null) {
