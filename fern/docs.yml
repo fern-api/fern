@@ -602,6 +602,12 @@ navigation:
         layout:
           - page: Overview
             path: ./pages/cli-api/api-get-started.mdx
+          - sdk: 
+            - endpoint: sdk.generate
+              hidden: true
+            - endpoint: sdk.getStatus
+              hidden: true
+
 
 navbar-links:
   - type: minimal
