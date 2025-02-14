@@ -88,6 +88,7 @@ public final class TestCaseGrade {
     }
 
     @JsonTypeName("hidden")
+    @JsonIgnoreProperties("type")
     private static final class HiddenValue implements Value {
         @JsonUnwrapped
         private TestCaseHiddenGrade value;
@@ -126,6 +127,7 @@ public final class TestCaseGrade {
     }
 
     @JsonTypeName("nonHidden")
+    @JsonIgnoreProperties("type")
     private static final class NonHiddenValue implements Value {
         @JsonUnwrapped
         private TestCaseNonHiddenGrade value;
@@ -163,6 +165,7 @@ public final class TestCaseGrade {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

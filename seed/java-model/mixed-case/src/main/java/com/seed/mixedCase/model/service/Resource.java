@@ -92,6 +92,7 @@ public final class Resource {
     }
 
     @JsonTypeName("user")
+    @JsonIgnoreProperties("resource_type")
     private static final class UserValue implements Value {
         @JsonUnwrapped
         private User value;
@@ -130,6 +131,7 @@ public final class Resource {
     }
 
     @JsonTypeName("Organization")
+    @JsonIgnoreProperties("resource_type")
     private static final class OrganizationValue implements Value {
         @JsonUnwrapped
         private Organization value;
@@ -167,6 +169,7 @@ public final class Resource {
         }
     }
 
+    @JsonIgnoreProperties("resource_type")
     private static final class _UnknownValue implements Value {
         private String type;
 

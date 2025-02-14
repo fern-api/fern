@@ -82,6 +82,7 @@ public final class UnionWithLiteral {
   }
 
   @JsonTypeName("fern")
+  @JsonIgnoreProperties("type")
   private static final class FernValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -119,6 +120,7 @@ public final class UnionWithLiteral {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

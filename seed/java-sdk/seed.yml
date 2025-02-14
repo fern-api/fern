@@ -126,7 +126,6 @@ allowedFailures:
   - oauth-client-credentials-custom
   - query-parameters
   - trace
-  - unions
   - streaming-parameter
   - literal
   - java-pagination-deep-cursor-path

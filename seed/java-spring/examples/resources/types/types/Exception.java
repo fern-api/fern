@@ -96,6 +96,7 @@ public final class Exception {
   }
 
   @JsonTypeName("generic")
+  @JsonIgnoreProperties("type")
   private static final class GenericValue implements Value {
     @JsonUnwrapped
     private ExceptionInfo value;
@@ -137,6 +138,7 @@ public final class Exception {
   }
 
   @JsonTypeName("timeout")
+  @JsonIgnoreProperties("type")
   private static final class TimeoutValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -161,6 +163,7 @@ public final class Exception {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

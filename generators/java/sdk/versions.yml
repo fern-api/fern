@@ -1,5 +1,15 @@
 - changelogEntry:
     - summary: |
+        Fix collision with variant type called "Value" and internal interface name.
+      type: fix
+    - summary: |
+        Prevent discriminant from deserializing as additional property in unwrapped variant.
+      type: fix
+  createdAt: '2025-02-14'
+  irVersion: 53
+  version: 2.12.1
+- changelogEntry:
+    - summary: |
         Let users define custom headers in request options
       type: feat
   createdAt: '2025-02-10'
