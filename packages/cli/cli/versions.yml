@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Introduce the AsyncAPI 3.0.0 parser, which enables conditional parsing of both 2.x and 3.x AsyncAPI specs.
+      type: fix
+  irVersion: 55
+  version: 0.52.0
+
+- changelogEntry:
+    - summary: |
         The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object 
         types, and fixes minor issues with docs dev when using specific navigation locators in docs.yml specification.
       type: fix
