@@ -88,6 +88,7 @@ public final class UnionWithoutKey {
     }
 
     @JsonTypeName("foo")
+    @JsonIgnoreProperties("type")
     private static final class FooValue implements Value {
         @JsonUnwrapped
         private Foo value;
@@ -126,6 +127,7 @@ public final class UnionWithoutKey {
     }
 
     @JsonTypeName("bar")
+    @JsonIgnoreProperties("type")
     private static final class BarValue implements Value {
         @JsonUnwrapped
         private Bar value;
@@ -163,6 +165,7 @@ public final class UnionWithoutKey {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

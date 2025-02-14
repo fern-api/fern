@@ -83,6 +83,7 @@ public final class UnionWithSingleElement {
   }
 
   @JsonTypeName("foo")
+  @JsonIgnoreProperties("type")
   private static final class FooValue implements Value {
     @JsonUnwrapped
     private Foo value;
@@ -123,6 +124,7 @@ public final class UnionWithSingleElement {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

@@ -293,6 +293,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("integerValue")
+  @JsonIgnoreProperties("type")
   private static final class IntegerValueValue implements Value {
     @JsonProperty("value")
     private int value;
@@ -331,6 +332,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("booleanValue")
+  @JsonIgnoreProperties("type")
   private static final class BooleanValueValue implements Value {
     @JsonProperty("value")
     private boolean value;
@@ -369,6 +371,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("doubleValue")
+  @JsonIgnoreProperties("type")
   private static final class DoubleValueValue implements Value {
     @JsonProperty("value")
     private double value;
@@ -407,6 +410,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("stringValue")
+  @JsonIgnoreProperties("type")
   private static final class StringValueValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -445,6 +449,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("charValue")
+  @JsonIgnoreProperties("type")
   private static final class CharValueValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -483,6 +488,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("mapValue")
+  @JsonIgnoreProperties("type")
   private static final class MapValueValue implements Value {
     @JsonUnwrapped
     private DebugMapValue value;
@@ -524,6 +530,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("listValue")
+  @JsonIgnoreProperties("type")
   private static final class ListValueValue implements Value {
     @JsonProperty("value")
     private List<DebugVariableValue> value;
@@ -562,6 +569,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("binaryTreeNodeValue")
+  @JsonIgnoreProperties("type")
   private static final class BinaryTreeNodeValueValue implements Value {
     @JsonUnwrapped
     private BinaryTreeNodeAndTreeValue value;
@@ -603,6 +611,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("singlyLinkedListNodeValue")
+  @JsonIgnoreProperties("type")
   private static final class SinglyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
     private SinglyLinkedListNodeAndListValue value;
@@ -644,6 +653,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("doublyLinkedListNodeValue")
+  @JsonIgnoreProperties("type")
   private static final class DoublyLinkedListNodeValueValue implements Value {
     @JsonUnwrapped
     private DoublyLinkedListNodeAndListValue value;
@@ -685,6 +695,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("undefinedValue")
+  @JsonIgnoreProperties("type")
   private static final class UndefinedValueValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -710,6 +721,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("nullValue")
+  @JsonIgnoreProperties("type")
   private static final class NullValueValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -735,6 +747,7 @@ public final class DebugVariableValue {
   }
 
   @JsonTypeName("genericValue")
+  @JsonIgnoreProperties("type")
   private static final class GenericValueValue implements Value {
     @JsonUnwrapped
     private GenericValue value;
@@ -775,6 +788,7 @@ public final class DebugVariableValue {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

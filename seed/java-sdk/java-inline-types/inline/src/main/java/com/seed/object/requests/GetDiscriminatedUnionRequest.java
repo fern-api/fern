@@ -142,11 +142,11 @@ public final class GetDiscriminatedUnionRequest {
             return value.visit(visitor);
         }
 
-        public static Bar type1(Type1 value) {
+        public static Bar type1(Bar.Type1 value) {
             return new Bar(new Type1Value(value));
         }
 
-        public static Bar type2(Type2 value) {
+        public static Bar type2(Bar.Type2 value) {
             return new Bar(new Type2Value(value));
         }
 
@@ -170,14 +170,14 @@ public final class GetDiscriminatedUnionRequest {
             return value instanceof _UnknownValue;
         }
 
-        public Optional<Type1> getType1() {
+        public Optional<Bar.Type1> getType1() {
             if (isType1()) {
                 return Optional.of(((Type1Value) value).value);
             }
             return Optional.empty();
         }
 
-        public Optional<Type2> getType2() {
+        public Optional<Bar.Type2> getType2() {
             if (isType2()) {
                 return Optional.of(((Type2Value) value).value);
             }
@@ -204,9 +204,9 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         public interface Visitor<T> {
-            T visitType1(Type1 type1);
+            T visitType1(Bar.Type1 type1);
 
-            T visitType2(Type2 type2);
+            T visitType2(Bar.Type2 type2);
 
             T visitRef(ReferenceType ref);
 
@@ -225,14 +225,15 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("type1")
+        @JsonIgnoreProperties("type")
         private static final class Type1Value implements Value {
             @JsonUnwrapped
-            private Type1 value;
+            private Bar.Type1 value;
 
             @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
             private Type1Value() {}
 
-            private Type1Value(Type1 value) {
+            private Type1Value(Bar.Type1 value) {
                 this.value = value;
             }
 
@@ -263,14 +264,15 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("type2")
+        @JsonIgnoreProperties("type")
         private static final class Type2Value implements Value {
             @JsonUnwrapped
-            private Type2 value;
+            private Bar.Type2 value;
 
             @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
             private Type2Value() {}
 
-            private Type2Value(Type2 value) {
+            private Type2Value(Bar.Type2 value) {
                 this.value = value;
             }
 
@@ -301,6 +303,7 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("ref")
+        @JsonIgnoreProperties("type")
         private static final class RefValue implements Value {
             @JsonUnwrapped
             private ReferenceType value;
@@ -338,6 +341,7 @@ public final class GetDiscriminatedUnionRequest {
             }
         }
 
+        @JsonIgnoreProperties("type")
         private static final class _UnknownValue implements Value {
             private String type;
 
@@ -374,8 +378,8 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = Type1.Builder.class)
-        public static final class Type1 {
+        @JsonDeserialize(builder = Type1_.Builder.class)
+        public static final class Type1_ {
             private final String foo;
 
             private final Bar_ bar;
@@ -384,7 +388,7 @@ public final class GetDiscriminatedUnionRequest {
 
             private final Map<String, Object> additionalProperties;
 
-            private Type1(String foo, Bar_ bar, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private Type1_(String foo, Bar_ bar, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.foo = foo;
                 this.bar = bar;
                 this.ref = ref;
@@ -418,7 +422,7 @@ public final class GetDiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof Type1 && equalTo((Type1) other);
+                return other instanceof Type1_ && equalTo((Type1_) other);
             }
 
             @JsonAnyGetter
@@ -426,7 +430,7 @@ public final class GetDiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(Type1 other) {
+            private boolean equalTo(Type1_ other) {
                 return foo.equals(other.foo) && bar.equals(other.bar) && ref.equals(other.ref);
             }
 
@@ -447,7 +451,7 @@ public final class GetDiscriminatedUnionRequest {
             public interface FooStage {
                 BarStage foo(@NotNull String foo);
 
-                Builder from(Type1 other);
+                Builder from(Type1_ other);
             }
 
             public interface BarStage {
@@ -459,7 +463,7 @@ public final class GetDiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                Type1 build();
+                Type1_ build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -476,7 +480,7 @@ public final class GetDiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(Type1 other) {
+                public Builder from(Type1_ other) {
                     foo(other.getFoo());
                     bar(other.getBar());
                     ref(other.getRef());
@@ -517,8 +521,8 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public Type1 build() {
-                    return new Type1(foo, bar, ref, additionalProperties);
+                public Type1_ build() {
+                    return new Type1_(foo, bar, ref, additionalProperties);
                 }
             }
 
@@ -645,15 +649,15 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = Type2.Builder.class)
-        public static final class Type2 {
+        @JsonDeserialize(builder = Type2_.Builder.class)
+        public static final class Type2_ {
             private final String baz;
 
             private final ReferenceType ref;
 
             private final Map<String, Object> additionalProperties;
 
-            private Type2(String baz, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private Type2_(String baz, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.baz = baz;
                 this.ref = ref;
                 this.additionalProperties = additionalProperties;
@@ -678,7 +682,7 @@ public final class GetDiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof Type2 && equalTo((Type2) other);
+                return other instanceof Type2_ && equalTo((Type2_) other);
             }
 
             @JsonAnyGetter
@@ -686,7 +690,7 @@ public final class GetDiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(Type2 other) {
+            private boolean equalTo(Type2_ other) {
                 return baz.equals(other.baz) && ref.equals(other.ref);
             }
 
@@ -707,7 +711,7 @@ public final class GetDiscriminatedUnionRequest {
             public interface BazStage {
                 RefStage baz(@NotNull String baz);
 
-                Builder from(Type2 other);
+                Builder from(Type2_ other);
             }
 
             public interface RefStage {
@@ -715,7 +719,7 @@ public final class GetDiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                Type2 build();
+                Type2_ build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -730,7 +734,7 @@ public final class GetDiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(Type2 other) {
+                public Builder from(Type2_ other) {
                     baz(other.getBaz());
                     ref(other.getRef());
                     return this;
@@ -759,8 +763,8 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public Type2 build() {
-                    return new Type2(baz, ref, additionalProperties);
+                public Type2_ build() {
+                    return new Type2_(baz, ref, additionalProperties);
                 }
             }
         }

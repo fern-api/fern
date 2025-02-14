@@ -253,6 +253,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("buildingExecutor")
+    @JsonIgnoreProperties("type")
     private static final class BuildingExecutorValue implements Value {
         @JsonUnwrapped
         private BuildingExecutorResponse value;
@@ -291,6 +292,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("running")
+    @JsonIgnoreProperties("type")
     private static final class RunningValue implements Value {
         @JsonUnwrapped
         private RunningResponse value;
@@ -329,6 +331,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("errored")
+    @JsonIgnoreProperties("type")
     private static final class ErroredValue implements Value {
         @JsonUnwrapped
         private ErroredResponse value;
@@ -367,6 +370,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("stopped")
+    @JsonIgnoreProperties("type")
     private static final class StoppedValue implements Value {
         @JsonUnwrapped
         private StoppedResponse value;
@@ -405,6 +409,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("graded")
+    @JsonIgnoreProperties("type")
     private static final class GradedValue implements Value {
         @JsonUnwrapped
         private GradedResponse value;
@@ -443,6 +448,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("gradedV2")
+    @JsonIgnoreProperties("type")
     private static final class GradedV2Value implements Value {
         @JsonUnwrapped
         private GradedResponseV2 value;
@@ -481,6 +487,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("workspaceRan")
+    @JsonIgnoreProperties("type")
     private static final class WorkspaceRanValue implements Value {
         @JsonUnwrapped
         private WorkspaceRanResponse value;
@@ -519,6 +526,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("recording")
+    @JsonIgnoreProperties("type")
     private static final class RecordingValue implements Value {
         @JsonUnwrapped
         private RecordingResponseNotification value;
@@ -557,6 +565,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("recorded")
+    @JsonIgnoreProperties("type")
     private static final class RecordedValue implements Value {
         @JsonUnwrapped
         private RecordedResponseNotification value;
@@ -595,6 +604,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("invalidRequest")
+    @JsonIgnoreProperties("type")
     private static final class InvalidRequestValue implements Value {
         @JsonUnwrapped
         private InvalidRequestResponse value;
@@ -633,6 +643,7 @@ public final class CodeExecutionUpdate {
     }
 
     @JsonTypeName("finished")
+    @JsonIgnoreProperties("type")
     private static final class FinishedValue implements Value {
         @JsonUnwrapped
         private FinishedResponse value;
@@ -670,6 +681,7 @@ public final class CodeExecutionUpdate {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

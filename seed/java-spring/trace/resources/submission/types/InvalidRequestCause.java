@@ -121,6 +121,7 @@ public final class InvalidRequestCause {
   }
 
   @JsonTypeName("submissionIdNotFound")
+  @JsonIgnoreProperties("type")
   private static final class SubmissionIdNotFoundValue implements Value {
     @JsonUnwrapped
     private SubmissionIdNotFound value;
@@ -162,6 +163,7 @@ public final class InvalidRequestCause {
   }
 
   @JsonTypeName("customTestCasesUnsupported")
+  @JsonIgnoreProperties("type")
   private static final class CustomTestCasesUnsupportedValue implements Value {
     @JsonUnwrapped
     private CustomTestCasesUnsupported value;
@@ -203,6 +205,7 @@ public final class InvalidRequestCause {
   }
 
   @JsonTypeName("unexpectedLanguage")
+  @JsonIgnoreProperties("type")
   private static final class UnexpectedLanguageValue implements Value {
     @JsonUnwrapped
     private UnexpectedLanguageError value;
@@ -243,6 +246,7 @@ public final class InvalidRequestCause {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

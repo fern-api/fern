@@ -35,11 +35,11 @@ public final class UnionTypeWithAliasVariant {
         return value.visit(visitor);
     }
 
-    public static UnionTypeWithAliasVariant aliasVariant(AliasVariant value) {
+    public static UnionTypeWithAliasVariant aliasVariant(UnionTypeWithAliasVariant.AliasVariant value) {
         return new UnionTypeWithAliasVariant(new AliasVariantValue(value));
     }
 
-    public static UnionTypeWithAliasVariant nonAliasVariant(NonAliasVariant value) {
+    public static UnionTypeWithAliasVariant nonAliasVariant(UnionTypeWithAliasVariant.NonAliasVariant value) {
         return new UnionTypeWithAliasVariant(new NonAliasVariantValue(value));
     }
 
@@ -55,14 +55,14 @@ public final class UnionTypeWithAliasVariant {
         return value instanceof _UnknownValue;
     }
 
-    public Optional<AliasVariant> getAliasVariant() {
+    public Optional<UnionTypeWithAliasVariant.AliasVariant> getAliasVariant() {
         if (isAliasVariant()) {
             return Optional.of(((AliasVariantValue) value).value);
         }
         return Optional.empty();
     }
 
-    public Optional<NonAliasVariant> getNonAliasVariant() {
+    public Optional<UnionTypeWithAliasVariant.NonAliasVariant> getNonAliasVariant() {
         if (isNonAliasVariant()) {
             return Optional.of(((NonAliasVariantValue) value).value);
         }
@@ -82,9 +82,9 @@ public final class UnionTypeWithAliasVariant {
     }
 
     public interface Visitor<T> {
-        T visitAliasVariant(AliasVariant aliasVariant);
+        T visitAliasVariant(UnionTypeWithAliasVariant.AliasVariant aliasVariant);
 
-        T visitNonAliasVariant(NonAliasVariant nonAliasVariant);
+        T visitNonAliasVariant(UnionTypeWithAliasVariant.NonAliasVariant nonAliasVariant);
 
         T _visitUnknown(Object unknownType);
     }
@@ -97,14 +97,15 @@ public final class UnionTypeWithAliasVariant {
     }
 
     @JsonTypeName("aliasVariant")
+    @JsonIgnoreProperties("type")
     private static final class AliasVariantValue implements Value {
         @JsonUnwrapped
-        private AliasVariant value;
+        private UnionTypeWithAliasVariant.AliasVariant value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private AliasVariantValue() {}
 
-        private AliasVariantValue(AliasVariant value) {
+        private AliasVariantValue(UnionTypeWithAliasVariant.AliasVariant value) {
             this.value = value;
         }
 
@@ -135,14 +136,15 @@ public final class UnionTypeWithAliasVariant {
     }
 
     @JsonTypeName("nonAliasVariant")
+    @JsonIgnoreProperties("type")
     private static final class NonAliasVariantValue implements Value {
         @JsonUnwrapped
-        private NonAliasVariant value;
+        private UnionTypeWithAliasVariant.NonAliasVariant value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private NonAliasVariantValue() {}
 
-        private NonAliasVariantValue(NonAliasVariant value) {
+        private NonAliasVariantValue(UnionTypeWithAliasVariant.NonAliasVariant value) {
             this.value = value;
         }
 
@@ -172,6 +174,7 @@ public final class UnionTypeWithAliasVariant {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 
@@ -208,13 +211,13 @@ public final class UnionTypeWithAliasVariant {
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
-    @JsonDeserialize(builder = AliasVariant.Builder.class)
-    public static final class AliasVariant {
+    @JsonDeserialize(builder = AliasVariant_.Builder.class)
+    public static final class AliasVariant_ {
         private final String prop;
 
         private final Map<String, Object> additionalProperties;
 
-        private AliasVariant(String prop, Map<String, Object> additionalProperties) {
+        private AliasVariant_(String prop, Map<String, Object> additionalProperties) {
             this.prop = prop;
             this.additionalProperties = additionalProperties;
         }
@@ -227,7 +230,7 @@ public final class UnionTypeWithAliasVariant {
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof AliasVariant && equalTo((AliasVariant) other);
+            return other instanceof AliasVariant_ && equalTo((AliasVariant_) other);
         }
 
         @JsonAnyGetter
@@ -235,7 +238,7 @@ public final class UnionTypeWithAliasVariant {
             return this.additionalProperties;
         }
 
-        private boolean equalTo(AliasVariant other) {
+        private boolean equalTo(AliasVariant_ other) {
             return prop.equals(other.prop);
         }
 
@@ -256,11 +259,11 @@ public final class UnionTypeWithAliasVariant {
         public interface PropStage {
             _FinalStage prop(@NotNull String prop);
 
-            Builder from(AliasVariant other);
+            Builder from(AliasVariant_ other);
         }
 
         public interface _FinalStage {
-            AliasVariant build();
+            AliasVariant_ build();
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -273,7 +276,7 @@ public final class UnionTypeWithAliasVariant {
             private Builder() {}
 
             @java.lang.Override
-            public Builder from(AliasVariant other) {
+            public Builder from(AliasVariant_ other) {
                 prop(other.getProp());
                 return this;
             }
@@ -286,20 +289,20 @@ public final class UnionTypeWithAliasVariant {
             }
 
             @java.lang.Override
-            public AliasVariant build() {
-                return new AliasVariant(prop, additionalProperties);
+            public AliasVariant_ build() {
+                return new AliasVariant_(prop, additionalProperties);
             }
         }
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
-    @JsonDeserialize(builder = NonAliasVariant.Builder.class)
-    public static final class NonAliasVariant {
+    @JsonDeserialize(builder = NonAliasVariant_.Builder.class)
+    public static final class NonAliasVariant_ {
         private final String prop;
 
         private final Map<String, Object> additionalProperties;
 
-        private NonAliasVariant(String prop, Map<String, Object> additionalProperties) {
+        private NonAliasVariant_(String prop, Map<String, Object> additionalProperties) {
             this.prop = prop;
             this.additionalProperties = additionalProperties;
         }
@@ -312,7 +315,7 @@ public final class UnionTypeWithAliasVariant {
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof NonAliasVariant && equalTo((NonAliasVariant) other);
+            return other instanceof NonAliasVariant_ && equalTo((NonAliasVariant_) other);
         }
 
         @JsonAnyGetter
@@ -320,7 +323,7 @@ public final class UnionTypeWithAliasVariant {
             return this.additionalProperties;
         }
 
-        private boolean equalTo(NonAliasVariant other) {
+        private boolean equalTo(NonAliasVariant_ other) {
             return prop.equals(other.prop);
         }
 
@@ -341,11 +344,11 @@ public final class UnionTypeWithAliasVariant {
         public interface PropStage {
             _FinalStage prop(@NotNull String prop);
 
-            Builder from(NonAliasVariant other);
+            Builder from(NonAliasVariant_ other);
         }
 
         public interface _FinalStage {
-            NonAliasVariant build();
+            NonAliasVariant_ build();
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -358,7 +361,7 @@ public final class UnionTypeWithAliasVariant {
             private Builder() {}
 
             @java.lang.Override
-            public Builder from(NonAliasVariant other) {
+            public Builder from(NonAliasVariant_ other) {
                 prop(other.getProp());
                 return this;
             }
@@ -371,8 +374,8 @@ public final class UnionTypeWithAliasVariant {
             }
 
             @java.lang.Override
-            public NonAliasVariant build() {
-                return new NonAliasVariant(prop, additionalProperties);
+            public NonAliasVariant_ build() {
+                return new NonAliasVariant_(prop, additionalProperties);
             }
         }
     }

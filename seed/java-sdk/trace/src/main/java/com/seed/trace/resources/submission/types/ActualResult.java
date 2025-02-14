@@ -16,10 +16,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class ActualResult {
-    private final Value value;
+    private final Value_ value;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    private ActualResult(Value value) {
+    private ActualResult(Value_ value) {
         this.value = value;
     }
 
@@ -84,7 +84,7 @@ public final class ActualResult {
     }
 
     @JsonValue
-    private Value getValue() {
+    private Value_ getValue_() {
         return this.value;
     }
 
@@ -105,12 +105,13 @@ public final class ActualResult {
         @JsonSubTypes.Type(ExceptionV2Value.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private interface Value {
+    private interface Value_ {
         <T> T visit(Visitor<T> visitor);
     }
 
     @JsonTypeName("value")
-    private static final class ValueValue implements Value {
+    @JsonIgnoreProperties("type")
+    private static final class ValueValue implements Value_ {
         @JsonProperty("value")
         private VariableValue value;
 
@@ -146,7 +147,8 @@ public final class ActualResult {
     }
 
     @JsonTypeName("exception")
-    private static final class ExceptionValue implements Value {
+    @JsonIgnoreProperties("type")
+    private static final class ExceptionValue implements Value_ {
         @JsonUnwrapped
         private ExceptionInfo value;
 
@@ -184,7 +186,8 @@ public final class ActualResult {
     }
 
     @JsonTypeName("exceptionV2")
-    private static final class ExceptionV2Value implements Value {
+    @JsonIgnoreProperties("type")
+    private static final class ExceptionV2Value implements Value_ {
         @JsonProperty("value")
         private ExceptionV2 value;
 
@@ -219,7 +222,8 @@ public final class ActualResult {
         }
     }
 
-    private static final class _UnknownValue implements Value {
+    @JsonIgnoreProperties("type")
+    private static final class _UnknownValue implements Value_ {
         private String type;
 
         @JsonValue

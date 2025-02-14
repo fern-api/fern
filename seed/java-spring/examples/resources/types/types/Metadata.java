@@ -102,6 +102,7 @@ public final class Metadata {
   }
 
   @JsonTypeName("html")
+  @JsonIgnoreProperties("type")
   private static final class HtmlValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -140,6 +141,7 @@ public final class Metadata {
   }
 
   @JsonTypeName("markdown")
+  @JsonIgnoreProperties("type")
   private static final class MarkdownValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -177,6 +179,7 @@ public final class Metadata {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

@@ -19,12 +19,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class UnionWithTime {
-  private final Value value;
+  private final Value_ value;
 
   @JsonCreator(
       mode = JsonCreator.Mode.DELEGATING
   )
-  private UnionWithTime(Value value) {
+  private UnionWithTime(Value_ value) {
     this.value = value;
   }
 
@@ -89,7 +89,7 @@ public final class UnionWithTime {
   }
 
   @JsonValue
-  private Value getValue() {
+  private Value_ getValue_() {
     return this.value;
   }
 
@@ -117,12 +117,13 @@ public final class UnionWithTime {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  private interface Value {
+  private interface Value_ {
     <T> T visit(Visitor<T> visitor);
   }
 
   @JsonTypeName("value")
-  private static final class ValueValue implements Value {
+  @JsonIgnoreProperties("type")
+  private static final class ValueValue implements Value_ {
     @JsonProperty("value")
     private int value;
 
@@ -160,7 +161,8 @@ public final class UnionWithTime {
   }
 
   @JsonTypeName("date")
-  private static final class DateValue implements Value {
+  @JsonIgnoreProperties("type")
+  private static final class DateValue implements Value_ {
     @JsonProperty("value")
     private String value;
 
@@ -198,7 +200,8 @@ public final class UnionWithTime {
   }
 
   @JsonTypeName("datetime")
-  private static final class DatetimeValue implements Value {
+  @JsonIgnoreProperties("type")
+  private static final class DatetimeValue implements Value_ {
     @JsonProperty("value")
     private OffsetDateTime value;
 
@@ -235,7 +238,8 @@ public final class UnionWithTime {
     }
   }
 
-  private static final class _UnknownValue implements Value {
+  @JsonIgnoreProperties("type")
+  private static final class _UnknownValue implements Value_ {
     private String type;
 
     @JsonValue

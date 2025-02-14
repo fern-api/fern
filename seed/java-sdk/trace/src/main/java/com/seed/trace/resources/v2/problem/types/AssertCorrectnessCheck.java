@@ -88,6 +88,7 @@ public final class AssertCorrectnessCheck {
     }
 
     @JsonTypeName("deepEquality")
+    @JsonIgnoreProperties("type")
     private static final class DeepEqualityValue implements Value {
         @JsonUnwrapped
         private DeepEqualityCorrectnessCheck value;
@@ -126,6 +127,7 @@ public final class AssertCorrectnessCheck {
     }
 
     @JsonTypeName("custom")
+    @JsonIgnoreProperties("type")
     private static final class CustomValue implements Value {
         @JsonUnwrapped
         private VoidFunctionDefinitionThatTakesActualResult value;
@@ -163,6 +165,7 @@ public final class AssertCorrectnessCheck {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 
