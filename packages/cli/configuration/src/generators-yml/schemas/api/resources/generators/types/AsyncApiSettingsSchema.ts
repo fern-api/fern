@@ -7,4 +7,5 @@ export interface AsyncApiSettingsSchema {
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
     "respect-nullable-schemas"?: boolean;
+    "idiomatic-request-names"?: boolean;
 }

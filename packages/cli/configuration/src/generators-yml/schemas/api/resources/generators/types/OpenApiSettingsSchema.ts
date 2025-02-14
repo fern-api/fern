@@ -8,6 +8,8 @@ export interface OpenApiSettingsSchema {
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
+    /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
+    "idiomatic-request-names"?: boolean;
     /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
     "prefer-undiscriminated-unions-with-literals"?: boolean;
     /** Enables parsing deep object query parameters */

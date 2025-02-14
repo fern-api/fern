@@ -15,6 +15,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     "title-as-schema-name": core.serialization.boolean().optional(),
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
+    "idiomatic-request-names": core.serialization.boolean().optional(),
     "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
     "object-query-parameters": core.serialization.boolean().optional(),
     "respect-readonly-schemas": core.serialization.boolean().optional(),
@@ -30,6 +31,7 @@ export declare namespace OpenApiSettingsSchema {
         "title-as-schema-name"?: boolean | null;
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
+        "idiomatic-request-names"?: boolean | null;
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
