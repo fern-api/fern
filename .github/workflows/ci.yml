@@ -159,7 +159,7 @@ jobs:
       - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"
-          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
