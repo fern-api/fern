@@ -2,10 +2,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import {
-    getLatestEndpointUrlSlug,
-    getLatestWebSocketUrlSlug,
-    getLatestWebhookUrlSlug
-} from "../utils/getLatestUrlSlug";
+    getApiLatestEndpointToNavigationNodeUrlSlug,
+    getApiLatestWebSocketToNavigationNodeUrlSlug,
+    getApiLatestWebhookToNavigationNodeUrlSlug
+} from "../utils/getApiLatestToNavigationNodeUrlSlug";
 
 it.skip("generates slug for endpoint", () => {
     const endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition = {
@@ -36,7 +36,7 @@ it.skip("generates slug for endpoint", () => {
         protocol: undefined,
         availability: undefined
     };
-    expect(getLatestEndpointUrlSlug(endpoint)).toBe("api-service/create");
+    expect(getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)).toBe("api-service/create");
 });
 
 it.skip("generates slug for websocket", () => {
@@ -62,7 +62,7 @@ it.skip("generates slug for websocket", () => {
         availability: undefined,
         description: undefined
     };
-    expect(getLatestWebSocketUrlSlug(websocket)).toBe("realtime/stream");
+    expect(getApiLatestWebSocketToNavigationNodeUrlSlug(websocket)).toBe("realtime/stream");
 });
 
 it.skip("generates slug for webhook", () => {
@@ -79,5 +79,5 @@ it.skip("generates slug for webhook", () => {
         payloads: [],
         description: undefined
     };
-    expect(getLatestWebhookUrlSlug(webhook)).toBe("webhooks/completed");
+    expect(getApiLatestWebhookToNavigationNodeUrlSlug(webhook)).toBe("webhooks/completed");
 });

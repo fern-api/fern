@@ -15,7 +15,11 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
-import { getLatestEndpointUrlSlug, getLatestWebSocketUrlSlug, getLatestWebhookUrlSlug } from "./utils/getLatestUrlSlug";
+import {
+    getApiLatestEndpointToNavigationNodeUrlSlug,
+    getApiLatestWebSocketToNavigationNodeUrlSlug,
+    getApiLatestWebhookToNavigationNodeUrlSlug
+} from "./utils/getApiLatestToNavigationNodeUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
@@ -417,7 +421,7 @@ export class ApiReferenceNodeConverterLatest {
             const endpointSlug =
                 endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestEndpointUrlSlug(endpoint) });
+                    : parentSlug.apply({ urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint) });
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
                 type: "endpoint",
@@ -460,7 +464,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestWebSocketUrlSlug(webSocket) })
+                    : parentSlug.apply({ urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket) })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -492,7 +496,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestWebhookUrlSlug(webhook) })
+                    : parentSlug.apply({ urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook) })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -585,7 +589,7 @@ export class ApiReferenceNodeConverterLatest {
             }
 
             const endpointSlug = parentSlug.apply({
-                urlSlug: getLatestEndpointUrlSlug(endpoint)
+                urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)
             });
 
             const endpointNode: FernNavigation.V1.EndpointNode = {
@@ -672,7 +676,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                 slug: parentSlug
                     .apply({
-                        urlSlug: getLatestWebSocketUrlSlug(webSocket)
+                        urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket)
                     })
                     .get(),
                 icon: undefined,
@@ -747,7 +751,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: webhook.displayName ?? titleCase(webhook.id),
                 slug: parentSlug
                     .apply({
-                        urlSlug: getLatestWebhookUrlSlug(webhook)
+                        urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook)
                     })
                     .get(),
                 icon: undefined,
