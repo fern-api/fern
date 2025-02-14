@@ -108,6 +108,7 @@ public final class ProblemDescriptionBoard {
     }
 
     @JsonTypeName("html")
+    @JsonIgnoreProperties("type")
     private static final class HtmlValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -144,6 +145,7 @@ public final class ProblemDescriptionBoard {
     }
 
     @JsonTypeName("variable")
+    @JsonIgnoreProperties("type")
     private static final class VariableValue implements Value {
         @JsonProperty("value")
         private com.seed.trace.resources.commons.types.VariableValue value;
@@ -180,6 +182,7 @@ public final class ProblemDescriptionBoard {
     }
 
     @JsonTypeName("testCaseId")
+    @JsonIgnoreProperties("type")
     private static final class TestCaseIdValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -215,6 +218,7 @@ public final class ProblemDescriptionBoard {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

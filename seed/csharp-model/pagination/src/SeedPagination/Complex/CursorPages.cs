@@ -18,7 +18,7 @@ public record CursorPages
     public int? TotalPages { get; set; }
 
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "pages";
 
     public override string ToString()
     {

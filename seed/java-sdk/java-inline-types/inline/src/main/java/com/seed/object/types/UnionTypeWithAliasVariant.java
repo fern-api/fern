@@ -97,6 +97,7 @@ public final class UnionTypeWithAliasVariant {
     }
 
     @JsonTypeName("aliasVariant")
+    @JsonIgnoreProperties("type")
     private static final class AliasVariantValue implements Value {
         @JsonUnwrapped
         private AliasVariant value;
@@ -135,6 +136,7 @@ public final class UnionTypeWithAliasVariant {
     }
 
     @JsonTypeName("nonAliasVariant")
+    @JsonIgnoreProperties("type")
     private static final class NonAliasVariantValue implements Value {
         @JsonUnwrapped
         private NonAliasVariant value;
@@ -172,6 +174,7 @@ public final class UnionTypeWithAliasVariant {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

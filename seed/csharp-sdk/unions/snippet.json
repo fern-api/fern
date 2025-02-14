@@ -6,6 +6,42 @@
             "id": {
                 "path": "/{id}",
                 "method": "GET",
+                "identifier_override": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.GetAsync(\"id\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(new NormalSweet { Value = \"value\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<object>()\n    {\n        new NormalSweet { Value = \"value\" },\n        new NormalSweet { Value = \"value\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {

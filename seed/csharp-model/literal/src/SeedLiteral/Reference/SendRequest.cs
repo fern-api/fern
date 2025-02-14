@@ -6,19 +6,19 @@ namespace SeedLiteral;
 public record SendRequest
 {
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; set; }
+    public string Prompt { get; set; } = "You are a helpful assistant";
 
     [JsonPropertyName("query")]
     public required string Query { get; set; }
 
     [JsonPropertyName("stream")]
-    public required bool Stream { get; set; }
+    public bool Stream { get; set; } = false;
 
     [JsonPropertyName("ending")]
-    public required string Ending { get; set; }
+    public string Ending { get; set; } = "$ending";
 
     [JsonPropertyName("context")]
-    public required string Context { get; set; }
+    public string Context { get; set; } = "You're super wise";
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }

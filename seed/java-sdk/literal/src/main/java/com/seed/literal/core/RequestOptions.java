@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public final class RequestOptions {
     private final String version;
@@ -17,11 +18,23 @@ public final class RequestOptions {
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(String version, String auditLogging, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    private final Map<String, String> headers;
+
+    private final Map<String, Supplier<String>> headerSuppliers;
+
+    private RequestOptions(
+            String version,
+            String auditLogging,
+            Optional<Integer> timeout,
+            TimeUnit timeoutTimeUnit,
+            Map<String, String> headers,
+            Map<String, Supplier<String>> headerSuppliers) {
         this.version = version;
         this.auditLogging = auditLogging;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
+        this.headers = headers;
+        this.headerSuppliers = headerSuppliers;
     }
 
     public Optional<Integer> getTimeout() {
@@ -40,6 +53,10 @@ public final class RequestOptions {
         if (this.auditLogging != null) {
             headers.put("X-API-Enable-Audit-Logging", this.auditLogging);
         }
+        headers.putAll(this.headers);
+        this.headerSuppliers.forEach((key, supplier) -> {
+            headers.put(key, supplier.get());
+        });
         return headers;
     }
 
@@ -55,6 +72,10 @@ public final class RequestOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        private final Map<String, String> headers = new HashMap<>();
+
+        private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
         public Builder version(String version) {
             this.version = version;
@@ -77,8 +98,18 @@ public final class RequestOptions {
             return this;
         }
 
+        public Builder addHeader(String key, String value) {
+            this.headers.put(key, value);
+            return this;
+        }
+
+        public Builder addHeader(String key, Supplier<String> value) {
+            this.headerSuppliers.put(key, value);
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(version, auditLogging, timeout, timeoutTimeUnit);
+            return new RequestOptions(version, auditLogging, timeout, timeoutTimeUnit, headers, headerSuppliers);
         }
     }
 }

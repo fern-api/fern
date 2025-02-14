@@ -7,52 +7,62 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.22
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Generate a pagination section to the generated README.md file.
+    - type: feat
+      summary: |
+        You can now `foreach(var item in page)` on `Page<T>` instances.
 - version: 1.9.21
   createdAt: "2025-02-06"
-  irVersion: 53          
+  irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         Support literals in query parameters and headers. For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
-        Note that wrapped requests are just a bag of properties that include body properties. 
+        Note that wrapped requests are just a bag of properties that include body properties.
 - version: 1.9.20
   createdAt: "2025-02-06"
-  irVersion: 53          
+  irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         Support literals in wrapped requests (). For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
-        Note that wrapped requests are just a bag of properties that include body properties. 
+        Note that wrapped requests are just a bag of properties that include body properties.
 - version: 1.9.19
   createdAt: "2025-02-06"
   changelogEntry:
     - type: fix
-      summary: | 
-        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are 
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
         correctly serialized using their wire value.
-  irVersion: 53          
+  irVersion: 53
 - version: 1.9.18
   createdAt: "2025-02-06"
   changelogEntry:
     - type: fix
-      summary: | 
-        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are 
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
         correctly serialized using their wire value.
-  irVersion: 53        
+  irVersion: 53
 - version: 1.9.17
   createdAt: "2025-02-06"
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         Support required literals. For example, if a field has a literal value of "foo", we will now set that value as the default value for the field.
-  irVersion: 53        
+  irVersion: 53
 - version: 1.9.16
   createdAt: "2025-02-06"
   changelogEntry:
     - type: fix
-      summary: | 
-        Required client parameters that are headers are now sent when making API requests. For example if a bearer token is required to 
-        instantiate the client, we will ensure that it is sent when making API requests. 
+      summary: |
+        Required client parameters that are headers are now sent when making API requests. For example if a bearer token is required to
+        instantiate the client, we will ensure that it is sent when making API requests.
   irVersion: 53
 - version: 1.9.15
   createdAt: "2025-02-06"

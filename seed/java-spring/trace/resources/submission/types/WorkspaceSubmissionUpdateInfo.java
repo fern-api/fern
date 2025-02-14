@@ -172,6 +172,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("running")
+  @JsonIgnoreProperties("type")
   private static final class RunningValue implements Value {
     @JsonProperty("value")
     private RunningSubmissionState value;
@@ -210,6 +211,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("ran")
+  @JsonIgnoreProperties("type")
   private static final class RanValue implements Value {
     @JsonUnwrapped
     private WorkspaceRunDetails value;
@@ -251,6 +253,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("stopped")
+  @JsonIgnoreProperties("type")
   private static final class StoppedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -276,6 +279,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("traced")
+  @JsonIgnoreProperties("type")
   private static final class TracedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -301,6 +305,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("tracedV2")
+  @JsonIgnoreProperties("type")
   private static final class TracedV2Value implements Value {
     @JsonUnwrapped
     private WorkspaceTracedUpdate value;
@@ -342,6 +347,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("errored")
+  @JsonIgnoreProperties("type")
   private static final class ErroredValue implements Value {
     @JsonProperty("value")
     private ErrorInfo value;
@@ -380,6 +386,7 @@ public final class WorkspaceSubmissionUpdateInfo {
   }
 
   @JsonTypeName("finished")
+  @JsonIgnoreProperties("type")
   private static final class FinishedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -404,6 +411,7 @@ public final class WorkspaceSubmissionUpdateInfo {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

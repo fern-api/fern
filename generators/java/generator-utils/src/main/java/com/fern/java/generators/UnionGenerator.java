@@ -88,9 +88,11 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                                         .map(SafeAndUnsafeString::getSafeName)
                                                         .collect(Collectors.toList())
                                                 : List.of())
-                                .build()))
+                                .build(),
+                        unionTypeDeclaration))
                 .collect(Collectors.toList());
-        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className, poetTypeNameMapper);
+        ModelUnionUnknownSubType unknownSubType =
+                new ModelUnionUnknownSubType(className, poetTypeNameMapper, unionTypeDeclaration);
         ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
                 className,
                 unionSubTypes,
@@ -241,7 +243,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         public TypeSpec build(TypeSpec.Builder unionBuilder) {
             return unionBuilder
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addMethod(MethodSpec.methodBuilder("getValue")
+                    // Passing an empty string here because we don't want a prefix before "Value"
+                    .addMethod(MethodSpec.methodBuilder(
+                                    "get" + valueClassName("", reservedTypeNames, unionTypeDeclaration))
                             .addAnnotation(JsonValue.class)
                             .addModifiers(Modifier.PRIVATE)
                             .returns(getValueInterfaceClassName())
@@ -251,7 +255,15 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         }
     }
 
-    private static String valueClassName(String name, Set<String> reservedTypeNames) {
+    private static String valueClassName(
+            String name, Set<String> reservedTypeNames, UnionTypeDeclaration unionTypeDeclaration) {
+        reservedTypeNames = new HashSet<>(reservedTypeNames);
+        reservedTypeNames.addAll(unionTypeDeclaration.getTypes().stream()
+                .map(SingleUnionType::getDiscriminantValue)
+                .map(NameAndWireValue::getName)
+                .map(Name::getPascalCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .collect(Collectors.toList()));
         return reservedTypeNames.contains(name + VALUE_CLASS_NAME)
                 ? name + VALUE_CLASS_NAME_UNDERSCORE
                 : name + VALUE_CLASS_NAME;
@@ -268,8 +280,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 ClassName unionClassName,
                 SingleUnionType singleUnionType,
                 PoetTypeNameMapper poetTypeNameMapper,
-                Set<String> reservedTypeNames) {
-            super(unionClassName, poetTypeNameMapper);
+                Set<String> reservedTypeNames,
+                UnionTypeDeclaration unionTypeDeclaration) {
+            super(unionClassName, poetTypeNameMapper, unionTypeDeclaration);
             this.singleUnionType = singleUnionType;
             this.reservedTypeNames = reservedTypeNames;
             this.valueFieldSpec = getValueField();
@@ -334,7 +347,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                     .getName()
                                     .getPascalCase()
                                     .getSafeName(),
-                            reservedTypeNames));
+                            reservedTypeNames,
+                            unionTypeDeclaration));
         }
 
         @Override
@@ -486,8 +500,11 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
     private static final class ModelUnionUnknownSubType extends UnionSubType {
 
-        private ModelUnionUnknownSubType(ClassName unionClassName, PoetTypeNameMapper poetTypeNameMapper) {
-            super(unionClassName, poetTypeNameMapper);
+        private ModelUnionUnknownSubType(
+                ClassName unionClassName,
+                PoetTypeNameMapper poetTypeNameMapper,
+                UnionTypeDeclaration unionTypeDeclaration) {
+            super(unionClassName, poetTypeNameMapper, unionTypeDeclaration);
         }
 
         @Override
