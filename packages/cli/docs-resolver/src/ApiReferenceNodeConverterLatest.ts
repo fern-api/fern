@@ -857,7 +857,8 @@ export class ApiReferenceNodeConverterLatest {
             types: {},
             subpackages: {},
             auths: {},
-            globalHeaders: undefined
+            globalHeaders: undefined,
+            snippetsConfiguration: undefined
         };
     }
 

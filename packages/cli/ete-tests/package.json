@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.130.0-8bf179148",
+    "@fern-fern/fdr-cjs-sdk": "0.130.1-6a9e22770",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-typescript/fetcher": "workspace:*",

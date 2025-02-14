@@ -66,7 +66,11 @@ type RegisterApiFn = (opts: {
     apiName?: string;
 }) => AsyncOrSync<string>;
 
-type RegisterApiV2Fn = (opts: { api: FdrAPI.api.latest.ApiDefinition; apiName?: string }) => AsyncOrSync<string>;
+type RegisterApiV2Fn = (opts: {
+    api: FdrAPI.api.latest.ApiDefinition;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+}) => AsyncOrSync<string>;
 
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
@@ -652,7 +656,8 @@ export class DocsDefinitionResolver {
             }
             await this.registerApiV2({
                 api,
-                apiName: item.apiName
+                apiName: item.apiName,
+                snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
@@ -669,12 +674,14 @@ export class DocsDefinitionResolver {
 
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
             if (api == null) {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
                 api,
+                snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
