@@ -82,7 +82,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
         const splitSchemaKey = schemaKey.split("/");
 
-        const components = (this.document as any).components;
+        const components = (this.document as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3).components;
         if (components == null || components.schemas == null) {
             throw new Error("Document does not have components.schemas.");
         }
