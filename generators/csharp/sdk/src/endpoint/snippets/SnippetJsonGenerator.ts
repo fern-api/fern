@@ -27,21 +27,36 @@ export class SnippetJsonGenerator {
             });
         const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? [];
 
-        function getCsharpSnippet(endpointSnippet: SingleEndpointSnippet): string {
+        function getCsharpSnippet(endpointSnippet: SingleEndpointSnippet, isPager: boolean): string {
+            let snippet = "";
             const snippetImportList = endpointSnippet.imports?.split("\n") ?? [];
             const uniqueOrderedImports = Array.from(new Set([...rootClientImportList, ...snippetImportList]))
                 .filter((importString) => importString !== "")
                 .sort();
-            return `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}${
-                endpointSnippet.endpointCall
-            }`;
+            snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
+
+            if (isPager) {
+                snippet += "var pager = ";
+            }
+
+            snippet += endpointSnippet.endpointCall;
+
+            if (isPager) {
+                snippet += `\nawait foreach (var item in pager)
+{
+    // do something with item
+}\n`;
+            }
+            return snippet;
         }
 
+        const isPaginationEnabled = this.context.config.generatePaginatedClients ?? false;
         const endpoints: FernGeneratorExec.Endpoint[] = [];
         for (const [_, service] of Object.entries(this.context.ir.services)) {
             for (const httpEndpoint of service.endpoints) {
+                const isPager = isPaginationEnabled && httpEndpoint.pagination != null;
                 for (const endpointSnippet of this.getSnippetsForEndpoint(httpEndpoint.id)) {
-                    const csharpSnippet = getCsharpSnippet(endpointSnippet);
+                    const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager);
                     const endpoint: Endpoint = {
                         exampleIdentifier: endpointSnippet?.exampleIdentifier,
                         id: {

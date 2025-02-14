@@ -20,6 +20,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly requestOptionsName: string;
+    private readonly isPaginationEnabled: boolean;
 
     constructor({
         context,
@@ -30,6 +31,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
+        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
         this.defaultEndpointId =
@@ -45,6 +47,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        if (this.isPaginationEnabled) {
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
         return snippets;
     }
 
@@ -100,6 +105,48 @@ try {
 }
 `)
         );
+    }
+
+    private buildPaginationSnippets(): string[] {
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
+            FernGeneratorCli.StructuredFeatureId.Pagination
+        );
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        const paginationEndpoint = this.getEndpointWithPagination();
+        if (paginationEndpoint != null) {
+            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id);
+            return snippet != null ? [snippet] : [];
+        }
+        return [];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        return this.filterEndpoint((endpointWithFilepath) => {
+            if (endpointWithFilepath.endpoint.pagination != null) {
+                return endpointWithFilepath;
+            }
+            return undefined;
+        });
+    }
+
+    private filterEndpoint<T>(transform: (endpoint: EndpointWithFilepath) => T | undefined): T | undefined {
+        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+            const result = transform(endpointWithFilepath);
+            if (result !== undefined) {
+                return result;
+            }
+        }
+        return undefined;
+    }
+
+    private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
+        const endpointIds = this.getEndpointIdsForFeature(featureId);
+        if (endpointIds != null) {
+            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null);
+        }
+        return undefined;
     }
 
     private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {

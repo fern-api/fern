@@ -12,7 +12,7 @@ public record SendResponse
     public required int Status { get; set; }
 
     [JsonPropertyName("success")]
-    public required bool Success { get; set; }
+    public bool Success { get; set; } = true;
 
     public override string ToString()
     {

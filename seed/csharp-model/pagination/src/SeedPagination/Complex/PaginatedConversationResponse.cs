@@ -15,7 +15,7 @@ public record PaginatedConversationResponse
     public required int TotalCount { get; set; }
 
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "conversation.list";
 
     public override string ToString()
     {
