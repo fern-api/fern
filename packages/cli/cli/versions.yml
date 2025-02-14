@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object 
+        types, and fixes minor issues with docs dev when using specific navigation locators in docs.yml specification.
+      type: fix
+  irVersion: 55
+  version: 0.51.39
+
+- changelogEntry:
+    - summary: |
         The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with 
         better fallback logic for sparse requests.
       type: fix

@@ -1,4 +1,4 @@
-import { camelCase, kebabCase } from "lodash-es";
+import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 
 import { docsYml } from "@fern-api/configuration-loader";
@@ -10,114 +10,26 @@ import { TaskContext } from "@fern-api/task-context";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
+import { ApiDefinitionHolderLatest } from "./ApiDefinitionHolderLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
+import {
+    getApiLatestEndpointToNavigationNodeUrlSlug,
+    getApiLatestWebSocketToNavigationNodeUrlSlug,
+    getApiLatestWebhookToNavigationNodeUrlSlug
+} from "./utils/getApiLatestToNavigationNodeUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
-// TODO: these functions need an extra piece of information from the fdr latest shape, to see if the operation id takes precedence over slug generation
-function getLatestEndpointUrlSlug(endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition) {
-    const slugParts = endpoint.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
-    slugParts.push(kebabCase(endpoint.id.split(".").pop() ?? ""));
-    return endpoint.operationId != null ? kebabCase(endpoint.operationId) : urlJoin(slugParts);
-}
-
-function getLatestWebSocketUrlSlug(webSocket: FdrAPI.api.latest.websocket.WebSocketChannel) {
-    const slugParts = webSocket.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
-    slugParts.push(kebabCase(webSocket.id.split(".").pop() ?? ""));
-    return webSocket.operationId != null ? kebabCase(webSocket.operationId) : urlJoin(slugParts);
-}
-
-function getLatestWebhookUrlSlug(webhook: FdrAPI.api.latest.webhook.WebhookDefinition) {
-    const slugParts = webhook.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
-    slugParts.push(kebabCase(webhook.id.split(".").pop() ?? ""));
-    return webhook.operationId != null ? kebabCase(webhook.operationId) : urlJoin(slugParts);
-}
-
-export function getOaiLocator(locator: string): string {
-    return locator
-        .split("/")
-        .map((part) => (part.startsWith(":") ? `{${part.slice(1)}}` : part))
-        .join("/");
-}
-
-export function findSubpackageByLocator(
-    locator: string,
-    subpackages: Record<FdrAPI.api.v1.SubpackageId, FdrAPI.api.latest.SubpackageMetadata> | undefined
-): FdrAPI.api.latest.SubpackageMetadata | undefined {
-    return (
-        subpackages?.[FdrAPI.api.v1.SubpackageId(locator)] ??
-        subpackages?.[
-            FdrAPI.api.v1.SubpackageId(locator.replace(".yml", "").replace(".yaml", "").split(".").pop() ?? "")
-        ] ??
-        subpackages?.[FdrAPI.api.v1.SubpackageId(locator.split("/").pop() ?? "")]
-    );
-}
-
-export function findEndpointByLocator(
-    locator: string,
-    endpoints: Record<FdrAPI.EndpointId, FdrAPI.api.latest.endpoint.EndpointDefinition> | undefined
-): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
-    const oaiLocator = getOaiLocator(locator);
-    return (
-        endpoints?.[FdrAPI.EndpointId(locator)] ??
-        endpoints?.[FdrAPI.EndpointId(locator.split(".").pop() ?? "")] ??
-        endpoints?.[FdrAPI.EndpointId(locator.split("/").pop() ?? "")] ??
-        Object.values(endpoints ?? {}).find((endpoint) => endpoint.id.includes(locator)) ??
-        Object.values(endpoints ?? {}).find(
-            (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === locator
-        ) ??
-        Object.values(endpoints ?? {}).find(
-            (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === locator
-        ) ??
-        Object.values(endpoints ?? {}).find(
-            (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
-        ) ??
-        Object.values(endpoints ?? {}).find(
-            (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
-        )
-    );
-}
-
-export function findWebSocketByLocator(
-    locator: string,
-    websockets: Record<FdrAPI.WebSocketId, FdrAPI.api.latest.websocket.WebSocketChannel> | undefined
-): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
-    const oaiLocator = getOaiLocator(locator);
-    return (
-        websockets?.[FdrAPI.WebSocketId(locator)] ??
-        websockets?.[FdrAPI.WebSocketId(locator.split(".").pop() ?? "")] ??
-        websockets?.[FdrAPI.WebSocketId(locator.split("/").pop() ?? "")] ??
-        Object.values(websockets ?? {}).find((websocket) => websocket.id.includes(locator)) ??
-        Object.values(websockets ?? {}).find(
-            (websocket) => `STREAM ${stringifyEndpointPathParts(websocket.path)}` === oaiLocator
-        )
-    );
-}
-
-export function findWebhookByLocator(
-    locator: string,
-    webhooks: Record<FdrAPI.WebhookId, FdrAPI.api.latest.webhook.WebhookDefinition> | undefined
-): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
-    const oaiLocator = getOaiLocator(locator);
-    return (
-        webhooks?.[FdrAPI.WebhookId(locator)] ??
-        webhooks?.[FdrAPI.WebhookId(locator.split(".").pop() ?? "")] ??
-        webhooks?.[FdrAPI.WebhookId(locator.split("/").pop() ?? "")] ??
-        Object.values(webhooks ?? {}).find((webhook) => webhook.id.includes(locator)) ??
-        Object.values(webhooks ?? {}).find((webhook) => `${webhook.method} ${webhook.path.join("/")}` === oaiLocator)
-    );
-}
-// END TODO
-
 export class ApiReferenceNodeConverterLatest {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
     #api: FdrAPI.api.latest.ApiDefinition;
+    #apiDefinitionHolder: ApiDefinitionHolderLatest;
     #visitedEndpoints = new Set<FernNavigation.V1.EndpointId>();
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
@@ -129,9 +41,6 @@ export class ApiReferenceNodeConverterLatest {
     #idgen: NodeIdGenerator;
     #topLevelSubpackages: Map<string, FdrAPI.navigation.v1.ApiPackageNode> = new Map();
     private disableEndpointPairs;
-    #endpointBySubpackageId: Map<string, FdrAPI.api.latest.endpoint.EndpointDefinition> = new Map();
-    #webSocketBySubpackageId: Map<string, FdrAPI.api.latest.websocket.WebSocketChannel> = new Map();
-    #webhookBySubpackageId: Map<string, FdrAPI.api.latest.webhook.WebhookDefinition> = new Map();
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: FdrAPI.api.latest.ApiDefinition,
@@ -143,6 +52,7 @@ export class ApiReferenceNodeConverterLatest {
         idgen: NodeIdGenerator
     ) {
         this.#api = api;
+        this.#apiDefinitionHolder = new ApiDefinitionHolderLatest(api);
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
 
@@ -168,7 +78,7 @@ export class ApiReferenceNodeConverterLatest {
 
         // Step 1. Convert the navigation items that are manually defined in the API section.
         if (this.apiSection.navigation != null) {
-            this.#children = this.#convertApiReferenceLayoutItems(this.apiSection.navigation, this.#slug);
+            this.#children = this.#convertApiReferenceLayoutItems(this.apiSection.navigation, undefined, this.#slug);
         }
 
         // Step 2. Fill in the any missing navigation items from the API definition
@@ -214,26 +124,11 @@ export class ApiReferenceNodeConverterLatest {
         };
     }
 
-    #findSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
-        return findSubpackageByLocator(locator, this.#api?.subpackages);
-    }
-
-    #findEndpointByLocator(locator: string): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
-        return findEndpointByLocator(locator, this.#api?.endpoints);
-    }
-
-    #findWebSocketByLocator(locator: string): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
-        return findWebSocketByLocator(locator, this.#api?.websockets);
-    }
-
-    #findWebhookByLocator(locator: string): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
-        return findWebhookByLocator(locator, this.#api?.webhooks);
-    }
-
     // Step 1
 
     #convertApiReferenceLayoutItems(
         navigation: docsYml.ParsedApiReferenceLayoutItem[],
+        apiDefinitionPackageId: string | undefined,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild[] {
         return navigation
@@ -250,8 +145,8 @@ export class ApiReferenceNodeConverterLatest {
                     package: (pkg) => this.#convertPackage(pkg, parentSlug),
                     section: (section) => this.#convertSection(section, parentSlug),
                     item: ({ value: unknownIdentifier }): FernNavigation.V1.ApiPackageChild | undefined =>
-                        this.#convertUnknownIdentifier(unknownIdentifier, parentSlug),
-                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, parentSlug)
+                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug),
+                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug)
                 })
             )
             .filter(isNonNullish);
@@ -282,7 +177,7 @@ export class ApiReferenceNodeConverterLatest {
         const maybeFullSlug =
             pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
 
-        const subpackage = this.#findSubpackageByLocator(pkg.package);
+        const subpackage = this.#apiDefinitionHolder.getSubpackageByLocator(pkg.package);
 
         if (subpackage != null) {
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackage.id}`);
@@ -301,7 +196,7 @@ export class ApiReferenceNodeConverterLatest {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, slug);
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, subpackage.id, slug);
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
                 id: subpackageNodeId,
                 type: "apiPackage",
@@ -334,7 +229,7 @@ export class ApiReferenceNodeConverterLatest {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, slug);
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, pkg.package, slug);
             const sectionNode: FernNavigation.V1.ApiPackageNode = {
                 id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
@@ -378,7 +273,7 @@ export class ApiReferenceNodeConverterLatest {
 
         const subpackageIds = section.referencedSubpackages
             .map((locator) => {
-                const subpackage = this.#findSubpackageByLocator(locator);
+                const subpackage = this.#apiDefinitionHolder.getSubpackageByLocator(locator);
 
                 return subpackage != null ? subpackage.id : undefined;
             })
@@ -397,6 +292,7 @@ export class ApiReferenceNodeConverterLatest {
                     `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
                 );
             }
+
             this.#visitedSubpackages.add(subpackageId);
         });
 
@@ -406,7 +302,7 @@ export class ApiReferenceNodeConverterLatest {
             skipUrlSlug: section.skipUrlSlug,
             urlSlug
         });
-        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, slug);
+        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, section.title, slug);
         const sectionNode: FernNavigation.V1.ApiPackageNode = {
             id: nodeId,
             type: "apiPackage",
@@ -436,6 +332,7 @@ export class ApiReferenceNodeConverterLatest {
 
     #convertUnknownIdentifier(
         unknownIdentifier: string,
+        apiDefinitionPackageId: string | undefined,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild | undefined {
         unknownIdentifier = unknownIdentifier.trim();
@@ -444,7 +341,7 @@ export class ApiReferenceNodeConverterLatest {
 
         // if the unknownIdentifier is a subpackage, we need to check subpackage metadata, and any locators (strip .yml)
 
-        const subpackage = this.#findSubpackageByLocator(unknownIdentifier);
+        const subpackage = this.#apiDefinitionHolder.getSubpackageByLocator(unknownIdentifier);
 
         if (subpackage != null) {
             const subpackageId = subpackage.id;
@@ -498,15 +395,20 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined,
                 featureFlags: undefined
             },
+            apiDefinitionPackageId,
             parentSlug
         );
     }
 
     #convertEndpoint(
         endpointItem: docsYml.ParsedApiReferenceLayoutItem.Endpoint,
+        apiDefinitionPackageIdRaw: string | undefined,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild | undefined {
-        const endpoint = this.#findEndpointByLocator(endpointItem.endpoint);
+        const endpoint = this.#apiDefinitionHolder.getEndpointByLocator(
+            endpointItem.endpoint,
+            apiDefinitionPackageIdRaw
+        );
 
         if (endpoint != null) {
             if (endpoint.id == null) {
@@ -519,7 +421,7 @@ export class ApiReferenceNodeConverterLatest {
             const endpointSlug =
                 endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestEndpointUrlSlug(endpoint) });
+                    : parentSlug.apply({ urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint) });
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
                 type: "endpoint",
@@ -540,7 +442,10 @@ export class ApiReferenceNodeConverterLatest {
             };
         }
 
-        const webSocket = this.#findWebSocketByLocator(endpointItem.endpoint);
+        const webSocket = this.#apiDefinitionHolder.getWebSocketByLocator(
+            endpointItem.endpoint,
+            apiDefinitionPackageIdRaw
+        );
 
         if (webSocket != null) {
             if (webSocket.id == null) {
@@ -559,7 +464,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestWebSocketUrlSlug(webSocket) })
+                    : parentSlug.apply({ urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket) })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -573,7 +478,7 @@ export class ApiReferenceNodeConverterLatest {
             };
         }
 
-        const webhook = this.#findWebhookByLocator(endpointItem.endpoint);
+        const webhook = this.#apiDefinitionHolder.getWebhookByLocator(endpointItem.endpoint, apiDefinitionPackageIdRaw);
 
         if (webhook != null) {
             if (webhook.id == null) {
@@ -591,7 +496,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getLatestWebhookUrlSlug(webhook) })
+                    : parentSlug.apply({ urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook) })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -618,7 +523,7 @@ export class ApiReferenceNodeConverterLatest {
         return mergeAndFilterChildren({
             left,
             right,
-            findEndpointById: (endpointId) => this.#findEndpointByLocator(endpointId),
+            findEndpointById: (endpointId) => this.#apiDefinitionHolder.getEndpointByLocator(endpointId, undefined),
             stringifyEndpointPathParts: (endpoint: FdrAPI.api.latest.EndpointDefinition) =>
                 stringifyEndpointPathParts(endpoint.path),
             disableEndpointPairs: this.disableEndpointPairs,
@@ -684,7 +589,7 @@ export class ApiReferenceNodeConverterLatest {
             }
 
             const endpointSlug = parentSlug.apply({
-                urlSlug: getLatestEndpointUrlSlug(endpoint)
+                urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)
             });
 
             const endpointNode: FernNavigation.V1.EndpointNode = {
@@ -707,7 +612,7 @@ export class ApiReferenceNodeConverterLatest {
             };
 
             if (endpoint.namespace != null && endpoint.namespace.length > 0) {
-                const firstNamespacePart = camelCase(endpoint.namespace[0]);
+                const firstNamespacePart = endpoint.namespace[0];
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -721,8 +626,7 @@ export class ApiReferenceNodeConverterLatest {
                     for (const namespacePart of endpoint.namespace.slice(1)) {
                         let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
                             subpackageCursor.children.find(
-                                (child) =>
-                                    child.type === "apiPackage" && child.id === camelCase(namespacePart.toString())
+                                (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
                             );
                         slugGenerator = slugGenerator.append(kebabCase(namespacePart));
                         if (newSubpackageCursor == null) {
@@ -772,7 +676,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                 slug: parentSlug
                     .apply({
-                        urlSlug: getLatestWebSocketUrlSlug(webSocket)
+                        urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket)
                     })
                     .get(),
                 icon: undefined,
@@ -786,7 +690,7 @@ export class ApiReferenceNodeConverterLatest {
                 featureFlags: undefined
             };
             if (webSocket.namespace != null && webSocket.namespace.length > 0) {
-                const firstNamespacePart = camelCase(webSocket.namespace[0]);
+                const firstNamespacePart = webSocket.namespace[0];
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -847,7 +751,7 @@ export class ApiReferenceNodeConverterLatest {
                 title: webhook.displayName ?? titleCase(webhook.id),
                 slug: parentSlug
                     .apply({
-                        urlSlug: getLatestWebhookUrlSlug(webhook)
+                        urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook)
                     })
                     .get(),
                 icon: undefined,
@@ -861,11 +765,13 @@ export class ApiReferenceNodeConverterLatest {
             };
 
             if (webhook.namespace != null && webhook.namespace.length > 0) {
-                const firstNamespacePart = camelCase(webhook.namespace[0]);
+                const firstNamespacePart = webhook.namespace[0];
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
-                        throw new Error(`Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`);
+                        throw new Error(
+                            `Subpackage subpackage_${firstNamespacePart} not found in ${this.apiDefinitionId}`
+                        );
                     }
                     let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
 
@@ -926,24 +832,21 @@ export class ApiReferenceNodeConverterLatest {
             Object.entries(this.#api?.endpoints ?? {}).filter(
                 ([_, endpoint]) =>
                     endpoint.namespace != null &&
-                    camelCase(endpoint.namespace[endpoint.namespace.length - 1]) ===
-                        FdrAPI.api.v1.SubpackageId(subpackageId)
+                    endpoint.namespace[endpoint.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const websockets = Object.fromEntries(
             Object.entries(this.#api?.websockets ?? {}).filter(
                 ([_, webSocket]) =>
                     webSocket.namespace != null &&
-                    camelCase(webSocket.namespace[webSocket.namespace.length - 1]) ===
-                        FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webSocket.namespace[webSocket.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const webhooks = Object.fromEntries(
             Object.entries(this.#api?.webhooks ?? {}).filter(
                 ([_, webhook]) =>
                     webhook.namespace != null &&
-                    camelCase(webhook.namespace[webhook.namespace.length - 1]) ===
-                        FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webhook.namespace[webhook.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         return {
