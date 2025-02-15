@@ -35,6 +35,8 @@ export const FERN_TYPE_EXTENSIONS: Plugin = {
 };
 
 export const FernOpenAPIExtension = {
+    SOURCE: TypedExtensionId.of<string>("source"),
+
     SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
     SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
 
