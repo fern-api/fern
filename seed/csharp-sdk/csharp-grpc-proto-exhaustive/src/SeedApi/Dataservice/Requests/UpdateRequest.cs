@@ -23,7 +23,7 @@ public record UpdateRequest
     public IndexedData? IndexedData { get; set; }
 
     [JsonPropertyName("indexType")]
-    public UpdateRequestIndexType? IndexType { get; set; }
+    public IndexType? IndexType { get; set; }
 
     public override string ToString()
     {
@@ -55,8 +55,7 @@ public record UpdateRequest
         }
         if (IndexType != null)
         {
-            result.IndexType = (Proto.UpdateRequestIndexType)
-                Enum.Parse(typeof(Proto.UpdateRequestIndexType), ToString());
+            result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
         }
         return result;
     }
