@@ -97,7 +97,7 @@ export class ProtobufOpenAPIGenerator {
             await which(["protoc-gen-openapi"]);
         } catch (err) {
             this.context.failAndThrow(
-                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest')."
+                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
             );
         }
 
