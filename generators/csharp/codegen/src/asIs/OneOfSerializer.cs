@@ -83,7 +83,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
     }
 
-    public override bool CanConvert(System.Type typeToConvert)
+    public override bool CanConvert(global::System.Type typeToConvert)
     {
         return typeof(IOneOf).IsAssignableFrom(typeToConvert);
     }

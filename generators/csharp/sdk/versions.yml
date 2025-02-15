@@ -7,6 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.26
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System.Type` instead of `System.Type` in `OneOfSerializer`
+        when a type named `System` exists in the current namespace.
+
 - version: 1.9.25
   createdAt: "2025-02-14"
   irVersion: 53
