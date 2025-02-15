@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
+using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
@@ -10,7 +11,7 @@ public record DescribeRequest
     public Metadata? Filter { get; set; }
 
     [JsonPropertyName("after")]
-    public object? After { get; set; }
+    public DateTime? After { get; set; }
 
     public override string ToString()
     {
@@ -29,7 +30,7 @@ public record DescribeRequest
         }
         if (After != null)
         {
-            result.After = After.ToProto();
+            result.After = WellKnownProto.Timestamp.FromDateTime(After.Value.ToUniversalTime());
         }
         return result;
     }

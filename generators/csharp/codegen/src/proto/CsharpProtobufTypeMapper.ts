@@ -1,11 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { ContainerType, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, EnumTypeDeclaration, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { csharp } from "../";
 import { CodeBlock, MethodType } from "../ast";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
 
 type WrapperType = "optional" | "list" | "map";
 
@@ -257,7 +258,7 @@ class ToProtoPropertyMapper {
                     wrapperType
                 });
             case "named":
-                return this.getValueForNamed({ propertyName, wrapperType });
+                return this.getValueForNamed({ propertyName, named: typeReference, wrapperType });
             case "primitive":
                 return this.getValueForPrimitive({ propertyName, primitive: typeReference.primitive, wrapperType });
             case "unknown":
@@ -267,11 +268,18 @@ class ToProtoPropertyMapper {
 
     private getValueForNamed({
         propertyName,
+        named,
         wrapperType
     }: {
         propertyName: string;
+        named: NamedType;
         wrapperType?: WrapperType;
     }): CodeBlock {
+        const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
+        if (resolvedType.shape.type === "enum") {
+            const classReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId);
+            return this.getValueForEnum({ classReference });
+        }
         if (wrapperType === WrapperType.List) {
             return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`);
         }
@@ -284,6 +292,14 @@ class ToProtoPropertyMapper {
                 })
             );
         });
+    }
+    
+    private getValueForEnum({
+        classReference,
+    }: {
+        classReference: csharp.ClassReference;
+    }): csharp.CodeBlock {
+        return getValueForEnum({ context: this.context, classReference });
     }
 
     private getValueForContainer({
@@ -373,9 +389,14 @@ class ToProtoPropertyMapper {
         primitive: PrimitiveType;
         wrapperType?: WrapperType;
     }): CodeBlock {
+        const primitiveValue = this.getValueMapperForPrimitive({ propertyName, primitive });
+        if (primitive.v1 === "DATE_TIME") {
+            // The google.protobuf.Timestamp type doesn't need a default value guard.
+            return primitiveValue;
+        }
         if (wrapperType === WrapperType.Optional) {
             return csharp.codeblock((writer) => {
-                writer.write(propertyName);
+                writer.writeNode(primitiveValue);
                 writer.write(" ?? ");
                 writer.writeNode(this.context.getDefaultValueForPrimitive({ primitive }));
             });
@@ -391,7 +412,53 @@ class ToProtoPropertyMapper {
                 );
             });
         }
-        return csharp.codeblock(propertyName);
+        return primitiveValue;
+    }
+
+    private getValueMapperForPrimitive({
+        propertyName,
+        primitive
+    }: {
+        propertyName: string;
+        primitive: PrimitiveType;
+    }): CodeBlock {
+        switch (primitive.v1) {
+            case "DATE_TIME":
+                return csharp.codeblock((writer) =>
+                    writer.writeNode(
+                        csharp.invokeMethod({
+                            on: EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE,
+                            method: "FromDateTime",
+                            arguments_: [
+                                csharp.codeblock((writer) => {
+                                    writer.writeNode(
+                                        csharp.invokeMethod({
+                                            on: csharp.codeblock(`${propertyName}.Value`),
+                                            method: "ToUniversalTime",
+                                            arguments_: []
+                                        })
+                                    );
+                                })
+                            ]
+                        })
+                    )
+                );
+            case "DATE":
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+            case "FLOAT":
+            case "DOUBLE":
+            case "BOOLEAN":
+            case "STRING":
+            case "UUID":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return csharp.codeblock(propertyName);
+            default:
+                assertNever(primitive.v1);
+        }
     }
 
     private propertyNeedsAssignment({ typeReference }: { typeReference: TypeReference }): boolean {
@@ -466,7 +533,7 @@ class FromProtoPropertyMapper {
             case "named":
                 return this.getValueForNamed({ propertyName, named: typeReference, wrapperType });
             case "primitive":
-                return this.getValueForPrimitive({ propertyName });
+                return this.getValueForPrimitive({ propertyName, primitive: typeReference.primitive });
             case "unknown":
                 return csharp.codeblock(propertyName);
         }
@@ -482,6 +549,10 @@ class FromProtoPropertyMapper {
         wrapperType?: WrapperType;
     }): CodeBlock {
         const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named);
+        const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
+        if (resolvedType.shape.type === "enum") {
+            return this.getValueForEnum({ propertyName, classReference: propertyClassReference });
+        }
         if (wrapperType === WrapperType.List) {
             // The static function is mapped within a LINQ expression.
             return csharp.codeblock((writer) => {
@@ -510,6 +581,16 @@ class FromProtoPropertyMapper {
             });
         }
         return fromProtoExpression;
+    }
+
+    private getValueForEnum({
+        classReference,
+        propertyName
+    }: {
+        classReference: csharp.ClassReference;
+        propertyName: string;
+    }): csharp.CodeBlock {
+        return getValueForEnum({ context: this.context, classReference, propertyName });
     }
 
     private getValueForContainer({
@@ -639,8 +720,32 @@ class FromProtoPropertyMapper {
         });
     }
 
-    private getValueForPrimitive({ propertyName }: { propertyName: string }): CodeBlock {
-        return csharp.codeblock(propertyName);
+    private getValueForPrimitive({
+        propertyName,
+        primitive
+    }: {
+        propertyName: string;
+        primitive: PrimitiveType;
+    }): CodeBlock {
+        switch (primitive.v1) {
+            case "DATE_TIME":
+                return csharp.codeblock(`${propertyName}.ToDateTime()`);
+            case "DATE":
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+            case "FLOAT":
+            case "DOUBLE":
+            case "BOOLEAN":
+            case "STRING":
+            case "UUID":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return csharp.codeblock(propertyName);
+            default:
+                assertNever(primitive.v1);
+        }
     }
 }
 
@@ -652,5 +757,44 @@ function getValueForLiteral({ literal }: { literal: Literal }): CodeBlock {
             case "boolean":
                 return writer.write(literal.boolean.toString());
         }
+    });
+}
+
+function getValueForEnum({
+    context,
+    classReference,
+    propertyName
+}: {
+    context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    classReference: csharp.ClassReference;
+    propertyName?: string;
+}): csharp.CodeBlock {
+    const arguments_ = [
+        csharp.codeblock((writer) => {
+            writer.write("typeof(");
+            writer.writeNode(classReference);
+            writer.write(")");
+        }),
+    ];
+    if (propertyName != null) {
+        arguments_.push(csharp.codeblock(`${propertyName}.ToString()`));
+    } else {
+        arguments_.push(csharp.codeblock("ToString()"));
+    }
+    return csharp.codeblock((writer) => {
+        writer.writeNode(
+            csharp.codeblock((writer) => {
+                writer.write("(");
+                writer.writeNode(classReference);
+                writer.write(")");
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: context.getSystemEnumClassReference(),
+                        method: "Parse",
+                        arguments_
+                    })
+                )
+            })
+        );
     });
 }

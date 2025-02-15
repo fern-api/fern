@@ -1,11 +1,10 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, csharp, EXTERNAL_PROTO_LIST_VALUE_CLASS_REFERENCE, EXTERNAL_PROTO_VALUE_CLASS_REFERENCE } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { EXTERNAL_PROTO_LIST_VALUE_CLASS_REFERENCE, EXTERNAL_PROTO_VALUE_CLASS_REFERENCE } from "./constants";
 
 export declare namespace WellKnownProtoValueGenerator {
     interface Args {

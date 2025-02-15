@@ -211,6 +211,13 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getSystemEnumClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Enum",
+            namespace: "System"
+        });
+    }
+
     public getFluentAssetionsJsonClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "",

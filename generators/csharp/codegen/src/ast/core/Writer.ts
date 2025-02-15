@@ -68,8 +68,13 @@ export class Writer extends AbstractWriter {
         }
     }
 
-    public addNamespaceAlias(alias: string, namespace: string): void {
+    public addNamespaceAlias(alias: string, namespace: string): string {
+        const set = new Set<Alias>(Object.values(this.namespaceAliases));
+        while (set.has(alias)) {
+            alias = "_" + alias;
+        }
         this.namespaceAliases[alias] = namespace;
+        return alias;
     }
 
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {

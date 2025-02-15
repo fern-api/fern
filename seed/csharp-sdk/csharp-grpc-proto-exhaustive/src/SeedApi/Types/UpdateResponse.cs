@@ -1,16 +1,18 @@
+using System;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
+using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
 public record UpdateResponse
 {
     [JsonPropertyName("updatedAt")]
-    public object? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     [JsonPropertyName("indexType")]
-    public UpdateResponseIndexType? IndexType { get; set; }
+    public IndexType? IndexType { get; set; }
 
     public override string ToString()
     {
@@ -25,11 +27,13 @@ public record UpdateResponse
         var result = new Proto.UpdateResponse();
         if (UpdatedAt != null)
         {
-            result.UpdatedAt = UpdatedAt.ToProto();
+            result.UpdatedAt = WellKnownProto.Timestamp.FromDateTime(
+                UpdatedAt.Value.ToUniversalTime()
+            );
         }
         if (IndexType != null)
         {
-            result.IndexType = IndexType.ToProto();
+            result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
         }
         return result;
     }
@@ -41,9 +45,8 @@ public record UpdateResponse
     {
         return new UpdateResponse
         {
-            UpdatedAt = value.UpdatedAt != null ? Timestamp.FromProto(value.UpdatedAt) : null,
-            IndexType =
-                value.IndexType != null ? UpdateResponseIndexType.FromProto(value.IndexType) : null,
+            UpdatedAt = value.UpdatedAt.ToDateTime(),
+            IndexType = (IndexType)Enum.Parse(typeof(IndexType), value.IndexType.ToString()),
         };
     }
 }

@@ -4,8 +4,8 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(EnumSerializer<UpdateResponseIndexType>))]
-public enum UpdateResponseIndexType
+[JsonConverter(typeof(EnumSerializer<IndexType>))]
+public enum IndexType
 {
     [EnumMember(Value = "INDEX_TYPE_INVALID")]
     IndexTypeInvalid,
