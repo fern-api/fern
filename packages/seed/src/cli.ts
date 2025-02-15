@@ -194,6 +194,11 @@ function addRunCommand(cli: Argv) {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
                 })
+                .option("skip-scripts", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
+                })
                 .option("audience", {
                     string: true,
                     demandOption: false
@@ -215,7 +220,8 @@ function addRunCommand(cli: Argv) {
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
                 logLevel: argv["log-level"],
-                audience: argv.audience
+                audience: argv.audience,
+                skipScripts: argv.skipScripts,
             });
         }
     );

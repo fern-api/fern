@@ -22,12 +22,14 @@ export async function runWithCustomFixture({
     pathToFixture,
     workspace,
     logLevel,
-    audience
+    audience,
+    skipScripts,
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
     audience: string | undefined;
+    skipScripts: boolean | undefined;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const outputDir = await tmp.dir();
@@ -45,7 +47,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, false, taskContext)
+        scriptRunner: new ScriptRunner(workspace, skipScripts ?? false, taskContext)
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
