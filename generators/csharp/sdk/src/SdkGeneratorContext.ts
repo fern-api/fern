@@ -573,7 +573,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
-        return protobufService.name.pascalCase.safeName;
+        return protobufService.name.originalName;
     }
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
