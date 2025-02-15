@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI parser now prefers the `source` extension set in the OpenAPI spec, and only writes
+        it if it is not already set.
+      type: fix
+  irVersion: 55
+  version: 0.53.2
+
+- changelogEntry:
+    - summary: |
         The OpenAPI v2 parser now parses Server specifications with variables.
       type: fix
   irVersion: 55

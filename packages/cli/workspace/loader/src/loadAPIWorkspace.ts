@@ -34,10 +34,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                 : undefined;
         if (definition.schema.type === "protobuf") {
-            const absoluteFilepathToProtobufRoot = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.root)
-            );
+            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
+            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -69,6 +67,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget,
                 absoluteFilepathToOverrides,
+                relativeFilepathToProtobufRoot,
                 generateLocally: definition.schema.localGeneration,
                 settings: {
                     audiences: definition.audiences ?? [],
