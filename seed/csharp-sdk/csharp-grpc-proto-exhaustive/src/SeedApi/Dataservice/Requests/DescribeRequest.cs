@@ -9,6 +9,9 @@ public record DescribeRequest
     [JsonPropertyName("filter")]
     public Metadata? Filter { get; set; }
 
+    [JsonPropertyName("after")]
+    public object? After { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -23,6 +26,10 @@ public record DescribeRequest
         if (Filter != null)
         {
             result.Filter = Filter.ToProto();
+        }
+        if (After != null)
+        {
+            result.After = After.ToProto();
         }
         return result;
     }

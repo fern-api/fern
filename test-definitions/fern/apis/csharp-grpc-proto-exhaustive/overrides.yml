@@ -8,6 +8,10 @@ paths:
       x-fern-request-name: ListRequest
 components:
   schemas:
+    Timestamp:
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Timestamp
     Metadata:
       oneOf:
         - type: object
@@ -34,6 +38,8 @@ components:
       properties:
         filter:
           $ref: '#/components/schemas/Metadata'
+        after:
+          $ref: '#/components/schemas/Timestamp'
     QueryRequest:
       properties:
         filter:
@@ -50,6 +56,10 @@ components:
       properties:
         setMetadata:
           $ref: '#/components/schemas/Metadata'
+    UpdateResponse:
+      properties:
+        updatedAt:
+          $ref: '#/components/schemas/Timestamp'
     Column:
       properties:
         metadata:

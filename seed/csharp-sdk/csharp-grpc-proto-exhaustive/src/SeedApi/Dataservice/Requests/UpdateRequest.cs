@@ -21,6 +21,9 @@ public record UpdateRequest
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    [JsonPropertyName("indexType")]
+    public UpdateRequestIndexType? IndexType { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -48,6 +51,10 @@ public record UpdateRequest
         if (IndexedData != null)
         {
             result.IndexedData = IndexedData.ToProto();
+        }
+        if (IndexType != null)
+        {
+            result.IndexType = IndexType.ToProto();
         }
         return result;
     }
