@@ -221,7 +221,7 @@ function addRunCommand(cli: Argv) {
                 workspace: generator,
                 logLevel: argv["log-level"],
                 audience: argv.audience,
-                skipScripts: argv.skipScripts,
+                skipScripts: argv.skipScripts
             });
         }
     );

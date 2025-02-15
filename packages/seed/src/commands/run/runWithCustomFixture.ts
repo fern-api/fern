@@ -23,7 +23,7 @@ export async function runWithCustomFixture({
     workspace,
     logLevel,
     audience,
-    skipScripts,
+    skipScripts
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
