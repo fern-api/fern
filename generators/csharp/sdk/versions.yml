@@ -7,6 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.23
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T> 
+        when the method returns a response.
+
 - version: 1.9.22
   createdAt: "2025-02-14"
   irVersion: 53
