@@ -9,7 +9,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
 {
     public override IOneOf? Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -38,7 +38,9 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         JsonSerializer.Serialize(writer, value.Value, options);
     }
 
-    private static (System.Type type, MethodInfo cast)[] GetOneOfTypes(System.Type typeToConvert)
+    private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
+        global::System.Type typeToConvert
+    )
     {
         var type = typeToConvert;
         if (Nullable.GetUnderlyingType(type) is { } underlyingType)
@@ -82,7 +84,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
     }
 
-    public override bool CanConvert(System.Type typeToConvert)
+    public override bool CanConvert(global::System.Type typeToConvert)
     {
         return typeof(IOneOf).IsAssignableFrom(typeToConvert);
     }
