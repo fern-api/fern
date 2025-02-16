@@ -28,6 +28,9 @@ public record UpdateRequest
     [JsonPropertyName("details")]
     public object? Details { get; set; }
 
+    [JsonPropertyName("indexTypes")]
+    public IEnumerable<IndexType>? IndexTypes { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -69,6 +72,20 @@ public record UpdateRequest
         if (Details != null)
         {
             result.Details = ProtoAnyMapper.ToProto(Details);
+        }
+        if (IndexTypes != null && IndexTypes.Any())
+        {
+            result.IndexTypes.AddRange(
+                IndexTypes.Select(type =>
+                    type switch
+                    {
+                        SeedApi.IndexType.IndexTypeInvalid => ProtoDataV1Grpc.IndexType.Invalid,
+                        SeedApi.IndexType.IndexTypeDefault => ProtoDataV1Grpc.IndexType.Default,
+                        SeedApi.IndexType.IndexTypeStrict => ProtoDataV1Grpc.IndexType.Strict,
+                        _ => throw new ArgumentException($"Unknown enum value: {type}"),
+                    }
+                )
+            );
         }
         return result;
     }

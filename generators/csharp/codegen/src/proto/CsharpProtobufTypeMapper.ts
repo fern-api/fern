@@ -289,10 +289,17 @@ class ToProtoPropertyMapper {
         }
         const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
         if (resolvedType.shape.type === "enum") {
-            // TODO: Update to handle enum lists.
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
                 fullyQualified: true
             });
+            if (wrapperType === WrapperType.List) {
+                return this.getValueForEnumList({
+                    enum_: resolvedType.shape,
+                    classReference: enumClassReference,
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId),
+                    propertyName
+                });
+            }
             const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId);
             return this.getValueForEnum({
                 enum_: resolvedType.shape,
@@ -324,6 +331,35 @@ class ToProtoPropertyMapper {
                     arguments_: [csharp.codeblock(propertyName)]
                 })
             );
+        });
+    }
+
+    private getValueForEnumList({
+        enum_,
+        classReference,
+        protobufClassReference,
+        propertyName
+    }: {
+        enum_: EnumTypeDeclaration;
+        classReference: csharp.ClassReference;
+        protobufClassReference: csharp.ClassReference;
+        propertyName: string;
+    }): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeLine(`${propertyName}.Select(type => type switch`);
+            writer.writeLine("{");
+            for (const enumValue of enum_.values) {
+                writer.writeNode(classReference);
+                writer.write(".");
+                writer.write(this.context.getPascalCaseSafeName(enumValue.name.name));
+                writer.write(" => ");
+                writer.writeNode(protobufClassReference);
+                writer.write(".");
+                writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
+                writer.writeLine(",");
+            }
+            writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {type}")`);
+            writer.write("})");
         });
     }
 
@@ -604,10 +640,17 @@ class FromProtoPropertyMapper {
     }): CodeBlock {
         const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
         if (resolvedType.shape.type === "enum") {
-            // TODO: Update to handle enum lists.
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
                 fullyQualified: true
             });
+            if (wrapperType === WrapperType.List) {
+                return this.getValueForEnumList({
+                    enum_: resolvedType.shape,
+                    classReference: enumClassReference,
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId),
+                    propertyName
+                });
+            }
             return this.getValueForEnum({
                 enum_: resolvedType.shape,
                 classReference: enumClassReference,
@@ -650,6 +693,20 @@ class FromProtoPropertyMapper {
 
     private getValueForAny({ propertyName }: { propertyName: string }): csharp.CodeBlock {
         return csharp.codeblock(propertyName);
+    }
+
+    private getValueForEnumList({
+        enum_,
+        classReference,
+        protobufClassReference,
+        propertyName
+    }: {
+        enum_: EnumTypeDeclaration;
+        classReference: csharp.ClassReference;
+        protobufClassReference: csharp.ClassReference;
+        propertyName: string;
+    }): csharp.CodeBlock {
+        return csharp.codeblock("todo");
     }
 
     private getValueForEnum({
