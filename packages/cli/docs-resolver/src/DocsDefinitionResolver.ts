@@ -529,7 +529,7 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: landingPageConfig.noindex ?? this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
+            noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
             featureFlags: landingPageConfig.featureFlags
         };
     }
@@ -808,7 +808,7 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: item.noindex ?? this.markdownFilesToNoIndex.get(item.absolutePath),
+            noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags
         };
     }
