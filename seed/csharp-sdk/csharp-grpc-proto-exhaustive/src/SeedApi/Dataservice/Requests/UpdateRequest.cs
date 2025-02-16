@@ -25,6 +25,9 @@ public record UpdateRequest
     [JsonPropertyName("indexType")]
     public IndexType? IndexType { get; set; }
 
+    [JsonPropertyName("details")]
+    public object? Details { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -56,6 +59,10 @@ public record UpdateRequest
         if (IndexType != null)
         {
             result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
+        }
+        if (Details != null)
+        {
+            result.Details = ProtoAnyMapper.ToProto(Details);
         }
         return result;
     }

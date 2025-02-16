@@ -283,6 +283,9 @@ class ToProtoPropertyMapper {
         named: NamedType;
         wrapperType?: WrapperType;
     }): CodeBlock {
+        if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
+            return this.getValueForAny({ propertyName });
+        }
         const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
         if (resolvedType.shape.type === "enum") {
             const classReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId);
@@ -297,6 +300,18 @@ class ToProtoPropertyMapper {
                     on: csharp.codeblock(propertyName),
                     method: "ToProto",
                     arguments_: []
+                })
+            );
+        });
+    }
+
+    private getValueForAny({ propertyName }: { propertyName: string }): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeNode(
+                csharp.invokeMethod({
+                    on: this.context.getProtoAnyMapperClassReference(),
+                    method: "ToProto",
+                    arguments_: [csharp.codeblock(propertyName)]
                 })
             );
         });
@@ -564,15 +579,17 @@ class FromProtoPropertyMapper {
                 writer.write(".FromProto");
             });
         }
-        const fromProtoExpression = csharp.codeblock((writer) => {
-            writer.writeNode(
-                csharp.invokeMethod({
-                    on: propertyClassReference,
-                    method: "FromProto",
-                    arguments_: [csharp.codeblock(propertyName)]
-                })
-            );
-        });
+        const fromProtoExpression = this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)
+            ? this.getValueForAny({ propertyName })
+            : csharp.codeblock((writer) => {
+                  writer.writeNode(
+                      csharp.invokeMethod({
+                          on: propertyClassReference,
+                          method: "FromProto",
+                          arguments_: [csharp.codeblock(propertyName)]
+                      })
+                  );
+              });
         if (wrapperType === WrapperType.Optional) {
             return csharp.codeblock((writer) => {
                 writer.writeNode(
@@ -585,6 +602,10 @@ class FromProtoPropertyMapper {
             });
         }
         return fromProtoExpression;
+    }
+
+    private getValueForAny({ propertyName }: { propertyName: string }): csharp.CodeBlock {
+        return csharp.codeblock(propertyName);
     }
 
     private getValueForEnum({

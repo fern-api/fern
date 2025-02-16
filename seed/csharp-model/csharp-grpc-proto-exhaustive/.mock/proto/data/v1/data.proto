@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package data.v1;
 
+import "google/protobuf/any.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
@@ -152,11 +153,13 @@ message UpdateRequest {
   string namespace = 4;
   IndexedData indexed_data = 5;
   IndexType index_type = 6;
+  google.protobuf.Any details = 7;
 }
 
 message UpdateResponse {
   google.protobuf.Timestamp updated_at = 1;
   IndexType index_type = 2;
+  google.protobuf.Any details = 3;
 }
 
 message DescribeRequest {

@@ -14,8 +14,17 @@ paths:
             properties: 
               indexType: 
                 $ref: '#/components/schemas/IndexType'
+              details:
+                $ref: '#/components/schemas/Any'
 components:
   schemas:
+    Any:
+      type: object
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Any
+    GoogleProtobufAny:
+      x-fern-ignore: true
     Metadata:
       oneOf:
         - type: object
@@ -60,10 +69,14 @@ components:
           $ref: '#/components/schemas/Metadata'
         indexType:
           $ref: '#/components/schemas/IndexType'
+        details:
+          $ref: '#/components/schemas/Any'
     UpdateResponse:
       properties:
         indexType:
           $ref: '#/components/schemas/IndexType'
+        details:
+          $ref: '#/components/schemas/Any'
     Column:
       properties:
         metadata:

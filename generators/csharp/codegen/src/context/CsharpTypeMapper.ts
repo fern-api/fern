@@ -120,7 +120,10 @@ export class CsharpTypeMapper {
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
         const objectClassReference = this.convertToClassReference(named);
-        if (this.context.protobufResolver.isAnyWellKnownProtobufType(named.typeId)) {
+        if (this.context.protobufResolver.isWellKnownProtobufType(named.typeId)) {
+            if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
+                return csharp.Type.object();
+            }
             return csharp.Type.reference(objectClassReference);
         }
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);

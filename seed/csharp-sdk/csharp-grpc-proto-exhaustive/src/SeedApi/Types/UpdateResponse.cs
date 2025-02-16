@@ -14,6 +14,9 @@ public record UpdateResponse
     [JsonPropertyName("indexType")]
     public IndexType? IndexType { get; set; }
 
+    [JsonPropertyName("details")]
+    public object? Details { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -35,6 +38,10 @@ public record UpdateResponse
         {
             result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
         }
+        if (Details != null)
+        {
+            result.Details = ProtoAnyMapper.ToProto(Details);
+        }
         return result;
     }
 
@@ -47,6 +54,7 @@ public record UpdateResponse
         {
             UpdatedAt = value.UpdatedAt.ToDateTime(),
             IndexType = (IndexType)Enum.Parse(typeof(IndexType), value.IndexType.ToString()),
+            Details = value.Details != null ? value.Details : null,
         };
     }
 }
