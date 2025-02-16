@@ -4,6 +4,39 @@
             "id": {
                 "path": "/{id}",
                 "method": "GET",
+                "identifier_override": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.get(\"id\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.update({\n    type: \"normalSweet\",\n    value: \"value\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.updateMany([{\n        type: \"normalSweet\",\n        value: \"value\"\n    }, {\n        type: \"normalSweet\",\n        value: \"value\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {
