@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
@@ -20,6 +21,9 @@ public record UpdateRequest
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
+
+    [JsonPropertyName("indexType")]
+    public IndexType? IndexType { get; set; }
 
     public override string ToString()
     {
@@ -48,6 +52,10 @@ public record UpdateRequest
         if (IndexedData != null)
         {
             result.IndexedData = IndexedData.ToProto();
+        }
+        if (IndexType != null)
+        {
+            result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
         }
         return result;
     }

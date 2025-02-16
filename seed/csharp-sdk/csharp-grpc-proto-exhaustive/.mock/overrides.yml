@@ -6,6 +6,14 @@ paths:
   /data/list:
     get:
       x-fern-request-name: ListRequest
+  /data/update:
+    post:
+      requestBody:
+        application/json:
+          schema: 
+            properties: 
+              indexType: 
+                $ref: '#/components/schemas/IndexType'
 components:
   schemas:
     Metadata:
@@ -50,7 +58,21 @@ components:
       properties:
         setMetadata:
           $ref: '#/components/schemas/Metadata'
+        indexType:
+          $ref: '#/components/schemas/IndexType'
+    UpdateResponse:
+      properties:
+        indexType:
+          $ref: '#/components/schemas/IndexType'
     Column:
       properties:
         metadata:
           $ref: '#/components/schemas/Metadata'
+    IndexType:
+      x-fern-sdk-group-name:
+        - dataservice
+      x-fern-type-name: IndexType
+      enum:
+        - INDEX_TYPE_INVALID
+        - INDEX_TYPE_DEFAULT
+        - INDEX_TYPE_STRICT

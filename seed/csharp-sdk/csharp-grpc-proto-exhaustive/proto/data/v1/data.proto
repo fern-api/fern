@@ -3,11 +3,18 @@ syntax = "proto3";
 package data.v1;
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
 option csharp_namespace = "Data.V1.Grpc";
 option go_package = "github.com/acme.co/data-go-grpc";
+
+enum IndexType {
+  INDEX_TYPE_INVALID = 0;
+  INDEX_TYPE_DEFAULT = 1;
+  INDEX_TYPE_STRICT = 2;
+}
 
 message IndexedData {
   repeated uint32 indices = 1 [
@@ -144,12 +151,17 @@ message UpdateRequest {
   google.protobuf.Struct set_metadata = 3;
   string namespace = 4;
   IndexedData indexed_data = 5;
+  IndexType index_type = 6;
 }
 
-message UpdateResponse {}
+message UpdateResponse {
+  google.protobuf.Timestamp updated_at = 1;
+  IndexType index_type = 2;
+}
 
 message DescribeRequest {
   google.protobuf.Struct filter = 1;
+  google.protobuf.Timestamp after = 2;
 }
 
 message NamespaceSummary {

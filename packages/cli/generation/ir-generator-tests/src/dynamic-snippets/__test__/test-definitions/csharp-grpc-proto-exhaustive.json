@@ -1,6 +1,141 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_dataservice:IndexType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "IndexType",
+                    "camelCase": {
+                        "unsafeName": "indexType",
+                        "safeName": "indexType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "index_type",
+                        "safeName": "index_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INDEX_TYPE",
+                        "safeName": "INDEX_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IndexType",
+                        "safeName": "IndexType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "dataservice",
+                            "camelCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATASERVICE",
+                                "safeName": "DATASERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dataservice",
+                                "safeName": "Dataservice"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_INVALID",
+                        "camelCase": {
+                            "unsafeName": "indexTypeInvalid",
+                            "safeName": "indexTypeInvalid"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_invalid",
+                            "safeName": "index_type_invalid"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_INVALID",
+                            "safeName": "INDEX_TYPE_INVALID"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeInvalid",
+                            "safeName": "IndexTypeInvalid"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_INVALID"
+                },
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_DEFAULT",
+                        "camelCase": {
+                            "unsafeName": "indexTypeDefault",
+                            "safeName": "indexTypeDefault"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_default",
+                            "safeName": "index_type_default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_DEFAULT",
+                            "safeName": "INDEX_TYPE_DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeDefault",
+                            "safeName": "IndexTypeDefault"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_DEFAULT"
+                },
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_STRICT",
+                        "camelCase": {
+                            "unsafeName": "indexTypeStrict",
+                            "safeName": "indexTypeStrict"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_strict",
+                            "safeName": "index_type_strict"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_STRICT",
+                            "safeName": "INDEX_TYPE_STRICT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeStrict",
+                            "safeName": "IndexTypeStrict"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_STRICT"
+                }
+            ]
+        },
         "type_:Column": {
             "type": "object",
             "declaration": {
@@ -1570,7 +1705,70 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updatedAt",
+                            "camelCase": {
+                                "unsafeName": "updatedAt",
+                                "safeName": "updatedAt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_at",
+                                "safeName": "updated_at"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_AT",
+                                "safeName": "UPDATED_AT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedAt",
+                                "safeName": "UpdatedAt"
+                            }
+                        },
+                        "wireValue": "updatedAt"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "indexType",
+                            "camelCase": {
+                                "unsafeName": "indexType",
+                                "safeName": "indexType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "index_type",
+                                "safeName": "index_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INDEX_TYPE",
+                                "safeName": "INDEX_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IndexType",
+                                "safeName": "IndexType"
+                            }
+                        },
+                        "wireValue": "indexType"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_dataservice:IndexType"
+                        }
+                    }
+                }
+            ]
         },
         "type_:UploadResponse": {
             "type": "object",
@@ -2538,6 +2736,37 @@
                                 "value": {
                                     "type": "named",
                                     "value": "type_:Metadata"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "after",
+                                    "camelCase": {
+                                        "unsafeName": "after",
+                                        "safeName": "after"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "after",
+                                        "safeName": "after"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AFTER",
+                                        "safeName": "AFTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "After",
+                                        "safeName": "After"
+                                    }
+                                },
+                                "wireValue": "after"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
                                 }
                             }
                         }
@@ -3770,6 +3999,37 @@
                                 "value": {
                                     "type": "named",
                                     "value": "type_:IndexedData"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "indexType",
+                                    "camelCase": {
+                                        "unsafeName": "indexType",
+                                        "safeName": "indexType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "index_type",
+                                        "safeName": "index_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INDEX_TYPE",
+                                        "safeName": "INDEX_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IndexType",
+                                        "safeName": "IndexType"
+                                    }
+                                },
+                                "wireValue": "indexType"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_dataservice:IndexType"
                                 }
                             }
                         }

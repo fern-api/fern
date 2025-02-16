@@ -31,8 +31,8 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         if (this.namespaceAlias != null) {
-            writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
-            writer.write(`${this.namespaceAlias}.${this.name}`);
+            const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
+            writer.write(`${alias}.${this.name}`);
         } else if (this.qualifiedTypeNameRequired(writer)) {
             const typeQualification = this.getTypeQualification({
                 classReferenceNamespace: this.namespace,
