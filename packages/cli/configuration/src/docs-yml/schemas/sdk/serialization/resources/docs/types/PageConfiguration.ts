@@ -18,6 +18,7 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
+        noindex: core.serialization.boolean().optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -29,5 +30,6 @@ export declare namespace PageConfiguration {
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;
+        noindex?: boolean | null;
     }
 }

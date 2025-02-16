@@ -560,6 +560,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      noindex: optional<boolean>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
