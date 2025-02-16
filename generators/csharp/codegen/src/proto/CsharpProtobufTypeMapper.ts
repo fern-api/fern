@@ -1,6 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { ContainerType, EnumTypeDeclaration, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    EnumTypeDeclaration,
+    Literal,
+    MapType,
+    NamedType,
+    PrimitiveType,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { csharp } from "../";
 import { CodeBlock, MethodType } from "../ast";
@@ -293,12 +301,8 @@ class ToProtoPropertyMapper {
             );
         });
     }
-    
-    private getValueForEnum({
-        classReference,
-    }: {
-        classReference: csharp.ClassReference;
-    }): csharp.CodeBlock {
+
+    private getValueForEnum({ classReference }: { classReference: csharp.ClassReference }): csharp.CodeBlock {
         return getValueForEnum({ context: this.context, classReference });
     }
 
@@ -774,7 +778,7 @@ function getValueForEnum({
             writer.write("typeof(");
             writer.writeNode(classReference);
             writer.write(")");
-        }),
+        })
     ];
     if (propertyName != null) {
         arguments_.push(csharp.codeblock(`${propertyName}.ToString()`));
@@ -793,7 +797,7 @@ function getValueForEnum({
                         method: "Parse",
                         arguments_
                     })
-                )
+                );
             })
         );
     });
