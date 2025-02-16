@@ -7,6 +7,16 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.29
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The Protobuf package aliases now include the package name to avoid conflicts when multiple
+        Protobuf packages are used. For example, `com.acme.users.v1` would be aliased as `ProtoUsersV1`
+        instead of just `Proto`.
+
 - version: 1.9.28
   createdAt: "2025-02-15"
   irVersion: 53
