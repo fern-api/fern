@@ -112,6 +112,7 @@ export class DocsDefinitionResolver {
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -144,6 +145,9 @@ export class DocsDefinitionResolver {
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
         this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their noindex values
+        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -302,6 +306,25 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToSlug;
+    }
+
+    /**
+     * Creates a list of markdown files that have noindex:true specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their noindex value
+     */
+    private async getMarkdownFilesToNoIndex(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, boolean>> {
+        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const noindex = frontmatter.data.noindex;
+            if (typeof noindex === "boolean") {
+                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+            }
+        }
+        return mdxFilePathToNoIndex;
     }
 
     /**
@@ -506,7 +529,7 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: landingPageConfig.noindex ?? this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
             featureFlags: landingPageConfig.featureFlags
         };
     }
@@ -785,7 +808,7 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: item.noindex ?? this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags
         };
     }
