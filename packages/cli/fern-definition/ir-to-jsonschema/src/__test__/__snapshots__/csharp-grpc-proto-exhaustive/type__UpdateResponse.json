@@ -21,6 +21,16 @@
           "type": "null"
         }
       ]
+    },
+    "details": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Any"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
@@ -32,6 +42,19 @@
         "INDEX_TYPE_DEFAULT",
         "INDEX_TYPE_STRICT"
       ]
+    },
+    "Any": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
     }
   }
 }

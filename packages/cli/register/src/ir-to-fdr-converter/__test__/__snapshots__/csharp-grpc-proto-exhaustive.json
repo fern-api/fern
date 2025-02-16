@@ -587,6 +587,16 @@
                 "value": "type_dataservice:IndexType"
               }
             }
+          },
+          {
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Any"
+              }
+            }
           }
         ]
       }
@@ -631,6 +641,24 @@
             }
           }
         ]
+      }
+    },
+    "type_:Any": {
+      "name": "Any",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "type_:Metadata": {
@@ -1734,6 +1762,16 @@
                         "value": "type_dataservice:IndexType"
                       }
                     }
+                  },
+                  {
+                    "key": "details",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Any"
+                      }
+                    }
                   }
                 ]
               }
@@ -1769,13 +1807,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "updatedAt": "2024-01-15T09:30:00Z",
-                "indexType": "INDEX_TYPE_INVALID"
+                "indexType": "INDEX_TYPE_INVALID",
+                "details": {
+                  "key": "value"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "updatedAt": "2024-01-15T09:30:00Z",
-                  "indexType": "INDEX_TYPE_INVALID"
+                  "indexType": "INDEX_TYPE_INVALID",
+                  "details": {
+                    "key": "value"
+                  }
                 }
               }
             }
@@ -1811,6 +1855,7 @@
       "type_:UpdateResponse",
       "type_:UploadResponse",
       "type_:Usage",
+      "type_:Any",
       "type_:Metadata",
       "type_:MetadataValue"
     ],

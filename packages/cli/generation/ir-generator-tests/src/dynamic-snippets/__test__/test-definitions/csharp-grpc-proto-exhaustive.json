@@ -1767,6 +1767,37 @@
                             "value": "type_dataservice:IndexType"
                         }
                     }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "details",
+                            "camelCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DETAILS",
+                                "safeName": "DETAILS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Details",
+                                "safeName": "Details"
+                            }
+                        },
+                        "wireValue": "details"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:Any"
+                        }
+                    }
                 }
             ]
         },
@@ -1893,6 +1924,45 @@
                     }
                 }
             ]
+        },
+        "type_:Any": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Any",
+                    "camelCase": {
+                        "unsafeName": "any",
+                        "safeName": "any"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "any",
+                        "safeName": "any"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ANY",
+                        "safeName": "ANY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Any",
+                        "safeName": "Any"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "map",
+                "key": {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                "value": {
+                    "type": "unknown"
+                }
+            }
         },
         "type_:Metadata": {
             "type": "undiscriminatedUnion",
@@ -4030,6 +4100,37 @@
                                 "value": {
                                     "type": "named",
                                     "value": "type_dataservice:IndexType"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "details",
+                                    "camelCase": {
+                                        "unsafeName": "details",
+                                        "safeName": "details"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "details",
+                                        "safeName": "details"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DETAILS",
+                                        "safeName": "DETAILS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Details",
+                                        "safeName": "Details"
+                                    }
+                                },
+                                "wireValue": "details"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:Any"
                                 }
                             }
                         }
