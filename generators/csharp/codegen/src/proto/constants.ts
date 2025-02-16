@@ -1,4 +1,4 @@
-import { csharp } from "..";
+import * as csharp from "../csharp";
 
 export const WELL_KNOWN_PROTO_TYPES_NAMESPACE = "Google.Protobuf.WellKnownTypes";
 
