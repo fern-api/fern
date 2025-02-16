@@ -24,6 +24,7 @@ export const AsIsFiles = {
     OneOfSerializer: "OneOfSerializer.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",
+    ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
     RawClient: "RawClient.Template.cs",
     RawGrpcClient: "RawGrpcClient.Template.cs",
     StringEnum: "StringEnum.Template.cs",

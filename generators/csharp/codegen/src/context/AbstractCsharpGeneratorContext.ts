@@ -121,6 +121,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
+    public getProtoAnyMapperClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "ProtoAnyMapper"
+        });
+    }
+
     public getConstantsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -323,7 +330,7 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
-        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
+        if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
 

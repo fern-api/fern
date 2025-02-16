@@ -1,7 +1,7 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
@@ -46,6 +46,10 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             files.push(AsIsFiles.StringEnumSerializer);
         } else {
             files.push(AsIsFiles.EnumSerializer);
+        }
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        if (resolvedProtoAnyType != null) {
+            files.push(AsIsFiles.ProtoAnyMapper);
         }
         return files;
     }
