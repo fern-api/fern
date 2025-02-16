@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
@@ -25,9 +25,9 @@ public record UpdateResponse
     /// <summary>
     /// Maps the UpdateResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.UpdateResponse ToProto()
+    internal ProtoDataV1Grpc.UpdateResponse ToProto()
     {
-        var result = new Proto.UpdateResponse();
+        var result = new ProtoDataV1Grpc.UpdateResponse();
         if (UpdatedAt != null)
         {
             result.UpdatedAt = WellKnownProto.Timestamp.FromDateTime(
@@ -36,7 +36,8 @@ public record UpdateResponse
         }
         if (IndexType != null)
         {
-            result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
+            result.IndexType = (ProtoDataV1Grpc.IndexType)
+                Enum.Parse(typeof(ProtoDataV1Grpc.IndexType), ToString());
         }
         if (Details != null)
         {
@@ -48,7 +49,7 @@ public record UpdateResponse
     /// <summary>
     /// Returns a new UpdateResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static UpdateResponse FromProto(Proto.UpdateResponse value)
+    internal static UpdateResponse FromProto(ProtoDataV1Grpc.UpdateResponse value)
     {
         return new UpdateResponse
         {
