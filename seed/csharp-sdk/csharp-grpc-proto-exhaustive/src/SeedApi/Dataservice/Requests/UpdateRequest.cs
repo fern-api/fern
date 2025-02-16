@@ -2,6 +2,7 @@ using System;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -58,7 +59,8 @@ public record UpdateRequest
         }
         if (IndexType != null)
         {
-            result.IndexType = (Proto.IndexType)Enum.Parse(typeof(Proto.IndexType), ToString());
+            result.IndexType = (ProtoDataV1Grpc.IndexType)
+                Enum.Parse(typeof(ProtoDataV1Grpc.IndexType), ToString());
         }
         if (Details != null)
         {

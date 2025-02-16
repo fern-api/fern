@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = User.V1;
+using ProtoUserV1 = User.V1;
 
 namespace SeedApi;
 
@@ -29,9 +29,9 @@ public record UserModel
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.UserModel ToProto()
+    internal ProtoUserV1.UserModel ToProto()
     {
-        var result = new Proto.UserModel();
+        var result = new ProtoUserV1.UserModel();
         if (Username != null)
         {
             result.Username = Username ?? "";
@@ -58,7 +58,7 @@ public record UserModel
     /// <summary>
     /// Returns a new UserModel type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static UserModel FromProto(Proto.UserModel value)
+    internal static UserModel FromProto(ProtoUserV1.UserModel value)
     {
         return new UserModel
         {
