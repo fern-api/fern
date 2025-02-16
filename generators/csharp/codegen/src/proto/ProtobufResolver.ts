@@ -1,3 +1,5 @@
+import { camelCase } from "lodash-es";
+
 import {
     ProtobufFile,
     ProtobufService,
@@ -7,7 +9,6 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 
-import { camelCase } from "lodash-es";
 import { csharp } from "..";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
@@ -49,12 +50,16 @@ export class ProtobufResolver {
                 );
             }
             case "userDefined": {
-                const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file);
+                const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(
+                    protobufType.file
+                );
                 const rootNamespace = this.context.getNamespace();
-                const aliasSuffix = camelCase(protoNamespace
-                    .split(".")
-                    .filter((segment) => !rootNamespace.split(".").includes(segment))
-                    .join("_"));
+                const aliasSuffix = camelCase(
+                    protoNamespace
+                        .split(".")
+                        .filter((segment) => !rootNamespace.split(".").includes(segment))
+                        .join("_")
+                );
                 return csharp.classReference({
                     name: protobufType.name.originalName,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
