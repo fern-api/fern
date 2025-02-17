@@ -1,10 +1,8 @@
 import { fetcher } from "@fern-typescript/fetcher";
 import decompress from "decompress";
-import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
-import { Readable } from "readable-stream";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -119,7 +117,15 @@ export async function downloadBundle({
     });
 
     if (!docsBundleZipResponse.ok) {
-        logger.error("Failed to download docs preview bundle.");
+        let errorMessage: string;
+        if (docsBundleZipResponse.error.reason === "status-code") {
+            errorMessage = `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.error.statusCode}`;
+        } else if (docsBundleZipResponse.error.reason === "unknown") {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.errorMessage}`;
+        } else {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.reason}`;
+        }
+        logger.error(errorMessage);
         return {
             type: "failure"
         };
