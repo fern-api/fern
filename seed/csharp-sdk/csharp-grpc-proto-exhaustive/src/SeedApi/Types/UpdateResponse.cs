@@ -83,13 +83,15 @@ public record UpdateResponse
                 _ => throw new ArgumentException($"Unknown enum value: {value.IndexType}"),
             },
             Details = value.Details != null ? value.Details : null,
-            IndexTypes = value.IndexTypes switch
-            {
-                ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
-                ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
-                ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
-                _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
-            },
+            IndexTypes = value.IndexTypes.Select(type =>
+                type switch
+                {
+                    ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
+                    ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
+                    ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
+                    _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
+                }
+            ),
         };
     }
 }

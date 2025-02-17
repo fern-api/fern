@@ -296,7 +296,9 @@ class ToProtoPropertyMapper {
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
-                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId),
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+                        named.typeId
+                    ),
                     propertyName
                 });
             }
@@ -358,7 +360,7 @@ class ToProtoPropertyMapper {
                 writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
                 writer.writeLine(",");
             }
-            writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {type}")`);
+            writer.writeLine(" _ => throw new ArgumentException($\"Unknown enum value: {type}\")");
             writer.write("})");
         });
     }
@@ -647,7 +649,9 @@ class FromProtoPropertyMapper {
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
-                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId),
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+                        named.typeId
+                    ),
                     propertyName
                 });
             }
@@ -707,7 +711,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
     }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.writeLine(`${propertyName} switch`);
+            writer.writeLine(`${propertyName}.Select(type => type switch`);
             writer.writeLine("{");
             for (const enumValue of enum_.values) {
                 writer.writeNode(protobufClassReference);
@@ -720,7 +724,7 @@ class FromProtoPropertyMapper {
                 writer.writeLine(",");
             }
             writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}}")`);
-            writer.write("}");
+            writer.write("})");
         });
     }
 
@@ -828,13 +832,15 @@ class FromProtoPropertyMapper {
                 const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(listType, {
                     fullyQualified: true
                 });
-                const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(listType.typeId);
+                const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+                    listType.typeId
+                );
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
                     protobufClassReference,
                     propertyName
-                })
+                });
             }
         }
         return csharp.codeblock((writer) => {
