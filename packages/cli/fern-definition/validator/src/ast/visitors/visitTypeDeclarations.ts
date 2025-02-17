@@ -186,7 +186,8 @@ export function visitTypeDeclaration({
                                 type: (type) => {
                                     visitTypeReference(type, [...nodePathForType, "type"]);
                                 },
-                                "display-name": noop
+                                "display-name": noop,
+                                validation: noop
                             });
                         }
                     }

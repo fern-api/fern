@@ -1184,6 +1184,16 @@
             }
           ]
         },
+        "validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "type": {
           "type": "string"
         }
