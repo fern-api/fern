@@ -762,6 +762,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -879,6 +880,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             changelog,
             this.docsWorkspace,
             this.#idgen
