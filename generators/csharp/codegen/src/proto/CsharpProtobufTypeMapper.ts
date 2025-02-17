@@ -360,7 +360,7 @@ class ToProtoPropertyMapper {
                 writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
                 writer.writeLine(",");
             }
-            writer.writeLine(" _ => throw new ArgumentException($\"Unknown enum value: {type}\")");
+            writer.writeLine(' _ => throw new ArgumentException($"Unknown enum value: {type}")');
             writer.write("})");
         });
     }

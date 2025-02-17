@@ -161,7 +161,11 @@ internal class RawClient(ClientOptions clientOptions)
             url,
             (current, queryItem) =>
             {
-                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
+                if (
+                    queryItem.Value
+                    is global::System.Collections.IEnumerable collection
+                        and not string
+                )
                 {
                     var items = collection
                         .Cast<object>()
