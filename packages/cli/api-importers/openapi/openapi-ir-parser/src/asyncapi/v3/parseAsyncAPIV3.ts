@@ -23,6 +23,7 @@ import { getSchemas } from "../../utils/getSchemas";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
+import { transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
@@ -226,7 +227,7 @@ export function parseAsyncAPIV3({
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
                         : undefined,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: channelPath,
+                path: transformToValidPath(channelPath),
                 description: undefined,
                 examples: [],
                 source

@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support validation schemas in detailed Union types.
+      type: fix
+  irVersion: 55
+  version: 0.53.5
+
+- changelogEntry:
+    - summary: |
         Improve error logging on `downloadLocalDocsBundle` failure.
       type: fix
   irVersion: 55
