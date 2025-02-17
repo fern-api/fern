@@ -690,6 +690,7 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
@@ -715,6 +716,7 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
@@ -751,6 +753,7 @@ export class DocsDefinitionResolver {
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             this.#idgen
         );
         return node.get();
@@ -762,6 +765,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -879,6 +883,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             changelog,
             this.docsWorkspace,
             this.#idgen
