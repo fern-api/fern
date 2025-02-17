@@ -690,6 +690,7 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
@@ -715,6 +716,7 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
@@ -751,6 +753,7 @@ export class DocsDefinitionResolver {
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             this.#idgen
         );
         return node.get();
