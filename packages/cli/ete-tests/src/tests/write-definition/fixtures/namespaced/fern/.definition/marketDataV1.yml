@@ -81,7 +81,7 @@ channel:
     publish:
       body: MarketDataV1PublishEvent
       origin: client
-  path: marketDataV1
+  path: /marketDataV1
   query-parameters:
     symbol:
       docs: >
