@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
+import path from "path";
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
@@ -45,8 +46,8 @@ export async function replaceReferencedCode({
         }
 
         const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
+            path.isAbsolute(src) ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+            path.normalize(src)
         );
 
         try {
