@@ -1,16 +1,16 @@
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
-import { GENERATORS_CONFIGURATION_FILENAME, ROOT_API_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 
-import { Rule, RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { ValidationViolation } from "@fern-api/validation-utils";
 import { visitDefinitionFileYamlAst, visitPackageMarkerYamlAst, visitRootApiFileYamlAst } from "./ast";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
 import { getAllEnabledRules } from "./getAllRules";
+import { Rule, RuleVisitors } from "./Rule";
 
 export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });

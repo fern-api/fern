@@ -1,4 +1,5 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { RuleViolation } from "@fern-api/validation-utils";
+import { Rule } from "../../Rule";
 
 export const ValidDocsEndpoints: Rule = {
     name: "valid-docs-endpoints",
@@ -19,6 +20,7 @@ export const ValidDocsEndpoints: Rule = {
                 .filter(([endpoint]) => endpoint && !validEndpoint(endpoint))
                 .map(([endpoint, name]): RuleViolation => {
                     return {
+                        name: ValidDocsEndpoints.name,
                         severity: "warning",
                         message: `${name} <${endpoint}> is malformed. Make sure it includes a protocol (e.g. 'https://')!`
                     };

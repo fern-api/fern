@@ -10,15 +10,18 @@ import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
 import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl";
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
 import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
 import { getInstanceUrls, toBaseUrl } from "./url-utils";
+import { RuleViolation } from "@fern-api/validation-utils";
+
+const RULE_NAME = "valid-markdown-links";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
-    name: "valid-markdown-links",
+    name: RULE_NAME,
     create: async ({ workspace, fernWorkspaces, ossWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace);
 

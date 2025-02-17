@@ -1,4 +1,5 @@
-import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 

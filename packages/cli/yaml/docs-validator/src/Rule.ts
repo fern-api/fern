@@ -2,6 +2,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
+import { RuleViolation } from "@fern-api/validation-utils";
 import { DocsConfigFileAstNodeTypes } from "./docsAst/DocsConfigFileAstVisitor";
 
 export interface Rule {
@@ -18,12 +19,6 @@ export interface RuleContext {
     fernWorkspaces: FernWorkspace[];
     ossWorkspaces: OSSWorkspace[];
     logger: Logger;
-}
-
-export interface RuleViolation {
-    name?: string;
-    severity: "fatal" | "error" | "warning";
-    message: string;
 }
 
 export type MaybePromise<T> = T | Promise<T>;
