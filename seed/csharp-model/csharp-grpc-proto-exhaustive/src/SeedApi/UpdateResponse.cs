@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -16,6 +15,9 @@ public record UpdateResponse
 
     [JsonPropertyName("details")]
     public object? Details { get; set; }
+
+    [JsonPropertyName("indexTypes")]
+    public IEnumerable<IndexType>? IndexTypes { get; set; }
 
     public override string ToString()
     {
@@ -36,12 +38,31 @@ public record UpdateResponse
         }
         if (IndexType != null)
         {
-            result.IndexType = (ProtoDataV1Grpc.IndexType)
-                Enum.Parse(typeof(ProtoDataV1Grpc.IndexType), ToString());
+            result.IndexType = IndexType.Value switch
+            {
+                SeedApi.IndexType.IndexTypeInvalid => ProtoDataV1Grpc.IndexType.Invalid,
+                SeedApi.IndexType.IndexTypeDefault => ProtoDataV1Grpc.IndexType.Default,
+                SeedApi.IndexType.IndexTypeStrict => ProtoDataV1Grpc.IndexType.Strict,
+                _ => throw new ArgumentException($"Unknown enum value: {IndexType.Value}"),
+            };
         }
         if (Details != null)
         {
             result.Details = ProtoAnyMapper.ToProto(Details);
+        }
+        if (IndexTypes != null && IndexTypes.Any())
+        {
+            result.IndexTypes.AddRange(
+                IndexTypes.Select(type =>
+                    type switch
+                    {
+                        SeedApi.IndexType.IndexTypeInvalid => ProtoDataV1Grpc.IndexType.Invalid,
+                        SeedApi.IndexType.IndexTypeDefault => ProtoDataV1Grpc.IndexType.Default,
+                        SeedApi.IndexType.IndexTypeStrict => ProtoDataV1Grpc.IndexType.Strict,
+                        _ => throw new ArgumentException($"Unknown enum value: {type}"),
+                    }
+                )
+            );
         }
         return result;
     }
@@ -54,8 +75,23 @@ public record UpdateResponse
         return new UpdateResponse
         {
             UpdatedAt = value.UpdatedAt.ToDateTime(),
-            IndexType = (IndexType)Enum.Parse(typeof(IndexType), value.IndexType.ToString()),
+            IndexType = value.IndexType switch
+            {
+                ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
+                ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
+                ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
+                _ => throw new ArgumentException($"Unknown enum value: {value.IndexType}"),
+            },
             Details = value.Details != null ? value.Details : null,
+            IndexTypes = value.IndexTypes.Select(type =>
+                type switch
+                {
+                    ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
+                    ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
+                    ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
+                    _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
+                }
+            ),
         };
     }
 }
