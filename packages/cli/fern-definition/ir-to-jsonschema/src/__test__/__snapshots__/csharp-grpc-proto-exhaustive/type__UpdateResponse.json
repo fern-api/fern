@@ -31,6 +31,19 @@
           "type": "null"
         }
       ]
+    },
+    "indexTypes": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataservice.IndexType"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,

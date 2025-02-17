@@ -611,6 +611,235 @@
                 }
             ]
         },
+        "type_:FieldBehavior": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "FieldBehavior",
+                    "camelCase": {
+                        "unsafeName": "fieldBehavior",
+                        "safeName": "fieldBehavior"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "field_behavior",
+                        "safeName": "field_behavior"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FIELD_BEHAVIOR",
+                        "safeName": "FIELD_BEHAVIOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FieldBehavior",
+                        "safeName": "FieldBehavior"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "FIELD_BEHAVIOR_UNSPECIFIED",
+                        "camelCase": {
+                            "unsafeName": "fieldBehaviorUnspecified",
+                            "safeName": "fieldBehaviorUnspecified"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "field_behavior_unspecified",
+                            "safeName": "field_behavior_unspecified"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FIELD_BEHAVIOR_UNSPECIFIED",
+                            "safeName": "FIELD_BEHAVIOR_UNSPECIFIED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FieldBehaviorUnspecified",
+                            "safeName": "FieldBehaviorUnspecified"
+                        }
+                    },
+                    "wireValue": "FIELD_BEHAVIOR_UNSPECIFIED"
+                },
+                {
+                    "name": {
+                        "originalName": "OPTIONAL",
+                        "camelCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTIONAL",
+                            "safeName": "OPTIONAL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Optional",
+                            "safeName": "Optional"
+                        }
+                    },
+                    "wireValue": "OPTIONAL"
+                },
+                {
+                    "name": {
+                        "originalName": "REQUIRED",
+                        "camelCase": {
+                            "unsafeName": "required",
+                            "safeName": "required"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "required",
+                            "safeName": "required"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REQUIRED",
+                            "safeName": "REQUIRED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Required",
+                            "safeName": "Required"
+                        }
+                    },
+                    "wireValue": "REQUIRED"
+                },
+                {
+                    "name": {
+                        "originalName": "OUTPUT_ONLY",
+                        "camelCase": {
+                            "unsafeName": "outputOnly",
+                            "safeName": "outputOnly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "output_only",
+                            "safeName": "output_only"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OUTPUT_ONLY",
+                            "safeName": "OUTPUT_ONLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "OutputOnly",
+                            "safeName": "OutputOnly"
+                        }
+                    },
+                    "wireValue": "OUTPUT_ONLY"
+                },
+                {
+                    "name": {
+                        "originalName": "INPUT_ONLY",
+                        "camelCase": {
+                            "unsafeName": "inputOnly",
+                            "safeName": "inputOnly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "input_only",
+                            "safeName": "input_only"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INPUT_ONLY",
+                            "safeName": "INPUT_ONLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "InputOnly",
+                            "safeName": "InputOnly"
+                        }
+                    },
+                    "wireValue": "INPUT_ONLY"
+                },
+                {
+                    "name": {
+                        "originalName": "IMMUTABLE",
+                        "camelCase": {
+                            "unsafeName": "immutable",
+                            "safeName": "immutable"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "immutable",
+                            "safeName": "immutable"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMMUTABLE",
+                            "safeName": "IMMUTABLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Immutable",
+                            "safeName": "Immutable"
+                        }
+                    },
+                    "wireValue": "IMMUTABLE"
+                },
+                {
+                    "name": {
+                        "originalName": "UNORDERED_LIST",
+                        "camelCase": {
+                            "unsafeName": "unorderedList",
+                            "safeName": "unorderedList"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unordered_list",
+                            "safeName": "unordered_list"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNORDERED_LIST",
+                            "safeName": "UNORDERED_LIST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnorderedList",
+                            "safeName": "UnorderedList"
+                        }
+                    },
+                    "wireValue": "UNORDERED_LIST"
+                },
+                {
+                    "name": {
+                        "originalName": "NON_EMPTY_DEFAULT",
+                        "camelCase": {
+                            "unsafeName": "nonEmptyDefault",
+                            "safeName": "nonEmptyDefault"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "non_empty_default",
+                            "safeName": "non_empty_default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NON_EMPTY_DEFAULT",
+                            "safeName": "NON_EMPTY_DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NonEmptyDefault",
+                            "safeName": "NonEmptyDefault"
+                        }
+                    },
+                    "wireValue": "NON_EMPTY_DEFAULT"
+                },
+                {
+                    "name": {
+                        "originalName": "IDENTIFIER",
+                        "camelCase": {
+                            "unsafeName": "identifier",
+                            "safeName": "identifier"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "identifier",
+                            "safeName": "identifier"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IDENTIFIER",
+                            "safeName": "IDENTIFIER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Identifier",
+                            "safeName": "Identifier"
+                        }
+                    },
+                    "wireValue": "IDENTIFIER"
+                }
+            ]
+        },
         "type_:IndexedData": {
             "type": "object",
             "declaration": {
@@ -1796,6 +2025,40 @@
                         "value": {
                             "type": "named",
                             "value": "type_:Any"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "indexTypes",
+                            "camelCase": {
+                                "unsafeName": "indexTypes",
+                                "safeName": "indexTypes"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "index_types",
+                                "safeName": "index_types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INDEX_TYPES",
+                                "safeName": "INDEX_TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IndexTypes",
+                                "safeName": "IndexTypes"
+                            }
+                        },
+                        "wireValue": "indexTypes"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "named",
+                                "value": "type_dataservice:IndexType"
+                            }
                         }
                     }
                 }
@@ -4131,6 +4394,40 @@
                                 "value": {
                                     "type": "named",
                                     "value": "type_:Any"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "indexTypes",
+                                    "camelCase": {
+                                        "unsafeName": "indexTypes",
+                                        "safeName": "indexTypes"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "index_types",
+                                        "safeName": "index_types"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INDEX_TYPES",
+                                        "safeName": "INDEX_TYPES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IndexTypes",
+                                        "safeName": "IndexTypes"
+                                    }
+                                },
+                                "wireValue": "indexTypes"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "list",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_dataservice:IndexType"
+                                    }
                                 }
                             }
                         }
