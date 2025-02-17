@@ -154,12 +154,14 @@ message UpdateRequest {
   IndexedData indexed_data = 5;
   IndexType index_type = 6;
   google.protobuf.Any details = 7;
+  repeated IndexType index_types = 8;
 }
 
 message UpdateResponse {
   google.protobuf.Timestamp updated_at = 1;
   IndexType index_type = 2;
   google.protobuf.Any details = 3;
+  repeated IndexType index_types = 4;
 }
 
 message DescribeRequest {

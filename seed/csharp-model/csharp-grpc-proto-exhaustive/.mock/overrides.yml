@@ -69,6 +69,10 @@ components:
           $ref: '#/components/schemas/Metadata'
         indexType:
           $ref: '#/components/schemas/IndexType'
+        indexTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexType'
         details:
           $ref: '#/components/schemas/Any'
     UpdateResponse:
@@ -77,6 +81,10 @@ components:
           $ref: '#/components/schemas/IndexType'
         details:
           $ref: '#/components/schemas/Any'
+        indexTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexType'
     Column:
       properties:
         metadata:

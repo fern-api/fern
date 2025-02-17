@@ -189,6 +189,41 @@
         ]
       }
     },
+    "type_:FieldBehavior": {
+      "name": "FieldBehavior",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "FIELD_BEHAVIOR_UNSPECIFIED"
+          },
+          {
+            "value": "OPTIONAL"
+          },
+          {
+            "value": "REQUIRED"
+          },
+          {
+            "value": "OUTPUT_ONLY"
+          },
+          {
+            "value": "INPUT_ONLY"
+          },
+          {
+            "value": "IMMUTABLE"
+          },
+          {
+            "value": "UNORDERED_LIST"
+          },
+          {
+            "value": "NON_EMPTY_DEFAULT"
+          },
+          {
+            "value": "IDENTIFIER"
+          }
+        ]
+      }
+    },
     "type_:IndexedData": {
       "name": "IndexedData",
       "shape": {
@@ -595,6 +630,19 @@
               "itemType": {
                 "type": "id",
                 "value": "type_:Any"
+              }
+            }
+          },
+          {
+            "key": "indexTypes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_dataservice:IndexType"
+                }
               }
             }
           }
@@ -1772,6 +1820,19 @@
                         "value": "type_:Any"
                       }
                     }
+                  },
+                  {
+                    "key": "indexTypes",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "type_dataservice:IndexType"
+                        }
+                      }
+                    }
                   }
                 ]
               }
@@ -1810,7 +1871,10 @@
                 "indexType": "INDEX_TYPE_INVALID",
                 "details": {
                   "key": "value"
-                }
+                },
+                "indexTypes": [
+                  "INDEX_TYPE_INVALID"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1819,7 +1883,10 @@
                   "indexType": "INDEX_TYPE_INVALID",
                   "details": {
                     "key": "value"
-                  }
+                  },
+                  "indexTypes": [
+                    "INDEX_TYPE_INVALID"
+                  ]
                 }
               }
             }
@@ -1843,6 +1910,7 @@
       "type_:DeleteResponse",
       "type_:DescribeResponse",
       "type_:FetchResponse",
+      "type_:FieldBehavior",
       "type_:IndexedData",
       "type_:ListElement",
       "type_:ListResponse",
