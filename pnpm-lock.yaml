@@ -5220,9 +5220,6 @@ importers:
       express:
         specifier: ^4.21.2
         version: 4.21.2
-      readable-stream:
-        specifier: ^4.5.2
-        version: 4.5.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5257,9 +5254,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/readable-stream':
-        specifier: ^4.0.15
-        version: 4.0.15
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
