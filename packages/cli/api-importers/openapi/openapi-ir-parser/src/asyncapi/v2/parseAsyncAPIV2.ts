@@ -25,7 +25,6 @@ import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV2 } from "../v2";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
@@ -250,7 +249,7 @@ export function parseAsyncAPIV2({
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: transformToValidPath(channelPath),
+                path: channelPath,
                 description: undefined,
                 examples,
                 source

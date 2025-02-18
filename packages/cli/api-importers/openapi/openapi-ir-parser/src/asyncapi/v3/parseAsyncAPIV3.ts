@@ -23,7 +23,6 @@ import { getSchemas } from "../../utils/getSchemas";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
@@ -141,7 +140,7 @@ export function parseAsyncAPIV3({
         const queryParameters: QueryParameterWithExample[] = [];
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters)) {
-                const { type, path } = convertChannelParameterLocation(parameter.location);
+                const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
                 const parameterSchema =
                     parameter.enum != null && Array.isArray(parameter.enum)
@@ -165,13 +164,13 @@ export function parseAsyncAPIV3({
                               description: undefined,
                               availability: undefined,
                               generatedName: "",
-                              title: undefined,
+                              title: parameterName,
                               groupName: undefined,
                               nameOverride: undefined
                           });
 
                 const parameterObject = {
-                    name,
+                    name: parameterKey,
                     description: parameter.description,
                     parameterNameOverride: undefined,
                     schema: parameterSchema,
@@ -227,7 +226,9 @@ export function parseAsyncAPIV3({
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
                         : undefined,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: transformToValidPath(channelPath),
+                // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
+                // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
+                path: channel.address ?? transformToValidPath(channelPath),
                 description: undefined,
                 examples: [],
                 source
@@ -249,9 +250,12 @@ function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
     return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
 }
 
-function convertChannelParameterLocation(location: string): { type: "header" | "path" | "payload"; path: string } {
-    const [messageType, path] = location.split("#/");
-    if (messageType == null || path == null) {
+function convertChannelParameterLocation(location: string): {
+    type: "header" | "path" | "payload";
+    parameterKey: string;
+} {
+    const [messageType, parameterKey] = location.split("#/");
+    if (messageType == null || parameterKey == null) {
         throw new Error(`Invalid location format: ${location}`);
     }
     if (!messageType.startsWith(LOCATION_PREFIX)) {
@@ -261,7 +265,14 @@ function convertChannelParameterLocation(location: string): { type: "header" | "
     if (type !== "header" && type !== "path" && type !== "payload") {
         throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
     }
-    return { type, path };
+    return { type, parameterKey };
+}
+
+function transformToValidPath(path: string): string {
+    if (!path.startsWith("/")) {
+        return "/" + path;
+    }
+    return path;
 }
 
 function buildEnumSchema({
