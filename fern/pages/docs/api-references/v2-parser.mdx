@@ -1,0 +1,28 @@
+---
+title: OpenAPI v2 parser
+subtitle: The next generation of the OpenAPI Parser for Docs
+---
+
+The next generation of the OpenAPI parser was built explicitly for Fern Docs. It's designed to be more expressive, more flexible and enable faster feature
+development.
+
+Previously, the parser was passed through several lossy layers of transformation, resulting in less accurate representations of the OpenAPI specification.
+From the ground up, it is built on top of the OpenAPI domain and was designed to directly converse to your docs to make sure that your experience with OpenAPI 
+and fern docs is fast, seamless and enjoyable. To enable the new parser, you can set the following config in your `docs.yml` file:
+
+```yaml
+experimental:
+  openapi-parser-v2: true
+```
+
+Features supported improving upon the current parser:
+- Multiple success response examples
+- Defaults, status codes, and schema specific metadata
+- Null support in examples
+- Higher fidelity parsing of OpenAPI files
+
+Features coming soon:
+- Support for No-Content responses
+- Examples on each API reference 
+- Multiple responses and content types
+- Webhook query parameters
