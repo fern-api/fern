@@ -11,7 +11,7 @@ export class ApiDefinitionHolderLatest {
     #endpointsByLocator: Record<string, FdrAPI.api.latest.endpoint.EndpointDefinition> = {};
     #websocketsByLocator: Record<string, FdrAPI.api.latest.websocket.WebSocketChannel> = {};
 
-    constructor(private api: FdrAPI.api.latest.ApiDefinition) {
+    constructor(api: FdrAPI.api.latest.ApiDefinition) {
         for (const [subpackageId, subpackage] of Object.entries(api.subpackages)) {
             this.#subpackagesByLocator[subpackageId] = subpackage;
             this.#subpackagesByLocator[`subpackage_${subpackageId}`] = subpackage;
