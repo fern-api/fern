@@ -127,6 +127,7 @@ jobs:
           commit-message: "chore(ruby): update ruby-model seed"
           title: "chore(ruby): update ruby-model seed"
           branch: update-ruby-model-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -162,6 +163,7 @@ jobs:
           commit-message: "chore(ruby): update ruby-sdk seed"
           title: "chore(ruby): update ruby-sdk seed"
           branch: update-ruby-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -197,6 +199,7 @@ jobs:
           commit-message: "chore(python): update pydantic seed"
           title: "chore(python): update pydantic seed"
           branch: update-pydantic-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -232,6 +235,7 @@ jobs:
           commit-message: "chore(python): update python-sdk seed"
           title: "chore(python): update python-sdk seed"
           branch: update-python-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -267,6 +271,7 @@ jobs:
           commit-message: "chore(python): update fastapi seed"
           title: "chore(python): update fastapi seed"
           branch: update-fastapi-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -302,6 +307,7 @@ jobs:
           commit-message: "chore(openapi): update openapi seed"
           title: "chore(openapi): update openapi seed"
           branch: update-openapi-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -337,6 +343,7 @@ jobs:
           commit-message: "chore(postman): update postman seed"
           title: "chore(postman): update postman seed"
           branch: update-postman-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -372,6 +379,7 @@ jobs:
           commit-message: "chore(java): update java-sdk seed"
           title: "chore(java): update java-sdk seed"
           branch: update-java-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -407,6 +415,7 @@ jobs:
           commit-message: "chore(java): update java-model seed"
           title: "chore(java): update java-model seed"
           branch: update-java-model-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -442,6 +451,7 @@ jobs:
           commit-message: "chore(java): update java-spring seed"
           title: "chore(java): update java-spring seed"
           branch: update-java-spring-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -477,6 +487,7 @@ jobs:
           commit-message: "chore(typescript): update typescript-sdk seed"
           title: "chore(typescript): update typescript-sdk seed"
           branch: update-typescript-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -512,6 +523,7 @@ jobs:
           commit-message: "chore(typescript): update typescript-express seed"
           title: "chore(typescript): update typescript-express seed"
           branch: update-typescript-express-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -547,6 +559,7 @@ jobs:
           commit-message: "chore(go): update go-fiber seed"
           title: "chore(go): update go-fiber seed"
           branch: update-go-fiber-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -582,6 +595,7 @@ jobs:
           commit-message: "chore(go): update go-model seed"
           title: "chore(go): update go-model seed"
           branch: update-go-model-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -617,6 +631,7 @@ jobs:
           commit-message: "chore(go): update go-sdk seed"
           title: "chore(go): update go-sdk seed"
           branch: update-go-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -652,6 +667,7 @@ jobs:
           commit-message: "chore(csharp): update csharp-model seed"
           title: "chore(csharp): update csharp-model seed"
           branch: update-csharp-model-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -687,6 +703,7 @@ jobs:
           commit-message: "chore(csharp): update csharp-sdk seed"
           title: "chore(csharp): update csharp-sdk seed"
           branch: update-csharp-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -722,6 +739,7 @@ jobs:
           commit-message: "chore(php): update php-model seed"
           title: "chore(php): update php-model seed"
           branch: update-php-model-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -757,6 +775,7 @@ jobs:
           commit-message: "chore(php): update php-sdk seed"
           title: "chore(php): update php-sdk seed"
           branch: update-php-sdk-seed
+          base: ${{ github.event.pull_request.base.ref || github.ref_name }}
           delete-branch: true
 
       - name: Enable Pull Request Automerge
