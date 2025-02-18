@@ -1761,7 +1761,8 @@
       "type": "string",
       "enum": [
         "json",
-        "exploded"
+        "exploded",
+        "form"
       ]
     },
     "service.HttpInlineFileRequestBodyPropertySchema": {

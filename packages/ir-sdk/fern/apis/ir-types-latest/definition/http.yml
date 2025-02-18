@@ -146,7 +146,8 @@ types:
   FileUploadBodyPropertyEncoding: 
     enum: 
       - exploded
-      - json          
+      - json    
+      - form      
   FileProperty:
     union:
       file: FilePropertySingle
