@@ -19618,7 +19618,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "artifact-summary": {

@@ -20,7 +20,8 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId
+    TypeId,
+    WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
@@ -161,6 +162,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.StringEnumSerializer);
         } else {
             files.push(AsIsFiles.EnumSerializer);
+        }
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        if (resolvedProtoAnyType != null) {
+            files.push(AsIsFiles.ProtoAnyMapper);
         }
         return files;
     }
@@ -573,7 +578,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
-        return protobufService.name.pascalCase.safeName;
+        return protobufService.name.originalName;
     }
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

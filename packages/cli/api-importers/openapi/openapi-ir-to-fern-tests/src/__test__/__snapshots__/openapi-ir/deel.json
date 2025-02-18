@@ -33587,7 +33587,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "PaymentStatementInitiatedWebhook": {

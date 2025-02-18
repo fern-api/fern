@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
@@ -32,7 +31,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/resource/{resourceId}",
+                    Path = $"/resource/{JsonUtils.SerializeAsString(resourceId)}",
                     Options = options,
                 },
                 cancellationToken

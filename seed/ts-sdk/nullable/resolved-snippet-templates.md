@@ -6,6 +6,8 @@ await client.nullable.getUsers({
   usernames: "usernames",
   avatar: "avatar",
   activated: true,
+  tags: "tags",
+  extra: true,
 });
 
 ```

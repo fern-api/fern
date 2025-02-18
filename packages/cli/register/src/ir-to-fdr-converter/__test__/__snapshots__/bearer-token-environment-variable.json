@@ -44,7 +44,9 @@
               "path": "/apiKey",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {},
+              "headers": {
+                "X-API-Version": "1.0.0"
+              },
               "responseStatusCode": 200,
               "responseBody": "string",
               "responseBodyV3": {
@@ -76,5 +78,16 @@
     "tokenName": "apiKey"
   },
   "snippetsConfiguration": {},
-  "globalHeaders": []
+  "globalHeaders": [
+    {
+      "key": "X-API-Version",
+      "type": {
+        "type": "literal",
+        "value": {
+          "type": "stringLiteral",
+          "value": "1.0.0"
+        }
+      }
+    }
+  ]
 }

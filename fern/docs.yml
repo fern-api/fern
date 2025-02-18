@@ -62,6 +62,9 @@ navigation:
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/openapi/auth.mdx
+          - page: Servers
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/openapi/servers.mdx            
           - section: Endpoints
             icon: fa-regular fa-object-intersect
             slug: endpoints
@@ -389,6 +392,10 @@ navigation:
           - page: Edit This Page and User Feedback
             icon: fa-regular fa-comment-dots
             path: ./pages/docs/building-your-docs/user-feedback.mdx
+          - page: Role based access control (RBAC)
+            icon: fa-regular fa-lock
+            path: ./pages/docs/building-your-docs/rbac.mdx
+            slug: rbac
 
       - section: Writing Content
         slug: content
@@ -452,6 +459,10 @@ navigation:
                 path: ./pages/docs/components/icons.mdx
                 icon: fa-regular fa-icons
                 slug: icons
+              - page: Parameter Fields
+                path: ./pages/docs/components/paramfield.mdx
+                icon: fa-regular fa-input-text
+                slug: paramfield
               - page: Steps
                 path: ./pages/docs/components/steps.mdx
                 icon: fa-regular fa-list-ol
@@ -584,12 +595,19 @@ navigation:
           - changelog: ./pages/changelogs/cli
       - api: API Reference
         api-name: public-api
+        icon: fa-regular fa-pro
         paginated: true
         audiences:
           - external
         layout:
           - page: Overview
             path: ./pages/cli-api/api-get-started.mdx
+          - sdk: 
+            - endpoint: sdk.generate
+              hidden: true
+            - endpoint: sdk.getStatus
+              hidden: true
+
 
 navbar-links:
   - type: minimal

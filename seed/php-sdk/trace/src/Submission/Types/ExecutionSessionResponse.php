@@ -35,9 +35,9 @@ class ExecutionSessionResponse extends JsonSerializableType
     /**
      * @param array{
      *   sessionId: string,
-     *   executionSessionUrl?: ?string,
      *   language: value-of<Language>,
      *   status: value-of<ExecutionSessionStatus>,
+     *   executionSessionUrl?: ?string,
      * } $values
      */
     public function __construct(

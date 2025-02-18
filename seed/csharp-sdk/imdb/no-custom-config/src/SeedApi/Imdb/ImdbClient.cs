@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -79,7 +78,7 @@ public partial class ImdbClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movies/{movieId}",
+                    Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
                     Options = options,
                 },
                 cancellationToken

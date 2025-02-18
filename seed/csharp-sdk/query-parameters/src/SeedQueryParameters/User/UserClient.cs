@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
@@ -15,6 +14,64 @@ public partial class UserClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.User.GetUsernameAsync(
+    ///     new GetUsersRequest
+    ///     {
+    ///         Limit = 1,
+    ///         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Bytes = "SGVsbG8gd29ybGQh",
+    ///         User = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///         UserList = new List&lt;User&gt;()
+    ///         {
+    ///             new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///             new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         },
+    ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
+    ///         OptionalString = "optionalString",
+    ///         NestedUser = new NestedUser
+    ///         {
+    ///             Name = "name",
+    ///             User = new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         },
+    ///         OptionalUser = new User
+    ///         {
+    ///             Name = "name",
+    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         },
+    ///         ExcludeUser =
+    ///         [
+    ///             new User
+    ///             {
+    ///                 Name = "name",
+    ///                 Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///             },
+    ///         ],
+    ///         Filter = ["filter"],
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,

@@ -17,4 +17,6 @@ export interface ApiDefinitionSettingsSchema {
     "only-include-referenced-schemas"?: boolean;
     /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
     "inline-path-parameters"?: boolean;
+    /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
+    "idiomatic-request-names"?: boolean;
 }

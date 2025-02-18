@@ -4,6 +4,7 @@ namespace Seed\V2\Problem;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\VariableType;
 use Seed\Core\Types\ArrayType;
 
 class LightweightProblemInfoV2 extends JsonSerializableType
@@ -27,9 +28,9 @@ class LightweightProblemInfoV2 extends JsonSerializableType
     public int $problemVersion;
 
     /**
-     * @var array<mixed> $variableTypes
+     * @var array<VariableType> $variableTypes
      */
-    #[JsonProperty('variableTypes'), ArrayType(['mixed'])]
+    #[JsonProperty('variableTypes'), ArrayType([VariableType::class])]
     public array $variableTypes;
 
     /**
@@ -37,7 +38,7 @@ class LightweightProblemInfoV2 extends JsonSerializableType
      *   problemId: string,
      *   problemName: string,
      *   problemVersion: int,
-     *   variableTypes: array<mixed>,
+     *   variableTypes: array<VariableType>,
      * } $values
      */
     public function __construct(

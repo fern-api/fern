@@ -316,7 +316,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "UserUpdate": {

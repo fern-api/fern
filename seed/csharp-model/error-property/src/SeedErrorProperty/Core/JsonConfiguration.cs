@@ -29,6 +29,12 @@ internal static class JsonUtils
         return JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
     }
 
+    public static string SerializeAsString<T>(T obj)
+    {
+        var json = JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
+        return json.Trim('"');
+    }
+
     public static T Deserialize<T>(string json)
     {
         return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;

@@ -83,7 +83,7 @@ public final class UnionWithTime {
     }
 
     @JsonValue
-    private Value getValue() {
+    private Value getValue_() {
         return this.value;
     }
 
@@ -109,6 +109,7 @@ public final class UnionWithTime {
     }
 
     @JsonTypeName("value")
+    @JsonIgnoreProperties("type")
     private static final class ValueValue implements Value {
         @JsonProperty("value")
         private int value;
@@ -145,6 +146,7 @@ public final class UnionWithTime {
     }
 
     @JsonTypeName("date")
+    @JsonIgnoreProperties("type")
     private static final class DateValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -181,6 +183,7 @@ public final class UnionWithTime {
     }
 
     @JsonTypeName("datetime")
+    @JsonIgnoreProperties("type")
     private static final class DatetimeValue implements Value {
         @JsonProperty("value")
         private OffsetDateTime value;
@@ -216,6 +219,7 @@ public final class UnionWithTime {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

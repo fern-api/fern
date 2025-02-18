@@ -6,7 +6,7 @@ namespace SeedLiteral;
 public record ANestedLiteral
 {
     [JsonPropertyName("myLiteral")]
-    public required string MyLiteral { get; set; }
+    public string MyLiteral { get; set; } = "How super cool";
 
     public override string ToString()
     {

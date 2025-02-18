@@ -27,7 +27,7 @@ public record ExtendedMovie
     public required double Rating { get; set; }
 
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "movie";
 
     [JsonPropertyName("tag")]
     public required string Tag { get; set; }

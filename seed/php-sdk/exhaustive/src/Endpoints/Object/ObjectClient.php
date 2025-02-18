@@ -10,6 +10,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithMapOfMap;
@@ -23,8 +24,9 @@ class ObjectClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -39,8 +41,9 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -56,6 +59,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ObjectWithOptionalField
      * @throws SeedException
@@ -81,6 +88,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -96,6 +113,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ObjectWithRequiredField
      * @throws SeedException
@@ -121,6 +142,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -136,6 +167,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ObjectWithMapOfMap
      * @throws SeedException
@@ -161,6 +196,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -176,6 +221,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return NestedObjectWithOptionalField
      * @throws SeedException
@@ -201,6 +250,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -217,6 +276,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return NestedObjectWithRequiredField
      * @throws SeedException
@@ -229,7 +292,7 @@ class ObjectClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-nested-with-required-field/$string",
+                    path: "/object/get-and-return-nested-with-required-field/{$string}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -242,6 +305,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -257,6 +330,10 @@ class ObjectClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return NestedObjectWithRequiredField
      * @throws SeedException
@@ -282,6 +359,16 @@ class ObjectClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

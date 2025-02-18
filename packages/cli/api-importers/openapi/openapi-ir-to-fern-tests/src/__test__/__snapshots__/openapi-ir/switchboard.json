@@ -4657,7 +4657,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ClientProvidedResponseMetadata": {

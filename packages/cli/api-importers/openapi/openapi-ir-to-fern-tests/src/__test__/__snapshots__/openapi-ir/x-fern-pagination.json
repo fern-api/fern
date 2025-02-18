@@ -294,7 +294,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Meta": {

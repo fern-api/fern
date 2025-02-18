@@ -29,8 +29,8 @@ class GetExecutionSessionStateResponse extends JsonSerializableType
     /**
      * @param array{
      *   states: array<string, ExecutionSessionState>,
-     *   numWarmingInstances?: ?int,
      *   warmingSessionIds: array<string>,
+     *   numWarmingInstances?: ?int,
      * } $values
      */
     public function __construct(

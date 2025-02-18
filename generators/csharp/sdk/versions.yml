@@ -6,6 +6,137 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.9.30
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The Protobuf enum mapper now handles every enum variant.
+
+- version: 1.9.29
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The Protobuf package aliases now include the package name to avoid conflicts when multiple
+        Protobuf packages are used. For example, `com.acme.users.v1` would be aliased as `ProtoUsersV1`
+        instead of just `Proto`.
+
+- version: 1.9.28
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix the Protobuf mappers for the google.protobuf.Any type.
+    - type: fix
+      summary: |
+        The Protobuf mappers now refer to the original name of the Protobuf type instead
+        of the PascalCase name.
+
+- version: 1.9.27
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix the Protobuf mappers for enum and timestamp types.
+
+- version: 1.9.26
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System.Type` instead of `System.Type` in `OneOfSerializer`
+        when a type named `System` exists in the current namespace.
+
+- version: 1.9.25
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts 
+        when a type named `System` exists in the current namespace.
+
+- version: 1.9.24
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use the original gRPC service name in the generated client reference instead of applying any casing transformations.
+
+- version: 1.9.23
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T> 
+        when the method returns a response.
+
+- version: 1.9.22
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Generate a pagination section to the generated README.md file.
+    - type: feat
+      summary: |
+        You can now `foreach(var item in page)` on `Page<T>` instances.
+- version: 1.9.21
+  createdAt: "2025-02-06"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support literals in query parameters and headers. For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include body properties.
+- version: 1.9.20
+  createdAt: "2025-02-06"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support literals in wrapped requests (). For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include body properties.
+- version: 1.9.19
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
+        correctly serialized using their wire value.
+  irVersion: 53
+- version: 1.9.18
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
+        correctly serialized using their wire value.
+  irVersion: 53
+- version: 1.9.17
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support required literals. For example, if a field has a literal value of "foo", we will now set that value as the default value for the field.
+  irVersion: 53
+- version: 1.9.16
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Required client parameters that are headers are now sent when making API requests. For example if a bearer token is required to
+        instantiate the client, we will ensure that it is sent when making API requests.
+  irVersion: 53
 - version: 1.9.15
   createdAt: "2025-02-06"
   changelogEntry:

@@ -56,7 +56,7 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/v2/playlist/{serviceParam}/create",
+                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/create",
                     Body = request.Body,
                     Query = _query,
                     Options = options,
@@ -124,7 +124,7 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/v2/playlist/{serviceParam}/all",
+                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/all",
                     Query = _query,
                     Options = options,
                 },
@@ -172,7 +172,8 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                    Path =
+                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
                     Options = options,
                 },
                 cancellationToken
@@ -228,7 +229,8 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                    Path =
+                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
                     Body = request,
                     Options = options,
                 },
@@ -276,7 +278,8 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                    Path =
+                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
                     Options = options,
                 },
                 cancellationToken

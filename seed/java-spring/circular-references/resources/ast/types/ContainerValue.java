@@ -103,6 +103,7 @@ public final class ContainerValue {
   }
 
   @JsonTypeName("list")
+  @JsonIgnoreProperties("type")
   private static final class ListValue implements Value {
     @JsonProperty("value")
     private List<FieldValue> value;
@@ -141,6 +142,7 @@ public final class ContainerValue {
   }
 
   @JsonTypeName("optional")
+  @JsonIgnoreProperties("type")
   private static final class OptionalValue implements Value {
     @JsonProperty("value")
     private Optional<FieldValue> value;
@@ -178,6 +180,7 @@ public final class ContainerValue {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

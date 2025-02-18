@@ -16,7 +16,12 @@ class BaseResource extends JsonSerializableType
     public string $id;
 
     /**
-     * @var array<Account|Patient|Practitioner|Script> $relatedResources
+     * @var array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )> $relatedResources
      */
     #[JsonProperty('related_resources'), ArrayType([new Union(Account::class, Patient::class, Practitioner::class, Script::class)])]
     public array $relatedResources;
@@ -30,7 +35,12 @@ class BaseResource extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   relatedResources: array<Account|Patient|Practitioner|Script>,
+     *   relatedResources: array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )>,
      *   memo: Memo,
      * } $values
      */

@@ -7,7 +7,7 @@ namespace SeedApi;
 public record Script
 {
     [JsonPropertyName("resource_type")]
-    public required string ResourceType { get; set; }
+    public string ResourceType { get; set; } = "Script";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }

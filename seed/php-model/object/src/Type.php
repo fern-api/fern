@@ -117,7 +117,7 @@ class Type extends JsonSerializableType
     public array $seventeen;
 
     /**
-     * @var string $eighteen
+     * @var 'eighteen' $eighteen
      */
     #[JsonProperty('eighteen')]
     public string $eighteen;
@@ -166,17 +166,17 @@ class Type extends JsonSerializableType
      *   ten: array<int>,
      *   eleven: array<float>,
      *   twelve: array<string, bool>,
-     *   thirteen?: ?int,
      *   fourteen: mixed,
      *   fifteen: array<array<int>>,
      *   sixteen: array<array<string, int>>,
      *   seventeen: array<?string>,
-     *   eighteen: string,
+     *   eighteen: 'eighteen',
      *   nineteen: Name,
      *   twenty: int,
      *   twentyone: int,
      *   twentytwo: float,
      *   twentythree: string,
+     *   thirteen?: ?int,
      * } $values
      */
     public function __construct(

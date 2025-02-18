@@ -10,7 +10,10 @@ use Seed\Core\Json\JsonProperty;
 class Entity extends JsonSerializableType
 {
     /**
-     * @var value-of<BasicType>|value-of<ComplexType> $type
+     * @var (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ) $type
      */
     #[JsonProperty('type')]
     public string $type;
@@ -23,7 +26,10 @@ class Entity extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: value-of<BasicType>|value-of<ComplexType>,
+     *   type: (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ),
      *   name: string,
      * } $values
      */

@@ -1,3 +1,5 @@
+import { camelCase } from "lodash-es";
+
 import {
     ProtobufFile,
     ProtobufService,
@@ -29,7 +31,7 @@ export class ProtobufResolver {
         wellKnownProtobufType: WellKnownProtobufType
     ): ResolvedWellKnownProtobufType | undefined {
         for (const [typeId, typeDeclaration] of Object.entries(this.context.ir.types)) {
-            if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufTypes: [wellKnownProtobufType] })) {
+            if (this._isWellKnownProtobufType({ typeId, wellKnownProtobufTypes: [wellKnownProtobufType] })) {
                 return {
                     typeDeclaration,
                     wellKnownProtobufType
@@ -48,10 +50,20 @@ export class ProtobufResolver {
                 );
             }
             case "userDefined": {
+                const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(
+                    protobufType.file
+                );
+                const rootNamespace = this.context.getNamespace();
+                const aliasSuffix = camelCase(
+                    protoNamespace
+                        .split(".")
+                        .filter((segment) => !rootNamespace.split(".").includes(segment))
+                        .join("_")
+                );
                 return csharp.classReference({
-                    name: this.context.getPascalCaseSafeName(protobufType.name),
+                    name: protobufType.name.originalName,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
-                    namespaceAlias: "Proto"
+                    namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase() + aliasSuffix.slice(1)}`
                 });
             }
         }
@@ -80,14 +92,25 @@ export class ProtobufResolver {
         return namespace;
     }
 
-    public isAnyWellKnownProtobufType(typeId: TypeId): boolean {
-        return this.isWellKnownProtobufType({
+    public isWellKnownProtobufType(typeId: TypeId): boolean {
+        return this._isWellKnownProtobufType({
             typeId,
-            wellKnownProtobufTypes: [WellKnownProtobufType.struct(), WellKnownProtobufType.value()]
+            wellKnownProtobufTypes: [
+                WellKnownProtobufType.any(),
+                WellKnownProtobufType.struct(),
+                WellKnownProtobufType.value()
+            ]
         });
     }
 
-    private isWellKnownProtobufType({
+    public isWellKnownAnyProtobufType(typeId: TypeId): boolean {
+        return this._isWellKnownProtobufType({
+            typeId,
+            wellKnownProtobufTypes: [WellKnownProtobufType.any()]
+        });
+    }
+
+    private _isWellKnownProtobufType({
         typeId,
         wellKnownProtobufTypes
     }: {

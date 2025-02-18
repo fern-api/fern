@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_nullable.getUsers"
             },
             "snippet": {
-                "client": "require \"fern_nullable\"\n\nnullable = SeedNullableClient::Client.new(base_url: \"https://api.example.com\")\nnullable.nullable.get_users(\n  usernames: \"usernames\",\n  avatar: \"avatar\",\n  activated: true\n)",
+                "client": "require \"fern_nullable\"\n\nnullable = SeedNullableClient::Client.new(base_url: \"https://api.example.com\")\nnullable.nullable.get_users(\n  usernames: \"usernames\",\n  avatar: \"avatar\",\n  activated: true,\n  tags: \"tags\",\n  extra: true\n)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_nullable.getUsers"
             },
             "snippet": {
-                "client": "require \"fern_nullable\"\n\nnullable = SeedNullableClient::Client.new(base_url: \"https://api.example.com\")\nnullable.nullable.get_users(\n  usernames: \"usernames\",\n  avatar: \"avatar\",\n  activated: true\n)",
+                "client": "require \"fern_nullable\"\n\nnullable = SeedNullableClient::Client.new(base_url: \"https://api.example.com\")\nnullable.nullable.get_users(\n  usernames: \"usernames\",\n  avatar: \"avatar\",\n  activated: true,\n  tags: \"tags\",\n  extra: true\n)",
                 "type": "ruby"
             }
         },

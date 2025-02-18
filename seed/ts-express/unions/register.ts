@@ -3,13 +3,16 @@
  */
 
 import express from "express";
+import { BigunionService } from "./api/resources/bigunion/service/BigunionService";
 import { UnionService } from "./api/resources/union/service/UnionService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
+        bigunion: BigunionService;
         union: UnionService;
     },
 ): void {
+    (expressApp as any).use("/", services.bigunion.toRouter());
     (expressApp as any).use("/", services.union.toRouter());
 }

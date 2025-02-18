@@ -10,7 +10,7 @@ import { ObjectGenerator } from "./object/ObjectGenerator";
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
     for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
-        if (context.protobufResolver.isAnyWellKnownProtobufType(typeId)) {
+        if (context.protobufResolver.isWellKnownProtobufType(typeId)) {
             // The well-known Protobuf types are generated separately.
             continue;
         }

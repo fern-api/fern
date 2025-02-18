@@ -8,14 +8,14 @@ use Seed\Core\Json\JsonProperty;
 class WorkspaceSubmissionState extends JsonSerializableType
 {
     /**
-     * @var mixed $status
+     * @var WorkspaceSubmissionStatus $status
      */
     #[JsonProperty('status')]
-    public mixed $status;
+    public WorkspaceSubmissionStatus $status;
 
     /**
      * @param array{
-     *   status: mixed,
+     *   status: WorkspaceSubmissionStatus,
      * } $values
      */
     public function __construct(

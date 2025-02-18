@@ -4,9 +4,9 @@ namespace SeedLiteral;
 
 public record SendLiteralsInHeadersRequest
 {
-    public required string EndpointVersion { get; set; }
+    public string EndpointVersion { get; set; } = "02-12-2024";
 
-    public required bool Async { get; set; }
+    public bool Async { get; set; } = true;
 
     public required string Query { get; set; }
 

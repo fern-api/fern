@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
@@ -53,7 +52,7 @@ public partial class SeedPackageYmlClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{id}/",
+                    Path = $"/{JsonUtils.SerializeAsString(id)}/",
                     Body = request,
                     Options = options,
                 },

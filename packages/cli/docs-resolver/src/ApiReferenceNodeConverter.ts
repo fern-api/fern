@@ -42,6 +42,7 @@ export class ApiReferenceNodeConverter {
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
+        private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
         idgen: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
@@ -88,6 +89,7 @@ export class ApiReferenceNodeConverter {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
@@ -160,6 +162,7 @@ export class ApiReferenceNodeConverter {
             parentSlug,
             docsWorkspace: this.docsWorkspace,
             markdownFilesToFullSlugs: this.markdownFilesToFullSlugs,
+            markdownFilesToNoIndex: this.markdownFilesToNoIndex,
             idgen: this.#idgen
         });
     }

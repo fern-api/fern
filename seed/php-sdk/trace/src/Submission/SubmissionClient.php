@@ -12,6 +12,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Submission\Types\GetExecutionSessionStateResponse;
 
@@ -21,8 +22,9 @@ class SubmissionClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -37,8 +39,9 @@ class SubmissionClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -56,6 +59,10 @@ class SubmissionClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ExecutionSessionResponse
      * @throws SeedException
@@ -68,7 +75,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/create-session/$language",
+                    path: "/sessions/create-session/{$language}",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -80,6 +87,16 @@ class SubmissionClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -97,6 +114,10 @@ class SubmissionClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?ExecutionSessionResponse
      * @throws SeedException
@@ -109,7 +130,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/$sessionId",
+                    path: "/sessions/{$sessionId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -124,6 +145,16 @@ class SubmissionClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -141,6 +172,10 @@ class SubmissionClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -152,7 +187,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/stop/$sessionId",
+                    path: "/sessions/stop/{$sessionId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -161,6 +196,16 @@ class SubmissionClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -175,6 +220,10 @@ class SubmissionClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return GetExecutionSessionStateResponse
      * @throws SeedException
@@ -199,6 +248,16 @@ class SubmissionClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

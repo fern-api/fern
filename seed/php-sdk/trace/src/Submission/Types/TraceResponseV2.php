@@ -4,6 +4,7 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Types\DebugVariableValue;
 
 class TraceResponseV2 extends JsonSerializableType
 {
@@ -26,10 +27,10 @@ class TraceResponseV2 extends JsonSerializableType
     public TracedFile $file;
 
     /**
-     * @var mixed $returnValue
+     * @var ?DebugVariableValue $returnValue
      */
     #[JsonProperty('returnValue')]
-    public mixed $returnValue;
+    public ?DebugVariableValue $returnValue;
 
     /**
      * @var ?ExpressionLocation $expressionLocation
@@ -54,9 +55,9 @@ class TraceResponseV2 extends JsonSerializableType
      *   submissionId: string,
      *   lineNumber: int,
      *   file: TracedFile,
-     *   returnValue?: mixed,
-     *   expressionLocation?: ?ExpressionLocation,
      *   stack: StackInformation,
+     *   returnValue?: ?DebugVariableValue,
+     *   expressionLocation?: ?ExpressionLocation,
      *   stdout?: ?string,
      * } $values
      */

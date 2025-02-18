@@ -109,6 +109,7 @@ public final class DiscriminatedUnion1 {
     }
 
     @JsonTypeName("type1")
+    @JsonIgnoreProperties("type")
     private static final class Type1Value implements Value {
         @JsonUnwrapped
         private DiscriminatedUnion1InlineType1 value;
@@ -147,6 +148,7 @@ public final class DiscriminatedUnion1 {
     }
 
     @JsonTypeName("type2")
+    @JsonIgnoreProperties("type")
     private static final class Type2Value implements Value {
         @JsonUnwrapped
         private DiscriminatedUnion1InlineType2 value;
@@ -185,6 +187,7 @@ public final class DiscriminatedUnion1 {
     }
 
     @JsonTypeName("ref")
+    @JsonIgnoreProperties("type")
     private static final class RefValue implements Value {
         @JsonUnwrapped
         private ReferenceType value;
@@ -222,6 +225,7 @@ public final class DiscriminatedUnion1 {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

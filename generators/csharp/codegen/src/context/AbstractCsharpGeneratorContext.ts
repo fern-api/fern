@@ -121,6 +121,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
+    public getProtoAnyMapperClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "ProtoAnyMapper"
+        });
+    }
+
     public getConstantsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -208,6 +215,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             name: "JToken",
             namespace: "Newtonsoft.Json.Linq"
+        });
+    }
+
+    public getSystemEnumClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Enum",
+            namespace: "System"
         });
     }
 
@@ -316,7 +330,7 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
-        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
+        if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
 
@@ -448,6 +462,56 @@ export abstract class AbstractCsharpGeneratorContext<
             customConfig: this.customConfig,
             skipImports: true
         });
+    }
+
+    /**
+     * Returns the literal value from a Type Reference (doesn't unbox containers to find a literal).
+     */
+    public getLiteralInitializerFromTypeReference({
+        typeReference
+    }: {
+        typeReference: TypeReference;
+    }): csharp.CodeBlock | undefined {
+        const literalValue = this.getLiteralValue(typeReference);
+        if (literalValue != null) {
+            return csharp.codeblock(
+                typeof literalValue === "boolean" ? `${literalValue.toString().toLowerCase()}` : `"${literalValue}"`
+            );
+        }
+        return undefined;
+    }
+
+    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            const literal = typeReference.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return literal.string;
+                case "boolean":
+                    return literal.boolean;
+                default:
+                    return undefined;
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (
+                typeDeclaration.shape.type === "alias" &&
+                typeDeclaration.shape.resolvedType.type === "container" &&
+                typeDeclaration.shape.resolvedType.container.type === "literal"
+            ) {
+                const literal = typeDeclaration.shape.resolvedType.container.literal;
+                switch (literal.type) {
+                    case "string":
+                        return literal.string;
+                    case "boolean":
+                        return literal.boolean;
+                    default:
+                        return undefined;
+                }
+            }
+        }
+        return undefined;
     }
 
     public abstract getRawAsIsFiles(): string[];

@@ -88,6 +88,7 @@ public final class UnionWithOptionalTime {
     }
 
     @JsonTypeName("date")
+    @JsonIgnoreProperties("type")
     private static final class DateValue implements Value {
         @JsonProperty("value")
         private Optional<String> value;
@@ -124,6 +125,7 @@ public final class UnionWithOptionalTime {
     }
 
     @JsonTypeName("datetime")
+    @JsonIgnoreProperties("type")
     private static final class DatetimeValue implements Value {
         @JsonProperty("value")
         private Optional<OffsetDateTime> value;
@@ -159,6 +161,7 @@ public final class UnionWithOptionalTime {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

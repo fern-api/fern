@@ -96,6 +96,7 @@ public final class UnionWithUnknown {
   }
 
   @JsonTypeName("foo")
+  @JsonIgnoreProperties("type")
   private static final class FooValue implements Value {
     @JsonUnwrapped
     private Foo value;
@@ -137,6 +138,7 @@ public final class UnionWithUnknown {
   }
 
   @JsonTypeName("unknown")
+  @JsonIgnoreProperties("type")
   private static final class UnknownValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -161,6 +163,7 @@ public final class UnionWithUnknown {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

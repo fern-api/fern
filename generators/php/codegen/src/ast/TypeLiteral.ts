@@ -135,7 +135,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "datetime": {
-                writer.write(`'${this.internalType.value}'`);
+                writer.writeNode(buildDateTimeFromString({ writer, value: this.internalType.value }));
                 break;
             }
             case "string": {
@@ -143,7 +143,11 @@ export class TypeLiteral extends AstNode {
                     this.writeStringWithHeredoc({ writer, value: this.internalType.value });
                     break;
                 }
-                writer.write(`'${this.internalType.value.replaceAll("'", "\\'")}'`);
+                if (this.internalType.value.includes("'")) {
+                    writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
+                    break;
+                }
+                writer.write(`'${this.internalType.value}'`);
                 break;
             }
             case "unknown": {
@@ -161,10 +165,22 @@ export class TypeLiteral extends AstNode {
         }
     }
 
+    public isClass(): this is Class_ {
+        return (this.internalType as Class_).type === "class";
+    }
+
+    public asClassOrThrow(): Class_ {
+        if (this.isClass()) {
+            return this.internalType as Class_;
+        }
+        throw new Error("Internal error; ts.TypeLiteral is not a class");
+    }
+
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {
         writer.writeLine("<<<EOT");
         writer.writeNoIndent(value);
-        writer.writeLine("EOT;");
+        writer.newLine();
+        writer.writeNoIndent("EOT");
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
@@ -229,6 +245,16 @@ export class TypeLiteral extends AstNode {
 
     public static boolean(value: boolean): TypeLiteral {
         return new this({ type: "boolean", value });
+    }
+
+    public static class_({
+        reference,
+        fields
+    }: {
+        reference: ClassReference;
+        fields: ConstructorField[];
+    }): TypeLiteral {
+        return new this({ type: "class", reference, fields });
     }
 
     public static file(value: string): TypeLiteral {
@@ -341,7 +367,7 @@ export class TypeLiteral extends AstNode {
         writer.writeLine("[");
         writer.indent();
         for (const [key, val] of entries) {
-            writer.write(`${key} => `);
+            writer.write(`'${key}' => `);
             writer.writeNode(TypeLiteral.unknown(val));
             writer.writeLine(",");
         }
@@ -350,11 +376,20 @@ export class TypeLiteral extends AstNode {
     }
 }
 
+function buildDateTimeFromString({ writer, value }: { writer: Writer; value: string }): ClassInstantiation {
+    return new ClassInstantiation({
+        classReference: new ClassReference({
+            name: "DateTime",
+            namespace: ""
+        }),
+        arguments_: [new CodeBlock(`'${value}'`)]
+    });
+}
 function buildFileFromString({ writer, value }: { writer: Writer; value: string }): MethodInvocation {
     return new MethodInvocation({
         on: new ClassReference({
             name: "File",
-            namespace: writer.rootNamespace
+            namespace: `${writer.rootNamespace}\\Utils`
         }),
         method: "createFromString",
         arguments_: [new CodeBlock(`"${value}"`)]

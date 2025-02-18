@@ -3,21 +3,22 @@
 namespace Seed\Submission\Types;
 
 use Seed\Core\Json\JsonSerializableType;
+use Seed\Commons\Types\VariableValue;
 use Seed\Core\Json\JsonProperty;
 
 class TestCaseResult extends JsonSerializableType
 {
     /**
-     * @var mixed $expectedResult
+     * @var VariableValue $expectedResult
      */
     #[JsonProperty('expectedResult')]
-    public mixed $expectedResult;
+    public VariableValue $expectedResult;
 
     /**
-     * @var mixed $actualResult
+     * @var ActualResult $actualResult
      */
     #[JsonProperty('actualResult')]
-    public mixed $actualResult;
+    public ActualResult $actualResult;
 
     /**
      * @var bool $passed
@@ -27,8 +28,8 @@ class TestCaseResult extends JsonSerializableType
 
     /**
      * @param array{
-     *   expectedResult: mixed,
-     *   actualResult: mixed,
+     *   expectedResult: VariableValue,
+     *   actualResult: ActualResult,
      *   passed: bool,
      * } $values
      */

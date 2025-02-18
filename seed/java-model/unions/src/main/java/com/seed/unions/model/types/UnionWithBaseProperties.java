@@ -109,6 +109,7 @@ public final class UnionWithBaseProperties {
     }
 
     @JsonTypeName("integer")
+    @JsonIgnoreProperties("type")
     private static final class IntegerValue implements Value {
         @JsonProperty("value")
         private int value;
@@ -145,6 +146,7 @@ public final class UnionWithBaseProperties {
     }
 
     @JsonTypeName("string")
+    @JsonIgnoreProperties("type")
     private static final class StringValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -181,6 +183,7 @@ public final class UnionWithBaseProperties {
     }
 
     @JsonTypeName("foo")
+    @JsonIgnoreProperties("type")
     private static final class FooValue implements Value {
         @JsonUnwrapped
         private Foo value;
@@ -218,6 +221,7 @@ public final class UnionWithBaseProperties {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

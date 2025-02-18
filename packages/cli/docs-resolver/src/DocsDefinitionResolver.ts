@@ -66,7 +66,11 @@ type RegisterApiFn = (opts: {
     apiName?: string;
 }) => AsyncOrSync<string>;
 
-type RegisterApiV2Fn = (opts: { api: FdrAPI.api.latest.ApiDefinition; apiName?: string }) => AsyncOrSync<string>;
+type RegisterApiV2Fn = (opts: {
+    api: FdrAPI.api.latest.ApiDefinition;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+}) => AsyncOrSync<string>;
 
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
@@ -108,6 +112,7 @@ export class DocsDefinitionResolver {
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -140,6 +145,9 @@ export class DocsDefinitionResolver {
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
         this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their noindex values
+        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -298,6 +306,25 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToSlug;
+    }
+
+    /**
+     * Creates a list of markdown files that have noindex:true specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their noindex value
+     */
+    private async getMarkdownFilesToNoIndex(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, boolean>> {
+        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const noindex = frontmatter.data.noindex;
+            if (typeof noindex === "boolean") {
+                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+            }
+        }
+        return mdxFilePathToNoIndex;
     }
 
     /**
@@ -502,7 +529,7 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
             featureFlags: landingPageConfig.featureFlags
         };
     }
@@ -652,7 +679,8 @@ export class DocsDefinitionResolver {
             }
             await this.registerApiV2({
                 api,
-                apiName: item.apiName
+                apiName: item.apiName,
+                snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
@@ -662,6 +690,7 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
@@ -669,12 +698,14 @@ export class DocsDefinitionResolver {
 
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
             if (api == null) {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
                 api,
+                snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
@@ -685,10 +716,12 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
                 this.#idgen
             );
             return node.get();
         }
+
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
         const ir = generateIntermediateRepresentation({
@@ -711,6 +744,7 @@ export class DocsDefinitionResolver {
             apiName: item.apiName
         });
         const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+
         const node = new ApiReferenceNodeConverter(
             item,
             api,
@@ -719,6 +753,7 @@ export class DocsDefinitionResolver {
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             this.#idgen
         );
         return node.get();
@@ -730,6 +765,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -776,7 +812,7 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags
         };
     }
@@ -847,6 +883,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             changelog,
             this.docsWorkspace,
             this.#idgen

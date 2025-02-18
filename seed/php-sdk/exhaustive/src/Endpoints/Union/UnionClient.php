@@ -4,12 +4,13 @@ namespace Seed\Endpoints\Union;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Types\Union\Types\Animal;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
-use Seed\Core\Json\JsonDecoder;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class UnionClient
@@ -18,8 +19,9 @@ class UnionClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -34,8 +36,9 @@ class UnionClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -47,16 +50,20 @@ class UnionClient
     }
 
     /**
-     * @param mixed $request
+     * @param Animal $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return mixed
+     * @return Animal
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnUnion(mixed $request, ?array $options = null): mixed
+    public function getAndReturnUnion(Animal $request, ?array $options = null): Animal
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -72,10 +79,20 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeMixed($json);
+                return Animal::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

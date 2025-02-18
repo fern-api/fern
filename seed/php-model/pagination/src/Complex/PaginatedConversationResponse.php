@@ -27,7 +27,7 @@ class PaginatedConversationResponse extends JsonSerializableType
     public int $totalCount;
 
     /**
-     * @var string $type
+     * @var 'conversation.list' $type
      */
     #[JsonProperty('type')]
     public string $type;
@@ -35,9 +35,9 @@ class PaginatedConversationResponse extends JsonSerializableType
     /**
      * @param array{
      *   conversations: array<Conversation>,
-     *   pages?: ?CursorPages,
      *   totalCount: int,
-     *   type: string,
+     *   type: 'conversation.list',
+     *   pages?: ?CursorPages,
      * } $values
      */
     public function __construct(

@@ -12,6 +12,7 @@ use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Types\Union;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Union\Types\KeyType;
 
@@ -21,8 +22,9 @@ class UnionClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -37,8 +39,9 @@ class UnionClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -50,12 +53,28 @@ class UnionClient
     }
 
     /**
-     * @param string|array<string>|int|array<int>|array<array<int>> $request
+     * @param (
+     *    string
+     *   |array<string>
+     *   |int
+     *   |array<int>
+     *   |array<array<int>>
+     * ) $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string|array<string>|int|array<int>|array<array<int>>
+     * @return (
+     *    string
+     *   |array<string>
+     *   |int
+     *   |array<int>
+     *   |array<array<int>>
+     * )
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -79,6 +98,16 @@ class UnionClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -93,8 +122,15 @@ class UnionClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<value-of<KeyType>|string, string>
+     * @return array<(
+     *    value-of<KeyType>
+     *   |'default'
+     * ), string>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -117,6 +153,16 @@ class UnionClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

@@ -191,7 +191,8 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ api, apiName }) => {
+        async ({ api, snippetsConfig, apiName }) => {
+            api.snippetsConfiguration = snippetsConfig;
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),

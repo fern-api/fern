@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -49,7 +48,7 @@ public partial class SeedApiClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"account/{accountId}",
+                    Path = $"account/{JsonUtils.SerializeAsString(accountId)}",
                     Options = options,
                 },
                 cancellationToken

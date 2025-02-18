@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
-import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
+import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -58,7 +58,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
-
             class_.addField(
                 csharp.field({
                     name: propertyName,
@@ -67,7 +66,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     get: true,
                     set: true,
                     summary: query.docs,
-                    useRequired: true
+                    useRequired: true,
+                    initializer: this.context.getLiteralInitializerFromTypeReference({
+                        typeReference: query.valueType
+                    })
                 })
             );
 
@@ -89,7 +91,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     get: true,
                     set: true,
                     summary: header.docs,
-                    useRequired: true
+                    useRequired: true,
+                    initializer: this.context.getLiteralInitializerFromTypeReference({
+                        typeReference: header.valueType
+                    })
                 })
             );
         }
@@ -113,6 +118,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     const propertyName = property.name.name.pascalCase.safeName;
+                    const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
+                        typeReference: property.valueType
+                    });
                     class_.addField(
                         csharp.field({
                             name: propertyName,
@@ -122,7 +130,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             set: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            useRequired: true
+                            useRequired: true,
+                            initializer: maybeLiteralInitializer
                         })
                     );
 

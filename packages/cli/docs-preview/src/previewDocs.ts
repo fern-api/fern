@@ -213,8 +213,15 @@ class ReferencedAPICollectorV2 {
 
     constructor(private readonly context: TaskContext) {}
 
-    public addReferencedAPI({ api }: { api: FdrAPI.api.latest.ApiDefinition }): APIDefinitionID {
+    public addReferencedAPI({
+        api,
+        snippetsConfig
+    }: {
+        api: FdrAPI.api.latest.ApiDefinition;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+    }): APIDefinitionID {
         try {
+            api.snippetsConfiguration = snippetsConfig;
             this.apis[api.id] = api;
             return api.id;
         } catch (e) {

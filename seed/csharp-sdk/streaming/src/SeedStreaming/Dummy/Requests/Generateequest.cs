@@ -6,7 +6,7 @@ namespace SeedStreaming;
 public record Generateequest
 {
     [JsonPropertyName("stream")]
-    public required bool Stream { get; set; }
+    public bool Stream { get; set; } = false;
 
     [JsonPropertyName("num_events")]
     public required int NumEvents { get; set; }

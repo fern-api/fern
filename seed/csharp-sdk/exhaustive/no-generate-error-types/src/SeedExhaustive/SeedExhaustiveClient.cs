@@ -13,6 +13,7 @@ public partial class SeedExhaustiveClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExhaustive" },
                 { "X-Fern-SDK-Version", Version.Current },

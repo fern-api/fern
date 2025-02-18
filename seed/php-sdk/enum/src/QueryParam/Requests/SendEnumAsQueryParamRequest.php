@@ -19,21 +19,33 @@ class SendEnumAsQueryParamRequest extends JsonSerializableType
     public ?string $maybeOperand;
 
     /**
-     * @var value-of<Color>|value-of<Operand> $operandOrColor
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ) $operandOrColor
      */
     public string $operandOrColor;
 
     /**
-     * @var value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null $maybeOperandOrColor
      */
     public string|null $maybeOperandOrColor;
 
     /**
      * @param array{
      *   operand: value-of<Operand>,
+     *   operandOrColor: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ),
      *   maybeOperand?: ?value-of<Operand>,
-     *   operandOrColor: value-of<Color>|value-of<Operand>,
-     *   maybeOperandOrColor?: value-of<Color>|value-of<Operand>|null,
+     *   maybeOperandOrColor?: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null,
      * } $values
      */
     public function __construct(

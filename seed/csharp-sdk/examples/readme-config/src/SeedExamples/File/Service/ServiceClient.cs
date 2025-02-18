@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -43,7 +42,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/file/{filename}",
+                    Path = $"/file/{JsonUtils.SerializeAsString(filename)}",
                     Headers = _headers,
                     Options = options,
                 },

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -34,7 +33,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken
@@ -125,7 +124,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
                     Body = request,
                     Options = options,
                 },
@@ -188,7 +187,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
                     Body = request,
                     Options = options,
                 },
@@ -232,7 +231,7 @@ public partial class HttpMethodsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/http-methods/{id}",
+                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken

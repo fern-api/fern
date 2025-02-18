@@ -50,6 +50,22 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "version: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-API-Version",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"

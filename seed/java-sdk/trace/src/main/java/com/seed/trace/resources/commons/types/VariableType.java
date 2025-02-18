@@ -179,6 +179,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("integerType")
+    @JsonIgnoreProperties("type")
     private static final class IntegerTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private IntegerTypeValue() {}
@@ -201,6 +202,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("doubleType")
+    @JsonIgnoreProperties("type")
     private static final class DoubleTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private DoubleTypeValue() {}
@@ -223,6 +225,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("booleanType")
+    @JsonIgnoreProperties("type")
     private static final class BooleanTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private BooleanTypeValue() {}
@@ -245,6 +248,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("stringType")
+    @JsonIgnoreProperties("type")
     private static final class StringTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private StringTypeValue() {}
@@ -267,6 +271,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("charType")
+    @JsonIgnoreProperties("type")
     private static final class CharTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private CharTypeValue() {}
@@ -289,6 +294,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("listType")
+    @JsonIgnoreProperties("type")
     private static final class ListTypeValue implements Value {
         @JsonUnwrapped
         private ListType value;
@@ -327,6 +333,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("mapType")
+    @JsonIgnoreProperties("type")
     private static final class MapTypeValue implements Value {
         @JsonUnwrapped
         private MapType value;
@@ -365,6 +372,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("binaryTreeType")
+    @JsonIgnoreProperties("type")
     private static final class BinaryTreeTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private BinaryTreeTypeValue() {}
@@ -387,6 +395,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("singlyLinkedListType")
+    @JsonIgnoreProperties("type")
     private static final class SinglyLinkedListTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private SinglyLinkedListTypeValue() {}
@@ -409,6 +418,7 @@ public final class VariableType {
     }
 
     @JsonTypeName("doublyLinkedListType")
+    @JsonIgnoreProperties("type")
     private static final class DoublyLinkedListTypeValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private DoublyLinkedListTypeValue() {}
@@ -430,6 +440,7 @@ public final class VariableType {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

@@ -30,6 +30,8 @@ export interface ParseOpenAPIOptions {
     objectQueryParameters: boolean;
     /* Whether or not to use undiscriminated unions with literals. */
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    /* Whether or not to use idiomatic request names for endpoints. */
+    shouldUseIdiomaticRequestNames: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -55,6 +57,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     preserveSchemaIds: false,
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
+    shouldUseIdiomaticRequestNames: false,
     filter: undefined,
     asyncApiNaming: "v1",
     exampleGeneration: undefined
@@ -105,6 +108,10 @@ export function getParseOptions({
             overrides?.shouldUseUndiscriminatedUnionsWithLiterals ??
             options?.shouldUseUndiscriminatedUnionsWithLiterals ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseUndiscriminatedUnionsWithLiterals,
+        shouldUseIdiomaticRequestNames:
+            overrides?.shouldUseIdiomaticRequestNames ??
+            options?.shouldUseIdiomaticRequestNames ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseIdiomaticRequestNames,
         objectQueryParameters:
             overrides?.objectQueryParameters ??
             options?.objectQueryParameters ??

@@ -21,8 +21,8 @@ class GenericValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   stringifiedType?: ?string,
      *   stringifiedValue: string,
+     *   stringifiedType?: ?string,
      * } $values
      */
     public function __construct(

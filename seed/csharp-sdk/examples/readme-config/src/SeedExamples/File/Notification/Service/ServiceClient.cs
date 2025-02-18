@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -33,7 +32,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/file/notification/{notificationId}",
+                    Path = $"/file/notification/{JsonUtils.SerializeAsString(notificationId)}",
                     Options = options,
                 },
                 cancellationToken

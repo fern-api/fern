@@ -7,7 +7,7 @@ namespace SeedApi;
 public record Patient
 {
     [JsonPropertyName("resource_type")]
-    public required string ResourceType { get; set; }
+    public string ResourceType { get; set; } = "Patient";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }

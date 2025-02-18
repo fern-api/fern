@@ -10,7 +10,7 @@ export function generateModelTests({ context }: { context: ModelGeneratorContext
         if (typeDeclaration.shape.type !== "object") {
             continue;
         }
-        if (context.protobufResolver.isAnyWellKnownProtobufType(typeId)) {
+        if (context.protobufResolver.isWellKnownProtobufType(typeId)) {
             continue;
         }
         const objectGenerator = new ObjectGenerator(context, typeDeclaration, typeDeclaration.shape);

@@ -673,6 +673,16 @@
               "type": "null"
             }
           ]
+        },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1376,6 +1386,16 @@
             }
           ]
         },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "prefer-undiscriminated-unions-with-literals": {
           "oneOf": [
             {
@@ -1545,6 +1565,16 @@
           ]
         },
         "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idiomatic-request-names": {
           "oneOf": [
             {
               "type": "boolean"

@@ -6,7 +6,7 @@ namespace SeedLiteral;
 public record SendLiteralsInlinedRequest
 {
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; set; }
+    public string Prompt { get; set; } = "You are a helpful assistant";
 
     [JsonPropertyName("context")]
     public string? Context { get; set; }
@@ -18,10 +18,10 @@ public record SendLiteralsInlinedRequest
     public double? Temperature { get; set; }
 
     [JsonPropertyName("stream")]
-    public required bool Stream { get; set; }
+    public bool Stream { get; set; } = false;
 
     [JsonPropertyName("aliasedContext")]
-    public required string AliasedContext { get; set; }
+    public string AliasedContext { get; set; } = "You're super wise";
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }

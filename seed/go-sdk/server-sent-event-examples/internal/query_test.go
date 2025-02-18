@@ -184,4 +184,56 @@ func TestQueryValues(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "objects%5Bkey%5D=hello&objects%5Bkey%5D=foo&objects%5Bvalue%5D=world&objects%5Bvalue%5D=bar", values.Encode())
 	})
+
+	t.Run("map", func(t *testing.T) {
+		type request struct {
+			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+		}
+		values, err := QueryValues(
+			&request{
+				Metadata: map[string]interface{}{
+					"foo": "bar",
+					"baz": "qux",
+				},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "metadata%5Bbaz%5D=qux&metadata%5Bfoo%5D=bar", values.Encode())
+	})
+
+	t.Run("nested map", func(t *testing.T) {
+		type request struct {
+			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+		}
+		values, err := QueryValues(
+			&request{
+				Metadata: map[string]interface{}{
+					"inner": map[string]interface{}{
+						"foo": "bar",
+					},
+				},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "metadata%5Binner%5D%5Bfoo%5D=bar", values.Encode())
+	})
+
+	t.Run("nested map array", func(t *testing.T) {
+		type request struct {
+			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+		}
+		values, err := QueryValues(
+			&request{
+				Metadata: map[string]interface{}{
+					"inner": []string{
+						"one",
+						"two",
+						"three",
+					},
+				},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "metadata%5Binner%5D=one&metadata%5Binner%5D=two&metadata%5Binner%5D=three", values.Encode())
+	})
 }

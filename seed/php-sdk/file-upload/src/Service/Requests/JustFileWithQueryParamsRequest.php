@@ -28,9 +28,9 @@ class JustFileWithQueryParamsRequest extends JsonSerializableType
     public array $listOfStrings;
 
     /**
-     * @var array<?string> $optionalListOfStrings
+     * @var ?array<string> $optionalListOfStrings
      */
-    public array $optionalListOfStrings;
+    public ?array $optionalListOfStrings;
 
     /**
      * @var File $file
@@ -39,12 +39,12 @@ class JustFileWithQueryParamsRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   maybeString?: ?string,
      *   integer: int,
-     *   maybeInteger?: ?int,
      *   listOfStrings: array<string>,
-     *   optionalListOfStrings: array<?string>,
      *   file: File,
+     *   maybeString?: ?string,
+     *   maybeInteger?: ?int,
+     *   optionalListOfStrings?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -54,7 +54,7 @@ class JustFileWithQueryParamsRequest extends JsonSerializableType
         $this->integer = $values['integer'];
         $this->maybeInteger = $values['maybeInteger'] ?? null;
         $this->listOfStrings = $values['listOfStrings'];
-        $this->optionalListOfStrings = $values['optionalListOfStrings'];
+        $this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;
         $this->file = $values['file'];
     }
 }

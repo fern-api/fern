@@ -144,6 +144,9 @@ types:
       inline-path-parameters:
         type: optional<boolean>
         docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      idiomatic-request-names:
+        type: optional<boolean>
+        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
   
   UnionSettingsSchema:
     enum: 
@@ -225,6 +228,9 @@ types:
       title-as-schema-name: optional<boolean>
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
+      idiomatic-request-names:
+        type: optional<boolean>
+        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
       prefer-undiscriminated-unions-with-literals: 
         type: optional<boolean>
         docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
@@ -281,6 +287,7 @@ types:
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
       respect-nullable-schemas: optional<boolean>
+      idiomatic-request-names: optional<boolean>
 
   AsyncAPISchema:
     properties:

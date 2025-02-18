@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -32,7 +31,7 @@ public partial class UnionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{id}",
+                    Path = $"/{JsonUtils.SerializeAsString(id)}",
                     Options = options,
                 },
                 cancellationToken

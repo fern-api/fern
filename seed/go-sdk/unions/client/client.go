@@ -3,6 +3,7 @@
 package client
 
 import (
+	bigunion "github.com/fern-api/unions-go/bigunion"
 	core "github.com/fern-api/unions-go/core"
 	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
@@ -15,7 +16,8 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	Union *union.Client
+	Bigunion *bigunion.Client
+	Union    *union.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,7 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		Union:  union.NewClient(opts...),
+		header:   options.ToHeader(),
+		Bigunion: bigunion.NewClient(opts...),
+		Union:    union.NewClient(opts...),
 	}
 }

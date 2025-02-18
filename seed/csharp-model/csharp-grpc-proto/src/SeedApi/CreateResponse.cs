@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = User.V1;
+using ProtoUserV1 = User.V1;
 
 namespace SeedApi;
 
@@ -17,9 +17,9 @@ public record CreateResponse
     /// <summary>
     /// Maps the CreateResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.CreateResponse ToProto()
+    internal ProtoUserV1.CreateResponse ToProto()
     {
-        var result = new Proto.CreateResponse();
+        var result = new ProtoUserV1.CreateResponse();
         if (User != null)
         {
             result.User = User.ToProto();
@@ -30,7 +30,7 @@ public record CreateResponse
     /// <summary>
     /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static CreateResponse FromProto(Proto.CreateResponse value)
+    internal static CreateResponse FromProto(ProtoUserV1.CreateResponse value)
     {
         return new CreateResponse
         {

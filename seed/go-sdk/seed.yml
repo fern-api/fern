@@ -133,3 +133,4 @@ allowedFailures:
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+  - unions

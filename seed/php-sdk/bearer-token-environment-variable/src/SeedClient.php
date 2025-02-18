@@ -18,8 +18,9 @@ class SeedClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -31,25 +32,32 @@ class SeedClient
 
     /**
      * @param ?string $apiKey The apiKey to use for authentication.
+     * @param ?string $version
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
         ?string $apiKey = null,
+        ?string $version = null,
         ?array $options = null,
     ) {
         $apiKey ??= $this->getFromEnvOrThrow('COURIER_API_KEY', 'Please pass in apiKey or set the environment variable COURIER_API_KEY.');
         $defaultHeaders = [
             'Authorization' => "Bearer $apiKey",
+            'X-API-Version' => '1.0.0',
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($version != null) {
+            $defaultHeaders['X-API-Version'] = $version;
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(

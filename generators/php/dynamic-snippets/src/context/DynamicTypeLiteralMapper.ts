@@ -1,4 +1,4 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { Arguments, DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -39,8 +39,32 @@ export class DynamicTypeLiteralMapper {
         if (args.value === undefined) {
             return php.TypeLiteral.nop();
         }
-        // TODO: Handle mapping types.
-        return php.TypeLiteral.nop();
+        switch (args.typeReference.type) {
+            case "list":
+            case "set":
+                return this.convertList({ list: args.typeReference.value, value: args.value });
+            case "literal":
+                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value });
+            case "map":
+                return this.convertMap({ map: args.typeReference, value: args.value });
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return this.convertNamed({ named, value: args.value, as: args.as });
+            }
+            case "optional":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "nullable":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "primitive":
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
+            case "unknown":
+                return this.convertUnknown({ value: args.value });
+            default:
+                assertNever(args.typeReference);
+        }
     }
 
     private convertLiteral({
@@ -149,15 +173,236 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return php.TypeLiteral.nop();
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionProperties = this.convertDiscriminatedUnionProperties({
+            discriminatedUnionTypeInstance,
+            unionVariant
+        });
+        if (unionProperties == null) {
+            return php.TypeLiteral.nop();
+        }
+        return php.TypeLiteral.reference(
+            php.codeblock((writer) => {
+                writer.writeNode(
+                    php.invokeMethod({
+                        on: php.classReference({
+                            name: this.context.getClassName(discriminatedUnion.declaration.name),
+                            namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath)
+                        }),
+                        method: this.context.getMethodName(unionVariant.discriminantValue.name),
+                        arguments_: this.convertDiscriminatedUnionVariantArgs({
+                            discriminatedUnionTypeInstance,
+                            unionVariant,
+                            unionProperties
+                        }),
+                        static_: true
+                    })
+                );
+            })
+        );
+    }
+
+    private convertDiscriminatedUnionProperties({
+        discriminatedUnionTypeInstance,
+        unionVariant
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): php.ConstructorField[] | undefined {
+        switch (unionVariant.type) {
+            case "samePropertiesAsObject": {
+                const named = this.context.resolveNamedType({
+                    typeId: unionVariant.typeId
+                });
+                if (named == null) {
+                    return undefined;
+                }
+                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
+                if (!converted.isClass()) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: "Internal error; expected union value to be an object"
+                    });
+                    return undefined;
+                }
+                const object_ = converted.asClassOrThrow();
+                return object_.fields;
+            }
+            case "singleProperty": {
+                try {
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                    if (record == null) {
+                        return [
+                            {
+                                name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                                value: this.convert({
+                                    typeReference: unionVariant.typeReference,
+                                    value: discriminatedUnionTypeInstance.value
+                                })
+                            }
+                        ];
+                    }
+                    return [
+                        {
+                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                            value: this.convert({
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            })
+                        }
+                    ];
+                } finally {
+                    this.context.errors.unscope();
+                }
+            }
+            case "noProperties":
+                return [];
+            default:
+                assertNever(unionVariant);
+        }
+    }
+
+    private convertDiscriminatedUnionVariantArgs({
+        discriminatedUnionTypeInstance,
+        unionVariant,
+        unionProperties
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+        unionProperties: php.ConstructorField[];
+    }): php.AstNode[] {
+        const baseFields = this.getBaseFields({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
+        });
+        if (unionVariant.type === "singleProperty") {
+            const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+            if (record == null && unionProperties.length === 1) {
+                // The union is a single value without any base properties, e.g.
+                return [
+                    ...baseFields,
+                    this.convert({
+                        typeReference: unionVariant.typeReference,
+                        value: discriminatedUnionTypeInstance.value
+                    })
+                ];
+            }
+        }
+        if (unionVariant.type === "samePropertiesAsObject") {
+            const named = this.context.resolveNamedType({
+                typeId: unionVariant.typeId
+            });
+            if (named == null) {
+                return [];
+            }
+            return [
+                ...baseFields,
+                php.TypeLiteral.class_({
+                    reference: php.classReference({
+                        name: this.context.getClassName(named.declaration.name),
+                        namespace: this.context.getTypesNamespace(named.declaration.fernFilepath)
+                    }),
+                    fields: unionProperties
+                })
+            ];
+        }
+        return baseFields;
+    }
+
+    private getBaseFields({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): php.AstNode[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return this.convert(property);
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
     }
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+        const properties = this.context.associateByWireValue({
+            parameters: object_.properties,
+            values: this.context.getRecord(value) ?? {}
+        });
+        return php.TypeLiteral.class_({
+            reference: php.classReference({
+                name: this.context.getClassName(object_.declaration.name),
+                namespace: this.context.getTypesNamespace(object_.declaration.fernFilepath)
+            }),
+            fields: properties.map((property) => {
+                this.context.errors.scope(property.name.wireValue);
+                try {
+                    return {
+                        name: this.context.getPropertyName(property.name.name),
+                        value: this.convert(property)
+                    };
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {
-        return php.TypeLiteral.nop(/* TODO: Implement me! */);
+        const name = this.getEnumValueName({ enum_, value });
+        if (name == null) {
+            return php.TypeLiteral.nop();
+        }
+        return php.TypeLiteral.reference(
+            php.codeblock((writer) => {
+                writer.writeNode(
+                    php.classReference({
+                        name: this.context.getClassName(enum_.declaration.name),
+                        namespace: this.context.getTypesNamespace(enum_.declaration.fernFilepath)
+                    })
+                );
+                writer.write("::");
+                writer.write(name);
+                writer.write("->value");
+            })
+        );
+    }
+
+    private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected enum value string, got: ${typeof value}`
+            });
+            return undefined;
+        }
+        const enumValue = enum_.values.find((v) => v.wireValue === value);
+        if (enumValue == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `An enum value named "${value}" does not exist in this context`
+            });
+            return undefined;
+        }
+        return this.context.getClassName(enumValue.name);
     }
 
     private convertUndiscriminatedUnion({

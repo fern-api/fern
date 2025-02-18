@@ -1,5 +1,22 @@
 {
   "types": {
+    "type_dataservice:IndexType": {
+      "name": "IndexType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "INDEX_TYPE_INVALID"
+          },
+          {
+            "value": "INDEX_TYPE_DEFAULT"
+          },
+          {
+            "value": "INDEX_TYPE_STRICT"
+          }
+        ]
+      }
+    },
     "type_:Column": {
       "name": "Column",
       "shape": {
@@ -168,6 +185,41 @@
                 "value": "type_:Usage"
               }
             }
+          }
+        ]
+      }
+    },
+    "type_:FieldBehavior": {
+      "name": "FieldBehavior",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "FIELD_BEHAVIOR_UNSPECIFIED"
+          },
+          {
+            "value": "OPTIONAL"
+          },
+          {
+            "value": "REQUIRED"
+          },
+          {
+            "value": "OUTPUT_ONLY"
+          },
+          {
+            "value": "INPUT_ONLY"
+          },
+          {
+            "value": "IMMUTABLE"
+          },
+          {
+            "value": "UNORDERED_LIST"
+          },
+          {
+            "value": "NON_EMPTY_DEFAULT"
+          },
+          {
+            "value": "IDENTIFIER"
           }
         ]
       }
@@ -548,7 +600,53 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [
+          {
+            "key": "updatedAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "indexType",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_dataservice:IndexType"
+              }
+            }
+          },
+          {
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Any"
+              }
+            }
+          },
+          {
+            "key": "indexTypes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_dataservice:IndexType"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "type_:UploadResponse": {
@@ -591,6 +689,24 @@
             }
           }
         ]
+      }
+    },
+    "type_:Any": {
+      "name": "Any",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "type_:Metadata": {
@@ -1015,6 +1131,18 @@
                       "itemType": {
                         "type": "id",
                         "value": "type_:Metadata"
+                      }
+                    }
+                  },
+                  {
+                    "key": "after",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
                       }
                     }
                   }
@@ -1672,6 +1800,39 @@
                         "value": "type_:IndexedData"
                       }
                     }
+                  },
+                  {
+                    "key": "indexType",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_dataservice:IndexType"
+                      }
+                    }
+                  },
+                  {
+                    "key": "details",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Any"
+                      }
+                    }
+                  },
+                  {
+                    "key": "indexTypes",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "type_dataservice:IndexType"
+                        }
+                      }
+                    }
                   }
                 ]
               }
@@ -1705,10 +1866,28 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "updatedAt": "2024-01-15T09:30:00Z",
+                "indexType": "INDEX_TYPE_INVALID",
+                "details": {
+                  "key": "value"
+                },
+                "indexTypes": [
+                  "INDEX_TYPE_INVALID"
+                ]
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "indexType": "INDEX_TYPE_INVALID",
+                  "details": {
+                    "key": "value"
+                  },
+                  "indexTypes": [
+                    "INDEX_TYPE_INVALID"
+                  ]
+                }
               }
             }
           ]
@@ -1716,7 +1895,9 @@
       ],
       "webhooks": [],
       "websockets": [],
-      "types": [],
+      "types": [
+        "type_dataservice:IndexType"
+      ],
       "subpackages": []
     }
   },
@@ -1729,6 +1910,7 @@
       "type_:DeleteResponse",
       "type_:DescribeResponse",
       "type_:FetchResponse",
+      "type_:FieldBehavior",
       "type_:IndexedData",
       "type_:ListElement",
       "type_:ListResponse",
@@ -1741,6 +1923,7 @@
       "type_:UpdateResponse",
       "type_:UploadResponse",
       "type_:Usage",
+      "type_:Any",
       "type_:Metadata",
       "type_:MetadataValue"
     ],

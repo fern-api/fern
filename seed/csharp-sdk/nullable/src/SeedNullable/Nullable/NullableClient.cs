@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedNullable.Core;
 
 namespace SeedNullable;
@@ -23,8 +22,8 @@ public partial class NullableClient
     ///         Usernames = ["usernames"],
     ///         Avatar = "avatar",
     ///         Activated = [true],
-    ///         Tags = [null],
-    ///         Extra = null,
+    ///         Tags = ["tags"],
+    ///         Extra = true,
     ///     }
     /// );
     /// </code>

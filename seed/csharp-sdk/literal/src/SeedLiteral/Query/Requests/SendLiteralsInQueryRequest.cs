@@ -4,21 +4,21 @@ namespace SeedLiteral;
 
 public record SendLiteralsInQueryRequest
 {
-    public required string Prompt { get; set; }
+    public string Prompt { get; set; } = "You are a helpful assistant";
 
     public string? OptionalPrompt { get; set; }
 
-    public required string AliasPrompt { get; set; }
+    public string AliasPrompt { get; set; } = "You are a helpful assistant";
 
     public string? AliasOptionalPrompt { get; set; }
 
     public required string Query { get; set; }
 
-    public required bool Stream { get; set; }
+    public bool Stream { get; set; } = false;
 
     public bool? OptionalStream { get; set; }
 
-    public required bool AliasStream { get; set; }
+    public bool AliasStream { get; set; } = false;
 
     public bool? AliasOptionalStream { get; set; }
 

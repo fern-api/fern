@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using OneOf;
 using SeedExamples.Commons;
 using SeedExamples.Core;
@@ -19,6 +18,7 @@ public partial class SeedExamplesClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExamples" },
                 { "X-Fern-SDK-Version", Version.Current },

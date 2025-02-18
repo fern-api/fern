@@ -60,6 +60,8 @@ class NullableClient:
             usernames="usernames",
             avatar="avatar",
             activated=True,
+            tags="tags",
+            extra=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -270,6 +272,8 @@ class AsyncNullableClient:
                 usernames="usernames",
                 avatar="avatar",
                 activated=True,
+                tags="tags",
+                extra=True,
             )
 
 
