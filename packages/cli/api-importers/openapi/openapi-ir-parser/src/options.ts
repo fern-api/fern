@@ -32,6 +32,8 @@ export interface ParseOpenAPIOptions {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     /* Whether or not to use idiomatic request names for endpoints. */
     shouldUseIdiomaticRequestNames: boolean;
+    /* What the default encoding should be for form data parameters. */
+    defaultFormParameterEncoding: "form" | "json" | undefined;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -60,7 +62,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldUseIdiomaticRequestNames: false,
     filter: undefined,
     asyncApiNaming: "v1",
-    exampleGeneration: undefined
+    exampleGeneration: undefined,
+    defaultFormParameterEncoding: "json"
 };
 
 export function getParseOptions({
@@ -119,6 +122,7 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
+        defaultFormParameterEncoding: overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
     };
 }

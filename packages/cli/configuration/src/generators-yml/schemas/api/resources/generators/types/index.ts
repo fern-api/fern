@@ -23,6 +23,7 @@ export * from "./ApiConfigurationSchemaInternal";
 export * from "./ApiConfigurationV2Schema";
 export * from "./ApiConfigurationV2SpecsSchema";
 export * from "./OpenApiSettingsSchema";
+export * from "./FormParameterEncoding";
 export * from "./OpenApiExampleGenerationSchema";
 export * from "./RequestOrResponseExampleGenerationSchema";
 export * from "./OpenApiFilterSchema";

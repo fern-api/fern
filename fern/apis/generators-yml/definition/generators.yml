@@ -249,12 +249,20 @@ types:
       inline-path-parameters:
         type: optional<boolean>
         docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      default-form-parameter-encoding: 
+        type: optional<FormParameterEncoding>
+        docs: The default encoding of form parameters. Defaults to JSON. 
       filter:
         type: optional<OpenAPIFilterSchema>
         docs: Filter to apply to the OpenAPI specification.
       example-generation: 
         type: optional<OpenAPIExampleGenerationSchema>
         docs: Fine-tune your example generation
+  
+  FormParameterEncoding: 
+    enum: 
+      - form
+      - json
   
   OpenAPIExampleGenerationSchema: 
     properties: 

@@ -22,6 +22,8 @@ export interface OpenApiSettingsSchema {
     "only-include-referenced-schemas"?: boolean;
     /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
     "inline-path-parameters"?: boolean;
+    /** The default encoding of form parameters. Defaults to JSON. */
+    "default-form-parameter-encoding"?: FernDefinition.FormParameterEncoding;
     /** Filter to apply to the OpenAPI specification. */
     filter?: FernDefinition.OpenApiFilterSchema;
     /** Fine-tune your example generation */

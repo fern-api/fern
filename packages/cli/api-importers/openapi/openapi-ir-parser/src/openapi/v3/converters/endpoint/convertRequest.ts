@@ -145,7 +145,8 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined,
                     });
                     continue;
                 }
@@ -162,7 +163,8 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined,
                     });
                     continue;
                 }
@@ -179,7 +181,8 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined,
                     });
                     continue;
                 }
@@ -197,17 +200,20 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false, 
+                        encoding: undefined,
                     });
                     continue;
                 }
 
+                const contentType =  multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
                     contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined
+                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                    encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
                 });
             }
         }

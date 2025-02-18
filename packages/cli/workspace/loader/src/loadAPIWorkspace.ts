@@ -87,7 +87,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     preserveSchemaIds: false,
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                     filter: definition.settings?.filter,
-                    exampleGeneration: undefined
+                    exampleGeneration: undefined,
+                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
                 }
             });
             continue;
@@ -139,7 +140,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 preserveSchemaIds: false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
-                exampleGeneration: definition.settings?.exampleGeneration
+                exampleGeneration: definition.settings?.exampleGeneration,
+                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
             },
             source: {
                 type: "openapi",
