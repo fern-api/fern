@@ -41,6 +41,7 @@ export * from "./OctetStreamRequest";
 export * from "./JsonRequest";
 export * from "./MultipartRequest";
 export * from "./MultipartRequestProperty";
+export * from "./MultipartRequestPropertyEncoding";
 export * from "./FileSchema";
 export * from "./MultipartSchema";
 export * from "./Response";

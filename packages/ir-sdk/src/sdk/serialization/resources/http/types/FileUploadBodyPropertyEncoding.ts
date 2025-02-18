@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const FileUploadBodyPropertyEncoding: core.serialization.Schema<
     serializers.FileUploadBodyPropertyEncoding.Raw,
     FernIr.FileUploadBodyPropertyEncoding
-> = core.serialization.enum_(["exploded", "json"]);
+> = core.serialization.enum_(["exploded", "json", "form"]);
 
 export declare namespace FileUploadBodyPropertyEncoding {
-    export type Raw = "exploded" | "json";
+    export type Raw = "exploded" | "json" | "form";
 }

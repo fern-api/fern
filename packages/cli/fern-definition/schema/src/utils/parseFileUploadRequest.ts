@@ -34,7 +34,7 @@ export declare namespace RawFileUploadRequest {
         availability?: AvailabilityUnionSchema | undefined;
         key: string;
         contentType?: string;
-        style?: "exploded" | "json";
+        style?: "exploded" | "json" | "form";
     }
 }
 

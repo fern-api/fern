@@ -22,7 +22,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     filter: undefined,
-    exampleGeneration: undefined
+    exampleGeneration: undefined,
+    defaultFormParameterEncoding: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -291,7 +292,8 @@ async function parseApiConfigurationV2Schema({
                     respectNullableSchemas: spec.settings?.["respect-nullable-schemas"],
                     inlinePathParameters: spec.settings?.["inline-path-parameters"],
                     filter: spec.settings?.filter,
-                    exampleGeneration: spec.settings?.["example-generation"]
+                    exampleGeneration: spec.settings?.["example-generation"],
+                    defaultFormParameterEncoding: spec.settings?.["default-form-parameter-encoding"]
                 }
             };
             if (spec.namespace == null) {
