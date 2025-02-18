@@ -569,6 +569,9 @@ navigation:
           - page: Vale
             icon: fa-regular fa-shield-check
             path: ./pages/docs/developer-tools/vale.mdx
+          - page: View Markdown
+            icon: fa-brands fa-markdown
+            path: ./pages/docs/developer-tools/view-markdown.mdx
 
       - section: Alternatives
         hidden: true
