@@ -31,8 +31,9 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^\\d");
 
-    public AbstractNonModelPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public AbstractNonModelPoetClassNameFactory(
+            List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     @Override

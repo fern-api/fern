@@ -5,6 +5,7 @@ import com.fern.ir.model.errors.DeclaredErrorName;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import com.fern.java.ICustomConfig;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.Optional;
 
 public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public SpringLocalFilesPoetClassNameFactory(Optional<String> directoryNamePrefix) {
-        super(directoryNamePrefix.map(List::of).orElseGet(() -> Collections.emptyList()));
+    public SpringLocalFilesPoetClassNameFactory(
+            Optional<String> directoryNamePrefix, ICustomConfig.PackageLayout packageLayout) {
+        super(directoryNamePrefix.map(List::of).orElseGet(() -> Collections.emptyList()), packageLayout);
     }
 
     public ClassName getErrorControllerAdviceName(DeclaredErrorName declaredTypeName) {

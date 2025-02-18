@@ -6,6 +6,7 @@ import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import com.fern.java.ICustomConfig;
 import com.fern.java.utils.CasingUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public ClientPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public ClientPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {

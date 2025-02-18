@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClassNameFactory {
 
-    public AbstractModelPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public AbstractModelPoetClassNameFactory(
+            List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     @Override
