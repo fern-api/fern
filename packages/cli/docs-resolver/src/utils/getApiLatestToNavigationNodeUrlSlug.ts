@@ -3,9 +3,7 @@ import urlJoin from "url-join";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>(
-    item: T
-): string {
+function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>(item: T): string {
     return item.operationId != null ? kebabCase(item.operationId) : kebabCase(item.id.split(".").pop() ?? "");
 }
 

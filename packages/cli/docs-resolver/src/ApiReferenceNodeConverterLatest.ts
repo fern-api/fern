@@ -835,21 +835,21 @@ export class ApiReferenceNodeConverterLatest {
             Object.entries(this.#api?.endpoints ?? {}).filter(
                 ([_, endpoint]) =>
                     endpoint.namespace != null &&
-                    endpoint.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    endpoint.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const websockets = Object.fromEntries(
             Object.entries(this.#api?.websockets ?? {}).filter(
                 ([_, webSocket]) =>
                     webSocket.namespace != null &&
-                    webSocket.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webSocket.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const webhooks = Object.fromEntries(
             Object.entries(this.#api?.webhooks ?? {}).filter(
                 ([_, webhook]) =>
                     webhook.namespace != null &&
-                    webhook.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webhook.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         return {
