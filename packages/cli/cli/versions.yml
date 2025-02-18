@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix an issue with the OpenAPI v2 parser where incorrect slugs were being generated.
+      type: fix
+  irVersion: 55
+  version: 0.53.9
+
+- changelogEntry:
+    - summary: |
         Fix noindex behavior for section overview pages. 
       type: fix
   irVersion: 55
