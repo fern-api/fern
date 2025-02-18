@@ -274,6 +274,11 @@ export class ApiReferenceNodeConverter {
                 ? this.markdownFilesToFullSlugs.get(section.overviewAbsolutePath)
                 : undefined;
 
+        const noindex =
+            section.overviewAbsolutePath != null
+                ? this.markdownFilesToNoIndex.get(section.overviewAbsolutePath)
+                : undefined;
+
         const nodeId = this.#idgen.get(overviewPageId ?? maybeFullSlug ?? parentSlug.get());
 
         const subpackageIds = section.referencedSubpackages
@@ -318,7 +323,7 @@ export class ApiReferenceNodeConverter {
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
-            noindex: undefined,
+            noindex,
             playground: this.#convertPlaygroundSettings(section.playground),
             authed: undefined,
             viewers: section.viewers,
