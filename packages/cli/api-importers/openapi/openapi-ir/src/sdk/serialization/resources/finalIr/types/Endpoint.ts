@@ -44,7 +44,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             request: Request.optional(),
             response: Response.optional(),
             errors: core.serialization.record(StatusCode, HttpError),
-            server: core.serialization.list(HttpEndpointServer),
+            servers: core.serialization.list(HttpEndpointServer),
             examples: core.serialization.list(EndpointExample),
             pagination: Pagination.optional(),
         })
@@ -73,7 +73,7 @@ export declare namespace Endpoint {
         request?: Request.Raw | null;
         response?: Response.Raw | null;
         errors: Record<StatusCode.Raw, HttpError.Raw>;
-        server: HttpEndpointServer.Raw[];
+        servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
     }

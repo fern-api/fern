@@ -23,12 +23,13 @@ import { getSchemas } from "../../utils/getSchemas";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
+import { ServerContext } from "../sharedTypes";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const LOCATION_PREFIX = "$message.";
-
+const SERVER_REFERENCE_PREFIX = "#/servers/";
 export function parseAsyncAPIV3({
     context,
     breadcrumbs,
@@ -67,6 +68,14 @@ export function parseAsyncAPIV3({
                 }
             }
         }
+    }
+
+    const servers: Record<string, ServerContext> = {};
+    for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        servers[serverId] = {
+            name: serverId,
+            url: `${server.protocol}://${server.host}`
+        };
     }
 
     const channelEvents: Record<
@@ -226,6 +235,9 @@ export function parseAsyncAPIV3({
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
                         : undefined,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                servers:
+                    channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
+                    Object.values(servers),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
@@ -239,6 +251,7 @@ export function parseAsyncAPIV3({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels,
+        servers: Object.values(servers),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
@@ -266,6 +279,21 @@ function convertChannelParameterLocation(location: string): {
         throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
     }
     return { type, parameterKey };
+}
+
+function getServerNameFromServerRef(
+    servers: Record<string, ServerContext>,
+    serverRef: OpenAPIV3.ReferenceObject
+): ServerContext {
+    if (!serverRef.$ref.startsWith(SERVER_REFERENCE_PREFIX)) {
+        throw new Error(`Failed to resolve server name from server ref ${serverRef.$ref}`);
+    }
+    const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
+    const server = servers[serverName];
+    if (server == null) {
+        throw new Error(`Failed to find server with name ${serverName}`);
+    }
+    return server;
 }
 
 function transformToValidPath(path: string): string {

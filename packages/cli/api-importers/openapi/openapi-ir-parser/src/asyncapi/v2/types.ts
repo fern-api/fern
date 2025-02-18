@@ -4,7 +4,8 @@ import { ChannelId } from "../sharedTypes";
 
 export interface DocumentV2 {
     asyncapi: string;
-    channels?: Record<ChannelId, Channel>;
+    servers?: Record<string, ServerV2>;
+    channels?: Record<ChannelId, ChannelV2>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<string, MessageV2>;
@@ -12,11 +13,18 @@ export interface DocumentV2 {
     tags?: Tag[];
 }
 
-export interface Channel {
+export interface ServerV2 {
+    name: string;
+    url: string;
+    protocol: string;
+}
+
+export interface ChannelV2 {
     address?: string;
     bindings?: Bindings;
     publish?: PublishEvent;
     subscribe?: SubscribeEvent;
+    servers?: string[];
     parameters?: Record<string, OpenAPIV3.ParameterObject>;
 }
 

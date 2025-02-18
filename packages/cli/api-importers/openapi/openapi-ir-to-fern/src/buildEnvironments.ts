@@ -59,7 +59,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const endpointLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
     const endpointLevelSkippedServers = [];
     for (const endpoint of context.ir.endpoints) {
-        for (const server of endpoint.server) {
+        for (const server of endpoint.servers) {
             if (server.url == null) {
                 continue;
             }
@@ -137,5 +137,25 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             }
         });
         context.builder.setDefaultEnvironment(PRODUCTION_ENVIRONMENT_NAME);
+    }
+
+    // WebsocketServers, per the AsyncAPI spec (2.x, 3.x), are guaranteed to have a name. We never
+    // want to set them as default, nor do we want to skip any OpenAPI servers that don't
+    // have a name just because they exist.
+    for (const server of context.ir.websocketServers) {
+        const environmentSchema = server.audiences
+            ? {
+                  url: server.url,
+                  audiences: server.audiences
+              }
+            : server.url;
+        if (server.name == null) {
+            topLevelSkippedServers.push(environmentSchema);
+            continue;
+        }
+        context.builder.addEnvironment({
+            name: server.name,
+            schema: environmentSchema
+        });
     }
 }

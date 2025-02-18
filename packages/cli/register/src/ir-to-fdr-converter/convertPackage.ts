@@ -204,13 +204,22 @@ function convertWebSocketChannel(
         availability: convertIrAvailability(channel.availability),
         description: channel.docs ?? undefined,
         defaultEnvironment:
-            ir.environments?.defaultEnvironment != null
-                ? FdrCjsSdk.EnvironmentId(ir.environments.defaultEnvironment)
-                : undefined,
+            channel.baseUrl != null
+                ? FdrCjsSdk.EnvironmentId(channel.baseUrl)
+                : ir.environments?.defaultEnvironment != null
+                  ? FdrCjsSdk.EnvironmentId(ir.environments.defaultEnvironment)
+                  : undefined,
         environments:
-            ir.environments != null
-                ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
-                : [],
+            channel.baseUrl != null
+                ? [
+                      {
+                          id: FdrCjsSdk.EnvironmentId(channel.baseUrl),
+                          baseUrl: channel.baseUrl
+                      }
+                  ]
+                : ir.environments != null
+                  ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
+                  : [],
         id: FdrCjsSdk.WebSocketId(channel.name.originalName),
         name: channel.displayName ?? startCase(channel.name.originalName),
         path: {
@@ -359,6 +368,7 @@ function convertIrWebSocketEnvironments({
                 };
             });
         case "multipleBaseUrls":
+            // TODO: support multiple base URLs in WebSocket channels.
             throw new Error(`Multiple base URLs are not supported for WebSocket "${channel.name.originalName}"`);
         default:
             assertNever(environmentsConfigValue);
