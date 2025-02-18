@@ -67,8 +67,17 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        String packageName;
+        switch (packageLayout) {
+            case FLAT:
+                packageName =
+                        getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+                break;
+            case NESTED:
+            default:
+                packageName = getResourcesPackage(
+                        Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        }
         return ClassName.get(
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }

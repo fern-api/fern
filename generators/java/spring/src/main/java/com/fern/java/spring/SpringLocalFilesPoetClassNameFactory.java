@@ -19,15 +19,31 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
     }
 
     public ClassName getErrorControllerAdviceName(DeclaredErrorName declaredTypeName) {
-        String packageName =
-                getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("handlers"));
+        String packageName;
+        switch (packageLayout) {
+            case FLAT:
+                packageName = getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.empty());
+                break;
+            case NESTED:
+            default:
+                packageName =
+                        getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("handlers"));
+        }
         return ClassName.get(
                 packageName, declaredTypeName.getName().getPascalCase().getUnsafeName() + "ExceptionHandler");
     }
 
     public ClassName getErrorClassName(DeclaredErrorName declaredTypeName) {
-        String packageName =
-                getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("exceptions"));
+        String packageName;
+        switch (packageLayout) {
+            case FLAT:
+                packageName = getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.empty());
+                break;
+            case NESTED:
+            default:
+                packageName =
+                        getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("exceptions"));
+        }
         return ClassName.get(
                 packageName, declaredTypeName.getName().getPascalCase().getSafeName());
     }
@@ -39,8 +55,17 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
     }
 
     public ClassName getInlinedRequestBodyClassName(HttpService httpService, InlinedRequestBody inlinedRequestBody) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        String packageName;
+        switch (packageLayout) {
+            case FLAT:
+                packageName =
+                        getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+                break;
+            case NESTED:
+            default:
+                packageName = getResourcesPackage(
+                        Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        }
         return ClassName.get(
                 packageName, inlinedRequestBody.getName().getPascalCase().getSafeName());
     }

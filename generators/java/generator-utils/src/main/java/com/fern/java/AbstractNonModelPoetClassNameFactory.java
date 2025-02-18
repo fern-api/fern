@@ -51,17 +51,36 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
+        switch (packageLayout) {
+            case FLAT:
+                return getResourcesPackage(Optional.of(fernFilepath), Optional.empty());
+            case NESTED:
+            default:
+                return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
+        }
     }
 
     protected final String getErrorsPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
+        switch (packageLayout) {
+            case FLAT:
+                return getResourcesPackage(Optional.of(fernFilepath), Optional.empty());
+            case NESTED:
+            default:
+                return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
+        }
     }
 
     protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        if (fernFilepath.isPresent() && !fernFilepath.get().getAllParts().isEmpty()) {
-            tokens.add("resources");
+        switch (packageLayout) {
+            case FLAT:
+                break;
+            case NESTED:
+            default:
+                if (fernFilepath.isPresent()
+                        && !fernFilepath.get().getAllParts().isEmpty()) {
+                    tokens.add("resources");
+                }
         }
         fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
                 .map(Name::getCamelCase)
