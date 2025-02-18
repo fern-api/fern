@@ -146,7 +146,7 @@ export function convertRequest({
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
                         exploded: false,
-                        encoding: undefined,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -164,7 +164,7 @@ export function convertRequest({
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
                         exploded: false,
-                        encoding: undefined,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -182,7 +182,7 @@ export function convertRequest({
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
                         exploded: false,
-                        encoding: undefined,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -200,13 +200,14 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false, 
-                        encoding: undefined,
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
 
-                const contentType =  multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
+                const contentType =
+                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),

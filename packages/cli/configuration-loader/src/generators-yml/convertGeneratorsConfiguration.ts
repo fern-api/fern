@@ -158,7 +158,7 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     shouldUseIdiomaticRequestNames: apiConfiguration.settings?.["idiomatic-request-names"],
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
-                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"],
+                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"]
                 }
             });
         }

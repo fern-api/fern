@@ -123,6 +123,7 @@ export function getParseOptions({
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
         exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
-        defaultFormParameterEncoding: overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
+        defaultFormParameterEncoding:
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
     };
 }
