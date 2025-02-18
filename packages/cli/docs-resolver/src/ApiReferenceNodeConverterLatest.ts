@@ -193,7 +193,7 @@ export class ApiReferenceNodeConverterLatest {
 
             this.#visitedSubpackages.add(subpackage.id);
             this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackage.id]);
-            const urlSlug = pkg.slug ?? subpackage.name;
+            const urlSlug = pkg.slug ?? kebabCase(subpackage.name);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -835,21 +835,21 @@ export class ApiReferenceNodeConverterLatest {
             Object.entries(this.#api?.endpoints ?? {}).filter(
                 ([_, endpoint]) =>
                     endpoint.namespace != null &&
-                    endpoint.namespace[endpoint.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    endpoint.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const websockets = Object.fromEntries(
             Object.entries(this.#api?.websockets ?? {}).filter(
                 ([_, webSocket]) =>
                     webSocket.namespace != null &&
-                    webSocket.namespace[webSocket.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webSocket.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         const webhooks = Object.fromEntries(
             Object.entries(this.#api?.webhooks ?? {}).filter(
                 ([_, webhook]) =>
                     webhook.namespace != null &&
-                    webhook.namespace[webhook.namespace.length - 1] === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webhook.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         );
         return {
