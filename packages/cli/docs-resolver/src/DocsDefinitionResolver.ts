@@ -832,6 +832,8 @@ export class DocsDefinitionResolver {
                 : undefined,
             skipUrlSlug: item.skipUrlSlug
         });
+        const noindex =
+            item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
         return {
             id,
             type: "section",
@@ -846,7 +848,7 @@ export class DocsDefinitionResolver {
             children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
             authed: undefined,
             pointsTo: undefined,
-            noindex: undefined,
+            noindex,
             featureFlags: item.featureFlags
         };
     }

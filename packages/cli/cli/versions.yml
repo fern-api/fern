@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix noindex behavior for section overview pages. 
+      type: fix
+  irVersion: 55
+  version: 0.53.8
+
+- changelogEntry:
+    - summary: |
         Regenerate changelog.
       type: fix
   irVersion: 55
