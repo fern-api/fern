@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-      - dsinghvi/fix-ir-jsons
+    paths:
+      - 'docker/seed/*'
+      - '.github/workflows/seed-dockers.yml'
   workflow_dispatch:
 
 # Cancel previous workflows on previous push

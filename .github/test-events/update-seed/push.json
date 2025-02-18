@@ -1,0 +1,11 @@
+{
+  "push": {
+    "paths": [
+      "packages/seed/src/cli.ts",
+      "generators/php/sdk/src/cli.ts"
+    ]
+  },
+  "repository":{
+    "default_branch": "main"
+  }
+}

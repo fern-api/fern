@@ -1,0 +1,8 @@
+{
+  "push": {
+    "paths": [
+      "generators/typescript/sdk/VERSION",
+      "generators/typescript/sdk/CHANGELOG.md"
+    ]
+  }
+}
