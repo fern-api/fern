@@ -51,29 +51,25 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
-        switch (packageLayout) {
-            case FLAT:
-                return getResourcesPackage(Optional.of(fernFilepath), Optional.empty());
-            case NESTED:
-            default:
-                return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
-        }
+        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
     }
 
     protected final String getErrorsPackageName(FernFilepath fernFilepath) {
-        switch (packageLayout) {
-            case FLAT:
-                return getResourcesPackage(Optional.of(fernFilepath), Optional.empty());
-            case NESTED:
-            default:
-                return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
-        }
+        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
     }
 
     protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         switch (packageLayout) {
             case FLAT:
+                List<Name> filePathParts =
+                        fernFilepath.map(FernFilepath::getAllParts).orElseGet(List::of);
+                // NOTE: We omit the last entry in the Fern filepath, which is the name of the YAML file containing the
+                //  definition
+                for (int i = 0; i < filePathParts.size() - 1; i++) {
+                    Name part = filePathParts.get(i);
+                    tokens.add(part.getCamelCase().getSafeName().toLowerCase());
+                }
                 break;
             case NESTED:
             default:
@@ -81,13 +77,14 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
                         && !fernFilepath.get().getAllParts().isEmpty()) {
                     tokens.add("resources");
                 }
+                fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
+                        .map(Name::getCamelCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        // names should be lower case
+                        .map(String::toLowerCase)
+                        .collect(Collectors.toList())));
         }
-        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
-                .map(Name::getCamelCase)
-                .map(SafeAndUnsafeString::getSafeName)
-                // names should be lower case
-                .map(String::toLowerCase)
-                .collect(Collectors.toList())));
+
         suffix.ifPresent(tokens::add);
         List<String> sanitizedTokens = new ArrayList<>();
         for (String token : tokens) {
