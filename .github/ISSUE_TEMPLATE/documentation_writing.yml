@@ -49,7 +49,7 @@ body:
   - type: dropdown
     id: contribute
     attributes:
-      label: "Are you interested to contribute this docs improvement?"
+      label: "Are you interested in contributing this improvement?"
       description: "If aligned with the project's goals, the maintainers are happy to support with guidance and review."
       options:
         - "No"
