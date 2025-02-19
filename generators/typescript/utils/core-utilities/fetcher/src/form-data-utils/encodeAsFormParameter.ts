@@ -5,7 +5,7 @@ import qs from "qs";
  */
 export function encodeAsFormParameter(value: unknown): Record<string, string> {
     const stringified = qs.stringify(value, { encode: false });
-    
+
     const keyValuePairs = stringified.split("&").map((pair) => {
         const [key, value] = pair.split("=");
         return [key, value] as const;
