@@ -25,6 +25,9 @@ public final class SeedMixedFileDirectoryClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedMixedFileDirectoryClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

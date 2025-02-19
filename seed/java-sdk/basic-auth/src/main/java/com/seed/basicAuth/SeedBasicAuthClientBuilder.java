@@ -36,6 +36,9 @@ public final class SeedBasicAuthClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedBasicAuthClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

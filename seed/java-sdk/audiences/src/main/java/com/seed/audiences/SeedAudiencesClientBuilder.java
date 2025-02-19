@@ -30,6 +30,9 @@ public final class SeedAudiencesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedAudiencesClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

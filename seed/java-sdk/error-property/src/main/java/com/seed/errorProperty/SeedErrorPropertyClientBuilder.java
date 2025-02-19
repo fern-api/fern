@@ -25,6 +25,9 @@ public final class SeedErrorPropertyClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedErrorPropertyClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

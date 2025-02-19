@@ -35,6 +35,9 @@ public final class SeedPaginationClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedPaginationClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

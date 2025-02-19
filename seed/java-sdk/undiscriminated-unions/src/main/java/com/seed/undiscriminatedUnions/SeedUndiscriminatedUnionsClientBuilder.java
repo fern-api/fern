@@ -25,6 +25,9 @@ public final class SeedUndiscriminatedUnionsClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedUndiscriminatedUnionsClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

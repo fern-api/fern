@@ -49,6 +49,9 @@ public final class SeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedOauthClientCredentialsEnvironmentVariablesClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

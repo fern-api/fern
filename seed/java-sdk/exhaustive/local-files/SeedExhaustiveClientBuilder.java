@@ -37,6 +37,9 @@ public final class SeedExhaustiveClientBuilder {
     return this;
   }
 
+  /**
+   * Sets the underlying OkHttp client
+   */
   public SeedExhaustiveClientBuilder httpClient(OkHttpClient httpClient) {
     this.clientOptionsBuilder.httpClient(httpClient);
     return this;

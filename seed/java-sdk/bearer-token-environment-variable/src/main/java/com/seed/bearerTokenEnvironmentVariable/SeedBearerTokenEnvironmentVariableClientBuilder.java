@@ -38,6 +38,9 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedBearerTokenEnvironmentVariableClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

@@ -35,6 +35,9 @@ public final class SeedMultiUrlEnvironmentClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedMultiUrlEnvironmentClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

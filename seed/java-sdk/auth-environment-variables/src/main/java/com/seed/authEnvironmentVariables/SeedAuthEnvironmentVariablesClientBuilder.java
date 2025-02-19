@@ -48,6 +48,9 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedAuthEnvironmentVariablesClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;

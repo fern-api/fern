@@ -213,6 +213,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
                 .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the underlying OkHttp client")
                 .returns(builderName)
                 .addParameter(OkHttpClient.class, "httpClient")
                 .addStatement("this.$L.httpClient(httpClient)", CLIENT_OPTIONS_BUILDER_NAME)

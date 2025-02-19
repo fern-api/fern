@@ -40,6 +40,9 @@ public final class SeedSingleUrlEnvironmentDefaultClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the underlying OkHttp client
+     */
     public SeedSingleUrlEnvironmentDefaultClientBuilder httpClient(OkHttpClient httpClient) {
         this.clientOptionsBuilder.httpClient(httpClient);
         return this;
