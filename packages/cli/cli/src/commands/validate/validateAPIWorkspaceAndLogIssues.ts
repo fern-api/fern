@@ -18,14 +18,17 @@ export async function validateAPIWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
+    const startTime = performance.now();
     const apiViolations = validateFernWorkspace(workspace, context.logger);
     const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
+    const elapsedMillis = performance.now() - startTime;
     const violations = [...apiViolations, ...generatorViolations];
     const { hasErrors } = logViolations({
         violations,
         context,
         logWarnings,
-        logSummary
+        logSummary,
+        elapsedMillis
     });
 
     return { hasErrors };

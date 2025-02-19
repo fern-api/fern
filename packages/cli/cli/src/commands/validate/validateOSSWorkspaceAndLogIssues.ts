@@ -15,8 +15,10 @@ export async function validateOSSWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
+    const startTime = performance.now();
     const violations = await validateOSSWorkspace(workspace, context);
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+    const elapsedMillis = performance.now() - startTime;
+    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary, elapsedMillis });
 
     return { hasErrors };
 }
