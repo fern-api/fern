@@ -211,13 +211,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.environments[name] = schema;
     }
 
-    // public addMultiUrlEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void {
-    //     if (this.rootApiFile.environments == null) {
-    //         this.rootApiFile.environments = {};
-    //     }
-    //     this.rootApiFile.environments[BASE_MULTI_URL_ENVIRONMENT_NAME] = {urlsname: schema};
-    // }
-
     public getGlobalHeaderNames(): Set<string> {
         const headerNames = Object.keys(this.rootApiFile.headers ?? {});
         // Get headers from auth schemes

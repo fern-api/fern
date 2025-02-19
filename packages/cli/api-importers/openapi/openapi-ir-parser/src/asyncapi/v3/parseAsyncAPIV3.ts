@@ -31,6 +31,7 @@ import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const LOCATION_PREFIX = "$message.";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
+
 export function parseAsyncAPIV3({
     context,
     breadcrumbs,
