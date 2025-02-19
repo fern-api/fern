@@ -41,6 +41,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        package-layout: flat
+      outputFolder: flat-package-layout
+    - customConfig:
         inline-path-parameters: true
         custom-dependencies:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
