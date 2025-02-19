@@ -1,6 +1,7 @@
 {
   "title": "Test setting to disable usage of title param",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },

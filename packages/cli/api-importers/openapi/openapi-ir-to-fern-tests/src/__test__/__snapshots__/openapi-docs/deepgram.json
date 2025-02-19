@@ -6027,6 +6027,7 @@ errors:
             },
           },
           "path": "/agent",
+          "url": "public",
         },
         "types": {
           "AgentAgentAudioDone": {
@@ -6601,6 +6602,7 @@ errors:
       },
       "rawContents": "channel:
   path: /agent
+  url: public
   auth: false
   headers:
     Sec-Websocket-Protocol:
@@ -7160,6 +7162,7 @@ types:
               "type": "string",
             },
           },
+          "url": "public",
         },
         "types": {
           "ListenCallbackMethod": {
@@ -8334,6 +8337,7 @@ types:
       openapi: ../asyncapi.yml
 channel:
   path: /v1/listen
+  url: public
   auth: false
   query-parameters:
     callback:
@@ -13756,6 +13760,7 @@ docs: Manage your projects
               "type": "SpeakSampleRate",
             },
           },
+          "url": "public",
         },
         "types": {
           "SpeakControlMessagesRequest": {
@@ -14062,6 +14067,7 @@ docs: Manage your projects
       openapi: ../asyncapi.yml
 channel:
   path: /v1/speak
+  url: public
   auth: false
   query-parameters:
     encoding:
@@ -15748,23 +15754,33 @@ docs: Transform text to speech
         },
       },
       "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "Deepgram API Specification",
       "environments": {
-        "Default": "https://api.deepgram.com",
+        "Default": {
+          "urls": {
+            "Base": "https://api.deepgram.com",
+            "public": "wss://api.deepgram.com",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Deepgram API Specification
 environments:
-  Default: https://api.deepgram.com
+  Default:
+    urls:
+      Base: https://api.deepgram.com
+      public: wss://api.deepgram.com
 default-environment: Default
+default-url: Base
 auth-schemes:
   ApiKeyAuth:
     header: Authorization

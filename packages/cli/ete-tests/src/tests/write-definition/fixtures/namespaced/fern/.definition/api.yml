@@ -3,9 +3,13 @@ auth-schemes:
   BearerAuthScheme:
     scheme: bearer
 default-environment: Production
+default-url: Base
 display-name: Train Travel API
 environments:
-  Production: https://api.example.com
+  Production:
+    urls:
+      Base: https://api.example.com
+      public: wss://api.gemini.com
 error-discrimination:
   strategy: status-code
 name: api

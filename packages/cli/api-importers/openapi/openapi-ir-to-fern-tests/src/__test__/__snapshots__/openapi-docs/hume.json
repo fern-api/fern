@@ -3994,6 +3994,7 @@ There are three ways to obtain the Chat Group ID:
               "type": "optional<boolean>",
             },
           },
+          "url": "prod",
         },
         "imports": {
           "root": "__package__.yml",
@@ -4079,6 +4080,7 @@ There are three ways to obtain the Chat Group ID:
       },
       "rawContents": "channel:
   path: /chat
+  url: prod
   auth: false
   query-parameters:
     config_id:
@@ -4395,23 +4397,33 @@ imports:
         },
       },
       "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "Hume AI Batch API",
       "environments": {
-        "Default": "https://api.hume.ai",
+        "Default": {
+          "urls": {
+            "Base": "https://api.hume.ai",
+            "prod": "wss://api.hume.ai/v0/evi",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Hume AI Batch API
 environments:
-  Default: https://api.hume.ai
+  Default:
+    urls:
+      Base: https://api.hume.ai
+      prod: wss://api.hume.ai/v0/evi
 default-environment: Default
+default-url: Base
 auth-schemes:
   Authentication:
     header: X-Hume-Api-Key

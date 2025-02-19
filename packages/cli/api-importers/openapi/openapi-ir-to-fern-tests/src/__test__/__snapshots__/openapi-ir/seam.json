@@ -5,6 +5,7 @@
       "url": "https://connect.getseam.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "/access_codes": {
@@ -569,7 +570,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/create",
@@ -1303,7 +1304,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/create_multiple",
@@ -1702,7 +1703,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/delete",
@@ -1924,7 +1925,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/generate_code",
@@ -2318,7 +2319,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/get",
@@ -2713,7 +2714,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/list",
@@ -3060,7 +3061,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/pull_backup_access_code",
@@ -3779,7 +3780,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/update",
@@ -4001,7 +4002,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action_attempts/get",
@@ -4232,7 +4233,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action_attempts/list",
@@ -4565,7 +4566,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/client_sessions/create",
@@ -4805,7 +4806,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/delete",
@@ -5010,7 +5011,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/get",
@@ -5368,7 +5369,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/client_sessions/get_or_create",
@@ -5719,7 +5720,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/grant_access",
@@ -6060,7 +6061,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/list",
@@ -6305,7 +6306,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/revoke",
@@ -6942,7 +6943,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/create",
@@ -7252,7 +7253,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/delete",
@@ -7434,7 +7435,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/get",
@@ -7858,7 +7859,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/list",
@@ -8193,7 +8194,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/delete",
@@ -8418,7 +8419,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/get",
@@ -8779,7 +8780,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/list",
@@ -9147,7 +9148,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/update",
@@ -9446,7 +9447,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/delete",
@@ -9652,7 +9653,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/get",
@@ -12000,7 +12001,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/list",
@@ -12447,7 +12448,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/list_device_providers",
@@ -12810,7 +12811,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/update",
@@ -13060,7 +13061,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/events/get",
@@ -14148,7 +14149,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/events/list",
@@ -14456,7 +14457,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/get",
@@ -18100,7 +18101,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/list",
@@ -18768,7 +18769,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/lock_door",
@@ -19010,7 +19011,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/unlock_door",
@@ -19232,7 +19233,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/networks/get",
@@ -19435,7 +19436,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/networks/list",
@@ -19629,7 +19630,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/deactivate",
@@ -19820,7 +19821,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/list",
@@ -20236,7 +20237,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/cool",
@@ -20482,7 +20483,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/get",
@@ -21990,7 +21991,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/heat",
@@ -22308,7 +22309,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/heat_cool",
@@ -23428,7 +23429,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/list",
@@ -23859,7 +23860,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/off",
@@ -24165,7 +24166,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/set_fan_mode",
@@ -24565,7 +24566,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/update",
@@ -24749,7 +24750,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/add_acs_user",
@@ -25022,7 +25023,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/create",
@@ -25240,7 +25241,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/delete",
@@ -25464,7 +25465,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/get",
@@ -25705,7 +25706,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/grant_access_to_device",
@@ -25903,7 +25904,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list",
@@ -26168,7 +26169,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_accessible_devices",
@@ -26828,7 +26829,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_acs_systems",
@@ -27171,7 +27172,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_acs_users",
@@ -27496,7 +27497,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/remove_acs_user",
@@ -27683,7 +27684,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/revoke_access_to_device",
@@ -27954,7 +27955,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/update",
@@ -28160,7 +28161,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/create",
@@ -28362,7 +28363,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/delete",
@@ -28543,7 +28544,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/get",
@@ -28728,7 +28729,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/list",
@@ -28942,7 +28943,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/update",
@@ -29251,7 +29252,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/create",
@@ -29434,7 +29435,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/get",
@@ -29609,7 +29610,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/list",
@@ -29785,7 +29786,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/reset_sandbox",
@@ -30027,7 +30028,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/simulate/create_unmanaged_access_code",
@@ -30392,7 +30393,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/convert_to_managed",
@@ -30594,7 +30595,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/delete",
@@ -30861,7 +30862,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/get",
@@ -31167,7 +31168,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/list",
@@ -31517,7 +31518,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/update",
@@ -31705,7 +31706,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/add_user",
@@ -31895,7 +31896,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/get",
@@ -32176,7 +32177,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/list",
@@ -32429,7 +32430,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/list_users",
@@ -32755,7 +32756,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/remove_user",
@@ -32949,7 +32950,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credential_pools/list",
@@ -33265,7 +33266,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credential_provisioning_automations/launch",
@@ -33509,7 +33510,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/assign",
@@ -34243,7 +34244,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/create",
@@ -34624,7 +34625,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/delete",
@@ -34807,7 +34808,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/get",
@@ -35209,7 +35210,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/list",
@@ -35568,7 +35569,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/list_accessible_entrances",
@@ -35876,7 +35877,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/unassign",
@@ -36314,7 +36315,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/update",
@@ -36708,7 +36709,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/get",
@@ -37016,7 +37017,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/grant_access",
@@ -37235,7 +37236,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/list",
@@ -37550,7 +37551,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/list_credentials_with_access",
@@ -37913,7 +37914,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/get",
@@ -38257,7 +38258,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/list",
@@ -38593,7 +38594,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/list_compatible_credential_manager_acs_systems",
@@ -38931,7 +38932,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/add_to_access_group",
@@ -39303,7 +39304,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/create",
@@ -39609,7 +39610,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/delete",
@@ -39792,7 +39793,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/get",
@@ -40187,7 +40188,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/list",
@@ -40511,7 +40512,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/list_accessible_entrances",
@@ -40803,7 +40804,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/remove_from_access_group",
@@ -40976,7 +40977,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/revoke_access_to_all_entrances",
@@ -41142,7 +41143,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/suspend",
@@ -41308,7 +41309,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/unsuspend",
@@ -41631,7 +41632,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/update",
@@ -41797,7 +41798,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/connect",
@@ -41963,7 +41964,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/disconnect",
@@ -42129,7 +42130,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/remove",
@@ -42336,7 +42337,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/get",
@@ -43667,7 +43668,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/list",
@@ -44032,7 +44033,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/update",
@@ -44343,7 +44344,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/create",
@@ -44668,7 +44669,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/delete",
@@ -44898,7 +44899,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/get",
@@ -45158,7 +45159,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/list",
@@ -45529,7 +45530,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/update",
@@ -45742,7 +45743,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/simulate/trigger_noise_threshold",
@@ -46211,7 +46212,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/simulate/create_sandbox_phone",
@@ -46870,7 +46871,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/create",
@@ -47175,7 +47176,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/delete",
@@ -47383,7 +47384,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/get",
@@ -47706,7 +47707,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/list",
@@ -48270,7 +48271,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/update",
@@ -48561,7 +48562,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/delete",
@@ -48744,7 +48745,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/get",
@@ -49134,7 +49135,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/launch",
@@ -49375,7 +49376,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/list",

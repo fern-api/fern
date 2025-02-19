@@ -643,10 +643,10 @@ colors:
     light: "#0D4C14"
   background:
     dark: "#081008"
-    light: "#FBFFFA"
+    light: "#F9FCFA"
   header-background:
     dark: "#081008"
-    light: "#FBFFFA"
+    light: "#F9FCFA"
 favicon: ./images/favicon.ico
 
 layout:

@@ -3,12 +3,8 @@ import urlJoin from "url-join";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-function getApiLatestToNavigationNodeUrlSlug<T extends { namespace?: string[]; id: string; operationId?: string }>(
-    item: T
-): string {
-    const slugParts = item.namespace?.map((subpackageId) => kebabCase(subpackageId.toString())) ?? [];
-    slugParts.push(kebabCase(item.id.split(".").pop() ?? ""));
-    return item.operationId != null ? kebabCase(item.operationId) : urlJoin(slugParts);
+function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>(item: T): string {
+    return item.operationId != null ? kebabCase(item.operationId) : kebabCase(item.id.split(".").pop() ?? "");
 }
 
 export function getApiLatestEndpointToNavigationNodeUrlSlug(

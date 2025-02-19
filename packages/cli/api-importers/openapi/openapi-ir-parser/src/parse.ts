@@ -44,6 +44,7 @@ export function parse({
         description: undefined,
         basePath: undefined,
         servers: [],
+        websocketServers: [],
         tags: {
             tagsById: {},
             orderedTagIds: undefined
@@ -86,6 +87,16 @@ export function parse({
                     asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
                     namespace: document.namespace
                 });
+                if (parsedAsyncAPI.servers != null) {
+                    ir.websocketServers = [
+                        ...ir.websocketServers,
+                        ...parsedAsyncAPI.servers.map((server) => ({
+                            ...server,
+                            audiences: undefined,
+                            description: undefined
+                        }))
+                    ];
+                }
                 if (parsedAsyncAPI.channels != null) {
                     ir.channels = {
                         ...ir.channels,
@@ -129,6 +140,7 @@ function merge(
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
         servers: [...ir1.servers, ...ir2.servers],
+        websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {
                 ...ir1.tags.tagsById,

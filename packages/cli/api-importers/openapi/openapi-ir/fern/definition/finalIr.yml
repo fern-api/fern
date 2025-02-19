@@ -15,6 +15,7 @@ types:
       description: optional<string>
       basePath: optional<string>
       servers: list<commons.Server>
+      websocketServers: list<commons.Server>
       groups:
         docs: |
           Top level group information populated through `x-fern-groups`.
@@ -115,6 +116,7 @@ types:
       handshake: WebsocketHandshake
       publish: optional<Schema>
       subscribe: optional<Schema>
+      servers: list<WebsocketServer>
       examples: list<WebsocketSessionExample>
 
   WebsocketHandshake:
@@ -189,7 +191,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<HttpEndpointServer>
+      servers: list<HttpEndpointServer>
       examples: list<EndpointExample>
       pagination: optional<Pagination>
 
@@ -200,6 +202,11 @@ types:
         docs: Populated by `X-Server-Name`
       url: optional<string>
       audiences: optional<list<string>>
+  
+  WebsocketServer:
+    properties:
+      name: string
+      url: string
 
   Pagination:
     union:
@@ -425,6 +432,12 @@ types:
       schema: MultipartSchema
       contentType: optional<string>
       exploded: optional<boolean>
+      encoding: optional<MultipartRequestPropertyEncoding>
+  
+  MultipartRequestPropertyEncoding: 
+    enum: 
+      - json
+      - form
 
   FileSchema:
     properties:

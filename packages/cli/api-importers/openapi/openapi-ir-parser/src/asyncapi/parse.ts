@@ -3,6 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { ParseOpenAPIOptions } from "../options";
 import { ParseAsyncAPIOptions } from "./options";
+import { ServerContext } from "./sharedTypes";
 import { AsyncAPIV2 } from "./v2";
 import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
 import { parseAsyncAPIV2 } from "./v2/parseAsyncAPIV2";
@@ -13,7 +14,7 @@ import { parseAsyncAPIV3 } from "./v3/parseAsyncAPIV3";
 export interface AsyncAPIIntermediateRepresentation {
     groupedSchemas: Schemas;
     channels: Record<string, WebsocketChannel> | undefined;
-    // channel: WebsocketChannel | undefined;
+    servers: Array<ServerContext> | undefined;
     basePath: string | undefined;
 }
 

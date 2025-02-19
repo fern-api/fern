@@ -7,6 +7,7 @@
       "description": "Production server"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Authentication": {
@@ -253,7 +254,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of Prompts.",
       "authed": true,
       "method": "GET",
@@ -677,7 +678,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a Prompt.\n\nWhen you call this endpoint with the same Prompt name but different parameters,\na new version of the Prompt will be created.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
       "authed": true,
       "method": "POST",
@@ -1205,7 +1206,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Prompt with the given ID.\n\nBy default the deployed version of the Prompt is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Prompt.",
       "authed": true,
       "method": "GET",
@@ -1660,7 +1661,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the Prompt with the given ID.",
       "authed": true,
       "method": "DELETE",
@@ -1785,7 +1786,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the Prompt with the given ID.",
       "authed": true,
       "method": "PATCH",
@@ -2336,7 +2337,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of all the versions of a Prompt.",
       "authed": true,
       "method": "GET",
@@ -2808,7 +2809,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deploy Prompt to Environment.\n\nSet the deployed Version for the specified Environment. This Prompt Version\nwill be used for calls made to the Prompt in this Environment.",
       "authed": true,
       "method": "POST",
@@ -3340,7 +3341,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Commit the Prompt Version with the given ID.",
       "authed": true,
       "method": "POST",
@@ -3908,7 +3909,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Log to a Prompt.\n\nYou can use query parameters version_id, or environment, to target\nan existing version of the Prompt. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt, if not we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
       "authed": true,
       "method": "POST",
@@ -4150,7 +4151,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Call a Prompt.\n\nCalling a Prompt subsequently calls the model provider before logging\nthe data to Humanloop.\n\nYou can use query parameters version_id, or environment, to target\nan existing version of the Prompt. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt, if not we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
       "authed": true,
       "method": "POST",
@@ -4893,7 +4894,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Activate and deactivate Evaluators for the Prompt.\n\nAn activated Evaluator will automatically be run on all new Logs\nwithin the Prompt for monitoring purposes.",
       "authed": true,
       "method": "POST",
@@ -5502,7 +5503,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of Tools.",
       "authed": true,
       "method": "GET",
@@ -5818,7 +5819,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a Tool.\n\nTools have immutable versions. When you call this endpoint\nwith the same Tool name but different parameters, a new version of\nthe Tool will be created.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
       "authed": true,
       "method": "POST",
@@ -6209,7 +6210,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Tool with the given ID.\n\nBy default the deployed version of the Tool is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Tool.",
       "authed": true,
       "method": "GET",
@@ -6535,7 +6536,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the Tool with the given ID.",
       "authed": true,
       "method": "DELETE",
@@ -6660,7 +6661,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the Tool with the given ID.",
       "authed": true,
       "method": "PATCH",
@@ -7082,7 +7083,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of all the versions of a Tool.",
       "authed": true,
       "method": "GET",
@@ -7446,7 +7447,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deploy Tool to Environment.\n\nSet the deployed Version for the specified Environment. This Tool Version\nwill be used for calls made to the Tool in this Environment.",
       "authed": true,
       "method": "POST",
@@ -7849,7 +7850,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Commit the Tool Version with the given ID.",
       "authed": true,
       "method": "POST",
@@ -8288,7 +8289,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Log to a Tool.\n\nYou can use query parameters version_id, or environment, to target\nan existing version of the Tool. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nTool details in the request body. In this case, we will check if the details correspond\nto an existing version of the Tool, if not we will create a new version. This is helpful\nin the case where you are storing or deriving your Tool details in code.",
       "authed": true,
       "method": "POST",
@@ -8452,7 +8453,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Activate and deactivate Evaluators for the Tool.\n\nAn activated Evaluator will automatically be run on all new Logs\nwithin the Tool for monitoring purposes.",
       "authed": true,
       "method": "POST",
@@ -8812,7 +8813,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/tools/templates",
@@ -9114,7 +9115,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of Datasets.",
       "authed": true,
       "method": "GET",
@@ -9432,7 +9433,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a Dataset.\n\nDataset have immutable versions. When you call this endpoint\nwith the same Dataset name but different parameters, a new version of\nthe Dataset will be created.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.\n\nBy default, the new Dataset version will be set to the list of Datapoints provided in\nthe request.\nYou can create a new version by adding or removing Datapoints from an existing version\nby specifying `action` as `add` or `remove` respectively. In this case, you may specify\nthe `version_id` or `environment` query parameters to identify the existing version to base\nthe new version on. If neither is provided, the default deployed version will be used.\n\nHumanloop also deduplicates Datapoints. If you try to add a Datapoint that already\nexists, it will be ignored.",
       "authed": true,
       "method": "POST",
@@ -9816,7 +9817,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Dataset with the given ID.\n\nUnless `include_datapoints` is set to `true`, the response will not include\nthe Datapoints.\nUse the List Datapoints endpoint (`GET /{id}/datapoints`) to efficiently\nretrieve Datapoints for a large Dataset.\n\nBy default the deployed version of the Dataset is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Dataset.",
       "authed": true,
       "method": "GET",
@@ -10099,7 +10100,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the Dataset with the given ID.",
       "authed": true,
       "method": "DELETE",
@@ -10224,7 +10225,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the Dataset with the given ID.",
       "authed": true,
       "method": "PATCH",
@@ -10641,7 +10642,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all Datapoints for the Dataset with the given ID.",
       "authed": true,
       "method": "GET",
@@ -10916,7 +10917,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of the versions for a Dataset.",
       "authed": true,
       "method": "GET",
@@ -11208,7 +11209,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Commit the Dataset Version with the given ID.",
       "authed": true,
       "method": "POST",
@@ -11569,7 +11570,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deploy Dataset to Environment.\n\nSet the deployed Version for the specified Environment.",
       "authed": true,
       "method": "POST",
@@ -11946,7 +11947,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List Evaluations for the given File.\n\nRetrieve a list of Evaluations that evaluate versions of the specified File.",
       "authed": true,
       "method": "GET",
@@ -12421,7 +12422,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create an Evaluation.\n\nCreate a new Evaluation by specifying the Dataset, Evaluatees, and Evaluators.\nHumanloop will automatically start generating Logs and running Evaluators.\n\nTo keep updated on the progress of the Evaluation, you can poll the Evaluation\nand check its status.",
       "authed": true,
       "method": "POST",
@@ -13004,7 +13005,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get an Evaluation.\n\nRetrieve the Evaluation with the given ID.",
       "authed": true,
       "method": "GET",
@@ -13528,7 +13529,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete an Evaluation.\n\nRemove an Evaluation from Humanloop. The Logs and Versions used in the Evaluation\nwill not be deleted.",
       "authed": true,
       "method": "DELETE",
@@ -13653,7 +13654,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update an Evaluation.\n\nUpdate the setup of an Evaluation by specifying the Dataset, Evaluatees, and Evaluators.",
       "authed": true,
       "method": "PATCH",
@@ -14266,7 +14267,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the status of an Evaluation.\n\nCan be used to cancel a running Evaluation, or mark an Evaluation that uses external or human evaluators\nas completed.",
       "authed": true,
       "method": "PATCH",
@@ -14818,7 +14819,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get Evaluation Stats.\n\nRetrieve aggregate stats for the specified Evaluation.\nThis includes the number of generated Logs for every evaluatee and Evaluator metrics\n(such as the mean and percentiles for numeric Evaluators for every evaluatee).",
       "authed": true,
       "method": "GET",
@@ -15242,7 +15243,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of Evaluators.",
       "authed": true,
       "method": "GET",
@@ -15523,7 +15524,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create an Evaluator.\n\nEvaluators have immutable versions. When you call this endpoint\nwith the same Evaluator name but different spec, a new version of\nthe Evaluator will be created.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
       "authed": true,
       "method": "POST",
@@ -16027,7 +16028,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Evaluator with the given ID.\n\nBy default the deployed version of the Evaluator is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Evaluator.",
       "authed": true,
       "method": "GET",
@@ -16442,7 +16443,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the Evaluator with the given ID.",
       "authed": true,
       "method": "DELETE",
@@ -16567,7 +16568,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the Evaluator with the given ID.",
       "authed": true,
       "method": "PATCH",
@@ -17078,7 +17079,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of all the versions of an Evaluator.",
       "authed": true,
       "method": "GET",
@@ -17407,7 +17408,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deploy Evaluator to Environment.\n\nSet the deployed Version for the specified Environment. This Evaluator Version\nwill be used for calls made to the Evaluator in this Environment.",
       "authed": true,
       "method": "POST",
@@ -17899,7 +17900,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Commit the Evaluator Version with the given ID.",
       "authed": true,
       "method": "POST",
@@ -18342,7 +18343,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of default evaluators for the organization.",
       "authed": true,
       "method": "GET",
@@ -18643,7 +18644,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Run a synchronous evaluator execution on a collection of datapoints.",
       "authed": true,
       "method": "POST",
@@ -20050,7 +20051,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List Logs.",
       "authed": true,
       "method": "GET",
@@ -20522,7 +20523,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete Logs with the given IDs.",
       "authed": true,
       "method": "DELETE",
@@ -20609,7 +20610,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Log with the given ID.",
       "authed": true,
       "method": "GET",
@@ -21412,7 +21413,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the Session with the given ID.",
       "authed": true,
       "method": "GET",
@@ -21879,7 +21880,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the Session with the given ID.",
       "authed": true,
       "method": "DELETE",
@@ -22075,7 +22076,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of Sessions.",
       "authed": true,
       "method": "GET",

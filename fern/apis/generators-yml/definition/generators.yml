@@ -243,12 +243,20 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      default-form-parameter-encoding:
+        type: optional<FormParameterEncoding>
+        docs: The default encoding of form parameters. Defaults to JSON.
       filter:
         type: optional<OpenAPIFilterSchema>
         docs: Filter to apply to the OpenAPI specification.
       example-generation:
         type: optional<OpenAPIExampleGenerationSchema>
         docs: Fine-tune your example generation
+
+  FormParameterEncoding:
+    enum:
+      - form
+      - json
 
   OpenAPIExampleGenerationSchema:
     properties:

@@ -604,6 +604,13 @@
         "v1"
       ]
     },
+    "generators.FormParameterEncoding": {
+      "type": "string",
+      "enum": [
+        "form",
+        "json"
+      ]
+    },
     "generators.OpenAPIFilterSchema": {
       "type": "object",
       "properties": {
@@ -739,6 +746,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-form-parameter-encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.FormParameterEncoding"
             },
             {
               "type": "null"
@@ -1550,6 +1567,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-form-parameter-encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.FormParameterEncoding"
             },
             {
               "type": "null"
