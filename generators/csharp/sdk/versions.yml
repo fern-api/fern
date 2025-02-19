@@ -7,6 +7,14 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.31
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System` instead of `System` to avoid conflicts when a type named `System` exists in the current namespace.
+
 - version: 1.9.30
   createdAt: "2025-02-15"
   irVersion: 53
