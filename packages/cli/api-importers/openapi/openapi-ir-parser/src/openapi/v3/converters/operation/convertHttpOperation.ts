@@ -172,7 +172,7 @@ export function convertHttpOperation({
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
-        server:
+        servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
                 : (operation.servers ?? []).map((server) => convertServer(server)),

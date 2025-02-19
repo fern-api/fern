@@ -2,6 +2,7 @@
   "title": "Tree API",
   "description": "API for working with tree data structures",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -36,7 +37,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/tree",

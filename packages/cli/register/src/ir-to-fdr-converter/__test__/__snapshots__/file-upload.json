@@ -434,6 +434,69 @@
           },
           "errorsV2": [],
           "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "withFormEncoding",
+          "originalEndpointId": "endpoint_service.withFormEncoding",
+          "name": "With Form Encoding",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/with-form-encoding"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "WithFormEncodingRequest",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false,
+                      "contentType": "application/octet-stream"
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "foo",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "bar",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyObject"
+                    },
+                    "exploded": false
+                  }
+                ]
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": []
         }
       ],
       "webhooks": [],

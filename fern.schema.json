@@ -1741,7 +1741,8 @@
       "type": "string",
       "enum": [
         "json",
-        "exploded"
+        "exploded",
+        "form"
       ]
     },
     "service.HttpInlineFileRequestBodyPropertySchema": {
@@ -3429,6 +3430,16 @@
         },
         "auth": {
           "type": "boolean"
+        },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path": {
           "type": "string"

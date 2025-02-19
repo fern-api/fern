@@ -350,6 +350,7 @@ function convertIrWebSocketEnvironments({
     channel: Ir.websocket.WebSocketChannel;
 }): FdrCjsSdk.api.v1.commons.Environment[] {
     const environmentsConfigValue = environmentsConfig.environments;
+    const channelBaseUrlId = channel.baseUrl;
     switch (environmentsConfigValue.type) {
         case "singleBaseUrl":
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
@@ -359,7 +360,21 @@ function convertIrWebSocketEnvironments({
                 };
             });
         case "multipleBaseUrls":
-            throw new Error(`Multiple base URLs are not supported for WebSocket "${channel.name.originalName}"`);
+            if (channelBaseUrlId == null) {
+                throw new Error(`Expected channel ${channel.name.originalName} to have base url.`);
+            }
+            return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                const channelBaseUrl = singleBaseUrlEnvironment.urls[channelBaseUrlId];
+                if (channelBaseUrl == null) {
+                    throw new Error(
+                        `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
+                    );
+                }
+                return {
+                    id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
+                    baseUrl: channelBaseUrl
+                };
+            });
         default:
             assertNever(environmentsConfigValue);
     }

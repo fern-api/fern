@@ -68,6 +68,23 @@ service:
               type: optional<MyObject>
               content-type: application/json
 
+    withFormEncoding:
+      path: "/with-form-encoding"
+      method: POST
+      request:
+        name: WithFormEncodingRequest
+        body:
+          properties:
+            file:
+              type: file
+              content-type: application/octet-stream
+            foo: 
+              type: string
+              style: form
+            bar:
+              type: MyObject
+              style: form            
+
 types:
   Id: string
 

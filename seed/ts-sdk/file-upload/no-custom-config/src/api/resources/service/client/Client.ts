@@ -10,6 +10,7 @@ import * as serializers from "../../../../serialization/index";
 import { toJson } from "../../../../core/json";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
+import * as qs from "qs";
 
 export declare namespace Service {
     export interface Options {
@@ -373,6 +374,71 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-content-type.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {File | fs.ReadStream | Blob} file
+     * @param {SeedFileUpload.WithFormEncodingRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public async withFormEncoding(
+        file: File | fs.ReadStream | Blob,
+        request: SeedFileUpload.WithFormEncodingRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<void> {
+        const _request = await core.newFormData();
+        await _request.appendFile("file", file);
+        _request.append("foo", qs.stringify(request.foo, { arrayFormat: "repeat" }));
+        _request.append("bar", qs.stringify(request.bar, { arrayFormat: "repeat" }));
+        const _maybeEncodedRequest = await _request.getRequest();
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-form-encoding",
+            ),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/file-upload",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/file-upload/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
+            },
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-form-encoding.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,

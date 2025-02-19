@@ -12,7 +12,7 @@ import {
     WebsocketChannel
 } from "@fern-api/openapi-ir";
 
-import { FernOpenAPIExtension, ParseOpenAPIOptions } from "../..";
+import { FernOpenAPIExtension } from "../..";
 import { getExtension } from "../../getExtension";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertEnum } from "../../schema/convertEnum";
@@ -23,10 +23,13 @@ import { getSchemas } from "../../utils/getSchemas";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
+import { ChannelId, ServerContext } from "../sharedTypes";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
+const SERVER_REFERENCE_PREFIX = "#/servers/";
 const LOCATION_PREFIX = "$message.";
 
 export function parseAsyncAPIV3({
@@ -43,7 +46,9 @@ export function parseAsyncAPIV3({
     document: AsyncAPIV3.DocumentV3;
 }): AsyncAPIIntermediateRepresentation {
     const schemas: Record<SchemaId, SchemaWithExample> = {};
-    const messageSchemas: Record<string, Record<SchemaId, SchemaWithExample>> = {};
+    const messageSchemas: Record<ChannelId, Record<SchemaId, SchemaWithExample>> = {};
+    const seenMessageIds: Array<Record<ChannelId, SchemaId>> = [];
+    const duplicatedMessageIds: Array<SchemaId> = [];
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
@@ -54,7 +59,23 @@ export function parseAsyncAPIV3({
         if (channel.messages != null) {
             messageSchemas[channelId] = {};
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                const schemaId = `${channelId}_${messageId}`;
+                let schemaId: string;
+                if (seenMessageIds.some((seenMessageRecord) => seenMessageRecord.schemaId === messageId)) {
+                    schemaId = `${channelId}_${messageId}`;
+                    for (const seenMessageRecord of seenMessageIds) {
+                        const { channelId: cid, schemaId: sid } = seenMessageRecord;
+                        if (sid === messageId && cid != null) {
+                            if (messageSchemas[cid] != null && messageSchemas[cid][sid] != null) {
+                                messageSchemas[cid][`${cid}_${messageId}`] = messageSchemas[cid][sid];
+                            }
+                            seenMessageIds.push({ channelId: cid, schemaId: `${cid}_${messageId}` });
+                        }
+                    }
+                    duplicatedMessageIds.push(messageId);
+                } else {
+                    schemaId = messageId;
+                }
+                seenMessageIds.push({ channelId, schemaId });
                 if (message.payload != null) {
                     messageSchemas[channelId][schemaId] = convertSchema(
                         message.payload,
@@ -67,6 +88,14 @@ export function parseAsyncAPIV3({
                 }
             }
         }
+    }
+
+    const servers: Record<string, ServerContext> = {};
+    for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        servers[serverId] = {
+            name: serverId,
+            url: constructServerUrl(server.protocol, server.host)
+        };
     }
 
     const channelEvents: Record<
@@ -110,9 +139,8 @@ export function parseAsyncAPIV3({
                 breadcrumbs,
                 context,
                 source,
-                options: context.options,
-                asyncApiOptions,
-                messageSchemas: messageSchemas[path]
+                messageSchemas: messageSchemas[path],
+                duplicatedMessageIds
             });
         }
         if (events.publish.length > 0 && messageSchemas[path] != null) {
@@ -123,9 +151,8 @@ export function parseAsyncAPIV3({
                 breadcrumbs,
                 context,
                 source,
-                options: context.options,
-                asyncApiOptions,
-                messageSchemas: messageSchemas[path]
+                messageSchemas: messageSchemas[path],
+                duplicatedMessageIds
             });
         }
     }
@@ -226,6 +253,9 @@ export function parseAsyncAPIV3({
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
                         : undefined,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                servers:
+                    channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
+                    Object.values(servers),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
@@ -239,6 +269,7 @@ export function parseAsyncAPIV3({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels,
+        servers: Object.values(servers),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
@@ -268,11 +299,19 @@ function convertChannelParameterLocation(location: string): {
     return { type, parameterKey };
 }
 
-function transformToValidPath(path: string): string {
-    if (!path.startsWith("/")) {
-        return "/" + path;
+function getServerNameFromServerRef(
+    servers: Record<string, ServerContext>,
+    serverRef: OpenAPIV3.ReferenceObject
+): ServerContext {
+    if (!serverRef.$ref.startsWith(SERVER_REFERENCE_PREFIX)) {
+        throw new Error(`Failed to resolve server name from server ref ${serverRef.$ref}`);
     }
-    return path;
+    const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
+    const server = servers[serverName];
+    if (server == null) {
+        throw new Error(`Failed to find server with name ${serverName}`);
+    }
+    return server;
 }
 
 function buildEnumSchema({
@@ -315,9 +354,8 @@ function convertMessagesToSchema({
     context,
     breadcrumbs,
     source,
-    options,
-    asyncApiOptions,
-    messageSchemas
+    messageSchemas,
+    duplicatedMessageIds
 }: {
     breadcrumbs: string[];
     generatedName: string;
@@ -325,15 +363,19 @@ function convertMessagesToSchema({
     messages: OpenAPIV3.ReferenceObject[];
     context: AsyncAPIV3ParserContext;
     source: Source;
-    options: ParseOpenAPIOptions;
-    asyncApiOptions: ParseAsyncAPIOptions;
     messageSchemas: Record<SchemaId, SchemaWithExample>;
+    duplicatedMessageIds: Array<SchemaId>;
 }): SchemaWithExample | undefined {
     if (messages.length > 0) {
         const subtypes: SchemaWithExample[] = [];
         for (const message of messages) {
             const resolvedMessage = context.resolveMessageReference(message);
-            const schemaId = `${channelPath}_${resolvedMessage.name}`;
+            let schemaId: string;
+            if (duplicatedMessageIds.some((duplicatedMessageId) => duplicatedMessageId === resolvedMessage.name)) {
+                schemaId = `${channelPath}_${resolvedMessage.name}`;
+            } else {
+                schemaId = resolvedMessage.name as string;
+            }
             const schema = messageSchemas[schemaId];
             if (schema != null) {
                 subtypes.push(schema);

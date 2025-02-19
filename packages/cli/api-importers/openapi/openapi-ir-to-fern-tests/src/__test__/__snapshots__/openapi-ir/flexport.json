@@ -7,6 +7,7 @@
       "description": "Flexport API"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Changelog": {
@@ -670,7 +671,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/booking_amendments",
@@ -2260,7 +2261,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of booking line items linked to submitted bookings",
       "authed": false,
       "method": "GET",
@@ -2809,7 +2810,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates and returns a booking line item",
       "authed": false,
       "method": "POST",
@@ -3299,7 +3300,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of booking line items",
       "authed": false,
       "method": "GET",
@@ -4526,7 +4527,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of bookings.",
       "authed": false,
       "method": "GET",
@@ -6326,7 +6327,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/bookings",
@@ -8575,7 +8576,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single booking.\n",
       "authed": false,
       "method": "GET",
@@ -10233,7 +10234,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Rate limited to 2,000 requests per hour",
       "authed": false,
       "method": "POST",
@@ -10820,7 +10821,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of commercial invoices",
       "authed": false,
       "method": "GET",
@@ -11845,7 +11846,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
       "method": "POST",
@@ -12934,7 +12935,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
       "method": "PATCH",
@@ -13962,7 +13963,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single commercial invoice.",
       "authed": false,
       "method": "GET",
@@ -15085,7 +15086,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of customs entries.",
       "authed": false,
       "method": "GET",
@@ -15568,7 +15569,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single customs entry.",
       "authed": false,
       "method": "GET",
@@ -16330,7 +16331,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of all documents associated with shipments.",
       "authed": false,
       "method": "GET",
@@ -16860,7 +16861,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new document for this client using the request payload",
       "authed": false,
       "method": "POST",
@@ -17329,7 +17330,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single document.",
       "authed": false,
       "method": "GET",
@@ -17688,7 +17689,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "authed": false,
       "method": "GET",
@@ -18217,7 +18218,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of all events delivered to any webhook registered by this client",
       "authed": false,
       "method": "GET",
@@ -18670,7 +18671,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns the webhook event with ID \":id\"",
       "authed": false,
       "method": "GET",
@@ -20243,7 +20244,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of invoices.",
       "authed": false,
       "method": "GET",
@@ -22101,7 +22102,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single invoice",
       "authed": false,
       "method": "GET",
@@ -23843,7 +23844,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of companies in the network.",
       "authed": false,
       "method": "GET",
@@ -24554,7 +24555,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/network/companies",
@@ -25094,7 +25095,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single company.",
       "authed": false,
       "method": "GET",
@@ -25783,7 +25784,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/network/companies/{id}",
@@ -26691,7 +26692,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of the company entity objects in the network.",
       "authed": false,
       "method": "GET",
@@ -27272,7 +27273,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/network/company_entities",
@@ -27813,7 +27814,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single company entity",
       "authed": false,
       "method": "GET",
@@ -28370,7 +28371,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/network/company_entities/{id}",
@@ -29125,7 +29126,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of contacts in the network.",
       "authed": false,
       "method": "GET",
@@ -29651,7 +29652,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/network/contacts",
@@ -30148,7 +30149,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single contact.",
       "authed": false,
       "method": "GET",
@@ -30651,7 +30652,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/network/contacts/{id}",
@@ -31415,7 +31416,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of location objects in the network.",
       "authed": false,
       "method": "GET",
@@ -32050,7 +32051,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/network/locations",
@@ -32666,7 +32667,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single location",
       "authed": false,
       "method": "GET",
@@ -33291,7 +33292,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/network/locations/{id}",
@@ -33884,7 +33885,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of your own organization.",
       "authed": false,
       "method": "GET",
@@ -34751,7 +34752,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/ocean/shipment_container_legs",
@@ -35281,7 +35282,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/ocean/shipment_container_legs/{id}",
@@ -36010,7 +36011,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of containers. The containers are sorted descending by creation date.",
       "authed": false,
       "method": "GET",
@@ -36839,7 +36840,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single container.",
       "authed": false,
       "method": "GET",
@@ -37861,7 +37862,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/ports",
@@ -38777,7 +38778,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of all products belonging to this client",
       "authed": false,
       "method": "GET",
@@ -39364,7 +39365,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new product for this client using the request payload",
       "authed": false,
       "method": "POST",
@@ -39951,7 +39952,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns the client's product with this ID",
       "authed": false,
       "method": "GET",
@@ -40535,7 +40536,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update this product to represent the request payload",
       "authed": false,
       "method": "PATCH",
@@ -41448,7 +41449,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of purchase order line items",
       "authed": false,
       "method": "GET",
@@ -42531,7 +42532,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns the details of a purchase order line item",
       "authed": false,
       "method": "GET",
@@ -44167,7 +44168,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of purchase orders",
       "authed": false,
       "method": "GET",
@@ -45871,7 +45872,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/purchase_orders",
@@ -47787,7 +47788,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single purchase order.\n",
       "authed": false,
       "method": "GET",
@@ -48988,7 +48989,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/purchase_orders/{id}",
@@ -50670,7 +50671,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
       "authed": false,
       "method": "GET",
@@ -51914,7 +51915,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/shipment_legs/{id}",
@@ -54034,7 +54035,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of shipments.",
       "authed": false,
       "method": "GET",
@@ -56166,7 +56167,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the details of a single shipment.\n",
       "authed": false,
       "method": "GET",
@@ -58268,7 +58269,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/shipments/{id}",
@@ -60346,7 +60347,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a list of shipments status shareable url",
       "authed": false,
       "method": "POST",

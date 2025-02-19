@@ -1,6 +1,7 @@
 {
   "title": "Test inheritance from undiscrimnated union objects",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
