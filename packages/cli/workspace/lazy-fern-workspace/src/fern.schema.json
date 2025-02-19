@@ -3431,6 +3431,16 @@
         "auth": {
           "type": "boolean"
         },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "path": {
           "type": "string"
         },

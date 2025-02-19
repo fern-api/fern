@@ -251,7 +251,7 @@ export function buildEndpoint({
 
     if (context.builder.getEnvironmentType() === "multi") {
         const defaultServer = context.getDefaultServerName();
-        const serverOverride = endpoint.server[0];
+        const serverOverride = endpoint.servers[0];
         if (serverOverride == null) {
             if (defaultServer != null) {
                 convertedEndpoint.url = defaultServer;

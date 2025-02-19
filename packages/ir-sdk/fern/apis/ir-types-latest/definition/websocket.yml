@@ -2,6 +2,7 @@ imports:
   commons: commons.yml
   types: types.yml
   http: http.yml
+  environment: environment.yml
 
 types:
   WebSocketMessageId: string
@@ -11,6 +12,7 @@ types:
     properties:
       name: WebSocketName
       displayName: optional<string>
+      baseUrl: optional<environment.EnvironmentBaseUrlId>
       path: http.HttpPath
       auth: boolean
       headers: list<http.HttpHeader>

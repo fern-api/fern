@@ -17,8 +17,8 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
                 throw new Error(`Failed to resolve message reference ${message.$ref} in channel ${channelPath}`);
             }
 
-            const channel = this.document.channels[channelPath] as AsyncAPIV3.Channel;
-            const resolvedInChannel = (channel as AsyncAPIV3.Channel).messages?.[messageKey];
+            const channel = this.document.channels[channelPath] as AsyncAPIV3.ChannelV3;
+            const resolvedInChannel = (channel as AsyncAPIV3.ChannelV3).messages?.[messageKey];
             if (resolvedInChannel == null) {
                 throw new Error(`${message.$ref} is undefined`);
             }

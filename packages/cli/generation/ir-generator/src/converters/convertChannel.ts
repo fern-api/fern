@@ -62,6 +62,7 @@ export function convertChannel({
     return {
         availability: convertAvailability(channel.availability),
         path: constructHttpPath(channel.path),
+        baseUrl: channel.url,
         auth: channel.auth,
         // since there's only 1 channel per file, we can use the file name as the channel's name
         name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),

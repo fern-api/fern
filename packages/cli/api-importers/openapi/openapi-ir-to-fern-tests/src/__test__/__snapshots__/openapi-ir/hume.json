@@ -6,6 +6,7 @@
       "url": "https://api.hume.ai"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Start Job": {
@@ -200,7 +201,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Sort and filter jobs.",
       "authed": true,
       "method": "GET",
@@ -366,7 +367,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Start a new batch job.",
       "authed": true,
       "method": "POST",
@@ -457,7 +458,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get the JSON predictions of a completed job.",
       "authed": true,
       "method": "GET",
@@ -617,7 +618,7 @@
         "type": "file"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get the artifacts ZIP of a completed job.",
       "authed": true,
       "method": "GET",
@@ -676,7 +677,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get the request details and state of a given job.",
       "authed": true,
       "method": "GET",

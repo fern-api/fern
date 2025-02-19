@@ -54,7 +54,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<finalIr.HttpEndpointServer>
+      servers: list<finalIr.HttpEndpointServer>
       examples:
         type: list<finalIr.EndpointExample>
         docs: |

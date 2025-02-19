@@ -6,6 +6,7 @@
       "url": "//https://api.suger.cloud"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -77,7 +78,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list all buyers by the given organization",
       "authed": true,
       "method": "GET",
@@ -276,7 +277,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "get buyer by the given organization and buyer id",
       "authed": true,
       "method": "GET",
@@ -623,7 +624,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "update buyer name and description by the given organization and buyer id",
       "authed": true,
       "method": "PATCH",
@@ -960,7 +961,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all entitlements of the given buyer",
       "authed": true,
       "method": "GET",
@@ -1367,7 +1368,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
       "authed": true,
       "method": "POST",
@@ -2028,7 +2029,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all entitlements under the organization",
       "authed": true,
       "method": "GET",
@@ -2410,7 +2411,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the entitlement by ID",
       "authed": true,
       "method": "GET",
@@ -2858,7 +2859,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
       "authed": true,
       "method": "POST",
@@ -3063,7 +3064,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the name of the given Entitlement",
       "authed": true,
       "method": "PATCH",
@@ -3459,7 +3460,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all Entitlement Terms of the given Entitlement",
       "authed": true,
       "method": "GET",
@@ -3858,7 +3859,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the entitlement term by ID",
       "authed": true,
       "method": "GET",
@@ -4343,7 +4344,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list UsageRecordGroups for the given organization and entitlement",
       "authed": true,
       "method": "GET",
@@ -4647,7 +4648,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
       "authed": true,
       "method": "POST",
@@ -5024,7 +5025,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
       "authed": true,
       "method": "GET",
@@ -5197,7 +5198,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all integrations for the given organization.",
       "authed": true,
       "method": "GET",
@@ -5412,7 +5413,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "For each organization, partner & service, there should be at most one integration.",
       "authed": true,
       "method": "POST",
@@ -6038,7 +6039,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the integration for the given organization, partner & service.",
       "authed": true,
       "method": "GET",
@@ -6623,7 +6624,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "delete the integration for the given orgId, partner and service.",
       "authed": true,
       "method": "DELETE",
@@ -6862,7 +6863,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the given integration.",
       "authed": true,
       "method": "PATCH",
@@ -7474,7 +7475,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Verify the given integration, check whether it works correctly.",
       "authed": true,
       "method": "POST",
@@ -7594,7 +7595,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all offers under the given organization.",
       "authed": true,
       "method": "GET",
@@ -7990,7 +7991,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a private offer under the given organization.",
       "authed": true,
       "method": "POST",
@@ -8662,7 +8663,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the offer by the given offer ID.",
       "authed": true,
       "method": "GET",
@@ -9339,7 +9340,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Only the offer with status = \"DRAFT\" or \"CREATE_FAILED\" is allowed to be deleted.",
       "authed": true,
       "method": "DELETE",
@@ -9477,7 +9478,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Only the offer with status = \"PENDING_ACCEPTANCE\" or \"PENDING_CANCEL\" is allowed to cancel.",
       "authed": true,
       "method": "POST",
@@ -9609,7 +9610,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all entitlements under the given offer",
       "authed": true,
       "method": "GET",
@@ -10075,7 +10076,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
       "authed": true,
       "method": "GET",
@@ -10267,7 +10268,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all entitlements under the given partner",
       "authed": true,
       "method": "GET",
@@ -10697,7 +10698,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all offers under the given organization & cloud partner.",
       "authed": false,
       "method": "GET",
@@ -11119,7 +11120,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list all products under the given organization and cloud partner",
       "authed": true,
       "method": "GET",
@@ -11617,7 +11618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list the revenue records for the given organization, product, entitlement, or buyer.",
       "authed": true,
       "method": "GET",
@@ -12104,7 +12105,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
       "authed": true,
       "method": "GET",
@@ -12231,7 +12232,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list all products under the given organization",
       "authed": true,
       "method": "GET",
@@ -12514,7 +12515,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "get product by product id",
       "authed": true,
       "method": "GET",
@@ -12983,7 +12984,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "only the product with status = \"CREATE_FAILED\" is allowed to be deleted.",
       "authed": true,
       "method": "DELETE",
@@ -13129,7 +13130,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "currently only the Fulfillment URL is allowed to update via this API.",
       "authed": true,
       "method": "PATCH",
@@ -13630,7 +13631,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list all metering dimensions of the given product",
       "authed": true,
       "method": "GET",
@@ -13805,7 +13806,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all entitlements under the given product",
       "authed": true,
       "method": "GET",
@@ -14202,7 +14203,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List all offers under the given organization & product.",
       "authed": true,
       "method": "GET",
@@ -14690,7 +14691,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list UsageRecordGroups for the given organization and product",
       "authed": true,
       "method": "GET",
@@ -15003,7 +15004,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List usageRecordReports for the given organization and product",
       "authed": true,
       "method": "GET",
@@ -15232,7 +15233,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the revenue report of the given organization, product, entitlement, or buyer.",
       "authed": true,
       "method": "POST",
@@ -15658,7 +15659,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "list UsageRecordGroups under the given organization.",
       "authed": true,
       "method": "GET",
@@ -15864,7 +15865,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
       "authed": true,
       "method": "GET",
@@ -16167,7 +16168,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List usageRecordReports under the given organization",
       "authed": true,
       "method": "GET",
@@ -16341,7 +16342,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "get the usageRecordReport for a given organization and usageRecordReport ID.",
       "authed": true,
       "method": "GET",
@@ -16791,7 +16792,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
       "authed": true,
       "method": "POST",
@@ -16985,7 +16986,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
       "authed": false,
       "method": "POST",

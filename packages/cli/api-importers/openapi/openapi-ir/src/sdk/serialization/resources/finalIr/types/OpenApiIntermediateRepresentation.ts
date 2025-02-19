@@ -28,6 +28,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     description: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
     servers: core.serialization.list(Server),
+    websocketServers: core.serialization.list(Server),
     groups: core.serialization.record(core.serialization.string(), SdkGroupInfo),
     tags: Tags,
     hasEndpointsMarkedInternal: core.serialization.boolean(),
@@ -49,6 +50,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         description?: string | null;
         basePath?: string | null;
         servers: Server.Raw[];
+        websocketServers: Server.Raw[];
         groups: Record<string, SdkGroupInfo.Raw>;
         tags: Tags.Raw;
         hasEndpointsMarkedInternal: boolean;

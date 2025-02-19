@@ -1,6 +1,7 @@
 {
   "title": "Test `json-string` example",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },

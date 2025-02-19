@@ -6,6 +6,8 @@ import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative }
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
+
 export type HttpServiceInfo = Partial<
     Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
 >;

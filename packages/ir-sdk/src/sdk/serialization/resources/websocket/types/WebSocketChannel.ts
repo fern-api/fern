@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WebSocketName } from "./WebSocketName";
+import { EnvironmentBaseUrlId } from "../../environment/types/EnvironmentBaseUrlId";
 import { HttpPath } from "../../http/types/HttpPath";
 import { HttpHeader } from "../../http/types/HttpHeader";
 import { QueryParameter } from "../../http/types/QueryParameter";
@@ -21,6 +22,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: WebSocketName,
         displayName: core.serialization.string().optional(),
+        baseUrl: EnvironmentBaseUrlId.optional(),
         path: HttpPath,
         auth: core.serialization.boolean(),
         headers: core.serialization.list(HttpHeader),
@@ -35,6 +37,7 @@ export declare namespace WebSocketChannel {
     export interface Raw extends Declaration.Raw {
         name: WebSocketName.Raw;
         displayName?: string | null;
+        baseUrl?: EnvironmentBaseUrlId.Raw | null;
         path: HttpPath.Raw;
         auth: boolean;
         headers: HttpHeader.Raw[];

@@ -5,7 +5,8 @@ import { ChannelId } from "../sharedTypes";
 export interface DocumentV3 {
     asyncapi: string;
     info: Info;
-    channels?: Record<ChannelId, Channel>;
+    servers?: Record<string, ServerV3>;
+    channels?: Record<ChannelId, ChannelV3>;
     operations?: Record<string, Operation>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
@@ -18,10 +19,17 @@ export interface Info {
     externalDocs?: OpenAPIV3.ExternalDocumentationObject;
 }
 
-export interface Channel {
+export interface ServerV3 {
+    name: string;
+    host: string;
+    protocol: string;
+}
+
+export interface ChannelV3 {
     address?: string;
     bindings?: Bindings;
     messages?: Record<string, MessageV3>;
+    servers?: OpenAPIV3.ReferenceObject[];
     // TODO: Add support for reference objects
     parameters?: Record<string, ChannelParameter>;
 }
