@@ -50,21 +50,16 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         switch (packageLayout) {
             case FLAT:
-                tokens.addAll(fernFilepath.getAllParts().stream()
-                        .map(Name::getSnakeCase)
-                        .map(SafeAndUnsafeString::getSafeName)
-                        .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
-                        .collect(Collectors.toList()));
-                return String.join(".", tokens);
+                break;
             case NESTED:
             default:
                 tokens.add("model");
-                tokens.addAll(fernFilepath.getAllParts().stream()
-                        .map(Name::getSnakeCase)
-                        .map(SafeAndUnsafeString::getSafeName)
-                        .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
-                        .collect(Collectors.toList()));
-                return String.join(".", tokens);
         }
+        tokens.addAll(fernFilepath.getAllParts().stream()
+                .map(Name::getSnakeCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
+                .collect(Collectors.toList()));
+        return String.join(".", tokens);
     }
 }
