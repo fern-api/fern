@@ -5,6 +5,7 @@ package com.seed.packageYml;
 
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedPackageYmlClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedPackageYmlClientBuilder {
      */
     public SeedPackageYmlClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedPackageYmlClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

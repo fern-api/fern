@@ -127,6 +127,11 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
+        private OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(new RetryInterceptor(3))
+                .callTimeout(this.timeout, TimeUnit.SECONDS)
+                .build();
+
         private Optional<ApiVersion> version = Optional.empty();
 
         public Builder environment(Environment environment) {
@@ -152,6 +157,11 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
         /**
          * version.toString() is sent as the "X-API-Version" header.
          */
@@ -161,11 +171,7 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    .callTimeout(this.timeout, TimeUnit.SECONDS)
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout, version);
+            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout, version);
         }
     }
 }

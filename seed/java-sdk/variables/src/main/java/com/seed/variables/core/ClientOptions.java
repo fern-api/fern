@@ -93,6 +93,11 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
+        private OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(new RetryInterceptor(3))
+                .callTimeout(this.timeout, TimeUnit.SECONDS)
+                .build();
+
         private String rootVariable;
 
         public Builder environment(Environment environment) {
@@ -118,18 +123,19 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
         public Builder rootVariable(String rootVariable) {
             this.rootVariable = rootVariable;
             return this;
         }
 
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    .callTimeout(this.timeout, TimeUnit.SECONDS)
-                    .build();
             return new ClientOptions(
-                    environment, headers, headerSuppliers, okhttpClient, this.timeout, this.rootVariable);
+                    environment, headers, headerSuppliers, httpClient, this.timeout, this.rootVariable);
         }
     }
 }

@@ -7,6 +7,7 @@ package com.fern.sdk;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.Environment;
 import java.lang.String;
+import okhttp3.OkHttpClient;
 
 public final class SeedExhaustiveClientBuilder {
   private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -33,6 +34,14 @@ public final class SeedExhaustiveClientBuilder {
    */
   public SeedExhaustiveClientBuilder timeout(int timeout) {
     this.clientOptionsBuilder.timeout(timeout);
+    return this;
+  }
+
+  /**
+   * Sets the underlying OkHttp client
+   */
+  public SeedExhaustiveClientBuilder httpClient(OkHttpClient httpClient) {
+    this.clientOptionsBuilder.httpClient(httpClient);
     return this;
   }
 

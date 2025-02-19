@@ -5,6 +5,7 @@ package com.seed.responseProperty;
 
 import com.seed.responseProperty.core.ClientOptions;
 import com.seed.responseProperty.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedResponsePropertyClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedResponsePropertyClientBuilder {
      */
     public SeedResponsePropertyClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedResponsePropertyClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

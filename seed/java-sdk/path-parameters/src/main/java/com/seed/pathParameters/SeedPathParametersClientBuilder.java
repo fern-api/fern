@@ -5,6 +5,7 @@ package com.seed.pathParameters;
 
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedPathParametersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedPathParametersClientBuilder {
      */
     public SeedPathParametersClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedPathParametersClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

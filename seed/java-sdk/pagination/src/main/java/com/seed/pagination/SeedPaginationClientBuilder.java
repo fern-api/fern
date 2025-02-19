@@ -5,6 +5,7 @@ package com.seed.pagination;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedPaginationClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,14 @@ public final class SeedPaginationClientBuilder {
      */
     public SeedPaginationClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedPaginationClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

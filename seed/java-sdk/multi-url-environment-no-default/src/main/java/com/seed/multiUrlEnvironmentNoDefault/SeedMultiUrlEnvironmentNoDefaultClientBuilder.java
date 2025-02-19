@@ -5,6 +5,7 @@ package com.seed.multiUrlEnvironmentNoDefault;
 
 import com.seed.multiUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.multiUrlEnvironmentNoDefault.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedMultiUrlEnvironmentNoDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,14 @@ public final class SeedMultiUrlEnvironmentNoDefaultClientBuilder {
      */
     public SeedMultiUrlEnvironmentNoDefaultClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedMultiUrlEnvironmentNoDefaultClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 
