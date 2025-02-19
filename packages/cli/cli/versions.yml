@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Dynamically deconflict AsyncAPI message names when generating Fern Definition Types to preserve original naming
+        wherever possible.
+      type: fix
+  irVersion: 55
+  version: 0.53.12
+
+- changelogEntry:
+    - summary: |
         Fix an issue with the OpenAPI v2 parser where schemas with single value arrays were being incorrectly parsed.
       type: fix
   irVersion: 55

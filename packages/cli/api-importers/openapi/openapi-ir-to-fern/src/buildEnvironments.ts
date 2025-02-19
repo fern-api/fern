@@ -94,8 +94,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     }
 
     const numTopLevelServersWithName = Object.keys(topLevelServersWithName).length;
-    const numEndpointLevelServersWithName = Object.keys(endpointLevelServersWithName).length;
-    const numWebsocketServersWithName = Object.keys(websocketServersWithName).length;
+    const hasEndpointLevelServersWithName = Object.keys(endpointLevelServersWithName).length > 0;
+    const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
 
     // Endpoint level servers must always have a name attached. If they don't, we'll throw an error.
     if (endpointLevelSkippedServers.length > 0) {
@@ -138,11 +138,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     }
 
     // At this stage, we have at least one top level named server. We now build the environments.
-    if (numEndpointLevelServersWithName === 0) {
-        let count = 0;
+    if (!hasEndpointLevelServersWithName) {
+        let firstEnvironment = true;
         for (const [name, schema] of Object.entries(topLevelServersWithName)) {
-            if (count === 0) {
-                if (numWebsocketServersWithName > 0) {
+            if (firstEnvironment) {
+                if (hasWebsocketServersWithName) {
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -159,9 +159,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     });
                 }
                 context.builder.setDefaultEnvironment(name);
-                count += 1;
+                firstEnvironment = false;
             } else {
-                if (numWebsocketServersWithName > 0) {
+                if (hasWebsocketServersWithName) {
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -178,9 +178,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     });
                 }
             }
-            count += 1;
         }
-        if (numWebsocketServersWithName > 0) {
+        if (hasWebsocketServersWithName) {
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         }
     } else {
@@ -204,9 +203,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             context.builder.setDefaultEnvironment(environmentName);
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         } else {
-            let count = 0;
+            let firstEnvironment = true;
             for (const [name, schema] of Object.entries(topLevelServersWithName)) {
-                if (count === 0) {
+                if (firstEnvironment) {
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -218,7 +217,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     });
                     context.builder.setDefaultEnvironment(name);
-                    count += 1;
+                    firstEnvironment = false;
                 } else {
                     context.builder.addEnvironment({
                         name,
@@ -233,7 +232,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     });
                 }
-                count += 1;
             }
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
         }
