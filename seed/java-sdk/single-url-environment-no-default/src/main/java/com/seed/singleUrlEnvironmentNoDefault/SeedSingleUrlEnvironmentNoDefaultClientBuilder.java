@@ -5,6 +5,7 @@ package com.seed.singleUrlEnvironmentNoDefault;
 
 import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -36,6 +37,11 @@ public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
      */
     public SeedSingleUrlEnvironmentNoDefaultClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedSingleUrlEnvironmentNoDefaultClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

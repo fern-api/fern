@@ -5,6 +5,7 @@ package com.seed.unions;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedUnionsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedUnionsClientBuilder {
      */
     public SeedUnionsClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedUnionsClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

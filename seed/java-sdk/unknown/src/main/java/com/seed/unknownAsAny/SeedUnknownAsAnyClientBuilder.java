@@ -5,6 +5,7 @@ package com.seed.unknownAsAny;
 
 import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedUnknownAsAnyClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedUnknownAsAnyClientBuilder {
      */
     public SeedUnknownAsAnyClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedUnknownAsAnyClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

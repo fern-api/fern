@@ -5,6 +5,7 @@ package com.seed.bearerTokenEnvironmentVariable;
 
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedBearerTokenEnvironmentVariableClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -34,6 +35,11 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
      */
     public SeedBearerTokenEnvironmentVariableClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedBearerTokenEnvironmentVariableClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

@@ -5,6 +5,7 @@ package com.seed.literal;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -25,6 +26,11 @@ public final class SeedLiteralClientBuilder {
      */
     public SeedLiteralClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedLiteralClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

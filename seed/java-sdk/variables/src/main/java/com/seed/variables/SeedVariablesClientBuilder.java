@@ -5,6 +5,7 @@ package com.seed.variables;
 
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedVariablesClientBuilder {
      */
     public SeedVariablesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedVariablesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

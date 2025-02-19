@@ -5,6 +5,7 @@ package com.seed.fileUpload;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedFileUploadClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedFileUploadClientBuilder {
      */
     public SeedFileUploadClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedFileUploadClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

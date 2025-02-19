@@ -5,6 +5,7 @@ package com.seed.nullable;
 
 import com.seed.nullable.core.ClientOptions;
 import com.seed.nullable.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedNullableClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedNullableClientBuilder {
      */
     public SeedNullableClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedNullableClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

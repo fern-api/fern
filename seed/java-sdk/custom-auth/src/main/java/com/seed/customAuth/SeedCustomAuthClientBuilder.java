@@ -5,6 +5,7 @@ package com.seed.customAuth;
 
 import com.seed.customAuth.core.ClientOptions;
 import com.seed.customAuth.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedCustomAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,11 @@ public final class SeedCustomAuthClientBuilder {
      */
     public SeedCustomAuthClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedCustomAuthClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

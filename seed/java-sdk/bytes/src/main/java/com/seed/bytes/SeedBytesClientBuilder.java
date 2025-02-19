@@ -5,6 +5,7 @@ package com.seed.bytes;
 
 import com.seed.bytes.core.ClientOptions;
 import com.seed.bytes.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedBytesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,11 @@ public final class SeedBytesClientBuilder {
      */
     public SeedBytesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    public SeedBytesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 
