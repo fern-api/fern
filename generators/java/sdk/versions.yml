@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add support for custom HTTP client in Java SDK
+      type: feat
+  createdAt: '2025-02-19'
+  irVersion: 53
+  version: 2.15.0
+- changelogEntry:
+    - summary: |
         Support user-agent header
       type: feat
   createdAt: '2025-02-19'
