@@ -67,7 +67,6 @@ export function parseAsyncAPIV3({
                         if (sid === messageId && cid != null) {
                             if (messageSchemas[cid] != null && messageSchemas[cid][sid] != null) {
                                 messageSchemas[cid][`${cid}_${messageId}`] = messageSchemas[cid][sid];
-                                delete messageSchemas[cid][sid];
                             }
                             seenMessageIds.push({ channelId: cid, schemaId: `${cid}_${messageId}` });
                         }
