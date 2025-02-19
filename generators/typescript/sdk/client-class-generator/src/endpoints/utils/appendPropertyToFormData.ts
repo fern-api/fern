@@ -1,4 +1,3 @@
-import { getSchemaOptions } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -110,6 +109,20 @@ export function appendPropertyToFormData({
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);
 
             let statement: ts.Statement;
+
+            if (property.style === "form") {
+                statement = context.coreUtilities.formDataUtils.append({
+                    referenceToFormData,
+                    key: property.name.wireValue,
+                    value: context.externalDependencies.qs.stringify(referenceToBodyProperty)
+                });
+            } else {
+                statement = context.coreUtilities.formDataUtils.append({
+                    referenceToFormData,
+                    key: property.name.wireValue,
+                    value: referenceToBodyProperty
+                });
+            }
 
             if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
