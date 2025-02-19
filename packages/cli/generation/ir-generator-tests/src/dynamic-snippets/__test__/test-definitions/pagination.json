@@ -3818,7 +3818,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithCursorPagination": {
             "auth": {
@@ -4113,7 +4114,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithMixedTypeCursorPagination": {
             "auth": {
@@ -4315,7 +4317,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithBodyCursorPagination": {
             "auth": {
@@ -4520,7 +4523,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithOffsetPagination": {
             "auth": {
@@ -4815,7 +4819,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithDoubleOffsetPagination": {
             "auth": {
@@ -5110,7 +5115,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithBodyOffsetPagination": {
             "auth": {
@@ -5315,7 +5321,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithOffsetStepPagination": {
             "auth": {
@@ -5579,7 +5586,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithOffsetPaginationHasNextPage": {
             "auth": {
@@ -5843,7 +5851,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithExtendedResults": {
             "auth": {
@@ -6045,7 +6054,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithExtendedResultsAndOptionalData": {
             "auth": {
@@ -6247,7 +6257,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listUsernames": {
             "auth": {
@@ -6449,7 +6460,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_users.listWithGlobalConfig": {
             "auth": {
@@ -6651,7 +6663,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

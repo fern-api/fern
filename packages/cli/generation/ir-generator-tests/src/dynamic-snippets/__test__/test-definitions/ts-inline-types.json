@@ -2930,7 +2930,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_.getDiscriminatedUnion": {
             "auth": null,
@@ -3063,7 +3064,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_.getUndiscriminatedUnion": {
             "auth": null,
@@ -3196,7 +3198,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

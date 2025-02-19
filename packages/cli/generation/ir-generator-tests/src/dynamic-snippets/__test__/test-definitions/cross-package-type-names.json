@@ -915,7 +915,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_folder-d/service.getDirectThread": {
             "auth": null,
@@ -1033,7 +1034,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_foo.find": {
             "auth": null,
@@ -1277,7 +1279,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

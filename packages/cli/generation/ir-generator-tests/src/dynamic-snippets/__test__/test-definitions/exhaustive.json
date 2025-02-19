@@ -2351,7 +2351,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnListOfObjects": {
             "auth": {
@@ -2499,7 +2500,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnSetOfPrimitives": {
             "auth": {
@@ -2647,7 +2649,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnSetOfObjects": {
             "auth": {
@@ -2795,7 +2798,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapPrimToPrim": {
             "auth": {
@@ -2947,7 +2951,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapOfPrimToObject": {
             "auth": {
@@ -3099,7 +3104,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/container.getAndReturnOptional": {
             "auth": {
@@ -3247,7 +3253,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/content-type.postJsonPatchContentType": {
             "auth": {
@@ -3392,7 +3399,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType": {
             "auth": {
@@ -3537,7 +3545,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/enum.getAndReturnEnum": {
             "auth": {
@@ -3682,7 +3691,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/http-methods.testGet": {
             "auth": {
@@ -3850,7 +3860,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/http-methods.testPost": {
             "auth": {
@@ -3995,7 +4006,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/http-methods.testPut": {
             "auth": {
@@ -4169,7 +4181,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/http-methods.testPatch": {
             "auth": {
@@ -4343,7 +4356,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/http-methods.testDelete": {
             "auth": {
@@ -4511,7 +4525,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithOptionalField": {
             "auth": {
@@ -4656,7 +4671,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithRequiredField": {
             "auth": {
@@ -4801,7 +4817,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithMapOfMap": {
             "auth": {
@@ -4946,7 +4963,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithOptionalField": {
             "auth": {
@@ -5091,7 +5109,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredField": {
             "auth": {
@@ -5265,7 +5284,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList": {
             "auth": {
@@ -5413,7 +5433,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithPath": {
             "auth": {
@@ -5581,7 +5602,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithInlinePath": {
             "auth": {
@@ -5858,7 +5880,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithQuery": {
             "auth": {
@@ -6163,7 +6186,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithAllowMultipleQuery": {
             "auth": {
@@ -6474,7 +6498,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithPathAndQuery": {
             "auth": {
@@ -6780,7 +6805,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.getWithInlinePathAndQuery": {
             "auth": {
@@ -7086,7 +7112,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.modifyWithPath": {
             "auth": {
@@ -7260,7 +7287,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/params.modifyWithInlinePath": {
             "auth": {
@@ -7565,7 +7593,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnString": {
             "auth": {
@@ -7710,7 +7739,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnInt": {
             "auth": {
@@ -7855,7 +7885,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnLong": {
             "auth": {
@@ -8000,7 +8031,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDouble": {
             "auth": {
@@ -8145,7 +8177,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnBool": {
             "auth": {
@@ -8290,7 +8323,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDatetime": {
             "auth": {
@@ -8435,7 +8469,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDate": {
             "auth": {
@@ -8580,7 +8615,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnUUID": {
             "auth": {
@@ -8725,7 +8761,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnBase64": {
             "auth": {
@@ -8870,7 +8907,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_endpoints/union.getAndReturnUnion": {
             "auth": {
@@ -9015,7 +9053,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_inlined-requests.postWithObjectBodyandResponse": {
             "auth": {
@@ -9273,7 +9312,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_no-auth.postWithNoAuth": {
             "auth": {
@@ -9378,7 +9418,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_no-req-body.getWithNoRequestBody": {
             "auth": {
@@ -9478,7 +9519,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_no-req-body.postWithNoRequestBody": {
             "auth": {
@@ -9578,7 +9620,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_req-with-headers.getWithCustomHeader": {
             "auth": {
@@ -9833,7 +9876,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

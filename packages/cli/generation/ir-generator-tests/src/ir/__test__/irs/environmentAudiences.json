@@ -5479,7 +5479,8 @@
                 },
                 "response": {
                     "type": "json"
-                }
+                },
+                "examples": null
             },
             "endpoint_imdb.getMovie": {
                 "auth": null,
@@ -5587,7 +5588,8 @@
                 },
                 "response": {
                     "type": "json"
-                }
+                },
+                "examples": null
             }
         },
         "environments": {

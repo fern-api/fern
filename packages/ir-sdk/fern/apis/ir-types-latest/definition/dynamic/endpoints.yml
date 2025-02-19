@@ -4,6 +4,8 @@ imports:
   declaration: ./declaration.yml
   http: ../http.yml
   types: ./types.yml
+  snippets: ./snippets.yml
+
 types:
   EndpointLocation:
     docs: |
@@ -19,6 +21,7 @@ types:
       location: EndpointLocation
       request: Request
       response: Response
+      examples: optional<list<snippets.EndpointSnippetRequest>>
 
   Request:
     docs: |
