@@ -1,25 +1,13 @@
 import { kebabCase } from "lodash-es";
 
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 
-function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>(item: T): string {
-    return item.operationId != null ? kebabCase(item.operationId) : kebabCase(item.id.split(".").pop() ?? "");
-}
-
-export function getApiLatestEndpointToNavigationNodeUrlSlug(
-    endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition
-): string {
-    return getApiLatestToNavigationNodeUrlSlug(endpoint);
-}
-
-export function getApiLatestWebSocketToNavigationNodeUrlSlug(
-    webSocket: FdrAPI.api.latest.websocket.WebSocketChannel
-): string {
-    return getApiLatestToNavigationNodeUrlSlug(webSocket);
-}
-
-export function getApiLatestWebhookToNavigationNodeUrlSlug(
-    webhook: FdrAPI.api.latest.webhook.WebhookDefinition
-): string {
-    return getApiLatestToNavigationNodeUrlSlug(webhook);
+export function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>(
+    item: T,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    namespacedSlug: FernNavigation.V1.SlugGenerator
+): FernNavigation.V1.Slug {
+    return item.operationId != null
+        ? parentSlug.apply({ urlSlug: kebabCase(item.operationId) }).get()
+        : namespacedSlug.apply({ urlSlug: kebabCase(item.id.split(".").pop() ?? "") }).get();
 }
