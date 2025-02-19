@@ -18,7 +18,7 @@ public final class SpringGeneratorContext
                 ir,
                 generatorConfig,
                 customConfig,
-                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix()),
+                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix(), customConfig.packageLayout()),
                 resolvedAuthSchemes);
     }
 
