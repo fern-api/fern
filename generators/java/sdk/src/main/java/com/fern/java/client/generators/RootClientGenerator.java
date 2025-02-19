@@ -47,6 +47,8 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
+import okhttp3.OkHttpClient;
+
 import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
@@ -207,6 +209,14 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addParameter(int.class, "timeout")
                 .returns(builderName)
                 .addStatement("this.$L.timeout(timeout)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderName)
+                .addParameter(OkHttpClient.class, "httpClient")
+                .addStatement("this.$L.httpClient(httpClient)", CLIENT_OPTIONS_BUILDER_NAME)
                 .addStatement("return this")
                 .build());
 
