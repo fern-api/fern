@@ -47,12 +47,11 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import okhttp3.OkHttpClient;
-
 import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
+import okhttp3.OkHttpClient;
 
 public final class RootClientGenerator extends AbstractFileGenerator {
 
