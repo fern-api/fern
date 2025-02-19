@@ -151,6 +151,33 @@ module SeedFileUploadClient
         req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
       end
     end
+
+    # @param file [String, IO]
+    # @param foo [String]
+    # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
+    # @param request_options [SeedFileUploadClient::RequestOptions]
+    # @return [Void]
+    def with_form_encoding(file:, foo:, bar:, request_options: nil)
+      @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = {
+          **(request_options&.additional_body_parameters || {}),
+          file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
+          foo: foo,
+          bar: bar
+        }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/with-form-encoding"
+      end
+    end
   end
 
   class AsyncServiceClient
@@ -302,6 +329,35 @@ module SeedFileUploadClient
             foo_bar: foo_bar
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
+        end
+      end
+    end
+
+    # @param file [String, IO]
+    # @param foo [String]
+    # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
+    # @param request_options [SeedFileUploadClient::RequestOptions]
+    # @return [Void]
+    def with_form_encoding(file:, foo:, bar:, request_options: nil)
+      Async do
+        @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
+            foo: foo,
+            bar: bar
+          }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/with-form-encoding"
         end
       end
     end

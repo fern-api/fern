@@ -17,11 +17,14 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param version [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
+    def initialize(version:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
       @api_key = "Bearer #{api_key}"
-      @conn = Faraday.new do |faraday|
+      @headers = {}
+      @headers["X-API-Version"] = version unless version.nil?
+      @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -59,11 +62,14 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param version [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
+    def initialize(version:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
       @api_key = "Bearer #{api_key}"
-      @conn = Faraday.new do |faraday|
+      @headers = {}
+      @headers["X-API-Version"] = version unless version.nil?
+      @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -97,6 +103,8 @@ module SeedBearerTokenEnvironmentVariableClient
     attr_reader :base_url
     # @return [String]
     attr_reader :api_key
+    # @return [String]
+    attr_reader :version
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -108,15 +116,17 @@ module SeedBearerTokenEnvironmentVariableClient
 
     # @param base_url [String]
     # @param api_key [String]
+    # @param version [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedBearerTokenEnvironmentVariableClient::RequestOptions]
-    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, api_key: nil, version: nil, additional_headers: nil,
+                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @api_key = api_key
+      @version = version
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
@@ -131,6 +141,8 @@ module SeedBearerTokenEnvironmentVariableClient
     attr_reader :base_url
     # @return [String]
     attr_reader :api_key
+    # @return [String]
+    attr_reader :version
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -142,15 +154,17 @@ module SeedBearerTokenEnvironmentVariableClient
 
     # @param base_url [String]
     # @param api_key [String]
+    # @param version [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedBearerTokenEnvironmentVariableClient::IdempotencyRequestOptions]
-    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, api_key: nil, version: nil, additional_headers: nil,
+                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @api_key = api_key
+      @version = version
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters

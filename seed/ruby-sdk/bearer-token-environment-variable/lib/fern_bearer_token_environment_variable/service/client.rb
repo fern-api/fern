@@ -20,12 +20,17 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param request_options [SeedBearerTokenEnvironmentVariableClient::RequestOptions]
     # @return [String]
     # @example
-    #  bearer_token_environment_variable = SeedBearerTokenEnvironmentVariableClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_AUTH_TOKEN")
+    #  bearer_token_environment_variable = SeedBearerTokenEnvironmentVariableClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_AUTH_TOKEN",
+    #    version: "Version"
+    #  )
     #  bearer_token_environment_variable.service.get_with_bearer_token
     def get_with_bearer_token(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -58,13 +63,18 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param request_options [SeedBearerTokenEnvironmentVariableClient::RequestOptions]
     # @return [String]
     # @example
-    #  bearer_token_environment_variable = SeedBearerTokenEnvironmentVariableClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_AUTH_TOKEN")
+    #  bearer_token_environment_variable = SeedBearerTokenEnvironmentVariableClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_AUTH_TOKEN",
+    #    version: "Version"
+    #  )
     #  bearer_token_environment_variable.service.get_with_bearer_token
     def get_with_bearer_token(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
