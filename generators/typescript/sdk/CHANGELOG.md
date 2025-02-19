@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.6] - 2025-01-28
+
+- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and 
+  object values with the `repeat` array format.
+
 ## [0.48.5] - 2025-01-28
 
 - Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.
