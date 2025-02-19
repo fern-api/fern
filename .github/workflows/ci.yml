@@ -156,7 +156,7 @@ jobs:
         with:
           node-version: "20.x"
 
-      - name: Check API definition is valid
+      - name: Assert docs are generated
         env:
           FORCE_COLOR: "2"
           FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
@@ -192,7 +192,7 @@ jobs:
         with:
           node-version: "20.x"
 
-      - name: Check API definition is valid
+      - name: Assert docs dev command succeeds
         env:
           FORCE_COLOR: "2"
           FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
@@ -206,11 +206,12 @@ jobs:
             exit 1
           }
           cd windows
-          $output = node $cliPath docs dev --log-level trace 2>&1
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Command failed with exit code $LASTEXITCODE"
-            exit $LASTEXITCODE
+          $process = Start-Process node -ArgumentList "$cliPath", "docs", "dev", "--log-level", "trace" -PassThru -RedirectStandardOutput "output.txt" -RedirectStandardError "error.txt"
+          Start-Sleep -Seconds 10
+          if (-not $process.HasExited) {
+            Stop-Process -Id $process.Id -Force
           }
+          $output = Get-Content "output.txt", "error.txt" -Raw
           if ($output -match "Failed to download docs preview bundle") {
             Write-Error "Found 'Failed to download docs preview bundle' in output"
             exit 1
