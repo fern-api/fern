@@ -25,7 +25,7 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
-client.union.get(
+client.bigunion.get(
     id="id",
 )
 ```
@@ -45,7 +45,7 @@ client = AsyncSeedUnions(
 
 
 async def main() -> None:
-    await client.union.get(
+    await client.bigunion.get(
         id="id",
     )
 
@@ -62,7 +62,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.union.get(...)
+    client.bigunion.get(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -85,7 +85,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.union.get(..., request_options={
+client.bigunion.get(..., request_options={
     "max_retries": 1
 })
 ```
@@ -105,7 +105,7 @@ client = SeedUnions(
 
 
 # Override timeout for a specific method
-client.union.get(..., request_options={
+client.bigunion.get(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
