@@ -111,7 +111,13 @@ export function appendPropertyToFormData({
 
             let statement: ts.Statement;
 
-            if (isMaybeIterable(property.valueType, context)) {
+            if (property.style === "form") {
+                statement = context.coreUtilities.formDataUtils.append({
+                    referenceToFormData,
+                    key: property.name.wireValue,
+                    value: context.externalDependencies.qs.stringify(referenceToBodyProperty)
+                });
+            } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(
