@@ -74,6 +74,28 @@ public interface ICustomConfig {
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
+    @Value.Default
+    @JsonProperty("package-layout")
+    default PackageLayout packageLayout() {
+        return PackageLayout.NESTED;
+    }
+
+    enum PackageLayout {
+        NESTED("nested"),
+        FLAT("flat");
+
+        private final String value;
+
+        PackageLayout(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
     enum JsonInclude {
         NON_EMPTY("non-empty"),
         NON_ABSENT("non-absent");
