@@ -62,14 +62,11 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         switch (packageLayout) {
             case FLAT:
-                List<Name> filePathParts =
-                        fernFilepath.map(FernFilepath::getAllParts).orElseGet(List::of);
-                // NOTE: We omit the last entry in the Fern filepath, which is the name of the YAML file containing the
-                //  definition
-                for (int i = 0; i < filePathParts.size() - 1; i++) {
-                    Name part = filePathParts.get(i);
-                    tokens.add(part.getCamelCase().getSafeName().toLowerCase());
-                }
+                fernFilepath.ifPresent(filePath -> tokens.addAll(filePath.getPackagePath().stream()
+                        .map(Name::getCamelCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        .map(String::toLowerCase)
+                        .collect(Collectors.toList())));
                 break;
             case NESTED:
             default:

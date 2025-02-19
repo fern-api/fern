@@ -5,6 +5,7 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Suppliers;
+import com.seed.exhaustive.endpoints.EndpointsClient;
 import java.util.function.Supplier;
 
 public class SeedExhaustiveClient {
