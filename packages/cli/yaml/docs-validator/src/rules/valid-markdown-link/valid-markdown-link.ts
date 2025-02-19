@@ -1,8 +1,9 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
+import terminalLink from "terminal-link";
 
 import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, convertIrToApiDefinition, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -14,6 +15,7 @@ import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
 import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
 import { getInstanceUrls, toBaseUrl } from "./url-utils";
+import { BaseUrl } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v2/resources/read";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
@@ -23,6 +25,7 @@ export const ValidMarkdownLinks: Rule = {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
+        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost")
 
         const docsDefinitionResolver = new DocsDefinitionResolver(
             url,
@@ -105,7 +108,7 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
+                            baseUrl: baseUrl
                         });
 
                         if (exists === true) {
@@ -113,11 +116,17 @@ export const ValidMarkdownLinks: Rule = {
                         }
 
                         return exists.map((brokenPathname) => {
-                            const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
+                            const [message, relFilePath] = createLinkViolationMessage(
+                                pathnameToCheck,
+                                brokenPathname,
+                                workspace.absoluteFilePath,
+                                baseUrl
+                            );
                             return {
                                 name: ValidMarkdownLinks.name,
                                 severity: violationSeverity,
-                                message
+                                message,
+                                relativeFilepath: relFilePath
                             };
                         });
                     })
@@ -168,7 +177,7 @@ export const ValidMarkdownLinks: Rule = {
                                     pageSlugs: visitableSlugs,
                                     absoluteFilePathsToSlugs,
                                     redirects: workspace.config.redirects,
-                                    baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
+                                    baseUrl: baseUrl
                                 });
 
                                 if (exists === true) {
@@ -179,11 +188,17 @@ export const ValidMarkdownLinks: Rule = {
                                 // that points to the endpoint definition file and line number.
                                 // We could potentially add this information in the future, but it's not a huge deal right now.
                                 return exists.map((brokenPathname) => {
-                                    const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
+                                    const [message, relFilePath] = createLinkViolationMessage(
+                                        pathnameToCheck,
+                                        brokenPathname,
+                                        workspace.absoluteFilePath,
+                                        baseUrl
+                                    );
                                     return {
                                         name: ValidMarkdownLinks.name,
                                         severity: "error" as const,
-                                        message
+                                        message,
+                                        relFilepath: relFilePath
                                     };
                                 });
                             })
@@ -199,18 +214,31 @@ export const ValidMarkdownLinks: Rule = {
     }
 };
 
-function createLinkViolationMessage(pathnameToCheck: PathnameToCheck, targetPathname: string): string {
-    return `${getPositionMessage(pathnameToCheck)}Page (${targetPathname}) contains a link to ${chalk.bold(
-        pathnameToCheck.pathname
-    )} that does not exist.`;
-}
-
-function getPositionMessage(pathnameToCheck: PathnameToCheck): string {
+function createLinkViolationMessage(
+    pathnameToCheck: PathnameToCheck,
+    targetPathname: string,
+    workspaceAbsPath: string,
+    baseUrl: BaseUrl
+): [msg: string, relFilePath: RelativeFilePath] {
+    let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
     if (sourceFilepath == null || position == null) {
-        return "";
+        return [msg, RelativeFilePath.of("")];
     }
-    return `[${sourceFilepath.toString()}:${position.start.line}:${position.start.column}] `;
+
+    // including line:column in the fileurl doesn't work, so we just link to the file
+    const fileUrl = `file://${sourceFilepath.toString()}`;
+    const fileLink = terminalLink(`${position.start.line}:${position.start.column}`, fileUrl, {
+        fallback: false
+    });
+
+    // TODO: potentially link to localhost:3000 if validator is being run as part of `docs dev`
+    const targetPageUrl = new URL(targetPathname, wrapWithHttps(baseUrl.domain)).toString();
+    const targetPathnameLink = terminalLink(targetPathname, targetPageUrl, {fallback: false})
+
+    msg = `[${fileLink}] ${targetPathnameLink} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
+    const relFilePath = RelativeFilePath.of(sourceFilepath.toString().replace(workspaceAbsPath, "."));
+    return [msg, relFilePath];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {

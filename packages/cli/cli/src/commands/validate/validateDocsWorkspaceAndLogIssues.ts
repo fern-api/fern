@@ -25,7 +25,14 @@ export async function validateDocsWorkspaceWithoutExiting({
     const startTime = performance.now();
     const violations = await validateDocsWorkspace(workspace, context, fernWorkspaces, ossWorkspaces);
     const elapsedMillis = performance.now() - startTime;
-    let { hasErrors } = logViolations({ violations, context, logWarnings, logSummary, elapsedMillis });
+    let { hasErrors } = logViolations({
+        violations,
+        context,
+        logWarnings,
+        logSummary,
+        logBreadcrumbs: false,
+        elapsedMillis
+    });
 
     if (errorOnBrokenLinks) {
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
