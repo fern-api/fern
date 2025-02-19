@@ -43,6 +43,7 @@ public class ServiceClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("User-Agent", "com.fern:examples/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -83,6 +84,7 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "com.fern:examples/0.0.1")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

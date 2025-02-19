@@ -43,6 +43,7 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "com.fern:bearer-token-environment-variable/0.0.1")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

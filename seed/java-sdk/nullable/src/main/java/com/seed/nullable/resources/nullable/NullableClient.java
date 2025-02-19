@@ -64,7 +64,8 @@ public class NullableClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:nullable/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -107,6 +108,7 @@ public class NullableClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:nullable/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -153,6 +155,7 @@ public class NullableClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:nullable/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

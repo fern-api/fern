@@ -51,6 +51,7 @@ public class AuthClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:oauth-client-credentials/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -93,6 +94,7 @@ public class AuthClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:oauth-client-credentials/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

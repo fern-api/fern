@@ -86,7 +86,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -140,7 +141,8 @@ public class UsersClient {
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -201,6 +203,7 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -269,7 +272,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -331,7 +335,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -389,6 +394,7 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -453,7 +459,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -512,7 +519,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -564,7 +572,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -617,7 +626,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -670,7 +680,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -721,7 +732,8 @@ public class UsersClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:pagination/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

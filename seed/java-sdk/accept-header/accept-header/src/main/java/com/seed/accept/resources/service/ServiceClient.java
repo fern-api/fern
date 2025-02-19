@@ -38,6 +38,7 @@ public class ServiceClient {
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("User-Agent", "com.fern:accept-header/0.0.1")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

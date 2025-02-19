@@ -44,6 +44,7 @@ public class OrganizationsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "com.fern:path-parameters/0.0.1")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -88,7 +89,8 @@ public class OrganizationsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:path-parameters/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -133,7 +135,8 @@ public class OrganizationsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:path-parameters/0.0.1");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

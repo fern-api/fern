@@ -47,7 +47,8 @@ public class ReqWithHeadersClient {
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "com.fern:exhaustive/0.0.1");
         _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
         _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
         Request okhttpRequest = _requestBuilder.build();

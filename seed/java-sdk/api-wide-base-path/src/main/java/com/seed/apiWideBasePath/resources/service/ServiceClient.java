@@ -39,6 +39,7 @@ public class ServiceClient {
                 .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("User-Agent", "com.fern:api-wide-base-path/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

@@ -79,15 +79,15 @@ public abstract class AbstractEndpointWriter {
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
     private final FieldSpec clientOptionsField;
-    private final ClientGeneratorContext clientGeneratorContext;
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Set<String> endpointParameterNames = new HashSet<>();
-    protected final ClassName baseErrorClassName;
-    protected final ClassName apiErrorClassName;
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
     private final boolean inlinePathParams;
+    protected final ClientGeneratorContext clientGeneratorContext;
+    protected final ClassName baseErrorClassName;
+    protected final ClassName apiErrorClassName;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -1689,9 +1689,7 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint, boolean withSemiColon) {
-        String ending = withSemiColon ? ";\n" : "\n";
-
+    public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint) {
         Set<String> contentTypes = new HashSet<>();
 
         // TODO: We'll need to get error content types from the IR once they're available.
@@ -1706,7 +1704,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         String headerValue = String.join("; ", contentTypes);
-        return Optional.of(CodeBlock.of(".addHeader($S, $S)" + ending, ACCEPT_HEADER, headerValue));
+        return Optional.of(CodeBlock.of(".addHeader($S, $S)", ACCEPT_HEADER, headerValue));
     }
 
     public static Optional<String> responseContentType(Optional<HttpResponse> response) {

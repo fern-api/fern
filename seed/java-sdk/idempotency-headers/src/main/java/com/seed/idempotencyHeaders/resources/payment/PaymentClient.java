@@ -51,6 +51,7 @@ public class PaymentClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", "com.fern:idempotency-headers/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -85,6 +86,7 @@ public class PaymentClient {
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("User-Agent", "com.fern:idempotency-headers/0.0.1")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
