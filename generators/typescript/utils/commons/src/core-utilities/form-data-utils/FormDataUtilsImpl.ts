@@ -33,20 +33,27 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             ts.factory.createAwaitExpression(ts.factory.createCallExpression(fdw.getExpression(), undefined, []))
     );
 
+    public readonly encodeAsFormParameter = this.withExportedName(
+        "encodeAsFormParameter",
+        (encodeAsFormParameter) =>
+            ({ referenceToArgument }: { referenceToArgument: ts.Expression }): ts.CallExpression =>
+                ts.factory.createCallExpression(encodeAsFormParameter.getExpression(), undefined, [referenceToArgument])
+    );
+
     public readonly append = ({
         referenceToFormData,
         key,
         value
     }: {
         referenceToFormData: ts.Expression;
-        key: string;
+        key: string | ts.Expression;
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("append")),
                 undefined,
-                [ts.factory.createStringLiteral(key), value]
+                [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value]
             )
         );
     };

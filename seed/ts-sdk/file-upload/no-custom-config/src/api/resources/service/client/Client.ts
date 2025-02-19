@@ -10,7 +10,6 @@ import * as serializers from "../../../../serialization/index";
 import { toJson } from "../../../../core/json";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
-import * as qs from "qs";
 
 export declare namespace Service {
     export interface Options {
@@ -393,8 +392,14 @@ export class Service {
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
-        _request.append("foo", qs.stringify(request.foo, { arrayFormat: "repeat" }));
-        _request.append("bar", qs.stringify(request.bar, { arrayFormat: "repeat" }));
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ bar: request.bar }))) {
+            _request.append(key, value);
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(
