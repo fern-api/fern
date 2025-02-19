@@ -49,12 +49,13 @@ body:
   - type: dropdown
     id: contribute
     attributes:
-      label: "Are you interested in contributing this docs improvement?"
+      label: "Are you interested to contribute this docs improvement?"
+      description: "If aligned with the project's goals, the maintainers are happy to support with guidance and review."
       options:
-        - "Yes, I'd love to!"
-        - "No, just reporting the issue."
+        - "No"
+        - "Yes"
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: file-attachment
