@@ -556,7 +556,7 @@ export class ApiReferenceNodeConverterLatest {
                 return;
             }
 
-            const slug = parentSlug.apply({
+            const slug = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
                 urlSlug: kebabCase(subpackageMetadata.name)
             });
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
@@ -591,10 +591,6 @@ export class ApiReferenceNodeConverterLatest {
                 return;
             }
 
-            const endpointSlug = parentSlug.apply({
-                urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)
-            });
-
             const endpointNode: FernNavigation.V1.EndpointNode = {
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
                 type: "endpoint",
@@ -604,7 +600,7 @@ export class ApiReferenceNodeConverterLatest {
                 availability: FernNavigation.V1.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
                 title: endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
-                slug: endpointSlug.get(),
+                slug: parentSlug.get(),
                 icon: undefined,
                 hidden: undefined,
                 playground: undefined,
@@ -624,7 +620,9 @@ export class ApiReferenceNodeConverterLatest {
                         );
                         return;
                     }
-                    let slugGenerator = parentSlug.apply({ urlSlug: kebabCase(subpackageCursor.slug) });
+                    let slugGenerator = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
+                        urlSlug: kebabCase(firstNamespacePart)
+                    });
 
                     for (const namespacePart of endpoint.namespace.slice(1)) {
                         let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
@@ -658,6 +656,9 @@ export class ApiReferenceNodeConverterLatest {
                         }
                     }
 
+                    endpointNode.slug = slugGenerator
+                        .apply({ urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint) })
+                        .get();
                     subpackageCursor.children.push(endpointNode);
                 }
             } else {
@@ -677,11 +678,7 @@ export class ApiReferenceNodeConverterLatest {
                 type: "webSocket",
                 webSocketId: FdrAPI.WebSocketId(webSocketId),
                 title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
-                slug: parentSlug
-                    .apply({
-                        urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket)
-                    })
-                    .get(),
+                slug: parentSlug.get(),
                 icon: undefined,
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
@@ -699,14 +696,16 @@ export class ApiReferenceNodeConverterLatest {
                     if (subpackageCursor == null) {
                         throw new Error(`Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`);
                     }
-                    let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
+                    let slugGenerator = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
+                        urlSlug: kebabCase(firstNamespacePart)
+                    });
 
                     for (const namespacePart of webSocket.namespace.slice(1)) {
                         let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
                             subpackageCursor.children.find(
                                 (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
                             );
-                        slugGenerator = slugGenerator.append(namespacePart);
+                        slugGenerator = slugGenerator.append(kebabCase(namespacePart));
                         if (newSubpackageCursor == null) {
                             newSubpackageCursor = {
                                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
@@ -732,6 +731,9 @@ export class ApiReferenceNodeConverterLatest {
                             subpackageCursor = newSubpackageCursor;
                         }
                     }
+                    webSocketNode.slug = slugGenerator
+                        .apply({ urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket) })
+                        .get();
                     subpackageCursor.children.push(webSocketNode);
                 }
             } else {
@@ -752,11 +754,7 @@ export class ApiReferenceNodeConverterLatest {
                 webhookId: FdrAPI.WebhookId(webhookId),
                 method: webhook.method,
                 title: webhook.displayName ?? titleCase(webhook.id),
-                slug: parentSlug
-                    .apply({
-                        urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook)
-                    })
-                    .get(),
+                slug: parentSlug.get(),
                 icon: undefined,
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
@@ -776,14 +774,16 @@ export class ApiReferenceNodeConverterLatest {
                             `Subpackage subpackage_${firstNamespacePart} not found in ${this.apiDefinitionId}`
                         );
                     }
-                    let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
+                    let slugGenerator = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
+                        urlSlug: kebabCase(firstNamespacePart)
+                    });
 
                     for (const namespacePart of webhook.namespace.slice(1)) {
                         let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
                             subpackageCursor.children.find(
                                 (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
                             );
-                        slugGenerator = slugGenerator.append(namespacePart);
+                        slugGenerator = slugGenerator.append(kebabCase(namespacePart));
                         if (newSubpackageCursor == null) {
                             newSubpackageCursor = {
                                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
@@ -809,6 +809,9 @@ export class ApiReferenceNodeConverterLatest {
                             subpackageCursor = newSubpackageCursor;
                         }
                     }
+                    webhookNode.slug = slugGenerator
+                        .apply({ urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook) })
+                        .get();
                     subpackageCursor.children.push(webhookNode);
                 }
             } else {

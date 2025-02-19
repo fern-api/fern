@@ -1,5 +1,4 @@
 import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
