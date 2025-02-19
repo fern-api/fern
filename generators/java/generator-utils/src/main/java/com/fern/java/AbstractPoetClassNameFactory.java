@@ -37,15 +37,9 @@ public abstract class AbstractPoetClassNameFactory {
     }
 
     public final String getCorePackage() {
-        switch (packageLayout) {
-            case FLAT:
-                return String.join(".", packagePrefixTokens);
-            case NESTED:
-            default:
-                List<String> tokens = new ArrayList<>(packagePrefixTokens);
-                tokens.add("core");
-                return String.join(".", tokens);
-        }
+        List<String> tokens = new ArrayList<>(packagePrefixTokens);
+        tokens.add("core");
+        return String.join(".", tokens);
     }
 
     public final String getPaginationPackage() {

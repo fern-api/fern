@@ -3,7 +3,7 @@
  */
 package com.seed.exhaustive.types.union;
 
-import com.seed.exhaustive.SeedExhaustiveApiException;
+import com.seed.exhaustive.core.SeedExhaustiveApiException;
 
 public final class ErrorWithUnionBody extends SeedExhaustiveApiException {
     /**

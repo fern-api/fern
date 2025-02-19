@@ -3,8 +3,8 @@
  */
 package com.seed.exhaustive.endpoints;
 
-import com.seed.exhaustive.ClientOptions;
-import com.seed.exhaustive.Suppliers;
+import com.seed.exhaustive.core.ClientOptions;
+import com.seed.exhaustive.core.Suppliers;
 import com.seed.exhaustive.endpoints.container.ContainerClient;
 import com.seed.exhaustive.endpoints.contenttype.ContentTypeClient;
 import com.seed.exhaustive.endpoints.enum_.EnumClient;

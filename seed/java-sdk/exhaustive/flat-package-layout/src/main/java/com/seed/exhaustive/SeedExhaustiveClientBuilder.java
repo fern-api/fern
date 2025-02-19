@@ -3,6 +3,9 @@
  */
 package com.seed.exhaustive;
 
+import com.seed.exhaustive.core.ClientOptions;
+import com.seed.exhaustive.core.Environment;
+
 public final class SeedExhaustiveClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 

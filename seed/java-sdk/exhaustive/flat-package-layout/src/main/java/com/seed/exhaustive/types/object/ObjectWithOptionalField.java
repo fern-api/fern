@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.exhaustive.ObjectMappers;
+import com.seed.exhaustive.core.ObjectMappers;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.HashMap;

@@ -3,6 +3,8 @@
  */
 package com.seed.exhaustive;
 
+import com.seed.exhaustive.core.ClientOptions;
+import com.seed.exhaustive.core.Suppliers;
 import com.seed.exhaustive.endpoints.EndpointsClient;
 import com.seed.exhaustive.inlinedrequests.InlinedRequestsClient;
 import com.seed.exhaustive.noauth.NoAuthClient;

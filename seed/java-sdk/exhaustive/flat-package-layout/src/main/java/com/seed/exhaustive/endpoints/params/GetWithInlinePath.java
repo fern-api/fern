@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.exhaustive.ObjectMappers;
+import com.seed.exhaustive.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -4,12 +4,12 @@
 package com.seed.exhaustive.endpoints.union;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.seed.exhaustive.ClientOptions;
-import com.seed.exhaustive.MediaTypes;
-import com.seed.exhaustive.ObjectMappers;
-import com.seed.exhaustive.RequestOptions;
-import com.seed.exhaustive.SeedExhaustiveApiException;
-import com.seed.exhaustive.SeedExhaustiveException;
+import com.seed.exhaustive.core.ClientOptions;
+import com.seed.exhaustive.core.MediaTypes;
+import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveApiException;
+import com.seed.exhaustive.core.SeedExhaustiveException;
 import com.seed.exhaustive.types.union.Animal;
 import java.io.IOException;
 import okhttp3.Headers;
