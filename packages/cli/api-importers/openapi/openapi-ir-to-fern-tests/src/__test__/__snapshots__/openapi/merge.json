@@ -21699,10 +21699,10 @@ service:
 error-discrimination:
   strategy: status-code
 display-name: Merge HRIS API
-default-environment: Production
 environments:
   Production: https://api.merge.dev/api/hris/v1
   Sandbox: https://api-sandbox.merge.dev/api/hris/v1
+default-environment: Production
 headers:
   X-Account-Token:
     type: optional<string>

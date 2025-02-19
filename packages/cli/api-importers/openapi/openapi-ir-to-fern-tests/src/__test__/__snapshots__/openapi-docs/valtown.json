@@ -5771,9 +5771,9 @@ docs: |-
 error-discrimination:
   strategy: status-code
 display-name: Val Town API
-default-environment: Production
 environments:
   Production: https://api.val.town
+default-environment: Production
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

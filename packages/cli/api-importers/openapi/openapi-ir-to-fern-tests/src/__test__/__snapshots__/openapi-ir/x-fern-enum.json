@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-enum` for enums",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },

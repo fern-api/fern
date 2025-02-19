@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-property-name`",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },

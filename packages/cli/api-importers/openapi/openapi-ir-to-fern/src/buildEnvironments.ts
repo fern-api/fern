@@ -118,9 +118,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                   }
                 : singleURL;
             topLevelServersWithName[DEFAULT_ENVIRONMENT_NAME] = newEnvironmentSchema;
-        } else {
-            // This should never happen, but we'll throw an error just in case.
-            throw Error("No top level servers found with a valid URL.");
         }
     }
 

@@ -7,6 +7,7 @@
       "description": "Deepgram Production API"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Speech to Text": {
@@ -1932,7 +1933,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Transcribe audio using Deepgram's speech-to-text API",
       "authed": true,
       "method": "POST",
@@ -2808,7 +2809,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Analyze text content using Deepgram's text analysis API",
       "authed": true,
       "method": "POST",
@@ -3707,7 +3708,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Convert text into natural-sounding speech using Deepgram's TTS API",
       "authed": true,
       "method": "POST",
@@ -3988,7 +3989,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves basic information about the projects associated with the API key",
       "authed": true,
       "method": "GET",
@@ -4687,7 +4688,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves information about the specified project",
       "authed": true,
       "method": "GET",
@@ -5317,7 +5318,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the specified project",
       "authed": true,
       "method": "DELETE",
@@ -5948,7 +5949,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Updates the name or other properties of an existing project",
       "authed": true,
       "method": "PATCH",
@@ -6659,7 +6660,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Generates a list of outstanding balances for the specified project",
       "authed": true,
       "method": "GET",
@@ -7362,7 +7363,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves details about the specified balance",
       "authed": true,
       "method": "GET",
@@ -7699,7 +7700,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns metadata on all the latest models that a specific project has access to, including non-public models",
       "authed": true,
       "method": "GET",
@@ -8098,7 +8099,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns metadata for a specific model",
       "authed": true,
       "method": "GET",
@@ -8649,7 +8650,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves all API keys associated with the specified project",
       "authed": true,
       "method": "GET",
@@ -9123,7 +9124,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new API key with specified settings for the project",
       "authed": true,
       "method": "POST",
@@ -9644,7 +9645,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves information about a specified API key",
       "authed": true,
       "method": "GET",
@@ -10180,7 +10181,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes an API key for a specific project",
       "authed": true,
       "method": "DELETE",
@@ -10666,7 +10667,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves a list of account objects for a specific project",
       "authed": true,
       "method": "GET",
@@ -11139,7 +11140,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Removes a member from the project using their unique member ID",
       "authed": true,
       "method": "DELETE",
@@ -11617,7 +11618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves a list of scopes for a specific member",
       "authed": true,
       "method": "GET",
@@ -12114,7 +12115,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Updates the scopes for a specific member",
       "authed": true,
       "method": "PUT",
@@ -12305,7 +12306,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Generates a list of invites for a specific project",
       "authed": true,
       "method": "GET",
@@ -12841,7 +12842,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Generates an invite for a specific project",
       "authed": true,
       "method": "POST",
@@ -13377,7 +13378,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes an invite for a specific project",
       "authed": true,
       "method": "DELETE",
@@ -13887,7 +13888,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Removes the authenticated account from the specific project",
       "authed": true,
       "method": "DELETE",
@@ -14605,7 +14606,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Generates a list of requests for a specific project",
       "authed": true,
       "method": "GET",
@@ -14857,7 +14858,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Retrieves a specific request for a specific project",
       "authed": true,
       "method": "GET",
@@ -15791,7 +15792,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the usage for a specific project",
       "authed": true,
       "method": "GET",
@@ -16551,7 +16552,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists the features, models, tags, languages, and processing method used for requests in the specified project",
       "authed": true,
       "method": "GET",
@@ -17998,7 +17999,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns the breakdown of usage for a specific project. Supports the following filter options:\n- &accessor={accessor_id} - The public API key accessor used\n- &deployment={deployment} - The deployment type used\n- &endpoint={endpoint} - The endpoint used\n- &feature_set={feature_set} - The collection of features used\n- &model={model_id} - The model used\n- &method={method} - The processing method used\n- &tags={tag} - Any tags used\n",
       "authed": true,
       "method": "GET",
@@ -18556,7 +18557,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns the original purchased amount on an order transaction",
       "authed": true,
       "method": "GET",
@@ -19351,7 +19352,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns metadata on all the latest public models",
       "authed": true,
       "method": "GET",
@@ -20234,7 +20235,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns metadata for a specific model",
       "authed": true,
       "method": "GET",
@@ -20922,7 +20923,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists sets of distribution credentials for the specified project",
       "authed": true,
       "method": "GET",
@@ -21194,7 +21195,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Creates a set of distribution credentials for the specified project",
       "authed": true,
       "method": "POST",
@@ -21766,7 +21767,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a set of distribution credentials for the specified project",
       "authed": true,
       "method": "GET",
@@ -22446,7 +22447,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes a set of distribution credentials for the specified project",
       "authed": true,
       "method": "DELETE",
