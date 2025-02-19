@@ -109,7 +109,7 @@ export function appendPropertyToFormData({
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);
 
-            let statement: ts.Statement;            
+            let statement: ts.Statement;
 
             if (property.style === "form") {
                 statement = context.coreUtilities.formDataUtils.append({
