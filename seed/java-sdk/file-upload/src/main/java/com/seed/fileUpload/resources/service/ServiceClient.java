@@ -12,6 +12,7 @@ import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
+import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -248,6 +249,49 @@ public class ServiceClient {
             if (request.getFooBar().isPresent()) {
                 body.addFormDataPart("foo_bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFooBar()));
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return;
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
+        }
+    }
+
+    public void withFormEncoding(File file, WithFormEncodingRequest request) {
+        withFormEncoding(file, request, null);
+    }
+
+    public void withFormEncoding(File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("with-form-encoding")
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
+            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
