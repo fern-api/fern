@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Resolve error where `fern docs dev` failed in Windows environments.
+      type: fix
+  irVersion: 55
+  version: 0.53.13
+
+- changelogEntry:
+    - summary: |
         Dynamically deconflict AsyncAPI message names when generating Fern Definition Types to preserve original naming
         wherever possible.
       type: fix
