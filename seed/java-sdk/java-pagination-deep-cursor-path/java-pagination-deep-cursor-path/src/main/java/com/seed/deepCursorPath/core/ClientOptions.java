@@ -31,6 +31,7 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
+                put("User-Agent", "com.fern:java-pagination-deep-cursor-path/0.0.1");
                 put("X-Fern-Language", "JAVA");
             }
         });
