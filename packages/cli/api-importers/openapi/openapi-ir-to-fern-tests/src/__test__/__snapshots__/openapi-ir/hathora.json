@@ -8,6 +8,7 @@
       "url": "/"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -48,7 +49,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/apps/v1/list",
@@ -356,7 +357,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/apps/v1/create",
@@ -592,7 +593,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/apps/v1/update/{appId}",
@@ -793,7 +794,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/apps/v1/info/{appId}",
@@ -986,7 +987,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/apps/v1/delete/{appId}",
@@ -1109,7 +1110,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/anonymous",
@@ -1285,7 +1286,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/nickname",
@@ -1500,7 +1501,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/google",
@@ -1636,7 +1637,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/builds/v1/{appId}/list",
@@ -1850,7 +1851,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/builds/v1/{appId}/info/{buildId}",
@@ -2107,7 +2108,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/builds/v1/{appId}/create",
@@ -2351,7 +2352,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/builds/v1/{appId}/run/{buildId}",
@@ -2487,7 +2488,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/builds/v1/{appId}/delete/{buildId}",
@@ -2606,7 +2607,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/deployments/v1/{appId}/list",
@@ -2834,7 +2835,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
@@ -3140,7 +3141,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/deployments/v1/{appId}/create/{buildId}",
@@ -3363,7 +3364,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/discovery/v1/ping",
@@ -3653,7 +3654,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -3945,7 +3946,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -4161,7 +4162,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "GET",
@@ -4583,7 +4584,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -5030,7 +5031,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -5477,7 +5478,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -5956,7 +5957,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/lobby/v2/{appId}/create",
@@ -6196,7 +6197,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/lobby/v2/{appId}/list/public",
@@ -6414,7 +6415,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/lobby/v2/{appId}/info/{roomId}",
@@ -6711,7 +6712,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/lobby/v2/{appId}/setState/{roomId}",
@@ -6996,7 +6997,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/all",
@@ -7129,7 +7130,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/process/{processId}",
@@ -7262,7 +7263,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
@@ -7478,7 +7479,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/metrics/v1/{appId}/process/{processId}",
@@ -7722,7 +7723,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/list/running",
@@ -8009,7 +8010,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/list/stopped",
@@ -8251,7 +8252,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/info/{processId}",
@@ -8549,7 +8550,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/create",
@@ -8688,7 +8689,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/info/{roomId}",
@@ -8920,7 +8921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/active",
@@ -9119,7 +9120,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
@@ -9321,7 +9322,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
@@ -9459,7 +9460,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
@@ -9643,7 +9644,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",

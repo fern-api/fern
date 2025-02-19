@@ -15,6 +15,7 @@ export interface OpenApiIntermediateRepresentation {
     description: string | undefined;
     basePath: string | undefined;
     servers: FernOpenapiIr.Server[];
+    websocketServers: FernOpenapiIr.Server[];
     /** Top level group information populated through `x-fern-groups`. */
     groups: Record<string, FernOpenapiIr.SdkGroupInfo>;
     tags: FernOpenapiIr.Tags;

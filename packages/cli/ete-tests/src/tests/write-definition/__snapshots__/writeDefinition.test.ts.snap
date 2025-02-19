@@ -238,9 +238,13 @@ auth-schemes:
   BearerAuthScheme:
     scheme: bearer
 default-environment: Production
+default-url: Base
 display-name: Train Travel API
 environments:
-  Production: https://api.example.com
+  Production:
+    urls:
+      Base: https://api.example.com
+      public: wss://api.gemini.com
 error-discrimination:
   strategy: status-code
 name: api
@@ -340,6 +344,7 @@ channel:
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
       type: MarketDataV1Symbol
+  url: public
 ",
     "name": "marketDataV1.yml",
     "type": "file",

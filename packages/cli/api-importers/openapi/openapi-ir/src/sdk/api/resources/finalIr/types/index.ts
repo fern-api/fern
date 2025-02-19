@@ -15,6 +15,7 @@ export * from "./WebhookHttpMethod";
 export * from "./Availability";
 export * from "./Endpoint";
 export * from "./HttpEndpointServer";
+export * from "./WebsocketServer";
 export * from "./Pagination";
 export * from "./CursorPagination";
 export * from "./OffsetPagination";

@@ -15,6 +15,6 @@ export interface WebsocketSessionExampleExtension {
     }[];
 }
 
-export function getFernExamples(channel: AsyncAPIV2.Channel): WebsocketSessionExampleExtension[] {
+export function getFernExamples(channel: AsyncAPIV2.ChannelV2): WebsocketSessionExampleExtension[] {
     return getExtension<WebsocketSessionExampleExtension[]>(channel, FernAsyncAPIExtension.FERN_EXAMPLES) ?? [];
 }

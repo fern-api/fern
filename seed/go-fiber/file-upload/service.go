@@ -95,3 +95,8 @@ type WithContentTypeRequest struct {
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
 }
+
+type WithFormEncodingRequest struct {
+	Foo string    `json:"foo" url:"-"`
+	Bar *MyObject `json:"bar,omitempty" url:"-"`
+}

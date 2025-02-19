@@ -13,6 +13,11 @@ export interface DocumentContext {
     channels?: Record<ChannelId, ChannelContext>;
 }
 
+export interface ServerContext {
+    name: string;
+    url: string;
+}
+
 export interface ChannelContext {
     messages?: Record<string, MessageV3>;
 }

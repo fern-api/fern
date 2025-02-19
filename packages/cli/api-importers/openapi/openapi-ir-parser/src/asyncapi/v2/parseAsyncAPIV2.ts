@@ -25,6 +25,8 @@ import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
+import { ServerContext } from "../sharedTypes";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV2 } from "../v2";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
@@ -51,6 +53,14 @@ export function parseAsyncAPIV2({
     }
 
     const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
+
+    const servers: Record<string, ServerContext> = {};
+    for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        servers[serverId] = {
+            name: serverId,
+            url: constructServerUrl(server.protocol, server.url)
+        };
+    }
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
         const shouldIgnore = getExtension<boolean>(channel, FernAsyncAPIExtension.IGNORE);
@@ -248,8 +258,11 @@ export function parseAsyncAPIV2({
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
+                servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers)).filter(
+                    (server): server is ServerContext => server != null
+                ),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: channelPath,
+                path: transformToValidPath(channelPath),
                 description: undefined,
                 examples,
                 source
@@ -260,6 +273,7 @@ export function parseAsyncAPIV2({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
+        servers: Object.values(servers),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
