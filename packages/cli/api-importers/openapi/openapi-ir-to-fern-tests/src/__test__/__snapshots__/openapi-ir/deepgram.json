@@ -22567,7 +22567,4358 @@
     }
   ],
   "webhooks": [],
-  "channels": {},
+  "channels": {
+    "speak": {
+      "audiences": [],
+      "handshake": {
+        "headers": [
+          {
+            "name": "Sec-Websocket-Protocol",
+            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "schema": {
+              "schema": {
+                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "SpeakSecWebSocketProtocol",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "queryParameters": [
+          {
+            "name": "encoding",
+            "description": "Encoding allows you to specify the expected encoding of your audio output",
+            "schema": {
+              "description": "Encoding allows you to specify the expected encoding of your audio output",
+              "generatedName": "SpeakEncoding",
+              "values": [
+                {
+                  "generatedName": "linear16",
+                  "value": "linear16",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "mulaw",
+                  "value": "mulaw",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "alaw",
+                  "value": "alaw",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "opus",
+                  "value": "opus",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "mp3",
+                  "value": "mp3",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "flac",
+                  "value": "flac",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "aac",
+                  "value": "aac",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "mp3",
+                "value": "mp3",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "model",
+            "description": "AI model used to process submitted text",
+            "schema": {
+              "description": "AI model used to process submitted text",
+              "generatedName": "SpeakModel",
+              "values": [
+                {
+                  "generatedName": "AuraAsteriaEn",
+                  "value": "aura-asteria-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraLunaEn",
+                  "value": "aura-luna-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraStellaEn",
+                  "value": "aura-stella-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraAthenaEn",
+                  "value": "aura-athena-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraHeraEn",
+                  "value": "aura-hera-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraOrionEn",
+                  "value": "aura-orion-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraArcasEn",
+                  "value": "aura-arcas-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraPerseusEn",
+                  "value": "aura-perseus-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraAngusEn",
+                  "value": "aura-angus-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraOrpheusEn",
+                  "value": "aura-orpheus-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraHeliosEn",
+                  "value": "aura-helios-en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AuraZeusEn",
+                  "value": "aura-zeus-en",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "AuraAsteriaEn",
+                "value": "aura-asteria-en",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "sample_rate",
+            "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+            "schema": {
+              "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+              "generatedName": "SpeakSampleRate",
+              "values": [
+                {
+                  "generatedName": "EightThousand",
+                  "value": "8000",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "16000",
+                  "value": "16000",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "24000",
+                  "value": "24000",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "44100",
+                  "value": "44100",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "48000",
+                  "value": "48000",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "24000",
+                "value": "24000",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": []
+      },
+      "groupName": [
+        "speak"
+      ],
+      "publish": {
+        "value": {
+          "generatedName": "SpeakPublishEvent",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "speakTextToSpeechRequestType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type indicating a text-to-speech request",
+                    "value": {
+                      "value": "Speak",
+                      "type": "string"
+                    },
+                    "generatedName": "SpeakTextToSpeechRequestType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "speakTextToSpeechRequestText",
+                  "key": "text",
+                  "schema": {
+                    "description": "The input text to be converted to speech",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "SpeakTextToSpeechRequestText",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "SpeakTextToSpeechRequest",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "generatedName": "SpeakControlMessagesRequest",
+              "values": [
+                {
+                  "generatedName": "Flush",
+                  "value": "Flush",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Clear",
+                  "value": "Clear",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Close",
+                  "value": "Close",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "subscribe": {
+        "value": {
+          "generatedName": "SpeakSubscribeEvent",
+          "schemas": [
+            {
+              "description": "Audio data in the format specified by the request parameters",
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              },
+              "generatedName": "SpeakTextToSpeechResponse",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "speakControlMessagesResponseType",
+                  "key": "type",
+                  "schema": {
+                    "description": "The type of control message response",
+                    "generatedName": "SpeakControlMessagesResponseType",
+                    "values": [
+                      {
+                        "generatedName": "flush",
+                        "value": "flush",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "clear",
+                        "value": "clear",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "close",
+                        "value": "close",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "speakControlMessagesResponseSequenceId",
+                  "key": "sequence_id",
+                  "schema": {
+                    "generatedName": "speakControlMessagesResponseSequenceId",
+                    "value": {
+                      "description": "The sequence ID of the response",
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "SpeakControlMessagesResponseSequenceId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "SpeakControlMessagesResponse",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "path": "/v1/speak",
+      "examples": [],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "listen": {
+      "audiences": [],
+      "handshake": {
+        "headers": [
+          {
+            "name": "Sec-Websocket-Protocol",
+            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "schema": {
+              "schema": {
+                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenSecWebSocketProtocol",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "queryParameters": [
+          {
+            "name": "callback",
+            "description": "URL to which we'll make the callback request",
+            "schema": {
+              "schema": {
+                "example": "https://example.com",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenCallback",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "callback_method",
+            "description": "HTTP method by which the callback request will be made",
+            "schema": {
+              "description": "HTTP method by which the callback request will be made",
+              "generatedName": "ListenCallbackMethod",
+              "values": [
+                {
+                  "generatedName": "POST",
+                  "value": "POST",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "GET",
+                  "value": "GET",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PUT",
+                  "value": "PUT",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DELETE",
+                  "value": "DELETE",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "POST",
+                "value": "POST",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "channels",
+            "description": "The number of channels in the submitted audio",
+            "schema": {
+              "schema": {
+                "default": "1",
+                "example": "1",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenChannels",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "dictation",
+            "description": "Identify and extract key entities from content in submitted audio",
+            "schema": {
+              "description": "Identify and extract key entities from content in submitted audio",
+              "generatedName": "ListenDictation",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "diarize",
+            "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+            "schema": {
+              "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+              "generatedName": "ListenDiarize",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "diarize_version",
+            "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
+            "schema": {
+              "schema": {
+                "default": "v2",
+                "example": "v1",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenDiarizeVersion",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "encoding",
+            "description": "Specify the expected encoding of your submitted audio",
+            "schema": {
+              "description": "Specify the expected encoding of your submitted audio",
+              "generatedName": "ListenEncoding",
+              "values": [
+                {
+                  "generatedName": "linear16",
+                  "value": "linear16",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "flac",
+                  "value": "flac",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "mulaw",
+                  "value": "mulaw",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AmrNb",
+                  "value": "amr-nb",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "AmrWb",
+                  "value": "amr-wb",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "opus",
+                  "value": "opus",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "speex",
+                  "value": "speex",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "g729",
+                  "value": "g729",
+                  "casing": {}
+                }
+              ],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "endpointing",
+            "description": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
+            "schema": {
+              "schema": {
+                "default": "10",
+                "example": "300",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenEndpointing",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "extra",
+            "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
+            "schema": {
+              "schema": {
+                "example": "key:value",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenExtra",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "filler_words",
+            "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
+            "schema": {
+              "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
+              "generatedName": "ListenFillerWords",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "interim_results",
+            "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
+            "schema": {
+              "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
+              "generatedName": "ListenInterimResults",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "keywords",
+            "description": "Keywords can boost or suppress specialized terminology and brands",
+            "schema": {
+              "schema": {
+                "example": "Twilio:2",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenKeywords",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "keyterm",
+            "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
+            "schema": {
+              "schema": {
+                "example": "Snuffleupagus",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenKeyterm",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "language",
+            "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
+            "schema": {
+              "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
+              "generatedName": "ListenLanguage",
+              "values": [
+                {
+                  "generatedName": "bg",
+                  "value": "bg",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ca",
+                  "value": "ca",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "cs",
+                  "value": "cs",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "da",
+                  "value": "da",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DaDk",
+                  "value": "da-DK",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "de",
+                  "value": "de",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DeCh",
+                  "value": "de-CH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "el",
+                  "value": "el",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "en",
+                  "value": "en",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnAu",
+                  "value": "en-AU",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnGb",
+                  "value": "en-GB",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnIn",
+                  "value": "en-IN",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnNz",
+                  "value": "en-NZ",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnUs",
+                  "value": "en-US",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "es",
+                  "value": "es",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Es419",
+                  "value": "es-419",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EsLatam",
+                  "value": "es-LATAM",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "et",
+                  "value": "et",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "fi",
+                  "value": "fi",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "fr",
+                  "value": "fr",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "FrCa",
+                  "value": "fr-CA",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "hi",
+                  "value": "hi",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "HiLatn",
+                  "value": "hi-Latn",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "hu",
+                  "value": "hu",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "id",
+                  "value": "id",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "it",
+                  "value": "it",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ja",
+                  "value": "ja",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ko",
+                  "value": "ko",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "KoKr",
+                  "value": "ko-KR",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "lt",
+                  "value": "lt",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "lv",
+                  "value": "lv",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ms",
+                  "value": "ms",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "nl",
+                  "value": "nl",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "NlBe",
+                  "value": "nl-BE",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "no",
+                  "value": "no",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "pl",
+                  "value": "pl",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "pt",
+                  "value": "pt",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PtBr",
+                  "value": "pt-BR",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PtPt",
+                  "value": "pt-PT",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ro",
+                  "value": "ro",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ru",
+                  "value": "ru",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "sk",
+                  "value": "sk",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "sv",
+                  "value": "sv",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "SvSe",
+                  "value": "sv-SE",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "taq",
+                  "value": "taq",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "th",
+                  "value": "th",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ThTh",
+                  "value": "th-TH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "tr",
+                  "value": "tr",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "uk",
+                  "value": "uk",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "vi",
+                  "value": "vi",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "zh",
+                  "value": "zh",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ZhCn",
+                  "value": "zh-CN",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ZhHk",
+                  "value": "zh-HK",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ZhHans",
+                  "value": "zh-Hans",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ZhHant",
+                  "value": "zh-Hant",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ZhTw",
+                  "value": "zh-TW",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "en",
+                "value": "en",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "model",
+            "description": "AI model to use for the transcription",
+            "schema": {
+              "description": "AI model to use for the transcription",
+              "generatedName": "ListenModel",
+              "values": [
+                {
+                  "generatedName": "Nova3",
+                  "value": "nova-3",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova3General",
+                  "value": "nova-3-general",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2",
+                  "value": "nova-2",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2General",
+                  "value": "nova-2-general",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Meeting",
+                  "value": "nova-2-meeting",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Finance",
+                  "value": "nova-2-finance",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Conversationalai",
+                  "value": "nova-2-conversationalai",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Voicemail",
+                  "value": "nova-2-voicemail",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Video",
+                  "value": "nova-2-video",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Medical",
+                  "value": "nova-2-medical",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Drivethru",
+                  "value": "nova-2-drivethru",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "Nova2Automotive",
+                  "value": "nova-2-automotive",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "nova",
+                  "value": "nova",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "NovaGeneral",
+                  "value": "nova-general",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "NovaPhonecall",
+                  "value": "nova-phonecall",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "NovaMedical",
+                  "value": "nova-medical",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "enhanced",
+                  "value": "enhanced",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnhancedGeneral",
+                  "value": "enhanced-general",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnhancedMeeting",
+                  "value": "enhanced-meeting",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnhancedPhonecall",
+                  "value": "enhanced-phonecall",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "EnhancedFinance",
+                  "value": "enhanced-finance",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "base",
+                  "value": "base",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "meeting",
+                  "value": "meeting",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "phonecall",
+                  "value": "phonecall",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "finance",
+                  "value": "finance",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "conversationalai",
+                  "value": "conversationalai",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "voicemail",
+                  "value": "voicemail",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "video",
+                  "value": "video",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "custom",
+                  "value": "custom",
+                  "casing": {}
+                }
+              ],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "multichannel",
+            "description": "Transcribe each audio channel independently",
+            "schema": {
+              "description": "Transcribe each audio channel independently",
+              "generatedName": "ListenMultichannel",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "numerals",
+            "description": "Convert numbers from written format to numerical format",
+            "schema": {
+              "description": "Convert numbers from written format to numerical format",
+              "generatedName": "ListenNumerals",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "profanity_filter",
+            "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
+            "schema": {
+              "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
+              "generatedName": "ListenProfanityFilter",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "punctuate",
+            "description": "Add punctuation and capitalization to the transcript",
+            "schema": {
+              "description": "Add punctuation and capitalization to the transcript",
+              "generatedName": "ListenPunctuate",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "redact",
+            "description": "Redaction removes sensitive information from your transcripts",
+            "schema": {
+              "description": "Redaction removes sensitive information from your transcripts",
+              "generatedName": "ListenRedact",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "replace",
+            "description": "Search for terms or phrases in submitted audio and replaces them",
+            "schema": {
+              "schema": {
+                "example": "monika:Monica",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenReplace",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "sample_rate",
+            "description": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
+            "schema": {
+              "schema": {
+                "example": "8000",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenSampleRate",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search for terms or phrases in submitted audio",
+            "schema": {
+              "schema": {
+                "example": "Deepgram",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenSearch",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "smart_format",
+            "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
+            "schema": {
+              "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
+              "generatedName": "ListenSmartFormat",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "tag",
+            "description": "Label your requests for the purpose of identification during usage reporting",
+            "schema": {
+              "schema": {
+                "example": "my-team",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenTag",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "utterance_end",
+            "description": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
+            "schema": {
+              "schema": {
+                "example": "1000",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenUtteranceEnd",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "vad_events",
+            "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+            "schema": {
+              "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+              "generatedName": "ListenVadEvents",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "version",
+            "description": "Version of an AI model to use",
+            "schema": {
+              "schema": {
+                "default": "latest",
+                "example": "MODEL_VERSION",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenVersion",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": []
+      },
+      "groupName": [
+        "listen"
+      ],
+      "publish": {
+        "value": {
+          "generatedName": "ListenPublishEvent",
+          "schemas": [
+            {
+              "description": "Raw audio data to be transcribed. Should be sent as a binary WebSocket message without base64 encoding",
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              },
+              "generatedName": "ListenTranscriptionRequest",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "value": {
+                "commonProperties": [],
+                "discriminantProperty": "type",
+                "generatedName": "ListenControlMessagesRequest",
+                "schemas": {
+                  "Finalize": {
+                    "allOf": [],
+                    "properties": [],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessagesRequestFinalize",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "CloseStream": {
+                    "allOf": [],
+                    "properties": [],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessagesRequestCloseStream",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "KeepAlive": {
+                    "allOf": [],
+                    "properties": [],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessagesRequestKeepAlive",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  }
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "subscribe": {
+        "value": {
+          "generatedName": "ListenSubscribeEvent",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseChannel",
+                  "key": "channel",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseChannel",
+                    "value": {
+                      "allOf": [],
+                      "properties": [
+                        {
+                          "conflict": {},
+                          "generatedName": "listenTranscriptionResponseChannelAlternatives",
+                          "key": "alternatives",
+                          "schema": {
+                            "generatedName": "listenTranscriptionResponseChannelAlternatives",
+                            "value": {
+                              "value": {
+                                "allOf": [],
+                                "properties": [
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemTranscript",
+                                    "key": "transcript",
+                                    "schema": {
+                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemTranscript",
+                                      "value": {
+                                        "description": "Complete transcribed text",
+                                        "schema": {
+                                          "type": "string"
+                                        },
+                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemTranscript",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemConfidence",
+                                    "key": "confidence",
+                                    "schema": {
+                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemConfidence",
+                                      "value": {
+                                        "description": "Overall confidence score",
+                                        "schema": {
+                                          "type": "float"
+                                        },
+                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemConfidence",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemWords",
+                                    "key": "words",
+                                    "schema": {
+                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemWords",
+                                      "value": {
+                                        "value": {
+                                          "allOf": [],
+                                          "properties": [
+                                            {
+                                              "conflict": {},
+                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                              "key": "word",
+                                              "schema": {
+                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                                "value": {
+                                                  "schema": {
+                                                    "type": "string"
+                                                  },
+                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                                  "groupName": [],
+                                                  "type": "primitive"
+                                                },
+                                                "groupName": [],
+                                                "type": "optional"
+                                              },
+                                              "audiences": []
+                                            },
+                                            {
+                                              "conflict": {},
+                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                              "key": "start",
+                                              "schema": {
+                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                                "value": {
+                                                  "schema": {
+                                                    "type": "float"
+                                                  },
+                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                                  "groupName": [],
+                                                  "type": "primitive"
+                                                },
+                                                "groupName": [],
+                                                "type": "optional"
+                                              },
+                                              "audiences": []
+                                            },
+                                            {
+                                              "conflict": {},
+                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                              "key": "end",
+                                              "schema": {
+                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                                "value": {
+                                                  "schema": {
+                                                    "type": "float"
+                                                  },
+                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                                  "groupName": [],
+                                                  "type": "primitive"
+                                                },
+                                                "groupName": [],
+                                                "type": "optional"
+                                              },
+                                              "audiences": []
+                                            },
+                                            {
+                                              "conflict": {},
+                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                              "key": "confidence",
+                                              "schema": {
+                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                                "value": {
+                                                  "schema": {
+                                                    "type": "float"
+                                                  },
+                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                                  "groupName": [],
+                                                  "type": "primitive"
+                                                },
+                                                "groupName": [],
+                                                "type": "optional"
+                                              },
+                                              "audiences": []
+                                            },
+                                            {
+                                              "conflict": {},
+                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                              "key": "punctuated_word",
+                                              "schema": {
+                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                                "value": {
+                                                  "schema": {
+                                                    "type": "string"
+                                                  },
+                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                                  "groupName": [],
+                                                  "type": "primitive"
+                                                },
+                                                "groupName": [],
+                                                "type": "optional"
+                                              },
+                                              "audiences": []
+                                            }
+                                          ],
+                                          "allOfPropertyConflicts": [],
+                                          "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItem",
+                                          "groupName": [],
+                                          "additionalProperties": false,
+                                          "source": {
+                                            "file": "../asyncapi.yml",
+                                            "type": "openapi"
+                                          },
+                                          "type": "object"
+                                        },
+                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWords",
+                                        "groupName": [],
+                                        "type": "array"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  }
+                                ],
+                                "allOfPropertyConflicts": [],
+                                "generatedName": "ListenTranscriptionResponseChannelAlternativesItem",
+                                "groupName": [],
+                                "additionalProperties": false,
+                                "source": {
+                                  "file": "../asyncapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "object"
+                              },
+                              "generatedName": "ListenTranscriptionResponseChannelAlternatives",
+                              "groupName": [],
+                              "type": "array"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        }
+                      ],
+                      "allOfPropertyConflicts": [],
+                      "generatedName": "ListenTranscriptionResponseChannel",
+                      "groupName": [],
+                      "additionalProperties": false,
+                      "source": {
+                        "file": "../asyncapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "object"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseMetadata",
+                  "key": "metadata",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseMetadata",
+                    "value": {
+                      "allOf": [],
+                      "properties": [
+                        {
+                          "conflict": {},
+                          "generatedName": "listenTranscriptionResponseMetadataModelInfo",
+                          "key": "model_info",
+                          "schema": {
+                            "generatedName": "listenTranscriptionResponseMetadataModelInfo",
+                            "value": {
+                              "allOf": [],
+                              "properties": [
+                                {
+                                  "conflict": {},
+                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoName",
+                                  "key": "name",
+                                  "schema": {
+                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoName",
+                                    "value": {
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoName",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                },
+                                {
+                                  "conflict": {},
+                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoVersion",
+                                  "key": "version",
+                                  "schema": {
+                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoVersion",
+                                    "value": {
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoVersion",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                },
+                                {
+                                  "conflict": {},
+                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoArch",
+                                  "key": "arch",
+                                  "schema": {
+                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoArch",
+                                    "value": {
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoArch",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                }
+                              ],
+                              "allOfPropertyConflicts": [],
+                              "generatedName": "ListenTranscriptionResponseMetadataModelInfo",
+                              "groupName": [],
+                              "additionalProperties": false,
+                              "source": {
+                                "file": "../asyncapi.yml",
+                                "type": "openapi"
+                              },
+                              "type": "object"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        },
+                        {
+                          "conflict": {},
+                          "generatedName": "listenTranscriptionResponseMetadataRequestId",
+                          "key": "request_id",
+                          "schema": {
+                            "generatedName": "listenTranscriptionResponseMetadataRequestId",
+                            "value": {
+                              "schema": {
+                                "format": "uuid",
+                                "type": "string"
+                              },
+                              "generatedName": "ListenTranscriptionResponseMetadataRequestId",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        },
+                        {
+                          "conflict": {},
+                          "generatedName": "listenTranscriptionResponseMetadataModelUuid",
+                          "key": "model_uuid",
+                          "schema": {
+                            "generatedName": "listenTranscriptionResponseMetadataModelUuid",
+                            "value": {
+                              "schema": {
+                                "format": "uuid",
+                                "type": "string"
+                              },
+                              "generatedName": "ListenTranscriptionResponseMetadataModelUuid",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        }
+                      ],
+                      "allOfPropertyConflicts": [],
+                      "generatedName": "ListenTranscriptionResponseMetadata",
+                      "groupName": [],
+                      "additionalProperties": false,
+                      "source": {
+                        "file": "../asyncapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "object"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseType",
+                  "key": "type",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseType",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ListenTranscriptionResponseType",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseChannelIndex",
+                  "key": "channel_index",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseChannelIndex",
+                    "value": {
+                      "value": {
+                        "schema": {
+                          "type": "int"
+                        },
+                        "generatedName": "ListenTranscriptionResponseChannelIndexItem",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "generatedName": "ListenTranscriptionResponseChannelIndex",
+                      "groupName": [],
+                      "type": "array"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseDuration",
+                  "key": "duration",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseDuration",
+                    "value": {
+                      "schema": {
+                        "type": "float"
+                      },
+                      "generatedName": "ListenTranscriptionResponseDuration",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseStart",
+                  "key": "start",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseStart",
+                    "value": {
+                      "schema": {
+                        "type": "float"
+                      },
+                      "generatedName": "ListenTranscriptionResponseStart",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseIsFinal",
+                  "key": "is_final",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseIsFinal",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ListenTranscriptionResponseIsFinal",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseFromFinalize",
+                  "key": "from_finalize",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseFromFinalize",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ListenTranscriptionResponseFromFinalize",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenTranscriptionResponseSpeechFinal",
+                  "key": "speech_final",
+                  "schema": {
+                    "generatedName": "listenTranscriptionResponseSpeechFinal",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ListenTranscriptionResponseSpeechFinal",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "ListenTranscriptionResponse",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "value": {
+                "generatedName": "ListenControlMessageResponse",
+                "schemas": [
+                  {
+                    "allOf": [],
+                    "properties": [
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseZeroType",
+                        "key": "type",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseZeroType",
+                          "value": {
+                            "value": {
+                              "value": "Finalize",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseZeroType",
+                            "groupName": [],
+                            "type": "literal"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseZeroChannel",
+                        "key": "channel",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseZeroChannel",
+                          "value": {
+                            "description": "The channel number being finalized",
+                            "schema": {
+                              "minimum": 0,
+                              "type": "int"
+                            },
+                            "generatedName": "ListenControlMessageResponseZeroChannel",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      }
+                    ],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessageResponseZero",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "allOf": [],
+                    "properties": [
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneType",
+                        "key": "type",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneType",
+                          "value": {
+                            "value": {
+                              "value": "Metadata",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneType",
+                            "groupName": [],
+                            "type": "literal"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneTransactionKey",
+                        "key": "transaction_key",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneTransactionKey",
+                          "value": {
+                            "description": "Deprecated field",
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneTransactionKey",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneRequestId",
+                        "key": "request_id",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneRequestId",
+                          "value": {
+                            "description": "Unique identifier for the request",
+                            "schema": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneRequestId",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneSha256",
+                        "key": "sha256",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneSha256",
+                          "value": {
+                            "description": "SHA-256 hash of the audio content",
+                            "schema": {
+                              "pattern": "^[a-fA-F0-9]{64}$",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneSha256",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneCreated",
+                        "key": "created",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneCreated",
+                          "value": {
+                            "description": "Timestamp when the response was created",
+                            "schema": {
+                              "type": "datetime"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneCreated",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneDuration",
+                        "key": "duration",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneDuration",
+                          "value": {
+                            "description": "Duration of the audio in seconds",
+                            "schema": {
+                              "type": "float"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneDuration",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseOneChannels",
+                        "key": "channels",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseOneChannels",
+                          "value": {
+                            "description": "Number of audio channels",
+                            "schema": {
+                              "minimum": 0,
+                              "type": "int"
+                            },
+                            "generatedName": "ListenControlMessageResponseOneChannels",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      }
+                    ],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessageResponseOne",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "allOf": [],
+                    "properties": [
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoType",
+                        "key": "type",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoType",
+                          "value": {
+                            "value": {
+                              "value": "CloseStream",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoType",
+                            "groupName": [],
+                            "type": "literal"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoTransactionKey",
+                        "key": "transaction_key",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoTransactionKey",
+                          "value": {
+                            "description": "Deprecated field",
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoTransactionKey",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoRequestId",
+                        "key": "request_id",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoRequestId",
+                          "value": {
+                            "description": "Unique identifier for the request",
+                            "schema": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoRequestId",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoSha256",
+                        "key": "sha256",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoSha256",
+                          "value": {
+                            "description": "SHA-256 hash of the audio content",
+                            "schema": {
+                              "pattern": "^[a-fA-F0-9]{64}$",
+                              "type": "string"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoSha256",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoCreated",
+                        "key": "created",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoCreated",
+                          "value": {
+                            "description": "Timestamp when the response was created",
+                            "schema": {
+                              "type": "datetime"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoCreated",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoDuration",
+                        "key": "duration",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoDuration",
+                          "value": {
+                            "description": "Duration of the audio in seconds",
+                            "schema": {
+                              "type": "float"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoDuration",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "listenControlMessageResponseTwoChannels",
+                        "key": "channels",
+                        "schema": {
+                          "generatedName": "listenControlMessageResponseTwoChannels",
+                          "value": {
+                            "description": "Number of audio channels",
+                            "schema": {
+                              "minimum": 0,
+                              "type": "int"
+                            },
+                            "generatedName": "ListenControlMessageResponseTwoChannels",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      }
+                    ],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ListenControlMessageResponseTwo",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "undiscriminated"
+              },
+              "type": "oneOf"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "path": "/v1/listen",
+      "examples": [],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "agent": {
+      "audiences": [],
+      "handshake": {
+        "headers": [
+          {
+            "name": "Sec-Websocket-Protocol",
+            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "schema": {
+              "schema": {
+                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "AgentSecWebSocketProtocol",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "agent"
+      ],
+      "publish": {
+        "value": {
+          "generatedName": "AgentPublishEvent",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentSettingsConfigurationType",
+                  "key": "type",
+                  "schema": {
+                    "value": {
+                      "value": "SettingsConfiguration",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentSettingsConfigurationType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentSettingsConfigurationAudio",
+                  "key": "audio",
+                  "schema": {
+                    "generatedName": "agentSettingsConfigurationAudio",
+                    "value": {
+                      "generatedName": "AgentSettingsConfigurationAudio",
+                      "description": "Optional audio configuration settings",
+                      "value": {
+                        "allOf": [],
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "agentSettingsConfigurationAudioInput",
+                            "key": "input",
+                            "schema": {
+                              "generatedName": "agentSettingsConfigurationAudioInput",
+                              "value": {
+                                "generatedName": "AgentSettingsConfigurationAudioInput",
+                                "description": "Optional audio input configuration settings",
+                                "value": {
+                                  "allOf": [],
+                                  "properties": [
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioInputEncoding",
+                                      "key": "encoding",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioInputEncoding",
+                                        "value": {
+                                          "description": "Audio encoding format",
+                                          "schema": {
+                                            "default": "linear16",
+                                            "type": "string"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioInputEncoding",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    },
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioInputSampleRate",
+                                      "key": "sample_rate",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioInputSampleRate",
+                                        "value": {
+                                          "description": "Sample rate in Hz",
+                                          "schema": {
+                                            "default": 24000,
+                                            "type": "int"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioInputSampleRate",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    }
+                                  ],
+                                  "allOfPropertyConflicts": [],
+                                  "description": "Optional audio input configuration settings",
+                                  "generatedName": "AgentSettingsConfigurationAudioInput",
+                                  "groupName": [],
+                                  "additionalProperties": false,
+                                  "source": {
+                                    "file": "../asyncapi.yml",
+                                    "type": "openapi"
+                                  },
+                                  "type": "object"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "agentSettingsConfigurationAudioOutput",
+                            "key": "output",
+                            "schema": {
+                              "generatedName": "agentSettingsConfigurationAudioOutput",
+                              "value": {
+                                "generatedName": "AgentSettingsConfigurationAudioOutput",
+                                "description": "Audio output configuration settings",
+                                "value": {
+                                  "allOf": [],
+                                  "properties": [
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioOutputEncoding",
+                                      "key": "encoding",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioOutputEncoding",
+                                        "value": {
+                                          "schema": {
+                                            "type": "string"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioOutputEncoding",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    },
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioOutputSampleRate",
+                                      "key": "sample_rate",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioOutputSampleRate",
+                                        "value": {
+                                          "description": "Sample rate in Hz",
+                                          "schema": {
+                                            "default": 24000,
+                                            "type": "int"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioOutputSampleRate",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    },
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioOutputBitrate",
+                                      "key": "bitrate",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioOutputBitrate",
+                                        "value": {
+                                          "schema": {
+                                            "type": "int"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioOutputBitrate",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    },
+                                    {
+                                      "conflict": {},
+                                      "generatedName": "agentSettingsConfigurationAudioOutputContainer",
+                                      "key": "container",
+                                      "schema": {
+                                        "generatedName": "agentSettingsConfigurationAudioOutputContainer",
+                                        "value": {
+                                          "schema": {
+                                            "type": "string"
+                                          },
+                                          "generatedName": "AgentSettingsConfigurationAudioOutputContainer",
+                                          "groupName": [],
+                                          "type": "primitive"
+                                        },
+                                        "groupName": [],
+                                        "type": "optional"
+                                      },
+                                      "audiences": []
+                                    }
+                                  ],
+                                  "allOfPropertyConflicts": [],
+                                  "description": "Audio output configuration settings",
+                                  "generatedName": "AgentSettingsConfigurationAudioOutput",
+                                  "groupName": [],
+                                  "additionalProperties": false,
+                                  "source": {
+                                    "file": "../asyncapi.yml",
+                                    "type": "openapi"
+                                  },
+                                  "type": "object"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": []
+                          }
+                        ],
+                        "allOfPropertyConflicts": [],
+                        "description": "Optional audio configuration settings",
+                        "generatedName": "AgentSettingsConfigurationAudio",
+                        "groupName": [],
+                        "additionalProperties": false,
+                        "source": {
+                          "file": "../asyncapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "object"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentSettingsConfigurationAgent",
+                  "key": "agent",
+                  "schema": {
+                    "allOf": [],
+                    "properties": [
+                      {
+                        "conflict": {},
+                        "generatedName": "agentSettingsConfigurationAgentListen",
+                        "key": "listen",
+                        "schema": {
+                          "generatedName": "agentSettingsConfigurationAgentListen",
+                          "value": {
+                            "allOf": [],
+                            "properties": [
+                              {
+                                "conflict": {},
+                                "generatedName": "agentSettingsConfigurationAgentListenModel",
+                                "key": "model",
+                                "schema": {
+                                  "generatedName": "agentSettingsConfigurationAgentListenModel",
+                                  "value": {
+                                    "description": "Model to use for speech recognition",
+                                    "schema": {
+                                      "default": "nova-2",
+                                      "type": "string"
+                                    },
+                                    "generatedName": "AgentSettingsConfigurationAgentListenModel",
+                                    "groupName": [],
+                                    "type": "primitive"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              }
+                            ],
+                            "allOfPropertyConflicts": [],
+                            "generatedName": "AgentSettingsConfigurationAgentListen",
+                            "groupName": [],
+                            "additionalProperties": false,
+                            "source": {
+                              "file": "../asyncapi.yml",
+                              "type": "openapi"
+                            },
+                            "type": "object"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "agentSettingsConfigurationAgentThink",
+                        "key": "think",
+                        "schema": {
+                          "generatedName": "agentSettingsConfigurationAgentThink",
+                          "value": {
+                            "allOf": [],
+                            "properties": [
+                              {
+                                "conflict": {},
+                                "generatedName": "agentSettingsConfigurationAgentThinkProvider",
+                                "key": "provider",
+                                "schema": {
+                                  "generatedName": "agentSettingsConfigurationAgentThinkProvider",
+                                  "value": {
+                                    "allOf": [],
+                                    "properties": [
+                                      {
+                                        "conflict": {},
+                                        "generatedName": "agentSettingsConfigurationAgentThinkProviderType",
+                                        "key": "type",
+                                        "schema": {
+                                          "generatedName": "agentSettingsConfigurationAgentThinkProviderType",
+                                          "value": {
+                                            "description": "LLM provider type",
+                                            "schema": {
+                                              "type": "string"
+                                            },
+                                            "generatedName": "AgentSettingsConfigurationAgentThinkProviderType",
+                                            "groupName": [],
+                                            "type": "primitive"
+                                          },
+                                          "groupName": [],
+                                          "type": "optional"
+                                        },
+                                        "audiences": []
+                                      }
+                                    ],
+                                    "allOfPropertyConflicts": [],
+                                    "generatedName": "AgentSettingsConfigurationAgentThinkProvider",
+                                    "groupName": [],
+                                    "additionalProperties": false,
+                                    "source": {
+                                      "file": "../asyncapi.yml",
+                                      "type": "openapi"
+                                    },
+                                    "type": "object"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              },
+                              {
+                                "conflict": {},
+                                "generatedName": "agentSettingsConfigurationAgentThinkModel",
+                                "key": "model",
+                                "schema": {
+                                  "generatedName": "agentSettingsConfigurationAgentThinkModel",
+                                  "value": {
+                                    "description": "LLM model to use",
+                                    "schema": {
+                                      "type": "string"
+                                    },
+                                    "generatedName": "AgentSettingsConfigurationAgentThinkModel",
+                                    "groupName": [],
+                                    "type": "primitive"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              },
+                              {
+                                "conflict": {},
+                                "generatedName": "agentSettingsConfigurationAgentThinkInstructions",
+                                "key": "instructions",
+                                "schema": {
+                                  "generatedName": "agentSettingsConfigurationAgentThinkInstructions",
+                                  "value": {
+                                    "generatedName": "AgentSettingsConfigurationAgentThinkInstructions",
+                                    "description": "LLM System prompt",
+                                    "value": {
+                                      "description": "LLM System prompt",
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "AgentSettingsConfigurationAgentThinkInstructions",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "nullable"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              },
+                              {
+                                "conflict": {},
+                                "generatedName": "agentSettingsConfigurationAgentThinkFunctions",
+                                "key": "functions",
+                                "schema": {
+                                  "generatedName": "agentSettingsConfigurationAgentThinkFunctions",
+                                  "value": {
+                                    "generatedName": "AgentSettingsConfigurationAgentThinkFunctions",
+                                    "value": {
+                                      "value": {
+                                        "allOf": [],
+                                        "properties": [
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemName",
+                                            "key": "name",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemName",
+                                              "value": {
+                                                "description": "Function name",
+                                                "schema": {
+                                                  "type": "string"
+                                                },
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemName",
+                                                "groupName": [],
+                                                "type": "primitive"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          },
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                            "key": "description",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                              "value": {
+                                                "description": "Description of function purpose and usage",
+                                                "schema": {
+                                                  "type": "string"
+                                                },
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                                "groupName": [],
+                                                "type": "primitive"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          },
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                            "key": "url",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                              "value": {
+                                                "description": "Function endpoint URL",
+                                                "schema": {
+                                                  "type": "string"
+                                                },
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                                "groupName": [],
+                                                "type": "primitive"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          },
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                            "key": "headers",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                              "value": {
+                                                "value": {
+                                                  "allOf": [],
+                                                  "properties": [
+                                                    {
+                                                      "conflict": {},
+                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                      "key": "key",
+                                                      "schema": {
+                                                        "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                        "value": {
+                                                          "schema": {
+                                                            "type": "string"
+                                                          },
+                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                          "groupName": [],
+                                                          "type": "primitive"
+                                                        },
+                                                        "groupName": [],
+                                                        "type": "optional"
+                                                      },
+                                                      "audiences": []
+                                                    },
+                                                    {
+                                                      "conflict": {},
+                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                      "key": "value",
+                                                      "schema": {
+                                                        "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                        "value": {
+                                                          "schema": {
+                                                            "type": "string"
+                                                          },
+                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                          "groupName": [],
+                                                          "type": "primitive"
+                                                        },
+                                                        "groupName": [],
+                                                        "type": "optional"
+                                                      },
+                                                      "audiences": []
+                                                    }
+                                                  ],
+                                                  "allOfPropertyConflicts": [],
+                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem",
+                                                  "groupName": [],
+                                                  "additionalProperties": false,
+                                                  "source": {
+                                                    "file": "../asyncapi.yml",
+                                                    "type": "openapi"
+                                                  },
+                                                  "type": "object"
+                                                },
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                                "groupName": [],
+                                                "type": "array"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          },
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                            "key": "method",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                              "value": {
+                                                "description": "HTTP method for function call",
+                                                "schema": {
+                                                  "default": "post",
+                                                  "type": "string"
+                                                },
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                                "groupName": [],
+                                                "type": "primitive"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          },
+                                          {
+                                            "conflict": {},
+                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                            "key": "parameters",
+                                            "schema": {
+                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                              "value": {
+                                                "allOf": [],
+                                                "properties": [
+                                                  {
+                                                    "conflict": {},
+                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                    "key": "type",
+                                                    "schema": {
+                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                      "value": {
+                                                        "schema": {
+                                                          "type": "string"
+                                                        },
+                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                        "groupName": [],
+                                                        "type": "primitive"
+                                                      },
+                                                      "groupName": [],
+                                                      "type": "optional"
+                                                    },
+                                                    "audiences": []
+                                                  },
+                                                  {
+                                                    "conflict": {},
+                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                    "key": "properties",
+                                                    "schema": {
+                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                      "value": {
+                                                        "key": {
+                                                          "schema": {
+                                                            "type": "string"
+                                                          },
+                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesKey",
+                                                          "groupName": [],
+                                                          "type": "primitive"
+                                                        },
+                                                        "value": {
+                                                          "allOf": [],
+                                                          "properties": [
+                                                            {
+                                                              "conflict": {},
+                                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                              "key": "type",
+                                                              "schema": {
+                                                                "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                                "value": {
+                                                                  "schema": {
+                                                                    "type": "string"
+                                                                  },
+                                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                                  "groupName": [],
+                                                                  "type": "primitive"
+                                                                },
+                                                                "groupName": [],
+                                                                "type": "optional"
+                                                              },
+                                                              "audiences": []
+                                                            },
+                                                            {
+                                                              "conflict": {},
+                                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                              "key": "description",
+                                                              "schema": {
+                                                                "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                                "value": {
+                                                                  "schema": {
+                                                                    "type": "string"
+                                                                  },
+                                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                                  "groupName": [],
+                                                                  "type": "primitive"
+                                                                },
+                                                                "groupName": [],
+                                                                "type": "optional"
+                                                              },
+                                                              "audiences": []
+                                                            }
+                                                          ],
+                                                          "allOfPropertyConflicts": [],
+                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue",
+                                                          "groupName": [],
+                                                          "additionalProperties": false,
+                                                          "source": {
+                                                            "file": "../asyncapi.yml",
+                                                            "type": "openapi"
+                                                          },
+                                                          "inline": true,
+                                                          "type": "object"
+                                                        },
+                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                        "groupName": [],
+                                                        "type": "map"
+                                                      },
+                                                      "groupName": [],
+                                                      "type": "optional"
+                                                    },
+                                                    "audiences": []
+                                                  },
+                                                  {
+                                                    "conflict": {},
+                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                    "key": "required",
+                                                    "schema": {
+                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                      "value": {
+                                                        "value": {
+                                                          "schema": {
+                                                            "type": "string"
+                                                          },
+                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersRequiredItem",
+                                                          "groupName": [],
+                                                          "type": "primitive"
+                                                        },
+                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                        "groupName": [],
+                                                        "type": "array"
+                                                      },
+                                                      "groupName": [],
+                                                      "type": "optional"
+                                                    },
+                                                    "audiences": []
+                                                  }
+                                                ],
+                                                "allOfPropertyConflicts": [],
+                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                                "groupName": [],
+                                                "additionalProperties": false,
+                                                "source": {
+                                                  "file": "../asyncapi.yml",
+                                                  "type": "openapi"
+                                                },
+                                                "type": "object"
+                                              },
+                                              "groupName": [],
+                                              "type": "optional"
+                                            },
+                                            "audiences": []
+                                          }
+                                        ],
+                                        "allOfPropertyConflicts": [],
+                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItem",
+                                        "groupName": [],
+                                        "additionalProperties": false,
+                                        "source": {
+                                          "file": "../asyncapi.yml",
+                                          "type": "openapi"
+                                        },
+                                        "type": "object"
+                                      },
+                                      "generatedName": "AgentSettingsConfigurationAgentThinkFunctions",
+                                      "groupName": [],
+                                      "type": "array"
+                                    },
+                                    "groupName": [],
+                                    "type": "nullable"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              }
+                            ],
+                            "allOfPropertyConflicts": [],
+                            "generatedName": "AgentSettingsConfigurationAgentThink",
+                            "groupName": [],
+                            "additionalProperties": false,
+                            "source": {
+                              "file": "../asyncapi.yml",
+                              "type": "openapi"
+                            },
+                            "type": "object"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "agentSettingsConfigurationAgentSpeak",
+                        "key": "speak",
+                        "schema": {
+                          "generatedName": "agentSettingsConfigurationAgentSpeak",
+                          "value": {
+                            "generatedName": "AgentSettingsConfigurationAgentSpeak",
+                            "value": {
+                              "allOf": [],
+                              "properties": [
+                                {
+                                  "conflict": {},
+                                  "generatedName": "agentSettingsConfigurationAgentSpeakModel",
+                                  "key": "model",
+                                  "schema": {
+                                    "generatedName": "agentSettingsConfigurationAgentSpeakModel",
+                                    "value": {
+                                      "description": "Text-to-speech model",
+                                      "schema": {
+                                        "default": "aura-asteria-en",
+                                        "type": "string"
+                                      },
+                                      "generatedName": "AgentSettingsConfigurationAgentSpeakModel",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                },
+                                {
+                                  "conflict": {},
+                                  "generatedName": "agentSettingsConfigurationAgentSpeakProvider",
+                                  "key": "provider",
+                                  "schema": {
+                                    "generatedName": "agentSettingsConfigurationAgentSpeakProvider",
+                                    "value": {
+                                      "description": "Alternative TTS provider",
+                                      "generatedName": "AgentSettingsConfigurationAgentSpeakProvider",
+                                      "values": [
+                                        {
+                                          "generatedName": "eleven_labs",
+                                          "value": "eleven_labs",
+                                          "casing": {}
+                                        },
+                                        {
+                                          "generatedName": "cartesia",
+                                          "value": "cartesia",
+                                          "casing": {}
+                                        }
+                                      ],
+                                      "groupName": [],
+                                      "source": {
+                                        "file": "../asyncapi.yml",
+                                        "type": "openapi"
+                                      },
+                                      "type": "enum"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                },
+                                {
+                                  "conflict": {},
+                                  "generatedName": "agentSettingsConfigurationAgentSpeakVoiceId",
+                                  "key": "voice_id",
+                                  "schema": {
+                                    "generatedName": "agentSettingsConfigurationAgentSpeakVoiceId",
+                                    "value": {
+                                      "description": "Unique voice identifier for the selected provider",
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "AgentSettingsConfigurationAgentSpeakVoiceId",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                }
+                              ],
+                              "allOfPropertyConflicts": [],
+                              "generatedName": "AgentSettingsConfigurationAgentSpeak",
+                              "groupName": [],
+                              "additionalProperties": false,
+                              "source": {
+                                "file": "../asyncapi.yml",
+                                "type": "openapi"
+                              },
+                              "type": "object"
+                            },
+                            "groupName": [],
+                            "type": "nullable"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      }
+                    ],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "AgentSettingsConfigurationAgent",
+                    "groupName": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentSettingsConfigurationContext",
+                  "key": "context",
+                  "schema": {
+                    "generatedName": "agentSettingsConfigurationContext",
+                    "value": {
+                      "generatedName": "AgentSettingsConfigurationContext",
+                      "value": {
+                        "allOf": [],
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "agentSettingsConfigurationContextMessages",
+                            "key": "messages",
+                            "schema": {
+                              "generatedName": "agentSettingsConfigurationContextMessages",
+                              "value": {
+                                "description": "LLM message history for conversation restoration",
+                                "value": {
+                                  "key": {
+                                    "schema": {
+                                      "type": "string"
+                                    },
+                                    "generatedName": "AgentSettingsConfigurationContextMessagesItemKey",
+                                    "groupName": [],
+                                    "type": "primitive"
+                                  },
+                                  "value": {
+                                    "generatedName": "AgentSettingsConfigurationContextMessagesItemValue",
+                                    "type": "unknown"
+                                  },
+                                  "generatedName": "AgentSettingsConfigurationContextMessagesItem",
+                                  "groupName": [],
+                                  "type": "map"
+                                },
+                                "generatedName": "AgentSettingsConfigurationContextMessages",
+                                "groupName": [],
+                                "type": "array"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "agentSettingsConfigurationContextReplay",
+                            "key": "replay",
+                            "schema": {
+                              "generatedName": "agentSettingsConfigurationContextReplay",
+                              "value": {
+                                "description": "Whether to replay the last assistant message",
+                                "schema": {
+                                  "default": false,
+                                  "type": "boolean"
+                                },
+                                "generatedName": "AgentSettingsConfigurationContextReplay",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": []
+                          }
+                        ],
+                        "allOfPropertyConflicts": [],
+                        "generatedName": "AgentSettingsConfigurationContext",
+                        "groupName": [],
+                        "additionalProperties": false,
+                        "source": {
+                          "file": "../asyncapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "object"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentSettingsConfiguration",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentUpdateInstructionsType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier",
+                    "value": {
+                      "value": "UpdateInstructions",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentUpdateInstructionsType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentUpdateInstructionsInstructions",
+                  "key": "instructions",
+                  "schema": {
+                    "description": "The new instructions to give to the Think model",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentUpdateInstructionsInstructions",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentUpdateInstructions",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentUpdateSpeakType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for updating the speak model",
+                    "value": {
+                      "value": "UpdateSpeak",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentUpdateSpeakType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentUpdateSpeakModel",
+                  "key": "model",
+                  "schema": {
+                    "description": "The new Text-to-Speech model to use",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentUpdateSpeakModel",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentUpdateSpeak",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentInjectAgentMessageType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for injecting an agent message",
+                    "value": {
+                      "value": "InjectAgentMessage",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentInjectAgentMessageType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentInjectAgentMessageMessage",
+                  "key": "message",
+                  "schema": {
+                    "description": "The statement that the agent should say",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentInjectAgentMessageMessage",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentInjectAgentMessage",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallResponseType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for function call responses",
+                    "value": {
+                      "value": "FunctionCallResponse",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallResponseType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallResponseFunctionCallId",
+                  "key": "function_call_id",
+                  "schema": {
+                    "description": "The unique identifier matching the original function call request",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallResponseFunctionCallId",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallResponseOutput",
+                  "key": "output",
+                  "schema": {
+                    "description": "The result of the function call execution",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallResponseOutput",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentFunctionCallResponse",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentKeepAliveType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for agent keep alive signal",
+                    "value": {
+                      "value": "KeepAlive",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentKeepAliveType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentAgentKeepAlive",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "subscribe": {
+        "value": {
+          "generatedName": "AgentSubscribeEvent",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentInjectionRefusedType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for injection refused",
+                    "value": {
+                      "value": "InjectionRefused",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentInjectionRefusedType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentInjectionRefused",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentWelcomeMessageType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for welcome message",
+                    "value": {
+                      "value": "Welcome",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentWelcomeMessageType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentWelcomeMessageSessionId",
+                  "key": "session_id",
+                  "schema": {
+                    "description": "Unique identifier for the websocket session",
+                    "schema": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentWelcomeMessageSessionId",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentWelcomeMessage",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentSettingsAppliedType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for settings applied confirmation",
+                    "value": {
+                      "value": "SettingsApplied",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentSettingsAppliedType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentSettingsApplied",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentConversationTextType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for conversation text",
+                    "value": {
+                      "value": "ConversationText",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentConversationTextType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentConversationTextRole",
+                  "key": "role",
+                  "schema": {
+                    "description": "Identifies who spoke the statement",
+                    "generatedName": "AgentConversationTextRole",
+                    "values": [
+                      {
+                        "generatedName": "user",
+                        "value": "user",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "assistant",
+                        "value": "assistant",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentConversationTextContent",
+                  "key": "content",
+                  "schema": {
+                    "description": "The actual statement that was spoken",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentConversationTextContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentConversationText",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentUserStartedSpeakingType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier indicating that the user has begun speaking",
+                    "value": {
+                      "value": "UserStartedSpeaking",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentUserStartedSpeakingType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentUserStartedSpeaking",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentThinkingType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for agent thinking",
+                    "value": {
+                      "value": "AgentThinking",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentThinkingType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentThinkingContent",
+                  "key": "content",
+                  "schema": {
+                    "description": "The text of the agent's thought process",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentThinkingContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentAgentThinking",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallRequestType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for function call requests",
+                    "value": {
+                      "value": "FunctionCallRequest",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallRequestType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallRequestFunctionName",
+                  "key": "function_name",
+                  "schema": {
+                    "description": "The name specified in the function definition",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallRequestFunctionName",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallRequestFunctionCallId",
+                  "key": "function_call_id",
+                  "schema": {
+                    "description": "Unique identifier to correlate the response with this request",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallRequestFunctionCallId",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallRequestInput",
+                  "key": "input",
+                  "schema": {
+                    "description": "Parameters defined for this function in the function definition",
+                    "key": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "AgentFunctionCallRequestInputKey",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "value": {
+                      "generatedName": "AgentFunctionCallRequestInputValue",
+                      "type": "unknown"
+                    },
+                    "generatedName": "AgentFunctionCallRequestInput",
+                    "groupName": [],
+                    "type": "map"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentFunctionCallRequest",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentFunctionCallingType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for function calling status",
+                    "value": {
+                      "value": "FunctionCalling",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentFunctionCallingType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentFunctionCalling",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentStartedSpeakingType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for agent started speaking",
+                    "value": {
+                      "value": "AgentStartedSpeaking",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentStartedSpeakingType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentStartedSpeakingTotalLatency",
+                  "key": "total_latency",
+                  "schema": {
+                    "description": "Seconds from receiving the user's utterance to producing the agent's reply",
+                    "schema": {
+                      "type": "float"
+                    },
+                    "generatedName": "AgentAgentStartedSpeakingTotalLatency",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentStartedSpeakingTtsLatency",
+                  "key": "tts_latency",
+                  "schema": {
+                    "description": "The portion of total latency attributable to text-to-speech",
+                    "schema": {
+                      "type": "float"
+                    },
+                    "generatedName": "AgentAgentStartedSpeakingTtsLatency",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentStartedSpeakingTttLatency",
+                  "key": "ttt_latency",
+                  "schema": {
+                    "description": "The portion of total latency attributable to text-to-text (usually an LLM)",
+                    "schema": {
+                      "type": "float"
+                    },
+                    "generatedName": "AgentAgentStartedSpeakingTttLatency",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentAgentStartedSpeaking",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentAudioDoneType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier indicating the agent has finished sending audio",
+                    "value": {
+                      "value": "AgentAudioDone",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentAudioDoneType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentAgentAudioDone",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentErrorResponseType",
+                  "key": "type",
+                  "schema": {
+                    "description": "Message type identifier for error responses",
+                    "value": {
+                      "value": "Error",
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentErrorResponseType",
+                    "groupName": [],
+                    "type": "literal"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "agentAgentErrorResponseMessage",
+                  "key": "message",
+                  "schema": {
+                    "description": "A description of what went wrong",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AgentAgentErrorResponseMessage",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "AgentAgentErrorResponse",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "path": "/agent",
+      "examples": [],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
   "groupedSchemas": {
     "rootSchemas": {
       "ListenRequest": {

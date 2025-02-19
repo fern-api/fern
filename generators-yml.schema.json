@@ -604,6 +604,67 @@
         "v1"
       ]
     },
+    "generators.OpenAPIFilterSchema": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.RequestOrResponseExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "max-depth": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.OpenAPIExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "generators.MessageNamingSettingsSchema": {
       "type": "string",
       "enum": [
@@ -634,26 +695,6 @@
             }
           ]
         },
-        "message-naming": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "respect-nullable-schemas": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -674,10 +715,110 @@
             }
           ]
         },
+        "prefer-undiscriminated-unions-with-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIFilterSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example-generation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-as-schema-name": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optional-additional-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "idiomatic-request-names": {
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message-naming": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
             },
             {
               "type": "null"
@@ -1292,70 +1433,19 @@
         }
       ]
     },
-    "generators.OpenAPIFilterSchema": {
+    "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
-        "endpoints": {
+        "respect-nullable-schemas": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "generators.RequestOrResponseExampleGenerationSchema": {
-      "type": "object",
-      "properties": {
-        "max-depth": {
-          "oneOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "generators.OpenAPIExampleGenerationSchema": {
-      "type": "object",
-      "properties": {
-        "request": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+              "type": "boolean"
             },
             {
               "type": "null"
             }
           ]
         },
-        "response": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "generators.OpenAPISettingsSchema": {
-      "type": "object",
-      "properties": {
         "title-as-schema-name": {
           "oneOf": [
             {
@@ -1396,6 +1486,46 @@
             }
           ]
         },
+        "use-title": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.UnionSettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "prefer-undiscriminated-unions-with-literals": {
           "oneOf": [
             {
@@ -1417,36 +1547,6 @@
           ]
         },
         "respect-readonly-schemas": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "respect-nullable-schemas": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "only-include-referenced-schemas": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline-path-parameters": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1534,6 +1634,16 @@
     "generators.AsyncAPISettingsSchema": {
       "type": "object",
       "properties": {
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "title-as-schema-name": {
           "oneOf": [
             {
@@ -1564,7 +1674,7 @@
             }
           ]
         },
-        "respect-nullable-schemas": {
+        "idiomatic-request-names": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1574,10 +1684,10 @@
             }
           ]
         },
-        "idiomatic-request-names": {
+        "message-naming": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
             },
             {
               "type": "null"
@@ -2807,7 +2917,7 @@
           ]
         },
         "settings": {
-          "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+          "$ref": "#/definitions/generators.OpenAPISettingsSchema"
         }
       },
       "required": [

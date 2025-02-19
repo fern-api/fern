@@ -5,39 +5,37 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
+import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.OpenApiSettingsSchema.Raw,
     FernDefinition.OpenApiSettingsSchema
-> = core.serialization.object({
-    "title-as-schema-name": core.serialization.boolean().optional(),
-    "optional-additional-properties": core.serialization.boolean().optional(),
-    "coerce-enums-to-literals": core.serialization.boolean().optional(),
-    "idiomatic-request-names": core.serialization.boolean().optional(),
-    "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
-    "object-query-parameters": core.serialization.boolean().optional(),
-    "respect-readonly-schemas": core.serialization.boolean().optional(),
-    "respect-nullable-schemas": core.serialization.boolean().optional(),
-    "only-include-referenced-schemas": core.serialization.boolean().optional(),
-    "inline-path-parameters": core.serialization.boolean().optional(),
-    filter: OpenApiFilterSchema.optional(),
-    "example-generation": OpenApiExampleGenerationSchema.optional(),
-});
+> = core.serialization
+    .object({
+        "use-title": core.serialization.boolean().optional(),
+        unions: UnionSettingsSchema.optional(),
+        "only-include-referenced-schemas": core.serialization.boolean().optional(),
+        "inline-path-parameters": core.serialization.boolean().optional(),
+        "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
+        "object-query-parameters": core.serialization.boolean().optional(),
+        "respect-readonly-schemas": core.serialization.boolean().optional(),
+        filter: OpenApiFilterSchema.optional(),
+        "example-generation": OpenApiExampleGenerationSchema.optional(),
+    })
+    .extend(BaseApiSettingsSchema);
 
 export declare namespace OpenApiSettingsSchema {
-    export interface Raw {
-        "title-as-schema-name"?: boolean | null;
-        "optional-additional-properties"?: boolean | null;
-        "coerce-enums-to-literals"?: boolean | null;
-        "idiomatic-request-names"?: boolean | null;
+    export interface Raw extends BaseApiSettingsSchema.Raw {
+        "use-title"?: boolean | null;
+        unions?: UnionSettingsSchema.Raw | null;
+        "only-include-referenced-schemas"?: boolean | null;
+        "inline-path-parameters"?: boolean | null;
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
-        "respect-nullable-schemas"?: boolean | null;
-        "only-include-referenced-schemas"?: boolean | null;
-        "inline-path-parameters"?: boolean | null;
         filter?: OpenApiFilterSchema.Raw | null;
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;
     }

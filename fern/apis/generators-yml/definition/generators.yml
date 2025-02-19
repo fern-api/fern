@@ -1,13 +1,12 @@
-
-imports: 
+imports:
   auth: ./fernDefinition/auth.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
   group: ./group.yml
   reviewers: ./reviewers.yml
-types: 
+types:
   GeneratorsConfigurationSchema:
-    audiences: 
+    audiences:
       - generators-yml
     properties:
       auth-schemes:
@@ -47,28 +46,28 @@ types:
         type: optional<APIDefinitionSettingsSchema>
         availability: deprecated
         docs: Deprecated, use the `api` key instead
-  
+
   APIConfigurationSchema:
     discriminated: false
     union:
       - APIConfigurationSchemaInternal
       - NamespacedAPIConfigurationSchema
       - APIConfigurationV2Schema
-  
+
   NamespacedAPIConfigurationSchema:
     properties:
       namespaces: map<string, APIConfigurationSchemaInternal>
-  
-  WhitelabelConfigurationSchema: 
+
+  WhitelabelConfigurationSchema:
     properties:
       github: optional<WhitelabelGithubConfigurationSchema>
-  
+
   WhitelabelGithubConfigurationSchema:
     properties:
       username: string
       email: string
       token: string
-  
+
   OutputMetadataSchema:
     properties:
       description: optional<string>
@@ -78,7 +77,7 @@ types:
     properties:
       name: string
       email: string
-  
+
   ReadmeSchema:
     properties:
       bannerLink: optional<string>
@@ -90,34 +89,34 @@ types:
       features:
         type: optional<map<string, list<ReadmeEndpointSchema>>>
         docs: "Specifies a list of endpoints associated with the feature"
-  
+
   ReadmeEndpointSchema:
     discriminated: false
     union:
       - type: string
         docs: "Endpoint name in 'POST /users' format"
       - ReadmeEndpointObjectSchema
-  
+
   ReadmeEndpointObjectSchema:
     properties:
       method: string
       path: string
       stream: optional<boolean>
-  
+
   GeneratorsOpenAPISchema:
     discriminated: false
     union:
       - GeneratorsOpenAPIObjectSchema
       - string
-  
+
   GeneratorsOpenAPIObjectSchema:
     properties:
       path: string
       origin: optional<string>
       overrides: optional<string>
       disable-examples: optional<boolean>
-      settings: APIDefinitionSettingsSchema
-  
+      settings: OpenAPISettingsSchema
+
   ## V1 API Configuration (now deprecated, use v2 instead)
 
   APIDefinitionPathSchema:
@@ -125,33 +124,16 @@ types:
     docs: Path to the OpenAPI, AsyncAPI or Fern Definition
 
   APIDefinitionSettingsSchema:
-    properties:
-      use-title:
-        type: optional<boolean>
-        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
-      unions:
-        type: optional<UnionSettingsSchema>
-        docs: What version of union generation to use, this will grow over time. Defaults to v0.
-      message-naming:
-        type: optional<MessageNamingSettingsSchema>
-        docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
-      respect-nullable-schemas:
-        type: optional<boolean>
-        docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
-      only-include-referenced-schemas:
-        type: optional<boolean>
-        docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
-      inline-path-parameters:
-        type: optional<boolean>
-        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
-      idiomatic-request-names:
-        type: optional<boolean>
-        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
-  
+    extends:
+      - OpenAPISettingsSchema
+      - AsyncAPISettingsSchema
+      - ConjureSettingsSchema
+    properties: {}
+
   UnionSettingsSchema:
-    enum: 
+    enum:
       - v1
-  
+
   MessageNamingSettingsSchema:
     enum:
       - v1
@@ -192,8 +174,8 @@ types:
 
   APIDefinitionList:
     type: list<APIDefinitionSchema>
-  
-  APIDefinitionSchema: 
+
+  APIDefinitionSchema:
     discriminated: false
     union:
       - APIDefinitionPathSchema
@@ -216,54 +198,66 @@ types:
     extends:
       - file.WithHeadersSchema
       - environments.WithEnvironmentsSchema
-  
+
   APIConfigurationV2SpecsSchema:
     discriminated: false
     union:
       - list<AsyncAPIOrOpenAPISpecSchema>
       - ConjureSchema
 
-  OpenAPISettingsSchema:
+  BaseAPISettingsSchema:
     properties:
-      title-as-schema-name: optional<boolean>
-      optional-additional-properties: optional<boolean>
-      coerce-enums-to-literals: optional<boolean>
-      idiomatic-request-names:
-        type: optional<boolean>
-        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
-      prefer-undiscriminated-unions-with-literals: 
-        type: optional<boolean>
-        docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
-      object-query-parameters: 
-        type: optional<boolean>
-        docs: Enables parsing deep object query parameters
-      respect-readonly-schemas:
-        type: optional<boolean>
-        docs: Enables exploring readonly schemas in OpenAPI specifications
       respect-nullable-schemas:
         type: optional<boolean>
-        docs: Preserves nullable schemas in OpenAPI specifications. Defaults to false, where nullable schemas are treated as optional.
+        docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
+      title-as-schema-name:
+        type: optional<boolean>
+        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+      optional-additional-properties: optional<boolean>
+      coerce-enums-to-literals: optional<boolean>
+      idiomatic-request-names: optional<boolean>
+
+  OpenAPISettingsSchema:
+    extends:
+      - BaseAPISettingsSchema
+    properties:
+      use-title:
+        type: optional<boolean>
+        availability: deprecated
+        docs: Deprecated, use the `title-as-schema-name` key instead
+      unions:
+        type: optional<UnionSettingsSchema>
+        docs: What version of union generation to use, this will grow over time. Defaults to v0.
       only-include-referenced-schemas:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
       inline-path-parameters:
         type: optional<boolean>
         docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      prefer-undiscriminated-unions-with-literals:
+        type: optional<boolean>
+        docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
+      object-query-parameters:
+        type: optional<boolean>
+        docs: Enables parsing deep object query parameters
+      respect-readonly-schemas:
+        type: optional<boolean>
+        docs: Enables exploring readonly schemas in OpenAPI specifications
       filter:
         type: optional<OpenAPIFilterSchema>
         docs: Filter to apply to the OpenAPI specification.
-      example-generation: 
+      example-generation:
         type: optional<OpenAPIExampleGenerationSchema>
         docs: Fine-tune your example generation
-  
-  OpenAPIExampleGenerationSchema: 
-    properties: 
+
+  OpenAPIExampleGenerationSchema:
+    properties:
       request: optional<RequestOrResponseExampleGenerationSchema>
       response: optional<RequestOrResponseExampleGenerationSchema>
-  
-  RequestOrResponseExampleGenerationSchema: 
-    properties: 
-      max-depth: 
+
+  RequestOrResponseExampleGenerationSchema:
+    properties:
+      max-depth:
         type: optional<integer>
         docs: Controls the maximum depth for which optional properties will have examples generated. A depth of 0 means no optional properties will have examples.
 
@@ -282,12 +276,12 @@ types:
       settings: optional<OpenAPISettingsSchema>
 
   AsyncAPISettingsSchema:
+    extends:
+      - BaseAPISettingsSchema
     properties:
-      title-as-schema-name: optional<boolean>
-      optional-additional-properties: optional<boolean>
-      coerce-enums-to-literals: optional<boolean>
-      respect-nullable-schemas: optional<boolean>
-      idiomatic-request-names: optional<boolean>
+      message-naming:
+        type: optional<MessageNamingSettingsSchema>
+        docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
 
   AsyncAPISchema:
     properties:
@@ -297,7 +291,7 @@ types:
       namespace: optional<string>
       settings: optional<AsyncAPISettingsSchema>
 
-  ConjureSettingsSchema: 
+  ConjureSettingsSchema:
     properties: {}
 
   ConjureSchema:

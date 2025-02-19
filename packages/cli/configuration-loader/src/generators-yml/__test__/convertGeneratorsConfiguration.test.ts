@@ -1,4 +1,5 @@
 /* eslint-disable jest/no-conditional-expect */
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
@@ -293,5 +294,248 @@ describe("convertGeneratorsConfiguration", () => {
                     output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
             ).toEqual(true);
         }
+    });
+
+    it("Settings should be inherited for api", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: {
+                    path: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml")
+                },
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /openapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /openapi"]
+            }
+        });
+    });
+
+    it("Settings should be inherited for api list", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: [
+                    {
+                        path: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml")
+                    }
+                ],
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /openapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /openapi"]
+            }
+        });
+    });
+
+    it("Settings should be inherited and overwritten for api list", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: [
+                    {
+                        path: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml"),
+                        settings: {
+                            filter: {
+                                endpoints: ["POST /openapi"]
+                            }
+                        }
+                    }
+                ],
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /anyapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /openapi"]
+            }
+        });
+    });
+
+    it("Settings should be inherited for specs list", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: {
+                    specs: [
+                        {
+                            openapi: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml")
+                        },
+                        {
+                            asyncapi: AbsoluteFilePath.of("/path/to/repo/fern/api/asyncapi.yml")
+                        }
+                    ]
+                },
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /anyapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /anyapi"]
+            }
+        });
+        expect(definitions[1]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /anyapi"]
+            }
+        });
+    });
+
+    it("Settings should be inherited and overwritten for specs list", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: {
+                    specs: [
+                        {
+                            openapi: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml"),
+                            settings: {
+                                filter: {
+                                    endpoints: ["POST /openapi"]
+                                }
+                            }
+                        },
+                        {
+                            asyncapi: AbsoluteFilePath.of("/path/to/repo/fern/api/asyncapi.yml"),
+                            settings: {
+                                "message-naming": "v2"
+                            }
+                        }
+                    ]
+                },
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /anyapi"]
+                    },
+                    "message-naming": "v1"
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /openapi"]
+            },
+            asyncApiMessageNaming: "v1"
+        });
+        expect(definitions[1]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /anyapi"]
+            },
+            asyncApiMessageNaming: "v2"
+        });
+    });
+
+    it("Settings should be inherited and overwritten for api", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                api: {
+                    path: AbsoluteFilePath.of("/path/to/repo/fern/api/openapi.yml"),
+                    settings: {
+                        filter: {
+                            endpoints: ["POST /openapi"]
+                        }
+                    }
+                },
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /anyapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /openapi"]
+            }
+        });
+    });
+
+    it("Settings should be inherited for asyncapi", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                "async-api": AbsoluteFilePath.of("/path/to/repo/fern/api/asyncapi.yml"),
+                "api-settings": {
+                    filter: {
+                        endpoints: ["POST /asyncapi"]
+                    }
+                }
+            }
+        });
+        if (typeof converted.api === "undefined") {
+            throw new Error("api is undefined");
+        }
+        if (!("definitions" in converted.api)) {
+            throw new Error("definitions is not in api");
+        }
+        const definitions = converted.api.definitions as generatorsYml.APIDefinitionLocation[];
+        expect(definitions[0]?.settings).toMatchObject({
+            filter: {
+                endpoints: ["POST /asyncapi"]
+            }
+        });
     });
 });

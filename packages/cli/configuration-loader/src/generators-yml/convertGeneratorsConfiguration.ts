@@ -65,11 +65,33 @@ export async function convertGeneratorsConfiguration({
     };
 }
 
+function parseApiDefinitionSettingsSchema(
+    settings: generatorsYml.ApiDefinitionSettingsSchema | undefined
+): generatorsYml.APIDefinitionSettings {
+    return {
+        shouldUseTitleAsName: settings?.["title-as-schema-name"] ?? settings?.["use-title"],
+        shouldUseUndiscriminatedUnionsWithLiterals:
+            settings?.["prefer-undiscriminated-unions-with-literals"] ?? settings?.unions === "v1",
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        asyncApiMessageNaming: settings?.["message-naming"],
+        onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
+        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
+        coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
+        objectQueryParameters: settings?.["object-query-parameters"],
+        respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        inlinePathParameters: settings?.["inline-path-parameters"],
+        filter: settings?.filter,
+        exampleGeneration: settings?.["example-generation"]
+    };
+}
+
 async function parseAPIConfigurationToApiLocations(
     apiConfiguration: generatorsYml.ApiConfigurationSchemaInternal | undefined,
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
 ): Promise<generatorsYml.APIDefinitionLocation[]> {
     const apiDefinitions: generatorsYml.APIDefinitionLocation[] = [];
+    const rootSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY] ?? {};
 
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
@@ -81,7 +103,7 @@ async function parseAPIConfigurationToApiLocations(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                settings: UNDEFINED_API_DEFINITION_SETTINGS
+                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS, ...parseApiDefinitionSettingsSchema(rootSettings) }
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
@@ -94,7 +116,7 @@ async function parseAPIConfigurationToApiLocations(
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
                 audiences: [],
-                settings: UNDEFINED_API_DEFINITION_SETTINGS
+                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS, ...parseApiDefinitionSettingsSchema(rootSettings) }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -107,7 +129,10 @@ async function parseAPIConfigurationToApiLocations(
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        settings: UNDEFINED_API_DEFINITION_SETTINGS
+                        settings: {
+                            ...UNDEFINED_API_DEFINITION_SETTINGS,
+                            ...parseApiDefinitionSettingsSchema(rootSettings)
+                        }
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
@@ -120,7 +145,10 @@ async function parseAPIConfigurationToApiLocations(
                         origin: undefined,
                         overrides: definition.proto.overrides,
                         audiences: [],
-                        settings: UNDEFINED_API_DEFINITION_SETTINGS
+                        settings: {
+                            ...UNDEFINED_API_DEFINITION_SETTINGS,
+                            ...parseApiDefinitionSettingsSchema(rootSettings)
+                        }
                     });
                 } else {
                     apiDefinitions.push({
@@ -133,11 +161,7 @@ async function parseAPIConfigurationToApiLocations(
                         audiences: definition.audiences,
                         settings: {
                             ...UNDEFINED_API_DEFINITION_SETTINGS,
-                            shouldUseTitleAsName: definition.settings?.["use-title"],
-                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
-                            shouldUseIdiomaticRequestNames: definition.settings?.["idiomatic-request-names"],
-                            asyncApiMessageNaming: definition.settings?.["message-naming"],
-                            onlyIncludeReferencedSchemas: definition.settings?.["only-include-referenced-schemas"]
+                            ...parseApiDefinitionSettingsSchema({ ...rootSettings, ...definition.settings })
                         }
                     });
                 }
@@ -153,11 +177,7 @@ async function parseAPIConfigurationToApiLocations(
                 audiences: apiConfiguration.audiences,
                 settings: {
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
-                    shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
-                    shouldUseIdiomaticRequestNames: apiConfiguration.settings?.["idiomatic-request-names"],
-                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
-                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"]
+                    ...parseApiDefinitionSettingsSchema({ ...rootSettings, ...apiConfiguration.settings })
                 }
             });
         }
@@ -166,7 +186,6 @@ async function parseAPIConfigurationToApiLocations(
         const apiOrigin = rawConfiguration[generatorsYml.API_ORIGIN_LOCATION_KEY];
         const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY];
         const asyncapi = rawConfiguration[generatorsYml.ASYNC_API_LOCATION_KEY];
-        const settings = rawConfiguration[generatorsYml.API_SETTINGS_KEY];
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 schema: {
@@ -178,10 +197,7 @@ async function parseAPIConfigurationToApiLocations(
                 audiences: [],
                 settings: {
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
-                    shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
-                    shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
-                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
+                    ...parseApiDefinitionSettingsSchema(rootSettings)
                 }
             });
         } else if (openapi != null) {
@@ -195,10 +211,7 @@ async function parseAPIConfigurationToApiLocations(
                 audiences: [],
                 settings: {
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
-                    shouldUseTitleAsName: openapi.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
-                    shouldUseIdiomaticRequestNames: openapi.settings?.["idiomatic-request-names"],
-                    onlyIncludeReferencedSchemas: openapi.settings?.["only-include-referenced-schemas"]
+                    ...parseApiDefinitionSettingsSchema({ ...rootSettings, ...openapi.settings })
                 }
             });
         }
@@ -214,11 +227,7 @@ async function parseAPIConfigurationToApiLocations(
                 audiences: [],
                 settings: {
                     ...UNDEFINED_API_DEFINITION_SETTINGS,
-                    shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
-                    shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
-                    asyncApiMessageNaming: settings?.["message-naming"],
-                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
+                    ...parseApiDefinitionSettingsSchema({ ...rootSettings })
                 }
             });
         }
@@ -234,6 +243,7 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration: generatorsYml.ApiConfigurationV2Schema;
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema;
 }): Promise<generatorsYml.APIDefinition> {
+    const rootSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY] ?? {};
     const partialConfig = {
         "auth-schemes":
             apiConfiguration.auth != null
@@ -268,8 +278,9 @@ async function parseApiConfigurationV2Schema({
     const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
 
     for (const spec of apiConfiguration.specs ?? []) {
+        let definitionLocation: generatorsYml.APIDefinitionLocation;
         if (generatorsYml.isOpenAPISchema(spec)) {
-            const definitionLocation: generatorsYml.APIDefinitionLocation = {
+            definitionLocation = {
                 schema: {
                     type: "oss",
                     path: spec.openapi
@@ -277,30 +288,28 @@ async function parseApiConfigurationV2Schema({
                 origin: spec.origin,
                 overrides: spec.overrides,
                 audiences: [],
-                settings: {
-                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.["prefer-undiscriminated-unions-with-literals"] ?? false,
-                    shouldUseIdiomaticRequestNames: spec.settings?.["idiomatic-request-names"],
-                    asyncApiMessageNaming: undefined,
-                    onlyIncludeReferencedSchemas: spec.settings?.["only-include-referenced-schemas"],
-                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
-                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
-                    objectQueryParameters: spec.settings?.["object-query-parameters"],
-                    respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
-                    respectNullableSchemas: spec.settings?.["respect-nullable-schemas"],
-                    inlinePathParameters: spec.settings?.["inline-path-parameters"],
-                    filter: spec.settings?.filter,
-                    exampleGeneration: spec.settings?.["example-generation"]
-                }
+                settings: parseApiDefinitionSettingsSchema({ ...rootSettings, ...spec.settings })
             };
-            if (spec.namespace == null) {
-                rootDefinitions.push(definitionLocation);
-            } else {
-                namespacedDefinitions[spec.namespace] ??= [];
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
-            }
+        } else if (generatorsYml.isAsyncAPISchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "oss",
+                    path: spec.asyncapi
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                audiences: [],
+                settings: parseApiDefinitionSettingsSchema({ ...rootSettings, ...spec.settings })
+            };
+        } else {
+            continue;
+        }
+        if (spec.namespace == null) {
+            rootDefinitions.push(definitionLocation);
+        } else {
+            namespacedDefinitions[spec.namespace] ??= [];
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
         }
     }
 
@@ -326,23 +335,25 @@ async function parseAPIConfiguration(
 ): Promise<generatorsYml.APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
 
-    if (apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
-        return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
-    }
-
-    if (apiConfiguration != null && generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
-        const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
-        for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
-            namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
-                configuration,
-                rawGeneratorsConfiguration
-            );
+    if (apiConfiguration != null) {
+        if (generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
+            return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
         }
-        return {
-            type: "multiNamespace",
-            rootDefinitions: undefined,
-            definitions: namespacedDefinitions
-        };
+
+        if (generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
+            const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
+            for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
+                namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
+                    configuration,
+                    rawGeneratorsConfiguration
+                );
+            }
+            return {
+                type: "multiNamespace",
+                rootDefinitions: undefined,
+                definitions: namespacedDefinitions
+            };
+        }
     }
 
     return {
