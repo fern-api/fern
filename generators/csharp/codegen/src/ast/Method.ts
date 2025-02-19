@@ -138,7 +138,8 @@ export class Method extends AstNode {
                 writer.writeNode(
                     new ClassReference({
                         name: "Task",
-                        namespace: "System.Threading.Tasks"
+                        namespace: "global::System.Threading.Tasks",
+                        fullyQualified: true
                     })
                 );
                 writer.write(" ");
