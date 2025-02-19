@@ -232,13 +232,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint)
                     .ifPresent(acceptsHeader -> builder.add(acceptsHeader).add("\n"));
-            clientGeneratorContext
-                    .getIr()
-                    .getSdkConfig()
-                    .getPlatformHeaders()
-                    .getUserAgent()
-                    .ifPresent(userAgent ->
-                            builder.add(".addHeader($S, $S)\n", userAgent.getHeader(), userAgent.getValue()));
             return builder.add(".build();\n").unindent().build();
         }
     }

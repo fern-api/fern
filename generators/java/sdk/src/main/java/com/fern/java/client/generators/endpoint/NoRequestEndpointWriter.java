@@ -111,14 +111,6 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
         if (sendContentType) {
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
-        clientGeneratorContext
-                .getIr()
-                .getSdkConfig()
-                .getPlatformHeaders()
-                .getUserAgent()
-                .ifPresent(
-                        userAgent -> builder.add(".addHeader($S, $S)\n", userAgent.getHeader(), userAgent.getValue()));
-
         AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint)
                 .ifPresent(acceptsHeader -> builder.add(acceptsHeader).add("\n"));
         return builder.add(".build();\n").unindent().build();

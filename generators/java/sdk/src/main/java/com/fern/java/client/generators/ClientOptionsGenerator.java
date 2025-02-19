@@ -637,6 +637,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     platformHeaders.getSdkVersion(),
                     generatorConfig.getPublish().get().getVersion());
         }
+        if (platformHeaders.getUserAgent().isPresent()) {
+            entries.put(
+                    platformHeaders.getUserAgent().get().getHeader(),
+                    platformHeaders.getUserAgent().get().getValue());
+        }
         entries.put(platformHeaders.getLanguage(), "JAVA");
         return entries;
     }

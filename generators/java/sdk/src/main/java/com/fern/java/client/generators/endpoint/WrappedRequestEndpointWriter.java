@@ -202,13 +202,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         }
         maybeAcceptsHeader.ifPresent(
                 acceptsHeader -> requestBodyCodeBlock.add("\n").add(acceptsHeader));
-        clientGeneratorContext
-                .getIr()
-                .getSdkConfig()
-                .getPlatformHeaders()
-                .getUserAgent()
-                .ifPresent(userAgent ->
-                        requestBodyCodeBlock.add("\n.addHeader($S, $S)", userAgent.getHeader(), userAgent.getValue()));
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
