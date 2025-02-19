@@ -77,6 +77,8 @@ types:
       openapi: asyncapi/sample.yml
 channel:
   auth: false
+  examples:
+    - messages: []
   messages:
     publish:
       body: MarketDataV1PublishEvent
