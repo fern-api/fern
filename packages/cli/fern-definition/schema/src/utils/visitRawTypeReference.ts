@@ -1,8 +1,6 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
 
-import { NumberValidationSchema } from "../schemas";
-import { StringValidationSchema } from "../schemas";
-import { ValidationSchema } from "../schemas";
+import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -95,9 +93,22 @@ export function visitRawTypeReference<R>({
             });
         }
         case RawPrimitiveType.float:
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Float,
-                v2: undefined
+                v2: PrimitiveTypeV2.float({
+                    default: _default != null ? (_default as string) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                min: maybeNumberValidation.min,
+                                max: maybeNumberValidation.max,
+                                exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                multipleOf: maybeNumberValidation.multipleOf
+                            }
+                            : undefined
+                })
             });
         case RawPrimitiveType.long:
             return visitor.primitive({
