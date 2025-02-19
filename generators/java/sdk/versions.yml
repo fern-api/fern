@@ -1,22 +1,19 @@
 - changelogEntry:
     - summary: |
         Users can set a custom OkHttp client by doing
-
-        ```java
-        RootClient.builder()
-            // ...
-            .httpClient(myOkHttpClient)
-            .build()
-        ```
-
-        Or in the `ClientOptions` object 
-
-        ```java
-        ClientOptions.builder()
-            // ...
-            .httpClient(myOkHttpClient)
-            .build()
-        ```
+            ```java
+            RootClient.builder()
+                // ...
+                .httpClient(myOkHttpClient)
+                .build()
+            ```
+            Or in the `ClientOptions` object
+            ```java
+            ClientOptions.builder()
+                // ...
+                .httpClient(myOkHttpClient)
+                .build()
+            ```
       type: feat
   createdAt: '2025-02-19'
   irVersion: 53
