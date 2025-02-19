@@ -26,6 +26,7 @@ import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExa
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ServerContext } from "../sharedTypes";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV2 } from "../v2";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
@@ -57,7 +58,7 @@ export function parseAsyncAPIV2({
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
             name: serverId,
-            url: `${server.protocol}://${server.url}`
+            url: constructServerUrl(server.protocol, server.url)
         };
     }
 
@@ -261,7 +262,7 @@ export function parseAsyncAPIV2({
                     (server): server is ServerContext => server != null
                 ),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: channelPath,
+                path: transformToValidPath(channelPath),
                 description: undefined,
                 examples,
                 source

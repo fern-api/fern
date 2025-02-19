@@ -23,7 +23,7 @@ export function buildChannel({
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: channel.path,
         // TODO: Channels can be associated with multiple servers, so we need to pick one at the moment.
-        url: channel.servers[0]?.url,
+        url: channel.servers[0]?.name,
         auth: false
     };
 

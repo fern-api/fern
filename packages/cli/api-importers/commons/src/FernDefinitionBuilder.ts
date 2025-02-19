@@ -6,6 +6,8 @@ import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative }
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
+
 export type HttpServiceInfo = Partial<
     Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
 >;
@@ -208,6 +210,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         }
         this.rootApiFile.environments[name] = schema;
     }
+
+    // public addMultiUrlEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void {
+    //     if (this.rootApiFile.environments == null) {
+    //         this.rootApiFile.environments = {};
+    //     }
+    //     this.rootApiFile.environments[BASE_MULTI_URL_ENVIRONMENT_NAME] = {urlsname: schema};
+    // }
 
     public getGlobalHeaderNames(): Set<string> {
         const headerNames = Object.keys(this.rootApiFile.headers ?? {});

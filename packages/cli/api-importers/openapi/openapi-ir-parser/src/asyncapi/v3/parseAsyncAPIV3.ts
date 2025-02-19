@@ -24,6 +24,7 @@ import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ServerContext } from "../sharedTypes";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
@@ -74,7 +75,7 @@ export function parseAsyncAPIV3({
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
             name: serverId,
-            url: `${server.protocol}://${server.host}`
+            url: constructServerUrl(server.protocol, server.host)
         };
     }
 
@@ -294,13 +295,6 @@ function getServerNameFromServerRef(
         throw new Error(`Failed to find server with name ${serverName}`);
     }
     return server;
-}
-
-function transformToValidPath(path: string): string {
-    if (!path.startsWith("/")) {
-        return "/" + path;
-    }
-    return path;
 }
 
 function buildEnumSchema({

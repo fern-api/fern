@@ -2,7 +2,7 @@ import { RawSchemas, isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-def
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
-const PRODUCTION_ENVIRONMENT_NAME = "Production";
+const DEFAULT_URL_NAME = "Base";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
 function extractUrlsFromEnvironmentSchema(
@@ -40,7 +40,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         return;
     }
 
-    const topLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
+    const topLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
     const topLevelSkippedServers = [];
     for (const server of context.ir.servers) {
         const environmentSchema = server.audiences
@@ -56,7 +56,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         topLevelServersWithName[server.name] = environmentSchema;
     }
 
-    const endpointLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
+    const endpointLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
     const endpointLevelSkippedServers = [];
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.servers) {
@@ -77,71 +77,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         }
     }
 
-    const numTopLevelServers = Object.keys(topLevelServersWithName).length;
-    const numEndpointLevelServers = Object.keys(endpointLevelServersWithName).length;
-
-    if (numTopLevelServers === 0 && numEndpointLevelServers === 0) {
-        const singleURL = context.ir.servers[0]?.url;
-        const singleURLAudiences = context.ir.servers[0]?.audiences;
-        if (singleURL != null) {
-            context.builder.addEnvironment({
-                name: DEFAULT_ENVIRONMENT_NAME,
-                schema: singleURLAudiences
-                    ? {
-                          url: singleURL,
-                          audiences: singleURLAudiences
-                      }
-                    : singleURL
-            });
-            context.builder.setDefaultEnvironment(DEFAULT_ENVIRONMENT_NAME);
-        }
-    } else if (numTopLevelServers > 0 && numEndpointLevelServers === 0) {
-        let count = 0;
-        if (topLevelSkippedServers.length > 0) {
-            context.logger.error(
-                `Skipping servers ${topLevelSkippedServers
-                    .map((server) => (typeof server === "string" ? server : server.url))
-                    .join(", ")} because x-fern-server-name was not provided.`
-            );
-        }
-        for (const [name, schema] of Object.entries(topLevelServersWithName)) {
-            if (count === 0) {
-                context.builder.setDefaultEnvironment(name);
-            }
-            context.builder.addEnvironment({
-                name,
-                schema
-            });
-            count += 1;
-        }
-    } else if (numEndpointLevelServers > 0) {
-        if (topLevelSkippedServers.length > 0 || endpointLevelSkippedServers.length > 0) {
-            context.logger.error(
-                `Skipping servers ${[...topLevelSkippedServers, ...endpointLevelSkippedServers]
-                    .map((server) => (typeof server === "string" ? server : server.url))
-                    .join(", ")} because x-fern-server-name was not provided.`
-            );
-        }
-        const toplevelServerEntries = Object.entries(topLevelServersWithName)[0];
-        if (toplevelServerEntries != null) {
-            const [name, _] = toplevelServerEntries;
-            context.setDefaultServerName(name);
-        }
-        context.builder.addEnvironment({
-            name: PRODUCTION_ENVIRONMENT_NAME,
-            schema: {
-                urls: {
-                    ...extractUrlsFromEnvironmentSchema(topLevelServersWithName),
-                    ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName)
-                }
-            }
-        });
-        context.builder.setDefaultEnvironment(PRODUCTION_ENVIRONMENT_NAME);
-    }
-
-    // WebsocketServers, per the AsyncAPI spec (2.x, 3.x), are guaranteed to have a name. We never
-    // want to set them as default, nor do we want to skip any OpenAPI servers that don't
-    // have a name just because they exist.
+    const websocketServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
+    const websocketSkippedServers = [];
     for (const server of context.ir.websocketServers) {
         const environmentSchema = server.audiences
             ? {
@@ -150,12 +87,158 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
               }
             : server.url;
         if (server.name == null) {
-            topLevelSkippedServers.push(environmentSchema);
+            websocketSkippedServers.push(environmentSchema);
             continue;
         }
-        context.builder.addEnvironment({
-            name: server.name,
-            schema: environmentSchema
-        });
+        websocketServersWithName[server.name] = environmentSchema;
+    }
+
+    const numTopLevelServersWithName = Object.keys(topLevelServersWithName).length;
+    const numEndpointLevelServersWithName = Object.keys(endpointLevelServersWithName).length;
+    const numWebsocketServersWithName = Object.keys(websocketServersWithName).length;
+
+    // Endpoint level servers must always have a name attached. If they don't, we'll throw an error.
+    if (endpointLevelSkippedServers.length > 0) {
+        context.logger.error(
+            `Skipping endpoint level servers ${endpointLevelSkippedServers
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
+        );
+    }
+
+    // In this instance, we don't have any top level servers, so we'll just use the first one at the IR level.
+    if (numTopLevelServersWithName === 0) {
+        const singleURL = context.ir.servers[0]?.url;
+        const singleURLAudiences = context.ir.servers[0]?.audiences;
+        if (singleURL != null) {
+            const newEnvironmentSchema = singleURLAudiences
+                ? {
+                      url: singleURL,
+                      audiences: singleURLAudiences
+                  }
+                : singleURL;
+            topLevelServersWithName[DEFAULT_ENVIRONMENT_NAME] = newEnvironmentSchema;
+        } else {
+            // This should never happen, but we'll throw an error just in case.
+            throw Error("No top level servers found with a valid URL.");
+        }
+    }
+
+    // We now log an error for all skipped servers that we didn't have a name or construct a name for.
+    const topLevelServerUrls = Object.values(topLevelServersWithName).map((schema) =>
+        typeof schema === "string" ? schema : schema.url
+    );
+    const filteredSkippedServers = topLevelSkippedServers.filter((server) => {
+        const serverUrl = typeof server === "string" ? server : server.url;
+        return !topLevelServerUrls.includes(serverUrl);
+    });
+    if (filteredSkippedServers.length > 0) {
+        context.logger.error(
+            `Skipping top level servers ${filteredSkippedServers
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
+        );
+    }
+
+    // At this stage, we have at least one top level named server. We now build the environments.
+    if (numEndpointLevelServersWithName === 0) {
+        let count = 0;
+        for (const [name, schema] of Object.entries(topLevelServersWithName)) {
+            if (count === 0) {
+                if (numWebsocketServersWithName > 0) {
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                } else {
+                    context.builder.addEnvironment({
+                        name,
+                        schema
+                    });
+                }
+                context.builder.setDefaultEnvironment(name);
+                count += 1;
+            } else {
+                if (numWebsocketServersWithName > 0) {
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                } else {
+                    context.builder.addEnvironment({
+                        name,
+                        schema
+                    });
+                }
+            }
+            count += 1;
+        }
+        if (numWebsocketServersWithName > 0) {
+            context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        }
+    } else {
+        if (numTopLevelServersWithName === 1) {
+            const environmentName = Object.keys(topLevelServersWithName)[0] as string;
+            const topLevelServerSchema = Object.values(topLevelServersWithName)[0] as
+                | string
+                | RawSchemas.SingleBaseUrlEnvironmentSchema;
+            const topLevelServerUrl =
+                typeof topLevelServerSchema === "string" ? topLevelServerSchema : topLevelServerSchema.url;
+            context.builder.addEnvironment({
+                name: environmentName,
+                schema: {
+                    urls: {
+                        ...{ [DEFAULT_URL_NAME]: topLevelServerUrl },
+                        ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                        ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                    }
+                }
+            });
+            context.builder.setDefaultEnvironment(environmentName);
+            context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        } else {
+            let count = 0;
+            for (const [name, schema] of Object.entries(topLevelServersWithName)) {
+                if (count === 0) {
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
+                                ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                    context.builder.setDefaultEnvironment(name);
+                    count += 1;
+                } else {
+                    context.builder.addEnvironment({
+                        name,
+                        schema: {
+                            urls: {
+                                ...{
+                                    [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url
+                                },
+                                ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                                ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                            }
+                        }
+                    });
+                }
+                count += 1;
+            }
+            context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        }
     }
 }
