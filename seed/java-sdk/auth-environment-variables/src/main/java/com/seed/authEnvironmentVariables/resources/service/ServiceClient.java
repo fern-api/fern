@@ -44,7 +44,6 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("User-Agent", "com.fern:auth-environment-variables/0.0.1")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -86,8 +85,7 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", "com.fern:auth-environment-variables/0.0.1");
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-Endpoint-Header", request.getXEndpointHeader());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

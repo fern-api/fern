@@ -52,8 +52,7 @@ public class HeadersClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", "com.fern:literal/0.0.1");
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-Endpoint-Version", request.getEndpointVersion());
         _requestBuilder.addHeader("X-Async", request.getAsync().toString());
         Request okhttpRequest = _requestBuilder.build();

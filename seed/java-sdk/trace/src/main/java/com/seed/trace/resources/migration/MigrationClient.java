@@ -43,8 +43,7 @@ public class MigrationClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", "com.fern:trace/0.0.1");
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("admin-key-header", request.getAdminKeyHeader());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
