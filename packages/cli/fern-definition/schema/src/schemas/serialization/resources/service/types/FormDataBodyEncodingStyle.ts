@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const FormDataBodyEncodingStyle: core.serialization.Schema<
     serializers.FormDataBodyEncodingStyle.Raw,
     FernDefinition.FormDataBodyEncodingStyle
-> = core.serialization.enum_(["json", "exploded"]);
+> = core.serialization.enum_(["json", "exploded", "form"]);
 
 export declare namespace FormDataBodyEncodingStyle {
-    export type Raw = "json" | "exploded";
+    export type Raw = "json" | "exploded" | "form";
 }

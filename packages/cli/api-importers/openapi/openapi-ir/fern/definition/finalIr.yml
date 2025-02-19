@@ -425,6 +425,12 @@ types:
       schema: MultipartSchema
       contentType: optional<string>
       exploded: optional<boolean>
+      encoding: optional<MultipartRequestPropertyEncoding>
+  
+  MultipartRequestPropertyEncoding: 
+    enum: 
+      - json
+      - form
 
   FileSchema:
     properties:
