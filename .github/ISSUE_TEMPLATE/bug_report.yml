@@ -71,7 +71,7 @@ body:
   - type: dropdown
     id: contribute
     attributes:
-      label: "Are you interested to contribute a fix for this bug?"
+      label: "Are you interested in contributing a fix?"
       description: "If this is a confirmed bug, the maintainers are happy to support with guidance and review."
       options:
         - "No"
