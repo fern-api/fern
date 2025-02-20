@@ -7,7 +7,7 @@ export function walkEstreeJsxAttributes(
     handlers: Record<string, (attr: JSXAttribute, node: JSXElement) => void>
 ): void {
     walk(estree, {
-        enter (node) {
+        enter(node) {
             if (node.type === "JSXElement") {
                 node.openingElement.attributes.forEach((attr) => {
                     if (
