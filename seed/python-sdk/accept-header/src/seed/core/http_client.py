@@ -183,7 +183,7 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -269,7 +269,7 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
@@ -359,7 +359,7 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -445,7 +445,7 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)

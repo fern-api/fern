@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.14
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Set the default number of retries to 2 (was 0) to align with the generated README.
+
 - version: 4.3.13
   irVersion: 53
   changelogEntry:
