@@ -1536,7 +1536,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_inlined.send": {
             "auth": null,
@@ -1931,7 +1932,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_path.send": {
             "auth": null,
@@ -2042,7 +2044,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_query.send": {
             "auth": null,
@@ -2468,7 +2471,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_reference.send": {
             "auth": null,
@@ -2553,7 +2557,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

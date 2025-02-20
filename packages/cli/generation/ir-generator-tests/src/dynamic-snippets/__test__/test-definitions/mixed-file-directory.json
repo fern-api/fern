@@ -891,7 +891,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.list": {
             "auth": null,
@@ -1072,7 +1073,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user/events.listEvents": {
             "auth": null,
@@ -1331,7 +1333,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user/events/metadata.getMetadata": {
             "auth": null,
@@ -1663,7 +1666,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

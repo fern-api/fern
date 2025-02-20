@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v55.3.0] - 2024-02-19
+
+- Feature: The Dynamic IR now supports optional list of examples in each enpdoint.
+
+## [v55.2.0] - 2024-02-18
+
+- Feature: Add support for configuring a websocket channel URL.
+
+## [v55.1.0] - 2024-02-18
+
+- Feature: Support form encoding in multipart requests.
+
 ## [v55.0.0] - 2024-01-13
 
 - Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.

@@ -4697,9 +4697,6 @@ importers:
       '@types/inquirer':
         specifier: ^9.0.7
         version: 9.0.7
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -4871,6 +4868,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -5746,6 +5746,9 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5770,6 +5773,9 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -6106,9 +6112,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/core-utils
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils
@@ -6163,9 +6166,6 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6188,9 +6188,6 @@ importers:
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7

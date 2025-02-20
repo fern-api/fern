@@ -677,7 +677,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_nullable.createUser": {
             "auth": null,
@@ -957,7 +958,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_nullable.deleteUser": {
             "auth": null,
@@ -1144,7 +1146,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

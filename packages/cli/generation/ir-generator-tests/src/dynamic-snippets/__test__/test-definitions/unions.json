@@ -8656,7 +8656,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_bigunion.update": {
             "auth": null,
@@ -8741,7 +8742,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_bigunion.update-many": {
             "auth": null,
@@ -8829,7 +8831,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_union.get": {
             "auth": null,
@@ -8937,7 +8940,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_union.update": {
             "auth": null,
@@ -9022,7 +9026,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

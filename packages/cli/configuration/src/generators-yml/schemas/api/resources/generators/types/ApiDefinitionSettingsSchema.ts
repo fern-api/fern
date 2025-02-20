@@ -4,10 +4,19 @@
 
 import * as FernDefinition from "../../../index";
 
+/**
+ * Deprecated, use the `api.specs` key instead
+ */
 export interface ApiDefinitionSettingsSchema {
-    /** Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true. */
+    /**
+     * Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+     * Deprecated, use the `api.specs.[].settings.title-as-schema-name` key instead.
+     */
     "use-title"?: boolean;
-    /** What version of union generation to use, this will grow over time. Defaults to v0. */
+    /**
+     * What version of union generation to use, this will grow over time. Defaults to v0.
+     * Deprecated, use the `api.specs.[].settings.prefer-undiscriminated-unions-with-literals` key instead.
+     */
     unions?: FernDefinition.UnionSettingsSchema;
     /** What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1. */
     "message-naming"?: FernDefinition.MessageNamingSettingsSchema;

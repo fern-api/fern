@@ -1240,7 +1240,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_deep-cursor-path.do-thing-required": {
             "auth": null,
@@ -1325,7 +1326,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_deep-cursor-path.do-thing-inline": {
             "auth": null,
@@ -1410,7 +1412,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

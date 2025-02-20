@@ -191,7 +191,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_a/b.foo": {
             "auth": null,
@@ -310,7 +311,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_a/c.foo": {
             "auth": null,
@@ -429,7 +431,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_folder.foo": {
             "auth": null,
@@ -510,7 +513,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_folder/service.endpoint": {
             "auth": null,
@@ -628,7 +632,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_folder/service.unknownRequest": {
             "auth": null,
@@ -751,7 +756,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

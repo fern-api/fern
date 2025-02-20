@@ -63,7 +63,8 @@ export async function loadGeneratorsConfiguration({
     }
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: filepath,
-        rawGeneratorsConfiguration
+        rawGeneratorsConfiguration,
+        context
     });
 }
 

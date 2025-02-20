@@ -98,13 +98,7 @@ module.exports = {
             }
         ],
         "@typescript-eslint/no-base-to-string": "error",
-        eqeqeq: [
-            "error",
-            "always",
-            {
-                null: "never"
-            }
-        ],
+        eqeqeq: "off",
         curly: "error",
         "no-console": "error",
         "react/react-in-jsx-scope": "off",

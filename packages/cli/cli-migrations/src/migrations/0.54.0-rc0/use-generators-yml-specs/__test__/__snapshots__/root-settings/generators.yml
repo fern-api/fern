@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - openapi: ./openapi.yml
+      overrides: ./openapi.overrides.yml
+      origin: root
+      settings:
+        inline-path-parameters: true
+        title-as-schema-name: true
+    - asyncapi: ./asyncapi.yml
+      settings:
+        title-as-schema-name: true
+        message-naming: v1
