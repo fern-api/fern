@@ -5,6 +5,8 @@
 import * as FernIr from "../../../../../index";
 
 export interface EndpointExample extends FernIr.dynamic.EndpointSnippetRequest {
+    /** The unique identifier for the example. */
+    id: string;
     /** The name of the example, if any. */
     name: string | undefined;
 }

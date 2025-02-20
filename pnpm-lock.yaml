@@ -5734,6 +5734,9 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5758,6 +5761,9 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)

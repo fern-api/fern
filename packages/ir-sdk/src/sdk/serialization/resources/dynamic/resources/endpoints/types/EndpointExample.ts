@@ -12,12 +12,14 @@ export const EndpointExample: core.serialization.ObjectSchema<
     FernIr.dynamic.EndpointExample
 > = core.serialization
     .objectWithoutOptionalProperties({
+        id: core.serialization.string(),
         name: core.serialization.string().optional(),
     })
     .extend(EndpointSnippetRequest);
 
 export declare namespace EndpointExample {
     export interface Raw extends EndpointSnippetRequest.Raw {
+        id: string;
         name?: string | null;
     }
 }

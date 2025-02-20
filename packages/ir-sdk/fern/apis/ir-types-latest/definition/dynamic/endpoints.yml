@@ -103,6 +103,10 @@ types:
     extends:
       - snippets.EndpointSnippetRequest
     properties:
+      id:
+        docs: |
+          The unique identifier for the example.
+        type: string
       name:
         docs: |
           The name of the example, if any.
