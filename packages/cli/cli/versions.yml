@@ -8,6 +8,9 @@
     - summary: |
         Log warnings when old generators.yml syntax is used during parsing.
       type: feat
+    - summary: |
+        Improve the violations summary displayed by `fern check` and include elapsed time when available.
+      type: chore
   irVersion: 55
   version: 0.54.0-rc0
 
