@@ -40,12 +40,17 @@ export async function validateWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             if (workspace instanceof OSSWorkspace) {
                 await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                    await validateOSSWorkspaceAndLogIssues({ workspace, context, logWarnings });
+                    await validateOSSWorkspaceAndLogIssues({ workspace, context, logWarnings, logPrefix: "[OSS] " });
                 });
             }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
-                await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
+                await validateAPIWorkspaceAndLogIssues({
+                    workspace: fernWorkspace,
+                    context,
+                    logWarnings,
+                    logPrefix: "[API] "
+                });
             });
         })
     );

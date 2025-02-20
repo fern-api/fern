@@ -16,12 +16,14 @@ export function logViolations({
     violations,
     logWarnings,
     logSummary = true,
+    logPrefix = "",
     elapsedMillis = 0
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
     logWarnings: boolean;
     logSummary?: boolean;
+    logPrefix?: string;
     elapsedMillis?: number;
 }): LogViolationsResponse {
     const stats = getViolationStats(violations);
@@ -34,7 +36,7 @@ export function logViolations({
 
     // log the summary at the end so that it's not pushed out of view by the violations
     if (logSummary) {
-        logViolationsSummary({ context, stats, logWarnings, elapsedMillis });
+        logViolationsSummary({ context, stats, logWarnings, logPrefix, elapsedMillis });
     }
 
     return {
@@ -119,17 +121,19 @@ function logViolationsSummary({
     stats,
     context,
     logWarnings,
+    logPrefix = "",
     elapsedMillis = 0
 }: {
     stats: ViolationStats;
     context: TaskContext;
     logWarnings: boolean;
+    logPrefix?: string;
     elapsedMillis?: number;
 }): void {
     const { numFatal, numErrors, numWarnings } = stats;
 
     const suffix = elapsedMillis > 0 ? ` in ${(elapsedMillis / 1000).toFixed(3)} seconds.` : ".";
-    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings` + suffix;
+    let message = logPrefix + `Found ${numFatal} errors and ${numErrors + numWarnings} warnings` + suffix;
     if (!logWarnings && numWarnings > 0) {
         message += " Run fern check --warnings to print out the warnings not shown.";
     }
@@ -139,7 +143,7 @@ function logViolationsSummary({
     } else if (numErrors + numWarnings > 0) {
         context.logger.warn(message);
     } else {
-        context.logger.info(chalk.green("✓ All checks passed"));
+        context.logger.info(chalk.green(logPrefix + "✓ All checks passed"));
     }
 }
 
