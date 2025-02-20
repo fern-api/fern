@@ -522,6 +522,10 @@ navigation:
           - page: Generate Webhook Reference
             icon: fa-regular fa-webhook
             path: ./pages/docs/api-references/generate-webhook-ref.mdx
+          - page: Generate WebSocket Reference
+            icon: fa-regular fa-plug
+            path: ./pages/docs/api-references/generate-websocket-ref.mdx
+            slug: generate-websocket-ref
 
       - section: Integrations
         slug: integrations
