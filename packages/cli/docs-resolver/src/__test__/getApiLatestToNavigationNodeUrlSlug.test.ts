@@ -33,11 +33,10 @@ it.skip("generates slug for endpoint", () => {
         availability: undefined
     };
     expect(
-        getApiLatestToNavigationNodeUrlSlug(
-            endpoint,
-            FernNavigation.V1.SlugGenerator.init(""),
-            FernNavigation.V1.SlugGenerator.init("")
-        )
+        getApiLatestToNavigationNodeUrlSlug({
+            item: endpoint,
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
+        })
     ).toBe("api-service/create");
 });
 
@@ -65,11 +64,10 @@ it.skip("generates slug for websocket", () => {
         description: undefined
     };
     expect(
-        getApiLatestToNavigationNodeUrlSlug(
-            websocket,
-            FernNavigation.V1.SlugGenerator.init(""),
-            FernNavigation.V1.SlugGenerator.init("")
-        )
+        getApiLatestToNavigationNodeUrlSlug({
+            item: websocket,
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
+        })
     ).toBe("realtime/stream");
 });
 
@@ -89,10 +87,9 @@ it.skip("generates slug for webhook", () => {
         queryParameters: []
     };
     expect(
-        getApiLatestToNavigationNodeUrlSlug(
-            webhook,
-            FernNavigation.V1.SlugGenerator.init(""),
-            FernNavigation.V1.SlugGenerator.init("")
-        )
+        getApiLatestToNavigationNodeUrlSlug({
+            item: webhook,
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
+        })
     ).toBe("webhooks/completed");
 });
