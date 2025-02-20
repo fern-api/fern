@@ -6,7 +6,12 @@
       "url": "https://api.hume.ai"
     }
   ],
-  "websocketServers": [],
+  "websocketServers": [
+    {
+      "name": "prod",
+      "url": "wss://api.hume.ai/v0/evi"
+    }
+  ],
   "tags": {
     "tagsById": {
       "Start Job": {
@@ -857,7 +862,391 @@
     }
   ],
   "webhooks": [],
-  "channels": {},
+  "channels": {
+    "/chat": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [
+          {
+            "name": "config_id",
+            "schema": {
+              "generatedName": "Websocket",
+              "title": "Config Id",
+              "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
+              "value": {
+                "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Websocket",
+                "title": "Config Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
+            "source": {
+              "file": "../asyncapi.json",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "config_version",
+            "schema": {
+              "generatedName": "Websocket",
+              "title": "Config Version",
+              "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
+              "value": {
+                "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "Websocket",
+                "title": "Config Version",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
+            "source": {
+              "file": "../asyncapi.json",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "resumed_chat_group_id",
+            "schema": {
+              "generatedName": "Websocket",
+              "title": "Resumed Chat Group Id",
+              "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
+              "value": {
+                "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Websocket",
+                "title": "Resumed Chat Group Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
+            "source": {
+              "file": "../asyncapi.json",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "verbose_transcription",
+            "schema": {
+              "generatedName": "Websocket",
+              "title": "Verbose Transcription",
+              "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
+              "value": {
+                "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
+                "schema": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "generatedName": "Websocket",
+                "title": "Verbose Transcription",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
+            "source": {
+              "file": "../asyncapi.json",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "access_token",
+            "schema": {
+              "generatedName": "Websocket",
+              "title": "Access Token",
+              "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
+              "value": {
+                "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
+                "schema": {
+                  "default": "",
+                  "type": "string"
+                },
+                "generatedName": "Websocket",
+                "title": "Access Token",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
+            "source": {
+              "file": "../asyncapi.json",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": []
+      },
+      "groupName": [
+        "/chat"
+      ],
+      "publish": {
+        "value": {
+          "generatedName": "PublishEvent",
+          "schemas": [
+            {
+              "generatedName": "WebsocketZero",
+              "schema": "AudioInput",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketOne",
+              "schema": "SessionSettings",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketTwo",
+              "schema": "UserInput",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketThree",
+              "schema": "AssistantInput",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketFour",
+              "schema": "ToolResponseMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketFive",
+              "schema": "ToolErrorMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketSix",
+              "schema": "PauseAssistantMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketSeven",
+              "schema": "ResumeAssistantMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.json",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "subscribe": {
+        "value": {
+          "generatedName": "SubscribeEvent",
+          "schemas": [
+            {
+              "generatedName": "WebsocketZero",
+              "schema": "AssistantEnd",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketOne",
+              "schema": "AssistantMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketTwo",
+              "schema": "AudioOutput",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketThree",
+              "schema": "ChatMetadata",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketFour",
+              "schema": "Error",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketFive",
+              "schema": "UserInterruption",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketSix",
+              "schema": "UserMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketSeven",
+              "schema": "ToolCallMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketEight",
+              "schema": "ToolResponseMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "WebsocketNine",
+              "schema": "ToolErrorMessage",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "source": {
+            "file": "../asyncapi.json",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "servers": [
+        {
+          "name": "prod",
+          "url": "wss://api.hume.ai/v0/evi"
+        }
+      ],
+      "path": "/chat",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "audio_input",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
+                  "data": {
+                    "value": {
+                      "value": "data",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "assistant_end",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.json",
+        "type": "openapi"
+      }
+    }
+  },
   "groupedSchemas": {
     "rootSchemas": {
       "BaseRequest": {
@@ -1506,48 +1895,115 @@
         "type": "map"
       },
       "Error": {
-        "allOf": [],
+        "description": "When provided, the output is an error message.",
         "properties": [
           {
-            "conflict": {},
-            "generatedName": "errorMessage",
-            "key": "message",
+            "key": "type",
             "schema": {
-              "description": "An error message.",
-              "schema": {
+              "nameOverride": "Type",
+              "generatedName": "ErrorType",
+              "title": "Type",
+              "value": {
+                "value": "error",
                 "type": "string"
               },
-              "generatedName": "ErrorMessage",
-              "title": "Error Message",
               "groupName": [],
-              "type": "primitive"
+              "description": "The type of message sent through the socket; for a Web Socket Error message, this must be `error`.\n\nThis message indicates a disruption in the WebSocket connection, such as an unexpected disconnection, protocol error, or data transmission issue.",
+              "type": "literal"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorType"
           },
           {
-            "conflict": {},
-            "generatedName": "errorFile",
-            "key": "file",
+            "key": "custom_session_id",
             "schema": {
-              "description": "A file path relative to the top level source URL or file.",
+              "nameOverride": "Error",
+              "generatedName": "errorCustomSessionId",
+              "title": "Error",
+              "value": {
+                "generatedName": "ErrorCustomSessionId",
+                "value": {
+                  "generatedName": "ErrorCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorCustomSessionId"
+          },
+          {
+            "key": "code",
+            "schema": {
+              "nameOverride": "Code",
+              "generatedName": "ErrorCode",
+              "title": "Code",
               "schema": {
                 "type": "string"
               },
-              "generatedName": "ErrorFile",
-              "nameOverride": "File",
-              "title": "File",
+              "description": "Error code. Identifies the type of error encountered.",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorCode"
+          },
+          {
+            "key": "slug",
+            "schema": {
+              "nameOverride": "Slug",
+              "generatedName": "ErrorSlug",
+              "title": "Slug",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Short, human-readable identifier and description for the error. See a complete list of error slugs on the [Errors page](/docs/resources/errors).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorSlug"
+          },
+          {
+            "key": "message",
+            "schema": {
+              "nameOverride": "Message",
+              "generatedName": "ErrorMessage",
+              "title": "Message",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Detailed description of the error.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "errorMessage"
           }
         ],
-        "allOfPropertyConflicts": [],
+        "nameOverride": "Error",
         "generatedName": "Error",
+        "title": "Error",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "groupName": [],
+        "fullExamples": [],
         "additionalProperties": false,
         "source": {
-          "file": "../openapi.yaml",
+          "file": "../asyncapi.json",
           "type": "openapi"
         },
         "type": "object"
@@ -4899,6 +5355,3385 @@
         "additionalProperties": false,
         "source": {
           "file": "../openapi.yaml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AssistantInput": {
+        "description": "When provided, the input is spoken by EVI.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "AssistantInputType",
+              "title": "Type",
+              "value": {
+                "value": "assistant_input",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; must be `assistant_input` for our server to correctly identify and process it as an Assistant Input message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantInputType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "AssistantInput",
+              "generatedName": "assistantInputCustomSessionId",
+              "title": "AssistantInput",
+              "value": {
+                "generatedName": "AssistantInputCustomSessionId",
+                "value": {
+                  "generatedName": "AssistantInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantInputCustomSessionId"
+          },
+          {
+            "key": "text",
+            "schema": {
+              "nameOverride": "Text",
+              "generatedName": "AssistantInputText",
+              "title": "Text",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Assistant text to synthesize into spoken audio and insert into the conversation.\n\nEVI uses this text to generate spoken audio using our proprietary expressive text-to-speech model. Our model adds appropriate emotional inflections and tones to the text based on the user’s expressions and the context of the conversation. The synthesized audio is streamed back to the user as an [Assistant Message](/reference/empathic-voice-interface-evi/chat/chat#receive.Assistant%20Message.type).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantInputText"
+          }
+        ],
+        "nameOverride": "AssistantInput",
+        "generatedName": "AssistantInput",
+        "title": "AssistantInput",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AudioConfiguration": {
+        "properties": [
+          {
+            "key": "encoding",
+            "schema": {
+              "generatedName": "AudioConfigurationEncoding",
+              "schema": "Encoding",
+              "description": "Encoding format of the audio input, such as `linear16`.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioConfigurationEncoding",
+            "readonly": false
+          },
+          {
+            "key": "channels",
+            "schema": {
+              "nameOverride": "Channels",
+              "generatedName": "AudioConfigurationChannels",
+              "title": "Channels",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Number of audio channels.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioConfigurationChannels"
+          },
+          {
+            "key": "sample_rate",
+            "schema": {
+              "generatedName": "AudioConfigurationSampleRate",
+              "title": "Sample Rate",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Audio sample rate. Number of samples per second in the audio input, measured in Hertz.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioConfigurationSampleRate"
+          }
+        ],
+        "nameOverride": "AudioConfiguration",
+        "generatedName": "AudioConfiguration",
+        "title": "AudioConfiguration",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AudioInput": {
+        "description": "When provided, the input is audio.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "AudioInputType",
+              "title": "Type",
+              "value": {
+                "value": "audio_input",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; must be `audio_input` for our server to correctly identify and process it as an Audio Input message.\n\nThis message is used for sending audio input data to EVI for processing and expression measurement. Audio data should be sent as a continuous stream, encoded in Base64.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioInputType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "AudioInput",
+              "generatedName": "audioInputCustomSessionId",
+              "title": "AudioInput",
+              "value": {
+                "generatedName": "AudioInputCustomSessionId",
+                "value": {
+                  "generatedName": "AudioInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioInputCustomSessionId"
+          },
+          {
+            "key": "data",
+            "schema": {
+              "nameOverride": "Data",
+              "generatedName": "AudioInputData",
+              "title": "Data",
+              "schema": {
+                "format": "base64",
+                "type": "string"
+              },
+              "description": "Base64 encoded audio input to insert into the conversation.\n\nThe content of an Audio Input message is treated as the user’s speech to EVI and must be streamed continuously. Pre-recorded audio files are not supported.\n\nFor optimal transcription quality, the audio data should be transmitted in small chunks.\n\nHume recommends streaming audio with a buffer window of 20 milliseconds (ms), or 100 milliseconds (ms) for web applications.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioInputData"
+          }
+        ],
+        "nameOverride": "AudioInput",
+        "generatedName": "AudioInput",
+        "title": "AudioInput",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "BuiltInTool": {
+        "nameOverride": "BuiltInTool",
+        "generatedName": "BuiltInTool",
+        "title": "BuiltInTool",
+        "values": [
+          {
+            "generatedName": "web_search",
+            "value": "web_search",
+            "casing": {}
+          },
+          {
+            "generatedName": "hang_up",
+            "value": "hang_up",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "BuiltinToolConfig": {
+        "properties": [
+          {
+            "key": "name",
+            "schema": {
+              "generatedName": "BuiltinToolConfigName",
+              "schema": "BuiltInTool",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "builtinToolConfigName",
+            "readonly": false
+          },
+          {
+            "key": "fallback_content",
+            "schema": {
+              "nameOverride": "BuiltinToolConfig",
+              "generatedName": "builtinToolConfigFallbackContent",
+              "title": "BuiltinToolConfig",
+              "value": {
+                "generatedName": "BuiltinToolConfigFallbackContent",
+                "value": {
+                  "generatedName": "BuiltinToolConfigFallbackContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "builtinToolConfigFallbackContent"
+          }
+        ],
+        "nameOverride": "BuiltinToolConfig",
+        "generatedName": "BuiltinToolConfig",
+        "title": "BuiltinToolConfig",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Context": {
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Context",
+              "generatedName": "contextType",
+              "title": "Context",
+              "value": {
+                "generatedName": "ContextType",
+                "schema": "ContextType",
+                "description": "The persistence level of the injected context. Specifies how long the injected context will remain active in the session.\n\nThere are three possible context types:\n\n- **Persistent**: The context is appended to all user messages for the duration of the session.\n\n- **Temporary**: The context is appended only to the next user message.\n\n - **Editable**: The original context is updated to reflect the new context.\n\n If the type is not specified, it will default to `temporary`.",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "contextType",
+            "readonly": false
+          },
+          {
+            "key": "text",
+            "schema": {
+              "nameOverride": "Text",
+              "generatedName": "ContextText",
+              "title": "Text",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The context to be injected into the conversation. Helps inform the LLM's response by providing relevant information about the ongoing conversation.\n\nThis text will be appended to the end of user messages based on the chosen persistence level. For example, if you want to remind EVI of its role as a helpful weather assistant, the context you insert will be appended to the end of user messages as `{Context: You are a helpful weather assistant}`.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "contextText"
+          }
+        ],
+        "nameOverride": "Context",
+        "generatedName": "Context",
+        "title": "Context",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ContextType": {
+        "nameOverride": "ContextType",
+        "generatedName": "ContextType",
+        "title": "ContextType",
+        "values": [
+          {
+            "generatedName": "editable",
+            "value": "editable",
+            "casing": {}
+          },
+          {
+            "generatedName": "persistent",
+            "value": "persistent",
+            "casing": {}
+          },
+          {
+            "generatedName": "temporary",
+            "value": "temporary",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Encoding": {
+        "nameOverride": "Encoding",
+        "generatedName": "Encoding",
+        "title": "Encoding",
+        "value": {
+          "value": "linear16",
+          "type": "string"
+        },
+        "groupName": [],
+        "type": "literal"
+      },
+      "ErrorLevel": {
+        "nameOverride": "ErrorLevel",
+        "generatedName": "ErrorLevel",
+        "title": "ErrorLevel",
+        "value": {
+          "value": "warn",
+          "type": "string"
+        },
+        "groupName": [],
+        "type": "literal"
+      },
+      "PauseAssistantMessage": {
+        "description": "Pause responses from EVI. Chat history is still saved and sent after resuming. ",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "PauseAssistantMessage",
+              "generatedName": "pauseAssistantMessageType",
+              "title": "PauseAssistantMessage",
+              "value": {
+                "nameOverride": "Type",
+                "generatedName": "PauseAssistantMessageType",
+                "title": "Type",
+                "value": {
+                  "value": "pause_assistant_message",
+                  "type": "string"
+                },
+                "groupName": [],
+                "description": "The type of message sent through the socket; must be `pause_assistant_message` for our server to correctly identify and process it as a Pause Assistant message.\n\nOnce this message is sent, EVI will not respond until a [Resume Assistant message](/reference/empathic-voice-interface-evi/chat/chat#send.Resume%20Assistant%20Message.type) is sent. When paused, EVI won’t respond, but transcriptions of your audio inputs will still be recorded.",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "pauseAssistantMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "PauseAssistantMessage",
+              "generatedName": "pauseAssistantMessageCustomSessionId",
+              "title": "PauseAssistantMessage",
+              "value": {
+                "generatedName": "PauseAssistantMessageCustomSessionId",
+                "value": {
+                  "generatedName": "PauseAssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "pauseAssistantMessageCustomSessionId"
+          }
+        ],
+        "nameOverride": "PauseAssistantMessage",
+        "generatedName": "PauseAssistantMessage",
+        "title": "PauseAssistantMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ResumeAssistantMessage": {
+        "description": "Resume responses from EVI. Chat history sent while paused will now be sent. ",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "ResumeAssistantMessage",
+              "generatedName": "resumeAssistantMessageType",
+              "title": "ResumeAssistantMessage",
+              "value": {
+                "nameOverride": "Type",
+                "generatedName": "ResumeAssistantMessageType",
+                "title": "Type",
+                "value": {
+                  "value": "resume_assistant_message",
+                  "type": "string"
+                },
+                "groupName": [],
+                "description": "The type of message sent through the socket; must be `resume_assistant_message` for our server to correctly identify and process it as a Resume Assistant message.\n\nUpon resuming, if any audio input was sent during the pause, EVI will retain context from all messages sent but only respond to the last user message. (e.g., If you ask EVI two questions while paused and then send a `resume_assistant_message`, EVI will respond to the second question and have added the first question to its conversation context.)",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "resumeAssistantMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "ResumeAssistantMessage",
+              "generatedName": "resumeAssistantMessageCustomSessionId",
+              "title": "ResumeAssistantMessage",
+              "value": {
+                "generatedName": "ResumeAssistantMessageCustomSessionId",
+                "value": {
+                  "generatedName": "ResumeAssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "resumeAssistantMessageCustomSessionId"
+          }
+        ],
+        "nameOverride": "ResumeAssistantMessage",
+        "generatedName": "ResumeAssistantMessage",
+        "title": "ResumeAssistantMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SessionSettings": {
+        "description": "Settings for this chat session.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "SessionSettingsType",
+              "title": "Type",
+              "value": {
+                "value": "session_settings",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; must be `session_settings` for our server to correctly identify and process it as a Session Settings message.\n\nSession settings are temporary and apply only to the current Chat session. These settings can be adjusted dynamically based on the requirements of each session to ensure optimal performance and user experience.\n\nFor more information, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsCustomSessionId",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsCustomSessionId",
+                "value": {
+                  "generatedName": "SessionSettingsCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsCustomSessionId"
+          },
+          {
+            "key": "system_prompt",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsSystemPrompt",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsSystemPrompt",
+                "value": {
+                  "generatedName": "SessionSettingsSystemPrompt",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsSystemPrompt"
+          },
+          {
+            "key": "context",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsContext",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsContext",
+                "value": {
+                  "generatedName": "SessionSettingsContext",
+                  "schema": "Context",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsContext"
+          },
+          {
+            "key": "audio",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsAudio",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsAudio",
+                "value": {
+                  "generatedName": "SessionSettingsAudio",
+                  "schema": "AudioConfiguration",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsAudio"
+          },
+          {
+            "key": "language_model_api_key",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsLanguageModelApiKey",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsLanguageModelApiKey",
+                "value": {
+                  "generatedName": "SessionSettingsLanguageModelApiKey",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsLanguageModelApiKey"
+          },
+          {
+            "key": "tools",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsTools",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsTools",
+                "value": {
+                  "generatedName": "SessionSettingsTools",
+                  "value": {
+                    "generatedName": "SessionSettingsToolsItem",
+                    "schema": "Tool",
+                    "source": {
+                      "file": "../asyncapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "description": "List of user-defined tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsTools"
+          },
+          {
+            "key": "builtin_tools",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsBuiltinTools",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsBuiltinTools",
+                "value": {
+                  "generatedName": "SessionSettingsBuiltinTools",
+                  "value": {
+                    "generatedName": "SessionSettingsBuiltinToolsItem",
+                    "schema": "BuiltinToolConfig",
+                    "source": {
+                      "file": "../asyncapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "description": "List of built-in tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).\n\nCurrently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsBuiltinTools"
+          },
+          {
+            "key": "metadata",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsMetadata",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsMetadata",
+                "value": {
+                  "generatedName": "SessionSettingsMetadata",
+                  "key": {
+                    "generatedName": "SessionSettingsMetadataKey",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "groupName": []
+                  },
+                  "value": {
+                    "generatedName": "SessionSettingsMetadataValue",
+                    "groupName": [],
+                    "type": "unknown"
+                  },
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsMetadata"
+          },
+          {
+            "key": "variables",
+            "schema": {
+              "nameOverride": "SessionSettings",
+              "generatedName": "sessionSettingsVariables",
+              "title": "SessionSettings",
+              "value": {
+                "generatedName": "SessionSettingsVariables",
+                "value": {
+                  "generatedName": "SessionSettingsVariables",
+                  "key": {
+                    "generatedName": "SessionSettingsVariablesKey",
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  "value": {
+                    "generatedName": "SessionSettingsVariablesValue",
+                    "value": {
+                      "generatedName": "SessionSettingsVariablesValue",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
+                  },
+                  "groupName": [],
+                  "type": "map"
+                },
+                "description": "Dynamic values that can be used to populate EVI prompts.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionSettingsVariables"
+          }
+        ],
+        "nameOverride": "SessionSettings",
+        "generatedName": "SessionSettings",
+        "title": "SessionSettings",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Tool": {
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "generatedName": "ToolType",
+              "schema": "ToolType",
+              "description": "Type of tool. Set to `function` for user-defined tools.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolType",
+            "readonly": false
+          },
+          {
+            "key": "name",
+            "schema": {
+              "nameOverride": "Name",
+              "generatedName": "ToolName",
+              "title": "Name",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Name of the user-defined tool to be enabled.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolName"
+          },
+          {
+            "key": "parameters",
+            "schema": {
+              "nameOverride": "Parameters",
+              "generatedName": "ToolParameters",
+              "title": "Parameters",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Parameters of the tool. Is a stringified JSON schema.\n\nThese parameters define the inputs needed for the tool’s execution, including the expected data type and description for each input field. Structured as a JSON schema, this format ensures the tool receives data in the expected format.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolParameters"
+          },
+          {
+            "key": "description",
+            "schema": {
+              "nameOverride": "Tool",
+              "generatedName": "toolDescription",
+              "title": "Tool",
+              "value": {
+                "generatedName": "ToolDescription",
+                "value": {
+                  "generatedName": "ToolDescription",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolDescription"
+          },
+          {
+            "key": "fallback_content",
+            "schema": {
+              "nameOverride": "Tool",
+              "generatedName": "toolFallbackContent",
+              "title": "Tool",
+              "value": {
+                "generatedName": "ToolFallbackContent",
+                "value": {
+                  "generatedName": "ToolFallbackContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolFallbackContent"
+          }
+        ],
+        "nameOverride": "Tool",
+        "generatedName": "Tool",
+        "title": "Tool",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ToolErrorMessage": {
+        "description": "When provided, the output is a function call error.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageType",
+              "title": "ToolErrorMessage",
+              "value": {
+                "nameOverride": "Type",
+                "generatedName": "ToolErrorMessageType",
+                "title": "Type",
+                "value": {
+                  "value": "tool_error",
+                  "type": "string"
+                },
+                "groupName": [],
+                "description": "The type of message sent through the socket; for a Tool Error message, this must be `tool_error`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and failing to invoke the function, this message is sent to notify EVI of the tool's failure.",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageCustomSessionId",
+              "title": "ToolErrorMessage",
+              "value": {
+                "generatedName": "ToolErrorMessageCustomSessionId",
+                "value": {
+                  "generatedName": "ToolErrorMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageCustomSessionId"
+          },
+          {
+            "key": "tool_type",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageToolType",
+              "title": "ToolErrorMessage",
+              "value": {
+                "generatedName": "ToolErrorMessageToolType",
+                "value": {
+                  "generatedName": "ToolErrorMessageToolType",
+                  "schema": "ToolType",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageToolType"
+          },
+          {
+            "key": "tool_call_id",
+            "schema": {
+              "generatedName": "ToolErrorMessageToolCallId",
+              "title": "Tool Call Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The unique identifier for a specific tool call instance.\n\nThis ID is used to track the request and response of a particular tool invocation, ensuring that the Tool Error message is linked to the appropriate tool call request. The specified `tool_call_id` must match the one received in the [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageToolCallId"
+          },
+          {
+            "key": "content",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageContent",
+              "title": "ToolErrorMessage",
+              "value": {
+                "generatedName": "ToolErrorMessageContent",
+                "value": {
+                  "generatedName": "ToolErrorMessageContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageContent"
+          },
+          {
+            "key": "error",
+            "schema": {
+              "nameOverride": "Error",
+              "generatedName": "ToolErrorMessageError",
+              "title": "Error",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Error message from the tool call, not exposed to the LLM or user.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageError"
+          },
+          {
+            "key": "code",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageCode",
+              "title": "ToolErrorMessage",
+              "value": {
+                "generatedName": "ToolErrorMessageCode",
+                "value": {
+                  "generatedName": "ToolErrorMessageCode",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Error code. Identifies the type of error encountered.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageCode"
+          },
+          {
+            "key": "level",
+            "schema": {
+              "nameOverride": "ToolErrorMessage",
+              "generatedName": "toolErrorMessageLevel",
+              "title": "ToolErrorMessage",
+              "value": {
+                "generatedName": "ToolErrorMessageLevel",
+                "value": {
+                  "generatedName": "ToolErrorMessageLevel",
+                  "schema": "ErrorLevel",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolErrorMessageLevel"
+          }
+        ],
+        "nameOverride": "ToolErrorMessage",
+        "generatedName": "ToolErrorMessage",
+        "title": "ToolErrorMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ToolResponseMessage": {
+        "description": "When provided, the output is a function call response.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "ToolResponseMessage",
+              "generatedName": "toolResponseMessageType",
+              "title": "ToolResponseMessage",
+              "value": {
+                "nameOverride": "Type",
+                "generatedName": "ToolResponseMessageType",
+                "title": "Type",
+                "value": {
+                  "value": "tool_response",
+                  "type": "string"
+                },
+                "groupName": [],
+                "description": "The type of message sent through the socket; for a Tool Response message, this must be `tool_response`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and successfully invoking the function, this message is sent to convey the result of the function call back to EVI.",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "ToolResponseMessage",
+              "generatedName": "toolResponseMessageCustomSessionId",
+              "title": "ToolResponseMessage",
+              "value": {
+                "generatedName": "ToolResponseMessageCustomSessionId",
+                "value": {
+                  "generatedName": "ToolResponseMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageCustomSessionId"
+          },
+          {
+            "key": "tool_call_id",
+            "schema": {
+              "generatedName": "ToolResponseMessageToolCallId",
+              "title": "Tool Call Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The unique identifier for a specific tool call instance.\n\nThis ID is used to track the request and response of a particular tool invocation, ensuring that the correct response is linked to the appropriate request. The specified `tool_call_id` must match the one received in the [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.tool_call_id).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageToolCallId"
+          },
+          {
+            "key": "content",
+            "schema": {
+              "nameOverride": "Content",
+              "generatedName": "ToolResponseMessageContent",
+              "title": "Content",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Return value of the tool call. Contains the output generated by the tool to pass back to EVI.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageContent"
+          },
+          {
+            "key": "tool_name",
+            "schema": {
+              "nameOverride": "ToolResponseMessage",
+              "generatedName": "toolResponseMessageToolName",
+              "title": "ToolResponseMessage",
+              "value": {
+                "generatedName": "ToolResponseMessageToolName",
+                "value": {
+                  "generatedName": "ToolResponseMessageToolName",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageToolName"
+          },
+          {
+            "key": "tool_type",
+            "schema": {
+              "nameOverride": "ToolResponseMessage",
+              "generatedName": "toolResponseMessageToolType",
+              "title": "ToolResponseMessage",
+              "value": {
+                "generatedName": "ToolResponseMessageToolType",
+                "value": {
+                  "generatedName": "ToolResponseMessageToolType",
+                  "schema": "ToolType",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolResponseMessageToolType"
+          }
+        ],
+        "nameOverride": "ToolResponseMessage",
+        "generatedName": "ToolResponseMessage",
+        "title": "ToolResponseMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ToolType": {
+        "nameOverride": "ToolType",
+        "generatedName": "ToolType",
+        "title": "ToolType",
+        "values": [
+          {
+            "generatedName": "builtin",
+            "value": "builtin",
+            "casing": {}
+          },
+          {
+            "generatedName": "function",
+            "value": "function",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "UserInput": {
+        "description": "User text to insert into the conversation. Text sent through a User Input message is treated as the user’s speech to EVI. EVI processes this input and provides a corresponding response.\n\nExpression measurement results are not available for User Input messages, as the prosody model relies on audio input and cannot process text alone.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "UserInputType",
+              "title": "Type",
+              "value": {
+                "value": "user_input",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; must be `user_input` for our server to correctly identify and process it as a User Input message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInputType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "UserInput",
+              "generatedName": "userInputCustomSessionId",
+              "title": "UserInput",
+              "value": {
+                "generatedName": "UserInputCustomSessionId",
+                "value": {
+                  "generatedName": "UserInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInputCustomSessionId"
+          },
+          {
+            "key": "text",
+            "schema": {
+              "nameOverride": "Text",
+              "generatedName": "UserInputText",
+              "title": "Text",
+              "schema": {
+                "type": "string"
+              },
+              "description": "User text to insert into the conversation. Text sent through a User Input message is treated as the user’s speech to EVI. EVI processes this input and provides a corresponding response.\n\nExpression measurement results are not available for User Input messages, as the prosody model relies on audio input and cannot process text alone.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInputText"
+          }
+        ],
+        "nameOverride": "UserInput",
+        "generatedName": "UserInput",
+        "title": "UserInput",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AssistantEnd": {
+        "description": "When provided, the output is an assistant end message.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "AssistantEndType",
+              "title": "Type",
+              "value": {
+                "value": "assistant_end",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; for an Assistant End message, this must be `assistant_end`.\n\nThis message indicates the conclusion of the assistant’s response, signaling that the assistant has finished speaking for the current conversational turn.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantEndType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "AssistantEnd",
+              "generatedName": "assistantEndCustomSessionId",
+              "title": "AssistantEnd",
+              "value": {
+                "generatedName": "AssistantEndCustomSessionId",
+                "value": {
+                  "generatedName": "AssistantEndCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantEndCustomSessionId"
+          }
+        ],
+        "nameOverride": "AssistantEnd",
+        "generatedName": "AssistantEnd",
+        "title": "AssistantEnd",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AssistantMessage": {
+        "description": "When provided, the output is an assistant message.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "AssistantMessageType",
+              "title": "Type",
+              "value": {
+                "value": "assistant_message",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; for an Assistant Message, this must be `assistant_message`.\n\nThis message contains both a transcript of the assistant’s response and the expression measurement predictions of the assistant’s audio output.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "AssistantMessage",
+              "generatedName": "assistantMessageCustomSessionId",
+              "title": "AssistantMessage",
+              "value": {
+                "generatedName": "AssistantMessageCustomSessionId",
+                "value": {
+                  "generatedName": "AssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageCustomSessionId"
+          },
+          {
+            "key": "id",
+            "schema": {
+              "nameOverride": "AssistantMessage",
+              "generatedName": "assistantMessageId",
+              "title": "AssistantMessage",
+              "value": {
+                "nameOverride": "Id",
+                "generatedName": "AssistantMessageId",
+                "title": "Id",
+                "schema": {
+                  "type": "string"
+                },
+                "description": "ID of the assistant message. Allows the Assistant Message to be tracked and referenced.",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageId"
+          },
+          {
+            "key": "message",
+            "schema": {
+              "generatedName": "AssistantMessageMessage",
+              "schema": "ChatMessage",
+              "description": "Transcript of the message.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageMessage",
+            "readonly": false
+          },
+          {
+            "key": "models",
+            "schema": {
+              "generatedName": "AssistantMessageModels",
+              "schema": "Inference",
+              "description": "Inference model results.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageModels",
+            "readonly": false
+          },
+          {
+            "key": "from_text",
+            "schema": {
+              "generatedName": "AssistantMessageFromText",
+              "title": "From Text",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Indicates if this message was inserted into the conversation as text from an [Assistant Input message](/reference/empathic-voice-interface-evi/chat/chat#send.Assistant%20Input.text).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "assistantMessageFromText"
+          }
+        ],
+        "nameOverride": "AssistantMessage",
+        "generatedName": "AssistantMessage",
+        "title": "AssistantMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AudioOutput": {
+        "description": "The type of message sent through the socket; for an Audio Output message, this must be `audio_output`.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "AudioOutputType",
+              "title": "Type",
+              "value": {
+                "value": "audio_output",
+                "type": "string"
+              },
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "AudioOutput",
+              "generatedName": "audioOutputCustomSessionId",
+              "title": "AudioOutput",
+              "value": {
+                "generatedName": "AudioOutputCustomSessionId",
+                "value": {
+                  "generatedName": "AudioOutputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputCustomSessionId"
+          },
+          {
+            "key": "id",
+            "schema": {
+              "nameOverride": "Id",
+              "generatedName": "AudioOutputId",
+              "title": "Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "ID of the audio output. Allows the Audio Output message to be tracked and referenced.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputId"
+          },
+          {
+            "key": "index",
+            "schema": {
+              "nameOverride": "Index",
+              "generatedName": "AudioOutputIndex",
+              "title": "Index",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Index of the chunk of audio relative to the whole audio segment.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputIndex"
+          },
+          {
+            "key": "data",
+            "schema": {
+              "nameOverride": "Data",
+              "generatedName": "AudioOutputData",
+              "title": "Data",
+              "schema": {
+                "format": "base64",
+                "type": "string"
+              },
+              "description": "Base64 encoded audio output. This encoded audio is transmitted to the client, where it can be decoded and played back as part of the user interaction.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputData"
+          },
+          {
+            "key": "is_final_chunk",
+            "schema": {
+              "generatedName": "AudioOutputIsFinalChunk",
+              "title": "Is Final Chunk",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "This AudioOutput contains the final chunk for this particular segment.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioOutputIsFinalChunk"
+          }
+        ],
+        "nameOverride": "AudioOutput",
+        "generatedName": "AudioOutput",
+        "title": "AudioOutput",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ChatMessage": {
+        "properties": [
+          {
+            "key": "role",
+            "schema": {
+              "generatedName": "ChatMessageRole",
+              "schema": "Role",
+              "description": "Role of who is providing the message.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMessageRole",
+            "readonly": false
+          },
+          {
+            "key": "content",
+            "schema": {
+              "nameOverride": "ChatMessage",
+              "generatedName": "chatMessageContent",
+              "title": "ChatMessage",
+              "value": {
+                "generatedName": "ChatMessageContent",
+                "value": {
+                  "generatedName": "ChatMessageContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Transcript of the message.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMessageContent"
+          },
+          {
+            "key": "tool_call",
+            "schema": {
+              "nameOverride": "ChatMessage",
+              "generatedName": "chatMessageToolCall",
+              "title": "ChatMessage",
+              "value": {
+                "generatedName": "ChatMessageToolCall",
+                "value": {
+                  "generatedName": "ChatMessageToolCall",
+                  "schema": "ToolCallMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "description": "Function call name and arguments.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMessageToolCall"
+          },
+          {
+            "key": "tool_result",
+            "schema": {
+              "nameOverride": "ChatMessage",
+              "generatedName": "chatMessageToolResult",
+              "title": "ChatMessage",
+              "value": {
+                "generatedName": "ChatMessageToolResult",
+                "title": "Tool Result",
+                "value": {
+                  "value": {
+                    "description": "Function call response from client.",
+                    "generatedName": "ChatMessageToolResult",
+                    "title": "Tool Result",
+                    "schemas": [
+                      {
+                        "generatedName": "ChatMessageToolResultZero",
+                        "schema": "ToolResponseMessage",
+                        "source": {
+                          "file": "../asyncapi.json",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      },
+                      {
+                        "generatedName": "ChatMessageToolResultOne",
+                        "schema": "ToolErrorMessage",
+                        "source": {
+                          "file": "../asyncapi.json",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "undiscriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "description": "Function call response from client.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMessageToolResult"
+          }
+        ],
+        "nameOverride": "ChatMessage",
+        "generatedName": "ChatMessage",
+        "title": "ChatMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ChatMetadata": {
+        "description": "When provided, the output is a chat metadata message.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "ChatMetadataType",
+              "title": "Type",
+              "value": {
+                "value": "chat_metadata",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; for a Chat Metadata message, this must be `chat_metadata`.\n\nThe Chat Metadata message is the first message you receive after establishing a connection with EVI and contains important identifiers for the current Chat session.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMetadataType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "ChatMetadata",
+              "generatedName": "chatMetadataCustomSessionId",
+              "title": "ChatMetadata",
+              "value": {
+                "generatedName": "ChatMetadataCustomSessionId",
+                "value": {
+                  "generatedName": "ChatMetadataCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMetadataCustomSessionId"
+          },
+          {
+            "key": "chat_group_id",
+            "schema": {
+              "generatedName": "ChatMetadataChatGroupId",
+              "title": "Chat Group Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "ID of the Chat Group.\n\nUsed to resume a Chat when passed in the [resumed_chat_group_id](/reference/empathic-voice-interface-evi/chat/chat#request.query.resumed_chat_group_id) query parameter of a subsequent connection request. This allows EVI to continue the conversation from where it left off within the Chat Group.\n\nLearn more about [supporting chat resumability](/docs/empathic-voice-interface-evi/faq#does-evi-support-chat-resumability) from the EVI FAQ.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMetadataChatGroupId"
+          },
+          {
+            "key": "chat_id",
+            "schema": {
+              "generatedName": "ChatMetadataChatId",
+              "title": "Chat Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "ID of the Chat session. Allows the Chat session to be tracked and referenced.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMetadataChatId"
+          },
+          {
+            "key": "request_id",
+            "schema": {
+              "generatedName": "ChatMetadataRequestId",
+              "value": {
+                "generatedName": "ChatMetadataRequestId",
+                "schema": {
+                  "type": "string"
+                },
+                "groupName": [],
+                "type": "primitive"
+              },
+              "description": "ID of the initiating request.",
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "chatMetadataRequestId"
+          }
+        ],
+        "nameOverride": "ChatMetadata",
+        "generatedName": "ChatMetadata",
+        "title": "ChatMetadata",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "EmotionScores": {
+        "properties": [
+          {
+            "key": "Admiration",
+            "schema": {
+              "nameOverride": "Admiration",
+              "generatedName": "EmotionScoresAdmiration",
+              "title": "Admiration",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAdmiration"
+          },
+          {
+            "key": "Adoration",
+            "schema": {
+              "nameOverride": "Adoration",
+              "generatedName": "EmotionScoresAdoration",
+              "title": "Adoration",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAdoration"
+          },
+          {
+            "key": "Aesthetic Appreciation",
+            "schema": {
+              "generatedName": "EmotionScoresAestheticAppreciation",
+              "title": "Aesthetic Appreciation",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAestheticAppreciation"
+          },
+          {
+            "key": "Amusement",
+            "schema": {
+              "nameOverride": "Amusement",
+              "generatedName": "EmotionScoresAmusement",
+              "title": "Amusement",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAmusement"
+          },
+          {
+            "key": "Anger",
+            "schema": {
+              "nameOverride": "Anger",
+              "generatedName": "EmotionScoresAnger",
+              "title": "Anger",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAnger"
+          },
+          {
+            "key": "Anxiety",
+            "schema": {
+              "nameOverride": "Anxiety",
+              "generatedName": "EmotionScoresAnxiety",
+              "title": "Anxiety",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAnxiety"
+          },
+          {
+            "key": "Awe",
+            "schema": {
+              "nameOverride": "Awe",
+              "generatedName": "EmotionScoresAwe",
+              "title": "Awe",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAwe"
+          },
+          {
+            "key": "Awkwardness",
+            "schema": {
+              "nameOverride": "Awkwardness",
+              "generatedName": "EmotionScoresAwkwardness",
+              "title": "Awkwardness",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresAwkwardness"
+          },
+          {
+            "key": "Boredom",
+            "schema": {
+              "nameOverride": "Boredom",
+              "generatedName": "EmotionScoresBoredom",
+              "title": "Boredom",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresBoredom"
+          },
+          {
+            "key": "Calmness",
+            "schema": {
+              "nameOverride": "Calmness",
+              "generatedName": "EmotionScoresCalmness",
+              "title": "Calmness",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresCalmness"
+          },
+          {
+            "key": "Concentration",
+            "schema": {
+              "nameOverride": "Concentration",
+              "generatedName": "EmotionScoresConcentration",
+              "title": "Concentration",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresConcentration"
+          },
+          {
+            "key": "Confusion",
+            "schema": {
+              "nameOverride": "Confusion",
+              "generatedName": "EmotionScoresConfusion",
+              "title": "Confusion",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresConfusion"
+          },
+          {
+            "key": "Contemplation",
+            "schema": {
+              "nameOverride": "Contemplation",
+              "generatedName": "EmotionScoresContemplation",
+              "title": "Contemplation",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresContemplation"
+          },
+          {
+            "key": "Contempt",
+            "schema": {
+              "nameOverride": "Contempt",
+              "generatedName": "EmotionScoresContempt",
+              "title": "Contempt",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresContempt"
+          },
+          {
+            "key": "Contentment",
+            "schema": {
+              "nameOverride": "Contentment",
+              "generatedName": "EmotionScoresContentment",
+              "title": "Contentment",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresContentment"
+          },
+          {
+            "key": "Craving",
+            "schema": {
+              "nameOverride": "Craving",
+              "generatedName": "EmotionScoresCraving",
+              "title": "Craving",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresCraving"
+          },
+          {
+            "key": "Desire",
+            "schema": {
+              "nameOverride": "Desire",
+              "generatedName": "EmotionScoresDesire",
+              "title": "Desire",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDesire"
+          },
+          {
+            "key": "Determination",
+            "schema": {
+              "nameOverride": "Determination",
+              "generatedName": "EmotionScoresDetermination",
+              "title": "Determination",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDetermination"
+          },
+          {
+            "key": "Disappointment",
+            "schema": {
+              "nameOverride": "Disappointment",
+              "generatedName": "EmotionScoresDisappointment",
+              "title": "Disappointment",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDisappointment"
+          },
+          {
+            "key": "Disgust",
+            "schema": {
+              "nameOverride": "Disgust",
+              "generatedName": "EmotionScoresDisgust",
+              "title": "Disgust",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDisgust"
+          },
+          {
+            "key": "Distress",
+            "schema": {
+              "nameOverride": "Distress",
+              "generatedName": "EmotionScoresDistress",
+              "title": "Distress",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDistress"
+          },
+          {
+            "key": "Doubt",
+            "schema": {
+              "nameOverride": "Doubt",
+              "generatedName": "EmotionScoresDoubt",
+              "title": "Doubt",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresDoubt"
+          },
+          {
+            "key": "Ecstasy",
+            "schema": {
+              "nameOverride": "Ecstasy",
+              "generatedName": "EmotionScoresEcstasy",
+              "title": "Ecstasy",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresEcstasy"
+          },
+          {
+            "key": "Embarrassment",
+            "schema": {
+              "nameOverride": "Embarrassment",
+              "generatedName": "EmotionScoresEmbarrassment",
+              "title": "Embarrassment",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresEmbarrassment"
+          },
+          {
+            "key": "Empathic Pain",
+            "schema": {
+              "generatedName": "EmotionScoresEmpathicPain",
+              "title": "Empathic Pain",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresEmpathicPain"
+          },
+          {
+            "key": "Entrancement",
+            "schema": {
+              "nameOverride": "Entrancement",
+              "generatedName": "EmotionScoresEntrancement",
+              "title": "Entrancement",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresEntrancement"
+          },
+          {
+            "key": "Envy",
+            "schema": {
+              "nameOverride": "Envy",
+              "generatedName": "EmotionScoresEnvy",
+              "title": "Envy",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresEnvy"
+          },
+          {
+            "key": "Excitement",
+            "schema": {
+              "nameOverride": "Excitement",
+              "generatedName": "EmotionScoresExcitement",
+              "title": "Excitement",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresExcitement"
+          },
+          {
+            "key": "Fear",
+            "schema": {
+              "nameOverride": "Fear",
+              "generatedName": "EmotionScoresFear",
+              "title": "Fear",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresFear"
+          },
+          {
+            "key": "Guilt",
+            "schema": {
+              "nameOverride": "Guilt",
+              "generatedName": "EmotionScoresGuilt",
+              "title": "Guilt",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresGuilt"
+          },
+          {
+            "key": "Horror",
+            "schema": {
+              "nameOverride": "Horror",
+              "generatedName": "EmotionScoresHorror",
+              "title": "Horror",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresHorror"
+          },
+          {
+            "key": "Interest",
+            "schema": {
+              "nameOverride": "Interest",
+              "generatedName": "EmotionScoresInterest",
+              "title": "Interest",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresInterest"
+          },
+          {
+            "key": "Joy",
+            "schema": {
+              "nameOverride": "Joy",
+              "generatedName": "EmotionScoresJoy",
+              "title": "Joy",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresJoy"
+          },
+          {
+            "key": "Love",
+            "schema": {
+              "nameOverride": "Love",
+              "generatedName": "EmotionScoresLove",
+              "title": "Love",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresLove"
+          },
+          {
+            "key": "Nostalgia",
+            "schema": {
+              "nameOverride": "Nostalgia",
+              "generatedName": "EmotionScoresNostalgia",
+              "title": "Nostalgia",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresNostalgia"
+          },
+          {
+            "key": "Pain",
+            "schema": {
+              "nameOverride": "Pain",
+              "generatedName": "EmotionScoresPain",
+              "title": "Pain",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresPain"
+          },
+          {
+            "key": "Pride",
+            "schema": {
+              "nameOverride": "Pride",
+              "generatedName": "EmotionScoresPride",
+              "title": "Pride",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresPride"
+          },
+          {
+            "key": "Realization",
+            "schema": {
+              "nameOverride": "Realization",
+              "generatedName": "EmotionScoresRealization",
+              "title": "Realization",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresRealization"
+          },
+          {
+            "key": "Relief",
+            "schema": {
+              "nameOverride": "Relief",
+              "generatedName": "EmotionScoresRelief",
+              "title": "Relief",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresRelief"
+          },
+          {
+            "key": "Romance",
+            "schema": {
+              "nameOverride": "Romance",
+              "generatedName": "EmotionScoresRomance",
+              "title": "Romance",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresRomance"
+          },
+          {
+            "key": "Sadness",
+            "schema": {
+              "nameOverride": "Sadness",
+              "generatedName": "EmotionScoresSadness",
+              "title": "Sadness",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresSadness"
+          },
+          {
+            "key": "Satisfaction",
+            "schema": {
+              "nameOverride": "Satisfaction",
+              "generatedName": "EmotionScoresSatisfaction",
+              "title": "Satisfaction",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresSatisfaction"
+          },
+          {
+            "key": "Shame",
+            "schema": {
+              "nameOverride": "Shame",
+              "generatedName": "EmotionScoresShame",
+              "title": "Shame",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresShame"
+          },
+          {
+            "key": "Surprise (negative)",
+            "schema": {
+              "generatedName": "EmotionScoresSurpriseNegative",
+              "title": "Surprise (Negative)",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresSurpriseNegative"
+          },
+          {
+            "key": "Surprise (positive)",
+            "schema": {
+              "generatedName": "EmotionScoresSurprisePositive",
+              "title": "Surprise (Positive)",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresSurprisePositive"
+          },
+          {
+            "key": "Sympathy",
+            "schema": {
+              "nameOverride": "Sympathy",
+              "generatedName": "EmotionScoresSympathy",
+              "title": "Sympathy",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresSympathy"
+          },
+          {
+            "key": "Tiredness",
+            "schema": {
+              "nameOverride": "Tiredness",
+              "generatedName": "EmotionScoresTiredness",
+              "title": "Tiredness",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresTiredness"
+          },
+          {
+            "key": "Triumph",
+            "schema": {
+              "nameOverride": "Triumph",
+              "generatedName": "EmotionScoresTriumph",
+              "title": "Triumph",
+              "schema": {
+                "type": "double"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "emotionScoresTriumph"
+          }
+        ],
+        "nameOverride": "EmotionScores",
+        "generatedName": "EmotionScores",
+        "title": "EmotionScores",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Inference": {
+        "properties": [
+          {
+            "key": "prosody",
+            "schema": {
+              "generatedName": "InferenceProsody",
+              "value": {
+                "generatedName": "InferenceProsody",
+                "schema": "ProsodyInference",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "description": "Prosody model inference results.\n\nEVI uses the prosody model to measure 48 emotions related to speech and vocal characteristics within a given expression.",
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "inferenceProsody"
+          }
+        ],
+        "nameOverride": "Inference",
+        "generatedName": "Inference",
+        "title": "Inference",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "MillisecondInterval": {
+        "properties": [
+          {
+            "key": "begin",
+            "schema": {
+              "nameOverride": "Begin",
+              "generatedName": "MillisecondIntervalBegin",
+              "title": "Begin",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Start time of the interval in milliseconds.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "millisecondIntervalBegin"
+          },
+          {
+            "key": "end",
+            "schema": {
+              "nameOverride": "End",
+              "generatedName": "MillisecondIntervalEnd",
+              "title": "End",
+              "schema": {
+                "type": "int"
+              },
+              "description": "End time of the interval in milliseconds.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "millisecondIntervalEnd"
+          }
+        ],
+        "nameOverride": "MillisecondInterval",
+        "generatedName": "MillisecondInterval",
+        "title": "MillisecondInterval",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ProsodyInference": {
+        "properties": [
+          {
+            "key": "scores",
+            "schema": {
+              "generatedName": "ProsodyInferenceScores",
+              "schema": "EmotionScores",
+              "description": "The confidence scores for 48 emotions within the detected expression of an audio sample.\n\nScores typically range from 0 to 1, with higher values indicating a stronger confidence level in the measured attribute.\n\nSee our guide on [interpreting expression measurement results](/docs/expression-measurement/faq#how-do-i-interpret-my-results) to learn more.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "prosodyInferenceScores",
+            "readonly": false
+          }
+        ],
+        "nameOverride": "ProsodyInference",
+        "generatedName": "ProsodyInference",
+        "title": "ProsodyInference",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Role": {
+        "nameOverride": "Role",
+        "generatedName": "Role",
+        "title": "Role",
+        "values": [
+          {
+            "generatedName": "assistant",
+            "value": "assistant",
+            "casing": {}
+          },
+          {
+            "generatedName": "system",
+            "value": "system",
+            "casing": {}
+          },
+          {
+            "generatedName": "user",
+            "value": "user",
+            "casing": {}
+          },
+          {
+            "generatedName": "all",
+            "value": "all",
+            "casing": {}
+          },
+          {
+            "generatedName": "tool",
+            "value": "tool",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "ToolCallMessage": {
+        "description": "When provided, the output is a tool call.",
+        "properties": [
+          {
+            "key": "name",
+            "schema": {
+              "nameOverride": "Name",
+              "generatedName": "ToolCallMessageName",
+              "title": "Name",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Name of the tool called.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageName"
+          },
+          {
+            "key": "parameters",
+            "schema": {
+              "nameOverride": "Parameters",
+              "generatedName": "ToolCallMessageParameters",
+              "title": "Parameters",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Parameters of the tool call. Is a stringified JSON schema.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageParameters"
+          },
+          {
+            "key": "tool_call_id",
+            "schema": {
+              "generatedName": "ToolCallMessageToolCallId",
+              "title": "Tool Call Id",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The unique identifier for a specific tool call instance.\n\nThis ID is used to track the request and response of a particular tool invocation, ensuring that the correct response is linked to the appropriate request.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageToolCallId"
+          },
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "ToolCallMessage",
+              "generatedName": "toolCallMessageType",
+              "title": "ToolCallMessage",
+              "value": {
+                "nameOverride": "Type",
+                "generatedName": "ToolCallMessageType",
+                "title": "Type",
+                "value": {
+                  "value": "tool_call",
+                  "type": "string"
+                },
+                "groupName": [],
+                "description": "The type of message sent through the socket; for a Tool Call message, this must be `tool_call`.\n\nThis message indicates that the supplemental LLM has detected a need to invoke the specified tool.",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "ToolCallMessage",
+              "generatedName": "toolCallMessageCustomSessionId",
+              "title": "ToolCallMessage",
+              "value": {
+                "generatedName": "ToolCallMessageCustomSessionId",
+                "value": {
+                  "generatedName": "ToolCallMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageCustomSessionId"
+          },
+          {
+            "key": "tool_type",
+            "schema": {
+              "generatedName": "ToolCallMessageToolType",
+              "schema": "ToolType",
+              "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageToolType",
+            "readonly": false
+          },
+          {
+            "key": "response_required",
+            "schema": {
+              "generatedName": "ToolCallMessageResponseRequired",
+              "title": "Response Required",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Indicates whether a response to the tool call is required from the developer, either in the form of a [Tool Response message](/reference/empathic-voice-interface-evi/chat/chat#send.Tool%20Response%20Message.type) or a [Tool Error message](/reference/empathic-voice-interface-evi/chat/chat#send.Tool%20Error%20Message.type).",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "toolCallMessageResponseRequired"
+          }
+        ],
+        "nameOverride": "ToolCallMessage",
+        "generatedName": "ToolCallMessage",
+        "title": "ToolCallMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserInterruption": {
+        "description": "When provided, the output is an interruption.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "UserInterruptionType",
+              "title": "Type",
+              "value": {
+                "value": "user_interruption",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "The type of message sent through the socket; for a User Interruption message, this must be `user_interruption`.\n\nThis message indicates the user has interrupted the assistant’s response. EVI detects the interruption in real-time and sends this message to signal the interruption event. This message allows the system to stop the current audio playback, clear the audio queue, and prepare to handle new user input.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInterruptionType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "UserInterruption",
+              "generatedName": "userInterruptionCustomSessionId",
+              "title": "UserInterruption",
+              "value": {
+                "generatedName": "UserInterruptionCustomSessionId",
+                "value": {
+                  "generatedName": "UserInterruptionCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInterruptionCustomSessionId"
+          },
+          {
+            "key": "time",
+            "schema": {
+              "nameOverride": "Time",
+              "generatedName": "UserInterruptionTime",
+              "title": "Time",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Unix timestamp of the detected user interruption.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userInterruptionTime"
+          }
+        ],
+        "nameOverride": "UserInterruption",
+        "generatedName": "UserInterruption",
+        "title": "UserInterruption",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserMessage": {
+        "description": "When provided, the output is a user message.",
+        "properties": [
+          {
+            "key": "type",
+            "schema": {
+              "nameOverride": "Type",
+              "generatedName": "UserMessageType",
+              "title": "Type",
+              "value": {
+                "value": "user_message",
+                "type": "string"
+              },
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageType"
+          },
+          {
+            "key": "custom_session_id",
+            "schema": {
+              "nameOverride": "UserMessage",
+              "generatedName": "userMessageCustomSessionId",
+              "title": "UserMessage",
+              "value": {
+                "generatedName": "UserMessageCustomSessionId",
+                "value": {
+                  "generatedName": "UserMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageCustomSessionId"
+          },
+          {
+            "key": "message",
+            "schema": {
+              "generatedName": "UserMessageMessage",
+              "schema": "ChatMessage",
+              "description": "Transcript of the message.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageMessage",
+            "readonly": false
+          },
+          {
+            "key": "models",
+            "schema": {
+              "generatedName": "UserMessageModels",
+              "schema": "Inference",
+              "description": "Inference model results.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageModels",
+            "readonly": false
+          },
+          {
+            "key": "time",
+            "schema": {
+              "generatedName": "UserMessageTime",
+              "schema": "MillisecondInterval",
+              "description": "Start and End time of user message.",
+              "source": {
+                "file": "../asyncapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageTime",
+            "readonly": false
+          },
+          {
+            "key": "from_text",
+            "schema": {
+              "generatedName": "UserMessageFromText",
+              "title": "From Text",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Indicates if this message was inserted into the conversation as text from a [User Input](/reference/empathic-voice-interface-evi/chat/chat#send.User%20Input.text) message.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageFromText"
+          },
+          {
+            "key": "interim",
+            "schema": {
+              "nameOverride": "Interim",
+              "generatedName": "UserMessageInterim",
+              "title": "Interim",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Indicates if this message contains an immediate and unfinalized transcript of the user's audio input. If it does, words may be repeated across successive UserMessage messages as our transcription model becomes more confident about what was said with additional context. Interim messages are useful to detect if the user is interrupting during audio playback on the client. Even without a finalized transcription, along with `UserInterrupt` messages, interim `UserMessages` are useful for detecting if the user is interrupting during audio playback on the client, signaling to stop playback in your application.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessageInterim"
+          }
+        ],
+        "nameOverride": "UserMessage",
+        "generatedName": "UserMessage",
+        "title": "UserMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.json",
           "type": "openapi"
         },
         "type": "object"

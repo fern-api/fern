@@ -4697,9 +4697,6 @@ importers:
       '@types/inquirer':
         specifier: ^9.0.7
         version: 9.0.7
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -4871,6 +4868,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)

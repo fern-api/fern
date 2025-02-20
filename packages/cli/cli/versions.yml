@@ -1,9 +1,15 @@
 - changelogEntry:
     - summary: |
-        Improve the violations summary displayed by `fern check` and include elapsed time when available.
+        Fix issue where the CLI would not parse asyncapi specs within the `api.specs` array in generators.yml.
       type: fix
+    - summary: |
+        Migrate old spec configuration in generators.yml to the `api.specs[]` format.
+      type: feat
+    - summary: |
+        Log warnings when old generators.yml syntax is used during parsing.
+      type: feat
   irVersion: 55
-  version: 0.53.19
+  version: 0.54.0-rc0
 
 - changelogEntry:
     - summary: |

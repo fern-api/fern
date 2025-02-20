@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema";
+import { OpenApiSettingsSchema } from "./OpenApiSettingsSchema";
 
 export const GeneratorsOpenApiObjectSchema: core.serialization.ObjectSchema<
     serializers.GeneratorsOpenApiObjectSchema.Raw,
@@ -15,7 +15,7 @@ export const GeneratorsOpenApiObjectSchema: core.serialization.ObjectSchema<
     origin: core.serialization.string().optional(),
     overrides: core.serialization.string().optional(),
     "disable-examples": core.serialization.boolean().optional(),
-    settings: ApiDefinitionSettingsSchema,
+    settings: OpenApiSettingsSchema,
 });
 
 export declare namespace GeneratorsOpenApiObjectSchema {
@@ -24,6 +24,6 @@ export declare namespace GeneratorsOpenApiObjectSchema {
         origin?: string | null;
         overrides?: string | null;
         "disable-examples"?: boolean | null;
-        settings: ApiDefinitionSettingsSchema.Raw;
+        settings: OpenApiSettingsSchema.Raw;
     }
 }
