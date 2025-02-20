@@ -1171,6 +1171,12 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
+        public Void visitBytes(BytesResponse bytesResponse) {
+            // TODO(ajgateno): Handle bytes
+            return null;
+        }
+
+        @Override
         public Void visitStreaming(StreamingResponse streaming) {
             addNonTryWithResourcesVariant(httpResponseBuilder);
             com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
@@ -1733,6 +1739,13 @@ public abstract class AbstractEndpointWriter {
             @Override
             public Optional<String> visitText(TextResponse textResponse) {
                 // TODO: Figure out if the right thing to do is text/plain here or if we want something more granular
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<String> visitBytes(BytesResponse bytesResponse) {
+                // TODO: At some point it may be necessary to apply application/octet-stream, although it's best to
+                //  wait for the IR change.
                 return Optional.empty();
             }
 
