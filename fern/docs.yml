@@ -472,7 +472,7 @@ navigation:
                 icon: fa-regular fa-window-restore
                 slug: tabs
           - page: Custom React Components
-            icon: fa-regular fa-react
+            icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx
           - page: Frontmatter
             icon: fa-regular fa-sliders
