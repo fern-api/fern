@@ -7,7 +7,6 @@ import { PlaygroundEnvironmentsExistRule } from "./rules/playground-environments
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints";
 import { ValidFileTypes } from "./rules/valid-file-types";
 import { ValidFrontmatter } from "./rules/valid-frontmatter";
-import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 export function getAllRules(): Rule[] {
@@ -16,7 +15,7 @@ export function getAllRules(): Rule[] {
         OnlyVersionedNavigation,
         ValidateVersionFileRule,
         AccentColorContrastRule,
-        ValidMarkdownLinks,
+        // ValidMarkdownLinks,
         ValidFileTypes,
         PlaygroundEnvironmentsExistRule,
         ValidDocsEndpoints,

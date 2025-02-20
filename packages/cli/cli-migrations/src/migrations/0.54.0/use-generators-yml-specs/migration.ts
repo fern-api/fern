@@ -1,19 +1,10 @@
-// TODO: localize versions of the types locally
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import YAML from "yaml";
 
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration-loader";
-import {
-    AbsoluteFilePath,
-    Directory,
-    File,
-    RelativeFilePath,
-    getDirectoryContents,
-    join,
-    relativize
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, Directory, File, RelativeFilePath, getDirectoryContents, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { Migration } from "../../../types/Migration";
