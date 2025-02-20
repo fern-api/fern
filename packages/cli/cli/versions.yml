@@ -1,5 +1,41 @@
 - changelogEntry:
     - summary: |
+        Disable broken link checker until it is ready to release. 
+      type: fix
+  irVersion: 55
+  version: 0.53.15
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue with the OpenAPI v2 parser where docs configs with no navigation structure would generate incorrect slugs.
+      type: fix
+  irVersion: 55
+  version: 0.53.14
+
+- changelogEntry:
+    - summary: |
+        Resolve error where `fern docs dev` failed in Windows environments.
+      type: fix
+  irVersion: 55
+  version: 0.53.13
+
+- changelogEntry:
+    - summary: |
+        Dynamically deconflict AsyncAPI message names when generating Fern Definition Types to preserve original naming
+        wherever possible.
+      type: fix
+  irVersion: 55
+  version: 0.53.12
+
+- changelogEntry:
+    - summary: |
+        Fix an issue with the OpenAPI v2 parser where schemas with single value arrays were being incorrectly parsed.
+      type: fix
+  irVersion: 55
+  version: 0.53.11
+
+- changelogEntry:
+    - summary: |
         Support differentiated server URLs in WebSocket channels and correctly generate multi-url environments.
       type: fix
   irVersion: 55

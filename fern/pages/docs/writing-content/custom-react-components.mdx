@@ -1,0 +1,54 @@
+---
+title: Custom React Components
+subtitle: Add your own React components to enhance your docs
+---
+
+You can extend Fern's built-in component library by adding your own custom React components. 
+This allows you to create unique, interactive elements that match your documentation needs.
+
+<Note>Setting up custom react components is part of the pro plan.</Note>
+
+## How does it work
+
+<Steps>
+  ### Create a React component
+
+  Let's start by creating a `components` folder where you can define your react components. Note 
+  that the react components can be defined in `.ts`, `.tsx`, `.js` or `.mdx` files. 
+
+  ```ts components/CustomCard.tsx 
+    export const CustomCard = ({ title, text, link, sparkle = false }) => {
+        return (
+            <a href={link} className="block p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+            <h2 className="text-xl font-semibold mb-2">
+                {title} {sparkle && "✨"}
+            </h2>
+            <p className="text-gray-600">{text}</p>
+            </a>
+        );
+    };
+  ```
+
+  ### Use the component in your docs
+
+  Once you've written the component, you can start leveraging it in your Markdown guides. 
+
+  ```jsx guide.mdx
+<CustomCard 
+    title="MyTitle" 
+    text="Hello" 
+    href="https://github.com/fern-api/fern/tree/main/generators/python"
+/>
+  ```
+
+  ### Specify your components directory in `docs.yml`
+
+  Add your components directory to `docs.yml` so that the Fern CLI can scan your components directory 
+  and upload them to the server. 
+
+  ```yml docs.yml
+  experimental:
+    mdx-components:
+      - ./components
+  ```
+</Steps>

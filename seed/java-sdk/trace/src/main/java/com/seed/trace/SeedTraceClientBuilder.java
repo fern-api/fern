@@ -5,6 +5,7 @@ package com.seed.trace;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedTraceClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -46,6 +47,14 @@ public final class SeedTraceClientBuilder {
      */
     public SeedTraceClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedTraceClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

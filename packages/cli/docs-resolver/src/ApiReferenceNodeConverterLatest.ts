@@ -15,11 +15,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
-import {
-    getApiLatestEndpointToNavigationNodeUrlSlug,
-    getApiLatestWebSocketToNavigationNodeUrlSlug,
-    getApiLatestWebhookToNavigationNodeUrlSlug
-} from "./utils/getApiLatestToNavigationNodeUrlSlug";
+import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
@@ -424,7 +420,9 @@ export class ApiReferenceNodeConverterLatest {
             const endpointSlug =
                 endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint) });
+                    : parentSlug.apply({
+                          urlSlug: getApiLatestToNavigationNodeUrlSlug(endpoint, parentSlug, parentSlug)
+                      });
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
                 type: "endpoint",
@@ -467,7 +465,9 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket) })
+                    : parentSlug.apply({
+                          urlSlug: getApiLatestToNavigationNodeUrlSlug(webSocket, parentSlug, parentSlug)
+                      })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -499,7 +499,9 @@ export class ApiReferenceNodeConverterLatest {
                 title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
                 slug: (endpointItem.slug != null
                     ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({ urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook) })
+                    : parentSlug.apply({
+                          urlSlug: getApiLatestToNavigationNodeUrlSlug(webhook, parentSlug, parentSlug)
+                      })
                 ).get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
@@ -543,28 +545,152 @@ export class ApiReferenceNodeConverterLatest {
             mergeAndFilterChildren: this.#mergeAndFilterChildren.bind(this)
         });
     }
-
     #convertApiDefinitionPackage(
         pkg: FdrAPI.api.latest.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.ApiPackageChild[] {
-        // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         let additionalChildren: FernNavigation.V1.ApiPackageChild[] = [];
 
+        // Convert unvisited subpackages
         Object.entries(pkg.subpackages).forEach(([subpackageId, subpackageMetadata]) => {
-            if (this.#visitedSubpackages.has(subpackageId)) {
+            if (!this.#visitedSubpackages.has(subpackageId)) {
+                additionalChildren.push(this.#createSubpackageNode(subpackageId, subpackageMetadata, parentSlug));
+            }
+        });
+
+        // Convert unvisited endpoints
+        Object.entries(pkg.endpoints).forEach(([endpointId, endpoint]) => {
+            if (endpointId == null) {
+                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
+            }
+            if (!this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId))) {
+                this.#addEndpointToHierarchy(endpointId, endpoint, parentSlug, additionalChildren);
+            }
+        });
+
+        // Convert unvisited websockets
+        Object.entries(pkg.websockets).forEach(([webSocketId, webSocket]) => {
+            if (webSocketId == null) {
+                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+            }
+            if (!this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId))) {
+                this.#addWebSocketToHierarchy(webSocketId, webSocket, parentSlug, additionalChildren);
+            }
+        });
+
+        // Convert unvisited webhooks
+        Object.entries(pkg.webhooks).forEach(([webhookId, webhook]) => {
+            if (webhookId == null) {
+                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+            }
+            if (!this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId))) {
+                this.#addWebhookToHierarchy(webhookId, webhook, parentSlug, additionalChildren);
+            }
+        });
+
+        additionalChildren = this.mergeEndpointPairs(additionalChildren);
+
+        if (this.apiSection.alphabetized) {
+            additionalChildren.sort((a, b) => {
+                const aTitle = a.type === "endpointPair" ? a.nonStream.title : a.title;
+                const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title;
+                return aTitle.localeCompare(bTitle);
+            });
+        }
+
+        return additionalChildren;
+    }
+
+    #createSubpackageNode(
+        subpackageId: string,
+        metadata: FdrAPI.api.latest.SubpackageMetadata,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.ApiPackageNode {
+        const slug = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
+            urlSlug: kebabCase(metadata.name)
+        });
+        const node: FernNavigation.V1.ApiPackageNode = {
+            id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
+            type: "apiPackage",
+            children: [],
+            title: metadata.displayName ?? titleCase(metadata.name),
+            slug: slug.get(),
+            icon: undefined,
+            hidden: undefined,
+            overviewPageId: undefined,
+            availability: undefined,
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined,
+            noindex: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
+        this.#topLevelSubpackages.set(subpackageId, node);
+        return node;
+    }
+
+    #addToNamespaceHierarchy<
+        T extends {
+            id: string;
+            operationId?: string;
+            namespace?: string[];
+        }
+    >(
+        item: T,
+        itemNode: Exclude<
+            FernNavigation.V1.ApiPackageChild,
+            FernNavigation.V1.EndpointPairNode | FernNavigation.V1.PageNode | FernNavigation.V1.LinkNode
+        >,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        additionalChildren: FernNavigation.V1.ApiPackageChild[]
+    ) {
+        if (item.namespace?.length) {
+            const [firstNamespacePart, ...remainingParts] = item.namespace;
+            if (firstNamespacePart == null) {
+                return;
+            }
+            let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
+            if (!subpackageCursor) {
+                this.taskContext.logger.error(`Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`);
                 return;
             }
 
-            const slug = parentSlug.apply({
-                urlSlug: kebabCase(subpackageMetadata.name)
+            let slugGenerator = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
+                urlSlug: kebabCase(firstNamespacePart)
             });
-            const subpackageNode: FernNavigation.V1.ApiPackageNode = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
+
+            for (const namespacePart of remainingParts) {
+                slugGenerator = slugGenerator.append(kebabCase(namespacePart));
+                subpackageCursor = this.#ensureSubpackage(subpackageCursor, namespacePart, slugGenerator);
+            }
+
+            itemNode.slug = getApiLatestToNavigationNodeUrlSlug(item, parentSlug, slugGenerator);
+            subpackageCursor.children.push(itemNode);
+        } else {
+            additionalChildren.push(itemNode);
+        }
+    }
+
+    #ensureSubpackage(
+        parent: FdrAPI.navigation.v1.ApiPackageNode,
+        namespacePart: string,
+        slugGenerator: FernNavigation.V1.SlugGenerator
+    ): FdrAPI.navigation.v1.ApiPackageNode {
+        let child = parent.children.find(
+            (child): child is FdrAPI.navigation.v1.ApiPackageNode =>
+                child.type === "apiPackage" && child.id === namespacePart.toString()
+        );
+
+        if (!child) {
+            child = {
+                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
                 type: "apiPackage",
                 children: [],
-                title: subpackageMetadata.displayName ?? titleCase(subpackageMetadata.name),
-                slug: slug.get(),
+                title: titleCase(namespacePart),
+                slug: slugGenerator.get(),
                 icon: undefined,
                 hidden: undefined,
                 overviewPageId: undefined,
@@ -578,255 +704,90 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined,
                 featureFlags: undefined
             };
-
-            this.#topLevelSubpackages.set(subpackageId, subpackageNode);
-            additionalChildren.push(subpackageNode);
-        });
-
-        Object.entries(pkg.endpoints).forEach(([endpointId, endpoint]) => {
-            if (endpointId == null) {
-                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
-            }
-            if (this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId))) {
-                return;
-            }
-
-            const endpointSlug = parentSlug.apply({
-                urlSlug: getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)
-            });
-
-            const endpointNode: FernNavigation.V1.EndpointNode = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
-                type: "endpoint",
-                method: endpoint.method,
-                endpointId: FdrAPI.EndpointId(endpointId),
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
-                title: endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
-                slug: endpointSlug.get(),
-                icon: undefined,
-                hidden: undefined,
-                playground: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            };
-
-            if (endpoint.namespace != null && endpoint.namespace.length > 0) {
-                const firstNamespacePart = endpoint.namespace[0];
-                if (firstNamespacePart != null) {
-                    let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
-                    if (subpackageCursor == null) {
-                        this.taskContext.logger.error(
-                            `Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`
-                        );
-                        return;
-                    }
-                    let slugGenerator = parentSlug.apply({ urlSlug: kebabCase(subpackageCursor.slug) });
-
-                    for (const namespacePart of endpoint.namespace.slice(1)) {
-                        let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
-                            subpackageCursor.children.find(
-                                (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
-                            );
-                        slugGenerator = slugGenerator.append(kebabCase(namespacePart));
-                        if (newSubpackageCursor == null) {
-                            newSubpackageCursor = {
-                                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
-                                type: "apiPackage",
-                                children: [],
-                                title: titleCase(namespacePart),
-                                slug: slugGenerator.get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                overviewPageId: undefined,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined,
-                                noindex: undefined,
-                                playground: undefined,
-                                authed: undefined,
-                                viewers: undefined,
-                                orphaned: undefined,
-                                featureFlags: undefined
-                            };
-                        }
-                        if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {
-                            subpackageCursor = newSubpackageCursor;
-                        }
-                    }
-
-                    subpackageCursor.children.push(endpointNode);
-                }
-            } else {
-                additionalChildren.push(endpointNode);
-            }
-        });
-
-        Object.entries(pkg.websockets).forEach(([webSocketId, webSocket]) => {
-            if (webSocketId == null) {
-                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
-            }
-            if (this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId))) {
-                return;
-            }
-            const webSocketNode: FernNavigation.V1.WebSocketNode = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
-                type: "webSocket",
-                webSocketId: FdrAPI.WebSocketId(webSocketId),
-                title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
-                slug: parentSlug
-                    .apply({
-                        urlSlug: getApiLatestWebSocketToNavigationNodeUrlSlug(webSocket)
-                    })
-                    .get(),
-                icon: undefined,
-                hidden: undefined,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability),
-                playground: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            };
-            if (webSocket.namespace != null && webSocket.namespace.length > 0) {
-                const firstNamespacePart = webSocket.namespace[0];
-                if (firstNamespacePart != null) {
-                    let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
-                    if (subpackageCursor == null) {
-                        throw new Error(`Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`);
-                    }
-                    let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
-
-                    for (const namespacePart of webSocket.namespace.slice(1)) {
-                        let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
-                            subpackageCursor.children.find(
-                                (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
-                            );
-                        slugGenerator = slugGenerator.append(namespacePart);
-                        if (newSubpackageCursor == null) {
-                            newSubpackageCursor = {
-                                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
-                                type: "apiPackage",
-                                children: [],
-                                title: titleCase(namespacePart),
-                                slug: slugGenerator.get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                overviewPageId: undefined,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined,
-                                noindex: undefined,
-                                playground: undefined,
-                                authed: undefined,
-                                viewers: undefined,
-                                orphaned: undefined,
-                                featureFlags: undefined
-                            };
-                        }
-                        if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {
-                            subpackageCursor = newSubpackageCursor;
-                        }
-                    }
-                    subpackageCursor.children.push(webSocketNode);
-                }
-            } else {
-                additionalChildren.push(webSocketNode);
-            }
-        });
-
-        Object.entries(pkg.webhooks).forEach(([webhookId, webhook]) => {
-            if (webhookId == null) {
-                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
-            }
-            if (this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId))) {
-                return;
-            }
-            const webhookNode: FernNavigation.V1.WebhookNode = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webhookId}`),
-                type: "webhook",
-                webhookId: FdrAPI.WebhookId(webhookId),
-                method: webhook.method,
-                title: webhook.displayName ?? titleCase(webhook.id),
-                slug: parentSlug
-                    .apply({
-                        urlSlug: getApiLatestWebhookToNavigationNodeUrlSlug(webhook)
-                    })
-                    .get(),
-                icon: undefined,
-                hidden: undefined,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            };
-
-            if (webhook.namespace != null && webhook.namespace.length > 0) {
-                const firstNamespacePart = webhook.namespace[0];
-                if (firstNamespacePart != null) {
-                    let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
-                    if (subpackageCursor == null) {
-                        throw new Error(
-                            `Subpackage subpackage_${firstNamespacePart} not found in ${this.apiDefinitionId}`
-                        );
-                    }
-                    let slugGenerator = parentSlug.apply({ urlSlug: subpackageCursor.slug });
-
-                    for (const namespacePart of webhook.namespace.slice(1)) {
-                        let newSubpackageCursor: FdrAPI.navigation.v1.ApiPackageChild | undefined =
-                            subpackageCursor.children.find(
-                                (child) => child.type === "apiPackage" && child.id === namespacePart.toString()
-                            );
-                        slugGenerator = slugGenerator.append(namespacePart);
-                        if (newSubpackageCursor == null) {
-                            newSubpackageCursor = {
-                                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
-                                type: "apiPackage",
-                                children: [],
-                                title: namespacePart,
-                                slug: slugGenerator.get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                overviewPageId: undefined,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined,
-                                noindex: undefined,
-                                playground: undefined,
-                                authed: undefined,
-                                viewers: undefined,
-                                orphaned: undefined,
-                                featureFlags: undefined
-                            };
-                        }
-                        if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {
-                            subpackageCursor = newSubpackageCursor;
-                        }
-                    }
-                    subpackageCursor.children.push(webhookNode);
-                }
-            } else {
-                additionalChildren.push(webhookNode);
-            }
-        });
-
-        additionalChildren = this.mergeEndpointPairs(additionalChildren);
-
-        if (this.apiSection.alphabetized) {
-            additionalChildren = additionalChildren.sort((a, b) => {
-                const aTitle = a.type === "endpointPair" ? a.nonStream.title : a.title;
-                const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title;
-                return aTitle.localeCompare(bTitle);
-            });
+            parent.children.push(child);
         }
 
-        return additionalChildren;
+        return child;
+    }
+
+    #addEndpointToHierarchy(
+        endpointId: string,
+        endpoint: FdrAPI.api.latest.EndpointDefinition,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        additionalChildren: FernNavigation.V1.ApiPackageChild[]
+    ) {
+        const endpointNode: FernNavigation.V1.EndpointNode = {
+            id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
+            type: "endpoint",
+            method: endpoint.method,
+            endpointId: FdrAPI.EndpointId(endpointId),
+            apiDefinitionId: this.apiDefinitionId,
+            availability: FernNavigation.V1.convertAvailability(endpoint.availability),
+            isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
+            title: endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
+            slug: parentSlug.get(),
+            icon: undefined,
+            hidden: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
+
+        this.#addToNamespaceHierarchy(endpoint, endpointNode, parentSlug, additionalChildren);
+    }
+
+    #addWebSocketToHierarchy(
+        webSocketId: string,
+        webSocket: FdrAPI.api.latest.WebSocketChannel,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        additionalChildren: FernNavigation.V1.ApiPackageChild[]
+    ) {
+        const webSocketNode: FernNavigation.V1.WebSocketNode = {
+            id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
+            type: "webSocket",
+            webSocketId: FdrAPI.WebSocketId(webSocketId),
+            title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
+            slug: parentSlug.get(),
+            icon: undefined,
+            hidden: undefined,
+            apiDefinitionId: this.apiDefinitionId,
+            availability: FernNavigation.V1.convertAvailability(webSocket.availability),
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
+
+        this.#addToNamespaceHierarchy(webSocket, webSocketNode, parentSlug, additionalChildren);
+    }
+
+    #addWebhookToHierarchy(
+        webhookId: string,
+        webhook: FdrAPI.api.latest.WebhookDefinition,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        additionalChildren: FernNavigation.V1.ApiPackageChild[]
+    ) {
+        const webhookNode: FernNavigation.V1.WebhookNode = {
+            id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webhookId}`),
+            type: "webhook",
+            webhookId: FdrAPI.WebhookId(webhookId),
+            method: webhook.method,
+            title: webhook.displayName ?? titleCase(webhook.id),
+            slug: parentSlug.get(),
+            icon: undefined,
+            hidden: undefined,
+            apiDefinitionId: this.apiDefinitionId,
+            availability: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
+
+        this.#addToNamespaceHierarchy(webhook, webhookNode, parentSlug, additionalChildren);
     }
 
     // TODO: optimize this with some DP, where we store incrementally found endpoints (constructing an indexed tree of subpackages)

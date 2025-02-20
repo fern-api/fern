@@ -51,6 +51,7 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
+import okhttp3.OkHttpClient;
 
 public final class RootClientGenerator extends AbstractFileGenerator {
 
@@ -207,6 +208,15 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addParameter(int.class, "timeout")
                 .returns(builderName)
                 .addStatement("this.$L.timeout(timeout)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the underlying OkHttp client")
+                .returns(builderName)
+                .addParameter(OkHttpClient.class, "httpClient")
+                .addStatement("this.$L.httpClient(httpClient)", CLIENT_OPTIONS_BUILDER_NAME)
                 .addStatement("return this")
                 .build());
 

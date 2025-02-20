@@ -5,6 +5,7 @@ package com.seed.mixedCase;
 
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedMixedCaseClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedMixedCaseClientBuilder {
      */
     public SeedMixedCaseClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedMixedCaseClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

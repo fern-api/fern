@@ -1,11 +1,7 @@
 /* eslint-disable jest/no-disabled-tests */
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 
-import {
-    getApiLatestEndpointToNavigationNodeUrlSlug,
-    getApiLatestWebSocketToNavigationNodeUrlSlug,
-    getApiLatestWebhookToNavigationNodeUrlSlug
-} from "../utils/getApiLatestToNavigationNodeUrlSlug";
+import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavigationNodeUrlSlug";
 
 it.skip("generates slug for endpoint", () => {
     const endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition = {
@@ -36,7 +32,13 @@ it.skip("generates slug for endpoint", () => {
         protocol: undefined,
         availability: undefined
     };
-    expect(getApiLatestEndpointToNavigationNodeUrlSlug(endpoint)).toBe("api-service/create");
+    expect(
+        getApiLatestToNavigationNodeUrlSlug(
+            endpoint,
+            FernNavigation.V1.SlugGenerator.init(""),
+            FernNavigation.V1.SlugGenerator.init("")
+        )
+    ).toBe("api-service/create");
 });
 
 it.skip("generates slug for websocket", () => {
@@ -62,7 +64,13 @@ it.skip("generates slug for websocket", () => {
         availability: undefined,
         description: undefined
     };
-    expect(getApiLatestWebSocketToNavigationNodeUrlSlug(websocket)).toBe("realtime/stream");
+    expect(
+        getApiLatestToNavigationNodeUrlSlug(
+            websocket,
+            FernNavigation.V1.SlugGenerator.init(""),
+            FernNavigation.V1.SlugGenerator.init("")
+        )
+    ).toBe("realtime/stream");
 });
 
 it.skip("generates slug for webhook", () => {
@@ -80,5 +88,11 @@ it.skip("generates slug for webhook", () => {
         description: undefined,
         queryParameters: []
     };
-    expect(getApiLatestWebhookToNavigationNodeUrlSlug(webhook)).toBe("webhooks/completed");
+    expect(
+        getApiLatestToNavigationNodeUrlSlug(
+            webhook,
+            FernNavigation.V1.SlugGenerator.init(""),
+            FernNavigation.V1.SlugGenerator.init("")
+        )
+    ).toBe("webhooks/completed");
 });

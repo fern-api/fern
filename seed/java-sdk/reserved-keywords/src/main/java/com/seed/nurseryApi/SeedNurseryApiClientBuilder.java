@@ -5,6 +5,7 @@ package com.seed.nurseryApi;
 
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedNurseryApiClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedNurseryApiClientBuilder {
      */
     public SeedNurseryApiClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedNurseryApiClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 
