@@ -1,4 +1,3 @@
-import { getSchemaOptions } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -111,7 +110,52 @@ export function appendPropertyToFormData({
 
             let statement: ts.Statement;
 
-            if (isMaybeIterable(property.valueType, context)) {
+            if (property.style === "form") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createArrayBindingPattern([
+                                    ts.factory.createBindingElement(undefined, undefined, "key"),
+                                    ts.factory.createBindingElement(undefined, undefined, "value")
+                                ]),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("entries")
+                        ),
+                        undefined,
+                        [
+                            context.coreUtilities.formDataUtils.encodeAsFormParameter({
+                                referenceToArgument: ts.factory.createObjectLiteralExpression([
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createStringLiteral(property.name.wireValue),
+                                        referenceToBodyProperty
+                                    )
+                                ])
+                            })
+                        ]
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.coreUtilities.formDataUtils.append({
+                                referenceToFormData,
+                                key: ts.factory.createIdentifier("key"),
+                                value: ts.factory.createIdentifier("value")
+                            })
+                        ],
+                        true
+                    )
+                );
+            } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(

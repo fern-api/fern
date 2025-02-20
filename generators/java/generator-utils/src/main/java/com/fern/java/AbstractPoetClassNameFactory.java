@@ -13,8 +13,11 @@ public abstract class AbstractPoetClassNameFactory {
 
     private final List<String> packagePrefixTokens;
 
-    public AbstractPoetClassNameFactory(List<String> packagePrefixTokens) {
+    protected final ICustomConfig.PackageLayout packageLayout;
+
+    public AbstractPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
         this.packagePrefixTokens = packagePrefixTokens;
+        this.packageLayout = packageLayout;
     }
 
     public abstract ClassName getTypeClassName(DeclaredTypeName declaredTypeName);
@@ -40,7 +43,13 @@ public abstract class AbstractPoetClassNameFactory {
     }
 
     public final String getPaginationPackage() {
-        return getCorePackage() + ".pagination";
+        switch (packageLayout) {
+            case FLAT:
+                return getCorePackage();
+            case NESTED:
+            default:
+                return getCorePackage() + ".pagination";
+        }
     }
 
     public final String getRootPackage() {

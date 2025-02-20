@@ -9,10 +9,11 @@ import {
     SchemaId,
     SchemaWithExample,
     Source,
-    WebsocketChannel
+    WebsocketChannel,
+    WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { FernOpenAPIExtension, ParseOpenAPIOptions } from "../..";
+import { FernOpenAPIExtension } from "../..";
 import { getExtension } from "../../getExtension";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertEnum } from "../../schema/convertEnum";
@@ -20,17 +21,18 @@ import { convertSchema } from "../../schema/convertSchemas";
 import { constructUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getSchemas } from "../../utils/getSchemas";
+import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ServerContext } from "../sharedTypes";
+import { ChannelId, ServerContext } from "../sharedTypes";
 import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
-const LOCATION_PREFIX = "$message.";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
+const LOCATION_PREFIX = "$message.";
 
 export function parseAsyncAPIV3({
     context,
@@ -46,7 +48,9 @@ export function parseAsyncAPIV3({
     document: AsyncAPIV3.DocumentV3;
 }): AsyncAPIIntermediateRepresentation {
     const schemas: Record<SchemaId, SchemaWithExample> = {};
-    const messageSchemas: Record<string, Record<SchemaId, SchemaWithExample>> = {};
+    const messageSchemas: Record<ChannelId, Record<SchemaId, SchemaWithExample>> = {};
+    const seenMessageIds: Array<Record<ChannelId, SchemaId>> = [];
+    const duplicatedMessageIds: Array<SchemaId> = [];
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
@@ -57,7 +61,23 @@ export function parseAsyncAPIV3({
         if (channel.messages != null) {
             messageSchemas[channelId] = {};
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                const schemaId = `${channelId}_${messageId}`;
+                let schemaId: string;
+                if (seenMessageIds.some((seenMessageRecord) => seenMessageRecord.schemaId === messageId)) {
+                    schemaId = `${channelId}_${messageId}`;
+                    for (const seenMessageRecord of seenMessageIds) {
+                        const { channelId: cid, schemaId: sid } = seenMessageRecord;
+                        if (sid === messageId && cid != null) {
+                            if (messageSchemas[cid] != null && messageSchemas[cid][sid] != null) {
+                                messageSchemas[cid][`${cid}_${messageId}`] = messageSchemas[cid][sid];
+                            }
+                            seenMessageIds.push({ channelId: cid, schemaId: `${cid}_${messageId}` });
+                        }
+                    }
+                    duplicatedMessageIds.push(messageId);
+                } else {
+                    schemaId = messageId;
+                }
+                seenMessageIds.push({ channelId, schemaId });
                 if (message.payload != null) {
                     messageSchemas[channelId][schemaId] = convertSchema(
                         message.payload,
@@ -71,6 +91,12 @@ export function parseAsyncAPIV3({
             }
         }
     }
+
+    const flattenedMessageSchemas: Record<string, SchemaWithExample> = Object.values(messageSchemas).reduce(
+        (acc, schemas) => ({ ...acc, ...schemas }),
+        {}
+    );
+    const exampleFactory = new ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
@@ -121,9 +147,8 @@ export function parseAsyncAPIV3({
                 breadcrumbs,
                 context,
                 source,
-                options: context.options,
-                asyncApiOptions,
-                messageSchemas: messageSchemas[path]
+                messageSchemas: messageSchemas[path],
+                duplicatedMessageIds
             });
         }
         if (events.publish.length > 0 && messageSchemas[path] != null) {
@@ -134,9 +159,8 @@ export function parseAsyncAPIV3({
                 breadcrumbs,
                 context,
                 source,
-                options: context.options,
-                asyncApiOptions,
-                messageSchemas: messageSchemas[path]
+                messageSchemas: messageSchemas[path],
+                duplicatedMessageIds
             });
         }
     }
@@ -209,6 +233,19 @@ export function parseAsyncAPIV3({
             (channelSchemas[channelPath] != null &&
                 (channelSchemas[channelPath].publish != null || channelSchemas[channelPath].subscribe != null))
         ) {
+            const examples: WebsocketSessionExample[] = [];
+            const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                handshake: {
+                    headers,
+                    queryParameters
+                },
+                publish: channelSchemas[channelPath]?.publish,
+                subscribe: channelSchemas[channelPath]?.subscribe
+            });
+            if (autogenExample != null) {
+                examples.push(autogenExample);
+            }
+
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -244,7 +281,7 @@ export function parseAsyncAPIV3({
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
                 description: undefined,
-                examples: [],
+                examples,
                 source
             };
         }
@@ -338,9 +375,8 @@ function convertMessagesToSchema({
     context,
     breadcrumbs,
     source,
-    options,
-    asyncApiOptions,
-    messageSchemas
+    messageSchemas,
+    duplicatedMessageIds
 }: {
     breadcrumbs: string[];
     generatedName: string;
@@ -348,15 +384,19 @@ function convertMessagesToSchema({
     messages: OpenAPIV3.ReferenceObject[];
     context: AsyncAPIV3ParserContext;
     source: Source;
-    options: ParseOpenAPIOptions;
-    asyncApiOptions: ParseAsyncAPIOptions;
     messageSchemas: Record<SchemaId, SchemaWithExample>;
+    duplicatedMessageIds: Array<SchemaId>;
 }): SchemaWithExample | undefined {
     if (messages.length > 0) {
         const subtypes: SchemaWithExample[] = [];
         for (const message of messages) {
             const resolvedMessage = context.resolveMessageReference(message);
-            const schemaId = `${channelPath}_${resolvedMessage.name}`;
+            let schemaId: string;
+            if (duplicatedMessageIds.some((duplicatedMessageId) => duplicatedMessageId === resolvedMessage.name)) {
+                schemaId = `${channelPath}_${resolvedMessage.name}`;
+            } else {
+                schemaId = resolvedMessage.name as string;
+            }
             const schema = messageSchemas[schemaId];
             if (schema != null) {
                 subtypes.push(schema);

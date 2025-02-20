@@ -1852,8 +1852,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -1918,8 +1918,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -1964,8 +1964,8 @@ importers:
   generators/typescript/express/express-error-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -2013,8 +2013,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2059,8 +2059,8 @@ importers:
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2099,8 +2099,8 @@ importers:
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2145,8 +2145,8 @@ importers:
   generators/typescript/express/express-register-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2197,8 +2197,8 @@ importers:
   generators/typescript/express/express-service-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2252,8 +2252,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2377,8 +2377,8 @@ importers:
   generators/typescript/model/type-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2426,8 +2426,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2472,8 +2472,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2515,8 +2515,8 @@ importers:
   generators/typescript/model/type-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2567,8 +2567,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2610,8 +2610,8 @@ importers:
   generators/typescript/model/union-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2750,8 +2750,8 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -2807,8 +2807,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2856,8 +2856,8 @@ importers:
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2905,8 +2905,8 @@ importers:
   generators/typescript/sdk/environments-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2969,8 +2969,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-fern/snippet-sdk':
         specifier: ^0.0.5526
         version: 0.0.5526
@@ -3124,8 +3124,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3170,8 +3170,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3222,8 +3222,8 @@ importers:
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -3271,8 +3271,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3317,8 +3317,8 @@ importers:
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3415,8 +3415,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -3510,8 +3510,8 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../core-utilities/fetcher
@@ -3607,8 +3607,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -3904,8 +3904,8 @@ importers:
   generators/typescript/utils/resolvers:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 55.1.0
+        version: 55.1.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -5297,8 +5297,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
-        specifier: 0.0.61
-        version: 0.0.61(typescript@5.7.2)
+        specifier: 0.0.62
+        version: 0.0.62(typescript@5.7.2)
       '@fern-api/fdr-sdk':
         specifier: 0.130.1-6a9e22770
         version: 0.130.1-6a9e22770(typescript@5.7.2)
@@ -9191,8 +9191,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.61':
-    resolution: {integrity: sha512-7Xm7fepuOjHEHaVXRVIhJ7djBpn59ZU1PksrqxSbpThe/6I7WM3apZa97uiJk+JN3gUjUWwgw+17dX9jjnH58Q==}
+  '@fern-api/docs-parsers@0.0.62':
+    resolution: {integrity: sha512-IqdijHmKuqHj6giqrMSK0jrGeg+XTUQkPYIyqOod7O7+UviPx3Suuhe21vHQaKOFn+alMyxu99Yw/y4uaE5r4A==}
 
   '@fern-api/dynamic-ir-sdk@55.0.0':
     resolution: {integrity: sha512-VQDqR99oQRHT/FiZJbBJ1edtvLg6nGwm3Ft/AkL0Kg5mZ3pHRvmIjiSqwj0ItSybisPHTFoZwvnkb4g0cmBn3A==}
@@ -9259,6 +9259,9 @@ packages:
 
   '@fern-fern/ir-sdk@55.0.0':
     resolution: {integrity: sha512-u7nzMMZexVJV+tyz8/Sag6gEQwrJYKgqUkdTBjLVRX1ZQPyPuVN3XvwShvXklNo05Cv8s6wXhWc61VOmNYltmA==}
+
+  '@fern-fern/ir-sdk@55.1.0':
+    resolution: {integrity: sha512-q9SVTHL4nAHkjBjI0boZKdjIy7x1bh+wBgjLj0q6aGuUdzjJiJZ3oNkYuGf3gLW0tb8R0CqWkHdPrL/VSwKrRQ==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -17017,7 +17020,7 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.61(typescript@5.7.2)':
+  '@fern-api/docs-parsers@0.0.62(typescript@5.7.2)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
@@ -17181,6 +17184,8 @@ snapshots:
   '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@55.0.0': {}
+
+  '@fern-fern/ir-sdk@55.1.0': {}
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 

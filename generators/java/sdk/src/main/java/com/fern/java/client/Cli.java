@@ -102,7 +102,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             JavaSdkDownloadFilesCustomConfig customConfig) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList));
+                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
+                customConfig.packageLayout());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
@@ -130,7 +131,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(packagePrefixTokens);
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -167,7 +169,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(packagePrefixTokens);
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(

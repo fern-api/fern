@@ -190,50 +190,19 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             requestBodyCodeBlock.add(
                     ".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName());
         }
-        Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, true);
+        Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
+        requestBodyCodeBlock.add(
+                ".headers($T.of($L.$L($L)))",
+                Headers.class,
+                clientOptionsMember.name,
+                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType && !isFileUpload) {
-            if (maybeAcceptsHeader.isPresent()) {
-
-                requestBodyCodeBlock
-                        .add(
-                                ".headers($T.of($L.$L($L)))\n",
-                                Headers.class,
-                                clientOptionsMember.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
-                        .add(".addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType)
-                        .add(maybeAcceptsHeader.get());
-            } else {
-
-                requestBodyCodeBlock
-                        .add(
-                                ".headers($T.of($L.$L($L)))\n",
-                                Headers.class,
-                                clientOptionsMember.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
-                        .add(".addHeader($S, $S);\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
-            }
-        } else {
-            if (maybeAcceptsHeader.isPresent()) {
-                requestBodyCodeBlock
-                        .add(
-                                ".headers($T.of($L.$L($L)))\n",
-                                Headers.class,
-                                clientOptionsMember.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
-                        .add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType)
-                        .add(maybeAcceptsHeader.get());
-            } else {
-                requestBodyCodeBlock.add(
-                        ".headers($T.of($L.$L($L)));\n",
-                        Headers.class,
-                        clientOptionsMember.name,
-                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                        AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
-            }
+            requestBodyCodeBlock.add("\n.addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
+        maybeAcceptsHeader.ifPresent(
+                acceptsHeader -> requestBodyCodeBlock.add("\n").add(acceptsHeader));
+        requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
             if (typeNameIsOptional(header.poetTypeName())) {

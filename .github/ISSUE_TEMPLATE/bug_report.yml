@@ -67,3 +67,14 @@ body:
       placeholder: "Copy and paste logs, specs, links, or drag & drop screenshots here..."
     validations:
       required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: "Are you interested in contributing a fix?"
+      description: "If this is a confirmed bug, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true

@@ -7,6 +7,7 @@ import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.Environment;
 import com.seed.oauthClientCredentialsDefault.core.OAuthTokenSupplier;
 import com.seed.oauthClientCredentialsDefault.resources.auth.AuthClient;
+import okhttp3.OkHttpClient;
 
 public final class SeedOauthClientCredentialsDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -43,6 +44,14 @@ public final class SeedOauthClientCredentialsDefaultClientBuilder {
      */
     public SeedOauthClientCredentialsDefaultClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedOauthClientCredentialsDefaultClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

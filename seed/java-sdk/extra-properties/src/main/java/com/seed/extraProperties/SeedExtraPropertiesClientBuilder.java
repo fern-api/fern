@@ -5,6 +5,7 @@ package com.seed.extraProperties;
 
 import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedExtraPropertiesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedExtraPropertiesClientBuilder {
      */
     public SeedExtraPropertiesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedExtraPropertiesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 
