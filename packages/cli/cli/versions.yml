@@ -9,7 +9,7 @@
         Log warnings when old generators.yml syntax is used during parsing.
       type: feat
   irVersion: 55
-  version: 0.54.00
+  version: 0.54.0-rc0
 
 - changelogEntry:
     - summary: |
