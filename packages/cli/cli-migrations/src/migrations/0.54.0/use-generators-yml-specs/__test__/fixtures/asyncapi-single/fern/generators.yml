@@ -7,9 +7,4 @@ api:
   settings:
     message-naming: v2
 
-api-settings:
-  use-title: true
-  inline-path-parameters: true
-  message-naming: v1
-
 groups: {}

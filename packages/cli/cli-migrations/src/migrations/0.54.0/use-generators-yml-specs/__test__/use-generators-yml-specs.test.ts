@@ -9,7 +9,9 @@ import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-const FIXTURES = ["root-settings", "openapi-single", "asyncapi-single", "api-array"].map(RelativeFilePath.of);
+const FIXTURES = ["root-settings", "openapi-single", "asyncapi-single", "api-array", "api-namespaces"].map(
+    RelativeFilePath.of
+);
 
 describe("use-generators-yml-specs", () => {
     for (const fixture of FIXTURES) {

@@ -5,6 +5,9 @@
     - summary: |
         Migrate old spec configuration in generators.yml to the `api.specs[]` format.
       type: feat
+    - summary: |
+        Log warnings when old generators.yml syntax is used during parsing.
+      type: feat
   irVersion: 55
   version: 0.54.00
 

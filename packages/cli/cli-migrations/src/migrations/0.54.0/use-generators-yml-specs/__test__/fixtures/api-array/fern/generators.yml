@@ -20,9 +20,4 @@ api:
       target: "./proto/target"
       local-generation: true
 
-api-settings:
-  use-title: true
-  inline-path-parameters: true
-  message-naming: v1
-
 groups: {}

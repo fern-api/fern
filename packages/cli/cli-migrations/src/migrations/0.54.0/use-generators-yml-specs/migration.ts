@@ -93,129 +93,52 @@ async function addApiConfigurationToSingleWorkspace({
 
         if (Array.isArray(generatorsYmlContents.api)) {
             const api = generatorsYmlContents.api;
-            for (let oldSpec of api) {
-                if (typeof oldSpec !== "string" && typeof oldSpec !== "object") {
-                    context.logger.warn("API spec is not a string or object. Skipping...");
-                    continue;
-                }
-                if (typeof oldSpec === "string") {
-                    oldSpec = {
-                        path: oldSpec
-                    };
-                }
-
-                if (typeof oldSpec !== "object") {
-                    context.logger.warn("API spec is not an object. Skipping...");
-                    continue;
-                }
-
-                if ("proto" in oldSpec) {
-                    if (typeof oldSpec.proto !== "object") {
-                        context.logger.warn("API spec proto is not an object. Skipping...");
-                        continue;
-                    }
-                    specs.push({
-                        proto: oldSpec.proto.root,
-                        overrides: oldSpec.proto.overrides,
-                        target: oldSpec.proto.target,
-                        "local-generation": oldSpec.proto["local-generation"]
-                    });
-                    continue;
-                }
-
-                if (!("path" in oldSpec)) {
-                    context.logger.warn("API spec does not have a path. Skipping...");
-                    continue;
-                }
-                if (typeof oldSpec.path !== "string") {
-                    context.logger.warn("API spec path is not a string. Skipping...");
-                    continue;
-                }
-
-                const deprecatedApiSettings = getDeprecatedApiSettings(oldSpec);
-
-                const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(oldSpec.path));
-                const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
-                if (specFile == null) {
-                    context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
-                    continue;
-                }
-                const specYaml = yaml.load(specFile.contents);
-                if (specYaml == null) {
-                    context.logger.warn(`API spec file ${oldSpec.path} is null or undefined. Skipping...`);
-                    continue;
-                }
-                if (typeof specYaml !== "object") {
-                    context.logger.warn(`API spec file ${oldSpec.path} is not a valid YAML object. Skipping...`);
-                    continue;
-                }
-                if ("asyncapi" in specYaml) {
-                    specs.push({
-                        asyncapi: oldSpec.path,
-                        overrides: oldSpec.overrides,
-                        namespace: oldSpec.namespace,
-                        origin: oldSpec.origin,
-                        settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
-                    });
-                } else if ("openapi" in specYaml) {
-                    specs.push({
-                        openapi: oldSpec.path,
-                        overrides: oldSpec.overrides,
-                        namespace: oldSpec.namespace,
-                        origin: oldSpec.origin,
-                        settings: convertDeprecatedApiSettingsToOpenApiSettings(deprecatedApiSettings)
-                    });
-                } else {
-                    context.logger.warn(
-                        `API spec file ${oldSpec.path} is not an OpenAPI or AsyncAPI spec. Skipping...`
-                    );
-                    continue;
-                }
+            for (const oldSpec of api) {
+                const spec = await parseApiSpec({
+                    oldSpec,
+                    absolutePathToFernDirectory,
+                    files,
+                    context
+                });
+                if (spec) {specs.push(spec);}
             }
         } else if (typeof generatorsYmlContents.api == "object") {
-            if (!("path" in generatorsYmlContents.api)) {
-                context.failAndThrow("API spec does not have a path.");
-                return;
-            }
-            if (typeof generatorsYmlContents.api.path !== "string") {
-                context.failAndThrow("API spec path is not a string.");
-                return;
-            }
-            const deprecatedApiSettings = getDeprecatedApiSettings(generatorsYmlContents.api);
-            const api = generatorsYmlContents.api as generatorsYml.ApiDefinitionWithOverridesSchema;
-
-            const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(api.path));
-            const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
-            if (specFile == null) {
-                context.failAndThrow(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
-                return;
-            }
-            const specYaml = yaml.load(specFile.contents);
-            if (specYaml == null) {
-                context.failAndThrow(`API spec file ${api.path} is null or undefined. Skipping...`);
-                return;
-            }
-            if (typeof specYaml !== "object") {
-                context.failAndThrow(`API spec file ${api.path} is not a valid YAML object. Skipping...`);
-                return;
-            }
-            if ("asyncapi" in specYaml) {
-                specs.push({
-                    asyncapi: api.path,
-                    overrides: api.overrides,
-                    origin: api.origin,
-                    settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
-                });
-            } else if ("openapi" in specYaml) {
-                specs.push({
-                    openapi: api.path,
-                    overrides: api.overrides,
-                    origin: api.origin,
-                    settings: convertDeprecatedApiSettingsToOpenApiSettings(deprecatedApiSettings)
-                });
+            if ("namespaces" in generatorsYmlContents.api) {
+                const namespaces = generatorsYmlContents.api.namespaces as Record<string, unknown>;
+                for (const [namespace, namespaceConfig] of Object.entries(namespaces)) {
+                    if (Array.isArray(namespaceConfig)) {
+                        for (const oldSpec of namespaceConfig) {
+                            const spec = await parseApiSpec({
+                                oldSpec,
+                                absolutePathToFernDirectory,
+                                files,
+                                context,
+                                namespace
+                            });
+                            if (spec) {specs.push(spec);}
+                        }
+                    } else if (typeof namespaceConfig === "string" || typeof namespaceConfig === "object") {
+                        const spec = await parseApiSpec({
+                            oldSpec: namespaceConfig,
+                            absolutePathToFernDirectory,
+                            files,
+                            context,
+                            namespace
+                        });
+                        if (spec) {specs.push(spec);}
+                    } else {
+                        context.logger.warn(`Namespace ${namespace} is not a valid type. Skipping...`);
+                        continue;
+                    }
+                }
             } else {
-                context.logger.warn(`API spec file ${api.path} is not an OpenAPI or AsyncAPI spec. Skipping...`);
-                return undefined;
+                const spec = await parseApiSpec({
+                    oldSpec: generatorsYmlContents.api,
+                    absolutePathToFernDirectory,
+                    files,
+                    context
+                });
+                if (spec) {specs.push(spec);}
             }
         } else {
             context.failAndThrow("API spec is not a valid YAML object or array");
@@ -290,6 +213,96 @@ async function addApiConfigurationToSingleWorkspace({
     }
     await writeFile(generatorsYmlFile.absolutePath, documentToWrite);
     context.logger.info(chalk.green(`Updated ${generatorsYmlFile.absolutePath}`));
+}
+
+async function parseApiSpec({
+    oldSpec,
+    absolutePathToFernDirectory,
+    files,
+    context,
+    namespace
+}: {
+    oldSpec: any;
+    absolutePathToFernDirectory: AbsoluteFilePath;
+    files: File[];
+    context: TaskContext;
+    namespace?: string;
+}): Promise<generatorsYml.SpecSchema | null> {
+    if (typeof oldSpec !== "string" && typeof oldSpec !== "object") {
+        context.logger.warn("API spec is not a string or object. Skipping...");
+        return null;
+    }
+    if (typeof oldSpec === "string") {
+        oldSpec = {
+            path: oldSpec
+        };
+    }
+
+    if (typeof oldSpec !== "object") {
+        context.logger.warn("API spec is not an object. Skipping...");
+        return null;
+    }
+
+    if ("proto" in oldSpec) {
+        if (typeof oldSpec.proto !== "object") {
+            context.logger.warn("API spec proto is not an object. Skipping...");
+            return null;
+        }
+        return {
+            proto: oldSpec.proto.root,
+            overrides: oldSpec.proto.overrides,
+            target: oldSpec.proto.target,
+            "local-generation": oldSpec.proto["local-generation"],
+            namespace
+        };
+    }
+
+    if (!("path" in oldSpec)) {
+        context.logger.warn("API spec does not have a path. Skipping...");
+        return null;
+    }
+    if (typeof oldSpec.path !== "string") {
+        context.logger.warn("API spec path is not a string. Skipping...");
+        return null;
+    }
+
+    const deprecatedApiSettings = getDeprecatedApiSettings(oldSpec);
+
+    const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(oldSpec.path));
+    const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
+    if (specFile == null) {
+        context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
+        return null;
+    }
+    const specYaml = yaml.load(specFile.contents);
+    if (specYaml == null) {
+        context.logger.warn(`API spec file ${oldSpec.path} is null or undefined. Skipping...`);
+        return null;
+    }
+    if (typeof specYaml !== "object") {
+        context.logger.warn(`API spec file ${oldSpec.path} is not a valid YAML object. Skipping...`);
+        return null;
+    }
+    if ("asyncapi" in specYaml) {
+        return {
+            asyncapi: oldSpec.path,
+            overrides: oldSpec.overrides,
+            namespace,
+            origin: oldSpec.origin,
+            settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
+        };
+    } else if ("openapi" in specYaml) {
+        return {
+            openapi: oldSpec.path,
+            overrides: oldSpec.overrides,
+            namespace,
+            origin: oldSpec.origin,
+            settings: convertDeprecatedApiSettingsToOpenApiSettings(deprecatedApiSettings)
+        };
+    } else {
+        context.logger.warn(`API spec file ${oldSpec.path} is not an OpenAPI or AsyncAPI spec. Skipping...`);
+        return null;
+    }
 }
 
 function getDeprecatedApiSettings(api: object): generatorsYml.ApiDefinitionSettingsSchema {
