@@ -1172,8 +1172,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitBytes(BytesResponse bytesResponse) {
-            // TODO(ajgateno): Handle bytes
-            return null;
+            throw new RuntimeException("Returning bytes is not supported.");
         }
 
         @Override
