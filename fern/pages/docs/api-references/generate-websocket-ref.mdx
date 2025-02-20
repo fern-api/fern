@@ -1,0 +1,39 @@
+---
+title: Generate WebSocket Reference
+description: Learn how to generate and customize WebSocket API reference documentation
+---
+
+Fern automatically generates WebSocket API reference documentation from your AsyncAPI specification or Fern Definition. The AsyncAPI Specification is a project used to describe message-driven APIs in a machine-readable format, the [v2](https://www.asyncapi.com/docs/reference/specification/v2.x) and [v3](https://www.asyncapi.com/docs/reference/specification/v3.0.0) specifications are supported.
+
+See [Deepgram's configuration](https://github.com/deepgram/deepgram-fern-config/tree/main/fern) for a complete example.
+
+<a href="https://developers.deepgram.com/reference/voice-agent-api/agent">
+  <Frame>
+    <img src="./websocket-deepgram.png" alt="WebSocket API Reference Example" />
+    <figcaption>Example of how a WebSocket API reference renders in Fern</figcaption>
+  </Frame>
+</a>
+
+## Configuration
+
+To generate WebSocket API reference documentation:
+
+1. Add your AsyncAPI specification file (e.g., `asyncapi.yml`) to your `/fern` directory
+2. Configure your `generators.yml`:
+
+<CodeBlock title='generators.yml'>
+  ```yaml
+api:
+    path: asyncapi.yml
+    origin: https://github.com/your-org/your-repo/blob/main/asyncapi.yml
+  ```
+</CodeBlock>
+
+<Params>
+  <Param name="path" required>
+    Location of your AsyncAPI specification file
+  </Param>
+  <Param name="origin" optional>
+    Remote URL where the specification file is hosted (optional)
+  </Param>
+</Params>
