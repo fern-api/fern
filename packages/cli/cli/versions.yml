@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fixes an issue with the OpenAPI v2 parser where docs configs with no navigation structure would generate incorrect slugs.
+      type: fix
+  irVersion: 55
+  version: 0.53.14
+
+- changelogEntry:
+    - summary: |
         Resolve error where `fern docs dev` failed in Windows environments.
       type: fix
   irVersion: 55
