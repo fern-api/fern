@@ -5,19 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { BaseProtobufDefinitionSchema } from "./BaseProtobufDefinitionSchema";
+import { ProtobufDefinitionSchema } from "./ProtobufDefinitionSchema";
 
 export const ProtobufSpecSchema: core.serialization.ObjectSchema<
     serializers.ProtobufSpecSchema.Raw,
     FernDefinition.ProtobufSpecSchema
-> = core.serialization
-    .object({
-        proto: core.serialization.string(),
-    })
-    .extend(BaseProtobufDefinitionSchema);
+> = core.serialization.object({
+    proto: ProtobufDefinitionSchema,
+});
 
 export declare namespace ProtobufSpecSchema {
-    export interface Raw extends BaseProtobufDefinitionSchema.Raw {
-        proto: string;
+    export interface Raw {
+        proto: ProtobufDefinitionSchema.Raw;
     }
 }

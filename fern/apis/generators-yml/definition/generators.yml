@@ -179,25 +179,20 @@ types:
         docs: Audiences that you would like to filter to
       settings: optional<APIDefinitionSettingsSchema>
 
-  BaseProtobufDefinitionSchema:
+  ProtobufDefinitionSchema:
     properties:
       target:
         type: string
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
+      root:
+        type: string
+        docs: The path to the `.proto` directory root (e.g. `proto`).
       overrides:
         type: optional<string>
         docs: Path to the overrides configuration
       local-generation:
         type: optional<boolean>
         docs: Whether to compile the `.proto` files locally. By default, we generate remotely.
-
-  ProtobufDefinitionSchema:
-    extends:
-      - BaseProtobufDefinitionSchema
-    properties:
-      root:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
 
   ProtobufAPIDefinitionSchema:
     properties:
@@ -338,9 +333,5 @@ types:
       - ProtobufSpecSchema
 
   ProtobufSpecSchema:
-    extends:
-      - BaseProtobufDefinitionSchema
     properties:
-      proto:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
+      proto: ProtobufDefinitionSchema

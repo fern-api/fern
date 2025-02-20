@@ -100,7 +100,9 @@ async function addApiConfigurationToSingleWorkspace({
                     files,
                     context
                 });
-                if (spec) {specs.push(spec);}
+                if (spec) {
+                    specs.push(spec);
+                }
             }
         } else if (typeof generatorsYmlContents.api == "object") {
             if ("namespaces" in generatorsYmlContents.api) {
@@ -115,7 +117,9 @@ async function addApiConfigurationToSingleWorkspace({
                                 context,
                                 namespace
                             });
-                            if (spec) {specs.push(spec);}
+                            if (spec) {
+                                specs.push(spec);
+                            }
                         }
                     } else if (typeof namespaceConfig === "string" || typeof namespaceConfig === "object") {
                         const spec = await parseApiSpec({
@@ -125,7 +129,9 @@ async function addApiConfigurationToSingleWorkspace({
                             context,
                             namespace
                         });
-                        if (spec) {specs.push(spec);}
+                        if (spec) {
+                            specs.push(spec);
+                        }
                     } else {
                         context.logger.warn(`Namespace ${namespace} is not a valid type. Skipping...`);
                         continue;
@@ -138,7 +144,9 @@ async function addApiConfigurationToSingleWorkspace({
                     files,
                     context
                 });
-                if (spec) {specs.push(spec);}
+                if (spec) {
+                    specs.push(spec);
+                }
             }
         } else {
             context.failAndThrow("API spec is not a valid YAML object or array");
@@ -249,11 +257,13 @@ async function parseApiSpec({
             return null;
         }
         return {
-            proto: oldSpec.proto.root,
-            overrides: oldSpec.proto.overrides,
-            target: oldSpec.proto.target,
-            "local-generation": oldSpec.proto["local-generation"],
-            namespace
+            proto: {
+                target: oldSpec.proto.target,
+                root: oldSpec.proto.root,
+                overrides: oldSpec.proto.overrides,
+                "local-generation": oldSpec.proto["local-generation"]
+                // don't add namespace because proto doesn't support it
+            }
         };
     }
 

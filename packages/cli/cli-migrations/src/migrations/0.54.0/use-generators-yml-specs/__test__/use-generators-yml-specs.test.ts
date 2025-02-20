@@ -1,5 +1,4 @@
 import { cp, readFile } from "fs/promises";
-import yaml from "js-yaml";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -13,7 +12,7 @@ const FIXTURES = ["root-settings", "openapi-single", "asyncapi-single", "api-arr
     RelativeFilePath.of
 );
 
-describe("use-generators-yml-specs", () => {
+describe("use-generators-yml-specs", async () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture, async () => {
@@ -33,7 +32,7 @@ describe("use-generators-yml-specs", () => {
                 join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("./fern/generators.yml")),
                 "utf-8"
             );
-            expect(content).toMatchSnapshot();
+            await expect(content).toMatchFileSnapshot(`./__snapshots__/${fixture}/generators.yml`);
         });
     }
 });

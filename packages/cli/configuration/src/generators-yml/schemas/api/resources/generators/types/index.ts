@@ -15,7 +15,6 @@ export * from "./ApiDefinitionSettingsSchema";
 export * from "./UnionSettingsSchema";
 export * from "./MessageNamingSettingsSchema";
 export * from "./ApiDefinitionWithOverridesSchema";
-export * from "./BaseProtobufDefinitionSchema";
 export * from "./ProtobufDefinitionSchema";
 export * from "./ProtobufApiDefinitionSchema";
 export * from "./ApiDefinitionList";

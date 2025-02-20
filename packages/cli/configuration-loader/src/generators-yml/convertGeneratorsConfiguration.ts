@@ -322,12 +322,12 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "protobuf",
-                    root: spec.proto,
-                    target: spec.target,
-                    localGeneration: spec["local-generation"] ?? false
+                    root: spec.proto.root,
+                    target: spec.proto.target,
+                    localGeneration: spec.proto["local-generation"] ?? false
                 },
                 origin: undefined,
-                overrides: spec.overrides,
+                overrides: spec.proto.overrides,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
             };
@@ -898,42 +898,42 @@ function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | unde
 function warnForDeprecatedConfiguration(context: TaskContext, config: generatorsYml.GeneratorsConfigurationSchema) {
     const warnings = [];
     if (config["api-settings"] != null) {
-        warnings.push("\"api-settings\" is deprecated. Please use \"api.specs[].settings\" instead.");
+        warnings.push('"api-settings" is deprecated. Please use "api.specs[].settings" instead.');
     }
     if (config["async-api"] != null) {
-        warnings.push("\"async-api\" is deprecated. Please use \"api.specs[].asyncapi\" instead.");
+        warnings.push('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.');
     }
     if (config.openapi != null) {
-        warnings.push("\"openapi\" is deprecated. Please use \"api.specs[].openapi\" instead.");
+        warnings.push('"openapi" is deprecated. Please use "api.specs[].openapi" instead.');
     }
     if (config["openapi-overrides"] != null) {
-        warnings.push("\"openapi-overrides\" is deprecated. Please use \"api.specs[].overrides\" instead.");
+        warnings.push('"openapi-overrides" is deprecated. Please use "api.specs[].overrides" instead.');
     }
     if (config["spec-origin"]) {
-        warnings.push("\"spec-origin\" is deprecated. Please use \"api.specs[].origin\" instead.");
+        warnings.push('"spec-origin" is deprecated. Please use "api.specs[].origin" instead.');
     }
     if (config.api != null) {
         if (typeof config.api === "string") {
             warnings.push(
-                "Using an OpenAPI or AsyncAPI path string for \"api\" is deprecated. Please use \"api.specs[].openapi\" or \"api.specs[].asyncapi\" instead."
+                'Using an OpenAPI or AsyncAPI path string for "api" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
             );
         }
         if (Array.isArray(config.api)) {
             warnings.push(
-                "Using an array for \"api\" is deprecated. Please use \"api.specs[].openapi\", \"api.specs[].asyncapi\", or \"api.specs[].proto\" instead."
+                'Using an array for "api" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" instead.'
             );
         } else if (typeof config.api === "object") {
             if ("path" in config.api) {
                 warnings.push(
-                    "Using \"api.path\" is deprecated. Please use \"api.specs[].openapi\" or \"api.specs[].asyncapi\" instead."
+                    'Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
                 );
             }
             if ("proto" in config.api) {
-                warnings.push("Using \"api.proto\" is deprecated. Please use \"api.specs[].proto\" instead.");
+                warnings.push('Using "api.proto" is deprecated. Please use "api.specs[].proto" instead.');
             }
             if ("namespaces" in config.api) {
                 warnings.push(
-                    "Using \"api.namespaces\" is deprecated. Please use \"api.specs[].openapi\", \"api.specs[].asyncapi\", or \"api.specs[].proto\" with the \"namespace\" property instead."
+                    'Using "api.namespaces" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" with the "namespace" property instead.'
                 );
             }
         }
