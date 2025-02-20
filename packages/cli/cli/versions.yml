@@ -2,6 +2,9 @@
     - summary: |
         Add the `x-fern-optional` extension to the AsyncAPI v3 parser to allow for optional channel parameters.
       type: feat
+    - summary: |
+        Improve the violations summary displayed by `fern check` and include elapsed time when available.
+      type: chore
   irVersion: 55
   version: 0.54.0-rc2
 
@@ -26,9 +29,6 @@
     - summary: |
         Log warnings when old generators.yml syntax is used during parsing.
       type: feat
-    - summary: |
-        Improve the violations summary displayed by `fern check` and include elapsed time when available.
-      type: chore
   irVersion: 55
   version: 0.54.0-rc0
 
