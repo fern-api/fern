@@ -34,7 +34,7 @@ Fern also implements a custom component for embedding downloadable assets:
   <Tab title="Example using `<embed>`">
     <embed src="./growing-fern.mp4" type="video/mp4" style={{ aspectRatio: '16 / 9', width: '100%' }} />
 
-    ```mdx
+    ```jsx
     <embed src="./growing-fern.mp4" type="video/mp4" style={{ aspectRatio: '16 / 9', width: '100%' }} />
     ```
 
@@ -48,7 +48,7 @@ Fern also implements a custom component for embedding downloadable assets:
       <source src="./growing-fern.mp4" type="video/mp4" />
     </video>
 
-    ```mdx
+    ```jsx
     <video style={{ aspectRatio: '16 / 9', width: '100%' }} controls>
       <source src="./growing-fern.mp4" type="video/mp4" />
     </video>
@@ -99,11 +99,14 @@ Enable users to download assets from within your documentation, instead of linki
   The filename to use for the downloaded asset. If not provided, the filename will be the same as the asset's name.
 </ParamField>
 
+<br />
+<br />
+
 <Download src="./all-about-ferns.pdf">
   <Button intent="primary">Download PDF</Button>
 </Download>
 
-```mdx
+```jsx
 <Download src="./all-about-ferns.pdf">
   <Button intent="primary">Download PDF</Button>
 </Download>
