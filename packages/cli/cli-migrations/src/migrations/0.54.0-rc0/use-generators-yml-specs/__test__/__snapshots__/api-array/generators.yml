@@ -17,7 +17,7 @@ api:
       settings:
         message-naming: v2
     - proto:
-        target: ./proto/target
         root: ./proto
         overrides: ./proto/overrides.yml
+        target: ./proto/target
         local-generation: true

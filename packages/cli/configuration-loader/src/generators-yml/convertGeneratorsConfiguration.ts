@@ -941,6 +941,6 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
 
     if (warnings.length > 0) {
         context.logger.warn("Warnings for generators.yml:");
-        context.logger.warn(warnings.join("\n\t"));
+        context.logger.warn("\t" + warnings.join("\n\t"));
     }
 }

@@ -12,9 +12,9 @@ api:
       settings:
         title-as-schema-name: false
     - proto:
-        target: ./proto/target
         root: ./proto
         overrides: ./proto/overrides.yml
+        target: ./proto/target
         local-generation: true
     - asyncapi: ./asyncapi.yml
       namespace: namespace2
