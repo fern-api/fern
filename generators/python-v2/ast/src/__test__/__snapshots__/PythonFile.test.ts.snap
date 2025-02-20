@@ -164,13 +164,3 @@ from uuid import UUID
 my_id = UUID("1234")
 "
 `;
-
-exports[`PythonFile > Write top of file comments 2`] = `
-"# !/usr/bin/env python
-# flake8: noqa: F401, F403
-
-from uuid import UUID
-
-my_id = UUID("1234")
-"
-`;

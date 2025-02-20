@@ -67,15 +67,6 @@ exports[`TypeInstantiation > set > should support trailing comma 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > set > should support trailing comma 2`] = `
-"{
-    1,
-    "two",
-    True,
-}
-"
-`;
-
 exports[`TypeInstantiation > str > should render a basic string 1`] = `
 ""hello"
 "

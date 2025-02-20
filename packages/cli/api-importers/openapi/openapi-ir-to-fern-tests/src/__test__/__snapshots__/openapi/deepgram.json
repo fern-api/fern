@@ -1841,6 +1841,25 @@ errors:
       "contents": {
         "channel": {
           "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "agent": {},
+                    "type": "SettingsConfiguration",
+                  },
+                  "type": "publish",
+                },
+                {
+                  "body": {
+                    "type": "InjectionRefused",
+                  },
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
           "headers": {
             "Sec-Websocket-Protocol": {
               "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
@@ -1862,7 +1881,7 @@ errors:
           "url": "public",
         },
         "types": {
-          "AgentAgentAudioDone": {
+          "AgentAudioDone": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1875,7 +1894,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentAgentErrorResponse": {
+          "AgentErrorResponse": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1892,7 +1911,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentAgentKeepAlive": {
+          "AgentKeepAlive": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1905,7 +1924,24 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentAgentStartedSpeaking": {
+          "AgentPublishEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "SettingsConfiguration",
+              "UpdateInstructions",
+              "UpdateSpeak",
+              "InjectAgentMessage",
+              "FunctionCallResponse",
+              "AgentKeepAlive",
+            ],
+          },
+          "AgentStartedSpeaking": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1930,7 +1966,29 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentAgentThinking": {
+          "AgentSubscribeEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "InjectionRefused",
+              "WelcomeMessage",
+              "SettingsApplied",
+              "ConversationText",
+              "UserStartedSpeaking",
+              "AgentThinking",
+              "FunctionCallRequest",
+              "FunctionCalling",
+              "AgentStartedSpeaking",
+              "AgentAudioDone",
+              "AgentErrorResponse",
+            ],
+          },
+          "AgentThinking": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1947,7 +2005,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentConversationText": {
+          "ConversationText": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1957,7 +2015,7 @@ errors:
               },
               "role": {
                 "docs": "Identifies who spoke the statement",
-                "type": "AgentConversationTextRole",
+                "type": "ConversationTextRole",
               },
               "type": {
                 "docs": "Message type identifier for conversation text",
@@ -1968,7 +2026,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentConversationTextRole": {
+          "ConversationTextRole": {
             "docs": "Identifies who spoke the statement",
             "enum": [
               "user",
@@ -1979,7 +2037,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentFunctionCallRequest": {
+          "FunctionCallRequest": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2004,7 +2062,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentFunctionCallResponse": {
+          "FunctionCallResponse": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2025,7 +2083,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentFunctionCalling": {
+          "FunctionCalling": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2038,7 +2096,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentInjectAgentMessage": {
+          "InjectAgentMessage": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2055,7 +2113,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentInjectionRefused": {
+          "InjectionRefused": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2068,24 +2126,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentPublishEvent": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-            "union": [
-              "AgentSettingsConfiguration",
-              "AgentUpdateInstructions",
-              "AgentUpdateSpeak",
-              "AgentInjectAgentMessage",
-              "AgentFunctionCallResponse",
-              "AgentAgentKeepAlive",
-            ],
-          },
-          "AgentSettingsApplied": {
+          "SettingsApplied": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2098,35 +2139,35 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfiguration": {
+          "SettingsConfiguration": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "agent": "AgentSettingsConfigurationAgent",
+              "agent": "SettingsConfigurationAgent",
               "audio": {
                 "docs": "Optional audio configuration settings",
-                "type": "optional<AgentSettingsConfigurationAudio>",
+                "type": "optional<SettingsConfigurationAudio>",
               },
-              "context": "optional<AgentSettingsConfigurationContext>",
+              "context": "optional<SettingsConfigurationContext>",
               "type": "literal<"SettingsConfiguration">",
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgent": {
+          "SettingsConfigurationAgent": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "listen": "optional<AgentSettingsConfigurationAgentListen>",
-              "speak": "optional<AgentSettingsConfigurationAgentSpeak>",
-              "think": "optional<AgentSettingsConfigurationAgentThink>",
+              "listen": "optional<SettingsConfigurationAgentListen>",
+              "speak": "optional<SettingsConfigurationAgentSpeak>",
+              "think": "optional<SettingsConfigurationAgentThink>",
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentListen": {
+          "SettingsConfigurationAgentListen": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2140,7 +2181,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentSpeak": {
+          "SettingsConfigurationAgentSpeak": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2151,7 +2192,7 @@ errors:
               },
               "provider": {
                 "docs": "Alternative TTS provider",
-                "type": "optional<AgentSettingsConfigurationAgentSpeakProvider>",
+                "type": "optional<SettingsConfigurationAgentSpeakProvider>",
               },
               "voice_id": {
                 "docs": "Unique voice identifier for the selected provider",
@@ -2162,7 +2203,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentSpeakProvider": {
+          "SettingsConfigurationAgentSpeakProvider": {
             "docs": "Alternative TTS provider",
             "enum": [
               "eleven_labs",
@@ -2173,11 +2214,11 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThink": {
+          "SettingsConfigurationAgentThink": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "functions": "optional<list<AgentSettingsConfigurationAgentThinkFunctionsItem>>",
+              "functions": "optional<list<SettingsConfigurationAgentThinkFunctionsItem>>",
               "instructions": {
                 "docs": "LLM System prompt",
                 "type": "optional<string>",
@@ -2186,13 +2227,13 @@ errors:
                 "docs": "LLM model to use",
                 "type": "optional<string>",
               },
-              "provider": "optional<AgentSettingsConfigurationAgentThinkProvider>",
+              "provider": "optional<SettingsConfigurationAgentThinkProvider>",
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThinkFunctionsItem": {
+          "SettingsConfigurationAgentThinkFunctionsItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2200,7 +2241,7 @@ errors:
                 "docs": "Description of function purpose and usage",
                 "type": "optional<string>",
               },
-              "headers": "optional<list<AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem>>",
+              "headers": "optional<list<SettingsConfigurationAgentThinkFunctionsItemHeadersItem>>",
               "method": {
                 "default": "post",
                 "docs": "HTTP method for function call",
@@ -2210,7 +2251,7 @@ errors:
                 "docs": "Function name",
                 "type": "optional<string>",
               },
-              "parameters": "optional<AgentSettingsConfigurationAgentThinkFunctionsItemParameters>",
+              "parameters": "optional<SettingsConfigurationAgentThinkFunctionsItemParameters>",
               "url": {
                 "docs": "Function endpoint URL",
                 "type": "optional<string>",
@@ -2220,7 +2261,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem": {
+          "SettingsConfigurationAgentThinkFunctionsItemHeadersItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2231,11 +2272,11 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThinkFunctionsItemParameters": {
+          "SettingsConfigurationAgentThinkFunctionsItemParameters": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "properties": "optional<map<string, AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>",
+              "properties": "optional<map<string, SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>",
               "required": "optional<list<string>>",
               "type": "optional<string>",
             },
@@ -2243,7 +2284,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue": {
+          "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2254,7 +2295,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAgentThinkProvider": {
+          "SettingsConfigurationAgentThinkProvider": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2267,24 +2308,24 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAudio": {
+          "SettingsConfigurationAudio": {
             "docs": "Optional audio configuration settings",
             "inline": true,
             "properties": {
               "input": {
                 "docs": "Optional audio input configuration settings",
-                "type": "optional<AgentSettingsConfigurationAudioInput>",
+                "type": "optional<SettingsConfigurationAudioInput>",
               },
               "output": {
                 "docs": "Audio output configuration settings",
-                "type": "optional<AgentSettingsConfigurationAudioOutput>",
+                "type": "optional<SettingsConfigurationAudioOutput>",
               },
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAudioInput": {
+          "SettingsConfigurationAudioInput": {
             "docs": "Optional audio input configuration settings",
             "inline": true,
             "properties": {
@@ -2303,7 +2344,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationAudioOutput": {
+          "SettingsConfigurationAudioOutput": {
             "docs": "Audio output configuration settings",
             "inline": true,
             "properties": {
@@ -2320,7 +2361,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSettingsConfigurationContext": {
+          "SettingsConfigurationContext": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2338,29 +2379,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentSubscribeEvent": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-            "union": [
-              "AgentInjectionRefused",
-              "AgentWelcomeMessage",
-              "AgentSettingsApplied",
-              "AgentConversationText",
-              "AgentUserStartedSpeaking",
-              "AgentAgentThinking",
-              "AgentFunctionCallRequest",
-              "AgentFunctionCalling",
-              "AgentAgentStartedSpeaking",
-              "AgentAgentAudioDone",
-              "AgentAgentErrorResponse",
-            ],
-          },
-          "AgentUpdateInstructions": {
+          "UpdateInstructions": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2377,7 +2396,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentUpdateSpeak": {
+          "UpdateSpeak": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2394,7 +2413,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentUserStartedSpeaking": {
+          "UserStartedSpeaking": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2407,7 +2426,7 @@ errors:
               "openapi": "../asyncapi.yml",
             },
           },
-          "AgentWelcomeMessage": {
+          "WelcomeMessage": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -2450,8 +2469,17 @@ errors:
     publish:
       origin: client
       body: AgentPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body:
+            type: SettingsConfiguration
+            agent: {}
+        - type: subscribe
+          body:
+            type: InjectionRefused
 types:
-  AgentInjectionRefused:
+  InjectionRefused:
     properties:
       type:
         type: literal<"InjectionRefused">
@@ -2459,7 +2487,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentWelcomeMessage:
+  WelcomeMessage:
     properties:
       type:
         type: literal<"Welcome">
@@ -2472,7 +2500,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsApplied:
+  SettingsApplied:
     properties:
       type:
         type: literal<"SettingsApplied">
@@ -2480,7 +2508,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentConversationTextRole:
+  ConversationTextRole:
     enum:
       - user
       - assistant
@@ -2488,13 +2516,13 @@ types:
     inline: true
     source:
       openapi: ../asyncapi.yml
-  AgentConversationText:
+  ConversationText:
     properties:
       type:
         type: literal<"ConversationText">
         docs: Message type identifier for conversation text
       role:
-        type: AgentConversationTextRole
+        type: ConversationTextRole
         docs: Identifies who spoke the statement
       content:
         type: string
@@ -2502,7 +2530,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentUserStartedSpeaking:
+  UserStartedSpeaking:
     properties:
       type:
         type: literal<"UserStartedSpeaking">
@@ -2510,7 +2538,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentAgentThinking:
+  AgentThinking:
     properties:
       type:
         type: literal<"AgentThinking">
@@ -2521,7 +2549,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentFunctionCallRequest:
+  FunctionCallRequest:
     properties:
       type:
         type: literal<"FunctionCallRequest">
@@ -2538,7 +2566,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentFunctionCalling:
+  FunctionCalling:
     properties:
       type:
         type: literal<"FunctionCalling">
@@ -2546,7 +2574,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentAgentStartedSpeaking:
+  AgentStartedSpeaking:
     properties:
       type:
         type: literal<"AgentStartedSpeaking">
@@ -2567,7 +2595,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentAgentAudioDone:
+  AgentAudioDone:
     properties:
       type:
         type: literal<"AgentAudioDone">
@@ -2577,7 +2605,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentAgentErrorResponse:
+  AgentErrorResponse:
     properties:
       type:
         type: literal<"Error">
@@ -2591,20 +2619,20 @@ types:
   AgentSubscribeEvent:
     discriminated: false
     union:
-      - AgentInjectionRefused
-      - AgentWelcomeMessage
-      - AgentSettingsApplied
-      - AgentConversationText
-      - AgentUserStartedSpeaking
-      - AgentAgentThinking
-      - AgentFunctionCallRequest
-      - AgentFunctionCalling
-      - AgentAgentStartedSpeaking
-      - AgentAgentAudioDone
-      - AgentAgentErrorResponse
+      - InjectionRefused
+      - WelcomeMessage
+      - SettingsApplied
+      - ConversationText
+      - UserStartedSpeaking
+      - AgentThinking
+      - FunctionCallRequest
+      - FunctionCalling
+      - AgentStartedSpeaking
+      - AgentAudioDone
+      - AgentErrorResponse
     source:
       openapi: ../asyncapi.yml
-  AgentSettingsConfigurationAudioInput:
+  SettingsConfigurationAudioInput:
     docs: Optional audio input configuration settings
     properties:
       encoding:
@@ -2618,7 +2646,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAudioOutput:
+  SettingsConfigurationAudioOutput:
     docs: Audio output configuration settings
     properties:
       encoding: optional<string>
@@ -2631,19 +2659,19 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAudio:
+  SettingsConfigurationAudio:
     docs: Optional audio configuration settings
     properties:
       input:
-        type: optional<AgentSettingsConfigurationAudioInput>
+        type: optional<SettingsConfigurationAudioInput>
         docs: Optional audio input configuration settings
       output:
-        type: optional<AgentSettingsConfigurationAudioOutput>
+        type: optional<SettingsConfigurationAudioOutput>
         docs: Audio output configuration settings
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentListen:
+  SettingsConfigurationAgentListen:
     properties:
       model:
         type: optional<string>
@@ -2652,7 +2680,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThinkProvider:
+  SettingsConfigurationAgentThinkProvider:
     properties:
       type:
         type: optional<string>
@@ -2660,31 +2688,31 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem:
+  SettingsConfigurationAgentThinkFunctionsItemHeadersItem:
     properties:
       key: optional<string>
       value: optional<string>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue:
+  SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue:
     properties:
       type: optional<string>
       description: optional<string>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThinkFunctionsItemParameters:
+  SettingsConfigurationAgentThinkFunctionsItemParameters:
     properties:
       type: optional<string>
       properties: >-
         optional<map<string,
-        AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>
+        SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>
       required: optional<list<string>>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThinkFunctionsItem:
+  SettingsConfigurationAgentThinkFunctionsItem:
     properties:
       name:
         type: optional<string>
@@ -2695,30 +2723,29 @@ types:
       url:
         type: optional<string>
         docs: Function endpoint URL
-      headers: >-
-        optional<list<AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem>>
+      headers: optional<list<SettingsConfigurationAgentThinkFunctionsItemHeadersItem>>
       method:
         type: optional<string>
         docs: HTTP method for function call
         default: post
-      parameters: optional<AgentSettingsConfigurationAgentThinkFunctionsItemParameters>
+      parameters: optional<SettingsConfigurationAgentThinkFunctionsItemParameters>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentThink:
+  SettingsConfigurationAgentThink:
     properties:
-      provider: optional<AgentSettingsConfigurationAgentThinkProvider>
+      provider: optional<SettingsConfigurationAgentThinkProvider>
       model:
         type: optional<string>
         docs: LLM model to use
       instructions:
         type: optional<string>
         docs: LLM System prompt
-      functions: optional<list<AgentSettingsConfigurationAgentThinkFunctionsItem>>
+      functions: optional<list<SettingsConfigurationAgentThinkFunctionsItem>>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgentSpeakProvider:
+  SettingsConfigurationAgentSpeakProvider:
     enum:
       - eleven_labs
       - cartesia
@@ -2726,14 +2753,14 @@ types:
     inline: true
     source:
       openapi: ../asyncapi.yml
-  AgentSettingsConfigurationAgentSpeak:
+  SettingsConfigurationAgentSpeak:
     properties:
       model:
         type: optional<string>
         docs: Text-to-speech model
         default: aura-asteria-en
       provider:
-        type: optional<AgentSettingsConfigurationAgentSpeakProvider>
+        type: optional<SettingsConfigurationAgentSpeakProvider>
         docs: Alternative TTS provider
       voice_id:
         type: optional<string>
@@ -2741,15 +2768,15 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationAgent:
+  SettingsConfigurationAgent:
     properties:
-      listen: optional<AgentSettingsConfigurationAgentListen>
-      think: optional<AgentSettingsConfigurationAgentThink>
-      speak: optional<AgentSettingsConfigurationAgentSpeak>
+      listen: optional<SettingsConfigurationAgentListen>
+      think: optional<SettingsConfigurationAgentThink>
+      speak: optional<SettingsConfigurationAgentSpeak>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfigurationContext:
+  SettingsConfigurationContext:
     properties:
       messages:
         type: optional<list<map<string, unknown>>>
@@ -2761,18 +2788,18 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentSettingsConfiguration:
+  SettingsConfiguration:
     properties:
       type: literal<"SettingsConfiguration">
       audio:
-        type: optional<AgentSettingsConfigurationAudio>
+        type: optional<SettingsConfigurationAudio>
         docs: Optional audio configuration settings
-      agent: AgentSettingsConfigurationAgent
-      context: optional<AgentSettingsConfigurationContext>
+      agent: SettingsConfigurationAgent
+      context: optional<SettingsConfigurationContext>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentUpdateInstructions:
+  UpdateInstructions:
     properties:
       type:
         type: literal<"UpdateInstructions">
@@ -2783,7 +2810,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentUpdateSpeak:
+  UpdateSpeak:
     properties:
       type:
         type: literal<"UpdateSpeak">
@@ -2794,7 +2821,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentInjectAgentMessage:
+  InjectAgentMessage:
     properties:
       type:
         type: literal<"InjectAgentMessage">
@@ -2805,7 +2832,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentFunctionCallResponse:
+  FunctionCallResponse:
     properties:
       type:
         type: literal<"FunctionCallResponse">
@@ -2819,7 +2846,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  AgentAgentKeepAlive:
+  AgentKeepAlive:
     properties:
       type:
         type: literal<"KeepAlive">
@@ -2830,12 +2857,12 @@ types:
   AgentPublishEvent:
     discriminated: false
     union:
-      - AgentSettingsConfiguration
-      - AgentUpdateInstructions
-      - AgentUpdateSpeak
-      - AgentInjectAgentMessage
-      - AgentFunctionCallResponse
-      - AgentAgentKeepAlive
+      - SettingsConfiguration
+      - UpdateInstructions
+      - UpdateSpeak
+      - InjectAgentMessage
+      - FunctionCallResponse
+      - AgentKeepAlive
     source:
       openapi: ../asyncapi.yml
 ",
@@ -2845,6 +2872,20 @@ types:
       "contents": {
         "channel": {
           "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+                {
+                  "body": {},
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
           "headers": {
             "Sec-Websocket-Protocol": {
               "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
@@ -2997,21 +3038,7 @@ types:
           "url": "public",
         },
         "types": {
-          "ListenCallbackMethod": {
-            "default": "POST",
-            "docs": "HTTP method by which the callback request will be made",
-            "enum": [
-              "POST",
-              "GET",
-              "PUT",
-              "DELETE",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenControlMessageResponse": {
+          "ControlMessageResponse": {
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -3020,12 +3047,12 @@ types:
               "openapi": "../asyncapi.yml",
             },
             "union": [
-              "ListenControlMessageResponseZero",
-              "ListenControlMessageResponseOne",
-              "ListenControlMessageResponseTwo",
+              "ControlMessageResponseZero",
+              "ControlMessageResponseOne",
+              "ControlMessageResponseTwo",
             ],
           },
-          "ListenControlMessageResponseOne": {
+          "ControlMessageResponseOne": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3078,7 +3105,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenControlMessageResponseTwo": {
+          "ControlMessageResponseTwo": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3131,7 +3158,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenControlMessageResponseZero": {
+          "ControlMessageResponseZero": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3148,6 +3175,20 @@ types:
               },
               "type": "optional<literal<"Finalize">>",
             },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenCallbackMethod": {
+            "default": "POST",
+            "docs": "HTTP method by which the callback request will be made",
+            "enum": [
+              "POST",
+              "GET",
+              "PUT",
+              "DELETE",
+            ],
+            "inline": undefined,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -3592,20 +3633,32 @@ types:
               "openapi": "../asyncapi.yml",
             },
             "union": [
-              "ListenTranscriptionResponse",
-              "ListenControlMessageResponse",
+              "TranscriptionResponse",
+              "ControlMessageResponse",
             ],
           },
-          "ListenTranscriptionResponse": {
+          "ListenVadEvents": {
+            "default": "false",
+            "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponse": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "channel": "optional<ListenTranscriptionResponseChannel>",
+              "channel": "optional<TranscriptionResponseChannel>",
               "channel_index": "optional<list<integer>>",
               "duration": "optional<float>",
               "from_finalize": "optional<boolean>",
               "is_final": "optional<boolean>",
-              "metadata": "optional<ListenTranscriptionResponseMetadata>",
+              "metadata": "optional<TranscriptionResponseMetadata>",
               "speech_final": "optional<boolean>",
               "start": "optional<float>",
               "type": "optional<string>",
@@ -3614,17 +3667,17 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenTranscriptionResponseChannel": {
+          "TranscriptionResponseChannel": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "alternatives": "optional<list<ListenTranscriptionResponseChannelAlternativesItem>>",
+              "alternatives": "optional<list<TranscriptionResponseChannelAlternativesItem>>",
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenTranscriptionResponseChannelAlternativesItem": {
+          "TranscriptionResponseChannelAlternativesItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3636,13 +3689,13 @@ types:
                 "docs": "Complete transcribed text",
                 "type": "optional<string>",
               },
-              "words": "optional<list<ListenTranscriptionResponseChannelAlternativesItemWordsItem>>",
+              "words": "optional<list<TranscriptionResponseChannelAlternativesItemWordsItem>>",
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenTranscriptionResponseChannelAlternativesItemWordsItem": {
+          "TranscriptionResponseChannelAlternativesItemWordsItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3656,11 +3709,11 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenTranscriptionResponseMetadata": {
+          "TranscriptionResponseMetadata": {
             "docs": undefined,
             "inline": true,
             "properties": {
-              "model_info": "optional<ListenTranscriptionResponseMetadataModelInfo>",
+              "model_info": "optional<TranscriptionResponseMetadataModelInfo>",
               "model_uuid": {
                 "type": "optional<string>",
                 "validation": {
@@ -3684,7 +3737,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenTranscriptionResponseMetadataModelInfo": {
+          "TranscriptionResponseMetadataModelInfo": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -3692,18 +3745,6 @@ types:
               "name": "optional<string>",
               "version": "optional<string>",
             },
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenVadEvents": {
-            "default": "false",
-            "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-            "enum": [
-              "true",
-              "false",
-            ],
-            "inline": undefined,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -3979,7 +4020,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenTranscriptionResponseChannelAlternativesItemWordsItem:
+  TranscriptionResponseChannelAlternativesItemWordsItem:
     properties:
       word: optional<string>
       start: optional<float>
@@ -3989,7 +4030,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenTranscriptionResponseChannelAlternativesItem:
+  TranscriptionResponseChannelAlternativesItem:
     properties:
       transcript:
         type: optional<string>
@@ -3997,18 +4038,17 @@ types:
       confidence:
         type: optional<float>
         docs: Overall confidence score
-      words: >-
-        optional<list<ListenTranscriptionResponseChannelAlternativesItemWordsItem>>
+      words: optional<list<TranscriptionResponseChannelAlternativesItemWordsItem>>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenTranscriptionResponseChannel:
+  TranscriptionResponseChannel:
     properties:
-      alternatives: optional<list<ListenTranscriptionResponseChannelAlternativesItem>>
+      alternatives: optional<list<TranscriptionResponseChannelAlternativesItem>>
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenTranscriptionResponseMetadataModelInfo:
+  TranscriptionResponseMetadataModelInfo:
     properties:
       name: optional<string>
       version: optional<string>
@@ -4016,9 +4056,9 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenTranscriptionResponseMetadata:
+  TranscriptionResponseMetadata:
     properties:
-      model_info: optional<ListenTranscriptionResponseMetadataModelInfo>
+      model_info: optional<TranscriptionResponseMetadataModelInfo>
       request_id:
         type: optional<string>
         validation:
@@ -4030,10 +4070,10 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenTranscriptionResponse:
+  TranscriptionResponse:
     properties:
-      channel: optional<ListenTranscriptionResponseChannel>
-      metadata: optional<ListenTranscriptionResponseMetadata>
+      channel: optional<TranscriptionResponseChannel>
+      metadata: optional<TranscriptionResponseMetadata>
       type: optional<string>
       channel_index: optional<list<integer>>
       duration: optional<float>
@@ -4044,7 +4084,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenControlMessageResponseZero:
+  ControlMessageResponseZero:
     properties:
       type: optional<literal<"Finalize">>
       channel:
@@ -4055,7 +4095,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenControlMessageResponseOne:
+  ControlMessageResponseOne:
     properties:
       type: optional<literal<"Metadata">>
       transaction_key:
@@ -4085,7 +4125,7 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenControlMessageResponseTwo:
+  ControlMessageResponseTwo:
     properties:
       type: optional<literal<"CloseStream">>
       transaction_key:
@@ -4115,20 +4155,20 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
-  ListenControlMessageResponse:
+  ControlMessageResponse:
     discriminated: false
     union:
-      - ListenControlMessageResponseZero
-      - ListenControlMessageResponseOne
-      - ListenControlMessageResponseTwo
+      - ControlMessageResponseZero
+      - ControlMessageResponseOne
+      - ControlMessageResponseTwo
     source:
       openapi: ../asyncapi.yml
     inline: true
   ListenSubscribeEvent:
     discriminated: false
     union:
-      - ListenTranscriptionResponse
-      - ListenControlMessageResponse
+      - TranscriptionResponse
+      - ControlMessageResponse
     source:
       openapi: ../asyncapi.yml
   ListenControlMessagesRequestFinalize:
@@ -4323,6 +4363,12 @@ channel:
     publish:
       origin: client
       body: ListenPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body: string
+        - type: subscribe
+          body: {}
 ",
     },
     "managementApi.yml": {
@@ -9557,6 +9603,23 @@ docs: Manage your projects
       "contents": {
         "channel": {
           "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "text": "text",
+                    "type": "Speak",
+                  },
+                  "type": "publish",
+                },
+                {
+                  "body": "string",
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
           "headers": {
             "Sec-Websocket-Protocol": {
               "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
@@ -9595,18 +9658,7 @@ docs: Manage your projects
           "url": "public",
         },
         "types": {
-          "SpeakControlMessagesRequest": {
-            "enum": [
-              "Flush",
-              "Clear",
-              "Close",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "SpeakControlMessagesResponse": {
+          "ControlMessagesResponse": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -9616,19 +9668,30 @@ docs: Manage your projects
               },
               "type": {
                 "docs": "The type of control message response",
-                "type": "SpeakControlMessagesResponseType",
+                "type": "ControlMessagesResponseType",
               },
             },
             "source": {
               "openapi": "../asyncapi.yml",
             },
           },
-          "SpeakControlMessagesResponseType": {
+          "ControlMessagesResponseType": {
             "docs": "The type of control message response",
             "enum": [
               "flush",
               "clear",
               "close",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakControlMessagesRequest": {
+            "enum": [
+              "Flush",
+              "Clear",
+              "Close",
             ],
             "inline": true,
             "source": {
@@ -9719,7 +9782,7 @@ docs: Manage your projects
               "openapi": "../asyncapi.yml",
             },
             "union": [
-              "SpeakTextToSpeechRequest",
+              "TextToSpeechRequest",
               "SpeakControlMessagesRequest",
             ],
           },
@@ -9760,10 +9823,10 @@ docs: Manage your projects
                   "pattern": undefined,
                 },
               },
-              "SpeakControlMessagesResponse",
+              "ControlMessagesResponse",
             ],
           },
-          "SpeakTextToSpeechRequest": {
+          "TextToSpeechRequest": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -9841,7 +9904,7 @@ docs: Manage your projects
     default: '24000'
     source:
       openapi: ../asyncapi.yml
-  SpeakControlMessagesResponseType:
+  ControlMessagesResponseType:
     enum:
       - flush
       - clear
@@ -9850,10 +9913,10 @@ docs: Manage your projects
     inline: true
     source:
       openapi: ../asyncapi.yml
-  SpeakControlMessagesResponse:
+  ControlMessagesResponse:
     properties:
       type:
-        type: SpeakControlMessagesResponseType
+        type: ControlMessagesResponseType
         docs: The type of control message response
       sequence_id:
         type: optional<integer>
@@ -9868,10 +9931,10 @@ docs: Manage your projects
         docs: Audio data in the format specified by the request parameters
         validation:
           format: binary
-      - SpeakControlMessagesResponse
+      - ControlMessagesResponse
     source:
       openapi: ../asyncapi.yml
-  SpeakTextToSpeechRequest:
+  TextToSpeechRequest:
     properties:
       type:
         type: literal<"Speak">
@@ -9893,7 +9956,7 @@ docs: Manage your projects
   SpeakPublishEvent:
     discriminated: false
     union:
-      - SpeakTextToSpeechRequest
+      - TextToSpeechRequest
       - SpeakControlMessagesRequest
     source:
       openapi: ../asyncapi.yml
@@ -9933,6 +9996,14 @@ channel:
     publish:
       origin: client
       body: SpeakPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body:
+            type: Speak
+            text: text
+        - type: subscribe
+          body: string
 ",
     },
     "speechToText.yml": {

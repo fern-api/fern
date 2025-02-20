@@ -22804,7 +22804,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "speakTextToSpeechRequestType",
+                  "generatedName": "textToSpeechRequestType",
                   "key": "type",
                   "schema": {
                     "description": "Message type indicating a text-to-speech request",
@@ -22812,7 +22812,7 @@
                       "value": "Speak",
                       "type": "string"
                     },
-                    "generatedName": "SpeakTextToSpeechRequestType",
+                    "generatedName": "TextToSpeechRequestType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -22820,14 +22820,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "speakTextToSpeechRequestText",
+                  "generatedName": "textToSpeechRequestText",
                   "key": "text",
                   "schema": {
                     "description": "The input text to be converted to speech",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "SpeakTextToSpeechRequestText",
+                    "generatedName": "TextToSpeechRequestText",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -22835,7 +22835,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "SpeakTextToSpeechRequest",
+              "generatedName": "TextToSpeechRequest",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -22889,7 +22889,7 @@
                 "format": "binary",
                 "type": "string"
               },
-              "generatedName": "SpeakTextToSpeechResponse",
+              "generatedName": "TextToSpeechResponse",
               "groupName": [],
               "type": "primitive"
             },
@@ -22898,11 +22898,11 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "speakControlMessagesResponseType",
+                  "generatedName": "controlMessagesResponseType",
                   "key": "type",
                   "schema": {
                     "description": "The type of control message response",
-                    "generatedName": "SpeakControlMessagesResponseType",
+                    "generatedName": "ControlMessagesResponseType",
                     "values": [
                       {
                         "generatedName": "flush",
@@ -22931,16 +22931,16 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "speakControlMessagesResponseSequenceId",
+                  "generatedName": "controlMessagesResponseSequenceId",
                   "key": "sequence_id",
                   "schema": {
-                    "generatedName": "speakControlMessagesResponseSequenceId",
+                    "generatedName": "controlMessagesResponseSequenceId",
                     "value": {
                       "description": "The sequence ID of the response",
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "SpeakControlMessagesResponseSequenceId",
+                      "generatedName": "ControlMessagesResponseSequenceId",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -22951,7 +22951,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "SpeakControlMessagesResponse",
+              "generatedName": "ControlMessagesResponse",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -22976,7 +22976,46 @@
         }
       ],
       "path": "/v1/speak",
-      "examples": [],
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "Speak",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
       "source": {
         "file": "../asyncapi.yml",
         "type": "openapi"
@@ -24191,7 +24230,7 @@
                 "format": "binary",
                 "type": "string"
               },
-              "generatedName": "ListenTranscriptionRequest",
+              "generatedName": "TranscriptionRequest",
               "groupName": [],
               "type": "primitive"
             },
@@ -24268,35 +24307,35 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseChannel",
+                  "generatedName": "transcriptionResponseChannel",
                   "key": "channel",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseChannel",
+                    "generatedName": "transcriptionResponseChannel",
                     "value": {
                       "allOf": [],
                       "properties": [
                         {
                           "conflict": {},
-                          "generatedName": "listenTranscriptionResponseChannelAlternatives",
+                          "generatedName": "transcriptionResponseChannelAlternatives",
                           "key": "alternatives",
                           "schema": {
-                            "generatedName": "listenTranscriptionResponseChannelAlternatives",
+                            "generatedName": "transcriptionResponseChannelAlternatives",
                             "value": {
                               "value": {
                                 "allOf": [],
                                 "properties": [
                                   {
                                     "conflict": {},
-                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemTranscript",
+                                    "generatedName": "transcriptionResponseChannelAlternativesItemTranscript",
                                     "key": "transcript",
                                     "schema": {
-                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemTranscript",
+                                      "generatedName": "transcriptionResponseChannelAlternativesItemTranscript",
                                       "value": {
                                         "description": "Complete transcribed text",
                                         "schema": {
                                           "type": "string"
                                         },
-                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemTranscript",
+                                        "generatedName": "TranscriptionResponseChannelAlternativesItemTranscript",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
@@ -24307,16 +24346,16 @@
                                   },
                                   {
                                     "conflict": {},
-                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemConfidence",
+                                    "generatedName": "transcriptionResponseChannelAlternativesItemConfidence",
                                     "key": "confidence",
                                     "schema": {
-                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemConfidence",
+                                      "generatedName": "transcriptionResponseChannelAlternativesItemConfidence",
                                       "value": {
                                         "description": "Overall confidence score",
                                         "schema": {
                                           "type": "float"
                                         },
-                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemConfidence",
+                                        "generatedName": "TranscriptionResponseChannelAlternativesItemConfidence",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
@@ -24327,25 +24366,25 @@
                                   },
                                   {
                                     "conflict": {},
-                                    "generatedName": "listenTranscriptionResponseChannelAlternativesItemWords",
+                                    "generatedName": "transcriptionResponseChannelAlternativesItemWords",
                                     "key": "words",
                                     "schema": {
-                                      "generatedName": "listenTranscriptionResponseChannelAlternativesItemWords",
+                                      "generatedName": "transcriptionResponseChannelAlternativesItemWords",
                                       "value": {
                                         "value": {
                                           "allOf": [],
                                           "properties": [
                                             {
                                               "conflict": {},
-                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                              "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemWord",
                                               "key": "word",
                                               "schema": {
-                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                                "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemWord",
                                                 "value": {
                                                   "schema": {
                                                     "type": "string"
                                                   },
-                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemWord",
+                                                  "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItemWord",
                                                   "groupName": [],
                                                   "type": "primitive"
                                                 },
@@ -24356,15 +24395,15 @@
                                             },
                                             {
                                               "conflict": {},
-                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                              "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemStart",
                                               "key": "start",
                                               "schema": {
-                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                                "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemStart",
                                                 "value": {
                                                   "schema": {
                                                     "type": "float"
                                                   },
-                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemStart",
+                                                  "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItemStart",
                                                   "groupName": [],
                                                   "type": "primitive"
                                                 },
@@ -24375,15 +24414,15 @@
                                             },
                                             {
                                               "conflict": {},
-                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                              "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemEnd",
                                               "key": "end",
                                               "schema": {
-                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                                "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemEnd",
                                                 "value": {
                                                   "schema": {
                                                     "type": "float"
                                                   },
-                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemEnd",
+                                                  "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItemEnd",
                                                   "groupName": [],
                                                   "type": "primitive"
                                                 },
@@ -24394,15 +24433,15 @@
                                             },
                                             {
                                               "conflict": {},
-                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                              "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemConfidence",
                                               "key": "confidence",
                                               "schema": {
-                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                                "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemConfidence",
                                                 "value": {
                                                   "schema": {
                                                     "type": "float"
                                                   },
-                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemConfidence",
+                                                  "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItemConfidence",
                                                   "groupName": [],
                                                   "type": "primitive"
                                                 },
@@ -24413,15 +24452,15 @@
                                             },
                                             {
                                               "conflict": {},
-                                              "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                              "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
                                               "key": "punctuated_word",
                                               "schema": {
-                                                "generatedName": "listenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                                "generatedName": "transcriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
                                                 "value": {
                                                   "schema": {
                                                     "type": "string"
                                                   },
-                                                  "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
+                                                  "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItemPunctuatedWord",
                                                   "groupName": [],
                                                   "type": "primitive"
                                                 },
@@ -24432,7 +24471,7 @@
                                             }
                                           ],
                                           "allOfPropertyConflicts": [],
-                                          "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWordsItem",
+                                          "generatedName": "TranscriptionResponseChannelAlternativesItemWordsItem",
                                           "groupName": [],
                                           "additionalProperties": false,
                                           "source": {
@@ -24441,7 +24480,7 @@
                                           },
                                           "type": "object"
                                         },
-                                        "generatedName": "ListenTranscriptionResponseChannelAlternativesItemWords",
+                                        "generatedName": "TranscriptionResponseChannelAlternativesItemWords",
                                         "groupName": [],
                                         "type": "array"
                                       },
@@ -24452,7 +24491,7 @@
                                   }
                                 ],
                                 "allOfPropertyConflicts": [],
-                                "generatedName": "ListenTranscriptionResponseChannelAlternativesItem",
+                                "generatedName": "TranscriptionResponseChannelAlternativesItem",
                                 "groupName": [],
                                 "additionalProperties": false,
                                 "source": {
@@ -24461,7 +24500,7 @@
                                 },
                                 "type": "object"
                               },
-                              "generatedName": "ListenTranscriptionResponseChannelAlternatives",
+                              "generatedName": "TranscriptionResponseChannelAlternatives",
                               "groupName": [],
                               "type": "array"
                             },
@@ -24472,7 +24511,7 @@
                         }
                       ],
                       "allOfPropertyConflicts": [],
-                      "generatedName": "ListenTranscriptionResponseChannel",
+                      "generatedName": "TranscriptionResponseChannel",
                       "groupName": [],
                       "additionalProperties": false,
                       "source": {
@@ -24488,33 +24527,33 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseMetadata",
+                  "generatedName": "transcriptionResponseMetadata",
                   "key": "metadata",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseMetadata",
+                    "generatedName": "transcriptionResponseMetadata",
                     "value": {
                       "allOf": [],
                       "properties": [
                         {
                           "conflict": {},
-                          "generatedName": "listenTranscriptionResponseMetadataModelInfo",
+                          "generatedName": "transcriptionResponseMetadataModelInfo",
                           "key": "model_info",
                           "schema": {
-                            "generatedName": "listenTranscriptionResponseMetadataModelInfo",
+                            "generatedName": "transcriptionResponseMetadataModelInfo",
                             "value": {
                               "allOf": [],
                               "properties": [
                                 {
                                   "conflict": {},
-                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoName",
+                                  "generatedName": "transcriptionResponseMetadataModelInfoName",
                                   "key": "name",
                                   "schema": {
-                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoName",
+                                    "generatedName": "transcriptionResponseMetadataModelInfoName",
                                     "value": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoName",
+                                      "generatedName": "TranscriptionResponseMetadataModelInfoName",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -24525,15 +24564,15 @@
                                 },
                                 {
                                   "conflict": {},
-                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoVersion",
+                                  "generatedName": "transcriptionResponseMetadataModelInfoVersion",
                                   "key": "version",
                                   "schema": {
-                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoVersion",
+                                    "generatedName": "transcriptionResponseMetadataModelInfoVersion",
                                     "value": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoVersion",
+                                      "generatedName": "TranscriptionResponseMetadataModelInfoVersion",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -24544,15 +24583,15 @@
                                 },
                                 {
                                   "conflict": {},
-                                  "generatedName": "listenTranscriptionResponseMetadataModelInfoArch",
+                                  "generatedName": "transcriptionResponseMetadataModelInfoArch",
                                   "key": "arch",
                                   "schema": {
-                                    "generatedName": "listenTranscriptionResponseMetadataModelInfoArch",
+                                    "generatedName": "transcriptionResponseMetadataModelInfoArch",
                                     "value": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "ListenTranscriptionResponseMetadataModelInfoArch",
+                                      "generatedName": "TranscriptionResponseMetadataModelInfoArch",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -24563,7 +24602,7 @@
                                 }
                               ],
                               "allOfPropertyConflicts": [],
-                              "generatedName": "ListenTranscriptionResponseMetadataModelInfo",
+                              "generatedName": "TranscriptionResponseMetadataModelInfo",
                               "groupName": [],
                               "additionalProperties": false,
                               "source": {
@@ -24579,16 +24618,16 @@
                         },
                         {
                           "conflict": {},
-                          "generatedName": "listenTranscriptionResponseMetadataRequestId",
+                          "generatedName": "transcriptionResponseMetadataRequestId",
                           "key": "request_id",
                           "schema": {
-                            "generatedName": "listenTranscriptionResponseMetadataRequestId",
+                            "generatedName": "transcriptionResponseMetadataRequestId",
                             "value": {
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
-                              "generatedName": "ListenTranscriptionResponseMetadataRequestId",
+                              "generatedName": "TranscriptionResponseMetadataRequestId",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -24599,16 +24638,16 @@
                         },
                         {
                           "conflict": {},
-                          "generatedName": "listenTranscriptionResponseMetadataModelUuid",
+                          "generatedName": "transcriptionResponseMetadataModelUuid",
                           "key": "model_uuid",
                           "schema": {
-                            "generatedName": "listenTranscriptionResponseMetadataModelUuid",
+                            "generatedName": "transcriptionResponseMetadataModelUuid",
                             "value": {
                               "schema": {
                                 "format": "uuid",
                                 "type": "string"
                               },
-                              "generatedName": "ListenTranscriptionResponseMetadataModelUuid",
+                              "generatedName": "TranscriptionResponseMetadataModelUuid",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -24619,7 +24658,7 @@
                         }
                       ],
                       "allOfPropertyConflicts": [],
-                      "generatedName": "ListenTranscriptionResponseMetadata",
+                      "generatedName": "TranscriptionResponseMetadata",
                       "groupName": [],
                       "additionalProperties": false,
                       "source": {
@@ -24635,15 +24674,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseType",
+                  "generatedName": "transcriptionResponseType",
                   "key": "type",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseType",
+                    "generatedName": "transcriptionResponseType",
                     "value": {
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenTranscriptionResponseType",
+                      "generatedName": "TranscriptionResponseType",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24654,20 +24693,20 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseChannelIndex",
+                  "generatedName": "transcriptionResponseChannelIndex",
                   "key": "channel_index",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseChannelIndex",
+                    "generatedName": "transcriptionResponseChannelIndex",
                     "value": {
                       "value": {
                         "schema": {
                           "type": "int"
                         },
-                        "generatedName": "ListenTranscriptionResponseChannelIndexItem",
+                        "generatedName": "TranscriptionResponseChannelIndexItem",
                         "groupName": [],
                         "type": "primitive"
                       },
-                      "generatedName": "ListenTranscriptionResponseChannelIndex",
+                      "generatedName": "TranscriptionResponseChannelIndex",
                       "groupName": [],
                       "type": "array"
                     },
@@ -24678,15 +24717,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseDuration",
+                  "generatedName": "transcriptionResponseDuration",
                   "key": "duration",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseDuration",
+                    "generatedName": "transcriptionResponseDuration",
                     "value": {
                       "schema": {
                         "type": "float"
                       },
-                      "generatedName": "ListenTranscriptionResponseDuration",
+                      "generatedName": "TranscriptionResponseDuration",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24697,15 +24736,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseStart",
+                  "generatedName": "transcriptionResponseStart",
                   "key": "start",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseStart",
+                    "generatedName": "transcriptionResponseStart",
                     "value": {
                       "schema": {
                         "type": "float"
                       },
-                      "generatedName": "ListenTranscriptionResponseStart",
+                      "generatedName": "TranscriptionResponseStart",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24716,15 +24755,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseIsFinal",
+                  "generatedName": "transcriptionResponseIsFinal",
                   "key": "is_final",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseIsFinal",
+                    "generatedName": "transcriptionResponseIsFinal",
                     "value": {
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "ListenTranscriptionResponseIsFinal",
+                      "generatedName": "TranscriptionResponseIsFinal",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24735,15 +24774,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseFromFinalize",
+                  "generatedName": "transcriptionResponseFromFinalize",
                   "key": "from_finalize",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseFromFinalize",
+                    "generatedName": "transcriptionResponseFromFinalize",
                     "value": {
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "ListenTranscriptionResponseFromFinalize",
+                      "generatedName": "TranscriptionResponseFromFinalize",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24754,15 +24793,15 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "listenTranscriptionResponseSpeechFinal",
+                  "generatedName": "transcriptionResponseSpeechFinal",
                   "key": "speech_final",
                   "schema": {
-                    "generatedName": "listenTranscriptionResponseSpeechFinal",
+                    "generatedName": "transcriptionResponseSpeechFinal",
                     "value": {
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "ListenTranscriptionResponseSpeechFinal",
+                      "generatedName": "TranscriptionResponseSpeechFinal",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -24773,7 +24812,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "ListenTranscriptionResponse",
+              "generatedName": "TranscriptionResponse",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -24784,23 +24823,23 @@
             },
             {
               "value": {
-                "generatedName": "ListenControlMessageResponse",
+                "generatedName": "ControlMessageResponse",
                 "schemas": [
                   {
                     "allOf": [],
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseZeroType",
+                        "generatedName": "controlMessageResponseZeroType",
                         "key": "type",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseZeroType",
+                          "generatedName": "controlMessageResponseZeroType",
                           "value": {
                             "value": {
                               "value": "Finalize",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseZeroType",
+                            "generatedName": "ControlMessageResponseZeroType",
                             "groupName": [],
                             "type": "literal"
                           },
@@ -24811,17 +24850,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseZeroChannel",
+                        "generatedName": "controlMessageResponseZeroChannel",
                         "key": "channel",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseZeroChannel",
+                          "generatedName": "controlMessageResponseZeroChannel",
                           "value": {
                             "description": "The channel number being finalized",
                             "schema": {
                               "minimum": 0,
                               "type": "int"
                             },
-                            "generatedName": "ListenControlMessageResponseZeroChannel",
+                            "generatedName": "ControlMessageResponseZeroChannel",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24832,7 +24871,7 @@
                       }
                     ],
                     "allOfPropertyConflicts": [],
-                    "generatedName": "ListenControlMessageResponseZero",
+                    "generatedName": "ControlMessageResponseZero",
                     "groupName": [],
                     "additionalProperties": false,
                     "source": {
@@ -24846,16 +24885,16 @@
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneType",
+                        "generatedName": "controlMessageResponseOneType",
                         "key": "type",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneType",
+                          "generatedName": "controlMessageResponseOneType",
                           "value": {
                             "value": {
                               "value": "Metadata",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseOneType",
+                            "generatedName": "ControlMessageResponseOneType",
                             "groupName": [],
                             "type": "literal"
                           },
@@ -24866,16 +24905,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneTransactionKey",
+                        "generatedName": "controlMessageResponseOneTransactionKey",
                         "key": "transaction_key",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneTransactionKey",
+                          "generatedName": "controlMessageResponseOneTransactionKey",
                           "value": {
                             "description": "Deprecated field",
                             "schema": {
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseOneTransactionKey",
+                            "generatedName": "ControlMessageResponseOneTransactionKey",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24886,17 +24925,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneRequestId",
+                        "generatedName": "controlMessageResponseOneRequestId",
                         "key": "request_id",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneRequestId",
+                          "generatedName": "controlMessageResponseOneRequestId",
                           "value": {
                             "description": "Unique identifier for the request",
                             "schema": {
                               "format": "uuid",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseOneRequestId",
+                            "generatedName": "ControlMessageResponseOneRequestId",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24907,17 +24946,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneSha256",
+                        "generatedName": "controlMessageResponseOneSha256",
                         "key": "sha256",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneSha256",
+                          "generatedName": "controlMessageResponseOneSha256",
                           "value": {
                             "description": "SHA-256 hash of the audio content",
                             "schema": {
                               "pattern": "^[a-fA-F0-9]{64}$",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseOneSha256",
+                            "generatedName": "ControlMessageResponseOneSha256",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24928,16 +24967,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneCreated",
+                        "generatedName": "controlMessageResponseOneCreated",
                         "key": "created",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneCreated",
+                          "generatedName": "controlMessageResponseOneCreated",
                           "value": {
                             "description": "Timestamp when the response was created",
                             "schema": {
                               "type": "datetime"
                             },
-                            "generatedName": "ListenControlMessageResponseOneCreated",
+                            "generatedName": "ControlMessageResponseOneCreated",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24948,16 +24987,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneDuration",
+                        "generatedName": "controlMessageResponseOneDuration",
                         "key": "duration",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneDuration",
+                          "generatedName": "controlMessageResponseOneDuration",
                           "value": {
                             "description": "Duration of the audio in seconds",
                             "schema": {
                               "type": "float"
                             },
-                            "generatedName": "ListenControlMessageResponseOneDuration",
+                            "generatedName": "ControlMessageResponseOneDuration",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24968,17 +25007,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseOneChannels",
+                        "generatedName": "controlMessageResponseOneChannels",
                         "key": "channels",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseOneChannels",
+                          "generatedName": "controlMessageResponseOneChannels",
                           "value": {
                             "description": "Number of audio channels",
                             "schema": {
                               "minimum": 0,
                               "type": "int"
                             },
-                            "generatedName": "ListenControlMessageResponseOneChannels",
+                            "generatedName": "ControlMessageResponseOneChannels",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -24989,7 +25028,7 @@
                       }
                     ],
                     "allOfPropertyConflicts": [],
-                    "generatedName": "ListenControlMessageResponseOne",
+                    "generatedName": "ControlMessageResponseOne",
                     "groupName": [],
                     "additionalProperties": false,
                     "source": {
@@ -25003,16 +25042,16 @@
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoType",
+                        "generatedName": "controlMessageResponseTwoType",
                         "key": "type",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoType",
+                          "generatedName": "controlMessageResponseTwoType",
                           "value": {
                             "value": {
                               "value": "CloseStream",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoType",
+                            "generatedName": "ControlMessageResponseTwoType",
                             "groupName": [],
                             "type": "literal"
                           },
@@ -25023,16 +25062,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoTransactionKey",
+                        "generatedName": "controlMessageResponseTwoTransactionKey",
                         "key": "transaction_key",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoTransactionKey",
+                          "generatedName": "controlMessageResponseTwoTransactionKey",
                           "value": {
                             "description": "Deprecated field",
                             "schema": {
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoTransactionKey",
+                            "generatedName": "ControlMessageResponseTwoTransactionKey",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25043,17 +25082,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoRequestId",
+                        "generatedName": "controlMessageResponseTwoRequestId",
                         "key": "request_id",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoRequestId",
+                          "generatedName": "controlMessageResponseTwoRequestId",
                           "value": {
                             "description": "Unique identifier for the request",
                             "schema": {
                               "format": "uuid",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoRequestId",
+                            "generatedName": "ControlMessageResponseTwoRequestId",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25064,17 +25103,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoSha256",
+                        "generatedName": "controlMessageResponseTwoSha256",
                         "key": "sha256",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoSha256",
+                          "generatedName": "controlMessageResponseTwoSha256",
                           "value": {
                             "description": "SHA-256 hash of the audio content",
                             "schema": {
                               "pattern": "^[a-fA-F0-9]{64}$",
                               "type": "string"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoSha256",
+                            "generatedName": "ControlMessageResponseTwoSha256",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25085,16 +25124,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoCreated",
+                        "generatedName": "controlMessageResponseTwoCreated",
                         "key": "created",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoCreated",
+                          "generatedName": "controlMessageResponseTwoCreated",
                           "value": {
                             "description": "Timestamp when the response was created",
                             "schema": {
                               "type": "datetime"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoCreated",
+                            "generatedName": "ControlMessageResponseTwoCreated",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25105,16 +25144,16 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoDuration",
+                        "generatedName": "controlMessageResponseTwoDuration",
                         "key": "duration",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoDuration",
+                          "generatedName": "controlMessageResponseTwoDuration",
                           "value": {
                             "description": "Duration of the audio in seconds",
                             "schema": {
                               "type": "float"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoDuration",
+                            "generatedName": "ControlMessageResponseTwoDuration",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25125,17 +25164,17 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "listenControlMessageResponseTwoChannels",
+                        "generatedName": "controlMessageResponseTwoChannels",
                         "key": "channels",
                         "schema": {
-                          "generatedName": "listenControlMessageResponseTwoChannels",
+                          "generatedName": "controlMessageResponseTwoChannels",
                           "value": {
                             "description": "Number of audio channels",
                             "schema": {
                               "minimum": 0,
                               "type": "int"
                             },
-                            "generatedName": "ListenControlMessageResponseTwoChannels",
+                            "generatedName": "ControlMessageResponseTwoChannels",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -25146,7 +25185,7 @@
                       }
                     ],
                     "allOfPropertyConflicts": [],
-                    "generatedName": "ListenControlMessageResponseTwo",
+                    "generatedName": "ControlMessageResponseTwo",
                     "groupName": [],
                     "additionalProperties": false,
                     "source": {
@@ -25181,7 +25220,31 @@
         }
       ],
       "path": "/v1/listen",
-      "examples": [],
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
       "source": {
         "file": "../asyncapi.yml",
         "type": "openapi"
@@ -25224,14 +25287,14 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentSettingsConfigurationType",
+                  "generatedName": "settingsConfigurationType",
                   "key": "type",
                   "schema": {
                     "value": {
                       "value": "SettingsConfiguration",
                       "type": "string"
                     },
-                    "generatedName": "AgentSettingsConfigurationType",
+                    "generatedName": "SettingsConfigurationType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -25239,41 +25302,41 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentSettingsConfigurationAudio",
+                  "generatedName": "settingsConfigurationAudio",
                   "key": "audio",
                   "schema": {
-                    "generatedName": "agentSettingsConfigurationAudio",
+                    "generatedName": "settingsConfigurationAudio",
                     "value": {
-                      "generatedName": "AgentSettingsConfigurationAudio",
+                      "generatedName": "SettingsConfigurationAudio",
                       "description": "Optional audio configuration settings",
                       "value": {
                         "allOf": [],
                         "properties": [
                           {
                             "conflict": {},
-                            "generatedName": "agentSettingsConfigurationAudioInput",
+                            "generatedName": "settingsConfigurationAudioInput",
                             "key": "input",
                             "schema": {
-                              "generatedName": "agentSettingsConfigurationAudioInput",
+                              "generatedName": "settingsConfigurationAudioInput",
                               "value": {
-                                "generatedName": "AgentSettingsConfigurationAudioInput",
+                                "generatedName": "SettingsConfigurationAudioInput",
                                 "description": "Optional audio input configuration settings",
                                 "value": {
                                   "allOf": [],
                                   "properties": [
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioInputEncoding",
+                                      "generatedName": "settingsConfigurationAudioInputEncoding",
                                       "key": "encoding",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioInputEncoding",
+                                        "generatedName": "settingsConfigurationAudioInputEncoding",
                                         "value": {
                                           "description": "Audio encoding format",
                                           "schema": {
                                             "default": "linear16",
                                             "type": "string"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioInputEncoding",
+                                          "generatedName": "SettingsConfigurationAudioInputEncoding",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25284,17 +25347,17 @@
                                     },
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioInputSampleRate",
+                                      "generatedName": "settingsConfigurationAudioInputSampleRate",
                                       "key": "sample_rate",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioInputSampleRate",
+                                        "generatedName": "settingsConfigurationAudioInputSampleRate",
                                         "value": {
                                           "description": "Sample rate in Hz",
                                           "schema": {
                                             "default": 24000,
                                             "type": "int"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioInputSampleRate",
+                                          "generatedName": "SettingsConfigurationAudioInputSampleRate",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25306,7 +25369,7 @@
                                   ],
                                   "allOfPropertyConflicts": [],
                                   "description": "Optional audio input configuration settings",
-                                  "generatedName": "AgentSettingsConfigurationAudioInput",
+                                  "generatedName": "SettingsConfigurationAudioInput",
                                   "groupName": [],
                                   "additionalProperties": false,
                                   "source": {
@@ -25325,27 +25388,27 @@
                           },
                           {
                             "conflict": {},
-                            "generatedName": "agentSettingsConfigurationAudioOutput",
+                            "generatedName": "settingsConfigurationAudioOutput",
                             "key": "output",
                             "schema": {
-                              "generatedName": "agentSettingsConfigurationAudioOutput",
+                              "generatedName": "settingsConfigurationAudioOutput",
                               "value": {
-                                "generatedName": "AgentSettingsConfigurationAudioOutput",
+                                "generatedName": "SettingsConfigurationAudioOutput",
                                 "description": "Audio output configuration settings",
                                 "value": {
                                   "allOf": [],
                                   "properties": [
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioOutputEncoding",
+                                      "generatedName": "settingsConfigurationAudioOutputEncoding",
                                       "key": "encoding",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioOutputEncoding",
+                                        "generatedName": "settingsConfigurationAudioOutputEncoding",
                                         "value": {
                                           "schema": {
                                             "type": "string"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioOutputEncoding",
+                                          "generatedName": "SettingsConfigurationAudioOutputEncoding",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25356,17 +25419,17 @@
                                     },
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioOutputSampleRate",
+                                      "generatedName": "settingsConfigurationAudioOutputSampleRate",
                                       "key": "sample_rate",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioOutputSampleRate",
+                                        "generatedName": "settingsConfigurationAudioOutputSampleRate",
                                         "value": {
                                           "description": "Sample rate in Hz",
                                           "schema": {
                                             "default": 24000,
                                             "type": "int"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioOutputSampleRate",
+                                          "generatedName": "SettingsConfigurationAudioOutputSampleRate",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25377,15 +25440,15 @@
                                     },
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioOutputBitrate",
+                                      "generatedName": "settingsConfigurationAudioOutputBitrate",
                                       "key": "bitrate",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioOutputBitrate",
+                                        "generatedName": "settingsConfigurationAudioOutputBitrate",
                                         "value": {
                                           "schema": {
                                             "type": "int"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioOutputBitrate",
+                                          "generatedName": "SettingsConfigurationAudioOutputBitrate",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25396,15 +25459,15 @@
                                     },
                                     {
                                       "conflict": {},
-                                      "generatedName": "agentSettingsConfigurationAudioOutputContainer",
+                                      "generatedName": "settingsConfigurationAudioOutputContainer",
                                       "key": "container",
                                       "schema": {
-                                        "generatedName": "agentSettingsConfigurationAudioOutputContainer",
+                                        "generatedName": "settingsConfigurationAudioOutputContainer",
                                         "value": {
                                           "schema": {
                                             "type": "string"
                                           },
-                                          "generatedName": "AgentSettingsConfigurationAudioOutputContainer",
+                                          "generatedName": "SettingsConfigurationAudioOutputContainer",
                                           "groupName": [],
                                           "type": "primitive"
                                         },
@@ -25416,7 +25479,7 @@
                                   ],
                                   "allOfPropertyConflicts": [],
                                   "description": "Audio output configuration settings",
-                                  "generatedName": "AgentSettingsConfigurationAudioOutput",
+                                  "generatedName": "SettingsConfigurationAudioOutput",
                                   "groupName": [],
                                   "additionalProperties": false,
                                   "source": {
@@ -25436,7 +25499,7 @@
                         ],
                         "allOfPropertyConflicts": [],
                         "description": "Optional audio configuration settings",
-                        "generatedName": "AgentSettingsConfigurationAudio",
+                        "generatedName": "SettingsConfigurationAudio",
                         "groupName": [],
                         "additionalProperties": false,
                         "source": {
@@ -25455,33 +25518,33 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentSettingsConfigurationAgent",
+                  "generatedName": "settingsConfigurationAgent",
                   "key": "agent",
                   "schema": {
                     "allOf": [],
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "agentSettingsConfigurationAgentListen",
+                        "generatedName": "settingsConfigurationAgentListen",
                         "key": "listen",
                         "schema": {
-                          "generatedName": "agentSettingsConfigurationAgentListen",
+                          "generatedName": "settingsConfigurationAgentListen",
                           "value": {
                             "allOf": [],
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "agentSettingsConfigurationAgentListenModel",
+                                "generatedName": "settingsConfigurationAgentListenModel",
                                 "key": "model",
                                 "schema": {
-                                  "generatedName": "agentSettingsConfigurationAgentListenModel",
+                                  "generatedName": "settingsConfigurationAgentListenModel",
                                   "value": {
                                     "description": "Model to use for speech recognition",
                                     "schema": {
                                       "default": "nova-2",
                                       "type": "string"
                                     },
-                                    "generatedName": "AgentSettingsConfigurationAgentListenModel",
+                                    "generatedName": "SettingsConfigurationAgentListenModel",
                                     "groupName": [],
                                     "type": "primitive"
                                   },
@@ -25492,7 +25555,7 @@
                               }
                             ],
                             "allOfPropertyConflicts": [],
-                            "generatedName": "AgentSettingsConfigurationAgentListen",
+                            "generatedName": "SettingsConfigurationAgentListen",
                             "groupName": [],
                             "additionalProperties": false,
                             "source": {
@@ -25508,34 +25571,34 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "agentSettingsConfigurationAgentThink",
+                        "generatedName": "settingsConfigurationAgentThink",
                         "key": "think",
                         "schema": {
-                          "generatedName": "agentSettingsConfigurationAgentThink",
+                          "generatedName": "settingsConfigurationAgentThink",
                           "value": {
                             "allOf": [],
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "agentSettingsConfigurationAgentThinkProvider",
+                                "generatedName": "settingsConfigurationAgentThinkProvider",
                                 "key": "provider",
                                 "schema": {
-                                  "generatedName": "agentSettingsConfigurationAgentThinkProvider",
+                                  "generatedName": "settingsConfigurationAgentThinkProvider",
                                   "value": {
                                     "allOf": [],
                                     "properties": [
                                       {
                                         "conflict": {},
-                                        "generatedName": "agentSettingsConfigurationAgentThinkProviderType",
+                                        "generatedName": "settingsConfigurationAgentThinkProviderType",
                                         "key": "type",
                                         "schema": {
-                                          "generatedName": "agentSettingsConfigurationAgentThinkProviderType",
+                                          "generatedName": "settingsConfigurationAgentThinkProviderType",
                                           "value": {
                                             "description": "LLM provider type",
                                             "schema": {
                                               "type": "string"
                                             },
-                                            "generatedName": "AgentSettingsConfigurationAgentThinkProviderType",
+                                            "generatedName": "SettingsConfigurationAgentThinkProviderType",
                                             "groupName": [],
                                             "type": "primitive"
                                           },
@@ -25546,7 +25609,7 @@
                                       }
                                     ],
                                     "allOfPropertyConflicts": [],
-                                    "generatedName": "AgentSettingsConfigurationAgentThinkProvider",
+                                    "generatedName": "SettingsConfigurationAgentThinkProvider",
                                     "groupName": [],
                                     "additionalProperties": false,
                                     "source": {
@@ -25562,16 +25625,16 @@
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "agentSettingsConfigurationAgentThinkModel",
+                                "generatedName": "settingsConfigurationAgentThinkModel",
                                 "key": "model",
                                 "schema": {
-                                  "generatedName": "agentSettingsConfigurationAgentThinkModel",
+                                  "generatedName": "settingsConfigurationAgentThinkModel",
                                   "value": {
                                     "description": "LLM model to use",
                                     "schema": {
                                       "type": "string"
                                     },
-                                    "generatedName": "AgentSettingsConfigurationAgentThinkModel",
+                                    "generatedName": "SettingsConfigurationAgentThinkModel",
                                     "groupName": [],
                                     "type": "primitive"
                                   },
@@ -25582,19 +25645,19 @@
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "agentSettingsConfigurationAgentThinkInstructions",
+                                "generatedName": "settingsConfigurationAgentThinkInstructions",
                                 "key": "instructions",
                                 "schema": {
-                                  "generatedName": "agentSettingsConfigurationAgentThinkInstructions",
+                                  "generatedName": "settingsConfigurationAgentThinkInstructions",
                                   "value": {
-                                    "generatedName": "AgentSettingsConfigurationAgentThinkInstructions",
+                                    "generatedName": "SettingsConfigurationAgentThinkInstructions",
                                     "description": "LLM System prompt",
                                     "value": {
                                       "description": "LLM System prompt",
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "AgentSettingsConfigurationAgentThinkInstructions",
+                                      "generatedName": "SettingsConfigurationAgentThinkInstructions",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -25608,28 +25671,28 @@
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "agentSettingsConfigurationAgentThinkFunctions",
+                                "generatedName": "settingsConfigurationAgentThinkFunctions",
                                 "key": "functions",
                                 "schema": {
-                                  "generatedName": "agentSettingsConfigurationAgentThinkFunctions",
+                                  "generatedName": "settingsConfigurationAgentThinkFunctions",
                                   "value": {
-                                    "generatedName": "AgentSettingsConfigurationAgentThinkFunctions",
+                                    "generatedName": "SettingsConfigurationAgentThinkFunctions",
                                     "value": {
                                       "value": {
                                         "allOf": [],
                                         "properties": [
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemName",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemName",
                                             "key": "name",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemName",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemName",
                                               "value": {
                                                 "description": "Function name",
                                                 "schema": {
                                                   "type": "string"
                                                 },
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemName",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemName",
                                                 "groupName": [],
                                                 "type": "primitive"
                                               },
@@ -25640,16 +25703,16 @@
                                           },
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemDescription",
                                             "key": "description",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemDescription",
                                               "value": {
                                                 "description": "Description of function purpose and usage",
                                                 "schema": {
                                                   "type": "string"
                                                 },
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemDescription",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemDescription",
                                                 "groupName": [],
                                                 "type": "primitive"
                                               },
@@ -25660,16 +25723,16 @@
                                           },
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemUrl",
                                             "key": "url",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemUrl",
                                               "value": {
                                                 "description": "Function endpoint URL",
                                                 "schema": {
                                                   "type": "string"
                                                 },
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemUrl",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemUrl",
                                                 "groupName": [],
                                                 "type": "primitive"
                                               },
@@ -25680,25 +25743,25 @@
                                           },
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeaders",
                                             "key": "headers",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeaders",
                                               "value": {
                                                 "value": {
                                                   "allOf": [],
                                                   "properties": [
                                                     {
                                                       "conflict": {},
-                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                      "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
                                                       "key": "key",
                                                       "schema": {
-                                                        "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                        "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
                                                         "value": {
                                                           "schema": {
                                                             "type": "string"
                                                           },
-                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
+                                                          "generatedName": "SettingsConfigurationAgentThinkFunctionsItemHeadersItemKey",
                                                           "groupName": [],
                                                           "type": "primitive"
                                                         },
@@ -25709,15 +25772,15 @@
                                                     },
                                                     {
                                                       "conflict": {},
-                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                      "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
                                                       "key": "value",
                                                       "schema": {
-                                                        "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                        "generatedName": "settingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
                                                         "value": {
                                                           "schema": {
                                                             "type": "string"
                                                           },
-                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
+                                                          "generatedName": "SettingsConfigurationAgentThinkFunctionsItemHeadersItemValue",
                                                           "groupName": [],
                                                           "type": "primitive"
                                                         },
@@ -25728,7 +25791,7 @@
                                                     }
                                                   ],
                                                   "allOfPropertyConflicts": [],
-                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeadersItem",
+                                                  "generatedName": "SettingsConfigurationAgentThinkFunctionsItemHeadersItem",
                                                   "groupName": [],
                                                   "additionalProperties": false,
                                                   "source": {
@@ -25737,7 +25800,7 @@
                                                   },
                                                   "type": "object"
                                                 },
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemHeaders",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemHeaders",
                                                 "groupName": [],
                                                 "type": "array"
                                               },
@@ -25748,17 +25811,17 @@
                                           },
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemMethod",
                                             "key": "method",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemMethod",
                                               "value": {
                                                 "description": "HTTP method for function call",
                                                 "schema": {
                                                   "default": "post",
                                                   "type": "string"
                                                 },
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemMethod",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemMethod",
                                                 "groupName": [],
                                                 "type": "primitive"
                                               },
@@ -25769,24 +25832,24 @@
                                           },
                                           {
                                             "conflict": {},
-                                            "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                            "generatedName": "settingsConfigurationAgentThinkFunctionsItemParameters",
                                             "key": "parameters",
                                             "schema": {
-                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemParameters",
                                               "value": {
                                                 "allOf": [],
                                                 "properties": [
                                                   {
                                                     "conflict": {},
-                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                    "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersType",
                                                     "key": "type",
                                                     "schema": {
-                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                      "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersType",
                                                       "value": {
                                                         "schema": {
                                                           "type": "string"
                                                         },
-                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersType",
+                                                        "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersType",
                                                         "groupName": [],
                                                         "type": "primitive"
                                                       },
@@ -25797,16 +25860,16 @@
                                                   },
                                                   {
                                                     "conflict": {},
-                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                    "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersProperties",
                                                     "key": "properties",
                                                     "schema": {
-                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                      "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersProperties",
                                                       "value": {
                                                         "key": {
                                                           "schema": {
                                                             "type": "string"
                                                           },
-                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesKey",
+                                                          "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesKey",
                                                           "groupName": [],
                                                           "type": "primitive"
                                                         },
@@ -25815,15 +25878,15 @@
                                                           "properties": [
                                                             {
                                                               "conflict": {},
-                                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
                                                               "key": "type",
                                                               "schema": {
-                                                                "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                                "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
                                                                 "value": {
                                                                   "schema": {
                                                                     "type": "string"
                                                                   },
-                                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
+                                                                  "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueType",
                                                                   "groupName": [],
                                                                   "type": "primitive"
                                                                 },
@@ -25834,15 +25897,15 @@
                                                             },
                                                             {
                                                               "conflict": {},
-                                                              "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                              "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
                                                               "key": "description",
                                                               "schema": {
-                                                                "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                                "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
                                                                 "value": {
                                                                   "schema": {
                                                                     "type": "string"
                                                                   },
-                                                                  "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
+                                                                  "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValueDescription",
                                                                   "groupName": [],
                                                                   "type": "primitive"
                                                                 },
@@ -25853,7 +25916,7 @@
                                                             }
                                                           ],
                                                           "allOfPropertyConflicts": [],
-                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue",
+                                                          "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue",
                                                           "groupName": [],
                                                           "additionalProperties": false,
                                                           "source": {
@@ -25863,7 +25926,7 @@
                                                           "inline": true,
                                                           "type": "object"
                                                         },
-                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersProperties",
+                                                        "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersProperties",
                                                         "groupName": [],
                                                         "type": "map"
                                                       },
@@ -25874,20 +25937,20 @@
                                                   },
                                                   {
                                                     "conflict": {},
-                                                    "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                    "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersRequired",
                                                     "key": "required",
                                                     "schema": {
-                                                      "generatedName": "agentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                      "generatedName": "settingsConfigurationAgentThinkFunctionsItemParametersRequired",
                                                       "value": {
                                                         "value": {
                                                           "schema": {
                                                             "type": "string"
                                                           },
-                                                          "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersRequiredItem",
+                                                          "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersRequiredItem",
                                                           "groupName": [],
                                                           "type": "primitive"
                                                         },
-                                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParametersRequired",
+                                                        "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParametersRequired",
                                                         "groupName": [],
                                                         "type": "array"
                                                       },
@@ -25898,7 +25961,7 @@
                                                   }
                                                 ],
                                                 "allOfPropertyConflicts": [],
-                                                "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItemParameters",
+                                                "generatedName": "SettingsConfigurationAgentThinkFunctionsItemParameters",
                                                 "groupName": [],
                                                 "additionalProperties": false,
                                                 "source": {
@@ -25914,7 +25977,7 @@
                                           }
                                         ],
                                         "allOfPropertyConflicts": [],
-                                        "generatedName": "AgentSettingsConfigurationAgentThinkFunctionsItem",
+                                        "generatedName": "SettingsConfigurationAgentThinkFunctionsItem",
                                         "groupName": [],
                                         "additionalProperties": false,
                                         "source": {
@@ -25923,7 +25986,7 @@
                                         },
                                         "type": "object"
                                       },
-                                      "generatedName": "AgentSettingsConfigurationAgentThinkFunctions",
+                                      "generatedName": "SettingsConfigurationAgentThinkFunctions",
                                       "groupName": [],
                                       "type": "array"
                                     },
@@ -25937,7 +26000,7 @@
                               }
                             ],
                             "allOfPropertyConflicts": [],
-                            "generatedName": "AgentSettingsConfigurationAgentThink",
+                            "generatedName": "SettingsConfigurationAgentThink",
                             "groupName": [],
                             "additionalProperties": false,
                             "source": {
@@ -25953,28 +26016,28 @@
                       },
                       {
                         "conflict": {},
-                        "generatedName": "agentSettingsConfigurationAgentSpeak",
+                        "generatedName": "settingsConfigurationAgentSpeak",
                         "key": "speak",
                         "schema": {
-                          "generatedName": "agentSettingsConfigurationAgentSpeak",
+                          "generatedName": "settingsConfigurationAgentSpeak",
                           "value": {
-                            "generatedName": "AgentSettingsConfigurationAgentSpeak",
+                            "generatedName": "SettingsConfigurationAgentSpeak",
                             "value": {
                               "allOf": [],
                               "properties": [
                                 {
                                   "conflict": {},
-                                  "generatedName": "agentSettingsConfigurationAgentSpeakModel",
+                                  "generatedName": "settingsConfigurationAgentSpeakModel",
                                   "key": "model",
                                   "schema": {
-                                    "generatedName": "agentSettingsConfigurationAgentSpeakModel",
+                                    "generatedName": "settingsConfigurationAgentSpeakModel",
                                     "value": {
                                       "description": "Text-to-speech model",
                                       "schema": {
                                         "default": "aura-asteria-en",
                                         "type": "string"
                                       },
-                                      "generatedName": "AgentSettingsConfigurationAgentSpeakModel",
+                                      "generatedName": "SettingsConfigurationAgentSpeakModel",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -25985,13 +26048,13 @@
                                 },
                                 {
                                   "conflict": {},
-                                  "generatedName": "agentSettingsConfigurationAgentSpeakProvider",
+                                  "generatedName": "settingsConfigurationAgentSpeakProvider",
                                   "key": "provider",
                                   "schema": {
-                                    "generatedName": "agentSettingsConfigurationAgentSpeakProvider",
+                                    "generatedName": "settingsConfigurationAgentSpeakProvider",
                                     "value": {
                                       "description": "Alternative TTS provider",
-                                      "generatedName": "AgentSettingsConfigurationAgentSpeakProvider",
+                                      "generatedName": "SettingsConfigurationAgentSpeakProvider",
                                       "values": [
                                         {
                                           "generatedName": "eleven_labs",
@@ -26018,16 +26081,16 @@
                                 },
                                 {
                                   "conflict": {},
-                                  "generatedName": "agentSettingsConfigurationAgentSpeakVoiceId",
+                                  "generatedName": "settingsConfigurationAgentSpeakVoiceId",
                                   "key": "voice_id",
                                   "schema": {
-                                    "generatedName": "agentSettingsConfigurationAgentSpeakVoiceId",
+                                    "generatedName": "settingsConfigurationAgentSpeakVoiceId",
                                     "value": {
                                       "description": "Unique voice identifier for the selected provider",
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "AgentSettingsConfigurationAgentSpeakVoiceId",
+                                      "generatedName": "SettingsConfigurationAgentSpeakVoiceId",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -26038,7 +26101,7 @@
                                 }
                               ],
                               "allOfPropertyConflicts": [],
-                              "generatedName": "AgentSettingsConfigurationAgentSpeak",
+                              "generatedName": "SettingsConfigurationAgentSpeak",
                               "groupName": [],
                               "additionalProperties": false,
                               "source": {
@@ -26057,7 +26120,7 @@
                       }
                     ],
                     "allOfPropertyConflicts": [],
-                    "generatedName": "AgentSettingsConfigurationAgent",
+                    "generatedName": "SettingsConfigurationAgent",
                     "groupName": [],
                     "additionalProperties": false,
                     "source": {
@@ -26070,21 +26133,21 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentSettingsConfigurationContext",
+                  "generatedName": "settingsConfigurationContext",
                   "key": "context",
                   "schema": {
-                    "generatedName": "agentSettingsConfigurationContext",
+                    "generatedName": "settingsConfigurationContext",
                     "value": {
-                      "generatedName": "AgentSettingsConfigurationContext",
+                      "generatedName": "SettingsConfigurationContext",
                       "value": {
                         "allOf": [],
                         "properties": [
                           {
                             "conflict": {},
-                            "generatedName": "agentSettingsConfigurationContextMessages",
+                            "generatedName": "settingsConfigurationContextMessages",
                             "key": "messages",
                             "schema": {
-                              "generatedName": "agentSettingsConfigurationContextMessages",
+                              "generatedName": "settingsConfigurationContextMessages",
                               "value": {
                                 "description": "LLM message history for conversation restoration",
                                 "value": {
@@ -26092,19 +26155,19 @@
                                     "schema": {
                                       "type": "string"
                                     },
-                                    "generatedName": "AgentSettingsConfigurationContextMessagesItemKey",
+                                    "generatedName": "SettingsConfigurationContextMessagesItemKey",
                                     "groupName": [],
                                     "type": "primitive"
                                   },
                                   "value": {
-                                    "generatedName": "AgentSettingsConfigurationContextMessagesItemValue",
+                                    "generatedName": "SettingsConfigurationContextMessagesItemValue",
                                     "type": "unknown"
                                   },
-                                  "generatedName": "AgentSettingsConfigurationContextMessagesItem",
+                                  "generatedName": "SettingsConfigurationContextMessagesItem",
                                   "groupName": [],
                                   "type": "map"
                                 },
-                                "generatedName": "AgentSettingsConfigurationContextMessages",
+                                "generatedName": "SettingsConfigurationContextMessages",
                                 "groupName": [],
                                 "type": "array"
                               },
@@ -26115,17 +26178,17 @@
                           },
                           {
                             "conflict": {},
-                            "generatedName": "agentSettingsConfigurationContextReplay",
+                            "generatedName": "settingsConfigurationContextReplay",
                             "key": "replay",
                             "schema": {
-                              "generatedName": "agentSettingsConfigurationContextReplay",
+                              "generatedName": "settingsConfigurationContextReplay",
                               "value": {
                                 "description": "Whether to replay the last assistant message",
                                 "schema": {
                                   "default": false,
                                   "type": "boolean"
                                 },
-                                "generatedName": "AgentSettingsConfigurationContextReplay",
+                                "generatedName": "SettingsConfigurationContextReplay",
                                 "groupName": [],
                                 "type": "primitive"
                               },
@@ -26136,7 +26199,7 @@
                           }
                         ],
                         "allOfPropertyConflicts": [],
-                        "generatedName": "AgentSettingsConfigurationContext",
+                        "generatedName": "SettingsConfigurationContext",
                         "groupName": [],
                         "additionalProperties": false,
                         "source": {
@@ -26155,7 +26218,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentSettingsConfiguration",
+              "generatedName": "SettingsConfiguration",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26169,7 +26232,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentUpdateInstructionsType",
+                  "generatedName": "updateInstructionsType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier",
@@ -26177,7 +26240,7 @@
                       "value": "UpdateInstructions",
                       "type": "string"
                     },
-                    "generatedName": "AgentUpdateInstructionsType",
+                    "generatedName": "UpdateInstructionsType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26185,14 +26248,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentUpdateInstructionsInstructions",
+                  "generatedName": "updateInstructionsInstructions",
                   "key": "instructions",
                   "schema": {
                     "description": "The new instructions to give to the Think model",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentUpdateInstructionsInstructions",
+                    "generatedName": "UpdateInstructionsInstructions",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26200,7 +26263,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentUpdateInstructions",
+              "generatedName": "UpdateInstructions",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26214,7 +26277,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentUpdateSpeakType",
+                  "generatedName": "updateSpeakType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for updating the speak model",
@@ -26222,7 +26285,7 @@
                       "value": "UpdateSpeak",
                       "type": "string"
                     },
-                    "generatedName": "AgentUpdateSpeakType",
+                    "generatedName": "UpdateSpeakType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26230,14 +26293,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentUpdateSpeakModel",
+                  "generatedName": "updateSpeakModel",
                   "key": "model",
                   "schema": {
                     "description": "The new Text-to-Speech model to use",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentUpdateSpeakModel",
+                    "generatedName": "UpdateSpeakModel",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26245,7 +26308,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentUpdateSpeak",
+              "generatedName": "UpdateSpeak",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26259,7 +26322,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentInjectAgentMessageType",
+                  "generatedName": "injectAgentMessageType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for injecting an agent message",
@@ -26267,7 +26330,7 @@
                       "value": "InjectAgentMessage",
                       "type": "string"
                     },
-                    "generatedName": "AgentInjectAgentMessageType",
+                    "generatedName": "InjectAgentMessageType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26275,14 +26338,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentInjectAgentMessageMessage",
+                  "generatedName": "injectAgentMessageMessage",
                   "key": "message",
                   "schema": {
                     "description": "The statement that the agent should say",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentInjectAgentMessageMessage",
+                    "generatedName": "InjectAgentMessageMessage",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26290,7 +26353,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentInjectAgentMessage",
+              "generatedName": "InjectAgentMessage",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26304,7 +26367,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallResponseType",
+                  "generatedName": "functionCallResponseType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for function call responses",
@@ -26312,7 +26375,7 @@
                       "value": "FunctionCallResponse",
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallResponseType",
+                    "generatedName": "FunctionCallResponseType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26320,14 +26383,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallResponseFunctionCallId",
+                  "generatedName": "functionCallResponseFunctionCallId",
                   "key": "function_call_id",
                   "schema": {
                     "description": "The unique identifier matching the original function call request",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallResponseFunctionCallId",
+                    "generatedName": "FunctionCallResponseFunctionCallId",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26335,14 +26398,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallResponseOutput",
+                  "generatedName": "functionCallResponseOutput",
                   "key": "output",
                   "schema": {
                     "description": "The result of the function call execution",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallResponseOutput",
+                    "generatedName": "FunctionCallResponseOutput",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26350,7 +26413,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentFunctionCallResponse",
+              "generatedName": "FunctionCallResponse",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26364,7 +26427,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentKeepAliveType",
+                  "generatedName": "agentKeepAliveType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for agent keep alive signal",
@@ -26372,7 +26435,7 @@
                       "value": "KeepAlive",
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentKeepAliveType",
+                    "generatedName": "AgentKeepAliveType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26380,7 +26443,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentAgentKeepAlive",
+              "generatedName": "AgentKeepAlive",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26407,7 +26470,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentInjectionRefusedType",
+                  "generatedName": "injectionRefusedType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for injection refused",
@@ -26415,7 +26478,7 @@
                       "value": "InjectionRefused",
                       "type": "string"
                     },
-                    "generatedName": "AgentInjectionRefusedType",
+                    "generatedName": "InjectionRefusedType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26423,7 +26486,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentInjectionRefused",
+              "generatedName": "InjectionRefused",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26437,7 +26500,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentWelcomeMessageType",
+                  "generatedName": "welcomeMessageType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for welcome message",
@@ -26445,7 +26508,7 @@
                       "value": "Welcome",
                       "type": "string"
                     },
-                    "generatedName": "AgentWelcomeMessageType",
+                    "generatedName": "WelcomeMessageType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26453,7 +26516,7 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentWelcomeMessageSessionId",
+                  "generatedName": "welcomeMessageSessionId",
                   "key": "session_id",
                   "schema": {
                     "description": "Unique identifier for the websocket session",
@@ -26461,7 +26524,7 @@
                       "format": "uuid",
                       "type": "string"
                     },
-                    "generatedName": "AgentWelcomeMessageSessionId",
+                    "generatedName": "WelcomeMessageSessionId",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26469,7 +26532,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentWelcomeMessage",
+              "generatedName": "WelcomeMessage",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26483,7 +26546,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentSettingsAppliedType",
+                  "generatedName": "settingsAppliedType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for settings applied confirmation",
@@ -26491,7 +26554,7 @@
                       "value": "SettingsApplied",
                       "type": "string"
                     },
-                    "generatedName": "AgentSettingsAppliedType",
+                    "generatedName": "SettingsAppliedType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26499,7 +26562,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentSettingsApplied",
+              "generatedName": "SettingsApplied",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26513,7 +26576,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentConversationTextType",
+                  "generatedName": "conversationTextType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for conversation text",
@@ -26521,7 +26584,7 @@
                       "value": "ConversationText",
                       "type": "string"
                     },
-                    "generatedName": "AgentConversationTextType",
+                    "generatedName": "ConversationTextType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26529,11 +26592,11 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentConversationTextRole",
+                  "generatedName": "conversationTextRole",
                   "key": "role",
                   "schema": {
                     "description": "Identifies who spoke the statement",
-                    "generatedName": "AgentConversationTextRole",
+                    "generatedName": "ConversationTextRole",
                     "values": [
                       {
                         "generatedName": "user",
@@ -26557,14 +26620,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentConversationTextContent",
+                  "generatedName": "conversationTextContent",
                   "key": "content",
                   "schema": {
                     "description": "The actual statement that was spoken",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentConversationTextContent",
+                    "generatedName": "ConversationTextContent",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26572,7 +26635,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentConversationText",
+              "generatedName": "ConversationText",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26586,7 +26649,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentUserStartedSpeakingType",
+                  "generatedName": "userStartedSpeakingType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier indicating that the user has begun speaking",
@@ -26594,7 +26657,7 @@
                       "value": "UserStartedSpeaking",
                       "type": "string"
                     },
-                    "generatedName": "AgentUserStartedSpeakingType",
+                    "generatedName": "UserStartedSpeakingType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26602,7 +26665,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentUserStartedSpeaking",
+              "generatedName": "UserStartedSpeaking",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26616,7 +26679,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentThinkingType",
+                  "generatedName": "agentThinkingType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for agent thinking",
@@ -26624,7 +26687,7 @@
                       "value": "AgentThinking",
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentThinkingType",
+                    "generatedName": "AgentThinkingType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26632,14 +26695,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentThinkingContent",
+                  "generatedName": "agentThinkingContent",
                   "key": "content",
                   "schema": {
                     "description": "The text of the agent's thought process",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentThinkingContent",
+                    "generatedName": "AgentThinkingContent",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26647,7 +26710,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentAgentThinking",
+              "generatedName": "AgentThinking",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26661,7 +26724,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallRequestType",
+                  "generatedName": "functionCallRequestType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for function call requests",
@@ -26669,7 +26732,7 @@
                       "value": "FunctionCallRequest",
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallRequestType",
+                    "generatedName": "FunctionCallRequestType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26677,14 +26740,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallRequestFunctionName",
+                  "generatedName": "functionCallRequestFunctionName",
                   "key": "function_name",
                   "schema": {
                     "description": "The name specified in the function definition",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallRequestFunctionName",
+                    "generatedName": "FunctionCallRequestFunctionName",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26692,14 +26755,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallRequestFunctionCallId",
+                  "generatedName": "functionCallRequestFunctionCallId",
                   "key": "function_call_id",
                   "schema": {
                     "description": "Unique identifier to correlate the response with this request",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallRequestFunctionCallId",
+                    "generatedName": "FunctionCallRequestFunctionCallId",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26707,7 +26770,7 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallRequestInput",
+                  "generatedName": "functionCallRequestInput",
                   "key": "input",
                   "schema": {
                     "description": "Parameters defined for this function in the function definition",
@@ -26715,15 +26778,15 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "AgentFunctionCallRequestInputKey",
+                      "generatedName": "FunctionCallRequestInputKey",
                       "groupName": [],
                       "type": "primitive"
                     },
                     "value": {
-                      "generatedName": "AgentFunctionCallRequestInputValue",
+                      "generatedName": "FunctionCallRequestInputValue",
                       "type": "unknown"
                     },
-                    "generatedName": "AgentFunctionCallRequestInput",
+                    "generatedName": "FunctionCallRequestInput",
                     "groupName": [],
                     "type": "map"
                   },
@@ -26731,7 +26794,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentFunctionCallRequest",
+              "generatedName": "FunctionCallRequest",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26745,7 +26808,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentFunctionCallingType",
+                  "generatedName": "functionCallingType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for function calling status",
@@ -26753,7 +26816,7 @@
                       "value": "FunctionCalling",
                       "type": "string"
                     },
-                    "generatedName": "AgentFunctionCallingType",
+                    "generatedName": "FunctionCallingType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26761,7 +26824,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentFunctionCalling",
+              "generatedName": "FunctionCalling",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26775,7 +26838,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentStartedSpeakingType",
+                  "generatedName": "agentStartedSpeakingType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for agent started speaking",
@@ -26783,7 +26846,7 @@
                       "value": "AgentStartedSpeaking",
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentStartedSpeakingType",
+                    "generatedName": "AgentStartedSpeakingType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26791,14 +26854,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentStartedSpeakingTotalLatency",
+                  "generatedName": "agentStartedSpeakingTotalLatency",
                   "key": "total_latency",
                   "schema": {
                     "description": "Seconds from receiving the user's utterance to producing the agent's reply",
                     "schema": {
                       "type": "float"
                     },
-                    "generatedName": "AgentAgentStartedSpeakingTotalLatency",
+                    "generatedName": "AgentStartedSpeakingTotalLatency",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26806,14 +26869,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentStartedSpeakingTtsLatency",
+                  "generatedName": "agentStartedSpeakingTtsLatency",
                   "key": "tts_latency",
                   "schema": {
                     "description": "The portion of total latency attributable to text-to-speech",
                     "schema": {
                       "type": "float"
                     },
-                    "generatedName": "AgentAgentStartedSpeakingTtsLatency",
+                    "generatedName": "AgentStartedSpeakingTtsLatency",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26821,14 +26884,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentStartedSpeakingTttLatency",
+                  "generatedName": "agentStartedSpeakingTttLatency",
                   "key": "ttt_latency",
                   "schema": {
                     "description": "The portion of total latency attributable to text-to-text (usually an LLM)",
                     "schema": {
                       "type": "float"
                     },
-                    "generatedName": "AgentAgentStartedSpeakingTttLatency",
+                    "generatedName": "AgentStartedSpeakingTttLatency",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26836,7 +26899,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentAgentStartedSpeaking",
+              "generatedName": "AgentStartedSpeaking",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26850,7 +26913,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentAudioDoneType",
+                  "generatedName": "agentAudioDoneType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier indicating the agent has finished sending audio",
@@ -26858,7 +26921,7 @@
                       "value": "AgentAudioDone",
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentAudioDoneType",
+                    "generatedName": "AgentAudioDoneType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26866,7 +26929,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentAgentAudioDone",
+              "generatedName": "AgentAudioDone",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26880,7 +26943,7 @@
               "properties": [
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentErrorResponseType",
+                  "generatedName": "agentErrorResponseType",
                   "key": "type",
                   "schema": {
                     "description": "Message type identifier for error responses",
@@ -26888,7 +26951,7 @@
                       "value": "Error",
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentErrorResponseType",
+                    "generatedName": "AgentErrorResponseType",
                     "groupName": [],
                     "type": "literal"
                   },
@@ -26896,14 +26959,14 @@
                 },
                 {
                   "conflict": {},
-                  "generatedName": "agentAgentErrorResponseMessage",
+                  "generatedName": "agentErrorResponseMessage",
                   "key": "message",
                   "schema": {
                     "description": "A description of what went wrong",
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "AgentAgentErrorResponseMessage",
+                    "generatedName": "AgentErrorResponseMessage",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -26911,7 +26974,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "AgentAgentErrorResponse",
+              "generatedName": "AgentErrorResponse",
               "groupName": [],
               "additionalProperties": false,
               "source": {
@@ -26936,7 +26999,48 @@
         }
       ],
       "path": "/agent",
-      "examples": [],
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "SettingsConfiguration",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
+                  "agent": {
+                    "properties": {},
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "InjectionRefused",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
       "source": {
         "file": "../asyncapi.yml",
         "type": "openapi"
