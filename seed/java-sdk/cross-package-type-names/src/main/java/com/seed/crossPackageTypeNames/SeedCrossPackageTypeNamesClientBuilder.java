@@ -5,6 +5,7 @@ package com.seed.crossPackageTypeNames;
 
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedCrossPackageTypeNamesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedCrossPackageTypeNamesClientBuilder {
      */
     public SeedCrossPackageTypeNamesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedCrossPackageTypeNamesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

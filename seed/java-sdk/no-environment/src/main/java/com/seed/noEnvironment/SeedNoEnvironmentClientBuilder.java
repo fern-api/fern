@@ -5,6 +5,7 @@ package com.seed.noEnvironment;
 
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedNoEnvironmentClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,14 @@ public final class SeedNoEnvironmentClientBuilder {
      */
     public SeedNoEnvironmentClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedNoEnvironmentClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

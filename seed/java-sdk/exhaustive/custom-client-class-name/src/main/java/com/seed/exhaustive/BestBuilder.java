@@ -5,6 +5,7 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class BestBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,14 @@ public final class BestBuilder {
      */
     public BestBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public BestBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

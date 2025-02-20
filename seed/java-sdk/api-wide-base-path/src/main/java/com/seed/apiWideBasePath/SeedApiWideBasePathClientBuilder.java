@@ -5,6 +5,7 @@ package com.seed.apiWideBasePath;
 
 import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedApiWideBasePathClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedApiWideBasePathClientBuilder {
      */
     public SeedApiWideBasePathClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedApiWideBasePathClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

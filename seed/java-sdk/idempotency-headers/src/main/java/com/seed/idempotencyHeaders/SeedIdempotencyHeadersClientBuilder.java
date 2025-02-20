@@ -5,6 +5,7 @@ package com.seed.idempotencyHeaders;
 
 import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedIdempotencyHeadersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -31,6 +32,14 @@ public final class SeedIdempotencyHeadersClientBuilder {
      */
     public SeedIdempotencyHeadersClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedIdempotencyHeadersClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

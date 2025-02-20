@@ -9,7 +9,8 @@ import {
     SchemaId,
     SchemaWithExample,
     Source,
-    WebsocketChannel
+    WebsocketChannel,
+    WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
 import { FernOpenAPIExtension } from "../..";
@@ -20,6 +21,7 @@ import { convertSchema } from "../../schema/convertSchemas";
 import { constructUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getSchemas } from "../../utils/getSchemas";
+import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
@@ -89,6 +91,12 @@ export function parseAsyncAPIV3({
             }
         }
     }
+
+    const flattenedMessageSchemas: Record<string, SchemaWithExample> = Object.values(messageSchemas).reduce(
+        (acc, schemas) => ({ ...acc, ...schemas }),
+        {}
+    );
+    const exampleFactory = new ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
@@ -225,6 +233,19 @@ export function parseAsyncAPIV3({
             (channelSchemas[channelPath] != null &&
                 (channelSchemas[channelPath].publish != null || channelSchemas[channelPath].subscribe != null))
         ) {
+            const examples: WebsocketSessionExample[] = [];
+            const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                handshake: {
+                    headers,
+                    queryParameters
+                },
+                publish: channelSchemas[channelPath]?.publish,
+                subscribe: channelSchemas[channelPath]?.subscribe
+            });
+            if (autogenExample != null) {
+                examples.push(autogenExample);
+            }
+
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -260,7 +281,7 @@ export function parseAsyncAPIV3({
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
                 description: undefined,
-                examples: [],
+                examples,
                 source
             };
         }

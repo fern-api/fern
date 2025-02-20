@@ -5,6 +5,7 @@ package com.seed.deepCursorPath;
 
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedDeepCursorPathClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedDeepCursorPathClientBuilder {
      */
     public SeedDeepCursorPathClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedDeepCursorPathClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

@@ -8,19 +8,23 @@ import {
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { isExamplePrimitive } from "../../openapi/v3/converters/ExampleEndpointFactory";
-import { convertSchema } from "../../schema/convertSchemas";
-import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
-import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { isSchemaRequired } from "../../schema/utils/isSchemaRequired";
-import { WebsocketSessionExampleExtension } from "../getFernExamples";
-import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
+import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
+import { convertSchema } from "../schema/convertSchemas";
+import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
+import { isReferenceObject } from "../schema/utils/isReferenceObject";
+import { isSchemaRequired } from "../schema/utils/isSchemaRequired";
+import { WebsocketSessionExampleExtension } from "./getFernExamples";
+import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
+import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext";
 
 export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, context: AsyncAPIV2ParserContext) {
+    constructor(
+        schemas: Record<string, SchemaWithExample>,
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext
+    ) {
         this.exampleTypeFactory = new ExampleTypeFactory(schemas, new Set(), context);
         this.schemas = schemas;
     }
@@ -34,7 +38,7 @@ export class ExampleWebsocketSessionFactory {
         source,
         namespace
     }: {
-        context: AsyncAPIV2ParserContext;
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
         handshake: WebsocketHandshakeWithExample;
         publish: SchemaWithExample | undefined;
