@@ -5,6 +5,7 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { websocket } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -419,10 +420,8 @@ export class ApiReferenceNodeConverterLatest {
             this.#visitedEndpoints.add(endpoint.id);
             const endpointSlug =
                 endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({
-                          urlSlug: getApiLatestToNavigationNodeUrlSlug(endpoint, parentSlug, parentSlug)
-                      });
+                    ? parentSlug.append(endpointItem.slug).get()
+                    : getApiLatestToNavigationNodeUrlSlug({ item: endpoint, parentSlug });
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
                 type: "endpoint",
@@ -432,7 +431,7 @@ export class ApiReferenceNodeConverterLatest {
                 availability: FernNavigation.V1.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
                 title: endpointItem.title ?? endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
-                slug: endpointSlug.get(),
+                slug: endpointSlug,
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
@@ -463,12 +462,10 @@ export class ApiReferenceNodeConverterLatest {
                 type: "webSocket",
                 webSocketId: webSocket.id,
                 title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
-                slug: (endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({
-                          urlSlug: getApiLatestToNavigationNodeUrlSlug(webSocket, parentSlug, parentSlug)
-                      })
-                ).get(),
+                slug:
+                    endpointItem.slug != null
+                        ? parentSlug.append(endpointItem.slug).get()
+                        : getApiLatestToNavigationNodeUrlSlug({ item: webSocket, parentSlug }),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
@@ -497,12 +494,10 @@ export class ApiReferenceNodeConverterLatest {
                 webhookId: webhook.id,
                 method: webhook.method,
                 title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
-                slug: (endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply({
-                          urlSlug: getApiLatestToNavigationNodeUrlSlug(webhook, parentSlug, parentSlug)
-                      })
-                ).get(),
+                slug:
+                    endpointItem.slug != null
+                        ? parentSlug.append(endpointItem.slug).get()
+                        : getApiLatestToNavigationNodeUrlSlug({ item: webhook, parentSlug }),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
@@ -554,7 +549,10 @@ export class ApiReferenceNodeConverterLatest {
         // Convert unvisited subpackages
         Object.entries(pkg.subpackages).forEach(([subpackageId, subpackageMetadata]) => {
             if (!this.#visitedSubpackages.has(subpackageId)) {
-                additionalChildren.push(this.#createSubpackageNode(subpackageId, subpackageMetadata, parentSlug));
+                const node = this.#createSubpackageNode(subpackageId, subpackageMetadata, parentSlug);
+                if (node != null) {
+                    additionalChildren.push(node);
+                }
             }
         });
 
@@ -563,7 +561,10 @@ export class ApiReferenceNodeConverterLatest {
             if (endpointId == null) {
                 throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
             }
-            if (!this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId))) {
+            if (
+                !this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId)) &&
+                (endpoint.namespace?.join(".") ?? this.#api.id) === pkg.id
+            ) {
                 this.#addEndpointToHierarchy(endpointId, endpoint, parentSlug, additionalChildren);
             }
         });
@@ -573,7 +574,10 @@ export class ApiReferenceNodeConverterLatest {
             if (webSocketId == null) {
                 throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
             }
-            if (!this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId))) {
+            if (
+                !this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId)) &&
+                (webSocket.namespace?.join(".") ?? this.#api.id) === pkg.id
+            ) {
                 this.#addWebSocketToHierarchy(webSocketId, webSocket, parentSlug, additionalChildren);
             }
         });
@@ -583,7 +587,10 @@ export class ApiReferenceNodeConverterLatest {
             if (webhookId == null) {
                 throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
             }
-            if (!this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId))) {
+            if (
+                !this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId)) &&
+                (webhook.namespace?.join(".") ?? this.#api.id) === pkg.id
+            ) {
                 this.#addWebhookToHierarchy(webhookId, webhook, parentSlug, additionalChildren);
             }
         });
@@ -605,14 +612,16 @@ export class ApiReferenceNodeConverterLatest {
         subpackageId: string,
         metadata: FdrAPI.api.latest.SubpackageMetadata,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): FernNavigation.V1.ApiPackageNode {
+    ): FernNavigation.V1.ApiPackageNode | undefined {
         const slug = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
             urlSlug: kebabCase(metadata.name)
         });
+        const children = this.#convertApiDefinitionPackageId(subpackageId, slug);
+
         const node: FernNavigation.V1.ApiPackageNode = {
             id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
             type: "apiPackage",
-            children: [],
+            children,
             title: metadata.displayName ?? titleCase(metadata.name),
             slug: slug.get(),
             icon: undefined,
@@ -629,7 +638,8 @@ export class ApiReferenceNodeConverterLatest {
             featureFlags: undefined
         };
         this.#topLevelSubpackages.set(subpackageId, node);
-        return node;
+
+        return children.length > 0 ? node : undefined;
     }
 
     #addToNamespaceHierarchy<
@@ -647,67 +657,8 @@ export class ApiReferenceNodeConverterLatest {
         parentSlug: FernNavigation.V1.SlugGenerator,
         additionalChildren: FernNavigation.V1.ApiPackageChild[]
     ) {
-        if (item.namespace?.length) {
-            const [firstNamespacePart, ...remainingParts] = item.namespace;
-            if (firstNamespacePart == null) {
-                return;
-            }
-            let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
-            if (!subpackageCursor) {
-                this.taskContext.logger.error(`Subpackage ${firstNamespacePart} not found in ${this.apiDefinitionId}`);
-                return;
-            }
-
-            let slugGenerator = FernNavigation.V1.SlugGenerator.init(parentSlug.get()).apply({
-                urlSlug: kebabCase(firstNamespacePart)
-            });
-
-            for (const namespacePart of remainingParts) {
-                slugGenerator = slugGenerator.append(kebabCase(namespacePart));
-                subpackageCursor = this.#ensureSubpackage(subpackageCursor, namespacePart, slugGenerator);
-            }
-
-            itemNode.slug = getApiLatestToNavigationNodeUrlSlug(item, parentSlug, slugGenerator);
-            subpackageCursor.children.push(itemNode);
-        } else {
-            additionalChildren.push(itemNode);
-        }
-    }
-
-    #ensureSubpackage(
-        parent: FdrAPI.navigation.v1.ApiPackageNode,
-        namespacePart: string,
-        slugGenerator: FernNavigation.V1.SlugGenerator
-    ): FdrAPI.navigation.v1.ApiPackageNode {
-        let child = parent.children.find(
-            (child): child is FdrAPI.navigation.v1.ApiPackageNode =>
-                child.type === "apiPackage" && child.id === namespacePart.toString()
-        );
-
-        if (!child) {
-            child = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${namespacePart}`),
-                type: "apiPackage",
-                children: [],
-                title: titleCase(namespacePart),
-                slug: slugGenerator.get(),
-                icon: undefined,
-                hidden: undefined,
-                overviewPageId: undefined,
-                availability: undefined,
-                apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined,
-                noindex: undefined,
-                playground: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            };
-            parent.children.push(child);
-        }
-
-        return child;
+        itemNode.slug = getApiLatestToNavigationNodeUrlSlug({ item, parentSlug });
+        additionalChildren.push(itemNode);
     }
 
     #addEndpointToHierarchy(
@@ -792,6 +743,16 @@ export class ApiReferenceNodeConverterLatest {
 
     // TODO: optimize this with some DP, where we store incrementally found endpoints (constructing an indexed tree of subpackages)
     #resolveSubpackage(subpackageId: string): FdrAPI.api.latest.ApiDefinition {
+        const subpackages = Object.fromEntries(
+            Object.entries(this.#api?.subpackages ?? {}).filter(([_, subpackage]) =>
+                subpackageId === this.#api.id
+                    ? subpackage.id.split(".").length === 1
+                    : subpackage.id != null &&
+                      subpackage.id.includes(subpackageId) &&
+                      subpackage.id !== subpackageId &&
+                      subpackage.id.split(".").length === subpackageId.split(".").length + 1
+            )
+        );
         const endpoints = Object.fromEntries(
             Object.entries(this.#api?.endpoints ?? {}).filter(
                 ([_, endpoint]) =>
@@ -819,7 +780,7 @@ export class ApiReferenceNodeConverterLatest {
             websockets,
             webhooks,
             types: {},
-            subpackages: {},
+            subpackages,
             auths: {},
             globalHeaders: undefined,
             snippetsConfiguration: undefined
