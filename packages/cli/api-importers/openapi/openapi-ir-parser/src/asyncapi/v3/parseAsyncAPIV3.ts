@@ -198,8 +198,10 @@ export function parseAsyncAPIV3({
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters)) {
                 const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
+                const isRequired = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_REQUIRED);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
-                const parameterSchema =
+                let parameterSchema: SchemaWithExample;
+                parameterSchema =
                     parameter.enum != null && Array.isArray(parameter.enum)
                         ? buildEnumSchema({
                               parameterName,
@@ -225,7 +227,18 @@ export function parseAsyncAPIV3({
                               groupName: undefined,
                               nameOverride: undefined
                           });
-
+                if (!isRequired) {
+                    parameterSchema = SchemaWithExample.optional({
+                        value: parameterSchema,
+                        description: undefined,
+                        availability: undefined,
+                        generatedName: "",
+                        title: parameterName,
+                        groupName: undefined,
+                        nameOverride: undefined,
+                        inline: undefined
+                    });
+                }
                 const parameterObject = {
                     name: parameterKey,
                     description: parameter.description,
