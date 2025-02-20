@@ -2,7 +2,7 @@
 
 exports[`validate > docs 1`] = `
 "Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
-[docs]: Unexpected. Docs have neither navigation or versions defined."
+[docs]: ✓ All checks passed"
 `;
 
 exports[`validate > no-api 1`] = `"[docs]:Missing file: api.yml"`;
