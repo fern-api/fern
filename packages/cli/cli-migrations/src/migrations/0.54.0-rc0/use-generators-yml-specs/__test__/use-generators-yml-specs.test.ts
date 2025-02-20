@@ -1,6 +1,5 @@
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { describe, expect, it } from "vitest";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -13,7 +12,7 @@ const FIXTURES = ["root-settings", "openapi-single", "asyncapi-single", "api-arr
     RelativeFilePath.of
 );
 
-describe("use-generators-yml-specs", async () => {
+describe("use-generators-yml-specs", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture, async () => {
