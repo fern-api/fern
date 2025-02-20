@@ -7,6 +7,13 @@
 
 - changelogEntry:
     - summary: |
+        Disable broken link checker until it is ready to release. 
+      type: fix
+  irVersion: 55
+  version: 0.53.15
+
+- changelogEntry:
+    - summary: |
         Fixes an issue with the OpenAPI v2 parser where docs configs with no navigation structure would generate incorrect slugs.
       type: fix
   irVersion: 55
