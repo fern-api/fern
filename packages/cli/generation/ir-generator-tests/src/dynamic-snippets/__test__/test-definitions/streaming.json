@@ -342,7 +342,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dummy.generate": {
             "auth": null,
@@ -554,7 +555,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

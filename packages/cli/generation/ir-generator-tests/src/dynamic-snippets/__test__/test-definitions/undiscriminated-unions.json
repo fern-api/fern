@@ -566,7 +566,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_union.getMetadata": {
             "auth": null,
@@ -645,7 +646,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

@@ -4,6 +4,8 @@ imports:
   declaration: ./declaration.yml
   http: ../http.yml
   types: ./types.yml
+  snippets: ./snippets.yml
+
 types:
   EndpointLocation:
     docs: |
@@ -19,6 +21,7 @@ types:
       location: EndpointLocation
       request: Request
       response: Response
+      examples: optional<list<EndpointExample>>
 
   Request:
     docs: |
@@ -95,3 +98,16 @@ types:
       file: commons.NameAndWireValue
       fileArray: commons.NameAndWireValue
       bodyProperty: types.NamedParameter
+
+  EndpointExample:
+    extends:
+      - snippets.EndpointSnippetRequest
+    properties:
+      id:
+        docs: |
+          The unique identifier for the example.
+        type: string
+      name:
+        docs: |
+          The name of the example, if any.
+        type: optional<string>

@@ -606,7 +606,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.get": {
             "auth": {
@@ -706,7 +707,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

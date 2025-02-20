@@ -31,6 +31,7 @@ exports[`generateDynamicIR > go 1`] = `
           },
         },
       },
+      "examples": undefined,
       "location": {
         "method": "GET",
         "path": "/testdata",

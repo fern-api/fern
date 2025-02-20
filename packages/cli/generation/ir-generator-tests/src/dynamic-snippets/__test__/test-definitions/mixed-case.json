@@ -811,7 +811,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.listResources": {
             "auth": null,
@@ -1017,7 +1018,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

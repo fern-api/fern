@@ -10,6 +10,7 @@ import { Declaration } from "../../declaration/types/Declaration";
 import { EndpointLocation } from "./EndpointLocation";
 import { Request } from "./Request";
 import { Response } from "./Response";
+import { EndpointExample } from "./EndpointExample";
 
 export const Endpoint: core.serialization.ObjectSchema<serializers.dynamic.Endpoint.Raw, FernIr.dynamic.Endpoint> =
     core.serialization.objectWithoutOptionalProperties({
@@ -18,6 +19,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.dynamic.Endpo
         location: EndpointLocation,
         request: Request,
         response: Response,
+        examples: core.serialization.list(EndpointExample).optional(),
     });
 
 export declare namespace Endpoint {
@@ -27,5 +29,6 @@ export declare namespace Endpoint {
         location: EndpointLocation.Raw;
         request: Request.Raw;
         response: Response.Raw;
+        examples?: EndpointExample.Raw[] | null;
     }
 }

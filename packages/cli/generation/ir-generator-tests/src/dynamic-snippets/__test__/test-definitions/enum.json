@@ -484,7 +484,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_path-param.send": {
             "auth": null,
@@ -620,7 +621,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_query-param.send": {
             "auth": null,
@@ -888,7 +890,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_query-param.sendList": {
             "auth": null,
@@ -1168,7 +1171,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

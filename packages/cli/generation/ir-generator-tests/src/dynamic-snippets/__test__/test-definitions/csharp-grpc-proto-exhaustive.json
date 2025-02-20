@@ -2402,7 +2402,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.upload": {
             "auth": null,
@@ -2617,7 +2618,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.delete": {
             "auth": null,
@@ -2897,7 +2899,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.describe": {
             "auth": null,
@@ -3112,7 +3115,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.fetch": {
             "auth": null,
@@ -3327,7 +3331,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.list": {
             "auth": null,
@@ -3601,7 +3606,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.query": {
             "auth": null,
@@ -4036,7 +4042,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.update": {
             "auth": null,
@@ -4440,7 +4447,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": {

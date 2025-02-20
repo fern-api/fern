@@ -704,7 +704,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieDocs": {
             "auth": null,
@@ -789,7 +790,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieName": {
             "auth": null,
@@ -874,7 +876,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieMetadata": {
             "auth": null,
@@ -959,7 +962,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovie": {
             "auth": null,
@@ -1044,7 +1048,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovieDocs": {
             "auth": null,
@@ -1129,7 +1134,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovieName": {
             "auth": null,
@@ -1214,7 +1220,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

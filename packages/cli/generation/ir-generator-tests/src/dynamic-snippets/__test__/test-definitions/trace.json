@@ -35546,7 +35546,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.updateTestSubmissionStatus": {
             "auth": {
@@ -35681,7 +35682,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.sendTestSubmissionUpdate": {
             "auth": {
@@ -35816,7 +35818,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.updateWorkspaceSubmissionStatus": {
             "auth": {
@@ -35951,7 +35954,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.sendWorkspaceSubmissionUpdate": {
             "auth": {
@@ -36086,7 +36090,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedTestCase": {
             "auth": {
@@ -36376,7 +36381,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedTestCaseV2": {
             "auth": {
@@ -36542,7 +36548,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedWorkspace": {
             "auth": {
@@ -36804,7 +36811,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedWorkspaceV2": {
             "auth": {
@@ -36942,7 +36950,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_homepage.getHomepageProblems": {
             "auth": {
@@ -37042,7 +37051,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_homepage.setHomepageProblems": {
             "auth": {
@@ -37151,7 +37161,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_migration.getAttemptedMigrations": {
             "auth": {
@@ -37350,7 +37361,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.createPlaylist": {
             "auth": {
@@ -37637,7 +37649,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.getPlaylists": {
             "auth": {
@@ -37989,7 +38002,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.getPlaylist": {
             "auth": {
@@ -38146,7 +38160,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.updatePlaylist": {
             "auth": {
@@ -38312,7 +38327,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.deletePlaylist": {
             "auth": {
@@ -38469,7 +38485,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.createProblem": {
             "auth": {
@@ -38575,7 +38592,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.updateProblem": {
             "auth": {
@@ -38710,7 +38728,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.deleteProblem": {
             "auth": {
@@ -38839,7 +38858,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.getDefaultStarterFiles": {
             "auth": {
@@ -39100,7 +39120,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.createExecutionSession": {
             "auth": {
@@ -39229,7 +39250,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.getExecutionSession": {
             "auth": {
@@ -39358,7 +39380,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.stopExecutionSession": {
             "auth": {
@@ -39487,7 +39510,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.getExecutionSessionsState": {
             "auth": {
@@ -39587,7 +39611,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_sysprop.setNumWarmInstances": {
             "auth": {
@@ -39744,7 +39769,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_sysprop.getNumWarmInstances": {
             "auth": {
@@ -39844,7 +39870,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getLightweightProblems": {
             "auth": {
@@ -39983,7 +40010,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getProblems": {
             "auth": {
@@ -40122,7 +40150,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getLatestProblem": {
             "auth": {
@@ -40290,7 +40319,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getProblemVersion": {
             "auth": {
@@ -40486,7 +40516,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getLightweightProblems": {
             "auth": {
@@ -40663,7 +40694,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getProblems": {
             "auth": {
@@ -40840,7 +40872,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getLatestProblem": {
             "auth": {
@@ -41046,7 +41079,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getProblemVersion": {
             "auth": {
@@ -41280,7 +41314,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": {

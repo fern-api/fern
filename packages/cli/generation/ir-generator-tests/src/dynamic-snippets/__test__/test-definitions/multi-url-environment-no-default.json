@@ -203,7 +203,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_s3.getPresignedUrl": {
             "auth": {
@@ -405,7 +406,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": {
