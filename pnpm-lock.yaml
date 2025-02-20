@@ -5163,6 +5163,9 @@ importers:
       '@types/estree':
         specifier: ^1.0.6
         version: 1.0.6
+      '@types/estree-jsx':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -7284,6 +7287,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
+      '@types/estree':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -10089,6 +10095,9 @@ packages:
 
   '@types/estree-jsx@1.0.0':
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
+
+  '@types/estree-jsx@1.0.5':
+    resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -18049,6 +18058,10 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
 
+  '@types/estree-jsx@1.0.5':
+    dependencies:
+      '@types/estree': 1.0.6
+
   '@types/estree@1.0.6': {}
 
   '@types/esutils@2.0.2': {}
@@ -20256,7 +20269,7 @@ snapshots:
 
   estree-util-visit@2.0.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/unist': 3.0.3
 
   estree-walker@0.6.1: {}
@@ -22123,7 +22136,7 @@ snapshots:
 
   mdast-util-mdx-expression@2.0.1:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0
@@ -22134,7 +22147,7 @@ snapshots:
 
   mdast-util-mdx-jsx@3.2.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
@@ -22161,7 +22174,7 @@ snapshots:
 
   mdast-util-mdxjs-esm@2.0.1:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0

@@ -16,6 +16,7 @@ import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
 import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
+import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
 
 interface AbsolutePathMetadata {
     absolutePathToMarkdownFile: AbsoluteFilePath;
@@ -75,21 +76,13 @@ export function parseImagePaths(
         }
 
         function walkEstreeForSrc(estree: EstreeNode) {
-            walk(estree, {
-                enter: (node) => {
-                    if (node.type === "JSXElement") {
-                        node.openingElement.attributes.forEach((attr) => {
-                            if (attr.type === "JSXAttribute" && attr.name.name === "src") {
-                                const src = trimAnchor(extractSingleLiteral(attr.value));
-                                if (src) {
-                                    const resolvedPath = resolvePath(src, metadata);
-                                    if (resolvedPath != null) {
-                                        filepaths.add(resolvedPath);
-                                        replaced = replaced.replaceAll(src, resolvedPath);
-                                    }
-                                }
-                            }
-                        });
+            walkEstreeJsxAttributes(estree, {
+                src: (attr) => {
+                    const src = trimAnchor(extractSingleLiteral(attr.value));
+                    const resolvedPath = resolvePath(src, metadata);
+                    if (src && resolvedPath) {
+                        filepaths.add(resolvedPath);
+                        replaced = replaced.replaceAll(src, resolvedPath);
                     }
                 }
             });
@@ -257,20 +250,9 @@ export function replaceImagePathsAndUrls(
         }
 
         function walkEstreeForSrcAndHref(estree: EstreeNode) {
-            walk(estree, {
-                enter: (node) => {
-                    if (node.type === "JSXElement") {
-                        node.openingElement.attributes.forEach((attr) => {
-                            if (attr.type === "JSXAttribute" && attr.name.name === "src") {
-                                replaceSrc(trimAnchor(extractSingleLiteral(attr.value)));
-                            }
-
-                            if (attr.type === "JSXAttribute" && attr.name.name === "href") {
-                                replaceHref(trimAnchor(extractSingleLiteral(attr.value)));
-                            }
-                        });
-                    }
-                }
+            walkEstreeJsxAttributes(estree, {
+                src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
+                href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
             });
         }
 
