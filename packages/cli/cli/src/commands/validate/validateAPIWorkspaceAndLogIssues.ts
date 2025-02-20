@@ -11,14 +11,12 @@ export async function validateAPIWorkspaceWithoutExiting({
     workspace,
     context,
     logWarnings,
-    logSummary = true,
-    logPrefix = ""
+    logSummary = true
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     logWarnings: boolean;
     logSummary?: boolean;
-    logPrefix?: string;
 }): Promise<{ hasErrors: boolean }> {
     const startTime = performance.now();
     const apiViolations = validateFernWorkspace(workspace, context.logger);
@@ -30,7 +28,6 @@ export async function validateAPIWorkspaceWithoutExiting({
         context,
         logWarnings,
         logSummary,
-        logPrefix,
         elapsedMillis
     });
 
@@ -40,19 +37,17 @@ export async function validateAPIWorkspaceWithoutExiting({
 export async function validateAPIWorkspaceAndLogIssues({
     workspace,
     context,
-    logWarnings,
-    logPrefix = ""
+    logWarnings
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     logWarnings: boolean;
-    logPrefix?: string;
 }): Promise<void> {
     if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
         context.failAndThrow("API name is not valid.");
     }
 
-    const { hasErrors } = await validateAPIWorkspaceWithoutExiting({ workspace, context, logWarnings, logPrefix });
+    const { hasErrors } = await validateAPIWorkspaceWithoutExiting({ workspace, context, logWarnings });
 
     if (hasErrors) {
         context.failAndThrow();

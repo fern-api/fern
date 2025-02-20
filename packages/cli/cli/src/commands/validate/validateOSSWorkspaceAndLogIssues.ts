@@ -8,19 +8,17 @@ export async function validateOSSWorkspaceWithoutExiting({
     workspace,
     context,
     logWarnings,
-    logSummary = true,
-    logPrefix = ""
+    logSummary = true
 }: {
     workspace: OSSWorkspace;
     context: TaskContext;
     logWarnings: boolean;
     logSummary?: boolean;
-    logPrefix?: string;
 }): Promise<{ hasErrors: boolean }> {
     const startTime = performance.now();
     const violations = await validateOSSWorkspace(workspace, context);
     const elapsedMillis = performance.now() - startTime;
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary, logPrefix, elapsedMillis });
+    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary, elapsedMillis });
 
     return { hasErrors };
 }
@@ -28,19 +26,16 @@ export async function validateOSSWorkspaceWithoutExiting({
 export async function validateOSSWorkspaceAndLogIssues({
     workspace,
     context,
-    logWarnings,
-    logPrefix = ""
+    logWarnings
 }: {
     workspace: OSSWorkspace;
     context: TaskContext;
     logWarnings: boolean;
-    logPrefix?: string;
 }): Promise<void> {
     const { hasErrors } = await validateOSSWorkspaceWithoutExiting({
         workspace,
         context,
-        logWarnings,
-        logPrefix
+        logWarnings
     });
 
     if (hasErrors) {
