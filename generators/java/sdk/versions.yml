@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 2.16.0
+- changelogEntry:
+    - summary: |
         Add support for custom HTTP client in Java SDK
       type: feat
   createdAt: '2025-02-19'
