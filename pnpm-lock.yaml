@@ -6094,9 +6094,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/core-utils
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils
@@ -6151,9 +6148,6 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6176,9 +6170,6 @@ importers:
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
