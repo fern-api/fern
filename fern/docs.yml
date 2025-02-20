@@ -471,6 +471,9 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+          - page: Custom React Components
+            icon: fa-brands fa-react
+            path: ./pages/docs/writing-content/custom-react-components.mdx
           - page: Frontmatter
             icon: fa-regular fa-sliders
             path: ./pages/docs/writing-content/frontmatter.mdx

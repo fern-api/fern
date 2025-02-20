@@ -7,6 +7,11 @@ export const FernAsyncAPIExtension = {
     FERN_DISPLAY_NAME: "x-fern-display-name",
 
     /**
+     * The x-fern-sdk-group-name allows you to specify the SDK group name for the websocket channel.
+     */
+    FERN_SDK_GROUP_NAME: "x-fern-sdk-group-name",
+
+    /**
      * The x-fern-examples allows you to specify examples for the websocket session.
      *
      * channels:
