@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
 
-import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 const MDX_NODE_TYPES = [
@@ -73,8 +73,7 @@ export function collectLinksAndSources({
             visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
 
-        const format = absoluteFilepath ? getMarkdownFormat(absoluteFilepath) : "mdx";
-        const mdast = parseMarkdownToTree(content, format);
+        const mdast = parseMarkdownToTree(content);
 
         const hast = toHast(mdast, {
             allowDangerousHtml: true,

@@ -2,7 +2,7 @@ import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { visit } from "unist-util-visit";
 
-import { getMarkdownFormat, getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
+import { getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
@@ -20,7 +20,7 @@ export const ValidMarkdownFileReferences: Rule = {
                     const fileContents = await readFile(absoluteFilepath, "utf-8");
                     const { content } = grayMatter(fileContents, {});
 
-                    const tree = parseMarkdownToTree(content, getMarkdownFormat(absoluteFilepath));
+                    const tree = parseMarkdownToTree(content);
 
                     const errors: RuleViolation[] = [];
 
