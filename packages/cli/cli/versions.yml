@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix an issue with the OpenAPI v2 parser where recursive subpackage slugs would not generate correctly.
+      type: fix
+  irVersion: 55
+  version: 0.53.16
+
+- changelogEntry:
+    - summary: |
         Disable broken link checker until it is ready to release. 
       type: fix
   irVersion: 55
