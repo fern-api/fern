@@ -1,7 +1,14 @@
 - changelogEntry:
     - summary: |
+        Improve the violations summary displayed by `fern check` and include elapsed time when available.
+      type: fix
+  irVersion: 55
+  version: 0.53.19
+
+- changelogEntry:
+    - summary: |
         Fix an issue where de-conflicting message names in AsyncAPI v3 parser would only update subsequent message names,
-        but not the first occurrence. 
+        but not the first occurrence.
       type: fix
   irVersion: 55
   version: 0.53.18
@@ -22,7 +29,7 @@
 
 - changelogEntry:
     - summary: |
-        Disable broken link checker until it is ready to release. 
+        Disable broken link checker until it is ready to release.
       type: fix
   irVersion: 55
   version: 0.53.15
@@ -72,7 +79,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix noindex behavior for section overview pages. 
+        Fix noindex behavior for section overview pages.
       type: fix
   irVersion: 55
   version: 0.53.8
@@ -155,7 +162,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object 
+        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object
         types, and fixes minor issues with docs dev when using specific navigation locators in docs.yml specification.
       type: fix
   irVersion: 55
@@ -163,7 +170,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with 
+        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with
         better fallback logic for sparse requests.
       type: fix
   irVersion: 55
@@ -193,8 +200,8 @@
 
 - changelogEntry:
     - summary: |
-        The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets 
-        accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which 
+        The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets
+        accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which
         could lead to incorrect API usage. This fix ensures that array parameters marked as "exploded" are properly expanded in the generated curl examples.
       type: fix
   irVersion: 55
@@ -202,7 +209,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required 
+        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required
         properties for global headers and improves upon example generation for APIs.
       type: fix
   irVersion: 55
@@ -322,7 +329,7 @@
 
 - changelogEntry:
     - summary: |
-        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly 
+        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly
         enabled with `displayErrors: true`.
       type: fix
   irVersion: 55
@@ -354,7 +361,7 @@
         OpenAPI overrides now support resolving file references from the location of the
         OpenAPI overrides file itself. Previously, relative paths were only resolved from
         the OpenAPI source file.
- 
+
         Most users will experience no change, but this will enable a wider set of file
         directory layouts depending on the user's preference.
       type: fix
@@ -363,18 +370,18 @@
 
 - changelogEntry:
     - summary: |
-        The Fern Definition now allows you to declare status codes for the response without having a type. 
-        This is useful for `204` response status codes. 
- 
+        The Fern Definition now allows you to declare status codes for the response without having a type.
+        This is useful for `204` response status codes.
+
         ```yml users.yml
-        service: 
+        service:
           auth: false
           base-path: /users
-          endpoints: 
-            update: 
+          endpoints:
+            update:
               path: ""
-              response: 
-                status-code: 204        
+              response:
+                status-code: 204
         ```
       type: fix
   irVersion: 55
@@ -396,7 +403,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating 
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
         the status code from the OpenAPI spec through the IR and FDR layers.
       type: fix
   irVersion: 55
@@ -404,7 +411,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating 
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
         the status code from the OpenAPI spec through the IR and FDR layers.
       type: fix
   irVersion: 55
