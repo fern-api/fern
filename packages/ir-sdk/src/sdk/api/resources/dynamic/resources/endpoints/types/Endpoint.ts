@@ -10,5 +10,5 @@ export interface Endpoint {
     location: FernIr.dynamic.EndpointLocation;
     request: FernIr.dynamic.Request;
     response: FernIr.dynamic.Response;
-    examples: FernIr.dynamic.EndpointSnippetRequest[] | undefined;
+    examples: FernIr.dynamic.EndpointExample[] | undefined;
 }

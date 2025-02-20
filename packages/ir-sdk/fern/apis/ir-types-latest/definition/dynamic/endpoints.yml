@@ -21,7 +21,7 @@ types:
       location: EndpointLocation
       request: Request
       response: Response
-      examples: optional<list<snippets.EndpointSnippetRequest>>
+      examples: optional<list<EndpointExample>>
 
   Request:
     docs: |
@@ -98,3 +98,12 @@ types:
       file: commons.NameAndWireValue
       fileArray: commons.NameAndWireValue
       bodyProperty: types.NamedParameter
+
+  EndpointExample:
+    extends:
+      - snippets.EndpointSnippetRequest
+    properties:
+      name:
+        docs: |
+          The name of the example, if any.
+        type: optional<string>
