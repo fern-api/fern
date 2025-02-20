@@ -5108,6 +5108,9 @@ importers:
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.130.1-6a9e22770
         version: 0.130.1-6a9e22770
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5123,6 +5126,12 @@ importers:
       mdast-util-mdx:
         specifier: ^3.0.0
         version: 3.0.0
+      mdast-util-mdx-expression:
+        specifier: ^2.0.1
+        version: 2.0.1
+      mdast-util-mdx-jsx:
+        specifier: ^3.2.0
+        version: 3.2.0
       micromark-extension-gfm:
         specifier: ^3.0.0
         version: 3.0.0
@@ -5135,9 +5144,6 @@ importers:
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
-      ts-essentials:
-        specifier: ^10.0.3
-        version: 10.0.4(typescript@5.7.2)
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -5151,6 +5157,12 @@ importers:
       '@types/diff':
         specifier: ^5.2.1
         version: 5.2.1
+      '@types/estree':
+        specifier: ^1.0.6
+        version: 1.0.6
+      '@types/estree-jsx':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -7269,6 +7281,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
+      '@types/estree':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -10074,6 +10089,9 @@ packages:
 
   '@types/estree-jsx@1.0.0':
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
+
+  '@types/estree-jsx@1.0.5':
+    resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -13254,8 +13272,8 @@ packages:
   mdast-util-math@3.0.0:
     resolution: {integrity: sha512-Tl9GBNeG/AhJnQM221bJR2HPvLOSnLE/T9cJI9tlc6zwQk2nPk/4f0cHkOdEixQPC/j8UtKDdITswvLAy1OZ1w==}
 
-  mdast-util-mdx-expression@2.0.0:
-    resolution: {integrity: sha512-fGCu8eWdKUKNu5mohVGkhBXCXGnOTLuFqOvGMvdikr+J1w7lDJgxThOKpwRWzzbyXAU2hhSwsmssOY4yTokluw==}
+  mdast-util-mdx-expression@2.0.1:
+    resolution: {integrity: sha512-J6f+9hUp+ldTZqKRSg7Vw5V6MqjATc+3E4gf3CFNcuZNWD8XdyI6zQ8GqH7f8169MM6P7hMBRDVGnn7oHB9kXQ==}
 
   mdast-util-mdx-jsx@3.2.0:
     resolution: {integrity: sha512-lj/z8v0r6ZtsN/cGNNtemmmfoLAFZnjMbNyLzBafjzikOM+glrjNHPlf6lQDOTccj9n5b0PPihEBbhneMyGs1Q==}
@@ -18034,6 +18052,10 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
 
+  '@types/estree-jsx@1.0.5':
+    dependencies:
+      '@types/estree': 1.0.6
+
   '@types/estree@1.0.6': {}
 
   '@types/esutils@2.0.2': {}
@@ -20241,7 +20263,7 @@ snapshots:
 
   estree-util-visit@2.0.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/unist': 3.0.3
 
   estree-walker@0.6.1: {}
@@ -20850,7 +20872,7 @@ snapshots:
       estree-util-attach-comments: 3.0.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       property-information: 6.3.0
@@ -20884,7 +20906,7 @@ snapshots:
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       property-information: 6.3.0
@@ -22106,9 +22128,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx-expression@2.0.0:
+  mdast-util-mdx-expression@2.0.1:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0
@@ -22119,7 +22141,7 @@ snapshots:
 
   mdast-util-mdx-jsx@3.2.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
@@ -22137,7 +22159,7 @@ snapshots:
   mdast-util-mdx@3.0.0:
     dependencies:
       mdast-util-from-markdown: 2.0.2
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       mdast-util-to-markdown: 2.1.0
@@ -22146,7 +22168,7 @@ snapshots:
 
   mdast-util-mdxjs-esm@2.0.1:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0
