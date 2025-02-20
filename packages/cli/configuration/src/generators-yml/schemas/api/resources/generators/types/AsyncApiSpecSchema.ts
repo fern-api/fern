@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface AsyncApiSchema {
+export interface AsyncApiSpecSchema {
     asyncapi: string;
     origin?: string;
     overrides?: string;

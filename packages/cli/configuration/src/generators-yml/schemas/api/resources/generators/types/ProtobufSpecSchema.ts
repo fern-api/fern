@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface ProtobufDefinitionSchema extends FernDefinition.BaseProtobufDefinitionSchema {
+export interface ProtobufSpecSchema extends FernDefinition.BaseProtobufDefinitionSchema {
     /** The path to the `.proto` directory root (e.g. `proto`). */
-    root: string;
+    proto: string;
 }

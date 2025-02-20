@@ -27,6 +27,7 @@ types:
         type: optional<reviewers.ReviewersSchema>
       openapi:
         type: optional<GeneratorsOpenAPISchema>
+        availability: deprecated
         docs: Deprecated, use the `api` key instead
 
       # Deprecated use the `api` key instead
@@ -124,11 +125,36 @@ types:
     docs: Path to the OpenAPI, AsyncAPI or Fern Definition
 
   APIDefinitionSettingsSchema:
-    extends:
-      - OpenAPISettingsSchema
-      - AsyncAPISettingsSchema
-      - ConjureSettingsSchema
-    properties: {}
+    availability: deprecated
+    docs: Deprecated, use the `api.specs` key instead
+    properties:
+      use-title:
+        type: optional<boolean>
+        docs: |
+          Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+          Deprecated, use the `api.specs.[].settings.title-as-schema-name` key instead.
+        availability: deprecated
+      unions:
+        type: optional<UnionSettingsSchema>
+        docs: |
+          What version of union generation to use, this will grow over time. Defaults to v0.
+          Deprecated, use the `api.specs.[].settings.prefer-undiscriminated-unions-with-literals` key instead.
+        availability: deprecated
+      message-naming:
+        type: optional<MessageNamingSettingsSchema>
+        docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
+      respect-nullable-schemas:
+        type: optional<boolean>
+        docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
+      only-include-referenced-schemas:
+        type: optional<boolean>
+        docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
+      inline-path-parameters:
+        type: optional<boolean>
+        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      idiomatic-request-names:
+        type: optional<boolean>
+        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
 
   UnionSettingsSchema:
     enum:
@@ -153,11 +179,8 @@ types:
         docs: Audiences that you would like to filter to
       settings: optional<APIDefinitionSettingsSchema>
 
-  ProtobufDefinitionSchema:
+  BaseProtobufDefinitionSchema:
     properties:
-      root:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
       target:
         type: string
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
@@ -167,6 +190,14 @@ types:
       local-generation:
         type: optional<boolean>
         docs: Whether to compile the `.proto` files locally. By default, we generate remotely.
+
+  ProtobufDefinitionSchema:
+    extends:
+      - BaseProtobufDefinitionSchema
+    properties:
+      root:
+        type: string
+        docs: The path to the `.proto` directory root (e.g. `proto`).
 
   ProtobufAPIDefinitionSchema:
     properties:
@@ -202,7 +233,7 @@ types:
   APIConfigurationV2SpecsSchema:
     discriminated: false
     union:
-      - list<AsyncAPIOrOpenAPISpecSchema>
+      - list<SpecSchema>
       - ConjureSchema
 
   BaseAPISettingsSchema:
@@ -221,13 +252,6 @@ types:
     extends:
       - BaseAPISettingsSchema
     properties:
-      use-title:
-        type: optional<boolean>
-        availability: deprecated
-        docs: Deprecated, use the `title-as-schema-name` key instead
-      unions:
-        type: optional<UnionSettingsSchema>
-        docs: What version of union generation to use, this will grow over time. Defaults to v0.
       only-include-referenced-schemas:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
@@ -291,7 +315,7 @@ types:
         type: optional<MessageNamingSettingsSchema>
         docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
 
-  AsyncAPISchema:
+  AsyncAPISpecSchema:
     properties:
       asyncapi: string
       origin: optional<string>
@@ -306,8 +330,17 @@ types:
     properties:
       conjure: string
 
-  AsyncAPIOrOpenAPISpecSchema:
+  SpecSchema:
     discriminated: false
     union:
       - OpenAPISpecSchema
-      - AsyncAPISchema
+      - AsyncAPISpecSchema
+      - ProtobufSpecSchema
+
+  ProtobufSpecSchema:
+    extends:
+      - BaseProtobufDefinitionSchema
+    properties:
+      proto:
+        type: string
+        docs: The path to the `.proto` directory root (e.g. `proto`).

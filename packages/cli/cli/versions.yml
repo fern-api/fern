@@ -3,14 +3,10 @@
         Fix issue where the CLI would not parse asyncapi specs within the `api.specs` array in generators.yml.
       type: fix
     - summary: |
-        Make `api.settings` and `api-settings` a combination of OpenAPI, AsyncAPI, and Conjure settings.
-      type: fix
-    - summary: |
-        `api-settings` are inherited by any OpenAPI, AsyncAPI, or Clojure definition.
-        You can overwrite the inherited settings by configuring the settings on the definition itself.
+        Migrate old spec configuration in generators.yml to the `api.specs[]` format.
       type: feat
   irVersion: 55
-  version: 0.53.11
+  version: 0.53.15
 
 - changelogEntry:
     - summary: |

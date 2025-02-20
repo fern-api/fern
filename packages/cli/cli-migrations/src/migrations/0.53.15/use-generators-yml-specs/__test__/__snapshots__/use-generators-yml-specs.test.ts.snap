@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`use-generators-yml-specs > api-array 1`] = `
+"# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - openapi: ./openapi.yml
+      settings: {}
+    - openapi: ./openapi2.yml
+      overrides: ./openapi2.overrides.yml
+      origin: dummy2
+      settings:
+        title-as-schema-name: false
+    - asyncapi: ./asyncapi.yml
+      settings: {}
+    - asyncapi: ./asyncapi2.yml
+      overrides: ./asyncapi2.overrides.yml
+      origin: dummy2
+      settings:
+        message-naming: v2
+    - proto: ./proto
+      overrides: ./proto/overrides.yml
+      target: ./proto/target
+      local-generation: true
+"
+`;
+
+exports[`use-generators-yml-specs > asyncapi-single 1`] = `
+"# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - asyncapi: ./asyncapi.yml
+      overrides: ./asyncapi.overrides.yml
+      origin: dummy
+      settings:
+        message-naming: v2
+"
+`;
+
+exports[`use-generators-yml-specs > openapi-single 1`] = `
+"# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - openapi: ./openapi.yml
+      overrides: ./openapi.overrides.yml
+      origin: dummy
+      settings:
+        title-as-schema-name: false
+"
+`;
+
+exports[`use-generators-yml-specs > root-settings 1`] = `
+"# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - openapi: ./openapi.yml
+      overrides: ./openapi.overrides.yml
+      origin: root
+      settings:
+        inline-path-parameters: true
+        title-as-schema-name: true
+    - asyncapi: ./asyncapi.yml
+      settings:
+        title-as-schema-name: true
+        message-naming: v1
+"
+`;

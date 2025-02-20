@@ -5,10 +5,6 @@
 import * as FernDefinition from "../../../index";
 
 export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSchema {
-    /** Deprecated, use the `title-as-schema-name` key instead */
-    "use-title"?: boolean;
-    /** What version of union generation to use, this will grow over time. Defaults to v0. */
-    unions?: FernDefinition.UnionSettingsSchema;
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     "only-include-referenced-schemas"?: boolean;
     /** Whether to include path parameters within the generated in-lined request. Defaults to false. */

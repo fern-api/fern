@@ -5,7 +5,6 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { FormParameterEncoding } from "./FormParameterEncoding";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
@@ -16,8 +15,6 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     FernDefinition.OpenApiSettingsSchema
 > = core.serialization
     .object({
-        "use-title": core.serialization.boolean().optional(),
-        unions: UnionSettingsSchema.optional(),
         "only-include-referenced-schemas": core.serialization.boolean().optional(),
         "inline-path-parameters": core.serialization.boolean().optional(),
         "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
@@ -31,8 +28,6 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
 
 export declare namespace OpenApiSettingsSchema {
     export interface Raw extends BaseApiSettingsSchema.Raw {
-        "use-title"?: boolean | null;
-        unions?: UnionSettingsSchema.Raw | null;
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;

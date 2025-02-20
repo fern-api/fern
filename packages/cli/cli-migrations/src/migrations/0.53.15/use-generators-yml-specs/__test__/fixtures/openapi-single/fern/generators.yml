@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  path: "./openapi.yml"
+  audiences: ["test"]
+  origin: "dummy"
+  overrides: "./openapi.overrides.yml"
+  settings:
+    use-title: false
+
+api-settings:
+  use-title: true
+  inline-path-parameters: true
+  message-naming: v1
+
+groups: {}

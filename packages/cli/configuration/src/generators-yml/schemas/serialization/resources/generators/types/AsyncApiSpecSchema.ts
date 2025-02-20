@@ -7,9 +7,9 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { AsyncApiSettingsSchema } from "./AsyncApiSettingsSchema";
 
-export const AsyncApiSchema: core.serialization.ObjectSchema<
-    serializers.AsyncApiSchema.Raw,
-    FernDefinition.AsyncApiSchema
+export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
+    serializers.AsyncApiSpecSchema.Raw,
+    FernDefinition.AsyncApiSpecSchema
 > = core.serialization.object({
     asyncapi: core.serialization.string(),
     origin: core.serialization.string().optional(),
@@ -18,7 +18,7 @@ export const AsyncApiSchema: core.serialization.ObjectSchema<
     settings: AsyncApiSettingsSchema.optional(),
 });
 
-export declare namespace AsyncApiSchema {
+export declare namespace AsyncApiSpecSchema {
     export interface Raw {
         asyncapi: string;
         origin?: string | null;
