@@ -5,9 +5,9 @@ import { walk } from "estree-walker";
 export function walkEstreeJsxAttributes(
     estree: EstreeNode,
     handlers: Record<string, (attr: JSXAttribute, node: JSXElement) => void>
-) {
+): void {
     walk(estree, {
-        enter: (node) => {
+        enter (node) {
             if (node.type === "JSXElement") {
                 node.openingElement.attributes.forEach((attr) => {
                     if (
