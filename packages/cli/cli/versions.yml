@@ -1,7 +1,28 @@
 - changelogEntry:
     - summary: |
+        Update CLI-side markdown parsing to detect more hrefs and srcs (where src files are automatically uploaded),
+        enabling the <Download src="./path/to/file.pdf">Download me</Download> pattern to work.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc1
+
+- changelogEntry:
+    - summary: |
+        Fix issue where the CLI would not parse asyncapi specs within the `api.specs` array in generators.yml.
+      type: fix
+    - summary: |
+        Migrate old spec configuration in generators.yml to the `api.specs[]` format.
+      type: feat
+    - summary: |
+        Log warnings when old generators.yml syntax is used during parsing.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc0
+
+- changelogEntry:
+    - summary: |
         Fix an issue where de-conflicting message names in AsyncAPI v3 parser would only update subsequent message names,
-        but not the first occurrence. 
+        but not the first occurrence.
       type: fix
   irVersion: 55
   version: 0.53.18
@@ -22,7 +43,7 @@
 
 - changelogEntry:
     - summary: |
-        Disable broken link checker until it is ready to release. 
+        Disable broken link checker until it is ready to release.
       type: fix
   irVersion: 55
   version: 0.53.15
@@ -72,7 +93,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix noindex behavior for section overview pages. 
+        Fix noindex behavior for section overview pages.
       type: fix
   irVersion: 55
   version: 0.53.8
@@ -155,7 +176,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object 
+        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object
         types, and fixes minor issues with docs dev when using specific navigation locators in docs.yml specification.
       type: fix
   irVersion: 55
@@ -163,7 +184,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with 
+        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with
         better fallback logic for sparse requests.
       type: fix
   irVersion: 55
@@ -193,8 +214,8 @@
 
 - changelogEntry:
     - summary: |
-        The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets 
-        accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which 
+        The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets
+        accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which
         could lead to incorrect API usage. This fix ensures that array parameters marked as "exploded" are properly expanded in the generated curl examples.
       type: fix
   irVersion: 55
@@ -202,7 +223,7 @@
 
 - changelogEntry:
     - summary: |
-        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required 
+        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required
         properties for global headers and improves upon example generation for APIs.
       type: fix
   irVersion: 55
@@ -322,7 +343,7 @@
 
 - changelogEntry:
     - summary: |
-        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly 
+        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly
         enabled with `displayErrors: true`.
       type: fix
   irVersion: 55
@@ -354,7 +375,7 @@
         OpenAPI overrides now support resolving file references from the location of the
         OpenAPI overrides file itself. Previously, relative paths were only resolved from
         the OpenAPI source file.
- 
+
         Most users will experience no change, but this will enable a wider set of file
         directory layouts depending on the user's preference.
       type: fix
@@ -363,18 +384,18 @@
 
 - changelogEntry:
     - summary: |
-        The Fern Definition now allows you to declare status codes for the response without having a type. 
-        This is useful for `204` response status codes. 
- 
+        The Fern Definition now allows you to declare status codes for the response without having a type.
+        This is useful for `204` response status codes.
+
         ```yml users.yml
-        service: 
+        service:
           auth: false
           base-path: /users
-          endpoints: 
-            update: 
+          endpoints:
+            update:
               path: ""
-              response: 
-                status-code: 204        
+              response:
+                status-code: 204
         ```
       type: fix
   irVersion: 55
@@ -396,7 +417,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating 
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
         the status code from the OpenAPI spec through the IR and FDR layers.
       type: fix
   irVersion: 55
@@ -404,7 +425,7 @@
 
 - changelogEntry:
     - summary: |
-        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating 
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
         the status code from the OpenAPI spec through the IR and FDR layers.
       type: fix
   irVersion: 55
@@ -487,7 +508,6 @@
   irVersion: 55
   version: 0.50.17
 
-
 - changelogEntry:
     - summary: |
         Improve performance of `fern docs dev` by debouncing across edits to multiple files,
@@ -544,8 +564,7 @@
   version: 0.50.11
 
 - changelogEntry:
-    - summary:
-        An addition to the broken link checker to further reduce false positives.
+    - summary: An addition to the broken link checker to further reduce false positives.
       type: fix
   irVersion: 55
   version: 0.50.10
@@ -581,14 +600,12 @@
   irVersion: 55
   version: 0.50.6
 
-
 - changelogEntry:
     - summary: |
         The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
       type: fix
   irVersion: 55
   version: 0.50.5
-
 
 - changelogEntry:
     - summary: |
@@ -665,9 +682,9 @@
   version: 0.50.0
 
 - changelogEntry:
-  - summary: |
-      The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
-    type: fix
+    - summary: |
+        The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
+      type: fix
   irVersion: 55
   version: 0.49.1
 
@@ -689,115 +706,115 @@
   version: 0.49.0
 
 - changelogEntry:
-  - summary: |
-      The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
-    type: fix
+    - summary: |
+        The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
+      type: fix
   irVersion: 54
   version: 0.48.1
 
 - changelogEntry:
-  - summary: |
-      Adds support for nullable types in the Fern definition, such as the following:
+    - summary: |
+        Adds support for nullable types in the Fern definition, such as the following:
 
-      ```yaml
-      types:
-        User:
-          properties:
-            name: string
-            email: nullable<string>
-      ```
-    type: feat
+        ```yaml
+        types:
+          User:
+            properties:
+              name: string
+              email: nullable<string>
+        ```
+      type: feat
   irVersion: 55
   version: 0.48.0
 
 - changelogEntry:
-  - summary: |
-      The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
-    type: feat
+    - summary: |
+        The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
+      type: feat
   irVersion: 54
   version: 0.47.6
 
 - changelogEntry:
-  - summary: |
-      Fixes an issue with broken link checking in the OpenAPI v2 parser.
-    type: feat
+    - summary: |
+        Fixes an issue with broken link checking in the OpenAPI v2 parser.
+      type: feat
   irVersion: 53
   version: 0.47.5
 
 - changelogEntry:
-  - summary: |
-      Allows for creating nullable types and pass formats on strings using the OpenAPI v2 parser.
-    type: feat
+    - summary: |
+        Allows for creating nullable types and pass formats on strings using the OpenAPI v2 parser.
+      type: feat
   irVersion: 53
   version: 0.47.4
 
 - changelogEntry:
-  - summary: |
-      Add the JSON schema to the generators.yml file for validation and autocomplete.
-    type: feat
+    - summary: |
+        Add the JSON schema to the generators.yml file for validation and autocomplete.
+      type: feat
   irVersion: 53
   version: 0.47.3
 
 - changelogEntry:
-  - summary: |
-      The CLI now supports checking for broken links in your docs. You will see warnings in `fern check` if your docs link to any
-      page that can't be resolved, and the `--strict-broken-links` option will cause the command to fail (exit with a non-zero exit code) if
-      any broken links are found. You can also run the new command `fern docs broken-links` to only check for broken links (ignoring
-      other possible errors), with the `--strict` option to cause the command to fail if any broken links are found.
-    type: feat
+    - summary: |
+        The CLI now supports checking for broken links in your docs. You will see warnings in `fern check` if your docs link to any
+        page that can't be resolved, and the `--strict-broken-links` option will cause the command to fail (exit with a non-zero exit code) if
+        any broken links are found. You can also run the new command `fern docs broken-links` to only check for broken links (ignoring
+        other possible errors), with the `--strict` option to cause the command to fail if any broken links are found.
+      type: feat
   irVersion: 53
   version: 0.47.2
 
 - changelogEntry:
-  - summary: |
-      Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more
-      idiomatic discriminated unions.
-      ```yml
-      api:
-        specs:
-          - openapi: ./path/to/openapi.yml
-            settings:
-              unions: v1
-      ```
-    type: feat
+    - summary: |
+        Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more
+        idiomatic discriminated unions.
+        ```yml
+        api:
+          specs:
+            - openapi: ./path/to/openapi.yml
+              settings:
+                unions: v1
+        ```
+      type: feat
   irVersion: 53
   version: 0.47.1
 
 - changelogEntry:
-  - summary: |
-      The CLI now supports publishing docs using the improved OpenAPI v2 parser. You can set `openapi-parser-v2: true`
-      in your `docs.yml` to use the new parser.
-    type: feat
+    - summary: |
+        The CLI now supports publishing docs using the improved OpenAPI v2 parser. You can set `openapi-parser-v2: true`
+        in your `docs.yml` to use the new parser.
+      type: feat
   irVersion: 53
   version: 0.47.0
 
 - changelogEntry:
-  - summary: |
-      The CLI now validates that method and group name overrides in OpenAPI settings are not duplicated.
-    type: feat
+    - summary: |
+        The CLI now validates that method and group name overrides in OpenAPI settings are not duplicated.
+      type: feat
   irVersion: 53
   version: 0.46.23
 
 - changelogEntry:
-  - summary: |
-      Support configuration of Google Analytics and Google Tag Manager in API Docs.
-    type: feat
+    - summary: |
+        Support configuration of Google Analytics and Google Tag Manager in API Docs.
+      type: feat
   irVersion: 53
   version: 0.46.22
 
 - changelogEntry:
-  - summary: |
-      The CLI now supports the `prefer-undiscriminated-unions-with-literals` setting in OpenAPI settings.
-    type: fix
+    - summary: |
+        The CLI now supports the `prefer-undiscriminated-unions-with-literals` setting in OpenAPI settings.
+      type: fix
   irVersion: 53
   version: 0.46.21
 
 - changelogEntry:
-  - summary: |
-      The `fern init` command now supports a `--mintlify` option. You can pass in
-      the path to your `mint.json` and the Fern CLI will generate a fern documentation
-      website.
-    type: feat
+    - summary: |
+        The `fern init` command now supports a `--mintlify` option. You can pass in
+        the path to your `mint.json` and the Fern CLI will generate a fern documentation
+        website.
+      type: feat
   irVersion: 53
   version: 0.46.20
 

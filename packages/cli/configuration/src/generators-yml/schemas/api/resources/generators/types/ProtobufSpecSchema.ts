@@ -4,4 +4,6 @@
 
 import * as FernDefinition from "../../../index";
 
-export type AsyncApiOrOpenApiSpecSchema = FernDefinition.OpenApiSpecSchema | FernDefinition.AsyncApiSchema;
+export interface ProtobufSpecSchema {
+    proto: FernDefinition.ProtobufDefinitionSchema;
+}
