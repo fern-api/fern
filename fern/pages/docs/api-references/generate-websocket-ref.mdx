@@ -8,17 +8,15 @@ Fern generates WebSocket API reference documentation from your AsyncAPI specific
 See [Deepgram's configuration](https://github.com/deepgram/deepgram-fern-config/tree/main/fern) for a complete example.
 
 <a href="https://developers.deepgram.com/reference/voice-agent-api/agent">
-  <Frame>
-    <img src="./websocket-deepgram.png" alt="WebSocket API Reference Example" />
-    <figcaption>Example of how a WebSocket API reference renders in Fern</figcaption>
+  <Frame caption="Example of how a WebSocket API Reference renders in Fern">
+    <img src="websocket-deepgram.png" alt="WebSocket API Reference Example" />
   </Frame>
 </a>
 
 ## Configuration
 
-
 1. Add your AsyncAPI specification file (e.g., `asyncapi.yml`) to your `/fern` directory
-2. Configure your `generators.yml`
+1. Configure your `generators.yml`
 
 <CodeBlock title='generators.yml'>
   ```yaml
@@ -28,16 +26,17 @@ api:
   ```
 </CodeBlock>
 
-<Params>
-  <Param name="path" required>
-    Location of your AsyncAPI specification file
-  </Param>
-  <Param name="origin" optional>
-    URL where the specification file is hosted if you want Fern to fetch it from a remote location
-  </Param>
-</Params>
+### Properties
 
-## Common Use Cases
+<ParamField path="path" required>
+    Location of your AsyncAPI specification file
+</ParamField>
+
+<ParamField path="origin">
+    URL where the specification file is hosted if you want Fern to fetch it from a remote location
+</ParamField>
+
+## Common use cases
 
 WebSockets enable real-time, bidirectional communication, making them essential for:
 
