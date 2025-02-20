@@ -34,6 +34,11 @@ const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
 const LOCATION_PREFIX = "$message.";
 
+interface SeenMessage {
+    channelId: string;
+    payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+}
+
 export function parseAsyncAPIV3({
     context,
     breadcrumbs,
@@ -49,7 +54,7 @@ export function parseAsyncAPIV3({
 }): AsyncAPIIntermediateRepresentation {
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     const messageSchemas: Record<ChannelId, Record<SchemaId, SchemaWithExample>> = {};
-    const seenMessageIds: Array<Record<ChannelId, SchemaId>> = [];
+    const seenMessages: Record<string, SeenMessage[]> = {};
     const duplicatedMessageIds: Array<SchemaId> = [];
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
@@ -58,36 +63,53 @@ export function parseAsyncAPIV3({
     }
 
     for (const [channelId, channel] of Object.entries(document.channels ?? {})) {
-        if (channel.messages != null) {
+        if (!messageSchemas[channelId]) {
             messageSchemas[channelId] = {};
+        }
+        if (channel.messages) {
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                let schemaId: string;
-                if (seenMessageIds.some((seenMessageRecord) => seenMessageRecord.schemaId === messageId)) {
-                    schemaId = `${channelId}_${messageId}`;
-                    for (const seenMessageRecord of seenMessageIds) {
-                        const { channelId: cid, schemaId: sid } = seenMessageRecord;
-                        if (sid === messageId && cid != null) {
-                            if (messageSchemas[cid] != null && messageSchemas[cid][sid] != null) {
-                                messageSchemas[cid][`${cid}_${messageId}`] = messageSchemas[cid][sid];
-                            }
-                            seenMessageIds.push({ channelId: cid, schemaId: `${cid}_${messageId}` });
-                        }
+                if (message && message.payload != null) {
+                    if (!seenMessages[messageId]) {
+                        seenMessages[messageId] = [];
                     }
-                    duplicatedMessageIds.push(messageId);
-                } else {
-                    schemaId = messageId;
+                    seenMessages[messageId].push({
+                        channelId,
+                        payload: message.payload
+                    });
                 }
-                seenMessageIds.push({ channelId, schemaId });
-                if (message.payload != null) {
-                    messageSchemas[channelId][schemaId] = convertSchema(
-                        message.payload,
-                        false,
-                        context,
-                        [schemaId],
-                        source,
-                        context.namespace
-                    );
+            }
+        }
+    }
+
+    for (const [originalMessageId, occurrences] of Object.entries(seenMessages)) {
+        if (occurrences.length === 1) {
+            const occurence = occurrences[0] as SeenMessage;
+            const occurenceChannelId = occurence.channelId as ChannelId;
+            messageSchemas[occurenceChannelId] = messageSchemas[occurenceChannelId] || {};
+            messageSchemas[occurenceChannelId][originalMessageId] = convertSchema(
+                occurence.payload,
+                false,
+                context,
+                [originalMessageId],
+                source,
+                context.namespace
+            );
+        } else {
+            duplicatedMessageIds.push(originalMessageId);
+
+            for (const { channelId, payload } of occurrences) {
+                const newSchemaId = `${channelId}_${originalMessageId}`;
+                if (!messageSchemas[channelId]) {
+                    messageSchemas[channelId] = {};
                 }
+                messageSchemas[channelId][newSchemaId] = convertSchema(
+                    payload,
+                    false,
+                    context,
+                    [newSchemaId],
+                    source,
+                    context.namespace
+                );
             }
         }
     }
