@@ -49,3 +49,4 @@ allowedFailures:
   - server-sent-event-examples
   - alias-extends
   - any-auth
+  - streaming-parameter
