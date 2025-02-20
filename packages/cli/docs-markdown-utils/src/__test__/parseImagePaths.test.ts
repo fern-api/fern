@@ -589,6 +589,14 @@ describe("parseImagePaths", () => {
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/file.mp4"]);
     });
 
+    it("should ignore <Markdown> tags", () => {
+        const page = `
+<Markdown src="path/to/file.mdx" />
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+    });
+
     describe("image path resolution", () => {
         const MOCK_FILE_IDS = {
             "/Volume/git/fern/absolute/path/image.png": "absolute-file-id",

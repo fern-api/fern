@@ -1,8 +1,11 @@
 import type { Node as EstreeNode } from "estree";
-import type { JSXAttribute } from "estree-jsx";
+import type { JSXAttribute, JSXElement } from "estree-jsx";
 import { walk } from "estree-walker";
 
-export function walkEstreeJsxAttributes(estree: EstreeNode, handlers: Record<string, (attr: JSXAttribute) => void>) {
+export function walkEstreeJsxAttributes(
+    estree: EstreeNode,
+    handlers: Record<string, (attr: JSXAttribute, node: JSXElement) => void>
+) {
     walk(estree, {
         enter: (node) => {
             if (node.type === "JSXElement") {
@@ -12,7 +15,7 @@ export function walkEstreeJsxAttributes(estree: EstreeNode, handlers: Record<str
                         attr.name.type === "JSXIdentifier" &&
                         handlers[attr.name.name]
                     ) {
-                        handlers[attr.name.name]?.(attr);
+                        handlers[attr.name.name]?.(attr, node);
                     }
                 });
             }

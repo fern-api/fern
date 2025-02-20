@@ -5,7 +5,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { isAbsolute } from "path";
-import { visit } from "unist-util-visit";
+import { CONTINUE, SKIP, visit } from "unist-util-visit";
 import { z } from "zod";
 
 import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
@@ -84,6 +84,7 @@ export function parseImagePaths(
                         filepaths.add(resolvedPath);
                         replaced = replaced.replaceAll(src, resolvedPath);
                     }
+                    return;
                 }
             });
         }
@@ -125,6 +126,8 @@ export function parseImagePaths(
         replacedContent =
             replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
         offset += replaced.length - length;
+
+        return CONTINUE;
     });
 
     return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
@@ -297,6 +300,8 @@ export function replaceImagePathsAndUrls(
         replacedContent =
             replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
         offset += replaced.length - length;
+
+        return CONTINUE;
     });
 
     return grayMatter.stringify(replacedContent, data);
