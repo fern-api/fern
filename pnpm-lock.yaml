@@ -5144,9 +5144,6 @@ importers:
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
-      ts-essentials:
-        specifier: ^10.0.3
-        version: 10.0.4(typescript@5.7.2)
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0

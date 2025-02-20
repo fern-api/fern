@@ -42,7 +42,6 @@
     "micromark-extension-math": "^3.1.0",
     "micromark-extension-mdx": "^2.1.0",
     "micromark-extension-mdxjs": "^3.0.0",
-    "ts-essentials": "^10.0.3",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
