@@ -43,7 +43,7 @@ export async function generateDynamicIrForWorkspaces({
                     disableExamples: false,
                     audiences,
                     readme: undefined,
-                    includeDynamicExamples,
+                    includeDynamicExamples
                 });
 
                 if (intermediateRepresentation.dynamic == null) {

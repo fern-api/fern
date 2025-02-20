@@ -640,7 +640,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                includeDynamicExamples: argv.includeExamples ?? false,
+                includeDynamicExamples: argv.includeExamples ?? false
             });
         }
     );
