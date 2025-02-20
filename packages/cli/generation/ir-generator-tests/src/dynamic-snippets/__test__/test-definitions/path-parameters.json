@@ -394,7 +394,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_organizations.getOrganizationUser": {
             "auth": null,
@@ -628,7 +629,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_organizations.searchOrganizations": {
             "auth": null,
@@ -866,7 +868,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.getUser": {
             "auth": null,
@@ -1072,7 +1075,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.createUser": {
             "auth": null,
@@ -1186,7 +1190,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.updateUser": {
             "auth": null,
@@ -1420,7 +1425,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.searchUsers": {
             "auth": null,
@@ -1658,7 +1664,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

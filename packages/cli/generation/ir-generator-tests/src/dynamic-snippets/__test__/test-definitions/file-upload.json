@@ -783,7 +783,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.justFile": {
             "auth": null,
@@ -959,7 +960,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.justFileWithQueryParams": {
             "auth": null,
@@ -1291,7 +1293,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.withContentType": {
             "auth": null,
@@ -1557,7 +1560,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.withFormEncoding": {
             "auth": null,
@@ -1791,7 +1795,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

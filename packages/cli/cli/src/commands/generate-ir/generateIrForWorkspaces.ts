@@ -87,7 +87,8 @@ async function getIntermediateRepresentation({
         keywords,
         smartCasing,
         disableExamples,
-        readme
+        readme,
+        includeDynamicExamples: false
     });
 
     if (version == null) {

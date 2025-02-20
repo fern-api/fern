@@ -30,7 +30,6 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
@@ -48,8 +47,7 @@
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "prettier2": "npm:prettier@^2.7.1",
-    "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0"
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
@@ -63,7 +61,6 @@
     "@types/jest": "^29.5.14",
     "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "@types/tmp": "^0.2.4",
-    "@types/url-join": "4.0.1",
     "vitest": "^2.1.9"
   }
 }

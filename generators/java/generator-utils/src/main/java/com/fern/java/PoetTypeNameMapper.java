@@ -270,6 +270,11 @@ public final class PoetTypeNameMapper {
         }
 
         @Override
+        public TypeName visitNullable(TypeReference typeReference) {
+            return visitOptional(typeReference);
+        }
+
+        @Override
         public TypeName visitOptional(TypeReference typeReference) {
             TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
             if (typeName instanceof ParameterizedTypeName) {

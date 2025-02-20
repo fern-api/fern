@@ -22,6 +22,11 @@ public class TypeReferenceUtils {
         }
 
         @Override
+        public ContainerTypeEnum visitNullable(TypeReference typeReference) {
+            return ContainerTypeEnum.NULLABLE;
+        }
+
+        @Override
         public ContainerTypeEnum visitOptional(TypeReference optional) {
             return ContainerTypeEnum.OPTIONAL;
         }
@@ -83,6 +88,11 @@ public class TypeReferenceUtils {
         }
 
         @Override
+        public TypeReference visitNullable(TypeReference nullable) {
+            return nullable;
+        }
+
+        @Override
         public TypeReference visitOptional(TypeReference optional) {
             return optional;
         }
@@ -114,6 +124,11 @@ public class TypeReferenceUtils {
         public String visitMap(MapType map) {
             return "MapOf" + map.getKeyType().visit(new TypeReferenceToName()) + "To"
                     + map.getValueType().visit(new TypeReferenceToName());
+        }
+
+        @Override
+        public String visitNullable(TypeReference nullable) {
+            return "Nullable" + nullable.visit(new TypeReferenceToName());
         }
 
         @Override
@@ -216,6 +231,7 @@ public class TypeReferenceUtils {
         MAP,
         OPTIONAL,
         SET,
-        LITERAL
+        LITERAL,
+        NULLABLE,
     }
 }

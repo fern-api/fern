@@ -58,6 +58,11 @@ public class TypeReferenceInlineChecker implements TypeReference.Visitor<Boolean
     }
 
     @Override
+    public Boolean visitNullable(TypeReference typeReference) {
+        return typeReference.visit(this);
+    }
+
+    @Override
     public Boolean visitOptional(TypeReference typeReference) {
         return typeReference.visit(this);
     }

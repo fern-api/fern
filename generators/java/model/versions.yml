@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.7.0
+- changelogEntry:
+    - summary: |
         Flat package layout by setting `page-layout: flat`
       type: feat
   createdAt: '2025-02-18'

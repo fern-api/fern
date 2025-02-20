@@ -218,7 +218,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_basic-auth.postWithBasicAuth": {
             "auth": {
@@ -342,7 +343,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": null

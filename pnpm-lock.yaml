@@ -5297,8 +5297,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
-        specifier: 0.0.62
-        version: 0.0.62(typescript@5.7.2)
+        specifier: 0.0.63
+        version: 0.0.63(typescript@5.7.2)
       '@fern-api/fdr-sdk':
         specifier: 0.130.1-6a9e22770
         version: 0.130.1-6a9e22770(typescript@5.7.2)
@@ -5734,6 +5734,9 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -5758,6 +5761,9 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -6094,9 +6100,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/core-utils
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils
@@ -6151,9 +6154,6 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6176,9 +6176,6 @@ importers:
       '@types/tmp':
         specifier: ^0.2.4
         version: 0.2.4
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -9191,8 +9188,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.62':
-    resolution: {integrity: sha512-IqdijHmKuqHj6giqrMSK0jrGeg+XTUQkPYIyqOod7O7+UviPx3Suuhe21vHQaKOFn+alMyxu99Yw/y4uaE5r4A==}
+  '@fern-api/docs-parsers@0.0.63':
+    resolution: {integrity: sha512-eXjmjlSQszDwJJJuMWQ6VYhwPoO787TNOQdQ17CbAcUPwGYFCB8OfWyMcGe2nxCXdgDF0OjN+4wzxMtkEZpq6A==}
 
   '@fern-api/dynamic-ir-sdk@55.0.0':
     resolution: {integrity: sha512-VQDqR99oQRHT/FiZJbBJ1edtvLg6nGwm3Ft/AkL0Kg5mZ3pHRvmIjiSqwj0ItSybisPHTFoZwvnkb4g0cmBn3A==}
@@ -17020,7 +17017,7 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.62(typescript@5.7.2)':
+  '@fern-api/docs-parsers@0.0.63(typescript@5.7.2)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
