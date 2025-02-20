@@ -1,9 +1,9 @@
 - changelogEntry:
     - summary: |
-        Disable broken link checker until it is ready to release. 
+        Enable `x-fern-sdk-group-name` extension in AsyncAPI v3 parser.
       type: fix
   irVersion: 55
-  version: 0.53.15
+  version: 0.53.16
 
 - changelogEntry:
     - summary: |
