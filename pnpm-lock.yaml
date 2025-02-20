@@ -5108,6 +5108,9 @@ importers:
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.130.1-6a9e22770
         version: 0.130.1-6a9e22770
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5123,6 +5126,12 @@ importers:
       mdast-util-mdx:
         specifier: ^3.0.0
         version: 3.0.0
+      mdast-util-mdx-expression:
+        specifier: ^2.0.1
+        version: 2.0.1
+      mdast-util-mdx-jsx:
+        specifier: ^3.2.0
+        version: 3.2.0
       micromark-extension-gfm:
         specifier: ^3.0.0
         version: 3.0.0
@@ -5151,6 +5160,9 @@ importers:
       '@types/diff':
         specifier: ^5.2.1
         version: 5.2.1
+      '@types/estree':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -13257,8 +13269,8 @@ packages:
   mdast-util-math@3.0.0:
     resolution: {integrity: sha512-Tl9GBNeG/AhJnQM221bJR2HPvLOSnLE/T9cJI9tlc6zwQk2nPk/4f0cHkOdEixQPC/j8UtKDdITswvLAy1OZ1w==}
 
-  mdast-util-mdx-expression@2.0.0:
-    resolution: {integrity: sha512-fGCu8eWdKUKNu5mohVGkhBXCXGnOTLuFqOvGMvdikr+J1w7lDJgxThOKpwRWzzbyXAU2hhSwsmssOY4yTokluw==}
+  mdast-util-mdx-expression@2.0.1:
+    resolution: {integrity: sha512-J6f+9hUp+ldTZqKRSg7Vw5V6MqjATc+3E4gf3CFNcuZNWD8XdyI6zQ8GqH7f8169MM6P7hMBRDVGnn7oHB9kXQ==}
 
   mdast-util-mdx-jsx@3.2.0:
     resolution: {integrity: sha512-lj/z8v0r6ZtsN/cGNNtemmmfoLAFZnjMbNyLzBafjzikOM+glrjNHPlf6lQDOTccj9n5b0PPihEBbhneMyGs1Q==}
@@ -20853,7 +20865,7 @@ snapshots:
       estree-util-attach-comments: 3.0.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       property-information: 6.3.0
@@ -20887,7 +20899,7 @@ snapshots:
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       property-information: 6.3.0
@@ -22109,7 +22121,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx-expression@2.0.0:
+  mdast-util-mdx-expression@2.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 3.0.4
@@ -22140,7 +22152,7 @@ snapshots:
   mdast-util-mdx@3.0.0:
     dependencies:
       mdast-util-from-markdown: 2.0.2
-      mdast-util-mdx-expression: 2.0.0
+      mdast-util-mdx-expression: 2.0.1
       mdast-util-mdx-jsx: 3.2.0
       mdast-util-mdxjs-esm: 2.0.1
       mdast-util-to-markdown: 2.1.0
