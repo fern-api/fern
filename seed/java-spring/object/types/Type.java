@@ -71,11 +71,11 @@ public final class Type {
 
   private final Name nineteen;
 
-  private final int twenty;
+  private final long twenty;
 
   private final long twentyone;
 
-  private final double twentytwo;
+  private final float twentytwo;
 
   private final BigInteger twentythree;
 
@@ -83,7 +83,7 @@ public final class Type {
       String seven, UUID eight, byte[] nine, List<Integer> ten, Set<Double> eleven,
       Map<String, Boolean> twelve, Optional<Long> thirteen, Object fourteen,
       List<List<Integer>> fifteen, List<Map<String, Integer>> sixteen,
-      List<Optional<UUID>> seventeen, Name nineteen, int twenty, long twentyone, double twentytwo,
+      List<Optional<UUID>> seventeen, Name nineteen, long twenty, long twentyone, float twentytwo,
       BigInteger twentythree) {
     this.one = one;
     this.two = two;
@@ -205,7 +205,7 @@ public final class Type {
   }
 
   @JsonProperty("twenty")
-  public int getTwenty() {
+  public long getTwenty() {
     return twenty;
   }
 
@@ -215,7 +215,7 @@ public final class Type {
   }
 
   @JsonProperty("twentytwo")
-  public double getTwentytwo() {
+  public float getTwentytwo() {
     return twentytwo;
   }
 
@@ -295,7 +295,7 @@ public final class Type {
   }
 
   public interface TwentyStage {
-    TwentyoneStage twenty(int twenty);
+    TwentyoneStage twenty(long twenty);
   }
 
   public interface TwentyoneStage {
@@ -303,7 +303,7 @@ public final class Type {
   }
 
   public interface TwentytwoStage {
-    TwentythreeStage twentytwo(double twentytwo);
+    TwentythreeStage twentytwo(float twentytwo);
   }
 
   public interface TwentythreeStage {
@@ -380,11 +380,11 @@ public final class Type {
 
     private Name nineteen;
 
-    private int twenty;
+    private long twenty;
 
     private long twentyone;
 
-    private double twentytwo;
+    private float twentytwo;
 
     private BigInteger twentythree;
 
@@ -511,7 +511,7 @@ public final class Type {
 
     @java.lang.Override
     @JsonSetter("twenty")
-    public TwentyoneStage twenty(int twenty) {
+    public TwentyoneStage twenty(long twenty) {
       this.twenty = twenty;
       return this;
     }
@@ -525,7 +525,7 @@ public final class Type {
 
     @java.lang.Override
     @JsonSetter("twentytwo")
-    public TwentythreeStage twentytwo(double twentytwo) {
+    public TwentythreeStage twentytwo(float twentytwo) {
       this.twentytwo = twentytwo;
       return this;
     }

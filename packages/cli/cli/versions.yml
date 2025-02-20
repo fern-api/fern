@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fix an issue where de-conflicting message names in AsyncAPI v3 parser would only update subsequent message names,
+        but not the first occurrence. 
+      type: fix
+  irVersion: 55
+  version: 0.53.18
+
+- changelogEntry:
+    - summary: |
         Fix an issue with the OpenAPI v2 parser where recursive subpackage slugs would not generate correctly.
       type: fix
   irVersion: 55
