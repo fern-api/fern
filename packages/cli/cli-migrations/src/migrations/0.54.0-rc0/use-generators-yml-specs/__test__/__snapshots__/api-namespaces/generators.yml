@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups: {}
+api:
+  specs:
+    - openapi: ./openapi.yml
+      namespace: namespace1
+      settings: {}
+    - openapi: ./openapi2.yml
+      overrides: ./openapi2.overrides.yml
+      namespace: namespace1
+      origin: dummy2
+      settings:
+        title-as-schema-name: false
+    - proto:
+        root: ./proto
+        overrides: ./proto/overrides.yml
+        target: ./proto/target
+        local-generation: true
+    - asyncapi: ./asyncapi.yml
+      namespace: namespace2
+      settings: {}
+    - asyncapi: ./asyncapi2.yml
+      overrides: ./asyncapi2.overrides.yml
+      namespace: namespace3
+      origin: dummy2
+      settings:
+        message-naming: v2

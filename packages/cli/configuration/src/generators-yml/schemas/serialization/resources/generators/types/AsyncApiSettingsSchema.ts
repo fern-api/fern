@@ -5,24 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
+import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const AsyncApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.AsyncApiSettingsSchema.Raw,
     FernDefinition.AsyncApiSettingsSchema
-> = core.serialization.object({
-    "title-as-schema-name": core.serialization.boolean().optional(),
-    "optional-additional-properties": core.serialization.boolean().optional(),
-    "coerce-enums-to-literals": core.serialization.boolean().optional(),
-    "respect-nullable-schemas": core.serialization.boolean().optional(),
-    "idiomatic-request-names": core.serialization.boolean().optional(),
-});
+> = core.serialization
+    .object({
+        "message-naming": MessageNamingSettingsSchema.optional(),
+    })
+    .extend(BaseApiSettingsSchema);
 
 export declare namespace AsyncApiSettingsSchema {
-    export interface Raw {
-        "title-as-schema-name"?: boolean | null;
-        "optional-additional-properties"?: boolean | null;
-        "coerce-enums-to-literals"?: boolean | null;
-        "respect-nullable-schemas"?: boolean | null;
-        "idiomatic-request-names"?: boolean | null;
+    export interface Raw extends BaseApiSettingsSchema.Raw {
+        "message-naming"?: MessageNamingSettingsSchema.Raw | null;
     }
 }

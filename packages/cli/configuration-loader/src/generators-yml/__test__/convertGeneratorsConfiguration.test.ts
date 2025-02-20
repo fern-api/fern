@@ -1,10 +1,16 @@
 /* eslint-disable jest/no-conditional-expect */
+import { vi } from "vitest";
+
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
 
 import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
@@ -22,13 +28,15 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
     });
 
     it("local-file-system resolves relative download path", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
@@ -46,13 +54,15 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/repo/output");
     });
 
     it("MIT license", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
@@ -70,13 +80,15 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 
     it("Apache-2.0 license", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
@@ -94,13 +106,15 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 
     it("Custom license", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
@@ -120,13 +134,15 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 
     it("Maven URL", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
@@ -158,7 +174,8 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
 
         const output = converted.groups[0]?.generators[0]?.outputMode;
@@ -175,6 +192,7 @@ describe("convertGeneratorsConfiguration", () => {
     });
 
     it("License Metadata", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
@@ -197,7 +215,8 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
         expect(output?.type).toEqual("githubV2");
@@ -207,6 +226,7 @@ describe("convertGeneratorsConfiguration", () => {
     });
 
     it("Reviewers", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
@@ -237,7 +257,8 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
         expect(output?.type).toEqual("githubV2");
@@ -251,6 +272,7 @@ describe("convertGeneratorsConfiguration", () => {
     });
 
     it("Output Metadata", async () => {
+        const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
@@ -282,7 +304,8 @@ describe("convertGeneratorsConfiguration", () => {
                         ]
                     }
                 }
-            }
+            },
+            context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
         expect(output?.type).toEqual("githubV2");
@@ -293,5 +316,165 @@ describe("convertGeneratorsConfiguration", () => {
                     output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
             ).toEqual(true);
         }
+    });
+
+    it("logs deprecation warnings for deprecated generators yml configuration", async () => {
+        const mockLogger: Logger = {
+            trace: vi.fn(),
+            debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
+            error: vi.fn(),
+            enable: vi.fn(),
+            disable: vi.fn(),
+            log: vi.fn()
+        };
+        const context = createMockTaskContext({ logger: mockLogger });
+
+        await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                "api-settings": {},
+                "async-api": "path/to/asyncapi.yml",
+                openapi: "path/to/openapi.yml",
+                "openapi-overrides": "path/to/openapi-overrides.yml",
+                "spec-origin": "some-origin",
+                api: "path/to/api.yml"
+            },
+            context
+        });
+
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('"api-settings" is deprecated. Please use "api.specs[].settings" instead.')
+        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.')
+        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('"openapi" is deprecated. Please use "api.specs[].openapi" instead.')
+        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('"openapi-overrides" is deprecated. Please use "api.specs[].overrides" instead.')
+        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('"spec-origin" is deprecated. Please use "api.specs[].origin" instead.')
+        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Using an OpenAPI or AsyncAPI path string for "api" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
+            )
+        );
+    });
+
+    it("logs deprecation warnings for deprecated generators yml configuration with api as an object", async () => {
+        const mockLogger: Logger = {
+            trace: vi.fn(),
+            debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
+            error: vi.fn(),
+            enable: vi.fn(),
+            disable: vi.fn(),
+            log: vi.fn()
+        };
+        const context = createMockTaskContext({ logger: mockLogger });
+
+        await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                api: {
+                    path: "path/to/openapi.yml"
+                }
+            },
+            context
+        });
+
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
+            )
+        );
+    });
+
+    it("logs deprecation warnings for deprecated generators yml configuration with api as an array", async () => {
+        const mockLogger: Logger = {
+            trace: vi.fn(),
+            debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
+            error: vi.fn(),
+            enable: vi.fn(),
+            disable: vi.fn(),
+            log: vi.fn()
+        };
+        const context = createMockTaskContext({ logger: mockLogger });
+
+        await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                api: [
+                    "path/to/openapi.yml",
+                    { path: "path/to/openapi.yml" },
+                    { path: "path/to/asyncapi.yml" },
+                    {
+                        proto: {
+                            root: "path/to/proto",
+                            target: "path/to/target"
+                        }
+                    }
+                ]
+            },
+            context
+        });
+
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Using an array for "api" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" instead.'
+            )
+        );
+    });
+
+    it("logs deprecation warnings for deprecated generators yml configuration with api namespaces", async () => {
+        const mockLogger: Logger = {
+            trace: vi.fn(),
+            debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
+            error: vi.fn(),
+            enable: vi.fn(),
+            disable: vi.fn(),
+            log: vi.fn()
+        };
+        const context = createMockTaskContext({ logger: mockLogger });
+
+        await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                api: {
+                    namespaces: {
+                        namespace1: "path/to/openapi.yml",
+                        namespace2: { path: "path/to/openapi.yml" },
+                        namespace3: { path: "path/to/asyncapi.yml" },
+                        namespace4: {
+                            proto: {
+                                root: "path/to/proto",
+                                target: "path/to/target"
+                            }
+                        }
+                    }
+                }
+            },
+            context
+        });
+
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Using "api.namespaces" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" with the "namespace" property instead.'
+            )
+        );
     });
 });
