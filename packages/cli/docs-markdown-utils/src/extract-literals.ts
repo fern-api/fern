@@ -18,7 +18,7 @@ export function extractSingleLiteral(estree?: EstreeNode | null | undefined): Li
     const literals: Literal[] = [];
     let skip = false;
     walk(estree, {
-        enter (node) {
+        enter(node) {
             // ignore function declarations, arrow functions, and JSX elements
             if (
                 node.type === "FunctionDeclaration" ||
@@ -56,7 +56,9 @@ export function extractSingleLiteral(estree?: EstreeNode | null | undefined): Li
  *  - <Component prop={["a", "b"]} />
  *  - <Component prop={<div />} />
  */
-export function extractAttributeValueLiteral(value: string | MdxJsxAttributeValueExpression | null | undefined) {
+export function extractAttributeValueLiteral(
+    value: string | MdxJsxAttributeValueExpression | null | undefined
+): Literal | undefined {
     if (typeof value === "string") {
         return value;
     }
