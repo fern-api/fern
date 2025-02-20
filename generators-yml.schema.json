@@ -748,6 +748,9 @@
         "target": {
           "type": "string"
         },
+        "root": {
+          "type": "string"
+        },
         "overrides": {
           "oneOf": [
             {
@@ -767,9 +770,6 @@
               "type": "null"
             }
           ]
-        },
-        "root": {
-          "type": "string"
         }
       },
       "required": [
@@ -1669,35 +1669,11 @@
     "generators.ProtobufSpecSchema": {
       "type": "object",
       "properties": {
-        "target": {
-          "type": "string"
-        },
-        "overrides": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "local-generation": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "proto": {
-          "type": "string"
+          "$ref": "#/definitions/generators.ProtobufDefinitionSchema"
         }
       },
       "required": [
-        "target",
         "proto"
       ],
       "additionalProperties": false
