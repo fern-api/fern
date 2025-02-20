@@ -230,12 +230,17 @@ async function parseApiSpec({
     context,
     namespace
 }: {
-    oldSpec: any;
+    oldSpec: unknown;
     absolutePathToFernDirectory: AbsoluteFilePath;
     files: File[];
     context: TaskContext;
     namespace?: string;
 }): Promise<generatorsYml.SpecSchema | null> {
+    if (oldSpec == null) {
+        context.logger.warn("API spec is null. Skipping...");
+        return null;
+    }
+
     if (typeof oldSpec !== "string" && typeof oldSpec !== "object") {
         context.logger.warn("API spec is not a string or object. Skipping...");
         return null;
@@ -251,34 +256,30 @@ async function parseApiSpec({
         return null;
     }
 
-    if ("proto" in oldSpec) {
-        if (typeof oldSpec.proto !== "object") {
+    const spec = oldSpec as object;
+
+    if ("proto" in spec) {
+        if (typeof spec.proto !== "object") {
             context.logger.warn("API spec proto is not an object. Skipping...");
             return null;
         }
         return {
-            proto: {
-                target: oldSpec.proto.target,
-                root: oldSpec.proto.root,
-                overrides: oldSpec.proto.overrides,
-                "local-generation": oldSpec.proto["local-generation"]
-                // don't add namespace because proto doesn't support it
-            }
+            proto: spec.proto as generatorsYml.ProtobufDefinitionSchema
         };
     }
 
-    if (!("path" in oldSpec)) {
+    if (!("path" in spec)) {
         context.logger.warn("API spec does not have a path. Skipping...");
         return null;
     }
-    if (typeof oldSpec.path !== "string") {
+    if (typeof spec.path !== "string") {
         context.logger.warn("API spec path is not a string. Skipping...");
         return null;
     }
 
-    const deprecatedApiSettings = getDeprecatedApiSettings(oldSpec);
+    const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
-    const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(oldSpec.path));
+    const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(spec.path));
     const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
     if (specFile == null) {
         context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
@@ -286,31 +287,33 @@ async function parseApiSpec({
     }
     const specYaml = yaml.load(specFile.contents);
     if (specYaml == null) {
-        context.logger.warn(`API spec file ${oldSpec.path} is null or undefined. Skipping...`);
+        context.logger.warn(`API spec file ${spec.path} is null or undefined. Skipping...`);
         return null;
     }
     if (typeof specYaml !== "object") {
-        context.logger.warn(`API spec file ${oldSpec.path} is not a valid YAML object. Skipping...`);
+        context.logger.warn(`API spec file ${spec.path} is not a valid YAML object. Skipping...`);
         return null;
     }
     if ("asyncapi" in specYaml) {
+        const asyncApi = spec as generatorsYml.ApiDefinitionWithOverridesSchema;
         return {
-            asyncapi: oldSpec.path,
-            overrides: oldSpec.overrides,
+            asyncapi: asyncApi.path,
+            overrides: asyncApi.overrides,
             namespace,
-            origin: oldSpec.origin,
+            origin: asyncApi.origin,
             settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
         };
     } else if ("openapi" in specYaml) {
+        const openApi = spec as generatorsYml.ApiDefinitionWithOverridesSchema;
         return {
-            openapi: oldSpec.path,
-            overrides: oldSpec.overrides,
+            openapi: openApi.path,
+            overrides: openApi.overrides,
             namespace,
-            origin: oldSpec.origin,
+            origin: openApi.origin,
             settings: convertDeprecatedApiSettingsToOpenApiSettings(deprecatedApiSettings)
         };
     } else {
-        context.logger.warn(`API spec file ${oldSpec.path} is not an OpenAPI or AsyncAPI spec. Skipping...`);
+        context.logger.warn(`API spec file ${spec.path} is not an OpenAPI or AsyncAPI spec. Skipping...`);
         return null;
     }
 }

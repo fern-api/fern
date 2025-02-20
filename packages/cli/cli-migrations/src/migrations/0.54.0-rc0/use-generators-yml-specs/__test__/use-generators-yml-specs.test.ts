@@ -12,7 +12,7 @@ const FIXTURES = ["root-settings", "openapi-single", "asyncapi-single", "api-arr
     RelativeFilePath.of
 );
 
-describe("use-generators-yml-specs", async () => {
+describe("use-generators-yml-specs", async (): Promise<void> => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture, async () => {
