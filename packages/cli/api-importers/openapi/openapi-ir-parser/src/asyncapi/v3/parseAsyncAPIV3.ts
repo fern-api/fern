@@ -200,8 +200,7 @@ export function parseAsyncAPIV3({
                 const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
                 const isRequired = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_REQUIRED);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
-                let parameterSchema: SchemaWithExample;
-                parameterSchema =
+                let parameterSchema: SchemaWithExample =
                     parameter.enum != null && Array.isArray(parameter.enum)
                         ? buildEnumSchema({
                               parameterName,
