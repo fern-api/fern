@@ -15,7 +15,8 @@ export async function generateIrForFernWorkspace({
     smartCasing,
     disableExamples,
     audiences,
-    readme
+    readme,
+    includeDynamicExamples
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -25,6 +26,7 @@ export async function generateIrForFernWorkspace({
     disableExamples: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
+    includeDynamicExamples: boolean;
 }): Promise<IntermediateRepresentation> {
     await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
     return generateIntermediateRepresentation({
@@ -38,6 +40,7 @@ export async function generateIrForFernWorkspace({
         version: undefined,
         packageName: undefined,
         context,
-        sourceResolver: new SourceResolverImpl(context, workspace)
+        sourceResolver: new SourceResolverImpl(context, workspace),
+        includeDynamicExamples
     });
 }

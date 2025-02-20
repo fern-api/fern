@@ -38,7 +38,9 @@ export async function generateAndSnapshotDynamicIR({
         sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 
-    const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(intermediateRepresentation);
+    const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr({
+        ir: intermediateRepresentation
+    });
 
     const dynamicIntermediateRepresentationJson = IrSerialization.dynamic.DynamicIntermediateRepresentation.jsonOrThrow(
         dynamicIntermediateRepresentation,

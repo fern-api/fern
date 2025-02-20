@@ -32,7 +32,8 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     keywords: undefined,
                     smartCasing: false,
                     disableExamples: false,
-                    readme: undefined
+                    readme: undefined,
+                    includeDynamicExamples: false
                 });
 
                 const apiDefinition = convertIrToFdrApi({

@@ -5105,7 +5105,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_.createType": {
             "auth": {
@@ -5173,7 +5174,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_file/notification/service.getException": {
             "auth": {
@@ -5379,7 +5381,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_file/service.getFile": {
             "auth": {
@@ -5685,7 +5688,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_health/service.check": {
             "auth": {
@@ -5853,7 +5857,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_health/service.ping": {
             "auth": {
@@ -5992,7 +5997,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovie": {
             "auth": {
@@ -6121,7 +6127,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.createMovie": {
             "auth": {
@@ -6227,7 +6234,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMetadata": {
             "auth": {
@@ -6492,7 +6500,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.createBigEntity": {
             "auth": {
@@ -6598,7 +6607,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
     "environments": {
