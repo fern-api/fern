@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
+import path from "path";
 import terminalLink from "terminal-link";
 
 import { noop } from "@fern-api/core-utils";
@@ -118,8 +119,7 @@ export const ValidMarkdownLinks: Rule = {
                             const [message, relFilePath] = createLinkViolationMessage(
                                 pathnameToCheck,
                                 brokenPathname,
-                                workspace.absoluteFilePath,
-                                baseUrl.domain
+                                workspace.absoluteFilePath
                             );
                             return {
                                 name: ValidMarkdownLinks.name,
@@ -190,8 +190,7 @@ export const ValidMarkdownLinks: Rule = {
                                     const [message, relFilePath] = createLinkViolationMessage(
                                         pathnameToCheck,
                                         brokenPathname,
-                                        workspace.absoluteFilePath,
-                                        baseUrl.domain
+                                        workspace.absoluteFilePath
                                     );
                                     return {
                                         name: ValidMarkdownLinks.name,
@@ -216,8 +215,7 @@ export const ValidMarkdownLinks: Rule = {
 function createLinkViolationMessage(
     pathnameToCheck: PathnameToCheck,
     targetPathname: string,
-    workspaceAbsPath: string,
-    domain: string
+    workspaceAbsPath: string
 ): [msg: string, relFilePath: RelativeFilePath] {
     let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
@@ -226,16 +224,18 @@ function createLinkViolationMessage(
     }
 
     // including line:column in the fileurl doesn't work, so we just link to the file
-    const fileUrl = `file://${sourceFilepath.toString()}`;
-    const fileLink = terminalLink(`${position.start.line}:${position.start.column}`, fileUrl, {
-        fallback: false
-    });
+    const positionStr = `[${position.start.line}:${position.start.column}]`;
+    const fileLink =
+        terminalLink(positionStr, `file://${sourceFilepath.toString()}`, {
+            fallback: false
+        }) + " ".repeat("[0000:0000]".length - positionStr.length); // pad right
 
-    // TODO: potentially link to localhost:3000 if validator is being run as part of `docs dev`
-    const targetPageUrl = new URL(targetPathname, wrapWithHttps(domain)).toString();
-    const targetPathnameLink = terminalLink(targetPathname, targetPageUrl, { fallback: false });
+    msg = `${fileLink} broken link to ${chalk.bold(pathnameToCheck.pathname)}`;
+    if (pathnameToCheck.pathname.length > 0 && !path.isAbsolute(pathnameToCheck.pathname)) {
+        // for relative paths, print out the resolved path that is broken
+        msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
+    }
 
-    msg = `[${fileLink}] ${targetPathnameLink} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const relFilePath = RelativeFilePath.of(sourceFilepath.toString().replace(workspaceAbsPath, "."));
     return [msg, relFilePath];
 }
