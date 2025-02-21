@@ -9,7 +9,12 @@ export async function getLatestVersionOfCli({
     cliEnvironment: CliEnvironment;
     includePreReleases?: boolean;
 }): Promise<string> {
-    return latestVersion("fern-api", {
+    // when running a non-prod version of the CLI (e.g. dev-cli in ETE tests),
+    // don't try to upgrade
+    if (cliEnvironment.packageName !== "fern-api") {
+        return cliEnvironment.packageVersion;
+    }
+    return latestVersion(cliEnvironment.packageName, {
         version: includePreReleases ? "prerelease" : "latest"
     });
 }
