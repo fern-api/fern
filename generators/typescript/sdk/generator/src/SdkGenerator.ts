@@ -673,25 +673,6 @@ export class SdkGenerator {
                     context.sourceFile.addStatements("// raja test statement"); // this works!
                     context.sourceFile.addStatements("// " + result); // this prints the websocket connection code as a comment
 
-                    // context.sourceFile.addStatements(JSON.stringify(websocketExpression));
-
-                    // add the expression statement to the source file
-                    // sourceFile.addStatements(expressionStatement);
-
-                    // generate a Client. ts per channel
-
-                    /*
-                    // Step 0) get some code to print anywhere
-                    // Step 1) generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
-                    // Step 2) output code like the 
-                    const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
-                        url: "hello world!!",
-                    });
-
-                    to the client.TS
-
-                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added. deep did this already.
-                    */
 
                     console.log("Writing type schema to file for:", typeDeclaration.name);
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
@@ -706,16 +687,13 @@ export class SdkGenerator {
                         // generate a Client. ts per channel
 
                     /*
-                    // Step 0) get some code to print anywhere
-                    // Step 1) generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
+                    // Step 0) get some code to print anywhere [done]
+                    // Step 1) generate a Client.ts per channel.
                     // Step 2) output code like the 
                     const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
                         url: "hello world!!",
                     });
-
-                    to the client.TS
-
-                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added. deep did this already.
+                    to the channel client.ts
                     */
 
     private generateErrorDeclarations() {
