@@ -1,0 +1,7 @@
+default-environment: Default
+display-name: OpenAPI definition
+environments:
+  Default: http://localhost:8080
+error-discrimination:
+  strategy: status-code
+name: api
