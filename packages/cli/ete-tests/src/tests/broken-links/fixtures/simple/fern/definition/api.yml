@@ -1,0 +1,27 @@
+imports:
+  commons: commons.yml
+name: my-api
+docs: foo bar baz
+auth: apiKey
+auth-schemes:
+  apiKey:
+    header: X_API_KEY
+    name: apiKey
+headers:
+  X-API-VERSION:
+    name: apiVersion
+    type: optional<string>
+error-discrimination:
+  strategy: property
+  property-name: error
+audiences:
+  - test
+errors:
+  - commons.BadRequestError
+default-environment: Production
+environments:
+  Production: https://buildwithfern.com
+  Staging: https://staging.buildwithfern.com
+base-path: /test/{rootPathParam}
+path-parameters:
+  rootPathParam: string
