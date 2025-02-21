@@ -645,14 +645,26 @@ export class SdkGenerator {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
 
                     console.log("Instantiating ReconnectingWebsocket");
-                    const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
+                    const websocketExpression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
                         url: "hello world!!",
                     });
-                    console.log("Stringified expression:", JSON.stringify(expression));
+                    console.log("Stringified expression:", JSON.stringify(websocketExpression));
+
+                    // wrap expression in an expression statement
+                    const expressionStatement = ts.factory.createExpressionStatement(websocketExpression);
+
+
+                    console.log("Adding expression statement to source file");
+                    // sourceFile.addStatements(expressionStatement);
+                    context.sourceFile.addStatements("// raja test statement"); // this works!
+
+                    // add the expression statement to the source file
+                    // sourceFile.addStatements(expressionStatement);
 
                     // generate a Client. ts per channel
 
                     /*
+                    // Step 0) get some code to print anywhere
                     // Step 1) generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
                     // Step 2) output code like the 
                     const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
@@ -661,7 +673,7 @@ export class SdkGenerator {
 
                     to the client.TS
 
-                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added.
+                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added. deep did this already.
                     */
 
                     console.log("Writing type schema to file for:", typeDeclaration.name);
@@ -673,6 +685,21 @@ export class SdkGenerator {
         console.log("Finished generating type schemas. Generated:", generated);
         return { generated };
     }
+
+                        // generate a Client. ts per channel
+
+                    /*
+                    // Step 0) get some code to print anywhere
+                    // Step 1) generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
+                    // Step 2) output code like the 
+                    const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
+                        url: "hello world!!",
+                    });
+
+                    to the client.TS
+
+                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added. deep did this already.
+                    */
 
     private generateErrorDeclarations() {
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
@@ -734,7 +761,7 @@ export class SdkGenerator {
 
         // generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
 
-        // Step 2) output code like the
+        // Step 2) output code like the hume output
     }
 
     private generateEndpointTypeSchemas(): { generated: boolean } {
@@ -1295,7 +1322,7 @@ export class SdkGenerator {
                 if (this.config.whitelabel) {
                     writer.writeLine(WHITELABEL_FILE_HEADER);
                 } else {
-                    writer.writeLine(FILE_HEADER);
+                    writer.writeLine(FILE_HEADER); // see this
                 }
             });
 

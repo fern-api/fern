@@ -24,7 +24,7 @@ channel:
           text: string
 
 types:
-  ReceiveEvent:
+  ReceiveEventTest:
     properties:
       text: string
 
