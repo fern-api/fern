@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Handle comments that include '*/' literal values. This previously caused any generator that uses c-style comments to fail.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc4
+
+- changelogEntry:
+    - summary: |
         Modify the `x-fern-examples` extension to support Websocket session examples for AsyncAPI v3 specs.
       type: feat
   irVersion: 55
