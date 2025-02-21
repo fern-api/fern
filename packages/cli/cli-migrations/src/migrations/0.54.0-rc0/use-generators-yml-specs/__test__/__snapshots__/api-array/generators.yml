@@ -1,16 +1,13 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-groups: {}
 api:
   specs:
     - openapi: ./openapi.yml
-      settings: {}
     - openapi: ./openapi2.yml
       overrides: ./openapi2.overrides.yml
       origin: dummy2
       settings:
         title-as-schema-name: false
     - asyncapi: ./asyncapi.yml
-      settings: {}
     - asyncapi: ./asyncapi2.yml
       overrides: ./asyncapi2.overrides.yml
       origin: dummy2
@@ -21,3 +18,5 @@ api:
         overrides: ./proto/overrides.yml
         target: ./proto/target
         local-generation: true
+
+groups: {}

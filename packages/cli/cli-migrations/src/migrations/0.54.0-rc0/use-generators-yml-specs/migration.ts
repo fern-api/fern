@@ -98,6 +98,7 @@ async function addApiConfigurationToSingleWorkspace({
                     oldSpec,
                     absolutePathToFernDirectory,
                     files,
+                    directories,
                     context
                 });
                 if (spec) {
@@ -114,6 +115,7 @@ async function addApiConfigurationToSingleWorkspace({
                                 oldSpec,
                                 absolutePathToFernDirectory,
                                 files,
+                                directories,
                                 context,
                                 namespace
                             });
@@ -126,6 +128,7 @@ async function addApiConfigurationToSingleWorkspace({
                             oldSpec: namespaceConfig,
                             absolutePathToFernDirectory,
                             files,
+                            directories,
                             context,
                             namespace
                         });
@@ -142,6 +145,7 @@ async function addApiConfigurationToSingleWorkspace({
                     oldSpec: generatorsYmlContents.api,
                     absolutePathToFernDirectory,
                     files,
+                    directories,
                     context
                 });
                 if (spec) {
@@ -213,8 +217,7 @@ async function addApiConfigurationToSingleWorkspace({
     parsedDocument.delete("openapi-overrides");
     parsedDocument.delete("async-api");
     parsedDocument.delete("spec-origin");
-    parsedDocument.delete("api");
-    parsedDocument.setIn(["api", "specs"], specs);
+    parsedDocument.set("api", { specs });
     let documentToWrite = parsedDocument.toString();
     if (schemaComment && documentToWrite.indexOf(schemaComment) === -1) {
         documentToWrite = `${schemaComment}${documentToWrite}`;
@@ -227,12 +230,14 @@ async function parseApiSpec({
     oldSpec,
     absolutePathToFernDirectory,
     files,
+    directories,
     context,
     namespace
 }: {
     oldSpec: unknown;
     absolutePathToFernDirectory: AbsoluteFilePath;
     files: File[];
+    directories: Directory[];
     context: TaskContext;
     namespace?: string;
 }): Promise<generatorsYml.SpecSchema | null> {
@@ -280,7 +285,8 @@ async function parseApiSpec({
     const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
     const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(spec.path));
-    const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
+    const allFiles = [...files, ...directories.flatMap(getAllFilesInDirectory)];
+    const specFile = allFiles.find((file) => file.absolutePath === absoluteSpecPath);
     if (specFile == null) {
         context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
         return null;
@@ -352,8 +358,8 @@ async function getFilesAndDirectories(
 
 function convertDeprecatedApiSettingsToOpenApiSettings(
     deprecatedApiSettings: generatorsYml.ApiDefinitionSettingsSchema
-): generatorsYml.OpenApiSettingsSchema {
-    return {
+): generatorsYml.OpenApiSettingsSchema | undefined {
+    const settings = {
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "inline-path-parameters": deprecatedApiSettings["inline-path-parameters"],
         "only-include-referenced-schemas": deprecatedApiSettings["only-include-referenced-schemas"],
@@ -361,14 +367,38 @@ function convertDeprecatedApiSettingsToOpenApiSettings(
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"]
     };
+
+    if (Object.values(settings).some((setting) => setting != null)) {
+        return settings;
+    } else {
+        return undefined;
+    }
 }
 function convertDeprecatedApiSettingsToAsyncApiSettings(
     deprecatedApiSettings: generatorsYml.ApiDefinitionSettingsSchema
-): generatorsYml.AsyncApiSettingsSchema {
-    return {
+): generatorsYml.AsyncApiSettingsSchema | undefined {
+    const settings = {
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
         "message-naming": deprecatedApiSettings["message-naming"]
     };
+
+    if (Object.values(settings).some((setting) => setting != null)) {
+        return settings;
+    } else {
+        return undefined;
+    }
+}
+
+function getAllFilesInDirectory(directory: Directory): File[] {
+    const files: File[] = [];
+    for (const item of directory.contents) {
+        if (item.type === "file") {
+            files.push(item);
+        } else {
+            files.push(...getAllFilesInDirectory(item));
+        }
+    }
+    return files;
 }
