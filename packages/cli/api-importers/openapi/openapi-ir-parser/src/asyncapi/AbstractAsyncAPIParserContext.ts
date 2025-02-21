@@ -8,6 +8,7 @@ import { ParseOpenAPIOptions } from "../options";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
+import { WebsocketSessionExampleMessage } from "./getFernExamples";
 import { AsyncAPIV2 } from "./v2";
 import { AsyncAPIV3 } from "./v3";
 
@@ -115,6 +116,8 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
 
         return resolvedSchema;
     }
+
+    public abstract getExampleMessageReference(message: WebsocketSessionExampleMessage): string;
 
     /**
      * Abstract: v2 vs v3 have different ways to handle message references.

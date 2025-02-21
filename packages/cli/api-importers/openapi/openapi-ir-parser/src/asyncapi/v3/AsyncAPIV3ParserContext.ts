@@ -1,9 +1,14 @@
 import { OpenAPIV3 } from "openapi-types";
 
 import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext";
+import { WebsocketSessionExampleMessage } from "../getFernExamples";
 import { AsyncAPIV3 } from "../v3";
 
 export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<AsyncAPIV3.DocumentV3> {
+    public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {
+        return `#/channels/${message.channelId}/messages/${message.messageId}`;
+    }
+
     public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.MessageV3 {
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
