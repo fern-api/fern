@@ -285,6 +285,7 @@ types:
       If set, the endpoint will be generated with auto-pagination features.
     union:
       cursor: CursorPagination
+      link: LinkPagination
       offset: OffsetPagination
 
   CursorPagination:
@@ -298,6 +299,83 @@ types:
       page: RequestProperty
       next: ResponseProperty
       results: ResponseProperty
+      previous: optional<ResponseProperty>
+      hasNextPage:
+        docs: A response property that indicates whether there is a next page or not.
+        type: optional<ResponseProperty>
+
+  LinkPagination:
+    docs: |
+      The page must be defined as a property defined on the request, whereas
+      the next page and results are resolved from a set of one or more links
+      properties defined on the response.
+    properties:
+      links: LinksResponseProperty
+      results: ResponseProperty
+      hasNextPage:
+        docs: A response property that indicates whether there is a next page or not.
+        type: optional<ResponseProperty>
+
+  LinksResponseProperty:
+    docs: |
+      The links properties included in the response. This might be a single link (i.e.
+      to fetch the next page), or a list of links that can be used to fetch the next
+      _or_ previous page.
+    properties:
+      next: LinkResponseProperty
+      previous: optional<LinkResponseProperty>
+
+  LinkResponseProperty:
+    union:
+      href:
+        docs: |
+          The next URL to fetch with no additional metadata, e.g.
+
+          ```json
+          {
+            "next": "https://www.example.com/article?story=abc&page=2",
+            "data": [ ... ]
+          }
+          ```
+        type: ResponseProperty
+      object: LinkResponsePropertyObjectValue
+
+  LinkResponsePropertyObjectValue:
+    docs: |
+      A particular value of a link property such as the following in the JSON response:
+
+      ```json
+      {
+        "links": {
+          "href": "https://www.example.com/article?story=abc&page=2",
+          "rel": "next",
+          "method": "GET"
+        },
+        "data": [ ... ]
+      }
+      ```
+    properties:
+      href: ResponseProperty
+      rel: LinkRelResponseProperty
+      method:
+        docs: |
+          The HTTP method to use to fetch the next page. By default, the method
+          will be the same as the method used to fetch the initial page.
+        type: optional<ResponseProperty>
+
+  LinkRelResponseProperty:
+    docs: |
+      The response property defining the relationship of the link to the current
+      page (e.g. `next`, `previous`, etc.)
+    properties:
+      rel:
+        docs: |
+          The property containing the `rel` value.
+        type: ResponseProperty
+      match:
+        docs: |
+          The value that the `rel` property must match (e.g "next", "prev", etc.).
+        type: string
 
   OffsetPagination:
     docs: |
