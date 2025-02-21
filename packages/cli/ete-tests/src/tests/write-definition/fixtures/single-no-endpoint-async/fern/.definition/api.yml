@@ -1,0 +1,12 @@
+default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api

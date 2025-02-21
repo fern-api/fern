@@ -1,0 +1,8 @@
+default-environment: Prod
+display-name: Test API
+environments:
+  Dev: http://dev.api.com
+  Prod: http://prod.api.com
+error-discrimination:
+  strategy: status-code
+name: api
