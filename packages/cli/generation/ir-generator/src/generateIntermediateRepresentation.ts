@@ -546,8 +546,9 @@ export function generateIntermediateRepresentation({
 }
 
 function formatAllDocs<T>(obj: T): T {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const visit = (value: any): any => {
-        if (!value || typeof value !== 'object') {
+        if (!value || typeof value !== "object") {
             return value;
         }
         if (Array.isArray(value)) {
@@ -555,9 +556,9 @@ function formatAllDocs<T>(obj: T): T {
         }
         for (const key in value) {
             const prop = value[key];
-            if (key === 'docs' && typeof prop === 'string') {
+            if (key === "docs" && typeof prop === "string") {
                 value[key] = formatDocs(prop);
-            } else if (prop && typeof prop === 'object') {
+            } else if (prop && typeof prop === "object") {
                 visit(prop);
             }
         }
