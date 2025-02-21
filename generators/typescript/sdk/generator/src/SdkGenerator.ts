@@ -648,15 +648,32 @@ export class SdkGenerator {
                     const websocketExpression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
                         url: "hello world!!",
                     });
+
+                    // Print the expression
+                    const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+                    const result = printer.printNode(
+                        ts.EmitHint.Expression,
+                        websocketExpression,
+                        sourceFile.compilerNode
+                    );
+                    console.log("Expression as code:", result);
+
+
                     console.log("Stringified expression:", JSON.stringify(websocketExpression));
 
+                    // console log websocketExpression as code
+                    console.log("Websocket expression as code:", websocketExpression.toString());
                     // wrap expression in an expression statement
                     const expressionStatement = ts.factory.createExpressionStatement(websocketExpression);
+                    console.log("Expression statement:", expressionStatement);
 
 
                     console.log("Adding expression statement to source file");
                     // sourceFile.addStatements(expressionStatement);
                     context.sourceFile.addStatements("// raja test statement"); // this works!
+                    context.sourceFile.addStatements("// " + result); // this prints the websocket connection code as a comment
+
+                    // context.sourceFile.addStatements(JSON.stringify(websocketExpression));
 
                     // add the expression statement to the source file
                     // sourceFile.addStatements(expressionStatement);

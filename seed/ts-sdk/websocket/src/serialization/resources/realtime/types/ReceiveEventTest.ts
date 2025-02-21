@@ -7,6 +7,7 @@ import * as serializers from "../../../index";
 import * as SeedWebsocket from "../../../../api/index";
 
 // raja test statement
+// new core.ReconnectingWebSocket("hello world!!")
 export const ReceiveEventTest: core.serialization.ObjectSchema<
     serializers.ReceiveEventTest.Raw,
     SeedWebsocket.ReceiveEventTest
