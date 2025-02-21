@@ -74,6 +74,15 @@
 
 - changelogEntry:
     - summary: |
+        Improve the `fern docs broken-links` output to make it easier to
+        understand. Logged violations now include clickable links to the
+        affected source files (in supported terminals).
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc4
+
+- changelogEntry:
+    - summary: |
         Modify the `x-fern-examples` extension to support Websocket session examples for AsyncAPI v3 specs.
       type: feat
   irVersion: 55
@@ -85,11 +94,6 @@
       type: feat
     - summary: |
         Improve the violations summary displayed by `fern check` and include elapsed time when available.
-      type: chore
-    - summary: |
-        Make the `fern docs broken-links` output easier to understand. Printed
-        violations now include clickable links to the affected source files and
-        web pages (in supported terminals).
       type: chore
   irVersion: 55
   version: 0.54.0-rc2
