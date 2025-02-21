@@ -21,6 +21,7 @@ import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../s
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
+import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
@@ -29,7 +30,6 @@ import { ServerContext } from "../sharedTypes";
 import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV2 } from "../v2";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
-import { V2ExampleWebsocketSessionFactory } from "./V2ExampleWebsocketSessionFactory";
 
 export function parseAsyncAPIV2({
     context,
@@ -52,7 +52,7 @@ export function parseAsyncAPIV2({
         schemas[schemaId] = convertedSchema;
     }
 
-    const exampleFactory = new V2ExampleWebsocketSessionFactory(schemas, context);
+    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {

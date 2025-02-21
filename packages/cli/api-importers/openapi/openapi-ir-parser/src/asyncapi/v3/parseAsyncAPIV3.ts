@@ -21,6 +21,7 @@ import { convertSchema } from "../../schema/convertSchemas";
 import { constructUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getSchemas } from "../../utils/getSchemas";
+import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
@@ -29,7 +30,6 @@ import { ChannelId, ServerContext } from "../sharedTypes";
 import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
-import { V3ExampleWebsocketSessionFactory } from "./V3ExampleWebsocketSessionFactory";
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
@@ -119,7 +119,7 @@ export function parseAsyncAPIV3({
         (acc, schemas) => ({ ...acc, ...schemas }),
         {}
     );
-    const exampleFactory = new V3ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
+    const exampleFactory = new ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
