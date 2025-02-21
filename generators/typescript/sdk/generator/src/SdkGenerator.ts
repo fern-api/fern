@@ -1345,3 +1345,6 @@ export class SdkGenerator {
         });
     }
 }
+
+// export class WebSocketGenerator {
+// }
