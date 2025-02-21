@@ -48,7 +48,7 @@ describe("use-generators-yml-specs", () => {
         }
     });
 
-    describe("multiple workspaces", async () => {
+    describe("multiple workspaces", () => {
         for (const [fixture, apis] of entries(MULTIPLE_WORKSPACE_FIXTURES)) {
             it(fixture, async () => {
                 const pathToFixture = join(FIXTURES_PATH, fixture);
