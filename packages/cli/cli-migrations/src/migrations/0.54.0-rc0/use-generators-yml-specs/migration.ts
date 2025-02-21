@@ -96,7 +96,7 @@ async function addApiConfigurationToSingleWorkspace({
             for (const oldSpec of api) {
                 const spec = await parseApiSpec({
                     oldSpec,
-                    absolutePathToFernDirectory,
+                    absoluteFilepathToWorkspace,
                     files,
                     directories,
                     context
@@ -113,7 +113,7 @@ async function addApiConfigurationToSingleWorkspace({
                         for (const oldSpec of namespaceConfig) {
                             const spec = await parseApiSpec({
                                 oldSpec,
-                                absolutePathToFernDirectory,
+                                absoluteFilepathToWorkspace,
                                 files,
                                 directories,
                                 context,
@@ -126,7 +126,7 @@ async function addApiConfigurationToSingleWorkspace({
                     } else if (typeof namespaceConfig === "string" || typeof namespaceConfig === "object") {
                         const spec = await parseApiSpec({
                             oldSpec: namespaceConfig,
-                            absolutePathToFernDirectory,
+                            absoluteFilepathToWorkspace,
                             files,
                             directories,
                             context,
@@ -143,7 +143,7 @@ async function addApiConfigurationToSingleWorkspace({
             } else {
                 const spec = await parseApiSpec({
                     oldSpec: generatorsYmlContents.api,
-                    absolutePathToFernDirectory,
+                    absoluteFilepathToWorkspace,
                     files,
                     directories,
                     context
@@ -228,14 +228,14 @@ async function addApiConfigurationToSingleWorkspace({
 
 async function parseApiSpec({
     oldSpec,
-    absolutePathToFernDirectory,
+    absoluteFilepathToWorkspace,
     files,
     directories,
     context,
     namespace
 }: {
     oldSpec: unknown;
-    absolutePathToFernDirectory: AbsoluteFilePath;
+    absoluteFilepathToWorkspace: AbsoluteFilePath;
     files: File[];
     directories: Directory[];
     context: TaskContext;
@@ -284,7 +284,7 @@ async function parseApiSpec({
 
     const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
-    const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(spec.path));
+    const absoluteSpecPath = join(absoluteFilepathToWorkspace, RelativeFilePath.of(spec.path));
     const allFiles = [...files, ...directories.flatMap(getAllFilesInDirectory)];
     const specFile = allFiles.find((file) => file.absolutePath === absoluteSpecPath);
     if (specFile == null) {
