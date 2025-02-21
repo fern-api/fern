@@ -3,6 +3,7 @@ import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { DateOnlyField } from "./DateOnlyField";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method } from "./Method";
@@ -107,7 +108,7 @@ export class Class extends AstNode {
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
 
-    private fields: Field[] = [];
+    private fields: (Field | DateOnlyField)[] = [];
     private constructors: Class.Constructor[] = [];
     private methods: Method[] = [];
     private operators: Class.Operator[] = [];
@@ -154,11 +155,11 @@ export class Class extends AstNode {
         this.primaryConstructor = primaryConstructor;
     }
 
-    public addField(field: Field): void {
+    public addField(field: Field | DateOnlyField): void {
         this.fields.push(field);
     }
 
-    public addFields(fields: Field[]): void {
+    public addFields(fields: (Field | DateOnlyField)[]): void {
         fields.forEach((field) => this.fields.push(field));
     }
 
@@ -394,7 +395,7 @@ export class Class extends AstNode {
         return this.methods.filter((method) => method.access === access);
     }
 
-    private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
+    private writeFields({ writer, fields }: { writer: Writer; fields: (Field | DateOnlyField)[] }): void {
         fields.forEach((field, index) => {
             field.write(writer);
             writer.writeNewLineIfLastLineNot();
@@ -405,11 +406,11 @@ export class Class extends AstNode {
         });
     }
 
-    private getFieldsByAccess(access: Access | undefined): Field[] {
+    private getFieldsByAccess(access: Access | undefined): (Field | DateOnlyField)[] {
         return this.fields.filter((field) => field.access === access);
     }
 
-    public getFields(): Field[] {
+    public getFields(): (Field | DateOnlyField)[] {
         return this.fields;
     }
 

@@ -7,6 +7,18 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.10.00
+  createdAt: "2025-02-21"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for generating dates. Configure the type of dates you generating using the `date-type` configuration option.
+        `date-type` has the following options:
+        - `use-date-only-portable` (default): Generates native `DateOnly` properties on .NET 6 and above, and falls back to using the third party `Portable.System.DateTimeOnly` package.
+        - `use-date-time`: Generates dates as `DateTime` properties.
+        - `use-date-only-on-net6+`: Generates native `DateOnly` properties on .NET 6 and above, and falls back to using `DateTime` on older versions of .NET.
+
 - version: 1.9.31
   createdAt: "2025-02-15"
   irVersion: 53
@@ -68,7 +80,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts 
+        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts
         when a type named `System` exists in the current namespace.
 
 - version: 1.9.24
@@ -85,7 +97,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T> 
+        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T>
         when the method returns a response.
 
 - version: 1.9.22

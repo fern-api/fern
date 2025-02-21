@@ -12,6 +12,7 @@ export { Dictionary } from "./Dictionary";
 export { Enum } from "./Enum";
 export { EnumInstantiation } from "./EnumInstantiation";
 export { Field } from "./Field";
+export { DateOnlyField } from "./DateOnlyField";
 export { PrimitiveInstantiation as InstantiatedPrimitive } from "./InstantiatedPrimitive";
 export { Interface } from "./Interface";
 export { List } from "./List";

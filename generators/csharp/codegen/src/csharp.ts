@@ -6,6 +6,7 @@ import {
     ClassReference,
     CodeBlock,
     CoreClassReference,
+    DateOnlyField,
     Dictionary,
     Enum,
     EnumInstantiation,
@@ -57,6 +58,10 @@ export function codeblock(arg: CodeBlock.Arg): CodeBlock {
 
 export function field(args: Field.Args): Field {
     return new Field(args);
+}
+
+export function dateOnlyField(args: DateOnlyField.Args): DateOnlyField {
+    return new DateOnlyField(args);
 }
 
 export function method(args: Method.Args): Method {
@@ -121,6 +126,7 @@ export {
     Dictionary,
     Enum,
     Field,
+    DateOnlyField,
     InstantiatedPrimitive,
     Method,
     MethodInvocation,
