@@ -15,23 +15,26 @@ export function logViolations({
     context,
     violations,
     logWarnings,
-    logSummary = true
+    logSummary = true,
+    elapsedMillis = 0
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
     logWarnings: boolean;
     logSummary?: boolean;
+    elapsedMillis?: number;
 }): LogViolationsResponse {
     const stats = getViolationStats(violations);
-    if (logSummary) {
-        logViolationsSummary({ context, stats, logWarnings });
-    }
-
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
     for (const [nodePath, violations] of violationsByNodePath) {
         const relativeFilepath = violations[0]?.relativeFilepath ?? "";
         logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, context });
+    }
+
+    // log the summary at the end so that it's not pushed out of view by the violations
+    if (logSummary) {
+        logViolationsSummary({ context, stats, logWarnings, elapsedMillis });
     }
 
     return {
@@ -115,15 +118,18 @@ function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
 function logViolationsSummary({
     stats,
     context,
-    logWarnings
+    logWarnings,
+    elapsedMillis = 0
 }: {
     stats: ViolationStats;
     context: TaskContext;
     logWarnings: boolean;
+    elapsedMillis?: number;
 }): void {
     const { numFatal, numErrors, numWarnings } = stats;
 
-    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings.`;
+    const suffix = elapsedMillis > 0 ? ` in ${(elapsedMillis / 1000).toFixed(3)} seconds.` : ".";
+    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings` + suffix;
     if (!logWarnings && numWarnings > 0) {
         message += " Run fern check --warnings to print out the warnings not shown.";
     }

@@ -104,9 +104,8 @@ export class ExampleWebsocketSessionFactory {
 
             const messages: WebsocketMessageExample[] = [];
             for (const messageExample of extensionExample.messages) {
-                const messageSchema = context.resolveMessageReference({
-                    $ref: `#/components/messages/${messageExample.messageId}`
-                });
+                const messageRef = context.getExampleMessageReference(messageExample);
+                const messageSchema = context.resolveMessageReference({ $ref: messageRef });
                 const resolvedSchema = isReferenceObject(messageSchema.payload)
                     ? context.resolveSchemaReference(messageSchema.payload)
                     : messageSchema.payload;
@@ -257,11 +256,11 @@ export class ExampleWebsocketSessionFactory {
         return example;
     }
 
-    private isSchemaRequired(schema: SchemaWithExample) {
+    private isSchemaRequired(schema: SchemaWithExample): boolean {
         return isSchemaRequired(this.getResolvedSchema(schema));
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {

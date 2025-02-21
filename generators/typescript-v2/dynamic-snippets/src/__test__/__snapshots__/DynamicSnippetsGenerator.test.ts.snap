@@ -334,11 +334,11 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Production,
+        environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
     await client.s3.getPresignedURL({
@@ -350,11 +350,11 @@ main();
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Staging,
+        environment: AcmeEnvironment.Staging,
         token: "<YOUR_API_KEY>",
     });
     await client.s3.getPresignedURL({
@@ -435,11 +435,11 @@ main();
 `;
 
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Production,
+        environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
     await client.dummy.getDummy();
@@ -449,11 +449,11 @@ main();
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Staging,
+        environment: AcmeEnvironment.Staging,
         token: "<YOUR_API_KEY>",
     });
     await client.dummy.getDummy();
