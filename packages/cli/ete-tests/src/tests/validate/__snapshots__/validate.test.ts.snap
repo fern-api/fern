@@ -14,5 +14,5 @@ exports[`validate > simple 1`] = `
        error-discrimination is required because this API has declared errors.
 [api]: other.yml -> types -> MyType
        Type MissingType is not defined.
-[api]: Found 2 errors and 0 warnings in 0.009 seconds."
+[api]: Found 2 errors and 0 warnings in"
 `;
