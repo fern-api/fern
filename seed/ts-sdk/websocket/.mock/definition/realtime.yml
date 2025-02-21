@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
-
 # goal: get this working
 channel:
   path: /realtime/{id}
@@ -24,7 +23,6 @@ channel:
         properties:
           text: string
 
-# already supported
 types:
   ReceiveEvent:
     properties:
