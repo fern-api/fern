@@ -12,7 +12,8 @@ export async function validateDocsWorkspaceWithoutExiting({
     context,
     logWarnings,
     errorOnBrokenLinks,
-    logSummary = true
+    logSummary = true,
+    excludeRules
 }: {
     workspace: DocsWorkspace;
     fernWorkspaces: FernWorkspace[];
@@ -21,9 +22,17 @@ export async function validateDocsWorkspaceWithoutExiting({
     logWarnings: boolean;
     errorOnBrokenLinks?: boolean;
     logSummary?: boolean;
+    excludeRules?: string[];
 }): Promise<{ hasErrors: boolean }> {
     const startTime = performance.now();
-    const violations = await validateDocsWorkspace(workspace, context, fernWorkspaces, ossWorkspaces);
+    const violations = await validateDocsWorkspace(
+        workspace,
+        context,
+        fernWorkspaces,
+        ossWorkspaces,
+        false,
+        excludeRules
+    );
     const elapsedMillis = performance.now() - startTime;
     let { hasErrors } = logViolations({
         violations,
@@ -47,7 +56,8 @@ export async function validateDocsWorkspaceAndLogIssues({
     ossWorkspaces,
     context,
     logWarnings,
-    errorOnBrokenLinks
+    errorOnBrokenLinks,
+    excludeRules
 }: {
     workspace: DocsWorkspace;
     fernWorkspaces: FernWorkspace[];
@@ -55,6 +65,7 @@ export async function validateDocsWorkspaceAndLogIssues({
     context: TaskContext;
     logWarnings: boolean;
     errorOnBrokenLinks?: boolean;
+    excludeRules?: string[];
 }): Promise<void> {
     const { hasErrors } = await validateDocsWorkspaceWithoutExiting({
         workspace,
@@ -62,7 +73,8 @@ export async function validateDocsWorkspaceAndLogIssues({
         logWarnings,
         fernWorkspaces,
         ossWorkspaces,
-        errorOnBrokenLinks
+        errorOnBrokenLinks,
+        excludeRules
     });
 
     if (hasErrors) {

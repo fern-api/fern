@@ -78,6 +78,10 @@
         understand. Logged violations now include clickable links to the
         affected source files (in supported terminals).
       type: fix
+    - summary: |
+        Added a `--broken-links` flag to the `fern check` and `fern docs dev`
+        commands. If set, broken links will be logged.
+      type: feat
   irVersion: 55
   version: 0.54.0-rc4
 
