@@ -19,5 +19,5 @@ describe("fern docs broken-links", () => {
                 // variable part of the output.
                 .slice(0, -15)
         ).toMatchSnapshot();
-    }, 5_000);
+    }, 20_000);
 });

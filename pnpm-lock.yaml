@@ -7420,6 +7420,9 @@ importers:
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
+      terminal-link:
+        specifier: ^3.0.0
+        version: 3.0.0
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0

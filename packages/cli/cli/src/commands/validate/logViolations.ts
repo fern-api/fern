@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { V } from "vitest/dist/chunks/reporters.nr4dxCkA";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
@@ -32,9 +33,11 @@ export function logViolations({
     // log the violations in sorted order so that output across runs is easier
     // to compare and ete test snapshots work
     for (const nodePath of Array.from(violationsByNodePath.keys()).sort()) {
-        const violations = violationsByNodePath.get(nodePath)!;
-        const configRelativeFilepath = violations[0]?.relativeFilepath ?? "";
-        logViolationsGroup({ logWarnings, logBreadcrumbs, configRelativeFilepath, nodePath, violations, context });
+        const violations = violationsByNodePath.get(nodePath);
+        if (violations) {
+            const configRelativeFilepath = violations[0]?.relativeFilepath ?? "";
+            logViolationsGroup({ logWarnings, logBreadcrumbs, configRelativeFilepath, nodePath, violations, context });
+        }
     }
 
     // log the summary at the end so that it's not pushed out of view by the violations
