@@ -1,6 +1,7 @@
 import { getExtension } from "../getExtension";
 import { FernAsyncAPIExtension } from "./fernExtensions";
 import { AsyncAPIV2 } from "./v2";
+import { AsyncAPIV3 } from "./v3";
 
 export interface WebsocketSessionExampleExtension {
     summary?: string;
@@ -9,12 +10,15 @@ export interface WebsocketSessionExampleExtension {
     headers?: Record<string, string>;
     messages: {
         type: "subscribe" | "publish";
+        channelId?: string;
         messageId: string;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value: any;
     }[];
 }
 
-export function getFernExamples(channel: AsyncAPIV2.ChannelV2): WebsocketSessionExampleExtension[] {
+export function getFernExamples(
+    channel: AsyncAPIV2.ChannelV2 | AsyncAPIV3.ChannelV3
+): WebsocketSessionExampleExtension[] {
     return getExtension<WebsocketSessionExampleExtension[]>(channel, FernAsyncAPIExtension.FERN_EXAMPLES) ?? [];
 }

@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Modify the `x-fern-examples` extension to support Websocket session examples for AsyncAPI v3 specs.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc3
+
+- changelogEntry:
+    - summary: |
         Add the `x-fern-optional` extension to the AsyncAPI v3 parser to allow for optional channel parameters.
       type: feat
   irVersion: 55
