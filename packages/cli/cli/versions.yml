@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Improve generators.yml migration to `api.specs` syntax.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc5
+
+- changelogEntry:
+    - summary: |
         Handle comments that include '*/' literal values. This previously caused any generator that uses c-style comments to fail.
       type: fix
   irVersion: 55
