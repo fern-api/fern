@@ -29,7 +29,10 @@ export function logViolations({
     const stats = getViolationStats(violations);
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
-    for (const [nodePath, violations] of violationsByNodePath) {
+    // log the violations in sorted order so that output across runs is easier
+    // to compare and ete test snapshots work
+    for (const nodePath of Array.from(violationsByNodePath.keys()).sort()) {
+        const violations = violationsByNodePath.get(nodePath)!;
         const configRelativeFilepath = violations[0]?.relativeFilepath ?? "";
         logViolationsGroup({ logWarnings, logBreadcrumbs, configRelativeFilepath, nodePath, violations, context });
     }
