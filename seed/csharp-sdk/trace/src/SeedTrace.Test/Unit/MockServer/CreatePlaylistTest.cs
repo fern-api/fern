@@ -1,6 +1,6 @@
 using System.Globalization;
-using System.Threading.Tasks;
 using FluentAssertions.Json;
+using global::System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
@@ -12,7 +12,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 public class CreatePlaylistTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedFileDownload.Core;
 
 namespace SeedFileDownload;
@@ -14,7 +14,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task DownloadFileAsync(
+    public async global::System.Threading.Tasks.Task DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

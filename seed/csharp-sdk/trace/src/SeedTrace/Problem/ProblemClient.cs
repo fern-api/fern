@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -223,7 +223,7 @@ public partial class ProblemClient
     /// await client.Problem.DeleteProblemAsync("problemId");
     /// </code>
     /// </example>
-    public async Task DeleteProblemAsync(
+    public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

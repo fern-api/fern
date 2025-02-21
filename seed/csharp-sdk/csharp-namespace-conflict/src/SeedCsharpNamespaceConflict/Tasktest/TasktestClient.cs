@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Threading;
+using global::System.Threading.Tasks;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
@@ -18,7 +19,7 @@ public partial class TasktestClient
     /// await client.Tasktest.HelloAsync();
     /// </code>
     /// </example>
-    public async System.Threading.Tasks.Task HelloAsync(
+    public async global::System.Threading.Tasks.Task HelloAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
