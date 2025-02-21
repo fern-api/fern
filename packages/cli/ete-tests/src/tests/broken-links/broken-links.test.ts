@@ -13,8 +13,6 @@ describe("fern docs broken-links", () => {
         });
         expect(
             stripAnsi(stdout)
-                // for some reason, locally the output contains a newline that Circle doesn't
-                // .trim()
                 // The expected stdout for the "simple" fixture includes
                 // an elapsed time that can change on every test run.
                 // So, we truncate the last 15 characters to remove the
