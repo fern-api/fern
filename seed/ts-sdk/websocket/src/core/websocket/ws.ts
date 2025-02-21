@@ -1,18 +1,14 @@
-/** THIS FILE IS MANUALLY MAINAINED: see .fernignore */
-// import { RUNTIME } from "../runtime";
-// import * as Events from "./events";
-// import { WebSocket as NodeWebSocket } from "ws";
-
-// @ts-nocheck
+import { WebSocket as NodeWebSocket } from "ws";
+import * as Events from "./events";
+import { RUNTIME } from "../runtime";
 
 const getGlobalWebSocket = (): WebSocket | undefined => {
     if (typeof WebSocket !== "undefined") {
         // @ts-ignore
         return WebSocket;
+    } else if (RUNTIME.type === "node") {
+        return NodeWebSocket as unknown as WebSocket;
     }
-    // } else if (RUNTIME.type === "node") {
-    //     return NodeWebSocket as unknown as WebSocket;
-    // }
     return undefined;
 };
 
@@ -267,7 +263,7 @@ export class ReconnectingWebSocket {
      */
     public addEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         type: T,
-        listener: Events.WebSocketEventListenerMap[T]
+        listener: Events.WebSocketEventListenerMap[T],
     ): void {
         if (this._listeners[type]) {
             // @ts-ignore
@@ -290,13 +286,13 @@ export class ReconnectingWebSocket {
      */
     public removeEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         type: T,
-        listener: Events.WebSocketEventListenerMap[T]
+        listener: Events.WebSocketEventListenerMap[T],
     ): void {
         if (this._listeners[type]) {
             // @ts-ignore
             this._listeners[type] = this._listeners[type].filter(
                 // @ts-ignore
-                (l) => l !== listener
+                (l) => l !== listener,
             );
         }
     }
@@ -416,7 +412,7 @@ export class ReconnectingWebSocket {
 
     private _callEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         event: Events.WebSocketEventMap[T],
-        listener: Events.WebSocketEventListenerMap[T]
+        listener: Events.WebSocketEventListenerMap[T],
     ) {
         if ("handleEvent" in listener) {
             // @ts-ignore
