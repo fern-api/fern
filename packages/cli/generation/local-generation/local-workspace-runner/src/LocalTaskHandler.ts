@@ -172,7 +172,7 @@ export class LocalTaskHandler {
             cwd,
             doNotPipeOutput: true
         });
-        return response.stdout ?? "";
+        return response.stdout;
     }
 }
 

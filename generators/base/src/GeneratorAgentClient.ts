@@ -24,7 +24,7 @@ export class GeneratorAgentClient {
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
         const cli = await this.getOrInstall();
         const content = await cli(args);
-        return content.stdout ?? "";
+        return content.stdout;
     }
 
     public async generateReference<ReferenceConfig>({
@@ -38,7 +38,7 @@ export class GeneratorAgentClient {
         const args = ["generate-reference", "--config", referenceConfigFilepath];
         const cli = await this.getOrInstall();
         const content = await cli(args);
-        return content.stdout ?? "";
+        return content.stdout;
     }
 
     public async writeConfig<T>({ config }: { config: T }): Promise<AbsoluteFilePath> {
