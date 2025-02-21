@@ -1,5 +1,3 @@
-import { ExecaReturnValue } from "execa";
-
 import { Logger } from "@fern-api/logger";
 
 import { loggingExeca } from "./loggingExeca";
