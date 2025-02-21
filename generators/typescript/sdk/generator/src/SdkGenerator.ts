@@ -465,6 +465,12 @@ export class SdkGenerator {
             }
         }
 
+        // TODO
+        // if (Object.entries(this.intermediateRepresentation.websocketChannels ?? {}).length > 0) {
+        // }
+
+
+
         if (this.npmPackage?.version != null) {
             const versionFileGenerator = new VersionFileGenerator({
                 version: this.npmPackage.version,
@@ -615,19 +621,47 @@ export class SdkGenerator {
     }
 
     private generateTypeSchemas(): { generated: boolean } {
+        console.log("Generating type schemas");
         let generated = false;
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            console.log("Processing type declaration:", typeDeclaration.name);
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
                     if (!generated) {
+                        console.log("First type schema being generated");
                         generated = true;
                     }
+                    console.log("Generating SDK context");
                     const context = this.generateSdkContext({ sourceFile, importsManager });
+
+                    console.log("Instantiating ReconnectingWebsocket");
+                    const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
+                        url: "hello world!!",
+                    });
+                    console.log("Stringified expression:", JSON.stringify(expression));
+
+                    // generate a Client. ts per channel
+
+                    /*
+                    // Step 1) generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
+                    // Step 2) output code like the 
+                    const expression = context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
+                        url: "hello world!!",
+                    });
+
+                    to the client.TS
+
+                    // Step 3) get core utils to be added to the SDK output. debug why it is not being added.
+                    */
+
+                    console.log("Writing type schema to file for:", typeDeclaration.name);
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
+                    console.log("Successfully wrote type schema for:", typeDeclaration.name);
                 }
             });
         }
+        console.log("Finished generating type schemas. Generated:", generated);
         return { generated };
     }
 
@@ -664,7 +698,17 @@ export class SdkGenerator {
                         endpoint
                     }),
                     run: ({ sourceFile, importsManager }) => {
+                        console.log("Generating endpoint error union context");
                         const context = this.generateSdkContext({ sourceFile, importsManager });
+                        console.log("Context generated successfully");
+
+                        // brings in our websocket utilitiy
+                        console.log("Instantiating ReconnectingWebsocket");
+                        context.coreUtilities.websocket.ReconnectingWebsocket._instantiate({
+                            url: "hello world!!",
+                        });
+                        console.log("ReconnectingWebsocket instantiated");
+
                         context.endpointErrorUnion
                             .getGeneratedEndpointErrorUnion(packageId, endpoint.name)
                             .writeToFile(context);
@@ -1269,8 +1313,11 @@ export class SdkGenerator {
 
     private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
+            console.log("Processing package:", packageId);
             const service = this.packageResolver.getServiceDeclaration(packageId);
+            console.log("Service found:", service != null);
             if (service != null) {
+                console.log("Running service for package:", packageId);
                 run(service, packageId);
             }
         }
@@ -1348,3 +1395,5 @@ export class SdkGenerator {
 
 // export class WebSocketGenerator {
 // }
+
+// generators/typescript/sdk/client-class-generator/src/endpoints/GeneratedFileDownloadEndpointImplementation.ts

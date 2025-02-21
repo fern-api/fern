@@ -1,5 +1,7 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
+
+# goal: get this working
 channel:
   path: /realtime/{id}
   auth: true
@@ -22,15 +24,21 @@ channel:
         properties:
           text: string
 
-  examples:
-    - name: Default example
-      path-parameters:
-        id: doc_123
-      messages:
-        - type: send
-          body: "uvxcdv12344412b"
-        - type: receive
-          body:
-            text: "The weather for today..."
-        - type: send
-          body: "uvxcdv12344412b"
+# already supported
+types:
+  ReceiveEvent:
+    properties:
+      text: string
+
+  # examples:
+  #   - name: Default example
+  #     path-parameters:
+  #       id: doc_123
+  #     messages:
+  #       - type: send
+  #         body: "uvxcdv12344412b"
+  #       - type: receive
+  #         body:
+  #           text: "The weather for today..."
+  #       - type: send
+  #         body: "uvxcdv12344412b"
