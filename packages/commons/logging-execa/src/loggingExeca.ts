@@ -9,7 +9,7 @@ export declare namespace loggingExeca {
         substitutions?: Record<string, string>;
     }
 
-    export type Return = ExecaReturnValue;
+    export type ReturnValue = ExecaReturnValue;
 }
 
 export async function loggingExeca(
@@ -17,7 +17,7 @@ export async function loggingExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): Promise<loggingExeca.Return> {
+): Promise<loggingExeca.ReturnValue> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
