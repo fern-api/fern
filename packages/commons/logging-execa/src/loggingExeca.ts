@@ -9,7 +9,9 @@ export declare namespace loggingExeca {
         substitutions?: Record<string, string>;
     }
 
-    export type ReturnValue = ExecaReturnValue;
+    export type Return = Omit<ExecaReturnValue, "stdout" | "stderr"> &
+        // the execa types are incorrect and sometimes stdout and stderr and not defined
+        Partial<Pick<ExecaReturnValue, "stdout" | "stderr">>;
 }
 
 export async function loggingExeca(
@@ -17,7 +19,7 @@ export async function loggingExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): Promise<ExecaReturnValue> {
+): Promise<loggingExeca.Return> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,

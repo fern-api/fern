@@ -9,7 +9,7 @@ async function main() {
     await tsup.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
-        minify: true,
+        minify: false,
         outDir: 'dist/prod',
         env: {
             AUTH0_DOMAIN: "fern-prod.us.auth0.com",

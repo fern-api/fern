@@ -33,9 +33,9 @@ export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
  *   3. re-runs `fern upgrade` using the latest version the CLI
  *        implementation detail: when doing so, we set the PREVIOUS_VERSION_ENV_VAR
  *        so we know what version we just upgraded from
- *   4. During this re-run, this function is invoked again. During this re-run, we:
- *        - run any migrations between PREVIOUS_VERSION_ENV_VAR and the latest version of the CLI.
- *        - change the generator versions in generators.yml to the latest stable versions
+ *   4. During this re-run, this function is invoked again. During this re-run,
+ *      we run any migrations between PREVIOUS_VERSION_ENV_VAR and the latest
+ *      version of the CLI.
  */
 export async function upgrade({
     cliContext,
@@ -83,15 +83,7 @@ export async function upgrade({
             cliContext.logger.info("No upgrade available.");
             return;
         }
-
-        await cliContext.runTask(async (context) => {
-            await runMigrations({
-                fromVersion: previousVersion,
-                toVersion: fernCliUpgradeInfo.latestVersion,
-                context
-            });
-        });
-        await cliContext.exitIfFailed();
+        await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.latestVersion });
     } else if (fernCliUpgradeInfo != null) {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
@@ -100,6 +92,8 @@ export async function upgrade({
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
         );
+        const originalVersion = projectConfig.version;
+
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;
         });
@@ -111,18 +105,46 @@ export async function upgrade({
             )}`
         );
 
-        await loggingExeca(cliContext.logger, "npm", [
-            "install",
-            "-g",
-            `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`
-        ]);
+        // special case: if we're running the local-dev version of the CLI, simulate a re-run
+        if (cliContext.environment.packageVersion === "0.0.0") {
+            await runPostUpgradeSteps({
+                cliContext,
+                previousVersion: originalVersion,
+                newVersion: fernCliUpgradeInfo.latestVersion
+            });
+        } else {
+            await loggingExeca(cliContext.logger, "npm", [
+                "install",
+                "-g",
+                `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`
+            ]);
 
-        await rerunFernCliAtVersion({
-            version: fernCliUpgradeInfo.latestVersion,
-            cliContext,
-            env: {
-                [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
-            }
-        });
+            await rerunFernCliAtVersion({
+                version: fernCliUpgradeInfo.latestVersion,
+                cliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
+                }
+            });
+        }
     }
+}
+
+async function runPostUpgradeSteps({
+    cliContext,
+    previousVersion,
+    newVersion
+}: {
+    cliContext: CliContext;
+    previousVersion: string;
+    newVersion: string;
+}) {
+    await cliContext.runTask(async (context) => {
+        await runMigrations({
+            fromVersion: previousVersion,
+            toVersion: newVersion,
+            context
+        });
+    });
+    await cliContext.exitIfFailed();
 }
