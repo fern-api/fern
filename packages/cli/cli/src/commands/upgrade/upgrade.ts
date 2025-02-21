@@ -71,7 +71,7 @@ export async function upgrade({
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({
             includePreReleases
         });
-        if (fernUpgradeInfo.cliUpgradeInfo) {
+        if (fernUpgradeInfo.cliUpgradeInfo != null) {
             fernCliUpgradeInfo = {
                 targetVersion: fernUpgradeInfo.cliUpgradeInfo.latestVersion,
                 isUpgradeAvailable: fernUpgradeInfo.cliUpgradeInfo.isUpgradeAvailable
