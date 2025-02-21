@@ -1,7 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles, DateTypeOption, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -138,15 +138,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.CollectionItemSerializer,
             AsIsFiles.Constants,
-            AsIsFiles.DateTimeSerializer,
             AsIsFiles.Extensions,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
-            AsIsFiles.JsonConfiguration,
-            AsIsFiles.OneOfSerializer,
+            AsIsFiles.Json.CollectionItemSerializer,
+            AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonConfiguration,
+            AsIsFiles.Json.OneOfSerializer,
             AsIsFiles.RawClient
         ];
         if (this.hasGrpcEndpoints()) {
@@ -159,10 +159,18 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.StringEnumSerializer);
+            files.push(AsIsFiles.Json.StringEnumSerializer);
         } else {
-            files.push(AsIsFiles.EnumSerializer);
+            files.push(AsIsFiles.Json.EnumSerializer);
         }
+
+        const dateTimeOption = this.getDateTypeOption();
+        switch (dateTimeOption) {
+            case DateTypeOption.USE_DATE_TIME:
+            case DateTypeOption.USE_DATE_ONLY_ON_NET6_PLUS:
+                files.push(AsIsFiles.Json.DateAsDateTimeConverter);
+        }
+
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
@@ -175,15 +183,34 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.Test.RawClientTests, AsIsFiles.Test.OneOfSerializerTests];
+        const files = [
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.OneOfSerializerTests,
+            AsIsFiles.Test.RawClientTests
+        ];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.Test.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.Test.EnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
         }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
+
+        const dateTimeOption = this.getDateTypeOption();
+        switch (dateTimeOption) {
+            case DateTypeOption.USE_DATE_TIME:
+                files.push(AsIsFiles.Test.Json.DateAsDateTimeJsonTests);
+                break;
+            case DateTypeOption.USE_DATE_ONLY_ON_NET6_PLUS:
+                files.push(AsIsFiles.Test.Json.DateAsDateTimeJsonTests);
+                files.push(AsIsFiles.Test.Json.DateOnlyJsonTests);
+                break;
+            case DateTypeOption.USE_DATE_ONLY_PORTABLE:
+                files.push(AsIsFiles.Test.Json.DateOnlyJsonTests);
+                break;
+        }
+
         return files;
     }
 

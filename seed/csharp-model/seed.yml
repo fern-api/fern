@@ -49,7 +49,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         date-type: use-date-only-on-net6+
-      outputFolder: date-only
+      outputFolder: date-only-only-on-net6plus
     - customConfig:
         date-type: use-date-time
       outputFolder: date-time

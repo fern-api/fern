@@ -11,13 +11,15 @@
   createdAt: "2025-02-21"
   irVersion: 53
   changelogEntry:
-    - type: fix
+    - type: feat
       summary: |
         Add support for generating dates. Configure the type of dates you generating using the `date-type` configuration option.
         `date-type` has the following options:
         - `use-date-only-portable` (default): Generates native `DateOnly` properties on .NET 6 and above, and falls back to using the third party `Portable.System.DateTimeOnly` package.
         - `use-date-time`: Generates dates as `DateTime` properties.
         - `use-date-only-on-net6+`: Generates native `DateOnly` properties on .NET 6 and above, and falls back to using `DateTime` on older versions of .NET.
+    - type: feat
+      summary: Add test for serializing and deserializing date times.
 
 - version: 1.9.31
   createdAt: "2025-02-15"
