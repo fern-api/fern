@@ -15,18 +15,21 @@ public class QueryStringMapper {
     public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value) {
         JsonNode nested = MAPPER.valueToTree(value);
 
-        if (!nested.isObject()) {
-            throw new IllegalArgumentException("Expected value to serialize to JSON object. Instead, got "
+        ObjectNode flat;
+
+        if (nested.isObject()) {
+            flat = flattenObject((ObjectNode) nested);
+        } else if (nested.isArray()) {
+            flat = flattenArray((ArrayNode) nested, "");
+        } else {
+            throw new IllegalArgumentException("Expected value to serialize to JSON object or array. Instead, got "
                     + (value == null ? null : value.toString()));
         }
-
-        ObjectNode flat = flattenObject((ObjectNode) nested);
 
         Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> field = fields.next();
-            httpUrl.addQueryParameter(
-                    key + field.getKey(), field.getValue().toString().replaceAll("\"", ""));
+            httpUrl.addQueryParameter(key + field.getKey(), field.getValue().toString());
         }
     }
 
