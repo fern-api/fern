@@ -18,8 +18,8 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.variables.VariableId;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.client.JavaSdkCustomConfig;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 import okhttp3.HttpUrl;
 import org.immutables.value.Value;
@@ -48,6 +49,7 @@ public final class HttpUrlBuilder {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
+    private final ClientGeneratorContext context;
     private final boolean hasOptionalPathParams;
     private final boolean inlinePathParams;
 
@@ -61,7 +63,7 @@ public final class HttpUrlBuilder {
             HttpService httpService,
             Map<String, PathParamInfo> servicePathParameters,
             Map<String, PathParamInfo> endpointPathParameters,
-            JavaSdkCustomConfig config) {
+            ClientGeneratorContext context) {
         this.httpUrlname = httpUrlname;
         this.requestName = requestName;
         this.clientOptionsField = clientOptionsField;
@@ -71,6 +73,7 @@ public final class HttpUrlBuilder {
         this.httpService = httpService;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
+        this.context = context;
         this.hasOptionalPathParams = Stream.concat(
                         servicePathParameters.values().stream(), endpointPathParameters.values().stream())
                 .anyMatch(pathParamInfo ->
@@ -81,7 +84,7 @@ public final class HttpUrlBuilder {
                                         .getContainer()
                                         .get()
                                         .isOptional());
-        this.inlinePathParams = config.inlinePathParameters()
+        this.inlinePathParams = context.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
                 && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
                 && (httpEndpoint
@@ -140,21 +143,38 @@ public final class HttpUrlBuilder {
         }
         queryParamProperties.forEach(queryParamProperty -> {
             boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
+            boolean isCollection = isTypeNameCollection(queryParamProperty.poetTypeName());
+            boolean isObject = isTypeNameObject(queryParamProperty.poetTypeName());
             if (isOptional) {
                 codeBlock.beginControlFlow(
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
-            codeBlock.addStatement(
-                    "$L.addQueryParameter($S, $L)",
-                    httpUrlname,
-                    queryParamProperty.wireKey().get(),
-                    PoetTypeNameStringifier.stringify(
-                            CodeBlock.of(
-                                            "$L.$N()" + (isOptional ? ".get()" : ""),
-                                            requestName,
-                                            queryParamProperty.getterProperty())
-                                    .toString(),
-                            queryParamProperty.poetTypeName()));
+            if (isCollection || isObject) {
+                codeBlock.addStatement(
+                        "$T.addQueryParameter($L, $S, $L)",
+                        context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                        httpUrlname,
+                        queryParamProperty.wireKey().get(),
+                        PoetTypeNameStringifier.stringify(
+                                CodeBlock.of(
+                                                "$L.$N()" + (isOptional ? ".get()" : ""),
+                                                requestName,
+                                                queryParamProperty.getterProperty())
+                                        .toString(),
+                                queryParamProperty.poetTypeName()));
+            } else {
+                codeBlock.addStatement(
+                        "$L.addQueryParameter($S, $L)",
+                        httpUrlname,
+                        queryParamProperty.wireKey().get(),
+                        PoetTypeNameStringifier.stringify(
+                                CodeBlock.of(
+                                                "$L.$N()" + (isOptional ? ".get()" : ""),
+                                                requestName,
+                                                queryParamProperty.getterProperty())
+                                        .toString(),
+                                queryParamProperty.poetTypeName()));
+            }
             if (isOptional) {
                 codeBlock.endControlFlow();
             }
@@ -249,6 +269,17 @@ public final class HttpUrlBuilder {
     private static boolean isTypeNameOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    private static boolean isTypeNameCollection(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && (((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(List.class))
+                        || ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Set.class)));
+    }
+
+    private static boolean isTypeNameObject(TypeName typeName) {
+        // TODO(ajgateno): Can we use the same logic for Maps?
+        return (typeName instanceof ClassName) && !typeName.isBoxedPrimitive();
     }
 
     @Value.Immutable
