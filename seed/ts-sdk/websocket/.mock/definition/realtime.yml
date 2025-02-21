@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
-
 # goal: get this working
 channel:
   path: /realtime/{id}
@@ -17,14 +16,13 @@ channel:
       body: string
 
     receive:
-      display-name: "Receive"
+      display-name: "Websocket Receive Test 123"
       origin: server
       body:
         name: ReceiveEvent
         properties:
           text: string
 
-# already supported
 types:
   ReceiveEvent:
     properties:

@@ -16,7 +16,7 @@ channel:
       body: string
 
     receive:
-      display-name: "Receive"
+      display-name: "Websocket Receive Test 123"
       origin: server
       body:
         name: ReceiveEvent

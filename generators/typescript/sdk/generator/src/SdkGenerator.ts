@@ -465,7 +465,16 @@ export class SdkGenerator {
             }
         }
 
-        // TODO
+        console.log("Intermediate representation:", JSON.stringify(this.intermediateRepresentation, null, 2));
+
+        if (Object.entries(this.intermediateRepresentation.websocketChannels ?? {}).length > 0) {
+            console.log("Websocket channels found");
+            this.generateWebsocketClient();
+        }
+
+
+
+        // // TODO
         // if (Object.entries(this.intermediateRepresentation.websocketChannels ?? {}).length > 0) {
         // }
 
@@ -716,6 +725,16 @@ export class SdkGenerator {
                 });
             }
         });
+    }
+    
+    private generateWebsocketClient() {
+        console.log("Generating websocket client");
+            
+        // generate a Client.ts per channel
+
+        // generate a Client.ts per channel using code here and adding new stuff. can just generate garbage code for now
+
+        // Step 2) output code like the
     }
 
     private generateEndpointTypeSchemas(): { generated: boolean } {
