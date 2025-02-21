@@ -9,9 +9,7 @@ export declare namespace loggingExeca {
         substitutions?: Record<string, string>;
     }
 
-    export type Return = Omit<ExecaReturnValue, "stdout" | "stderr"> &
-        // the execa types are incorrect and sometimes stdout and stderr and not defined
-        Partial<Pick<ExecaReturnValue, "stdout" | "stderr">>;
+    export type Return = ExecaReturnValue;
 }
 
 export async function loggingExeca(
@@ -39,5 +37,14 @@ export async function loggingExeca(
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
     }
-    return command;
+    return command.then((result) => {
+        // the execa types are incorrect and sometimes stdout and stderr and not defined
+        if (result.stdout == null) {
+            result.stdout = "";
+        }
+        if (result.stderr == null) {
+            result.stderr = "";
+        }
+        return result;
+    });
 }
