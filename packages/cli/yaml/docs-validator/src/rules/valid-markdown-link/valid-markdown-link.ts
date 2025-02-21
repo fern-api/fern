@@ -223,20 +223,13 @@ function createLinkViolationMessage(
         return [msg, RelativeFilePath.of("")];
     }
 
-    // including line:column in the fileurl doesn't work, so we just link to the file
-    const positionStr = `[${position.start.line}:${position.start.column}]`;
-    const fileLink =
-        terminalLink(positionStr, `file://${sourceFilepath.toString()}`, {
-            fallback: false
-        }) + " ".repeat("[0000:0000]".length - positionStr.length); // pad right
-
-    msg = `${fileLink} broken link to ${chalk.bold(pathnameToCheck.pathname)}`;
+    msg = `broken link to ${chalk.bold(pathnameToCheck.pathname)}`;
     if (pathnameToCheck.pathname.length > 0 && !path.isAbsolute(pathnameToCheck.pathname)) {
         // for relative paths, print out the resolved path that is broken
         msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
     }
-
     const relFilePath = RelativeFilePath.of(sourceFilepath.toString().replace(workspaceAbsPath, "."));
+    msg += `\n\tfix here: ${relFilePath.slice(2)}:${position.start.line}:${position.start.column}`;
     return [msg, relFilePath];
 }
 
