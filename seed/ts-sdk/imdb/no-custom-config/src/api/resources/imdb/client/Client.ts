@@ -32,7 +32,7 @@ export class Imdb {
     constructor(protected readonly _options: Imdb.Options) {}
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      *
      * @param {SeedApi.CreateMovieRequest} request
      * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.

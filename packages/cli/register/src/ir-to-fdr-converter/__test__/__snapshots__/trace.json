@@ -2260,7 +2260,7 @@
             }
           },
           {
-            "description": "If the submission cannot be executed and throws a runtime error before getting to any of the testcases.\n",
+            "description": "If the submission cannot be executed and throws a runtime error before getting to any of the testcases.",
             "discriminantValue": "runtimeError",
             "additionalProperties": {
               "extends": [
@@ -2270,7 +2270,7 @@
             }
           },
           {
-            "description": "If the trace backend encounters an unexpected error.\n",
+            "description": "If the trace backend encounters an unexpected error.",
             "discriminantValue": "internalError",
             "additionalProperties": {
               "extends": [
@@ -9506,7 +9506,7 @@
                     }
                   },
                   {
-                    "description": "The name of the `method` that the student has to complete.\nThe method name cannot include the following characters:\n  - Greater Than `>`\n  - Less Than `<``\n  - Equals `=`\n  - Period `.`\n",
+                    "description": "The name of the `method` that the student has to complete.\nThe method name cannot include the following characters:\n  - Greater Than `>`\n  - Less Than `<``\n  - Equals `=`\n  - Period `.`",
                     "key": "methodName",
                     "valueType": {
                       "type": "primitive",

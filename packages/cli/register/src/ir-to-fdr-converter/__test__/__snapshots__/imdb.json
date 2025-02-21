@@ -82,7 +82,7 @@
       "endpoints": [
         {
           "auth": false,
-          "description": "Add a movie to the database",
+          "description": "Add a movie to the database using the movies/* /... path.",
           "method": "POST",
           "id": "createMovie",
           "originalEndpointId": "endpoint_imdb.createMovie",

@@ -1,0 +1,20 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+      url: Debug
+  source:
+    openapi: openapi.yml

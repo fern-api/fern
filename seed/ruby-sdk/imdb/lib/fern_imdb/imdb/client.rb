@@ -17,7 +17,7 @@ module SeedApiClient
       @request_client = request_client
     end
 
-    # Add a movie to the database
+    # Add a movie to the database using the movies/* /... path.
     #
     # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)
@@ -82,7 +82,7 @@ module SeedApiClient
       @request_client = request_client
     end
 
-    # Add a movie to the database
+    # Add a movie to the database using the movies/* /... path.
     #
     # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)

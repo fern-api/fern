@@ -19,7 +19,7 @@ service:
   base-path: /movies
   endpoints:
     createMovie:
-      docs: Add a movie to the database
+      docs: Add a movie to the database using the movies/*/... path.
       method: POST
       path: /create-movie
       request: CreateMovieRequest

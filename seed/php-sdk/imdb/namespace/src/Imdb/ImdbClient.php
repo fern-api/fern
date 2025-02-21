@@ -52,7 +52,7 @@ class ImdbClient
     }
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      *
      * @param CreateMovieRequest $request
      * @param ?array{
