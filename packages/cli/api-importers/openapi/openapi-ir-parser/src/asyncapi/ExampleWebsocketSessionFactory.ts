@@ -38,7 +38,7 @@ export class ExampleWebsocketSessionFactory {
         source,
         namespace
     }: {
-        context: AsyncAPIV3ParserContext | AsyncAPIV2ParserContext;
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
         handshake: WebsocketHandshakeWithExample;
         publish: SchemaWithExample | undefined;
