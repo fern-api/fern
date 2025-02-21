@@ -94,7 +94,6 @@ export async function upgrade({
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
         );
-        const originalVersion = projectConfig.version;
 
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.targetVersion;
@@ -111,7 +110,7 @@ export async function upgrade({
         if (cliContext.environment.packageVersion === "0.0.0") {
             await runPostUpgradeSteps({
                 cliContext,
-                previousVersion: originalVersion,
+                previousVersion: projectConfig.version,
                 newVersion: fernCliUpgradeInfo.targetVersion
             });
         } else {
