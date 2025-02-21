@@ -8,6 +8,7 @@ import { PromiseUtils } from "./promise/PromiseUtils";
 import { Runtime } from "./runtime/Runtime";
 import { StreamUtils } from "./stream-utils/StreamUtils";
 import { Utils } from "./utils/Utils";
+import { Websocket } from "./websocket/Websocket";
 import { Zurg } from "./zurg/Zurg";
 
 export interface CoreUtilities {
@@ -22,4 +23,5 @@ export interface CoreUtilities {
     pagination: Pagination;
     utils: Utils;
     promiseUtils: PromiseUtils;
+    websocket: Websocket;
 }
