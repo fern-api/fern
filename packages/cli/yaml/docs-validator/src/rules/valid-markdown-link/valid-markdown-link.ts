@@ -15,7 +15,6 @@ import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
 import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
 import { getInstanceUrls, toBaseUrl } from "./url-utils";
-import { BaseUrl } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v2/resources/read";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
@@ -25,7 +24,7 @@ export const ValidMarkdownLinks: Rule = {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
-        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost")
+        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost");
 
         const docsDefinitionResolver = new DocsDefinitionResolver(
             url,
@@ -108,7 +107,7 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl: baseUrl
+                            baseUrl
                         });
 
                         if (exists === true) {
@@ -120,7 +119,7 @@ export const ValidMarkdownLinks: Rule = {
                                 pathnameToCheck,
                                 brokenPathname,
                                 workspace.absoluteFilePath,
-                                baseUrl
+                                baseUrl.domain
                             );
                             return {
                                 name: ValidMarkdownLinks.name,
@@ -177,7 +176,7 @@ export const ValidMarkdownLinks: Rule = {
                                     pageSlugs: visitableSlugs,
                                     absoluteFilePathsToSlugs,
                                     redirects: workspace.config.redirects,
-                                    baseUrl: baseUrl
+                                    baseUrl
                                 });
 
                                 if (exists === true) {
@@ -192,7 +191,7 @@ export const ValidMarkdownLinks: Rule = {
                                         pathnameToCheck,
                                         brokenPathname,
                                         workspace.absoluteFilePath,
-                                        baseUrl
+                                        baseUrl.domain
                                     );
                                     return {
                                         name: ValidMarkdownLinks.name,
@@ -218,7 +217,7 @@ function createLinkViolationMessage(
     pathnameToCheck: PathnameToCheck,
     targetPathname: string,
     workspaceAbsPath: string,
-    baseUrl: BaseUrl
+    domain: string
 ): [msg: string, relFilePath: RelativeFilePath] {
     let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
@@ -233,8 +232,8 @@ function createLinkViolationMessage(
     });
 
     // TODO: potentially link to localhost:3000 if validator is being run as part of `docs dev`
-    const targetPageUrl = new URL(targetPathname, wrapWithHttps(baseUrl.domain)).toString();
-    const targetPathnameLink = terminalLink(targetPathname, targetPageUrl, {fallback: false})
+    const targetPageUrl = new URL(targetPathname, wrapWithHttps(domain)).toString();
+    const targetPathnameLink = terminalLink(targetPathname, targetPageUrl, { fallback: false });
 
     msg = `[${fileLink}] ${targetPathnameLink} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const relFilePath = RelativeFilePath.of(sourceFilepath.toString().replace(workspaceAbsPath, "."));
