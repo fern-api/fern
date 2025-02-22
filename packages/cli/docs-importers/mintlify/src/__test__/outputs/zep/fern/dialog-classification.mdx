@@ -19,11 +19,11 @@ The `topic` is only used as a name or label for the classification task and does
 You may optionally specify the number of previous messages to consider when classifying the Session (default `4`), and whether to persist the classification in the Session's metadata (default `True`).
 
 <Tabs>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     ```python classes = ["class1", "class2", ..., "other"] classification = client.memory.classify_session( session_id,
     "topic", classes, last_n=4, persist=True ) ```
   </Tab>
-  <Tab title="Typescript">
+  <Tab title="Typescript" language="typescript">
     ```typescript const classes = ["class1", "class2", ..., "other"] const classification = await
     client.memory.classifySession( session_id, "topic", classes, 4, // lastN true // persist ) ```
   </Tab>
@@ -48,12 +48,12 @@ You may optionally provide a custom instruction to the classification task. This
 You may want to use this option if you have specific guidelines that you want to communicate to the LLM in addition to our classification prompt.
 
 <Tabs group="memory">
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     ```python classes = ["advanced", "beginner", ..., "dojo"] classification = client.memory.classify_session(
     session_id, "experience level", classes, instruction="Classify the user's experience level. You may classify
     experience as 'dojo' only if the user is a black belt." ) ```
   </Tab>
-  <Tab title="Typescript">
+  <Tab title="Typescript" language="typescript">
     ```typescript const classes = ["advanced", "beginner", ..., "dojo"] const classification = await
     client.memory.classifySession( session_id, "experience level", classes, "Classify the user's experience level. You
     may classify experience as 'dojo' only if the user is a black belt." ) ```
@@ -69,7 +69,7 @@ user: Hello, my phone isn't responding to touch.
 ```
 
 <Tabs>
-    <Tab title="Python">
+    <Tab title="Python" language="python">
         ```python
         classes = [
             "sales interest",
@@ -84,7 +84,7 @@ user: Hello, my phone isn't responding to touch.
         print(classification)
         ```
     </Tab>
-    <Tab title="Typescript">
+    <Tab title="Typescript" language="typescript">
         ```typescript
         const classes = [
             "sales interest",
@@ -116,11 +116,11 @@ user: What is the capital of France?
 ```
 
 <Tabs>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     ```python classes = [ "complete math problems using a calculator", "research topics or find information with a web
     search", "no matching tool", ] classification = client.memory.classify_session( session_id, "tool", classes ) ```
   </Tab>
-  <Tab title="Typescript">
+  <Tab title="Typescript" language="typescript">
     ```typescript const classes = [ "complete math problems using a calculator", "research topics or find information
     with a web search", "no matching tool", ] const classification = await client.memory.classifySession( session_id,
     "tool", classes ) ```
@@ -141,11 +141,11 @@ user: Is that entirely necessary? I'm very busy.
 ```
 
 <Tabs>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     ```python classes = [ "happy", "sad", "frustrated", "angry", "other" ] classification =
     client.memory.classify_session( session_id, "emotion", classes ) ```
   </Tab>
-  <Tab title="Typescript">
+  <Tab title="Typescript" language="typescript">
     ```typescript const classes = [ "happy", "sad", "frustrated", "angry", "other" ] classification = await
     client.memory.classifySession( session_id, "emotion", classes ) ```
   </Tab>

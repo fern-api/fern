@@ -8,7 +8,7 @@ description: Paginate through API responses easily with offset, cursor, and link
 Instead of forcing SDK users to learn the intricacies of your pagination system, Fern SDKs will return an iterator so that users can simply loop through all the results.
 
 <Tabs>
-<Tab title="TypeScript">
+<Tab title="TypeScript" language="typescript">
 
   When pagination for an endpoint is configured, the TypeScript SDK method 
   will return a `Page<T>` where `T` is the underlying data type. The `Page<T>`
@@ -42,7 +42,7 @@ Instead of forcing SDK users to learn the intricacies of your pagination system,
   ```
   
 </Tab>
-<Tab title="Python">
+<Tab title="Python" language="python">
 
   When pagination for an endpoint is configured, the Python SDK method 
   will return a `Pager[T]` (specifically a `SyncPager[T]` or an `AsyncPager[T]`) where `T` is the underlying data type. The `Pager[T]`
