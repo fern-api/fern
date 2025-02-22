@@ -80,6 +80,17 @@ public record Type
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }
 
+    [JsonPropertyName("twentyfour")]
+    public DateTime? Twentyfour { get; set; }
+
+#if NET6_0_OR_GREATER
+    [JsonPropertyName("twentyfive")]
+    public DateOnly? Twentyfive { get; set; }
+#else
+    [JsonPropertyName("twentyfive")]
+    public DateTime? Twentyfive { get; set; }
+#endif
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

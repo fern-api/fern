@@ -66,7 +66,9 @@ public class TypeTest
           ""twenty"": 20,
           ""twentyone"": 21,
           ""twentytwo"": 22.22,
-          ""twentythree"": ""23""
+          ""twentythree"": ""23"",
+          ""twentyfour"": ""1994-01-01T01:01:01Z"",
+          ""twentyfive"": ""1994-01-01""
         }
         ";
 
