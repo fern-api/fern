@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from "@fern-api/configurati
 import { FernFilepath } from "@fern-api/ir-sdk";
 import { RelativeFilePath, basename, dirname, sep } from "@fern-api/path-utils";
 
-import { CasingsGenerator } from "../casings/CasingsGenerator";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 
 export function convertToFernFilepath({
     relativeFilepath,

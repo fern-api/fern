@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import {
-    constructCasingsGenerator,
     constructFernFileContext,
     convertToFernFilepath,
     parseInlineType

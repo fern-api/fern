@@ -10,7 +10,7 @@ import {
     SingleBaseUrlEnvironments
 } from "@fern-api/ir-sdk";
 
-import { CasingsGenerator } from "../casings/CasingsGenerator";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 
 export function convertEnvironments({
     rawApiFileSchema: { "default-environment": defaultEnvironment, environments },

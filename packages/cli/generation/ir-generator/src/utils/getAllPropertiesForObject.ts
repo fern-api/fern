@@ -3,7 +3,7 @@ import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-sch
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { constructFernFileContext } from "../FernFileContext";
-import { constructCasingsGenerator } from "../casings/CasingsGenerator";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";
 import { ResolvedType } from "../resolvers/ResolvedType";
 import { TypeResolver } from "../resolvers/TypeResolver";

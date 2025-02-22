@@ -28,6 +28,7 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",

@@ -4,7 +4,7 @@ import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/f
 import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { CasingsGenerator } from "./casings/CasingsGenerator";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseInlineType } from "./utils/parseInlineType";
 

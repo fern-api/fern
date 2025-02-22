@@ -1,6 +1,6 @@
 import { Constants } from "@fern-api/ir-sdk";
 
-import { CasingsGenerator } from "../casings/CasingsGenerator";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 
 export function generateFernConstants(casingsGenerator: CasingsGenerator): Constants {
     return {

@@ -24,7 +24,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernFileContext, constructFernFileContext, constructRootApiFileContext } from "./FernFileContext";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
-import { constructCasingsGenerator } from "./casings/CasingsGenerator";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertApiVersionScheme } from "./converters/convertApiVersionScheme";
