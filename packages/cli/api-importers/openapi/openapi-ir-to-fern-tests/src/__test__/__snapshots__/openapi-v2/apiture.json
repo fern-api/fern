@@ -136,27 +136,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "billPay",
+                "camelCase": {
+                  "unsafeName": "billPay",
+                  "safeName": "billPay"
+                },
+                "snakeCase": {
+                  "unsafeName": "bill_pay",
+                  "safeName": "bill_pay"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BILL_PAY",
+                  "safeName": "BILL_PAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "BillPay",
+                  "safeName": "BillPay"
+                }
+              },
+              "wireValue": "billPay"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "transferFrom",
+                "camelCase": {
+                  "unsafeName": "transferFrom",
+                  "safeName": "transferFrom"
+                },
+                "snakeCase": {
+                  "unsafeName": "transfer_from",
+                  "safeName": "transfer_from"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSFER_FROM",
+                  "safeName": "TRANSFER_FROM"
+                },
+                "pascalCase": {
+                  "unsafeName": "TransferFrom",
+                  "safeName": "TransferFrom"
+                }
+              },
+              "wireValue": "transferFrom"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "transferTo",
+                "camelCase": {
+                  "unsafeName": "transferTo",
+                  "safeName": "transferTo"
+                },
+                "snakeCase": {
+                  "unsafeName": "transfer_to",
+                  "safeName": "transfer_to"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSFER_TO",
+                  "safeName": "TRANSFER_TO"
+                },
+                "pascalCase": {
+                  "unsafeName": "TransferTo",
+                  "safeName": "TransferTo"
+                }
+              },
+              "wireValue": "transferTo"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "mobileCheckDeposit",
+                "camelCase": {
+                  "unsafeName": "mobileCheckDeposit",
+                  "safeName": "mobileCheckDeposit"
+                },
+                "snakeCase": {
+                  "unsafeName": "mobile_check_deposit",
+                  "safeName": "mobile_check_deposit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MOBILE_CHECK_DEPOSIT",
+                  "safeName": "MOBILE_CHECK_DEPOSIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "MobileCheckDeposit",
+                  "safeName": "MobileCheckDeposit"
+                }
+              },
+              "wireValue": "mobileCheckDeposit"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "view",
+                "camelCase": {
+                  "unsafeName": "view",
+                  "safeName": "view"
+                },
+                "snakeCase": {
+                  "unsafeName": "view",
+                  "safeName": "view"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VIEW",
+                  "safeName": "VIEW"
+                },
+                "pascalCase": {
+                  "unsafeName": "View",
+                  "safeName": "View"
+                }
+              },
+              "wireValue": "view"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "viewCards",
+                "camelCase": {
+                  "unsafeName": "viewCards",
+                  "safeName": "viewCards"
+                },
+                "snakeCase": {
+                  "unsafeName": "view_cards",
+                  "safeName": "view_cards"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VIEW_CARDS",
+                  "safeName": "VIEW_CARDS"
+                },
+                "pascalCase": {
+                  "unsafeName": "ViewCards",
+                  "safeName": "ViewCards"
+                }
+              },
+              "wireValue": "viewCards"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "manageCards",
+                "camelCase": {
+                  "unsafeName": "manageCards",
+                  "safeName": "manageCards"
+                },
+                "snakeCase": {
+                  "unsafeName": "manage_cards",
+                  "safeName": "manage_cards"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MANAGE_CARDS",
+                  "safeName": "MANAGE_CARDS"
+                },
+                "pascalCase": {
+                  "unsafeName": "ManageCards",
+                  "safeName": "ManageCards"
+                }
+              },
+              "wireValue": "manageCards"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -1241,27 +1391,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "internal",
+                "camelCase": {
+                  "unsafeName": "internal",
+                  "safeName": "internal"
+                },
+                "snakeCase": {
+                  "unsafeName": "internal",
+                  "safeName": "internal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INTERNAL",
+                  "safeName": "INTERNAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Internal",
+                  "safeName": "Internal"
+                }
+              },
+              "wireValue": "internal"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "external",
+                "camelCase": {
+                  "unsafeName": "external",
+                  "safeName": "external"
+                },
+                "snakeCase": {
+                  "unsafeName": "external",
+                  "safeName": "external"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXTERNAL",
+                  "safeName": "EXTERNAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "External",
+                  "safeName": "External"
+                }
+              },
+              "wireValue": "external"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "outside",
+                "camelCase": {
+                  "unsafeName": "outside",
+                  "safeName": "outside"
+                },
+                "snakeCase": {
+                  "unsafeName": "outside",
+                  "safeName": "outside"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OUTSIDE",
+                  "safeName": "OUTSIDE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Outside",
+                  "safeName": "Outside"
+                }
+              },
+              "wireValue": "outside"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -1607,27 +1811,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "instant",
+                "camelCase": {
+                  "unsafeName": "instant",
+                  "safeName": "instant"
+                },
+                "snakeCase": {
+                  "unsafeName": "instant",
+                  "safeName": "instant"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INSTANT",
+                  "safeName": "INSTANT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Instant",
+                  "safeName": "Instant"
+                }
+              },
+              "wireValue": "instant"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "microDeposits",
+                "camelCase": {
+                  "unsafeName": "microDeposits",
+                  "safeName": "microDeposits"
+                },
+                "snakeCase": {
+                  "unsafeName": "micro_deposits",
+                  "safeName": "micro_deposits"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MICRO_DEPOSITS",
+                  "safeName": "MICRO_DEPOSITS"
+                },
+                "pascalCase": {
+                  "unsafeName": "MicroDeposits",
+                  "safeName": "MicroDeposits"
+                }
+              },
+              "wireValue": "microDeposits"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "manual",
+                "camelCase": {
+                  "unsafeName": "manual",
+                  "safeName": "manual"
+                },
+                "snakeCase": {
+                  "unsafeName": "manual",
+                  "safeName": "manual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MANUAL",
+                  "safeName": "MANUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Manual",
+                  "safeName": "Manual"
+                }
+              },
+              "wireValue": "manual"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -2896,27 +3154,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "abaRoutingNumber",
+                "camelCase": {
+                  "unsafeName": "abaRoutingNumber",
+                  "safeName": "abaRoutingNumber"
+                },
+                "snakeCase": {
+                  "unsafeName": "aba_routing_number",
+                  "safeName": "aba_routing_number"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ABA_ROUTING_NUMBER",
+                  "safeName": "ABA_ROUTING_NUMBER"
+                },
+                "pascalCase": {
+                  "unsafeName": "AbaRoutingNumber",
+                  "safeName": "AbaRoutingNumber"
+                }
+              },
+              "wireValue": "abaRoutingNumber"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "swiftBicCode",
+                "camelCase": {
+                  "unsafeName": "swiftBicCode",
+                  "safeName": "swiftBicCode"
+                },
+                "snakeCase": {
+                  "unsafeName": "swift_bic_code",
+                  "safeName": "swift_bic_code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SWIFT_BIC_CODE",
+                  "safeName": "SWIFT_BIC_CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SwiftBicCode",
+                  "safeName": "SwiftBicCode"
+                }
+              },
+              "wireValue": "swiftBicCode"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "ibanAccountNumber",
+                "camelCase": {
+                  "unsafeName": "ibanAccountNumber",
+                  "safeName": "ibanAccountNumber"
+                },
+                "snakeCase": {
+                  "unsafeName": "iban_account_number",
+                  "safeName": "iban_account_number"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IBAN_ACCOUNT_NUMBER",
+                  "safeName": "IBAN_ACCOUNT_NUMBER"
+                },
+                "pascalCase": {
+                  "unsafeName": "IbanAccountNumber",
+                  "safeName": "IbanAccountNumber"
+                }
+              },
+              "wireValue": "ibanAccountNumber"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -3593,27 +3905,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "ach",
+                "camelCase": {
+                  "unsafeName": "ach",
+                  "safeName": "ach"
+                },
+                "snakeCase": {
+                  "unsafeName": "ach",
+                  "safeName": "ach"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACH",
+                  "safeName": "ACH"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ach",
+                  "safeName": "Ach"
+                }
+              },
+              "wireValue": "ach"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "sameDayAch",
+                "camelCase": {
+                  "unsafeName": "sameDayAch",
+                  "safeName": "sameDayAch"
+                },
+                "snakeCase": {
+                  "unsafeName": "same_day_ach",
+                  "safeName": "same_day_ach"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAME_DAY_ACH",
+                  "safeName": "SAME_DAY_ACH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SameDayAch",
+                  "safeName": "SameDayAch"
+                }
+              },
+              "wireValue": "sameDayAch"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "domesticWireTransfer",
+                "camelCase": {
+                  "unsafeName": "domesticWireTransfer",
+                  "safeName": "domesticWireTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "domestic_wire_transfer",
+                  "safeName": "domestic_wire_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DOMESTIC_WIRE_TRANSFER",
+                  "safeName": "DOMESTIC_WIRE_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "DomesticWireTransfer",
+                  "safeName": "DomesticWireTransfer"
+                }
+              },
+              "wireValue": "domesticWireTransfer"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "internationalWireTransfer",
+                "camelCase": {
+                  "unsafeName": "internationalWireTransfer",
+                  "safeName": "internationalWireTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "international_wire_transfer",
+                  "safeName": "international_wire_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INTERNATIONAL_WIRE_TRANSFER",
+                  "safeName": "INTERNATIONAL_WIRE_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "InternationalWireTransfer",
+                  "safeName": "InternationalWireTransfer"
+                }
+              },
+              "wireValue": "internationalWireTransfer"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "internalTransfer",
+                "camelCase": {
+                  "unsafeName": "internalTransfer",
+                  "safeName": "internalTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "internal_transfer",
+                  "safeName": "internal_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INTERNAL_TRANSFER",
+                  "safeName": "INTERNAL_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "InternalTransfer",
+                  "safeName": "InternalTransfer"
+                }
+              },
+              "wireValue": "internalTransfer"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "externalTransfer",
+                "camelCase": {
+                  "unsafeName": "externalTransfer",
+                  "safeName": "externalTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "external_transfer",
+                  "safeName": "external_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXTERNAL_TRANSFER",
+                  "safeName": "EXTERNAL_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "ExternalTransfer",
+                  "safeName": "ExternalTransfer"
+                }
+              },
+              "wireValue": "externalTransfer"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "billPay",
+                "camelCase": {
+                  "unsafeName": "billPay",
+                  "safeName": "billPay"
+                },
+                "snakeCase": {
+                  "unsafeName": "bill_pay",
+                  "safeName": "bill_pay"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BILL_PAY",
+                  "safeName": "BILL_PAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "BillPay",
+                  "safeName": "BillPay"
+                }
+              },
+              "wireValue": "billPay"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -3649,27 +4111,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "debit",
+                "camelCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "snakeCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEBIT",
+                  "safeName": "DEBIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Debit",
+                  "safeName": "Debit"
+                }
+              },
+              "wireValue": "debit"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "credit",
+                "camelCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "snakeCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREDIT",
+                  "safeName": "CREDIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Credit",
+                  "safeName": "Credit"
+                }
+              },
+              "wireValue": "credit"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "both",
+                "camelCase": {
+                  "unsafeName": "both",
+                  "safeName": "both"
+                },
+                "snakeCase": {
+                  "unsafeName": "both",
+                  "safeName": "both"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BOTH",
+                  "safeName": "BOTH"
+                },
+                "pascalCase": {
+                  "unsafeName": "Both",
+                  "safeName": "Both"
+                }
+              },
+              "wireValue": "both"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -3972,27 +4488,153 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "pastDate",
+                "camelCase": {
+                  "unsafeName": "pastDate",
+                  "safeName": "pastDate"
+                },
+                "snakeCase": {
+                  "unsafeName": "past_date",
+                  "safeName": "past_date"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAST_DATE",
+                  "safeName": "PAST_DATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PastDate",
+                  "safeName": "PastDate"
+                }
+              },
+              "wireValue": "pastDate"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "pastCutoffTime",
+                "camelCase": {
+                  "unsafeName": "pastCutoffTime",
+                  "safeName": "pastCutoffTime"
+                },
+                "snakeCase": {
+                  "unsafeName": "past_cutoff_time",
+                  "safeName": "past_cutoff_time"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAST_CUTOFF_TIME",
+                  "safeName": "PAST_CUTOFF_TIME"
+                },
+                "pascalCase": {
+                  "unsafeName": "PastCutoffTime",
+                  "safeName": "PastCutoffTime"
+                }
+              },
+              "wireValue": "pastCutoffTime"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "riskRestricted",
+                "camelCase": {
+                  "unsafeName": "riskRestricted",
+                  "safeName": "riskRestricted"
+                },
+                "snakeCase": {
+                  "unsafeName": "risk_restricted",
+                  "safeName": "risk_restricted"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RISK_RESTRICTED",
+                  "safeName": "RISK_RESTRICTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "RiskRestricted",
+                  "safeName": "RiskRestricted"
+                }
+              },
+              "wireValue": "riskRestricted"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "holiday",
+                "camelCase": {
+                  "unsafeName": "holiday",
+                  "safeName": "holiday"
+                },
+                "snakeCase": {
+                  "unsafeName": "holiday",
+                  "safeName": "holiday"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HOLIDAY",
+                  "safeName": "HOLIDAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Holiday",
+                  "safeName": "Holiday"
+                }
+              },
+              "wireValue": "holiday"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "closure",
+                "camelCase": {
+                  "unsafeName": "closure",
+                  "safeName": "closure"
+                },
+                "snakeCase": {
+                  "unsafeName": "closure",
+                  "safeName": "closure"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CLOSURE",
+                  "safeName": "CLOSURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Closure",
+                  "safeName": "Closure"
+                }
+              },
+              "wireValue": "closure"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "other",
+                "camelCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "snakeCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OTHER",
+                  "safeName": "OTHER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                }
+              },
+              "wireValue": "other"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -4028,29 +4670,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "internal",
-              "validation": {},
-              "type": "string"
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "internal",
+              "camelCase": {
+                "unsafeName": "internal",
+                "safeName": "internal"
+              },
+              "snakeCase": {
+                "unsafeName": "internal",
+                "safeName": "internal"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "INTERNAL",
+                "safeName": "INTERNAL"
+              },
+              "pascalCase": {
+                "unsafeName": "Internal",
+                "safeName": "Internal"
+              }
+            },
+            "wireValue": "internal"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "internal",
+                "camelCase": {
+                  "unsafeName": "internal",
+                  "safeName": "internal"
+                },
+                "snakeCase": {
+                  "unsafeName": "internal",
+                  "safeName": "internal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INTERNAL",
+                  "safeName": "INTERNAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Internal",
+                  "safeName": "Internal"
+                }
+              },
+              "wireValue": "internal"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "internal",
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "ach",
+                "camelCase": {
+                  "unsafeName": "ach",
+                  "safeName": "ach"
+                },
+                "snakeCase": {
+                  "unsafeName": "ach",
+                  "safeName": "ach"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACH",
+                  "safeName": "ACH"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ach",
+                  "safeName": "Ach"
+                }
+              },
+              "wireValue": "ach"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "achDebit",
+                "camelCase": {
+                  "unsafeName": "achDebit",
+                  "safeName": "achDebit"
+                },
+                "snakeCase": {
+                  "unsafeName": "ach_debit",
+                  "safeName": "ach_debit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACH_DEBIT",
+                  "safeName": "ACH_DEBIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "AchDebit",
+                  "safeName": "AchDebit"
+                }
+              },
+              "wireValue": "achDebit"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "achCredit",
+                "camelCase": {
+                  "unsafeName": "achCredit",
+                  "safeName": "achCredit"
+                },
+                "snakeCase": {
+                  "unsafeName": "ach_credit",
+                  "safeName": "ach_credit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACH_CREDIT",
+                  "safeName": "ACH_CREDIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "AchCredit",
+                  "safeName": "AchCredit"
+                }
+              },
+              "wireValue": "achCredit"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "domesticWireTransfer",
+                "camelCase": {
+                  "unsafeName": "domesticWireTransfer",
+                  "safeName": "domesticWireTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "domestic_wire_transfer",
+                  "safeName": "domestic_wire_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DOMESTIC_WIRE_TRANSFER",
+                  "safeName": "DOMESTIC_WIRE_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "DomesticWireTransfer",
+                  "safeName": "DomesticWireTransfer"
+                }
+              },
+              "wireValue": "domesticWireTransfer"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "internationalWireTransfer",
+                "camelCase": {
+                  "unsafeName": "internationalWireTransfer",
+                  "safeName": "internationalWireTransfer"
+                },
+                "snakeCase": {
+                  "unsafeName": "international_wire_transfer",
+                  "safeName": "international_wire_transfer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INTERNATIONAL_WIRE_TRANSFER",
+                  "safeName": "INTERNATIONAL_WIRE_TRANSFER"
+                },
+                "pascalCase": {
+                  "unsafeName": "InternationalWireTransfer",
+                  "safeName": "InternationalWireTransfer"
+                }
+              },
+              "wireValue": "internationalWireTransfer"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -6758,27 +7548,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "balance",
+                "camelCase": {
+                  "unsafeName": "balance",
+                  "safeName": "balance"
+                },
+                "snakeCase": {
+                  "unsafeName": "balance",
+                  "safeName": "balance"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BALANCE",
+                  "safeName": "BALANCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Balance",
+                  "safeName": "Balance"
+                }
+              },
+              "wireValue": "balance"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "debit",
+                "camelCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "snakeCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEBIT",
+                  "safeName": "DEBIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Debit",
+                  "safeName": "Debit"
+                }
+              },
+              "wireValue": "debit"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "credit",
+                "camelCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "snakeCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREDIT",
+                  "safeName": "CREDIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Credit",
+                  "safeName": "Credit"
+                }
+              },
+              "wireValue": "credit"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -6814,27 +7658,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "check",
+                "camelCase": {
+                  "unsafeName": "check",
+                  "safeName": "check"
+                },
+                "snakeCase": {
+                  "unsafeName": "check",
+                  "safeName": "check"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHECK",
+                  "safeName": "CHECK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Check",
+                  "safeName": "Check"
+                }
+              },
+              "wireValue": "check"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "other",
+                "camelCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "snakeCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OTHER",
+                  "safeName": "OTHER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                }
+              },
+              "wireValue": "other"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -6870,27 +7744,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "credit",
+                "camelCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "snakeCase": {
+                  "unsafeName": "credit",
+                  "safeName": "credit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREDIT",
+                  "safeName": "CREDIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Credit",
+                  "safeName": "Credit"
+                }
+              },
+              "wireValue": "credit"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "debit",
+                "camelCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "snakeCase": {
+                  "unsafeName": "debit",
+                  "safeName": "debit"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEBIT",
+                  "safeName": "DEBIT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Debit",
+                  "safeName": "Debit"
+                }
+              },
+              "wireValue": "debit"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -8091,27 +8995,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "unscheduled",
+                "camelCase": {
+                  "unsafeName": "unscheduled",
+                  "safeName": "unscheduled"
+                },
+                "snakeCase": {
+                  "unsafeName": "unscheduled",
+                  "safeName": "unscheduled"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNSCHEDULED",
+                  "safeName": "UNSCHEDULED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Unscheduled",
+                  "safeName": "Unscheduled"
+                }
+              },
+              "wireValue": "unscheduled"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "pendingApproval",
+                "camelCase": {
+                  "unsafeName": "pendingApproval",
+                  "safeName": "pendingApproval"
+                },
+                "snakeCase": {
+                  "unsafeName": "pending_approval",
+                  "safeName": "pending_approval"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PENDING_APPROVAL",
+                  "safeName": "PENDING_APPROVAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "PendingApproval",
+                  "safeName": "PendingApproval"
+                }
+              },
+              "wireValue": "pendingApproval"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "scheduled",
+                "camelCase": {
+                  "unsafeName": "scheduled",
+                  "safeName": "scheduled"
+                },
+                "snakeCase": {
+                  "unsafeName": "scheduled",
+                  "safeName": "scheduled"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCHEDULED",
+                  "safeName": "SCHEDULED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Scheduled",
+                  "safeName": "Scheduled"
+                }
+              },
+              "wireValue": "scheduled"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "processing",
+                "camelCase": {
+                  "unsafeName": "processing",
+                  "safeName": "processing"
+                },
+                "snakeCase": {
+                  "unsafeName": "processing",
+                  "safeName": "processing"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROCESSING",
+                  "safeName": "PROCESSING"
+                },
+                "pascalCase": {
+                  "unsafeName": "Processing",
+                  "safeName": "Processing"
+                }
+              },
+              "wireValue": "processing"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "processed",
+                "camelCase": {
+                  "unsafeName": "processed",
+                  "safeName": "processed"
+                },
+                "snakeCase": {
+                  "unsafeName": "processed",
+                  "safeName": "processed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROCESSED",
+                  "safeName": "PROCESSED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Processed",
+                  "safeName": "Processed"
+                }
+              },
+              "wireValue": "processed"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "failed",
+                "camelCase": {
+                  "unsafeName": "failed",
+                  "safeName": "failed"
+                },
+                "snakeCase": {
+                  "unsafeName": "failed",
+                  "safeName": "failed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FAILED",
+                  "safeName": "FAILED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Failed",
+                  "safeName": "Failed"
+                }
+              },
+              "wireValue": "failed"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "other",
+                "camelCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "snakeCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OTHER",
+                  "safeName": "OTHER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                }
+              },
+              "wireValue": "other"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -8147,27 +9201,153 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "savings",
+                "camelCase": {
+                  "unsafeName": "savings",
+                  "safeName": "savings"
+                },
+                "snakeCase": {
+                  "unsafeName": "savings",
+                  "safeName": "savings"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAVINGS",
+                  "safeName": "SAVINGS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Savings",
+                  "safeName": "Savings"
+                }
+              },
+              "wireValue": "savings"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "checking",
+                "camelCase": {
+                  "unsafeName": "checking",
+                  "safeName": "checking"
+                },
+                "snakeCase": {
+                  "unsafeName": "checking",
+                  "safeName": "checking"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHECKING",
+                  "safeName": "CHECKING"
+                },
+                "pascalCase": {
+                  "unsafeName": "Checking",
+                  "safeName": "Checking"
+                }
+              },
+              "wireValue": "checking"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "cd",
+                "camelCase": {
+                  "unsafeName": "cd",
+                  "safeName": "cd"
+                },
+                "snakeCase": {
+                  "unsafeName": "cd",
+                  "safeName": "cd"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CD",
+                  "safeName": "CD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Cd",
+                  "safeName": "Cd"
+                }
+              },
+              "wireValue": "cd"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ira",
+                "camelCase": {
+                  "unsafeName": "ira",
+                  "safeName": "ira"
+                },
+                "snakeCase": {
+                  "unsafeName": "ira",
+                  "safeName": "ira"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IRA",
+                  "safeName": "IRA"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ira",
+                  "safeName": "Ira"
+                }
+              },
+              "wireValue": "ira"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "loan",
+                "camelCase": {
+                  "unsafeName": "loan",
+                  "safeName": "loan"
+                },
+                "snakeCase": {
+                  "unsafeName": "loan",
+                  "safeName": "loan"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LOAN",
+                  "safeName": "LOAN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Loan",
+                  "safeName": "Loan"
+                }
+              },
+              "wireValue": "loan"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "creditCard",
+                "camelCase": {
+                  "unsafeName": "creditCard",
+                  "safeName": "creditCard"
+                },
+                "snakeCase": {
+                  "unsafeName": "credit_card",
+                  "safeName": "credit_card"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREDIT_CARD",
+                  "safeName": "CREDIT_CARD"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreditCard",
+                  "safeName": "CreditCard"
+                }
+              },
+              "wireValue": "creditCard"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -8203,27 +9383,321 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "once",
+                "camelCase": {
+                  "unsafeName": "once",
+                  "safeName": "once"
+                },
+                "snakeCase": {
+                  "unsafeName": "once",
+                  "safeName": "once"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ONCE",
+                  "safeName": "ONCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Once",
+                  "safeName": "Once"
+                }
+              },
+              "wireValue": "once"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "occasional",
+                "camelCase": {
+                  "unsafeName": "occasional",
+                  "safeName": "occasional"
+                },
+                "snakeCase": {
+                  "unsafeName": "occasional",
+                  "safeName": "occasional"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OCCASIONAL",
+                  "safeName": "OCCASIONAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Occasional",
+                  "safeName": "Occasional"
+                }
+              },
+              "wireValue": "occasional"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "daily",
+                "camelCase": {
+                  "unsafeName": "daily",
+                  "safeName": "daily"
+                },
+                "snakeCase": {
+                  "unsafeName": "daily",
+                  "safeName": "daily"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DAILY",
+                  "safeName": "DAILY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Daily",
+                  "safeName": "Daily"
+                }
+              },
+              "wireValue": "daily"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "weekly",
+                "camelCase": {
+                  "unsafeName": "weekly",
+                  "safeName": "weekly"
+                },
+                "snakeCase": {
+                  "unsafeName": "weekly",
+                  "safeName": "weekly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WEEKLY",
+                  "safeName": "WEEKLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Weekly",
+                  "safeName": "Weekly"
+                }
+              },
+              "wireValue": "weekly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "biweekly",
+                "camelCase": {
+                  "unsafeName": "biweekly",
+                  "safeName": "biweekly"
+                },
+                "snakeCase": {
+                  "unsafeName": "biweekly",
+                  "safeName": "biweekly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BIWEEKLY",
+                  "safeName": "BIWEEKLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Biweekly",
+                  "safeName": "Biweekly"
+                }
+              },
+              "wireValue": "biweekly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "semimonthly",
+                "camelCase": {
+                  "unsafeName": "semimonthly",
+                  "safeName": "semimonthly"
+                },
+                "snakeCase": {
+                  "unsafeName": "semimonthly",
+                  "safeName": "semimonthly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEMIMONTHLY",
+                  "safeName": "SEMIMONTHLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Semimonthly",
+                  "safeName": "Semimonthly"
+                }
+              },
+              "wireValue": "semimonthly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "monthly",
+                "camelCase": {
+                  "unsafeName": "monthly",
+                  "safeName": "monthly"
+                },
+                "snakeCase": {
+                  "unsafeName": "monthly",
+                  "safeName": "monthly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MONTHLY",
+                  "safeName": "MONTHLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Monthly",
+                  "safeName": "Monthly"
+                }
+              },
+              "wireValue": "monthly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "monthlyFirstDay",
+                "camelCase": {
+                  "unsafeName": "monthlyFirstDay",
+                  "safeName": "monthlyFirstDay"
+                },
+                "snakeCase": {
+                  "unsafeName": "monthly_first_day",
+                  "safeName": "monthly_first_day"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MONTHLY_FIRST_DAY",
+                  "safeName": "MONTHLY_FIRST_DAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "MonthlyFirstDay",
+                  "safeName": "MonthlyFirstDay"
+                }
+              },
+              "wireValue": "monthlyFirstDay"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "monthlyLastDay",
+                "camelCase": {
+                  "unsafeName": "monthlyLastDay",
+                  "safeName": "monthlyLastDay"
+                },
+                "snakeCase": {
+                  "unsafeName": "monthly_last_day",
+                  "safeName": "monthly_last_day"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MONTHLY_LAST_DAY",
+                  "safeName": "MONTHLY_LAST_DAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "MonthlyLastDay",
+                  "safeName": "MonthlyLastDay"
+                }
+              },
+              "wireValue": "monthlyLastDay"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "bimonthly",
+                "camelCase": {
+                  "unsafeName": "bimonthly",
+                  "safeName": "bimonthly"
+                },
+                "snakeCase": {
+                  "unsafeName": "bimonthly",
+                  "safeName": "bimonthly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BIMONTHLY",
+                  "safeName": "BIMONTHLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Bimonthly",
+                  "safeName": "Bimonthly"
+                }
+              },
+              "wireValue": "bimonthly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "quarterly",
+                "camelCase": {
+                  "unsafeName": "quarterly",
+                  "safeName": "quarterly"
+                },
+                "snakeCase": {
+                  "unsafeName": "quarterly",
+                  "safeName": "quarterly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "QUARTERLY",
+                  "safeName": "QUARTERLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Quarterly",
+                  "safeName": "Quarterly"
+                }
+              },
+              "wireValue": "quarterly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "semiyearly",
+                "camelCase": {
+                  "unsafeName": "semiyearly",
+                  "safeName": "semiyearly"
+                },
+                "snakeCase": {
+                  "unsafeName": "semiyearly",
+                  "safeName": "semiyearly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEMIYEARLY",
+                  "safeName": "SEMIYEARLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Semiyearly",
+                  "safeName": "Semiyearly"
+                }
+              },
+              "wireValue": "semiyearly"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "yearly",
+                "camelCase": {
+                  "unsafeName": "yearly",
+                  "safeName": "yearly"
+                },
+                "snakeCase": {
+                  "unsafeName": "yearly",
+                  "safeName": "yearly"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "YEARLY",
+                  "safeName": "YEARLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Yearly",
+                  "safeName": "Yearly"
+                }
+              },
+              "wireValue": "yearly"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -8259,27 +9733,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "early",
+                "camelCase": {
+                  "unsafeName": "early",
+                  "safeName": "early"
+                },
+                "snakeCase": {
+                  "unsafeName": "early",
+                  "safeName": "early"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EARLY",
+                  "safeName": "EARLY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Early",
+                  "safeName": "Early"
+                }
+              },
+              "wireValue": "early"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "normal",
+                "camelCase": {
+                  "unsafeName": "normal",
+                  "safeName": "normal"
+                },
+                "snakeCase": {
+                  "unsafeName": "normal",
+                  "safeName": "normal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NORMAL",
+                  "safeName": "NORMAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Normal",
+                  "safeName": "Normal"
+                }
+              },
+              "wireValue": "normal"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "float",
+                "camelCase": {
+                  "unsafeName": "float",
+                  "safeName": "float"
+                },
+                "snakeCase": {
+                  "unsafeName": "float",
+                  "safeName": "float"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FLOAT",
+                  "safeName": "FLOAT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Float",
+                  "safeName": "Float"
+                }
+              },
+              "wireValue": "float"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "sameDay",
+                "camelCase": {
+                  "unsafeName": "sameDay",
+                  "safeName": "sameDay"
+                },
+                "snakeCase": {
+                  "unsafeName": "same_day",
+                  "safeName": "same_day"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAME_DAY",
+                  "safeName": "SAME_DAY"
+                },
+                "pascalCase": {
+                  "unsafeName": "SameDay",
+                  "safeName": "SameDay"
+                }
+              },
+              "wireValue": "sameDay"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -9118,27 +10670,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "fixed",
+                "camelCase": {
+                  "unsafeName": "fixed",
+                  "safeName": "fixed"
+                },
+                "snakeCase": {
+                  "unsafeName": "fixed",
+                  "safeName": "fixed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FIXED",
+                  "safeName": "FIXED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Fixed",
+                  "safeName": "Fixed"
+                }
+              },
+              "wireValue": "fixed"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "variable",
+                "camelCase": {
+                  "unsafeName": "variable",
+                  "safeName": "variable"
+                },
+                "snakeCase": {
+                  "unsafeName": "variable",
+                  "safeName": "variable"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VARIABLE",
+                  "safeName": "VARIABLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Variable",
+                  "safeName": "Variable"
+                }
+              },
+              "wireValue": "variable"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -10364,27 +11946,249 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "arc",
+                "camelCase": {
+                  "unsafeName": "arc",
+                  "safeName": "arc"
+                },
+                "snakeCase": {
+                  "unsafeName": "arc",
+                  "safeName": "arc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ARC",
+                  "safeName": "ARC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Arc",
+                  "safeName": "Arc"
+                }
+              },
+              "wireValue": "arc"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "boc",
+                "camelCase": {
+                  "unsafeName": "boc",
+                  "safeName": "boc"
+                },
+                "snakeCase": {
+                  "unsafeName": "boc",
+                  "safeName": "boc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BOC",
+                  "safeName": "BOC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Boc",
+                  "safeName": "Boc"
+                }
+              },
+              "wireValue": "boc"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "ccd",
+                "camelCase": {
+                  "unsafeName": "ccd",
+                  "safeName": "ccd"
+                },
+                "snakeCase": {
+                  "unsafeName": "ccd",
+                  "safeName": "ccd"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CCD",
+                  "safeName": "CCD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ccd",
+                  "safeName": "Ccd"
+                }
+              },
+              "wireValue": "ccd"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "cie",
+                "camelCase": {
+                  "unsafeName": "cie",
+                  "safeName": "cie"
+                },
+                "snakeCase": {
+                  "unsafeName": "cie",
+                  "safeName": "cie"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CIE",
+                  "safeName": "CIE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Cie",
+                  "safeName": "Cie"
+                }
+              },
+              "wireValue": "cie"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ctx",
+                "camelCase": {
+                  "unsafeName": "ctx",
+                  "safeName": "ctx"
+                },
+                "snakeCase": {
+                  "unsafeName": "ctx",
+                  "safeName": "ctx"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CTX",
+                  "safeName": "CTX"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ctx",
+                  "safeName": "Ctx"
+                }
+              },
+              "wireValue": "ctx"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pop",
+                "camelCase": {
+                  "unsafeName": "pop",
+                  "safeName": "pop"
+                },
+                "snakeCase": {
+                  "unsafeName": "pop",
+                  "safeName": "pop"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "POP",
+                  "safeName": "POP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pop",
+                  "safeName": "Pop"
+                }
+              },
+              "wireValue": "pop"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ppd",
+                "camelCase": {
+                  "unsafeName": "ppd",
+                  "safeName": "ppd"
+                },
+                "snakeCase": {
+                  "unsafeName": "ppd",
+                  "safeName": "ppd"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PPD",
+                  "safeName": "PPD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ppd",
+                  "safeName": "Ppd"
+                }
+              },
+              "wireValue": "ppd"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "rck",
+                "camelCase": {
+                  "unsafeName": "rck",
+                  "safeName": "rck"
+                },
+                "snakeCase": {
+                  "unsafeName": "rck",
+                  "safeName": "rck"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RCK",
+                  "safeName": "RCK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Rck",
+                  "safeName": "Rck"
+                }
+              },
+              "wireValue": "rck"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "tel",
+                "camelCase": {
+                  "unsafeName": "tel",
+                  "safeName": "tel"
+                },
+                "snakeCase": {
+                  "unsafeName": "tel",
+                  "safeName": "tel"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TEL",
+                  "safeName": "TEL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Tel",
+                  "safeName": "Tel"
+                }
+              },
+              "wireValue": "tel"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "web",
+                "camelCase": {
+                  "unsafeName": "web",
+                  "safeName": "web"
+                },
+                "snakeCase": {
+                  "unsafeName": "web",
+                  "safeName": "web"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WEB",
+                  "safeName": "WEB"
+                },
+                "pascalCase": {
+                  "unsafeName": "Web",
+                  "safeName": "Web"
+                }
+              },
+              "wireValue": "web"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -11979,27 +13783,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "sms",
+                "camelCase": {
+                  "unsafeName": "sms",
+                  "safeName": "sms"
+                },
+                "snakeCase": {
+                  "unsafeName": "sms",
+                  "safeName": "sms"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SMS",
+                  "safeName": "SMS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sms",
+                  "safeName": "Sms"
+                }
+              },
+              "wireValue": "sms"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "email",
+                "camelCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "snakeCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMAIL",
+                  "safeName": "EMAIL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Email",
+                  "safeName": "Email"
+                }
+              },
+              "wireValue": "email"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "voice",
+                "camelCase": {
+                  "unsafeName": "voice",
+                  "safeName": "voice"
+                },
+                "snakeCase": {
+                  "unsafeName": "voice",
+                  "safeName": "voice"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICE",
+                  "safeName": "VOICE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Voice",
+                  "safeName": "Voice"
+                }
+              },
+              "wireValue": "voice"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "securityQuestions",
+                "camelCase": {
+                  "unsafeName": "securityQuestions",
+                  "safeName": "securityQuestions"
+                },
+                "snakeCase": {
+                  "unsafeName": "security_questions",
+                  "safeName": "security_questions"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SECURITY_QUESTIONS",
+                  "safeName": "SECURITY_QUESTIONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "SecurityQuestions",
+                  "safeName": "SecurityQuestions"
+                }
+              },
+              "wireValue": "securityQuestions"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "authenticatorToken",
+                "camelCase": {
+                  "unsafeName": "authenticatorToken",
+                  "safeName": "authenticatorToken"
+                },
+                "snakeCase": {
+                  "unsafeName": "authenticator_token",
+                  "safeName": "authenticator_token"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTHENTICATOR_TOKEN",
+                  "safeName": "AUTHENTICATOR_TOKEN"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthenticatorToken",
+                  "safeName": "AuthenticatorToken"
+                }
+              },
+              "wireValue": "authenticatorToken"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],

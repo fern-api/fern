@@ -11,9 +11,9 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
+import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -76,11 +76,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    public async getIntermediateRepresentation({
-        context
-    }: {
-        context: TaskContext;
-    }): Promise<unknown> {
+    public async getIntermediateRepresentation({ context }: { context: TaskContext }): Promise<unknown> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({
             context,
@@ -89,14 +85,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const document of documents) {
             if (document.type === "openapi") {
                 const converter = new OpenAPI3_1Converter();
-                return converter.convert({ 
-                    context: new OpenAPIConverterContext3_1({ 
+                return converter.convert({
+                    context: new OpenAPIConverterContext3_1({
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value as any,
-                    }), 
-                    errorCollector: new ErrorCollector(),
+                        spec: document.value as any
+                    }),
+                    errorCollector: new ErrorCollector()
                 });
             }
         }

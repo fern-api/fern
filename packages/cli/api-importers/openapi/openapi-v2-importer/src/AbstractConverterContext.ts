@@ -1,9 +1,10 @@
+import { camelCase } from "lodash-es";
+
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { DeclaredTypeName, TypeReference } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
-import { camelCase } from "lodash-es";
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -40,7 +41,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
     }
 
-
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
     /**
      * Converts breadcrumbs into a schema name or type id
@@ -53,7 +53,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (/^\d+$/.test(crumb)) {
                 return false;
             }
-            
+
             // Ignore 'properties' and 'allOf' anywhere
             if (AbstractConverterContext.BREADCRUMBS_TO_IGNORE.includes(crumb)) {
                 return false;
@@ -133,7 +133,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             fernFilepath: {
                 allParts: [],
                 packagePath: [],
-                file: undefined,
+                file: undefined
             },
             name: this.casingsGenerator.generateName(typeId)
         };
@@ -185,5 +185,3 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return undefined;
     }
 }
-
-

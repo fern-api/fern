@@ -1,12 +1,13 @@
-import { TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { TypeReference } from "@fern-api/ir-sdk";
+
 import { AbstractConverterContext } from "../AbstractConverterContext";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
-
     public isReferenceObject(
         parameter:
             | OpenAPIV3_1.ReferenceObject
@@ -18,7 +19,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         return "$ref" in parameter;
     }
 
-    public convertReferenceToTypeReference(reference: OpenAPIV3_1.ReferenceObject): { ok: true; reference: TypeReference; } | { ok: false } {
+    public convertReferenceToTypeReference(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): { ok: true; reference: TypeReference } | { ok: false } {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
         if (!schemaMatch || !schemaMatch[1]) {
             return { ok: false };
@@ -42,6 +45,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 default: undefined,
                 inline: false
             })
-        }
+        };
     }
 }

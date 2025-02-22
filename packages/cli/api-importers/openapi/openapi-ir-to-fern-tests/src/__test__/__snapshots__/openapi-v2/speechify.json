@@ -828,27 +828,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:speech",
+                "camelCase": {
+                  "unsafeName": "audioSpeech",
+                  "safeName": "audioSpeech"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_speech",
+                  "safeName": "audio_speech"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_SPEECH",
+                  "safeName": "AUDIO_SPEECH"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioSpeech",
+                  "safeName": "AudioSpeech"
+                }
+              },
+              "wireValue": "audio:speech"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:stream",
+                "camelCase": {
+                  "unsafeName": "audioStream",
+                  "safeName": "audioStream"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_stream",
+                  "safeName": "audio_stream"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_STREAM",
+                  "safeName": "AUDIO_STREAM"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioStream",
+                  "safeName": "AudioStream"
+                }
+              },
+              "wireValue": "audio:stream"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:all",
+                "camelCase": {
+                  "unsafeName": "audioAll",
+                  "safeName": "audioAll"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_all",
+                  "safeName": "audio_all"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_ALL",
+                  "safeName": "AUDIO_ALL"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioAll",
+                  "safeName": "AudioAll"
+                }
+              },
+              "wireValue": "audio:all"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:read",
+                "camelCase": {
+                  "unsafeName": "voicesRead",
+                  "safeName": "voicesRead"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_read",
+                  "safeName": "voices_read"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_READ",
+                  "safeName": "VOICES_READ"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesRead",
+                  "safeName": "VoicesRead"
+                }
+              },
+              "wireValue": "voices:read"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:create",
+                "camelCase": {
+                  "unsafeName": "voicesCreate",
+                  "safeName": "voicesCreate"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_create",
+                  "safeName": "voices_create"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_CREATE",
+                  "safeName": "VOICES_CREATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesCreate",
+                  "safeName": "VoicesCreate"
+                }
+              },
+              "wireValue": "voices:create"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:delete",
+                "camelCase": {
+                  "unsafeName": "voicesDelete",
+                  "safeName": "voicesDelete"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_delete",
+                  "safeName": "voices_delete"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_DELETE",
+                  "safeName": "VOICES_DELETE"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesDelete",
+                  "safeName": "VoicesDelete"
+                }
+              },
+              "wireValue": "voices:delete"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:all",
+                "camelCase": {
+                  "unsafeName": "voicesAll",
+                  "safeName": "voicesAll"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_all",
+                  "safeName": "voices_all"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_ALL",
+                  "safeName": "VOICES_ALL"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesAll",
+                  "safeName": "VoicesAll"
+                }
+              },
+              "wireValue": "voices:all"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -884,27 +1034,33 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "bearer",
+                "camelCase": {
+                  "unsafeName": "bearer",
+                  "safeName": "bearer"
+                },
+                "snakeCase": {
+                  "unsafeName": "bearer",
+                  "safeName": "bearer"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BEARER",
+                  "safeName": "BEARER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Bearer",
+                  "safeName": "Bearer"
+                }
+              },
+              "wireValue": "bearer"
             }
-          },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
-            }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -1191,27 +1347,33 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "client_credentials",
+                "camelCase": {
+                  "unsafeName": "clientCredentials",
+                  "safeName": "clientCredentials"
+                },
+                "snakeCase": {
+                  "unsafeName": "client_credentials",
+                  "safeName": "client_credentials"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CLIENT_CREDENTIALS",
+                  "safeName": "CLIENT_CREDENTIALS"
+                },
+                "pascalCase": {
+                  "unsafeName": "ClientCredentials",
+                  "safeName": "ClientCredentials"
+                }
+              },
+              "wireValue": "client_credentials"
             }
-          },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
-            }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -1247,27 +1409,177 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:speech",
+                "camelCase": {
+                  "unsafeName": "audioSpeech",
+                  "safeName": "audioSpeech"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_speech",
+                  "safeName": "audio_speech"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_SPEECH",
+                  "safeName": "AUDIO_SPEECH"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioSpeech",
+                  "safeName": "AudioSpeech"
+                }
+              },
+              "wireValue": "audio:speech"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:stream",
+                "camelCase": {
+                  "unsafeName": "audioStream",
+                  "safeName": "audioStream"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_stream",
+                  "safeName": "audio_stream"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_STREAM",
+                  "safeName": "AUDIO_STREAM"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioStream",
+                  "safeName": "AudioStream"
+                }
+              },
+              "wireValue": "audio:stream"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "audio:all",
+                "camelCase": {
+                  "unsafeName": "audioAll",
+                  "safeName": "audioAll"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_all",
+                  "safeName": "audio_all"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_ALL",
+                  "safeName": "AUDIO_ALL"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioAll",
+                  "safeName": "AudioAll"
+                }
+              },
+              "wireValue": "audio:all"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:read",
+                "camelCase": {
+                  "unsafeName": "voicesRead",
+                  "safeName": "voicesRead"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_read",
+                  "safeName": "voices_read"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_READ",
+                  "safeName": "VOICES_READ"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesRead",
+                  "safeName": "VoicesRead"
+                }
+              },
+              "wireValue": "voices:read"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:create",
+                "camelCase": {
+                  "unsafeName": "voicesCreate",
+                  "safeName": "voicesCreate"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_create",
+                  "safeName": "voices_create"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_CREATE",
+                  "safeName": "VOICES_CREATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesCreate",
+                  "safeName": "VoicesCreate"
+                }
+              },
+              "wireValue": "voices:create"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:delete",
+                "camelCase": {
+                  "unsafeName": "voicesDelete",
+                  "safeName": "voicesDelete"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_delete",
+                  "safeName": "voices_delete"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_DELETE",
+                  "safeName": "VOICES_DELETE"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesDelete",
+                  "safeName": "VoicesDelete"
+                }
+              },
+              "wireValue": "voices:delete"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "voices:all",
+                "camelCase": {
+                  "unsafeName": "voicesAll",
+                  "safeName": "voicesAll"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices_all",
+                  "safeName": "voices_all"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES_ALL",
+                  "safeName": "VOICES_ALL"
+                },
+                "pascalCase": {
+                  "unsafeName": "VoicesAll",
+                  "safeName": "VoicesAll"
+                }
+              },
+              "wireValue": "voices:all"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -1806,27 +2118,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-base",
+                "camelCase": {
+                  "unsafeName": "simbaBase",
+                  "safeName": "simbaBase"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_base",
+                  "safeName": "simba_base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_BASE",
+                  "safeName": "SIMBA_BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaBase",
+                  "safeName": "SimbaBase"
+                }
+              },
+              "wireValue": "simba-base"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-english",
+                "camelCase": {
+                  "unsafeName": "simbaEnglish",
+                  "safeName": "simbaEnglish"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_english",
+                  "safeName": "simba_english"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_ENGLISH",
+                  "safeName": "SIMBA_ENGLISH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaEnglish",
+                  "safeName": "SimbaEnglish"
+                }
+              },
+              "wireValue": "simba-english"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-multilingual",
+                "camelCase": {
+                  "unsafeName": "simbaMultilingual",
+                  "safeName": "simbaMultilingual"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_multilingual",
+                  "safeName": "simba_multilingual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_MULTILINGUAL",
+                  "safeName": "SIMBA_MULTILINGUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaMultilingual",
+                  "safeName": "SimbaMultilingual"
+                }
+              },
+              "wireValue": "simba-multilingual"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-turbo",
+                "camelCase": {
+                  "unsafeName": "simbaTurbo",
+                  "safeName": "simbaTurbo"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_turbo",
+                  "safeName": "simba_turbo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_TURBO",
+                  "safeName": "SIMBA_TURBO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaTurbo",
+                  "safeName": "SimbaTurbo"
+                }
+              },
+              "wireValue": "simba-turbo"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -2218,27 +2608,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "shared",
+                "camelCase": {
+                  "unsafeName": "shared",
+                  "safeName": "shared"
+                },
+                "snakeCase": {
+                  "unsafeName": "shared",
+                  "safeName": "shared"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SHARED",
+                  "safeName": "SHARED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Shared",
+                  "safeName": "Shared"
+                }
+              },
+              "wireValue": "shared"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "personal",
+                "camelCase": {
+                  "unsafeName": "personal",
+                  "safeName": "personal"
+                },
+                "snakeCase": {
+                  "unsafeName": "personal",
+                  "safeName": "personal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PERSONAL",
+                  "safeName": "PERSONAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Personal",
+                  "safeName": "Personal"
+                }
+              },
+              "wireValue": "personal"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -2633,29 +3053,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "simba-base",
+              "camelCase": {
+                "unsafeName": "simbaBase",
+                "safeName": "simbaBase"
+              },
+              "snakeCase": {
+                "unsafeName": "simba_base",
+                "safeName": "simba_base"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SIMBA_BASE",
+                "safeName": "SIMBA_BASE"
+              },
+              "pascalCase": {
+                "unsafeName": "SimbaBase",
+                "safeName": "SimbaBase"
+              }
+            },
+            "wireValue": "simba-base"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-base",
+                "camelCase": {
+                  "unsafeName": "simbaBase",
+                  "safeName": "simbaBase"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_base",
+                  "safeName": "simba_base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_BASE",
+                  "safeName": "SIMBA_BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaBase",
+                  "safeName": "SimbaBase"
+                }
+              },
+              "wireValue": "simba-base"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-english",
+                "camelCase": {
+                  "unsafeName": "simbaEnglish",
+                  "safeName": "simbaEnglish"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_english",
+                  "safeName": "simba_english"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_ENGLISH",
+                  "safeName": "SIMBA_ENGLISH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaEnglish",
+                  "safeName": "SimbaEnglish"
+                }
+              },
+              "wireValue": "simba-english"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-multilingual",
+                "camelCase": {
+                  "unsafeName": "simbaMultilingual",
+                  "safeName": "simbaMultilingual"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_multilingual",
+                  "safeName": "simba_multilingual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_MULTILINGUAL",
+                  "safeName": "SIMBA_MULTILINGUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaMultilingual",
+                  "safeName": "SimbaMultilingual"
+                }
+              },
+              "wireValue": "simba-multilingual"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-turbo",
+                "camelCase": {
+                  "unsafeName": "simbaTurbo",
+                  "safeName": "simbaTurbo"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_turbo",
+                  "safeName": "simba_turbo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_TURBO",
+                  "safeName": "SIMBA_TURBO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaTurbo",
+                  "safeName": "SimbaTurbo"
+                }
+              },
+              "wireValue": "simba-turbo"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -3409,29 +3929,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "wav",
-              "validation": {},
-              "type": "string"
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "wav",
+              "camelCase": {
+                "unsafeName": "wav",
+                "safeName": "wav"
+              },
+              "snakeCase": {
+                "unsafeName": "wav",
+                "safeName": "wav"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "WAV",
+                "safeName": "WAV"
+              },
+              "pascalCase": {
+                "unsafeName": "Wav",
+                "safeName": "Wav"
+              }
+            },
+            "wireValue": "wav"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "wav",
+                "camelCase": {
+                  "unsafeName": "wav",
+                  "safeName": "wav"
+                },
+                "snakeCase": {
+                  "unsafeName": "wav",
+                  "safeName": "wav"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WAV",
+                  "safeName": "WAV"
+                },
+                "pascalCase": {
+                  "unsafeName": "Wav",
+                  "safeName": "Wav"
+                }
+              },
+              "wireValue": "wav"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "wav",
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "mp3",
+                "camelCase": {
+                  "unsafeName": "mp3",
+                  "safeName": "mp3"
+                },
+                "snakeCase": {
+                  "unsafeName": "mp_3",
+                  "safeName": "mp_3"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MP_3",
+                  "safeName": "MP_3"
+                },
+                "pascalCase": {
+                  "unsafeName": "Mp3",
+                  "safeName": "Mp3"
+                }
+              },
+              "wireValue": "mp3"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "ogg",
+                "camelCase": {
+                  "unsafeName": "ogg",
+                  "safeName": "ogg"
+                },
+                "snakeCase": {
+                  "unsafeName": "ogg",
+                  "safeName": "ogg"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OGG",
+                  "safeName": "OGG"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ogg",
+                  "safeName": "Ogg"
+                }
+              },
+              "wireValue": "ogg"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "aac",
+                "camelCase": {
+                  "unsafeName": "aac",
+                  "safeName": "aac"
+                },
+                "snakeCase": {
+                  "unsafeName": "aac",
+                  "safeName": "aac"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AAC",
+                  "safeName": "AAC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Aac",
+                  "safeName": "Aac"
+                }
+              },
+              "wireValue": "aac"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -3579,29 +4199,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "simba-base",
+              "camelCase": {
+                "unsafeName": "simbaBase",
+                "safeName": "simbaBase"
+              },
+              "snakeCase": {
+                "unsafeName": "simba_base",
+                "safeName": "simba_base"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SIMBA_BASE",
+                "safeName": "SIMBA_BASE"
+              },
+              "pascalCase": {
+                "unsafeName": "SimbaBase",
+                "safeName": "SimbaBase"
+              }
+            },
+            "wireValue": "simba-base"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-base",
+                "camelCase": {
+                  "unsafeName": "simbaBase",
+                  "safeName": "simbaBase"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_base",
+                  "safeName": "simba_base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_BASE",
+                  "safeName": "SIMBA_BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaBase",
+                  "safeName": "SimbaBase"
+                }
+              },
+              "wireValue": "simba-base"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-english",
+                "camelCase": {
+                  "unsafeName": "simbaEnglish",
+                  "safeName": "simbaEnglish"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_english",
+                  "safeName": "simba_english"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_ENGLISH",
+                  "safeName": "SIMBA_ENGLISH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaEnglish",
+                  "safeName": "SimbaEnglish"
+                }
+              },
+              "wireValue": "simba-english"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-multilingual",
+                "camelCase": {
+                  "unsafeName": "simbaMultilingual",
+                  "safeName": "simbaMultilingual"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_multilingual",
+                  "safeName": "simba_multilingual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_MULTILINGUAL",
+                  "safeName": "SIMBA_MULTILINGUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaMultilingual",
+                  "safeName": "SimbaMultilingual"
+                }
+              },
+              "wireValue": "simba-multilingual"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-turbo",
+                "camelCase": {
+                  "unsafeName": "simbaTurbo",
+                  "safeName": "simbaTurbo"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_turbo",
+                  "safeName": "simba_turbo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_TURBO",
+                  "safeName": "SIMBA_TURBO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaTurbo",
+                  "safeName": "SimbaTurbo"
+                }
+              },
+              "wireValue": "simba-turbo"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -4210,27 +4930,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "wav",
+                "camelCase": {
+                  "unsafeName": "wav",
+                  "safeName": "wav"
+                },
+                "snakeCase": {
+                  "unsafeName": "wav",
+                  "safeName": "wav"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WAV",
+                  "safeName": "WAV"
+                },
+                "pascalCase": {
+                  "unsafeName": "Wav",
+                  "safeName": "Wav"
+                }
+              },
+              "wireValue": "wav"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "mp3",
+                "camelCase": {
+                  "unsafeName": "mp3",
+                  "safeName": "mp3"
+                },
+                "snakeCase": {
+                  "unsafeName": "mp_3",
+                  "safeName": "mp_3"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MP_3",
+                  "safeName": "MP_3"
+                },
+                "pascalCase": {
+                  "unsafeName": "Mp3",
+                  "safeName": "Mp3"
+                }
+              },
+              "wireValue": "mp3"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "ogg",
+                "camelCase": {
+                  "unsafeName": "ogg",
+                  "safeName": "ogg"
+                },
+                "snakeCase": {
+                  "unsafeName": "ogg",
+                  "safeName": "ogg"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OGG",
+                  "safeName": "OGG"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ogg",
+                  "safeName": "Ogg"
+                }
+              },
+              "wireValue": "ogg"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "aac",
+                "camelCase": {
+                  "unsafeName": "aac",
+                  "safeName": "aac"
+                },
+                "snakeCase": {
+                  "unsafeName": "aac",
+                  "safeName": "aac"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AAC",
+                  "safeName": "AAC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Aac",
+                  "safeName": "Aac"
+                }
+              },
+              "wireValue": "aac"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -4833,29 +5631,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "simba-base",
+              "camelCase": {
+                "unsafeName": "simbaBase",
+                "safeName": "simbaBase"
+              },
+              "snakeCase": {
+                "unsafeName": "simba_base",
+                "safeName": "simba_base"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SIMBA_BASE",
+                "safeName": "SIMBA_BASE"
+              },
+              "pascalCase": {
+                "unsafeName": "SimbaBase",
+                "safeName": "SimbaBase"
+              }
+            },
+            "wireValue": "simba-base"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-base",
+                "camelCase": {
+                  "unsafeName": "simbaBase",
+                  "safeName": "simbaBase"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_base",
+                  "safeName": "simba_base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_BASE",
+                  "safeName": "SIMBA_BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaBase",
+                  "safeName": "SimbaBase"
+                }
+              },
+              "wireValue": "simba-base"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "default": "simba-base",
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-english",
+                "camelCase": {
+                  "unsafeName": "simbaEnglish",
+                  "safeName": "simbaEnglish"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_english",
+                  "safeName": "simba_english"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_ENGLISH",
+                  "safeName": "SIMBA_ENGLISH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaEnglish",
+                  "safeName": "SimbaEnglish"
+                }
+              },
+              "wireValue": "simba-english"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-multilingual",
+                "camelCase": {
+                  "unsafeName": "simbaMultilingual",
+                  "safeName": "simbaMultilingual"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_multilingual",
+                  "safeName": "simba_multilingual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_MULTILINGUAL",
+                  "safeName": "SIMBA_MULTILINGUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaMultilingual",
+                  "safeName": "SimbaMultilingual"
+                }
+              },
+              "wireValue": "simba-multilingual"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-turbo",
+                "camelCase": {
+                  "unsafeName": "simbaTurbo",
+                  "safeName": "simbaTurbo"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_turbo",
+                  "safeName": "simba_turbo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_TURBO",
+                  "safeName": "SIMBA_TURBO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaTurbo",
+                  "safeName": "SimbaTurbo"
+                }
+              },
+              "wireValue": "simba-turbo"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -5362,27 +6260,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "male",
+                "camelCase": {
+                  "unsafeName": "male",
+                  "safeName": "male"
+                },
+                "snakeCase": {
+                  "unsafeName": "male",
+                  "safeName": "male"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MALE",
+                  "safeName": "MALE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Male",
+                  "safeName": "Male"
+                }
+              },
+              "wireValue": "male"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "female",
+                "camelCase": {
+                  "unsafeName": "female",
+                  "safeName": "female"
+                },
+                "snakeCase": {
+                  "unsafeName": "female",
+                  "safeName": "female"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEMALE",
+                  "safeName": "FEMALE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Female",
+                  "safeName": "Female"
+                }
+              },
+              "wireValue": "female"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "notSpecified",
+                "camelCase": {
+                  "unsafeName": "notSpecified",
+                  "safeName": "notSpecified"
+                },
+                "snakeCase": {
+                  "unsafeName": "not_specified",
+                  "safeName": "not_specified"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NOT_SPECIFIED",
+                  "safeName": "NOT_SPECIFIED"
+                },
+                "pascalCase": {
+                  "unsafeName": "NotSpecified",
+                  "safeName": "NotSpecified"
+                }
+              },
+              "wireValue": "notSpecified"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -5733,27 +6685,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "shared",
+                "camelCase": {
+                  "unsafeName": "shared",
+                  "safeName": "shared"
+                },
+                "snakeCase": {
+                  "unsafeName": "shared",
+                  "safeName": "shared"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SHARED",
+                  "safeName": "SHARED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Shared",
+                  "safeName": "Shared"
+                }
+              },
+              "wireValue": "shared"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "personal",
+                "camelCase": {
+                  "unsafeName": "personal",
+                  "safeName": "personal"
+                },
+                "snakeCase": {
+                  "unsafeName": "personal",
+                  "safeName": "personal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PERSONAL",
+                  "safeName": "PERSONAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Personal",
+                  "safeName": "Personal"
+                }
+              },
+              "wireValue": "personal"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -6601,27 +7583,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-base",
+                "camelCase": {
+                  "unsafeName": "simbaBase",
+                  "safeName": "simbaBase"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_base",
+                  "safeName": "simba_base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_BASE",
+                  "safeName": "SIMBA_BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaBase",
+                  "safeName": "SimbaBase"
+                }
+              },
+              "wireValue": "simba-base"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-english",
+                "camelCase": {
+                  "unsafeName": "simbaEnglish",
+                  "safeName": "simbaEnglish"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_english",
+                  "safeName": "simba_english"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_ENGLISH",
+                  "safeName": "SIMBA_ENGLISH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaEnglish",
+                  "safeName": "SimbaEnglish"
+                }
+              },
+              "wireValue": "simba-english"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-multilingual",
+                "camelCase": {
+                  "unsafeName": "simbaMultilingual",
+                  "safeName": "simbaMultilingual"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_multilingual",
+                  "safeName": "simba_multilingual"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_MULTILINGUAL",
+                  "safeName": "SIMBA_MULTILINGUAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaMultilingual",
+                  "safeName": "SimbaMultilingual"
+                }
+              },
+              "wireValue": "simba-multilingual"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "simba-turbo",
+                "camelCase": {
+                  "unsafeName": "simbaTurbo",
+                  "safeName": "simbaTurbo"
+                },
+                "snakeCase": {
+                  "unsafeName": "simba_turbo",
+                  "safeName": "simba_turbo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIMBA_TURBO",
+                  "safeName": "SIMBA_TURBO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SimbaTurbo",
+                  "safeName": "SimbaTurbo"
+                }
+              },
+              "wireValue": "simba-turbo"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -7479,27 +8539,129 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "invalid_client",
+                "camelCase": {
+                  "unsafeName": "invalidClient",
+                  "safeName": "invalidClient"
+                },
+                "snakeCase": {
+                  "unsafeName": "invalid_client",
+                  "safeName": "invalid_client"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INVALID_CLIENT",
+                  "safeName": "INVALID_CLIENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "InvalidClient",
+                  "safeName": "InvalidClient"
+                }
+              },
+              "wireValue": "invalid_client"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "unauthorized_client",
+                "camelCase": {
+                  "unsafeName": "unauthorizedClient",
+                  "safeName": "unauthorizedClient"
+                },
+                "snakeCase": {
+                  "unsafeName": "unauthorized_client",
+                  "safeName": "unauthorized_client"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNAUTHORIZED_CLIENT",
+                  "safeName": "UNAUTHORIZED_CLIENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnauthorizedClient",
+                  "safeName": "UnauthorizedClient"
+                }
+              },
+              "wireValue": "unauthorized_client"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "invalid_request",
+                "camelCase": {
+                  "unsafeName": "invalidRequest",
+                  "safeName": "invalidRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "invalid_request",
+                  "safeName": "invalid_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INVALID_REQUEST",
+                  "safeName": "INVALID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "InvalidRequest",
+                  "safeName": "InvalidRequest"
+                }
+              },
+              "wireValue": "invalid_request"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "unsupported_grant_type",
+                "camelCase": {
+                  "unsafeName": "unsupportedGrantType",
+                  "safeName": "unsupportedGrantType"
+                },
+                "snakeCase": {
+                  "unsafeName": "unsupported_grant_type",
+                  "safeName": "unsupported_grant_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNSUPPORTED_GRANT_TYPE",
+                  "safeName": "UNSUPPORTED_GRANT_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnsupportedGrantType",
+                  "safeName": "UnsupportedGrantType"
+                }
+              },
+              "wireValue": "unsupported_grant_type"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "invalid_scope",
+                "camelCase": {
+                  "unsafeName": "invalidScope",
+                  "safeName": "invalidScope"
+                },
+                "snakeCase": {
+                  "unsafeName": "invalid_scope",
+                  "safeName": "invalid_scope"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INVALID_SCOPE",
+                  "safeName": "INVALID_SCOPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "InvalidScope",
+                  "safeName": "InvalidScope"
+                }
+              },
+              "wireValue": "invalid_scope"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],

@@ -1,6 +1,8 @@
+import { OpenAPIV3_1 } from "openapi-types";
+
 import { isNonNullish } from "@fern-api/core-utils";
 import { ObjectProperty, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { OpenAPIV3_1 } from "openapi-types";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -19,7 +21,6 @@ export declare namespace ObjectSchemaConverter {
 }
 
 export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, ObjectSchemaConverter.Output> {
-
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: ObjectSchemaConverter.Args) {
@@ -49,10 +50,13 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                 const maybeTypeReference = context.convertReferenceToTypeReference(propertySchema);
                 if (maybeTypeReference.ok) {
                     properties.push({
-                        name: context.casingsGenerator.generateNameAndWireValue({ name: propertyName, wireValue: propertyName}),
+                        name: context.casingsGenerator.generateNameAndWireValue({
+                            name: propertyName,
+                            wireValue: propertyName
+                        }),
                         valueType: maybeTypeReference.reference,
                         docs: propertySchema.description,
-                        availability: undefined,
+                        availability: undefined
                     });
                 }
                 continue;
@@ -63,20 +67,23 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             const propertySchemaConverter = new SchemaConverter({
                 id: propertyId,
                 breadcrumbs: propertyBreadcrumbs,
-                schema: propertySchema,
+                schema: propertySchema
             });
             const convertedProperty = propertySchemaConverter.convert({ context, errorCollector });
             if (convertedProperty != null) {
                 properties.push({
-                    name:  context.casingsGenerator.generateNameAndWireValue({ name: propertyName, wireValue: propertyName}),
+                    name: context.casingsGenerator.generateNameAndWireValue({
+                        name: propertyName,
+                        wireValue: propertyName
+                    }),
                     valueType: context.createNamedTypeReference(propertyId),
                     docs: propertySchema.description,
-                    availability: undefined,
+                    availability: undefined
                 });
                 inlinedTypes = {
                     ...inlinedTypes,
                     ...convertedProperty.inlinedTypes,
-                    [propertyId]: convertedProperty.typeDeclaration,
+                    [propertyId]: convertedProperty.typeDeclaration
                 };
             }
         }
@@ -86,7 +93,7 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         }
 
         const extends_: TypeReference[] = [];
-        
+
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
             const subBreadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
 
@@ -102,19 +109,19 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             // if allOf schema is inlined and has properties, add them to the object properties
             for (const [propertyName, propertySchema] of Object.entries(allOfSchema.properties ?? {})) {
                 const propertyBreadcrumbs = [...subBreadcrumbs, propertyName];
-                
+
                 // if property is a reference
                 if (context.isReferenceObject(propertySchema)) {
                     const maybeTypeReference = context.convertReferenceToTypeReference(propertySchema);
                     if (maybeTypeReference.ok) {
                         properties.push({
-                            name: context.casingsGenerator.generateNameAndWireValue({ 
-                                name: propertyName, 
+                            name: context.casingsGenerator.generateNameAndWireValue({
+                                name: propertyName,
                                 wireValue: propertyName
                             }),
                             valueType: maybeTypeReference.reference,
                             docs: propertySchema.description,
-                            availability: undefined,
+                            availability: undefined
                         });
                     }
                     continue;
@@ -125,23 +132,23 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                 const propertySchemaConverter = new SchemaConverter({
                     id: propertySchemaId,
                     breadcrumbs: propertyBreadcrumbs,
-                    schema: propertySchema,
+                    schema: propertySchema
                 });
                 const convertedProperty = propertySchemaConverter.convert({ context, errorCollector });
                 if (convertedProperty != null) {
                     properties.push({
-                        name: context.casingsGenerator.generateNameAndWireValue({ 
-                            name: propertyName, 
+                        name: context.casingsGenerator.generateNameAndWireValue({
+                            name: propertyName,
                             wireValue: propertyName
                         }),
                         valueType: context.createNamedTypeReference(propertySchemaId),
                         docs: propertySchema.description,
-                        availability: undefined,
+                        availability: undefined
                     });
                     inlinedTypes = {
                         ...inlinedTypes,
                         ...convertedProperty.inlinedTypes,
-                        [propertySchemaId]: convertedProperty.typeDeclaration,
+                        [propertySchemaId]: convertedProperty.typeDeclaration
                     };
                 }
             }
@@ -150,9 +157,9 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         return {
             object: Type.object({
                 properties,
-                extends: extends_.map(ext => context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
+                extends: extends_.map((ext) => context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
                 extendedProperties: [],
-                extraProperties: this.schema.additionalProperties != null,
+                extraProperties: this.schema.additionalProperties != null
             }),
             inlinedTypes
         };

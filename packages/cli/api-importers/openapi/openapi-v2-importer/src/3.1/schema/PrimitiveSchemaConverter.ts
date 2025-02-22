@@ -1,5 +1,14 @@
-import { ContainerType, IntegerValidationRules, Literal, PrimitiveTypeV2, StringValidationRules, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import {
+    ContainerType,
+    IntegerValidationRules,
+    Literal,
+    PrimitiveTypeV2,
+    StringValidationRules,
+    TypeReference
+} from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -45,7 +54,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<OpenAPIConverter
                     case "double":
                     case undefined:
                         return TypeReference.primitive({
-                            v1: "DOUBLE", 
+                            v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
                                 default: context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
@@ -71,7 +80,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<OpenAPIConverter
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: context.getAsNumber(this.schema.default),
+                                default: context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
                         });
@@ -85,13 +94,13 @@ export class PrimitiveSchemaConverter extends AbstractConverter<OpenAPIConverter
                         });
                     case "uint64":
                         return TypeReference.primitive({
-                            v1: "UINT_64", 
+                            v1: "UINT_64",
                             v2: PrimitiveTypeV2.uint64({
                                 default: context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
-                    default: 
+                    default:
                         return TypeReference.primitive({
                             v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({

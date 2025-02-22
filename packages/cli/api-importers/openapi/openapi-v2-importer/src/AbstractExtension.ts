@@ -23,5 +23,11 @@ export abstract class AbstractExtension<Context extends AbstractConverterContext
      * @param errorCollector Collector to track validation errors
      * @returns The validation output or undefined if validation fails
      */
-    public abstract validate({ context, errorCollector }: { context: Context; errorCollector: ErrorCollector }): Output | undefined;
+    public abstract validate({
+        context,
+        errorCollector
+    }: {
+        context: Context;
+        errorCollector: ErrorCollector;
+    }): Output | undefined;
 }

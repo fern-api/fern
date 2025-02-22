@@ -1,5 +1,7 @@
-import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -18,7 +20,6 @@ export declare namespace ArraySchemaConverter {
 }
 
 export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, ArraySchemaConverter.Output> {
-
     private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
@@ -36,7 +37,7 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
         errorCollector: ErrorCollector;
     }): ArraySchemaConverter.Output | undefined {
         if (this.schema.items == null) {
-            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN }
+            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
         }
 
         // if itmes is a reference
@@ -44,11 +45,11 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
             const maybeTypeReference = context.convertReferenceToTypeReference(this.schema.items);
             if (maybeTypeReference.ok) {
                 return {
-                    typeReference: TypeReference.container(ContainerType.list(maybeTypeReference.reference)),
-                }
+                    typeReference: TypeReference.container(ContainerType.list(maybeTypeReference.reference))
+                };
             }
-            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN }
-        } 
+            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
+        }
 
         // if items is a inlined schema
         const itemsBreadcrumbs = [...this.breadcrumbs, "items"];
@@ -56,7 +57,7 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
         const itemSchemaConverter = new SchemaConverter({
             id: schemaId,
             breadcrumbs: itemsBreadcrumbs,
-            schema: this.schema.items,
+            schema: this.schema.items
         });
         const itemSchema = itemSchemaConverter.convert({ context, errorCollector });
         if (itemSchema != null) {
@@ -64,12 +65,12 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
                 typeReference: TypeReference.container(ContainerType.list(context.createNamedTypeReference(schemaId))),
                 inlinedTypes: {
                     ...itemSchema.inlinedTypes,
-                    schemaId: itemSchema.typeDeclaration,
+                    schemaId: itemSchema.typeDeclaration
                 }
-            }
+            };
         }
 
         // fallback
-        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN }
+        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
     }
 }

@@ -510,27 +510,705 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "zh",
+                "camelCase": {
+                  "unsafeName": "zh",
+                  "safeName": "zh"
+                },
+                "snakeCase": {
+                  "unsafeName": "zh",
+                  "safeName": "zh"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ZH",
+                  "safeName": "ZH"
+                },
+                "pascalCase": {
+                  "unsafeName": "Zh",
+                  "safeName": "Zh"
+                }
+              },
+              "wireValue": "zh"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "da",
+                "camelCase": {
+                  "unsafeName": "da",
+                  "safeName": "da"
+                },
+                "snakeCase": {
+                  "unsafeName": "da",
+                  "safeName": "da"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DA",
+                  "safeName": "DA"
+                },
+                "pascalCase": {
+                  "unsafeName": "Da",
+                  "safeName": "Da"
+                }
+              },
+              "wireValue": "da"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "nl",
+                "camelCase": {
+                  "unsafeName": "nl",
+                  "safeName": "nl"
+                },
+                "snakeCase": {
+                  "unsafeName": "nl",
+                  "safeName": "nl"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NL",
+                  "safeName": "NL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Nl",
+                  "safeName": "Nl"
+                }
+              },
+              "wireValue": "nl"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "en",
+                "camelCase": {
+                  "unsafeName": "en",
+                  "safeName": "en"
+                },
+                "snakeCase": {
+                  "unsafeName": "en",
+                  "safeName": "en"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EN",
+                  "safeName": "EN"
+                },
+                "pascalCase": {
+                  "unsafeName": "En",
+                  "safeName": "En"
+                }
+              },
+              "wireValue": "en"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "en-AU",
+                "camelCase": {
+                  "unsafeName": "enAu",
+                  "safeName": "enAu"
+                },
+                "snakeCase": {
+                  "unsafeName": "en_au",
+                  "safeName": "en_au"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EN_AU",
+                  "safeName": "EN_AU"
+                },
+                "pascalCase": {
+                  "unsafeName": "EnAu",
+                  "safeName": "EnAu"
+                }
+              },
+              "wireValue": "en-AU"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "en-IN",
+                "camelCase": {
+                  "unsafeName": "enIn",
+                  "safeName": "enIn"
+                },
+                "snakeCase": {
+                  "unsafeName": "en_in",
+                  "safeName": "en_in"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EN_IN",
+                  "safeName": "EN_IN"
+                },
+                "pascalCase": {
+                  "unsafeName": "EnIn",
+                  "safeName": "EnIn"
+                }
+              },
+              "wireValue": "en-IN"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "en-NZ",
+                "camelCase": {
+                  "unsafeName": "enNz",
+                  "safeName": "enNz"
+                },
+                "snakeCase": {
+                  "unsafeName": "en_nz",
+                  "safeName": "en_nz"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EN_NZ",
+                  "safeName": "EN_NZ"
+                },
+                "pascalCase": {
+                  "unsafeName": "EnNz",
+                  "safeName": "EnNz"
+                }
+              },
+              "wireValue": "en-NZ"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "en-GB",
+                "camelCase": {
+                  "unsafeName": "enGb",
+                  "safeName": "enGb"
+                },
+                "snakeCase": {
+                  "unsafeName": "en_gb",
+                  "safeName": "en_gb"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EN_GB",
+                  "safeName": "EN_GB"
+                },
+                "pascalCase": {
+                  "unsafeName": "EnGb",
+                  "safeName": "EnGb"
+                }
+              },
+              "wireValue": "en-GB"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "fr",
+                "camelCase": {
+                  "unsafeName": "fr",
+                  "safeName": "fr"
+                },
+                "snakeCase": {
+                  "unsafeName": "fr",
+                  "safeName": "fr"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FR",
+                  "safeName": "FR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Fr",
+                  "safeName": "Fr"
+                }
+              },
+              "wireValue": "fr"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "fr-CA",
+                "camelCase": {
+                  "unsafeName": "frCa",
+                  "safeName": "frCa"
+                },
+                "snakeCase": {
+                  "unsafeName": "fr_ca",
+                  "safeName": "fr_ca"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FR_CA",
+                  "safeName": "FR_CA"
+                },
+                "pascalCase": {
+                  "unsafeName": "FrCa",
+                  "safeName": "FrCa"
+                }
+              },
+              "wireValue": "fr-CA"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "de",
+                "camelCase": {
+                  "unsafeName": "de",
+                  "safeName": "de"
+                },
+                "snakeCase": {
+                  "unsafeName": "de",
+                  "safeName": "de"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DE",
+                  "safeName": "DE"
+                },
+                "pascalCase": {
+                  "unsafeName": "De",
+                  "safeName": "De"
+                }
+              },
+              "wireValue": "de"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "hi",
+                "camelCase": {
+                  "unsafeName": "hi",
+                  "safeName": "hi"
+                },
+                "snakeCase": {
+                  "unsafeName": "hi",
+                  "safeName": "hi"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HI",
+                  "safeName": "HI"
+                },
+                "pascalCase": {
+                  "unsafeName": "Hi",
+                  "safeName": "Hi"
+                }
+              },
+              "wireValue": "hi"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "hi-Latn",
+                "camelCase": {
+                  "unsafeName": "hiLatn",
+                  "safeName": "hiLatn"
+                },
+                "snakeCase": {
+                  "unsafeName": "hi_latn",
+                  "safeName": "hi_latn"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HI_LATN",
+                  "safeName": "HI_LATN"
+                },
+                "pascalCase": {
+                  "unsafeName": "HiLatn",
+                  "safeName": "HiLatn"
+                }
+              },
+              "wireValue": "hi-Latn"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "wireValue": "id"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "it",
+                "camelCase": {
+                  "unsafeName": "it",
+                  "safeName": "it"
+                },
+                "snakeCase": {
+                  "unsafeName": "it",
+                  "safeName": "it"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IT",
+                  "safeName": "IT"
+                },
+                "pascalCase": {
+                  "unsafeName": "It",
+                  "safeName": "It"
+                }
+              },
+              "wireValue": "it"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ja",
+                "camelCase": {
+                  "unsafeName": "ja",
+                  "safeName": "ja"
+                },
+                "snakeCase": {
+                  "unsafeName": "ja",
+                  "safeName": "ja"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "JA",
+                  "safeName": "JA"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ja",
+                  "safeName": "Ja"
+                }
+              },
+              "wireValue": "ja"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ko",
+                "camelCase": {
+                  "unsafeName": "ko",
+                  "safeName": "ko"
+                },
+                "snakeCase": {
+                  "unsafeName": "ko",
+                  "safeName": "ko"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KO",
+                  "safeName": "KO"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ko",
+                  "safeName": "Ko"
+                }
+              },
+              "wireValue": "ko"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "no",
+                "camelCase": {
+                  "unsafeName": "no",
+                  "safeName": "no"
+                },
+                "snakeCase": {
+                  "unsafeName": "no",
+                  "safeName": "no"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NO",
+                  "safeName": "NO"
+                },
+                "pascalCase": {
+                  "unsafeName": "No",
+                  "safeName": "No"
+                }
+              },
+              "wireValue": "no"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pl",
+                "camelCase": {
+                  "unsafeName": "pl",
+                  "safeName": "pl"
+                },
+                "snakeCase": {
+                  "unsafeName": "pl",
+                  "safeName": "pl"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PL",
+                  "safeName": "PL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pl",
+                  "safeName": "Pl"
+                }
+              },
+              "wireValue": "pl"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pt",
+                "camelCase": {
+                  "unsafeName": "pt",
+                  "safeName": "pt"
+                },
+                "snakeCase": {
+                  "unsafeName": "pt",
+                  "safeName": "pt"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PT",
+                  "safeName": "PT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pt",
+                  "safeName": "Pt"
+                }
+              },
+              "wireValue": "pt"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pt-BR",
+                "camelCase": {
+                  "unsafeName": "ptBr",
+                  "safeName": "ptBr"
+                },
+                "snakeCase": {
+                  "unsafeName": "pt_br",
+                  "safeName": "pt_br"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PT_BR",
+                  "safeName": "PT_BR"
+                },
+                "pascalCase": {
+                  "unsafeName": "PtBr",
+                  "safeName": "PtBr"
+                }
+              },
+              "wireValue": "pt-BR"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pt-PT",
+                "camelCase": {
+                  "unsafeName": "ptPt",
+                  "safeName": "ptPt"
+                },
+                "snakeCase": {
+                  "unsafeName": "pt_pt",
+                  "safeName": "pt_pt"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PT_PT",
+                  "safeName": "PT_PT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PtPt",
+                  "safeName": "PtPt"
+                }
+              },
+              "wireValue": "pt-PT"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ru",
+                "camelCase": {
+                  "unsafeName": "ru",
+                  "safeName": "ru"
+                },
+                "snakeCase": {
+                  "unsafeName": "ru",
+                  "safeName": "ru"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RU",
+                  "safeName": "RU"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ru",
+                  "safeName": "Ru"
+                }
+              },
+              "wireValue": "ru"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "es",
+                "camelCase": {
+                  "unsafeName": "es",
+                  "safeName": "es"
+                },
+                "snakeCase": {
+                  "unsafeName": "es",
+                  "safeName": "es"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ES",
+                  "safeName": "ES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Es",
+                  "safeName": "Es"
+                }
+              },
+              "wireValue": "es"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "es-419",
+                "camelCase": {
+                  "unsafeName": "es419",
+                  "safeName": "es419"
+                },
+                "snakeCase": {
+                  "unsafeName": "es_419",
+                  "safeName": "es_419"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ES_419",
+                  "safeName": "ES_419"
+                },
+                "pascalCase": {
+                  "unsafeName": "Es419",
+                  "safeName": "Es419"
+                }
+              },
+              "wireValue": "es-419"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "sv",
+                "camelCase": {
+                  "unsafeName": "sv",
+                  "safeName": "sv"
+                },
+                "snakeCase": {
+                  "unsafeName": "sv",
+                  "safeName": "sv"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SV",
+                  "safeName": "SV"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sv",
+                  "safeName": "Sv"
+                }
+              },
+              "wireValue": "sv"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ta",
+                "camelCase": {
+                  "unsafeName": "ta",
+                  "safeName": "ta"
+                },
+                "snakeCase": {
+                  "unsafeName": "ta",
+                  "safeName": "ta"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TA",
+                  "safeName": "TA"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ta",
+                  "safeName": "Ta"
+                }
+              },
+              "wireValue": "ta"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "tr",
+                "camelCase": {
+                  "unsafeName": "tr",
+                  "safeName": "tr"
+                },
+                "snakeCase": {
+                  "unsafeName": "tr",
+                  "safeName": "tr"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TR",
+                  "safeName": "TR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Tr",
+                  "safeName": "Tr"
+                }
+              },
+              "wireValue": "tr"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "uk",
+                "camelCase": {
+                  "unsafeName": "uk",
+                  "safeName": "uk"
+                },
+                "snakeCase": {
+                  "unsafeName": "uk",
+                  "safeName": "uk"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UK",
+                  "safeName": "UK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Uk",
+                  "safeName": "Uk"
+                }
+              },
+              "wireValue": "uk"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -2285,27 +2963,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "asc",
+                "camelCase": {
+                  "unsafeName": "asc",
+                  "safeName": "asc"
+                },
+                "snakeCase": {
+                  "unsafeName": "asc",
+                  "safeName": "asc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ASC",
+                  "safeName": "ASC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Asc",
+                  "safeName": "Asc"
+                }
+              },
+              "wireValue": "asc"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "desc",
+                "camelCase": {
+                  "unsafeName": "desc",
+                  "safeName": "desc"
+                },
+                "snakeCase": {
+                  "unsafeName": "desc",
+                  "safeName": "desc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DESC",
+                  "safeName": "DESC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Desc",
+                  "safeName": "Desc"
+                }
+              },
+              "wireValue": "desc"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -5635,27 +6343,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "word",
+                "camelCase": {
+                  "unsafeName": "word",
+                  "safeName": "word"
+                },
+                "snakeCase": {
+                  "unsafeName": "word",
+                  "safeName": "word"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORD",
+                  "safeName": "WORD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Word",
+                  "safeName": "Word"
+                }
+              },
+              "wireValue": "word"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "sentence",
+                "camelCase": {
+                  "unsafeName": "sentence",
+                  "safeName": "sentence"
+                },
+                "snakeCase": {
+                  "unsafeName": "sentence",
+                  "safeName": "sentence"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SENTENCE",
+                  "safeName": "SENTENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sentence",
+                  "safeName": "Sentence"
+                }
+              },
+              "wireValue": "sentence"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "utterance",
+                "camelCase": {
+                  "unsafeName": "utterance",
+                  "safeName": "utterance"
+                },
+                "snakeCase": {
+                  "unsafeName": "utterance",
+                  "safeName": "utterance"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UTTERANCE",
+                  "safeName": "UTTERANCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Utterance",
+                  "safeName": "Utterance"
+                }
+              },
+              "wireValue": "utterance"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "conversational_turn",
+                "camelCase": {
+                  "unsafeName": "conversationalTurn",
+                  "safeName": "conversationalTurn"
+                },
+                "snakeCase": {
+                  "unsafeName": "conversational_turn",
+                  "safeName": "conversational_turn"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONVERSATIONAL_TURN",
+                  "safeName": "CONVERSATIONAL_TURN"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConversationalTurn",
+                  "safeName": "ConversationalTurn"
+                }
+              },
+              "wireValue": "conversational_turn"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -14593,27 +15379,81 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "created",
+                "camelCase": {
+                  "unsafeName": "created",
+                  "safeName": "created"
+                },
+                "snakeCase": {
+                  "unsafeName": "created",
+                  "safeName": "created"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATED",
+                  "safeName": "CREATED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Created",
+                  "safeName": "Created"
+                }
+              },
+              "wireValue": "created"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "started",
+                "camelCase": {
+                  "unsafeName": "started",
+                  "safeName": "started"
+                },
+                "snakeCase": {
+                  "unsafeName": "started",
+                  "safeName": "started"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STARTED",
+                  "safeName": "STARTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Started",
+                  "safeName": "Started"
+                }
+              },
+              "wireValue": "started"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "ended",
+                "camelCase": {
+                  "unsafeName": "ended",
+                  "safeName": "ended"
+                },
+                "snakeCase": {
+                  "unsafeName": "ended",
+                  "safeName": "ended"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENDED",
+                  "safeName": "ENDED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ended",
+                  "safeName": "Ended"
+                }
+              },
+              "wireValue": "ended"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -15155,27 +15995,105 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "QUEUED",
+                "camelCase": {
+                  "unsafeName": "queued",
+                  "safeName": "queued"
+                },
+                "snakeCase": {
+                  "unsafeName": "queued",
+                  "safeName": "queued"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "QUEUED",
+                  "safeName": "QUEUED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Queued",
+                  "safeName": "Queued"
+                }
+              },
+              "wireValue": "QUEUED"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "IN_PROGRESS",
+                "camelCase": {
+                  "unsafeName": "inProgress",
+                  "safeName": "inProgress"
+                },
+                "snakeCase": {
+                  "unsafeName": "in_progress",
+                  "safeName": "in_progress"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IN_PROGRESS",
+                  "safeName": "IN_PROGRESS"
+                },
+                "pascalCase": {
+                  "unsafeName": "InProgress",
+                  "safeName": "InProgress"
+                }
+              },
+              "wireValue": "IN_PROGRESS"
             }
           },
-          "type": "primitive"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "COMPLETED",
+                "camelCase": {
+                  "unsafeName": "completed",
+                  "safeName": "completed"
+                },
+                "snakeCase": {
+                  "unsafeName": "completed",
+                  "safeName": "completed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMPLETED",
+                  "safeName": "COMPLETED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Completed",
+                  "safeName": "Completed"
+                }
+              },
+              "wireValue": "COMPLETED"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "FAILED",
+                "camelCase": {
+                  "unsafeName": "failed",
+                  "safeName": "failed"
+                },
+                "snakeCase": {
+                  "unsafeName": "failed",
+                  "safeName": "failed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FAILED",
+                  "safeName": "FAILED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Failed",
+                  "safeName": "Failed"
+                }
+              },
+              "wireValue": "FAILED"
+            }
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -16026,27 +16944,57 @@
         }
       },
       "shape": {
-        "aliasOf": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "created_before",
+                "camelCase": {
+                  "unsafeName": "createdBefore",
+                  "safeName": "createdBefore"
+                },
+                "snakeCase": {
+                  "unsafeName": "created_before",
+                  "safeName": "created_before"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATED_BEFORE",
+                  "safeName": "CREATED_BEFORE"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreatedBefore",
+                  "safeName": "CreatedBefore"
+                }
+              },
+              "wireValue": "created_before"
             }
           },
-          "type": "primitive"
-        },
-        "resolvedType": {
-          "primitive": {
-            "v1": "STRING",
-            "v2": {
-              "validation": {},
-              "type": "string"
+          {
+            "name": {
+              "name": {
+                "originalName": "created_after",
+                "camelCase": {
+                  "unsafeName": "createdAfter",
+                  "safeName": "createdAfter"
+                },
+                "snakeCase": {
+                  "unsafeName": "created_after",
+                  "safeName": "created_after"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATED_AFTER",
+                  "safeName": "CREATED_AFTER"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreatedAfter",
+                  "safeName": "CreatedAfter"
+                }
+              },
+              "wireValue": "created_after"
             }
-          },
-          "type": "primitive"
-        },
-        "type": "alias"
+          }
+        ],
+        "type": "enum"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],

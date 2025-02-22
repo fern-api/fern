@@ -12,9 +12,8 @@ export declare namespace AbstractConverter {
  * @template Output The target type to convert to
  */
 export abstract class AbstractConverter<Context extends AbstractConverterContext<any>, Output> {
-
     protected breadcrumbs: string[] = [];
-    
+
     constructor({ breadcrumbs = [] }: AbstractConverter.Args = {}) {
         this.breadcrumbs = breadcrumbs;
     }
@@ -24,5 +23,11 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
      * @param errorCollector Optional collector to track any conversion errors
      * @returns The converted target type Output
      */
-    public abstract convert({ context, errorCollector }: { context: Context, errorCollector: ErrorCollector} ): Output | undefined;
+    public abstract convert({
+        context,
+        errorCollector
+    }: {
+        context: Context;
+        errorCollector: ErrorCollector;
+    }): Output | undefined;
 }

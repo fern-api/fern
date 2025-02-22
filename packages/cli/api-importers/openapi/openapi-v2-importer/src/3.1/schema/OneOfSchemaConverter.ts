@@ -1,5 +1,7 @@
-import { Type, TypeDeclaration, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { Type, TypeDeclaration, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -18,7 +20,6 @@ export declare namespace OneOfSchemaConverter {
 }
 
 export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, OneOfSchemaConverter.Output> {
-
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: OneOfSchemaConverter.Args) {
@@ -60,7 +61,7 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
             const schemaConverter = new SchemaConverter({
                 id: schemaId,
                 breadcrumbs: subBreadcrumbs,
-                schema: subSchema,
+                schema: subSchema
             });
             const convertedSchema = schemaConverter.convert({ context, errorCollector });
             if (convertedSchema != null) {
@@ -71,7 +72,7 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
                 inlinedTypes = {
                     ...inlinedTypes,
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration,
+                    [schemaId]: convertedSchema.typeDeclaration
                 };
             }
         }
@@ -82,7 +83,7 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
 
         return {
             union: Type.undiscriminatedUnion({
-                members: unionTypes,
+                members: unionTypes
             }),
             inlinedTypes
         };

@@ -1,6 +1,7 @@
 import { mapValues, pickBy } from "lodash-es";
 
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
@@ -24,7 +25,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernFileContext, constructFernFileContext, constructRootApiFileContext } from "./FernFileContext";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertApiVersionScheme } from "./converters/convertApiVersionScheme";

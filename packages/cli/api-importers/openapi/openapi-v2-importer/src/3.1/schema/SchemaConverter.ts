@@ -1,9 +1,12 @@
-import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
+import { EnumSchemaConverter } from "./EnumSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
@@ -32,7 +35,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         this.id = id;
         this.inlined = inlined;
     }
-    
+
     public convert({
         context,
         errorCollector
@@ -40,8 +43,25 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): SchemaConverter.Output | undefined {
+        // Try to convert as enum
+        if (this.schema.enum?.length) {
+            const enumConverter = new EnumSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema
+            });
+            const enumType = enumConverter.convert({ context, errorCollector });
+            if (enumType != null) {
+                return {
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: enumType.enum,
+                        context
+                    }),
+                    inlinedTypes: {}
+                };
+            }
+        }
 
-        // First try to convert as primitive schema
+        // Try to convert as primitive schema
         const primitiveConverter = new PrimitiveSchemaConverter({ schema: this.schema });
         const primitiveType = primitiveConverter.convert({ context, errorCollector });
         if (primitiveType != null) {
@@ -49,7 +69,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                 typeDeclaration: this.createTypeDeclaration({
                     shape: Type.alias({
                         aliasOf: primitiveType,
-                        resolvedType: primitiveType as any,
+                        resolvedType: primitiveType as any
                     }),
                     context
                 }),
@@ -59,7 +79,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
 
         // Try to convert as array schema
         if (this.schema.type === "array") {
-            const arrayConverter = new ArraySchemaConverter({ 
+            const arrayConverter = new ArraySchemaConverter({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,
                 inlinedTypes: {}
@@ -70,7 +90,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                     typeDeclaration: this.createTypeDeclaration({
                         shape: Type.alias({
                             aliasOf: arrayType.typeReference,
-                            resolvedType: arrayType.typeReference as any,
+                            resolvedType: arrayType.typeReference as any
                         }),
                         context
                     }),
@@ -120,7 +140,13 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         return undefined;
     }
 
-    public createTypeDeclaration({ shape, context }: { shape: Type, context: OpenAPIConverterContext3_1 }): TypeDeclaration {
+    public createTypeDeclaration({
+        shape,
+        context
+    }: {
+        shape: Type;
+        context: OpenAPIConverterContext3_1;
+    }): TypeDeclaration {
         return {
             name: this.convertDeclaredTypeName({ context }),
             shape,
@@ -131,7 +157,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             docs: this.schema.description,
             referencedTypes: new Set(),
             source: undefined,
-            inline: this.inlined,
+            inline: this.inlined
         };
     }
 
@@ -141,7 +167,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             fernFilepath: {
                 allParts: [],
                 packagePath: [],
-                file: undefined,
+                file: undefined
             },
             name: context.casingsGenerator.generateName(this.id)
         };
