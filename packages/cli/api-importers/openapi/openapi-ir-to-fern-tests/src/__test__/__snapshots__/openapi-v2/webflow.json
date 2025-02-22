@@ -1,0 +1,19 @@
+{
+  "apiDisplayName": "Data API",
+  "apiDocs": "Webflow's Data API v2",
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "services": {},
+  "webhookGroups": {},
+  "errors": {},
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  }
+}

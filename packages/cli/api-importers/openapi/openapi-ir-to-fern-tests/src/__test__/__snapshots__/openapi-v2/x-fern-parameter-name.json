@@ -1,0 +1,18 @@
+{
+  "apiDisplayName": "Test extension `x-fern-parameter-name` for parameters.",
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "services": {},
+  "webhookGroups": {},
+  "errors": {},
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  }
+}

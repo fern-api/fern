@@ -8,7 +8,7 @@ import { camelCase } from "lodash-es";
 export declare namespace Spec {
     export interface Args<T> {
         spec: T;
-        settings: OpenAPISettings;
+        settings?: OpenAPISettings;
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
@@ -21,7 +21,7 @@ export declare namespace Spec {
  */
 export abstract class AbstractConverterContext<Spec extends object> {
     public readonly spec: Spec;
-    public readonly settings: OpenAPISettings;
+    public readonly settings?: OpenAPISettings;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
     public readonly smartCasing: boolean;

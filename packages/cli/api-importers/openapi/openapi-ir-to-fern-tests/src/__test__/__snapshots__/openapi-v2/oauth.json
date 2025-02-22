@@ -1,0 +1,19 @@
+{
+  "apiDisplayName": "OAuth Token API",
+  "apiDocs": "A simple API with an OAuth token endpoint accepting JSON input",
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "services": {},
+  "webhookGroups": {},
+  "errors": {},
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  }
+}

@@ -15,7 +15,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
 
     protected breadcrumbs: string[] = [];
     
-    constructor({ breadcrumbs = [] }: AbstractConverter.Args) {
+    constructor({ breadcrumbs = [] }: AbstractConverter.Args = {}) {
         this.breadcrumbs = breadcrumbs;
     }
 

@@ -8,6 +8,7 @@ export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "s
 
 export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3_1, BaseIntermediateRepresentation> {
 
+    
     public convert({
         context,
         errorCollector
@@ -79,7 +80,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         for (const [wpath, webhook] of Object.entries(context.spec.webhooks ?? {})) {
 
         }
-        
+
         return ir;
     }
 }

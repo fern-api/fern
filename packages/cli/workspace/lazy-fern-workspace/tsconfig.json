@@ -52,5 +52,8 @@
     {
       "path": "../commons"
     },
+    {
+      "path": "../../api-importers/openapi/openapi-v2-importer"
+    }
   ]
 }

@@ -7099,6 +7099,9 @@ importers:
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-v2-parser':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi/openapi-v2-importer
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils

@@ -1,0 +1,18 @@
+{
+  "apiDisplayName": "Test content-type parsing.",
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "services": {},
+  "webhookGroups": {},
+  "errors": {},
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  }
+}

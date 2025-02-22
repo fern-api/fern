@@ -1,0 +1,18 @@
+{
+  "apiDisplayName": "API with Default Values",
+  "headers": [],
+  "idempotencyHeaders": [],
+  "types": {},
+  "services": {},
+  "webhookGroups": {},
+  "errors": {},
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": []
+  }
+}

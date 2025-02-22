@@ -13,6 +13,7 @@ import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 
+import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -73,6 +74,33 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration
             }
         });
+    }
+
+    public async getIntermediateRepresentation({
+        context
+    }: {
+        context: TaskContext;
+    }): Promise<unknown> {
+        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        const documents = await this.loader.loadDocuments({
+            context,
+            specs: openApiSpecs
+        });
+        for (const document of documents) {
+            if (document.type === "openapi") {
+                const converter = new OpenAPI3_1Converter();
+                return converter.convert({ 
+                    context: new OpenAPIConverterContext3_1({ 
+                        generationLanguage: "typescript",
+                        logger: context.logger,
+                        smartCasing: false,
+                        spec: document.value as any,
+                    }), 
+                    errorCollector: new ErrorCollector(),
+                });
+            }
+        }
+        return {};
     }
 
     public async toFernWorkspace(
