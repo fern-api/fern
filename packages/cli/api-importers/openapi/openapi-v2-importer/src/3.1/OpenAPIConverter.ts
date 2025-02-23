@@ -6,6 +6,7 @@ import { ErrorCollector } from "../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { SchemaConverter } from "./schema/SchemaConverter";
+import { ServersConverter } from "./servers/ServersConverter";
 
 export type BaseIntermediateRepresentation = Omit<
     IntermediateRepresentation,  "apiName" | "constants"
@@ -79,8 +80,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         errorCollector: ErrorCollector;
     }): IntermediateRepresentation {
         // convert servers
-        for (const server of context.spec.servers ?? []) {
-        }
+        this.convertServers({ context, errorCollector });
 
         // convert security schemes
         for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
@@ -103,6 +103,23 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
         return toRet;
+    }
+
+    private convertServers({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): void {
+        const serversConverter = new ServersConverter({
+            breadcrumbs: ["servers"],
+            servers: context.spec.servers
+        });
+        const convertedServers = serversConverter.convert({ context, errorCollector });
+        if (convertedServers != null) {
+            this.ir.environments = convertedServers;
+        }
     }
 
     private convertSchemas({

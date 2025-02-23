@@ -17836,6 +17836,37 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "environments": {
+    "defaultEnvironment": "default",
+    "environments": {
+      "environments": [
+        {
+          "id": "default",
+          "name": {
+            "originalName": "Default",
+            "camelCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "snakeCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
+            },
+            "pascalCase": {
+              "unsafeName": "Default",
+              "safeName": "Default"
+            }
+          },
+          "url": "https://api.airtop.ai/v1"
+        }
+      ],
+      "type": "singleBaseUrl"
+    }
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
