@@ -20,9 +20,15 @@ types:
         type: literal<"1.0.0">
       types: map<commons.TypeId, types.NamedType>
       endpoints: map<commons.EndpointId, endpoints.Endpoint>
+      environments: optional<environment.EnvironmentsConfig>
       headers:
         docs: |
           The headers that are required on every request. These headers
           are typically included in the SDK's client constructor.
         type: optional<list<types.NamedParameter>>
-      environments: optional<environment.EnvironmentsConfig>
+      pathParameters:
+        docs: |
+          The path parameters that are required on every request. These
+          path parameters are typically included in the SDK's client
+          constructor.
+        type: optional<list<types.NamedParameter>>
