@@ -706,7 +706,8 @@ export class SdkGenerator {
         console.log("Generating websocket clients");
         for (const websocketClient of Object.values(this.getWebsocketClientsToGenerate())) {
             console.log(`Processing websocket client: ${JSON.stringify(websocketClient, null, 2)}`);
-            // what should the file path be?
+            // TODO: make the filepath equal:
+            // src/api/resources/realtime/resources/<channel_name>?/client/Client.ts
             const filepath = this.websocketDeclarationReferencer.getExportedFilepath(websocketClient.name);
             console.log("filepath:", filepath);
 
@@ -716,9 +717,17 @@ export class SdkGenerator {
             // THIS LOOKS RIGHT LFGGGGGGGG
             // Next is to make below code work, and generate the websocket client
 
+            // goal is to generate something like hume client.ts
+            // namespace, args, etc.
+
         
             this.withSourceFile({
-                filepath,
+                filepath: {
+                    directories: [],
+                    file: {
+                        nameOnDisk: "/resources/realtime/resources/channel_name/client/Client.ts",
+                    }
+                },
                 run: ({ sourceFile, importsManager }) => {
                     console.log("Generating websocket client context");
 
