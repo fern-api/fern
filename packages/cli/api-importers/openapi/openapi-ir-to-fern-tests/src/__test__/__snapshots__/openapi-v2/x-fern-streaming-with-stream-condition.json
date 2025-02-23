@@ -1,7 +1,8 @@
 {
-  "apiDisplayName": "Vectara REST API v2",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "ChatRequestQuery": {
       "name": {
@@ -917,15 +918,87 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "service": "",
+    "types": [
+      "ChatRequest",
+      "ChatFullResponse",
+      "ChatStreamedResponse"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {},
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

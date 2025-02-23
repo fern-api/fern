@@ -1,8 +1,8 @@
 {
-  "apiDisplayName": "Hume AI Batch API",
-  "apiDocs": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "schemaId": {
       "name": {
@@ -17638,6 +17638,533 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "List Jobs",
+          "method": "GET",
+          "name": {
+            "originalName": "List Jobs",
+            "camelCase": {
+              "unsafeName": "listJobs",
+              "safeName": "listJobs"
+            },
+            "snakeCase": {
+              "unsafeName": "list_jobs",
+              "safeName": "list_jobs"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_JOBS",
+              "safeName": "LIST_JOBS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListJobs",
+              "safeName": "ListJobs"
+            }
+          },
+          "path": {
+            "head": "/v0/batch/jobs",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of jobs to include in the response.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "typeId": "limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                },
+                "wireValue": "status"
+              },
+              "docs": "Include only jobs with these statuses.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                },
+                "typeId": "status",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "when",
+                  "camelCase": {
+                    "unsafeName": "when",
+                    "safeName": "when"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "when",
+                    "safeName": "when"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WHEN",
+                    "safeName": "WHEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "When",
+                    "safeName": "When"
+                  }
+                },
+                "wireValue": "when"
+              },
+              "docs": "Include only jobs that were created before or after `timestamp_ms`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "timestamp_ms",
+                  "camelCase": {
+                    "unsafeName": "timestampMs",
+                    "safeName": "timestampMs"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "timestamp_ms",
+                    "safeName": "timestamp_ms"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TIMESTAMP_MS",
+                    "safeName": "TIMESTAMP_MS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TimestampMs",
+                    "safeName": "TimestampMs"
+                  }
+                },
+                "wireValue": "timestamp_ms"
+              },
+              "docs": "Defaults to the current date and time. See `when`.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "timestamp_ms",
+                  "camelCase": {
+                    "unsafeName": "timestampMs",
+                    "safeName": "timestampMs"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "timestamp_ms",
+                    "safeName": "timestamp_ms"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TIMESTAMP_MS",
+                    "safeName": "TIMESTAMP_MS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TimestampMs",
+                    "safeName": "TimestampMs"
+                  }
+                },
+                "typeId": "timestamp_ms",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "sort_by",
+                  "camelCase": {
+                    "unsafeName": "sortBy",
+                    "safeName": "sortBy"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sort_by",
+                    "safeName": "sort_by"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SORT_BY",
+                    "safeName": "SORT_BY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SortBy",
+                    "safeName": "SortBy"
+                  }
+                },
+                "wireValue": "sort_by"
+              },
+              "docs": "The job timestamp to sort by.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "direction",
+                  "camelCase": {
+                    "unsafeName": "direction",
+                    "safeName": "direction"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "direction",
+                    "safeName": "direction"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DIRECTION",
+                    "safeName": "DIRECTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Direction",
+                    "safeName": "Direction"
+                  }
+                },
+                "wireValue": "direction"
+              },
+              "docs": "The sort direction.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": true
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "paths_/v0/batch/jobs_get_responses_200_schema",
+                    "camelCase": {
+                      "unsafeName": "pathsV0BatchJobsGetResponses200Schema",
+                      "safeName": "pathsV0BatchJobsGetResponses200Schema"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "paths_v_0_batch_jobs_get_responses_200_schema",
+                      "safeName": "paths_v_0_batch_jobs_get_responses_200_schema"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PATHS_V_0_BATCH_JOBS_GET_RESPONSES_200_SCHEMA",
+                      "safeName": "PATHS_V_0_BATCH_JOBS_GET_RESPONSES_200_SCHEMA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PathsV0BatchJobsGetResponses200Schema",
+                      "safeName": "PathsV0BatchJobsGetResponses200Schema"
+                    }
+                  },
+                  "typeId": "paths_/v0/batch/jobs_get_responses_200_schema",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Sort and filter jobs.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v0/batch/jobs",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Start Job",
+          "method": "POST",
+          "name": {
+            "originalName": "Start Job",
+            "camelCase": {
+              "unsafeName": "startJob",
+              "safeName": "startJob"
+            },
+            "snakeCase": {
+              "unsafeName": "start_job",
+              "safeName": "start_job"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "START_JOB",
+              "safeName": "START_JOB"
+            },
+            "pascalCase": {
+              "unsafeName": "StartJob",
+              "safeName": "StartJob"
+            }
+          },
+          "path": {
+            "head": "/v0/batch/jobs",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "requestBody": {
+            "contentType": "multipart/form-data",
+            "name": {
+              "originalName": "Start Job_Request",
+              "camelCase": {
+                "unsafeName": "startJobRequest",
+                "safeName": "startJobRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "start_job_request",
+                "safeName": "start_job_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "START_JOB_REQUEST",
+                "safeName": "START_JOB_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "StartJobRequest",
+                "safeName": "StartJobRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "file",
+                    "camelCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE",
+                      "safeName": "FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "File",
+                      "safeName": "File_"
+                    }
+                  },
+                  "wireValue": "file"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V0BatchJobsPostRequestBodySchemaFile",
+                    "camelCase": {
+                      "unsafeName": "v0BatchJobsPostRequestBodySchemaFile",
+                      "safeName": "v0BatchJobsPostRequestBodySchemaFile"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_0_batch_jobs_post_request_body_schema_file",
+                      "safeName": "v_0_batch_jobs_post_request_body_schema_file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_0_BATCH_JOBS_POST_REQUEST_BODY_SCHEMA_FILE",
+                      "safeName": "V_0_BATCH_JOBS_POST_REQUEST_BODY_SCHEMA_FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V0BatchJobsPostRequestBodySchemaFile",
+                      "safeName": "V0BatchJobsPostRequestBodySchemaFile"
+                    }
+                  },
+                  "typeId": "V0BatchJobsPostRequestBodySchemaFile",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)."
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "JobId",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Start a new batch job.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v0/batch/jobs",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "displayName": "Get Job Predictions",
           "method": "GET",
           "name": {
@@ -17885,6 +18412,160 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "Get Job Artifacts",
+          "method": "GET",
+          "name": {
+            "originalName": "get_job_artifacts",
+            "camelCase": {
+              "unsafeName": "getJobArtifacts",
+              "safeName": "getJobArtifacts"
+            },
+            "snakeCase": {
+              "unsafeName": "get_job_artifacts",
+              "safeName": "get_job_artifacts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_JOB_ARTIFACTS",
+              "safeName": "GET_JOB_ARTIFACTS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetJobArtifacts",
+              "safeName": "GetJobArtifacts"
+            }
+          },
+          "path": {
+            "head": "/v0/batch/jobs/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/artifacts"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": true,
+          "docs": "Get the artifacts ZIP of a completed job.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v0/batch/jobs/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/artifacts"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
           "displayName": "Get Job Details",
           "method": "GET",
           "name": {
@@ -18078,15 +18759,188 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "service": "",
+    "types": [
+      "BaseRequest",
+      "Bcp47Tag",
+      "BoundingBox",
+      "BurstPrediction",
+      "Completed",
+      "DescriptionsScore",
+      "Direction",
+      "EmotionScore",
+      "Error",
+      "Face",
+      "FacePrediction",
+      "FacemeshPrediction",
+      "FacsScore",
+      "Failed",
+      "File",
+      "Granularity",
+      "GroupedPredictions_BurstPrediction",
+      "GroupedPredictions_FacePrediction",
+      "GroupedPredictions_FacemeshPrediction",
+      "GroupedPredictions_LanguagePrediction",
+      "GroupedPredictions_NerPrediction",
+      "GroupedPredictions_ProsodyPrediction",
+      "InProgress",
+      "Job_Request",
+      "JobId",
+      "Language",
+      "LanguagePrediction",
+      "Ner",
+      "NerPrediction",
+      "PositionInterval",
+      "Prediction",
+      "Predictions_optional_Null_BurstPrediction",
+      "Predictions_optional_Null_FacePrediction",
+      "Predictions_optional_Null_FacemeshPrediction",
+      "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
+      "Predictions_optional_TranscriptionMetadata_NerPrediction",
+      "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
+      "Prosody",
+      "ProsodyPrediction",
+      "Queued",
+      "Request",
+      "Results",
+      "SentimentScore",
+      "SortBy",
+      "Source",
+      "SourceResult",
+      "State",
+      "Status",
+      "TimeInterval",
+      "ToxicityScore",
+      "TranscriptionMetadata",
+      "Url",
+      "When",
+      "Window"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {
+    "": {
+      "name": {
+        "originalName": "Get Job Predictions",
+        "camelCase": {
+          "unsafeName": "getJobPredictions",
+          "safeName": "getJobPredictions"
+        },
+        "snakeCase": {
+          "unsafeName": "get_job_predictions",
+          "safeName": "get_job_predictions"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "GET_JOB_PREDICTIONS",
+          "safeName": "GET_JOB_PREDICTIONS"
+        },
+        "pascalCase": {
+          "unsafeName": "GetJobPredictions",
+          "safeName": "GetJobPredictions"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "Get Job Predictions",
+          "camelCase": {
+            "unsafeName": "getJobPredictions",
+            "safeName": "getJobPredictions"
+          },
+          "snakeCase": {
+            "unsafeName": "get_job_predictions",
+            "safeName": "get_job_predictions"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_JOB_PREDICTIONS",
+            "safeName": "GET_JOB_PREDICTIONS"
+          },
+          "pascalCase": {
+            "unsafeName": "GetJobPredictions",
+            "safeName": "GetJobPredictions"
+          }
+        }
+      },
+      "service": "Get Job Predictions",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

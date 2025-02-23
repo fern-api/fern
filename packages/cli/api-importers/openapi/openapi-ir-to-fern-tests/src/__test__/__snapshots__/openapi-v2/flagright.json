@@ -1,8 +1,8 @@
 {
-  "apiDisplayName": "Flagright API",
-  "apiDocs": "",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "AddressAddressLines": {
       "name": {
@@ -53450,6 +53450,983 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "Verify a Transaction",
+          "method": "POST",
+          "name": {
+            "originalName": "post-consumer-transaction",
+            "camelCase": {
+              "unsafeName": "postConsumerTransaction",
+              "safeName": "postConsumerTransaction"
+            },
+            "snakeCase": {
+              "unsafeName": "post_consumer_transaction",
+              "safeName": "post_consumer_transaction"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_CONSUMER_TRANSACTION",
+              "safeName": "POST_CONSUMER_TRANSACTION"
+            },
+            "pascalCase": {
+              "unsafeName": "PostConsumerTransaction",
+              "safeName": "PostConsumerTransaction"
+            }
+          },
+          "path": {
+            "head": "/transactions",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "validateOriginUserId",
+                  "camelCase": {
+                    "unsafeName": "validateOriginUserId",
+                    "safeName": "validateOriginUserId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "validate_origin_user_id",
+                    "safeName": "validate_origin_user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALIDATE_ORIGIN_USER_ID",
+                    "safeName": "VALIDATE_ORIGIN_USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValidateOriginUserId",
+                    "safeName": "ValidateOriginUserId"
+                  }
+                },
+                "wireValue": "validateOriginUserId"
+              },
+              "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "validateOriginUserId",
+                  "camelCase": {
+                    "unsafeName": "validateOriginUserId",
+                    "safeName": "validateOriginUserId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "validate_origin_user_id",
+                    "safeName": "validate_origin_user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALIDATE_ORIGIN_USER_ID",
+                    "safeName": "VALIDATE_ORIGIN_USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValidateOriginUserId",
+                    "safeName": "ValidateOriginUserId"
+                  }
+                },
+                "typeId": "validateOriginUserId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "validateDestinationUserId",
+                  "camelCase": {
+                    "unsafeName": "validateDestinationUserId",
+                    "safeName": "validateDestinationUserId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "validate_destination_user_id",
+                    "safeName": "validate_destination_user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALIDATE_DESTINATION_USER_ID",
+                    "safeName": "VALIDATE_DESTINATION_USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValidateDestinationUserId",
+                    "safeName": "ValidateDestinationUserId"
+                  }
+                },
+                "wireValue": "validateDestinationUserId"
+              },
+              "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "validateDestinationUserId",
+                  "camelCase": {
+                    "unsafeName": "validateDestinationUserId",
+                    "safeName": "validateDestinationUserId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "validate_destination_user_id",
+                    "safeName": "validate_destination_user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALIDATE_DESTINATION_USER_ID",
+                    "safeName": "VALIDATE_DESTINATION_USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValidateDestinationUserId",
+                    "safeName": "ValidateDestinationUserId"
+                  }
+                },
+                "typeId": "validateDestinationUserId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "errors": [],
+          "auth": true,
+          "docs": "## POST Transactions\n\n`/transactions` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)\n\nIn order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. \n\n\n### Payload\n\nHere are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):\n\n* `type`: Type of transaction (Ex: `WITHDRAWAL`, `DEPOSIT`, `TRANSFER` etc). \n* `transactionId` - Unique Identifier for the transaction. Flagright API will generate a `transactionId` if this field is left empty\n* `timestamp` - UNIX timestamp in *milliseconds* of when the transaction took place\n* `transactionState` - The state of the transaction, set to `CREATED` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)\n* `originUserId` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `destinationUserId` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `originAmountDetails` - Details of the amount being sent from the origin\n* `destinationAmountDetails` - Details of the amount being received at the destination\n* `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.\n* `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/transactions",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Retrieve a Transaction",
+          "method": "GET",
+          "name": {
+            "originalName": "get-consumer-transaction",
+            "camelCase": {
+              "unsafeName": "getConsumerTransaction",
+              "safeName": "getConsumerTransaction"
+            },
+            "snakeCase": {
+              "unsafeName": "get_consumer_transaction",
+              "safeName": "get_consumer_transaction"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_CONSUMER_TRANSACTION",
+              "safeName": "GET_CONSUMER_TRANSACTION"
+            },
+            "pascalCase": {
+              "unsafeName": "GetConsumerTransaction",
+              "safeName": "GetConsumerTransaction"
+            }
+          },
+          "path": {
+            "head": "/transactions/",
+            "parts": [
+              {
+                "pathParameter": "transactionId",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transactionId",
+                "camelCase": {
+                  "unsafeName": "transactionId",
+                  "safeName": "transactionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transaction_id",
+                  "safeName": "transaction_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSACTION_ID",
+                  "safeName": "TRANSACTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TransactionId",
+                  "safeName": "TransactionId"
+                }
+              },
+              "docs": "Unique Transaction Identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transactionId",
+                  "camelCase": {
+                    "unsafeName": "transactionId",
+                    "safeName": "transactionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transaction_id",
+                    "safeName": "transaction_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSACTION_ID",
+                    "safeName": "TRANSACTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TransactionId",
+                    "safeName": "TransactionId"
+                  }
+                },
+                "typeId": "transactionId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "TransactionWithRulesResult",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "### GET Transactions\n\n`/transactions` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).\n\nCalling `GET /transactions/{transactionId}` will return the entire transaction payload and rule execution results for the transaction with the corresponding `transactionId`",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/transactions/",
+            "parts": [
+              {
+                "pathParameter": "transactionId",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transactionId",
+                "camelCase": {
+                  "unsafeName": "transactionId",
+                  "safeName": "transactionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transaction_id",
+                  "safeName": "transaction_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSACTION_ID",
+                  "safeName": "TRANSACTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TransactionId",
+                  "safeName": "TransactionId"
+                }
+              },
+              "docs": "Unique Transaction Identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transactionId",
+                  "camelCase": {
+                    "unsafeName": "transactionId",
+                    "safeName": "transactionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transaction_id",
+                    "safeName": "transaction_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSACTION_ID",
+                    "safeName": "TRANSACTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TransactionId",
+                    "safeName": "TransactionId"
+                  }
+                },
+                "typeId": "transactionId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Create a Transaction Event",
+          "method": "POST",
+          "name": {
+            "originalName": "post-transaction-event",
+            "camelCase": {
+              "unsafeName": "postTransactionEvent",
+              "safeName": "postTransactionEvent"
+            },
+            "snakeCase": {
+              "unsafeName": "post_transaction_event",
+              "safeName": "post_transaction_event"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_TRANSACTION_EVENT",
+              "safeName": "POST_TRANSACTION_EVENT"
+            },
+            "pascalCase": {
+              "unsafeName": "PostTransactionEvent",
+              "safeName": "PostTransactionEvent"
+            }
+          },
+          "path": {
+            "head": "/events/transaction",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "TransactionEventMonitoringResult",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Created",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "## POST Transaction Events\n\n`/events/transaction` endpoint allows you to operate on the [Transaction Events entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-event)\n\nTransaction events are created after the initial `POST /transactions` call (which creates a transaction) and are used to:\n\n* Update the STATE of the transaction, using the `transactionState` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)\n* Update the transaction details, using the `updatedTransactionAttributes` field.\n\n> If you have neither of the above two use cases, you do not need to use transaction events. \n\n### Payload\n\nEach transaction event needs three mandatory fields:\n\n* `transactionState` - STATE of the transaction -> value is set to `CREATED` after `POST /transactions` call\n* `timestamp`- the timestamp of when the event was created or occured in your system\n* `transactionId` - The ID of the transaction for which this event is generated. \n\nIn order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.\n",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/events/transaction",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Create a Consumer User",
+          "method": "POST",
+          "name": {
+            "originalName": "post-consumer-user",
+            "camelCase": {
+              "unsafeName": "postConsumerUser",
+              "safeName": "postConsumerUser"
+            },
+            "snakeCase": {
+              "unsafeName": "post_consumer_user",
+              "safeName": "post_consumer_user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_CONSUMER_USER",
+              "safeName": "POST_CONSUMER_USER"
+            },
+            "pascalCase": {
+              "unsafeName": "PostConsumerUser",
+              "safeName": "PostConsumerUser"
+            }
+          },
+          "path": {
+            "head": "/consumer/users",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": true,
+          "docs": "## POST Consumer User\n\n`/consumer/user` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\nEach consumer User entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system\n",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/consumer/users",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Retrieve a Consumer User",
+          "method": "GET",
+          "name": {
+            "originalName": "get-consumer-user",
+            "camelCase": {
+              "unsafeName": "getConsumerUser",
+              "safeName": "getConsumerUser"
+            },
+            "snakeCase": {
+              "unsafeName": "get_consumer_user",
+              "safeName": "get_consumer_user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_CONSUMER_USER",
+              "safeName": "GET_CONSUMER_USER"
+            },
+            "pascalCase": {
+              "unsafeName": "GetConsumerUser",
+              "safeName": "GetConsumerUser"
+            }
+          },
+          "path": {
+            "head": "/consumer/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "docs": "",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "User",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "### GET Consumer User\n\n`/consumer/user` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).\n\nCalling `GET /consumer/user/{userId}` will return the entire user payload and rule execution results for the user with the corresponding `userId`",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/consumer/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "docs": "",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Create a Business User",
+          "method": "POST",
+          "name": {
+            "originalName": "post-business-user",
+            "camelCase": {
+              "unsafeName": "postBusinessUser",
+              "safeName": "postBusinessUser"
+            },
+            "snakeCase": {
+              "unsafeName": "post_business_user",
+              "safeName": "post_business_user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_BUSINESS_USER",
+              "safeName": "POST_BUSINESS_USER"
+            },
+            "pascalCase": {
+              "unsafeName": "PostBusinessUser",
+              "safeName": "PostBusinessUser"
+            }
+          },
+          "path": {
+            "head": "/business/users",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": true,
+          "docs": "## POST Business User\n\n`/business/user` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\n\nEach consumer Business entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/business/users",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Retrieve a Business User",
+          "method": "GET",
+          "name": {
+            "originalName": "get-business-user-userId",
+            "camelCase": {
+              "unsafeName": "getBusinessUserUserId",
+              "safeName": "getBusinessUserUserId"
+            },
+            "snakeCase": {
+              "unsafeName": "get_business_user_user_id",
+              "safeName": "get_business_user_user_id"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_BUSINESS_USER_USER_ID",
+              "safeName": "GET_BUSINESS_USER_USER_ID"
+            },
+            "pascalCase": {
+              "unsafeName": "GetBusinessUserUserId",
+              "safeName": "GetBusinessUserUserId"
+            }
+          },
+          "path": {
+            "head": "/business/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "docs": "",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Business",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "### GET Business User\n\n`/business/user` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).\n\nCalling `GET /business/user/{userId}` will return the entire User payload and rule execution results for the User with the corresponding `userId`",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/business/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "docs": "",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Create a Consumer User Event",
+          "method": "POST",
+          "name": {
+            "originalName": "post-user-event",
+            "camelCase": {
+              "unsafeName": "postUserEvent",
+              "safeName": "postUserEvent"
+            },
+            "snakeCase": {
+              "unsafeName": "post_user_event",
+              "safeName": "post_user_event"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_USER_EVENT",
+              "safeName": "POST_USER_EVENT"
+            },
+            "pascalCase": {
+              "unsafeName": "PostUserEvent",
+              "safeName": "PostUserEvent"
+            }
+          },
+          "path": {
+            "head": "/events/consumer/user",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "UserWithRulesResult",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Created",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "## POST Consumer User Events\n\n`/events/consumer/user` endpoint allows you to operate on the Consumer User Events entity.\n\nUser events are created after the initial `POST /consumer/users` call (which creates a user) and are used to:\n\n* Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field\n* Update the user details, using the `updatedConsumerUserAttributes` field.\n\n> If you have neither of the above two use cases, you do not need to use user events. \n\n### Payload\n\nEach user event needs three mandatory fields:\n\n* `timestamp`- the timestamp of when the event was created or occured in your system\n* `userId` - The ID of the transaction for which this event is generated. \n\nIn order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.\n",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/events/consumer/user",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "displayName": "Create a Business User Event",
           "method": "POST",
           "name": {
@@ -53531,15 +54508,176 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "service": "",
+    "types": [
+      "Address",
+      "UserBase",
+      "UserOptional",
+      "Person",
+      "LegalDocument",
+      "Tag",
+      "TransactionUpdatable",
+      "TransactionBase",
+      "DeviceData",
+      "RulesResults",
+      "ExecutedRulesResult",
+      "HitRulesDetails",
+      "FailedRulesResult",
+      "RuleFailureException",
+      "RiskScoringResult",
+      "ConsumerName",
+      "TransactionAmountDetails",
+      "Amount",
+      "LegalEntity",
+      "ContactDetails",
+      "CompanyFinancialDetails",
+      "UserDetails",
+      "UserRegistrationStatus",
+      "CompanyGeneralDetails",
+      "CompanyRegistrationDetails",
+      "BusinessBase",
+      "BusinessOptional",
+      "BusinessUsersResponse",
+      "ConsumerUsersResponse",
+      "CardDetails",
+      "IBANDetails",
+      "WalletDetails",
+      "ACHDetails",
+      "SWIFTDetails",
+      "MpesaDetails",
+      "GenericBankAccountDetails",
+      "UPIDetails",
+      "TransactionLimits",
+      "RuleAction",
+      "RuleHitMeta",
+      "RuleHitDirection",
+      "RuleNature",
+      "RuleLabels",
+      "TransactionEvent",
+      "ConsumerUserEvent",
+      "BusinessUserEvent",
+      "CaseManagementEvent",
+      "Date",
+      "TransactionState",
+      "AcquisitionChannel",
+      "UPIPaymentMethod",
+      "IBANPaymentMethod",
+      "CardPaymentMethod",
+      "WalletPaymentMethod",
+      "ACHPaymentMethod",
+      "SWIFTPaymentMethod",
+      "CheckPaymentMethod",
+      "MpesaPaymentMethod",
+      "GeneralBankAccountPaymentMethod",
+      "UserState",
+      "KYCStatus",
+      "PEPStatus",
+      "KYCStatusDetails",
+      "UserStateDetails",
+      "CaseClosedDetails",
+      "AlertClosedDetails",
+      "RiskLevel",
+      "CardExpiry",
+      "TransactionType",
+      "WebhookEvent",
+      "WebhookEventType",
+      "ListType",
+      "ListSubtype",
+      "ListData",
+      "ListItem",
+      "ListMetadata",
+      "ListExisted",
+      "ListHeader",
+      "PaymentMethod",
+      "CardMerchantDetails",
+      "CheckDetails",
+      "CountryCode",
+      "CurrencyCode",
+      "MCCDetails",
+      "TransactionCountLimit",
+      "TransactionAmountLimit",
+      "TransactionLimit",
+      "FalsePositiveDetails",
+      "SanctionsDetails",
+      "SanctionsDetailsEntityType",
+      "BusinessEntityLink",
+      "Thing"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {},
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

@@ -1,8 +1,8 @@
 {
-  "apiDisplayName": "AssemblyAI API",
-  "apiDocs": "AssemblyAI API",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "RedactedAudioResponseRedactedAudioUrl": {
       "name": {
@@ -22675,6 +22675,1837 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "List transcripts",
+          "method": "GET",
+          "name": {
+            "originalName": "list",
+            "camelCase": {
+              "unsafeName": "list",
+              "safeName": "list"
+            },
+            "snakeCase": {
+              "unsafeName": "list",
+              "safeName": "list"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST",
+              "safeName": "LIST"
+            },
+            "pascalCase": {
+              "unsafeName": "List",
+              "safeName": "List"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "Maximum amount of transcripts to retrieve",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                },
+                "wireValue": "status"
+              },
+              "docs": "Filter by transcript status",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/status",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "created_on",
+                  "camelCase": {
+                    "unsafeName": "createdOn",
+                    "safeName": "createdOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "created_on",
+                    "safeName": "created_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATED_ON",
+                    "safeName": "CREATED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreatedOn",
+                    "safeName": "CreatedOn"
+                  }
+                },
+                "wireValue": "created_on"
+              },
+              "docs": "Only get transcripts created on this date",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/created_on",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "before_id",
+                  "camelCase": {
+                    "unsafeName": "beforeId",
+                    "safeName": "beforeId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "before_id",
+                    "safeName": "before_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BEFORE_ID",
+                    "safeName": "BEFORE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BeforeId",
+                    "safeName": "BeforeId"
+                  }
+                },
+                "wireValue": "before_id"
+              },
+              "docs": "Get transcripts that were created before this transcript ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/before_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "after_id",
+                  "camelCase": {
+                    "unsafeName": "afterId",
+                    "safeName": "afterId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "after_id",
+                    "safeName": "after_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AFTER_ID",
+                    "safeName": "AFTER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AfterId",
+                    "safeName": "AfterId"
+                  }
+                },
+                "wireValue": "after_id"
+              },
+              "docs": "Get transcripts that were created after this transcript ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/after_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "throttled_only",
+                  "camelCase": {
+                    "unsafeName": "throttledOnly",
+                    "safeName": "throttledOnly"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "throttled_only",
+                    "safeName": "throttled_only"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "THROTTLED_ONLY",
+                    "safeName": "THROTTLED_ONLY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ThrottledOnly",
+                    "safeName": "ThrottledOnly"
+                  }
+                },
+                "wireValue": "throttled_only"
+              },
+              "docs": "Only get throttled transcripts, overrides the status filter",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "TranscriptListParameters/properties/throttled_only",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "TranscriptList",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A list of transcripts filtered by `limit` and `status`",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Retrieve a list of transcripts you have created.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Create a transcript from an audio file",
+          "method": "POST",
+          "name": {
+            "originalName": "create",
+            "camelCase": {
+              "unsafeName": "create",
+              "safeName": "create"
+            },
+            "snakeCase": {
+              "unsafeName": "create",
+              "safeName": "create"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE",
+              "safeName": "CREATE"
+            },
+            "pascalCase": {
+              "unsafeName": "Create",
+              "safeName": "Create"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Transcript",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Transcript created and queued for processing.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Create a transcript from an audio or video file that is accessible via a URL.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Get the transcript",
+          "method": "GET",
+          "name": {
+            "originalName": "get",
+            "camelCase": {
+              "unsafeName": "get",
+              "safeName": "get_"
+            },
+            "snakeCase": {
+              "unsafeName": "get",
+              "safeName": "get_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET",
+              "safeName": "GET"
+            },
+            "pascalCase": {
+              "unsafeName": "Get",
+              "safeName": "Get"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Transcript",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The transcript resource",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Get the transcript resource. The transcript is ready when the \"status\" is \"completed\".",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Delete the transcript",
+          "method": "DELETE",
+          "name": {
+            "originalName": "delete",
+            "camelCase": {
+              "unsafeName": "delete",
+              "safeName": "delete_"
+            },
+            "snakeCase": {
+              "unsafeName": "delete",
+              "safeName": "delete_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DELETE",
+              "safeName": "DELETE"
+            },
+            "pascalCase": {
+              "unsafeName": "Delete",
+              "safeName": "Delete"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Transcript",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The deleted transcript response.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Delete the transcript",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Export transcript as SRT or VTT captions.",
+          "method": "GET",
+          "name": {
+            "originalName": "getSubtitles",
+            "camelCase": {
+              "unsafeName": "getSubtitles",
+              "safeName": "getSubtitles"
+            },
+            "snakeCase": {
+              "unsafeName": "get_subtitles",
+              "safeName": "get_subtitles"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_SUBTITLES",
+              "safeName": "GET_SUBTITLES"
+            },
+            "pascalCase": {
+              "unsafeName": "GetSubtitles",
+              "safeName": "GetSubtitles"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/"
+              },
+              {
+                "pathParameter": "subtitle_format",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "subtitle_format",
+                "camelCase": {
+                  "unsafeName": "subtitleFormat",
+                  "safeName": "subtitleFormat"
+                },
+                "snakeCase": {
+                  "unsafeName": "subtitle_format",
+                  "safeName": "subtitle_format"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SUBTITLE_FORMAT",
+                  "safeName": "SUBTITLE_FORMAT"
+                },
+                "pascalCase": {
+                  "unsafeName": "SubtitleFormat",
+                  "safeName": "SubtitleFormat"
+                }
+              },
+              "docs": "The format of the captions.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "SubtitleFormat",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "chars_per_caption",
+                  "camelCase": {
+                    "unsafeName": "charsPerCaption",
+                    "safeName": "charsPerCaption"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "chars_per_caption",
+                    "safeName": "chars_per_caption"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHARS_PER_CAPTION",
+                    "safeName": "CHARS_PER_CAPTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CharsPerCaption",
+                    "safeName": "CharsPerCaption"
+                  }
+                },
+                "wireValue": "chars_per_caption"
+              },
+              "docs": "The maximum number of characters per caption",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "chars_per_caption",
+                  "camelCase": {
+                    "unsafeName": "charsPerCaption",
+                    "safeName": "charsPerCaption"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "chars_per_caption",
+                    "safeName": "chars_per_caption"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHARS_PER_CAPTION",
+                    "safeName": "CHARS_PER_CAPTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CharsPerCaption",
+                    "safeName": "CharsPerCaption"
+                  }
+                },
+                "typeId": "chars_per_caption",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "errors": [],
+          "auth": true,
+          "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/"
+              },
+              {
+                "pathParameter": "subtitle_format",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "subtitle_format",
+                "camelCase": {
+                  "unsafeName": "subtitleFormat",
+                  "safeName": "subtitleFormat"
+                },
+                "snakeCase": {
+                  "unsafeName": "subtitle_format",
+                  "safeName": "subtitle_format"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SUBTITLE_FORMAT",
+                  "safeName": "SUBTITLE_FORMAT"
+                },
+                "pascalCase": {
+                  "unsafeName": "SubtitleFormat",
+                  "safeName": "SubtitleFormat"
+                }
+              },
+              "docs": "The format of the captions.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "SubtitleFormat",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Get the transcript split by sentences",
+          "method": "GET",
+          "name": {
+            "originalName": "getSentences",
+            "camelCase": {
+              "unsafeName": "getSentences",
+              "safeName": "getSentences"
+            },
+            "snakeCase": {
+              "unsafeName": "get_sentences",
+              "safeName": "get_sentences"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_SENTENCES",
+              "safeName": "GET_SENTENCES"
+            },
+            "pascalCase": {
+              "unsafeName": "GetSentences",
+              "safeName": "GetSentences"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/sentences"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "SentencesResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Exported sentences",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/sentences"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Get the transcript split by paragraphs",
+          "method": "GET",
+          "name": {
+            "originalName": "getParagraphs",
+            "camelCase": {
+              "unsafeName": "getParagraphs",
+              "safeName": "getParagraphs"
+            },
+            "snakeCase": {
+              "unsafeName": "get_paragraphs",
+              "safeName": "get_paragraphs"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_PARAGRAPHS",
+              "safeName": "GET_PARAGRAPHS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetParagraphs",
+              "safeName": "GetParagraphs"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/paragraphs"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ParagraphsResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Exported paragraphs",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/paragraphs"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Search the given transcript for words, numbers, or phrases",
+          "method": "GET",
+          "name": {
+            "originalName": "wordSearch",
+            "camelCase": {
+              "unsafeName": "wordSearch",
+              "safeName": "wordSearch"
+            },
+            "snakeCase": {
+              "unsafeName": "word_search",
+              "safeName": "word_search"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WORD_SEARCH",
+              "safeName": "WORD_SEARCH"
+            },
+            "pascalCase": {
+              "unsafeName": "WordSearch",
+              "safeName": "WordSearch"
+            }
+          },
+          "path": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/word-search"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "words",
+                  "camelCase": {
+                    "unsafeName": "words",
+                    "safeName": "words"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "words",
+                    "safeName": "words"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WORDS",
+                    "safeName": "WORDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Words",
+                    "safeName": "Words"
+                  }
+                },
+                "wireValue": "words"
+              },
+              "docs": "Keywords to search for",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "words",
+                  "camelCase": {
+                    "unsafeName": "words",
+                    "safeName": "words"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "words",
+                    "safeName": "words"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WORDS",
+                    "safeName": "WORDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Words",
+                    "safeName": "Words"
+                  }
+                },
+                "typeId": "words",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "WordSearchResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Word search response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v2/transcript/",
+            "parts": [
+              {
+                "pathParameter": "transcript_id",
+                "tail": "/word-search"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
           "displayName": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
           "method": "GET",
           "name": {
@@ -23059,6 +24890,326 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "Generate a custom summary from one or more transcripts.",
+          "method": "POST",
+          "name": {
+            "originalName": "summary",
+            "camelCase": {
+              "unsafeName": "summary",
+              "safeName": "summary"
+            },
+            "snakeCase": {
+              "unsafeName": "summary",
+              "safeName": "summary"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SUMMARY",
+              "safeName": "SUMMARY"
+            },
+            "pascalCase": {
+              "unsafeName": "Summary",
+              "safeName": "Summary"
+            }
+          },
+          "path": {
+            "head": "/lemur/v3/generate/summary",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "LemurSummaryResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "LeMUR summary response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/lemur/v3/generate/summary",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Create answers to one or more questions about one or more transcripts.",
+          "method": "POST",
+          "name": {
+            "originalName": "questionAnswer",
+            "camelCase": {
+              "unsafeName": "questionAnswer",
+              "safeName": "questionAnswer"
+            },
+            "snakeCase": {
+              "unsafeName": "question_answer",
+              "safeName": "question_answer"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "QUESTION_ANSWER",
+              "safeName": "QUESTION_ANSWER"
+            },
+            "pascalCase": {
+              "unsafeName": "QuestionAnswer",
+              "safeName": "QuestionAnswer"
+            }
+          },
+          "path": {
+            "head": "/lemur/v3/generate/question-answer",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "LemurQuestionAnswerResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "LeMUR question & answer response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/lemur/v3/generate/question-answer",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Extract action items from one or more meeting transcripts.",
+          "method": "POST",
+          "name": {
+            "originalName": "actionItems",
+            "camelCase": {
+              "unsafeName": "actionItems",
+              "safeName": "actionItems"
+            },
+            "snakeCase": {
+              "unsafeName": "action_items",
+              "safeName": "action_items"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ACTION_ITEMS",
+              "safeName": "ACTION_ITEMS"
+            },
+            "pascalCase": {
+              "unsafeName": "ActionItems",
+              "safeName": "ActionItems"
+            }
+          },
+          "path": {
+            "head": "/lemur/v3/generate/action-items",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "LemurActionItemsResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "LeMUR action items response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Use LeMUR to generate a list of Action Items from a transcript",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/lemur/v3/generate/action-items",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
+          "method": "POST",
+          "name": {
+            "originalName": "task",
+            "camelCase": {
+              "unsafeName": "task",
+              "safeName": "task"
+            },
+            "snakeCase": {
+              "unsafeName": "task",
+              "safeName": "task"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TASK",
+              "safeName": "TASK"
+            },
+            "pascalCase": {
+              "unsafeName": "Task",
+              "safeName": "Task"
+            }
+          },
+          "path": {
+            "head": "/lemur/v3/generate/task",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "LemurTaskResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "LeMUR task response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Use LeMUR to ask anything with Custom Task",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/lemur/v3/generate/task",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "displayName": "Delete the data for a previously submitted LeMUR request.",
           "method": "DELETE",
           "name": {
@@ -23254,15 +25405,182 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [
+      "RedactedAudioResponse",
+      "RedactedAudioStatus",
+      "SubtitleFormat",
+      "WordSearchResponse",
+      "WordSearchMatch",
+      "WordSearchTimestamp",
+      "Timestamp",
+      "CreateTranscriptOptionalParameters",
+      "SummaryModel",
+      "SummaryType",
+      "TranscriptBoostParam",
+      "TranscriptCustomSpelling",
+      "TranscriptUtterance",
+      "SubstitutionPolicy",
+      "PiiPolicy",
+      "TranscriptLanguageCode",
+      "TranscriptStatus",
+      "Transcript",
+      "Chapter",
+      "Entity",
+      "EntityType",
+      "SentimentAnalysisResult",
+      "Sentiment",
+      "TopicDetectionResult",
+      "ContentSafetyLabel",
+      "ContentSafetyLabelResult",
+      "SeverityScoreSummary",
+      "AutoHighlightsResult",
+      "AutoHighlightResult",
+      "TranscriptWord",
+      "TranscriptSentence",
+      "SentencesResponse",
+      "TranscriptParagraph",
+      "ParagraphsResponse",
+      "PageDetails",
+      "TranscriptListParameters",
+      "TranscriptListItem",
+      "TranscriptList",
+      "UploadedFile",
+      "CreateRealtimeTemporaryTokenParameters",
+      "RealtimeTemporaryTokenResponse",
+      "AudioIntelligenceModelStatus",
+      "PurgeLemurRequestDataResponse",
+      "LemurBaseResponse",
+      "LemurQuestionAnswer",
+      "LemurBaseParameters",
+      "LemurQuestion",
+      "LemurModel",
+      "Error"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {
+    "": {
+      "name": {
+        "originalName": "files",
+        "camelCase": {
+          "unsafeName": "files",
+          "safeName": "files"
+        },
+        "snakeCase": {
+          "unsafeName": "files",
+          "safeName": "files"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "FILES",
+          "safeName": "FILES"
+        },
+        "pascalCase": {
+          "unsafeName": "Files",
+          "safeName": "Files"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "files",
+          "camelCase": {
+            "unsafeName": "files",
+            "safeName": "files"
+          },
+          "snakeCase": {
+            "unsafeName": "files",
+            "safeName": "files"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FILES",
+            "safeName": "FILES"
+          },
+          "pascalCase": {
+            "unsafeName": "Files",
+            "safeName": "Files"
+          }
+        }
+      },
+      "service": "lemur",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

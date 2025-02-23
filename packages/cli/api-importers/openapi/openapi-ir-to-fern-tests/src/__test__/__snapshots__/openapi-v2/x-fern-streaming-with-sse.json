@@ -1,7 +1,8 @@
 {
-  "apiDisplayName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "CreateCompletionRequestStream": {
       "name": {
@@ -740,15 +741,136 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [
+      "CreateCompletionRequest",
+      "Completion",
+      "CompletionChunk"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {
+    "": {
+      "name": {
+        "originalName": "chatCompletions",
+        "camelCase": {
+          "unsafeName": "chatCompletions",
+          "safeName": "chatCompletions"
+        },
+        "snakeCase": {
+          "unsafeName": "chat_completions",
+          "safeName": "chat_completions"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "CHAT_COMPLETIONS",
+          "safeName": "CHAT_COMPLETIONS"
+        },
+        "pascalCase": {
+          "unsafeName": "ChatCompletions",
+          "safeName": "ChatCompletions"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "chatCompletions",
+          "camelCase": {
+            "unsafeName": "chatCompletions",
+            "safeName": "chatCompletions"
+          },
+          "snakeCase": {
+            "unsafeName": "chat_completions",
+            "safeName": "chat_completions"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CHAT_COMPLETIONS",
+            "safeName": "CHAT_COMPLETIONS"
+          },
+          "pascalCase": {
+            "unsafeName": "ChatCompletions",
+            "safeName": "ChatCompletions"
+          }
+        }
+      },
+      "service": "chatCompletions",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

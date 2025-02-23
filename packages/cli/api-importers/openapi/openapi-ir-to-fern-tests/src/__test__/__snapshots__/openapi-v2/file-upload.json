@@ -1,7 +1,8 @@
 {
-  "apiDisplayName": "Test file upload",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "UploadPostRequestBodySchemaFile": {
       "name": {
@@ -469,6 +470,181 @@
             }
           },
           "path": {
+            "head": "/upload",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "requestBody": {
+            "contentType": "multipart/form-data",
+            "name": {
+              "originalName": "upload-file_Request",
+              "camelCase": {
+                "unsafeName": "uploadFileRequest",
+                "safeName": "uploadFileRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "upload_file_request",
+                "safeName": "upload_file_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "UPLOAD_FILE_REQUEST",
+                "safeName": "UPLOAD_FILE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "UploadFileRequest",
+                "safeName": "UploadFileRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "file",
+                    "camelCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE",
+                      "safeName": "FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "File",
+                      "safeName": "File_"
+                    }
+                  },
+                  "wireValue": "file"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "UploadPostRequestBodySchemaFile",
+                    "camelCase": {
+                      "unsafeName": "uploadPostRequestBodySchemaFile",
+                      "safeName": "uploadPostRequestBodySchemaFile"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "upload_post_request_body_schema_file",
+                      "safeName": "upload_post_request_body_schema_file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "UPLOAD_POST_REQUEST_BODY_SCHEMA_FILE",
+                      "safeName": "UPLOAD_POST_REQUEST_BODY_SCHEMA_FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UploadPostRequestBodySchemaFile",
+                      "safeName": "UploadPostRequestBodySchemaFile"
+                    }
+                  },
+                  "typeId": "UploadPostRequestBodySchemaFile",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The file to upload"
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "maybe_file",
+                    "camelCase": {
+                      "unsafeName": "maybeFile",
+                      "safeName": "maybeFile"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "maybe_file",
+                      "safeName": "maybe_file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "MAYBE_FILE",
+                      "safeName": "MAYBE_FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "MaybeFile",
+                      "safeName": "MaybeFile"
+                    }
+                  },
+                  "wireValue": "maybe_file"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "UploadPostRequestBodySchemaMaybeFile",
+                    "camelCase": {
+                      "unsafeName": "uploadPostRequestBodySchemaMaybeFile",
+                      "safeName": "uploadPostRequestBodySchemaMaybeFile"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "upload_post_request_body_schema_maybe_file",
+                      "safeName": "upload_post_request_body_schema_maybe_file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "UPLOAD_POST_REQUEST_BODY_SCHEMA_MAYBE_FILE",
+                      "safeName": "UPLOAD_POST_REQUEST_BODY_SCHEMA_MAYBE_FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UploadPostRequestBodySchemaMaybeFile",
+                      "safeName": "UploadPostRequestBodySchemaMaybeFile"
+                    }
+                  },
+                  "typeId": "UploadPostRequestBodySchemaMaybeFile",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "An optional file to upload"
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/upload",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Upload a file",
+          "method": "POST",
+          "name": {
+            "originalName": "upload-file",
+            "camelCase": {
+              "unsafeName": "uploadFile",
+              "safeName": "uploadFile"
+            },
+            "snakeCase": {
+              "unsafeName": "upload_file",
+              "safeName": "upload_file"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPLOAD_FILE",
+              "safeName": "UPLOAD_FILE"
+            },
+            "pascalCase": {
+              "unsafeName": "UploadFile",
+              "safeName": "UploadFile"
+            }
+          },
+          "path": {
             "head": "/upload-with-content-type",
             "parts": []
           },
@@ -675,15 +851,83 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "service": "",
+    "types": [],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {},
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

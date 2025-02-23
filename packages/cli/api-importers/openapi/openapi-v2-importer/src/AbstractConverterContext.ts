@@ -3,7 +3,7 @@ import { camelCase } from "lodash-es";
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { DeclaredTypeName, TypeReference } from "@fern-api/ir-sdk";
+import { DeclaredTypeName, Package, TypeReference } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
 
 export declare namespace Spec {
@@ -79,6 +79,30 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
         return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+    }
+
+    /**
+     * Creates a Package object with default values
+     * @param args Optional object containing package name
+     * @returns Package object with default values
+     */
+    public createPackage(args: { name?: string } = {}): Package {
+        return {
+            fernFilepath: {
+                allParts: [],
+                packagePath: [],
+                file: args.name != null ? this.casingsGenerator.generateName(args.name) : undefined,
+            },
+            service: undefined,
+            types: [],
+            errors: [],
+            subpackages: [],
+            docs: undefined,
+            webhooks: undefined,
+            websocket: undefined,
+            hasEndpointsInTree: false,
+            navigationConfig: undefined
+        };
     }
 
     /**

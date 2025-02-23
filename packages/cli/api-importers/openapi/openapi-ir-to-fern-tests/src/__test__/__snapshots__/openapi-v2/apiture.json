@@ -1,8 +1,8 @@
 {
-  "apiDisplayName": "Apiture Digital Banking",
-  "apiDocs": "APIs for digital banking client applications.\n\n## Customer Accounts\n\nCustomer-level API for listing banking accounts, balances, and other account-specific data.\n\nClients may use this API to:\n\n  * [`listAccounts`](#op-listAccounts) - obtain a list of accounts that the authorized user has access to,\n  returning a [`accounts`](#schema-accounts) collection with a `list` of account objects.\n  * [`listEligibleAchAccounts`](#op-listEligibleAchAccounts) - obtain a list of ACH accounts that allow\n  transfers based on SEC code and authorized account privileges.\n  * [`listAccountBalances`](#op-listAccountBalances) - list the balances of the customer' accounts.\n  * [`getAccount`](#op-getAccount) - Fetch a more complete set of properties of an internal account.\n  * Manage overdraft protection:\n    * [`listEligibleOverdraftAccounts`](#op-listEligibleOverdraftAccounts) - List accounts which may be set as\n    overdraft protection accounts for another account.\n    * [`getOverdraftProtection`](#op-getOverdraftProtection) - fetch an account's overdraft protection settings.\n    * [`patchOverdraftAccounts`](#op-patchOverdraftAccounts) - update an account's overdraft protection settings.\n\n## Financial Institutions\n\nOperations related to bank and credit union financial institutions (FIs). This API provides the following features\n\n  1. [Calculating upcoming dates](#op-listTransferSchedule) for transfer schedules, factoring in weekends, non-business days, and\n  banking holidays as determined by the institution,\n  1. Provide a [list of transfer date restrictions](#op-getTransferDateRestrictions):\n  dates when users should not schedule transfers, based on transfer parameters,\n  1. [Look up a financial institution](#op-lookUpInstitutionByLocator) by an FI locator value: either an ABA routing and transit number,\n  an IBAN account number, or a SWIFT/BIC code,\n  1. [Fetching Cutoff times for FI money movement requests](#op-getCutoffTimes).\n\nSome of the operations in this API require an `institutionId` path parameter. This is the unique alphanumeric code that uniquely identifies a financial institution.\n\n## Account Transactions\n\nThe Transactions API allows bank customers to view the transactions history associated with a banking account. The client may filter the transaction history by date, amount, transaction type, and other criteria. The transaction response is paginated since there may be many thousands of transactions for an account.\n\nTransactions have a `type` which indicates if the item is a balance transaction which establishes the account's balance, or a `debit`, or a `credit` transaction. Examples of debit transactions are checks drawn against an account, withdrawals, transfers from the account, fees, and adjustments. Examples of credit transactions are deposits, transfers to the account, interest, and adjustments. Check transactions include the check number and links to the check front and back images.\n\nSome transactions, such as ACH transfers or debit card payments, include information about the merchant, such as the merchant name, the merchant's website URL, and logo URL if available.\n\nTransactions also have a `memo` descriptive field which the customer can change. Each non-balance transaction can also be assigned to a _category_. The customer can edit their list of custom transaction categories. There is also a pre-defined list of fixed categories. (_Category management is to be designed._)\n\n**Note:** The financial institution may limit transaction history to the last 12 months of data.\n\n## Account to Account Transfers\n\nSchedule and manage account to account transfers.\n\nWhen creating new simple transfers, the source and target accounts, amount, and transfer schedule are required and the transfer is scheduled to be processed on the scheduled date. Some financial institutions support immediate transfers between local accounts scheduled on the current day. Transfers to or from external accounts typically are processed after the financial institution's ACH cut-off time but require several business days.\n\nTransfers have a [`state`](#schema-transferState) property which indicates if the transfer is pending, pending approvals, scheduled (queued for processing), processing, or processed.\n\nTransfers support recurring schedules, such as repeating every week or every month. Recurring transfers can also be variable transfers; they recur without an amount. Occasional recurring transfers do not have a scheduled date. Both of these situations result in transfers in a `pending` state. They remain pending until a [`patchTransfer`](#op-patchTransfer) operation sets the amount and schedule. Once a `pending` transfer has an amount and schedule, it becomes `scheduled`.",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "accountIds": {
       "name": {
@@ -14439,6 +14439,474 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "List Accounts",
+          "method": "GET",
+          "name": {
+            "originalName": "listAccounts",
+            "camelCase": {
+              "unsafeName": "listAccounts",
+              "safeName": "listAccounts"
+            },
+            "snakeCase": {
+              "unsafeName": "list_accounts",
+              "safeName": "list_accounts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_ACCOUNTS",
+              "safeName": "LIST_ACCOUNTS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListAccounts",
+              "safeName": "ListAccounts"
+            }
+          },
+          "path": {
+            "head": "/accounts",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "productType",
+                  "camelCase": {
+                    "unsafeName": "productType",
+                    "safeName": "productType"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "product_type",
+                    "safeName": "product_type"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PRODUCT_TYPE",
+                    "safeName": "PRODUCT_TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ProductType",
+                    "safeName": "ProductType"
+                  }
+                },
+                "wireValue": "productType"
+              },
+              "docs": "Include only accounts whose `product.type` is in pipe-delimited set. For example, to list only savings, checking, and CD accounts, use <br>`?productType=savings|checking|cd`.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "productType",
+                  "camelCase": {
+                    "unsafeName": "productType",
+                    "safeName": "productType"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "product_type",
+                    "safeName": "product_type"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PRODUCT_TYPE",
+                    "safeName": "PRODUCT_TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ProductType",
+                    "safeName": "ProductType"
+                  }
+                },
+                "typeId": "productType",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "location",
+                  "camelCase": {
+                    "unsafeName": "location",
+                    "safeName": "location"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "location",
+                    "safeName": "location"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOCATION",
+                    "safeName": "LOCATION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Location",
+                    "safeName": "Location"
+                  }
+                },
+                "wireValue": "location"
+              },
+              "docs": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "location",
+                  "camelCase": {
+                    "unsafeName": "location",
+                    "safeName": "location"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "location",
+                    "safeName": "location"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOCATION",
+                    "safeName": "LOCATION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Location",
+                    "safeName": "Location"
+                  }
+                },
+                "typeId": "location",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "accounts",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return a paginated list of the customer's accounts, consisting of internal accounts at this financial institution and accounts at other financial institutions, if any.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/accounts",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Get an Account",
+          "method": "GET",
+          "name": {
+            "originalName": "getAccount",
+            "camelCase": {
+              "unsafeName": "getAccount",
+              "safeName": "getAccount"
+            },
+            "snakeCase": {
+              "unsafeName": "get_account",
+              "safeName": "get_account"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_ACCOUNT",
+              "safeName": "GET_ACCOUNT"
+            },
+            "pascalCase": {
+              "unsafeName": "GetAccount",
+              "safeName": "GetAccount"
+            }
+          },
+          "path": {
+            "head": "/accounts/",
+            "parts": [
+              {
+                "pathParameter": "accountId",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "account",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK. The response is a representation of the customer's account.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return details of the customer's internal account.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/accounts/",
+            "parts": [
+              {
+                "pathParameter": "accountId",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "List Account Balances",
+          "method": "GET",
+          "name": {
+            "originalName": "listAccountBalances",
+            "camelCase": {
+              "unsafeName": "listAccountBalances",
+              "safeName": "listAccountBalances"
+            },
+            "snakeCase": {
+              "unsafeName": "list_account_balances",
+              "safeName": "list_account_balances"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_ACCOUNT_BALANCES",
+              "safeName": "LIST_ACCOUNT_BALANCES"
+            },
+            "pascalCase": {
+              "unsafeName": "ListAccountBalances",
+              "safeName": "ListAccountBalances"
+            }
+          },
+          "path": {
+            "head": "/accountBalances",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "accounts",
+                  "camelCase": {
+                    "unsafeName": "accounts",
+                    "safeName": "accounts"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "accounts",
+                    "safeName": "accounts"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACCOUNTS",
+                    "safeName": "ACCOUNTS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Accounts",
+                    "safeName": "Accounts"
+                  }
+                },
+                "wireValue": "accounts"
+              },
+              "docs": "The unique account identifiers of one or more internal accounts. (Internal accounts are those with `location` value of `internal`.) If omitted, this operation uses the accounts for which the customer has view permissions but is limited to at most 1000 accounts. Note: The account IDs are unrelated to the account number.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "accountIds",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "retryCount",
+                  "camelCase": {
+                    "unsafeName": "retryCount",
+                    "safeName": "retryCount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "retry_count",
+                    "safeName": "retry_count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RETRY_COUNT",
+                    "safeName": "RETRY_COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RetryCount",
+                    "safeName": "RetryCount"
+                  }
+                },
+                "wireValue": "retryCount"
+              },
+              "docs": "When retrying the operation, pass the `retryCount` from the `incompleteAccountBalances` response.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "retryCount",
+                  "camelCase": {
+                    "unsafeName": "retryCount",
+                    "safeName": "retryCount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "retry_count",
+                    "safeName": "retry_count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RETRY_COUNT",
+                    "safeName": "RETRY_COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RetryCount",
+                    "safeName": "RetryCount"
+                  }
+                },
+                "typeId": "retryCount",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "accountBalances",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return a list of the requested internal accounts' balances. The `accounts` query parameter is a list of account IDs which typically comes from the `getAccounts` operation response. The returned list does not include external accounts. The caller must have entitlements to view each account's details, as indicated by a `true` value for `account.allows.view`. Requests to list balances for accounts the user is not allowed to read results in a 403 Forbidden response.\n\nThe response may be incomplete. Given a `Retry-After` response header, the client can retry the operation after a short delay, requesting only the accounts which are incomplete; see the 202 Accepted response for details.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/accountBalances",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "displayName": "List Eligible ACH Accounts",
           "method": "GET",
           "name": {
@@ -14717,6 +15185,160 @@
       "headers": [],
       "pathParameters": [],
       "endpoints": [
+        {
+          "id": "",
+          "displayName": "List Eligible Overdraft Accounts",
+          "method": "GET",
+          "name": {
+            "originalName": "listEligibleOverdraftAccounts",
+            "camelCase": {
+              "unsafeName": "listEligibleOverdraftAccounts",
+              "safeName": "listEligibleOverdraftAccounts"
+            },
+            "snakeCase": {
+              "unsafeName": "list_eligible_overdraft_accounts",
+              "safeName": "list_eligible_overdraft_accounts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS",
+              "safeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListEligibleOverdraftAccounts",
+              "safeName": "ListEligibleOverdraftAccounts"
+            }
+          },
+          "path": {
+            "head": "/accounts/",
+            "parts": [
+              {
+                "pathParameter": "accountId",
+                "tail": "/eligibleOverdraftAccounts"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "accountId",
+                "camelCase": {
+                  "unsafeName": "accountId",
+                  "safeName": "accountId"
+                },
+                "snakeCase": {
+                  "unsafeName": "account_id",
+                  "safeName": "account_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACCOUNT_ID",
+                  "safeName": "ACCOUNT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "AccountId",
+                  "safeName": "AccountId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "eligibleOverdraftAccounts",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return a paginated list of a customer's accounts that are eligible to serve as overdraft protection accounts for the given account. An overdraft protection account is a deposit account that the financial institution can transfer funds from to prevent the account balance from going negative and incurring non-sufficient funds fees.\n\nThe user must have the `allows.manageOverdraftAccounts` permission on the account to use this operation.\n\nTo obtain available balances for these accounts, use [`listAccountBalances`](#op-listAccountBalances).",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/accounts/",
+            "parts": [
+              {
+                "pathParameter": "accountId",
+                "tail": "/eligibleOverdraftAccounts"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "accountId",
+                "camelCase": {
+                  "unsafeName": "accountId",
+                  "safeName": "accountId"
+                },
+                "snakeCase": {
+                  "unsafeName": "account_id",
+                  "safeName": "account_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACCOUNT_ID",
+                  "safeName": "ACCOUNT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "AccountId",
+                  "safeName": "AccountId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
         {
           "id": "",
           "displayName": "Fetch a representation of the account's overdraft protection settings",
@@ -15097,6 +15719,937 @@
       "headers": [],
       "pathParameters": [],
       "endpoints": [
+        {
+          "id": "",
+          "displayName": "Look up institution by routing number, IBAN, or SWIFT/BIC code",
+          "method": "GET",
+          "name": {
+            "originalName": "lookUpInstitutionByLocator",
+            "camelCase": {
+              "unsafeName": "lookUpInstitutionByLocator",
+              "safeName": "lookUpInstitutionByLocator"
+            },
+            "snakeCase": {
+              "unsafeName": "look_up_institution_by_locator",
+              "safeName": "look_up_institution_by_locator"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LOOK_UP_INSTITUTION_BY_LOCATOR",
+              "safeName": "LOOK_UP_INSTITUTION_BY_LOCATOR"
+            },
+            "pascalCase": {
+              "unsafeName": "LookUpInstitutionByLocator",
+              "safeName": "LookUpInstitutionByLocator"
+            }
+          },
+          "path": {
+            "head": "/institutionByLocator",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "locator",
+                  "camelCase": {
+                    "unsafeName": "locator",
+                    "safeName": "locator"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "locator",
+                    "safeName": "locator"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOCATOR",
+                    "safeName": "LOCATOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Locator",
+                    "safeName": "Locator"
+                  }
+                },
+                "wireValue": "locator"
+              },
+              "docs": "The financial institution lookup key (routing number, IBAN, or SWIFT/BIC), as indicated by the `locatorType` query parameter.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "locator",
+                  "camelCase": {
+                    "unsafeName": "locator",
+                    "safeName": "locator"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "locator",
+                    "safeName": "locator"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOCATOR",
+                    "safeName": "LOCATOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Locator",
+                    "safeName": "Locator"
+                  }
+                },
+                "typeId": "locator",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "locatorType",
+                  "camelCase": {
+                    "unsafeName": "locatorType",
+                    "safeName": "locatorType"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "locator_type",
+                    "safeName": "locator_type"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOCATOR_TYPE",
+                    "safeName": "LOCATOR_TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "LocatorType",
+                    "safeName": "LocatorType"
+                  }
+                },
+                "wireValue": "locatorType"
+              },
+              "docs": "Indicates what type of value the `locator` query parameter is.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "institutionLocatorType",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "countryCode",
+                  "camelCase": {
+                    "unsafeName": "countryCode",
+                    "safeName": "countryCode"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "country_code",
+                    "safeName": "country_code"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNTRY_CODE",
+                    "safeName": "COUNTRY_CODE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CountryCode",
+                    "safeName": "CountryCode"
+                  }
+                },
+                "wireValue": "countryCode"
+              },
+              "docs": "The country code in which to search for institutions. For the US, the `locatorType` must be `abaRoutingNumber`. For non-US countries, the `locatorType` must be `swiftBicCode` or `ibanAccountNumber`.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "countryCode",
+                  "camelCase": {
+                    "unsafeName": "countryCode",
+                    "safeName": "countryCode"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "country_code",
+                    "safeName": "country_code"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNTRY_CODE",
+                    "safeName": "COUNTRY_CODE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CountryCode",
+                    "safeName": "CountryCode"
+                  }
+                },
+                "typeId": "countryCode",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "includeIntermediaryInstitutions",
+                  "camelCase": {
+                    "unsafeName": "includeIntermediaryInstitutions",
+                    "safeName": "includeIntermediaryInstitutions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_intermediary_institutions",
+                    "safeName": "include_intermediary_institutions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_INTERMEDIARY_INSTITUTIONS",
+                    "safeName": "INCLUDE_INTERMEDIARY_INSTITUTIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeIntermediaryInstitutions",
+                    "safeName": "IncludeIntermediaryInstitutions"
+                  }
+                },
+                "wireValue": "includeIntermediaryInstitutions"
+              },
+              "docs": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "includeIntermediaryInstitutions",
+                  "camelCase": {
+                    "unsafeName": "includeIntermediaryInstitutions",
+                    "safeName": "includeIntermediaryInstitutions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_intermediary_institutions",
+                    "safeName": "include_intermediary_institutions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_INTERMEDIARY_INSTITUTIONS",
+                    "safeName": "INCLUDE_INTERMEDIARY_INSTITUTIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeIntermediaryInstitutions",
+                    "safeName": "IncludeIntermediaryInstitutions"
+                  }
+                },
+                "typeId": "includeIntermediaryInstitutions",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "institutionLookupResult",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Look up a financial institution by their country code and either [American Bankers Association routing number](https://www.aba.com/about-us/routing-number), by [International Bank Account Number (IBAN)](https://www.ecbs.org/iban.htm), or by [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code). Optionally, include a list of intermediary institutions that may be necessary to complete international wire transfers.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/institutionByLocator",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Return this institution's list of upcoming transfer schedule dates",
+          "method": "GET",
+          "name": {
+            "originalName": "listTransferSchedule",
+            "camelCase": {
+              "unsafeName": "listTransferSchedule",
+              "safeName": "listTransferSchedule"
+            },
+            "snakeCase": {
+              "unsafeName": "list_transfer_schedule",
+              "safeName": "list_transfer_schedule"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_TRANSFER_SCHEDULE",
+              "safeName": "LIST_TRANSFER_SCHEDULE"
+            },
+            "pascalCase": {
+              "unsafeName": "ListTransferSchedule",
+              "safeName": "ListTransferSchedule"
+            }
+          },
+          "path": {
+            "head": "/institutions/",
+            "parts": [
+              {
+                "pathParameter": "institutionId",
+                "tail": "/transferSchedule"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "institutionId",
+                "camelCase": {
+                  "unsafeName": "institutionId",
+                  "safeName": "institutionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "institution_id",
+                  "safeName": "institution_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INSTITUTION_ID",
+                  "safeName": "INSTITUTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "InstitutionId",
+                  "safeName": "InstitutionId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "startsOn",
+                  "camelCase": {
+                    "unsafeName": "startsOn",
+                    "safeName": "startsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "starts_on",
+                    "safeName": "starts_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STARTS_ON",
+                    "safeName": "STARTS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "StartsOn",
+                    "safeName": "StartsOn"
+                  }
+                },
+                "wireValue": "startsOn"
+              },
+              "docs": "The date to use to begin calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "startsOn",
+                  "camelCase": {
+                    "unsafeName": "startsOn",
+                    "safeName": "startsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "starts_on",
+                    "safeName": "starts_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STARTS_ON",
+                    "safeName": "STARTS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "StartsOn",
+                    "safeName": "StartsOn"
+                  }
+                },
+                "typeId": "startsOn",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "endsOn",
+                  "camelCase": {
+                    "unsafeName": "endsOn",
+                    "safeName": "endsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ends_on",
+                    "safeName": "ends_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDS_ON",
+                    "safeName": "ENDS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndsOn",
+                    "safeName": "EndsOn"
+                  }
+                },
+                "wireValue": "endsOn"
+              },
+              "docs": "The date to use to conclude calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "endsOn",
+                  "camelCase": {
+                    "unsafeName": "endsOn",
+                    "safeName": "endsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ends_on",
+                    "safeName": "ends_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDS_ON",
+                    "safeName": "ENDS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndsOn",
+                    "safeName": "EndsOn"
+                  }
+                },
+                "typeId": "endsOn",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "direction",
+                  "camelCase": {
+                    "unsafeName": "direction",
+                    "safeName": "direction"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "direction",
+                    "safeName": "direction"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DIRECTION",
+                    "safeName": "DIRECTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Direction",
+                    "safeName": "Direction"
+                  }
+                },
+                "wireValue": "direction"
+              },
+              "docs": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For `debit`, dates are adjusted to the next business day. For `credit`, dates are adjusted to the previous business day.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "transferScheduleDirection",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "count",
+                  "camelCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNT",
+                    "safeName": "COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Count",
+                    "safeName": "Count"
+                  }
+                },
+                "wireValue": "count"
+              },
+              "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "count",
+                  "camelCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNT",
+                    "safeName": "COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Count",
+                    "safeName": "Count"
+                  }
+                },
+                "typeId": "count",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "frequency",
+                  "camelCase": {
+                    "unsafeName": "frequency",
+                    "safeName": "frequency"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "frequency",
+                    "safeName": "frequency"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FREQUENCY",
+                    "safeName": "FREQUENCY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Frequency",
+                    "safeName": "Frequency"
+                  }
+                },
+                "wireValue": "frequency"
+              },
+              "docs": "The interval at which the money movement recurs.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "transferFrequency",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "transferSchedules",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return a transfer schedule list for this institution.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/institutions/",
+            "parts": [
+              {
+                "pathParameter": "institutionId",
+                "tail": "/transferSchedule"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "institutionId",
+                "camelCase": {
+                  "unsafeName": "institutionId",
+                  "safeName": "institutionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "institution_id",
+                  "safeName": "institution_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INSTITUTION_ID",
+                  "safeName": "INSTITUTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "InstitutionId",
+                  "safeName": "InstitutionId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
+          "displayName": "Return the financial institution's cutoff times for products",
+          "method": "GET",
+          "name": {
+            "originalName": "getCutoffTimes",
+            "camelCase": {
+              "unsafeName": "getCutoffTimes",
+              "safeName": "getCutoffTimes"
+            },
+            "snakeCase": {
+              "unsafeName": "get_cutoff_times",
+              "safeName": "get_cutoff_times"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_CUTOFF_TIMES",
+              "safeName": "GET_CUTOFF_TIMES"
+            },
+            "pascalCase": {
+              "unsafeName": "GetCutoffTimes",
+              "safeName": "GetCutoffTimes"
+            }
+          },
+          "path": {
+            "head": "/institutions/",
+            "parts": [
+              {
+                "pathParameter": "institutionId",
+                "tail": "/cutoffTimes"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "institutionId",
+                "camelCase": {
+                  "unsafeName": "institutionId",
+                  "safeName": "institutionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "institution_id",
+                  "safeName": "institution_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INSTITUTION_ID",
+                  "safeName": "INSTITUTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "InstitutionId",
+                  "safeName": "InstitutionId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "timeZoneId",
+                  "camelCase": {
+                    "unsafeName": "timeZoneId",
+                    "safeName": "timeZoneId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "time_zone_id",
+                    "safeName": "time_zone_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TIME_ZONE_ID",
+                    "safeName": "TIME_ZONE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TimeZoneId",
+                    "safeName": "TimeZoneId"
+                  }
+                },
+                "wireValue": "timeZoneId"
+              },
+              "docs": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "timeZoneId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "cutoffTimes",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return daily cutoff times for different money movement processes at a financial institution. Money movement requests (account to account transfers, ACH, wire transfers, etc.) must be submitted before the cutoff time in order for the financial institution to begin processing the request that day. Some [cutoff time types](#schema-cutoffTimeType) may have multiple cutoff times per day.\n\nCutoff times are very slowly changing data. This is a _conditional operation_ when the `If-None-Match` header is used. If the client has a `getCutoffTimes` response and the `ETag` returned from a previous call to this operation, this operation returns a 304 Not Modified when called again if the cutoff times have not changed.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/institutions/",
+            "parts": [
+              {
+                "pathParameter": "institutionId",
+                "tail": "/cutoffTimes"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "institutionId",
+                "camelCase": {
+                  "unsafeName": "institutionId",
+                  "safeName": "institutionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "institution_id",
+                  "safeName": "institution_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INSTITUTION_ID",
+                  "safeName": "INSTITUTION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "InstitutionId",
+                  "safeName": "InstitutionId"
+                }
+              },
+              "valueType": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
         {
           "id": "",
           "displayName": "Return the financial institution's transfer dates restrictions",
@@ -16464,6 +18017,383 @@
       "endpoints": [
         {
           "id": "",
+          "displayName": "Return a collection of transfers",
+          "method": "GET",
+          "name": {
+            "originalName": "listTransfers",
+            "camelCase": {
+              "unsafeName": "listTransfers",
+              "safeName": "listTransfers"
+            },
+            "snakeCase": {
+              "unsafeName": "list_transfers",
+              "safeName": "list_transfers"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_TRANSFERS",
+              "safeName": "LIST_TRANSFERS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListTransfers",
+              "safeName": "ListTransfers"
+            }
+          },
+          "path": {
+            "head": "/transfers",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "scheduledOn",
+                  "camelCase": {
+                    "unsafeName": "scheduledOn",
+                    "safeName": "scheduledOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "scheduled_on",
+                    "safeName": "scheduled_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SCHEDULED_ON",
+                    "safeName": "SCHEDULED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ScheduledOn",
+                    "safeName": "ScheduledOn"
+                  }
+                },
+                "wireValue": "scheduledOn"
+              },
+              "docs": "Return only transactions whose `schedule.scheduledOn` date is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Example date ranges: <ul> <li> `2022-05-19` match only transfers scheduled on May 19, 2022.</li> <li> `[2022-05-01,2022-06-01)` in May, 2022: on or after May 1, but _before_ June 1</li> <li> `(2022-05-01,2022-06-01)` in May, 2022 (on or after May 1, but before June 1)</li> <li> `[2022-05-09,]` on or after May 9, 2022</li> <li> `(2022-05-09,)` after May 9, 2022</li> <li> `[,2022-05-09]` on or before May 9, 2022</li> <li> `(,2022-05-09)` before May 9, 2022</li> </ul>",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "dateRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "debitsOn",
+                  "camelCase": {
+                    "unsafeName": "debitsOn",
+                    "safeName": "debitsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "debits_on",
+                    "safeName": "debits_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DEBITS_ON",
+                    "safeName": "DEBITS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DebitsOn",
+                    "safeName": "DebitsOn"
+                  }
+                },
+                "wireValue": "debitsOn"
+              },
+              "docs": "Return only transactions whose `schedule.debitsOn` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "dateRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "creditsOn",
+                  "camelCase": {
+                    "unsafeName": "creditsOn",
+                    "safeName": "creditsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "credits_on",
+                    "safeName": "credits_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREDITS_ON",
+                    "safeName": "CREDITS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreditsOn",
+                    "safeName": "CreditsOn"
+                  }
+                },
+                "wireValue": "creditsOn"
+              },
+              "docs": "Return only transactions whose `schedule.creditsOn` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "dateRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "historical",
+                  "camelCase": {
+                    "unsafeName": "historical",
+                    "safeName": "historical"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "historical",
+                    "safeName": "historical"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HISTORICAL",
+                    "safeName": "HISTORICAL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Historical",
+                    "safeName": "Historical"
+                  }
+                },
+                "wireValue": "historical"
+              },
+              "docs": "If `true`, list only historical (`state` is `processed`) transfers. If `false`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "historical",
+                  "camelCase": {
+                    "unsafeName": "historical",
+                    "safeName": "historical"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "historical",
+                    "safeName": "historical"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HISTORICAL",
+                    "safeName": "HISTORICAL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Historical",
+                    "safeName": "Historical"
+                  }
+                },
+                "typeId": "historical",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "transfers",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "OK.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transfers. The [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links) in the response is a pagination link.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/transfers",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "displayName": "Create a new transfer",
+          "method": "POST",
+          "name": {
+            "originalName": "createTransfer",
+            "camelCase": {
+              "unsafeName": "createTransfer",
+              "safeName": "createTransfer"
+            },
+            "snakeCase": {
+              "unsafeName": "create_transfer",
+              "safeName": "create_transfer"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_TRANSFER",
+              "safeName": "CREATE_TRANSFER"
+            },
+            "pascalCase": {
+              "unsafeName": "CreateTransfer",
+              "safeName": "CreateTransfer"
+            }
+          },
+          "path": {
+            "head": "/transfers",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "transfer",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Created.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "Create a new transfer within the transfers collection. If all the necessary properties are set, the transfer is queued for processing. If the request omits the `schedule.scheduledOn` date, the transfer remains pending/unscheduled until the user sets it via the [`patchTransfer`](#op-patchTransfer) operation.\n\nNote: This operation requires an identity challenge if the financial institution requires the user to proove their identity for some types of transfers. See the \"Challenges API\".",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/transfers",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "displayName": "Fetch a representation of this transfer",
           "method": "GET",
           "name": {
@@ -16761,15 +18691,193 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [
+      "accountIds",
+      "accountAllowsFilter",
+      "accountPermissions",
+      "overdraftAccountFields",
+      "accountLocation",
+      "accountFields",
+      "externalAccountVerificationMethod",
+      "accountRoutingNumber",
+      "accountNickname",
+      "maskedAccountNumber",
+      "fullAccountNumber",
+      "accountBalance",
+      "jointOwnerInvitationFields",
+      "institutionLocatorType",
+      "simpleInstitution",
+      "timeZoneId",
+      "cutoffTime",
+      "cutoffTimeType",
+      "transferScheduleDirection",
+      "transferScheduleItem",
+      "transferDateRestrictionType",
+      "transferTypeForDateRestrictions",
+      "transferDateRestriction",
+      "transactionFields",
+      "transactionMerchant",
+      "transactionCheck",
+      "transactionCategorization",
+      "transactionCategoryLabel",
+      "transactionType",
+      "transactionSubType",
+      "transactionCategoryType",
+      "transferSchedule",
+      "transferAccountReference",
+      "transferFields",
+      "transferState",
+      "productType",
+      "transferFrequency",
+      "achAccountRisk",
+      "dateRange",
+      "amountRange",
+      "resourceId",
+      "productReference",
+      "creditOrDebitValue",
+      "readOnlyTimestamp",
+      "positiveIntegerRange",
+      "transferRecurrenceType",
+      "monetaryValue",
+      "timestampFields",
+      "apiProblem",
+      "achSecCode",
+      "institutionId",
+      "challengeToken",
+      "requiredIdentityChallenge",
+      "abstractPagedBodyFields",
+      "addressFields",
+      "challengeFactor",
+      "challengeFactorType",
+      "challengeSecurityQuestions",
+      "challengeSecurityQuestion",
+      "challengePromptId"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {
+    "": {
+      "name": {
+        "originalName": "accounts",
+        "camelCase": {
+          "unsafeName": "accounts",
+          "safeName": "accounts"
+        },
+        "snakeCase": {
+          "unsafeName": "accounts",
+          "safeName": "accounts"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ACCOUNTS",
+          "safeName": "ACCOUNTS"
+        },
+        "pascalCase": {
+          "unsafeName": "Accounts",
+          "safeName": "Accounts"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "accounts",
+          "camelCase": {
+            "unsafeName": "accounts",
+            "safeName": "accounts"
+          },
+          "snakeCase": {
+            "unsafeName": "accounts",
+            "safeName": "accounts"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ACCOUNTS",
+            "safeName": "ACCOUNTS"
+          },
+          "pascalCase": {
+            "unsafeName": "Accounts",
+            "safeName": "Accounts"
+          }
+        }
+      },
+      "service": "transfers",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }

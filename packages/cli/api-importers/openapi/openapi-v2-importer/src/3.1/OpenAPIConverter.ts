@@ -11,71 +11,63 @@ export type BaseIntermediateRepresentation = Omit<
     IntermediateRepresentation,  "apiName" | "constants"
 >;
 
+export declare namespace OpenAPIConverter {
+    export interface Args extends AbstractConverter.Args {
+        context: OpenAPIConverterContext3_1;
+    }
+}
+
 export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
 
-    private ir: BaseIntermediateRepresentation = {
-        auth: {
-            docs: undefined,
-            requirement: FernIr.AuthSchemesRequirement.All,
-            schemes: [],
-        },
-        types: {},
-        services: {},
-        errors: {},
-        webhookGroups: {},
-        websocketChannels: undefined,
-        headers: [],
-        idempotencyHeaders: [],
-        apiVersion: undefined,
-        apiDisplayName: undefined,
-        apiDocs: undefined,
-        basePath: undefined,
-        pathParameters: [],
-        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
-        variables: [],
-        serviceTypeReferenceInfo: {
-            sharedTypes: [],
-            typesReferencedOnlyByService: {}
-        },
-        readmeConfig: undefined,
-        sourceConfig: undefined,
-        publishConfig: undefined,
-        dynamic: undefined,
-        environments: undefined,
-        fdrApiDefinitionId: undefined,
-        rootPackage: {
-            fernFilepath: {
-                allParts: [],
-                packagePath: [],
-                file: undefined
-            },
-            service: undefined,
-            types: [],
-            errors: [],
-            subpackages: [],
-            docs: undefined,
-            webhooks: undefined,
-            websocket: undefined,
-            hasEndpointsInTree: false,
-            navigationConfig: undefined,
-        },
-        subpackages: {},
-        sdkConfig: {
-            hasFileDownloadEndpoints: false,
-            hasPaginatedEndpoints: false,
-            hasStreamingEndpoints: false,
-            isAuthMandatory: true,
-            platformHeaders: {
-                language: "",
-                sdkName: "",
-                sdkVersion: "",
-                userAgent: undefined,
-            }
-        }
-    };
+    private ir: BaseIntermediateRepresentation;
 
-    constructor({ breadcrumbs }: AbstractConverter.Args = {}) {
+    constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
         super({ breadcrumbs });
+        this.ir = {
+            auth: {
+                docs: undefined,
+                requirement: FernIr.AuthSchemesRequirement.All,
+                schemes: [],
+            },
+            types: {},
+            services: {},
+            errors: {},
+            webhookGroups: {},
+            websocketChannels: undefined,
+            headers: [],
+            idempotencyHeaders: [],
+            apiVersion: undefined,
+            apiDisplayName: undefined,
+            apiDocs: undefined,
+            basePath: undefined,
+            pathParameters: [],
+            errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
+            variables: [],
+            serviceTypeReferenceInfo: {
+                sharedTypes: [],
+                typesReferencedOnlyByService: {}
+            },
+            readmeConfig: undefined,
+            sourceConfig: undefined,
+            publishConfig: undefined,
+            dynamic: undefined,
+            environments: undefined,
+            fdrApiDefinitionId: undefined,
+            rootPackage: context.createPackage(),
+            subpackages: {},
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: true,
+                platformHeaders: {
+                    language: "",
+                    sdkName: "",
+                    sdkVersion: "",
+                    userAgent: undefined,
+                }
+            }
+        };
     }
 
 
@@ -127,6 +119,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             });
             const convertedSchema = schemaConverter.convert({ context, errorCollector });
             if (convertedSchema != null) {
+                this.ir.rootPackage.types.push(id);
+
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedSchema.inlinedTypes,
@@ -134,6 +128,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 };
             }
         }
+        
     }
 
     private convertPaths({
@@ -190,6 +185,20 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 transport: undefined,
                 encoding: undefined
             };
+
+            if (group !== "") {
+                const packagePath = allParts.slice(0, -1);
+                const packageId = packagePath.join(".");
+                if (this.ir.subpackages[packageId] == null) {
+                    this.ir.subpackages[packageId] = {
+                        name: context.casingsGenerator.generateName(group),
+                        ...context.createPackage({ name: group }),
+                    }
+                }
+                this.ir.subpackages[packageId].service = group;
+            } else {
+                this.ir.rootPackage.service = group;
+            }
         }
     }
 }

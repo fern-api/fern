@@ -85,14 +85,15 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
         for (const document of documents) {
             if (document.type === "openapi") {
-                const converter = new OpenAPI3_1Converter();
+                const converterContext = new OpenAPIConverterContext3_1({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value as any
+                });
+                const converter = new OpenAPI3_1Converter({ context: converterContext });
                 return converter.convert({
-                    context: new OpenAPIConverterContext3_1({
-                        generationLanguage: "typescript",
-                        logger: context.logger,
-                        smartCasing: false,
-                        spec: document.value as any
-                    }),
+                    context: converterContext,
                     errorCollector: new ErrorCollector()
                 });
             }

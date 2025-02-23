@@ -1,8 +1,8 @@
 {
-  "apiDisplayName": "Vellum Client API",
-  "apiDocs": "\n## Vellum API Documentation\n\n### Welcome 👋\nWelcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you,\nas well as the parameters and responses that they accept and return.\n\nWe will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform\nvia the UI that you wish you could perform via API, please let us know and we can expose it here in an unstable state.\n\n### API Stability\nSome of the APIs documented within are undergoing active development. Use the\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\nand\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\ntags to differentiate between those that are stable and those that are not.\n\n### Base URLs\nSome endpoints are hosted separately from the main Vellum API and therefore have a different base url. If this is\nthe case, they will say so in their description.\n\nUnless otherwise specified, all endpoints use <code>https://api.vellum.ai</code> as their base URL.\n\n### Official API Clients:\nVellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact\nwith all stable endpoints. You can find them here:\n- [Python](https://github.com/vellum-ai/vellum-client-python)\n- [Node/Typescript](https://github.com/vellum-ai/vellum-client-node)\n",
-  "headers": [],
-  "idempotencyHeaders": [],
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
   "types": {
     "BlockTypeEnum": {
       "name": {
@@ -34966,6 +34966,302 @@
       "endpoints": [
         {
           "id": "",
+          "method": "GET",
+          "name": {
+            "originalName": "list",
+            "camelCase": {
+              "unsafeName": "list",
+              "safeName": "list"
+            },
+            "snakeCase": {
+              "unsafeName": "list",
+              "safeName": "list"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST",
+              "safeName": "LIST"
+            },
+            "pascalCase": {
+              "unsafeName": "List",
+              "safeName": "List"
+            }
+          },
+          "path": {
+            "head": "/v1/documents",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "document_index_id",
+                  "camelCase": {
+                    "unsafeName": "documentIndexId",
+                    "safeName": "documentIndexId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "document_index_id",
+                    "safeName": "document_index_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DOCUMENT_INDEX_ID",
+                    "safeName": "DOCUMENT_INDEX_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DocumentIndexId",
+                    "safeName": "DocumentIndexId"
+                  }
+                },
+                "wireValue": "document_index_id"
+              },
+              "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "document_index_id",
+                  "camelCase": {
+                    "unsafeName": "documentIndexId",
+                    "safeName": "documentIndexId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "document_index_id",
+                    "safeName": "document_index_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DOCUMENT_INDEX_ID",
+                    "safeName": "DOCUMENT_INDEX_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DocumentIndexId",
+                    "safeName": "DocumentIndexId"
+                  }
+                },
+                "typeId": "document_index_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "Number of results to return per page.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "typeId": "limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "offset",
+                  "camelCase": {
+                    "unsafeName": "offset",
+                    "safeName": "offset"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "offset",
+                    "safeName": "offset"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OFFSET",
+                    "safeName": "OFFSET"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Offset",
+                    "safeName": "Offset"
+                  }
+                },
+                "wireValue": "offset"
+              },
+              "docs": "The initial index from which to return the results.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "offset",
+                  "camelCase": {
+                    "unsafeName": "offset",
+                    "safeName": "offset"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "offset",
+                    "safeName": "offset"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OFFSET",
+                    "safeName": "OFFSET"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Offset",
+                    "safeName": "Offset"
+                  }
+                },
+                "typeId": "offset",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "ordering",
+                  "camelCase": {
+                    "unsafeName": "ordering",
+                    "safeName": "ordering"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ordering",
+                    "safeName": "ordering"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORDERING",
+                    "safeName": "ORDERING"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Ordering",
+                    "safeName": "Ordering"
+                  }
+                },
+                "wireValue": "ordering"
+              },
+              "docs": "Which field to use when ordering the results.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ordering",
+                  "camelCase": {
+                    "unsafeName": "ordering",
+                    "safeName": "ordering"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ordering",
+                    "safeName": "ordering"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORDERING",
+                    "safeName": "ORDERING"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Ordering",
+                    "safeName": "Ordering"
+                  }
+                },
+                "typeId": "ordering",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "PaginatedSlimDocumentList",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to list documents. Optionally filter on supported fields.\n",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/documents",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
           "method": "POST",
           "name": {
             "originalName": "upload",
@@ -35102,6 +35398,322 @@
           "id": "",
           "method": "POST",
           "name": {
+            "originalName": "execute-workflow-stream",
+            "camelCase": {
+              "unsafeName": "executeWorkflowStream",
+              "safeName": "executeWorkflowStream"
+            },
+            "snakeCase": {
+              "unsafeName": "execute_workflow_stream",
+              "safeName": "execute_workflow_stream"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EXECUTE_WORKFLOW_STREAM",
+              "safeName": "EXECUTE_WORKFLOW_STREAM"
+            },
+            "pascalCase": {
+              "unsafeName": "ExecuteWorkflowStream",
+              "safeName": "ExecuteWorkflowStream"
+            }
+          },
+          "path": {
+            "head": "/v1/execute-workflow-stream",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "WorkflowStreamEvent",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nExecutes a deployed Workflow and streams back its results.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/execute-workflow-stream",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "method": "POST",
+          "name": {
+            "originalName": "generate",
+            "camelCase": {
+              "unsafeName": "generate",
+              "safeName": "generate"
+            },
+            "snakeCase": {
+              "unsafeName": "generate",
+              "safeName": "generate"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GENERATE",
+              "safeName": "GENERATE"
+            },
+            "pascalCase": {
+              "unsafeName": "Generate",
+              "safeName": "Generate"
+            }
+          },
+          "path": {
+            "head": "/v1/generate",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "GenerateResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/generate",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "method": "POST",
+          "name": {
+            "originalName": "generate-stream",
+            "camelCase": {
+              "unsafeName": "generateStream",
+              "safeName": "generateStream"
+            },
+            "snakeCase": {
+              "unsafeName": "generate_stream",
+              "safeName": "generate_stream"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GENERATE_STREAM",
+              "safeName": "GENERATE_STREAM"
+            },
+            "pascalCase": {
+              "unsafeName": "GenerateStream",
+              "safeName": "GenerateStream"
+            }
+          },
+          "path": {
+            "head": "/v1/generate-stream",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "GenerateStreamResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/generate-stream",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "method": "POST",
+          "name": {
+            "originalName": "search",
+            "camelCase": {
+              "unsafeName": "search",
+              "safeName": "search"
+            },
+            "snakeCase": {
+              "unsafeName": "search",
+              "safeName": "search"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SEARCH",
+              "safeName": "SEARCH"
+            },
+            "pascalCase": {
+              "unsafeName": "Search",
+              "safeName": "Search"
+            }
+          },
+          "path": {
+            "head": "/v1/search",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "SearchResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/search",
+            "parts": []
+          },
+          "allPathParameters": []
+        },
+        {
+          "id": "",
+          "method": "POST",
+          "name": {
             "originalName": "submit-completion-actuals",
             "camelCase": {
               "unsafeName": "submitCompletionActuals",
@@ -35194,6 +35806,199 @@
       "headers": [],
       "pathParameters": [],
       "endpoints": [
+        {
+          "id": "",
+          "method": "GET",
+          "name": {
+            "originalName": "retrieve",
+            "camelCase": {
+              "unsafeName": "retrieve",
+              "safeName": "retrieve"
+            },
+            "snakeCase": {
+              "unsafeName": "retrieve",
+              "safeName": "retrieve"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "RETRIEVE",
+              "safeName": "RETRIEVE"
+            },
+            "pascalCase": {
+              "unsafeName": "Retrieve",
+              "safeName": "Retrieve"
+            }
+          },
+          "path": {
+            "head": "/v1/model-versions/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": ""
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this model version.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ModelVersionRead",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a model version given its ID.\n",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/model-versions/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": ""
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this model version.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
         {
           "id": "",
           "method": "POST",
@@ -35578,6 +36383,199 @@
       "endpoints": [
         {
           "id": "",
+          "method": "POST",
+          "name": {
+            "originalName": "upsert_sandbox_scenario",
+            "camelCase": {
+              "unsafeName": "upsertSandboxScenario",
+              "safeName": "upsertSandboxScenario"
+            },
+            "snakeCase": {
+              "unsafeName": "upsert_sandbox_scenario",
+              "safeName": "upsert_sandbox_scenario"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPSERT_SANDBOX_SCENARIO",
+              "safeName": "UPSERT_SANDBOX_SCENARIO"
+            },
+            "pascalCase": {
+              "unsafeName": "UpsertSandboxScenario",
+              "safeName": "UpsertSandboxScenario"
+            }
+          },
+          "path": {
+            "head": "/v1/sandboxes/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/scenarios"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this sandbox.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "SandboxScenario",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/sandboxes/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/scenarios"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this sandbox.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
           "method": "DELETE",
           "name": {
             "originalName": "delete_sandbox_scenario",
@@ -35898,6 +36896,199 @@
       "endpoints": [
         {
           "id": "",
+          "method": "POST",
+          "name": {
+            "originalName": "upsert_test_suite_test_case",
+            "camelCase": {
+              "unsafeName": "upsertTestSuiteTestCase",
+              "safeName": "upsertTestSuiteTestCase"
+            },
+            "snakeCase": {
+              "unsafeName": "upsert_test_suite_test_case",
+              "safeName": "upsert_test_suite_test_case"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPSERT_TEST_SUITE_TEST_CASE",
+              "safeName": "UPSERT_TEST_SUITE_TEST_CASE"
+            },
+            "pascalCase": {
+              "unsafeName": "UpsertTestSuiteTestCase",
+              "safeName": "UpsertTestSuiteTestCase"
+            }
+          },
+          "path": {
+            "head": "/v1/test-suites/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/test-cases"
+              }
+            ]
+          },
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this test suite.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "TestSuiteTestCase",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [],
+          "auth": true,
+          "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/v1/test-suites/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "/test-cases"
+              }
+            ]
+          },
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "A UUID string identifying this test suite.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
+        },
+        {
+          "id": "",
           "method": "DELETE",
           "name": {
             "originalName": "delete_test_suite_test_case",
@@ -36164,15 +37355,251 @@
       ]
     }
   },
-  "webhookGroups": {},
   "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
   },
   "variables": [],
   "serviceTypeReferenceInfo": {
-    "typesReferencedOnlyByService": {},
-    "sharedTypes": []
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "service": "",
+    "types": [
+      "BlockTypeEnum",
+      "ChatMessage",
+      "ChatMessageRequest",
+      "ChatMessageRole",
+      "ConditionalNodeResult",
+      "ConditionalNodeResultData",
+      "ContentType",
+      "DeploymentNodeResult",
+      "DeploymentNodeResultData",
+      "DeploymentRead",
+      "DeploymentReadStatusEnum",
+      "Document",
+      "DocumentDocumentToDocumentIndex",
+      "DocumentIndexCreateRequest",
+      "DocumentIndexRead",
+      "DocumentIndexStatus",
+      "EnrichedNormalizedCompletion",
+      "EnvironmentEnum",
+      "EvaluationParams",
+      "EvaluationParamsRequest",
+      "ExecuteWorkflowStreamRequest",
+      "FinishReasonEnum",
+      "GenerateBodyRequest",
+      "GenerateErrorResponse",
+      "GenerateRequest",
+      "GenerateResponse",
+      "GenerateResultData",
+      "GenerateResultError",
+      "GenerateStreamBodyRequest",
+      "GenerateStreamResponse",
+      "GenerateStreamResult",
+      "GenerateStreamResultData",
+      "IndexingStateEnum",
+      "LogprobsEnum",
+      "ModelTypeEnum",
+      "ModelVersionBuildConfig",
+      "ModelVersionCompiledPrompt",
+      "ModelVersionExecConfig",
+      "ModelVersionExecConfigParameters",
+      "ModelVersionRead",
+      "ModelVersionReadStatusEnum",
+      "ModelVersionSandboxSnapshot",
+      "NormalizedLogProbs",
+      "NormalizedTokenLogProbs",
+      "PaginatedSlimDocumentList",
+      "ProcessingFailureReasonEnum",
+      "ProcessingStateEnum",
+      "PromptNodeResult",
+      "PromptNodeResultData",
+      "PromptTemplateBlock",
+      "PromptTemplateBlockData",
+      "PromptTemplateBlockDataRequest",
+      "PromptTemplateBlockProperties",
+      "PromptTemplateBlockPropertiesRequest",
+      "PromptTemplateBlockRequest",
+      "PromptTemplateInputVariable",
+      "PromptTemplateInputVariableRequest",
+      "ProviderEnum",
+      "RegisterPromptErrorResponse",
+      "RegisterPromptModelParametersRequest",
+      "RegisterPromptPrompt",
+      "RegisterPromptPromptInfoRequest",
+      "RegisterPromptRequestRequest",
+      "RegisteredPromptDeployment",
+      "RegisteredPromptModelVersion",
+      "RegisteredPromptSandbox",
+      "RegisteredPromptSandboxSnapshot",
+      "SandboxNodeResult",
+      "SandboxNodeResultData",
+      "SandboxScenario",
+      "ScenarioInput",
+      "ScenarioInputRequest",
+      "ScenarioInputTypeEnum",
+      "SearchErrorResponse",
+      "SearchFiltersRequest",
+      "SearchNodeResult",
+      "SearchNodeResultData",
+      "SearchRequestBodyRequest",
+      "SearchRequestOptionsRequest",
+      "SearchResponse",
+      "SearchResult",
+      "SearchResultMergingRequest",
+      "SearchWeightsRequest",
+      "SlimDocument",
+      "SlimDocumentStatusEnum",
+      "SubmitCompletionActualRequest",
+      "SubmitCompletionActualsErrorResponse",
+      "SubmitCompletionActualsRequest",
+      "TerminalNodeChatHistoryResult",
+      "TerminalNodeJsonResult",
+      "TerminalNodeResult",
+      "TerminalNodeResultData",
+      "TerminalNodeResultOutput",
+      "TerminalNodeStringResult",
+      "TestSuiteTestCase",
+      "TestSuiteTestCaseRequest",
+      "UploadDocumentBodyRequest",
+      "UploadDocumentErrorResponse",
+      "UploadDocumentResponse",
+      "UpsertSandboxScenarioRequestRequest",
+      "WorkflowEventError",
+      "WorkflowExecutionEventErrorCode",
+      "WorkflowExecutionNodeResultEvent",
+      "WorkflowExecutionWorkflowResultEvent",
+      "WorkflowNodeResultData",
+      "WorkflowNodeResultEvent",
+      "WorkflowNodeResultEventState",
+      "WorkflowRequestChatHistoryInputRequest",
+      "WorkflowRequestInputRequest",
+      "WorkflowRequestJSONInputRequest",
+      "WorkflowRequestStringInputRequest",
+      "WorkflowResultEvent",
+      "WorkflowResultEventOutputData",
+      "WorkflowResultEventOutputDataChatHistory",
+      "WorkflowResultEventOutputDataJSON",
+      "WorkflowResultEventOutputDataString",
+      "WorkflowStreamEvent"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {
+    "": {
+      "name": {
+        "originalName": "deployments",
+        "camelCase": {
+          "unsafeName": "deployments",
+          "safeName": "deployments"
+        },
+        "snakeCase": {
+          "unsafeName": "deployments",
+          "safeName": "deployments"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "DEPLOYMENTS",
+          "safeName": "DEPLOYMENTS"
+        },
+        "pascalCase": {
+          "unsafeName": "Deployments",
+          "safeName": "Deployments"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "deployments",
+          "camelCase": {
+            "unsafeName": "deployments",
+            "safeName": "deployments"
+          },
+          "snakeCase": {
+            "unsafeName": "deployments",
+            "safeName": "deployments"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DEPLOYMENTS",
+            "safeName": "DEPLOYMENTS"
+          },
+          "pascalCase": {
+            "unsafeName": "Deployments",
+            "safeName": "Deployments"
+          }
+        }
+      },
+      "service": "test-suites",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
   }
 }
