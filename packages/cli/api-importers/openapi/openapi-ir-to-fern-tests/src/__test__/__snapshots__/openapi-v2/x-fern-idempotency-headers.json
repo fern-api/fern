@@ -86,6 +86,86 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "send_Request",
+              "camelCase": {
+                "unsafeName": "sendRequest",
+                "safeName": "sendRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "send_request",
+                "safeName": "send_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SEND_REQUEST",
+                "safeName": "SEND_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SendRequest",
+                "safeName": "SendRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "send",
+                    "camelCase": {
+                      "unsafeName": "send",
+                      "safeName": "send"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "send",
+                      "safeName": "send"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SEND",
+                      "safeName": "SEND"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Send",
+                      "safeName": "Send"
+                    }
+                  },
+                  "wireValue": "send"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SendPostRequestBodySchemaSend",
+                    "camelCase": {
+                      "unsafeName": "sendPostRequestBodySchemaSend",
+                      "safeName": "sendPostRequestBodySchemaSend"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "send_post_request_body_schema_send",
+                      "safeName": "send_post_request_body_schema_send"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SEND_POST_REQUEST_BODY_SCHEMA_SEND",
+                      "safeName": "SEND_POST_REQUEST_BODY_SCHEMA_SEND"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SendPostRequestBodySchemaSend",
+                      "safeName": "SendPostRequestBodySchemaSend"
+                    }
+                  },
+                  "typeId": "SendPostRequestBodySchemaSend",
+                  "inline": false,
+                  "type": "named"
+                }
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

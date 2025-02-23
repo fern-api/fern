@@ -682,6 +682,86 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "postSuccessInlineBetaBody_Request",
+              "camelCase": {
+                "unsafeName": "postSuccessInlineBetaBodyRequest",
+                "safeName": "postSuccessInlineBetaBodyRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_success_inline_beta_body_request",
+                "safeName": "post_success_inline_beta_body_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_SUCCESS_INLINE_BETA_BODY_REQUEST",
+                "safeName": "POST_SUCCESS_INLINE_BETA_BODY_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostSuccessInlineBetaBodyRequest",
+                "safeName": "PostSuccessInlineBetaBodyRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "fine_setting",
+                    "camelCase": {
+                      "unsafeName": "fineSetting",
+                      "safeName": "fineSetting"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "fine_setting",
+                      "safeName": "fine_setting"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FINE_SETTING",
+                      "safeName": "FINE_SETTING"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FineSetting",
+                      "safeName": "FineSetting"
+                    }
+                  },
+                  "wireValue": "fine_setting"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SuccessInlineBetaBodyPostRequestBodySchemaFineSetting",
+                    "camelCase": {
+                      "unsafeName": "successInlineBetaBodyPostRequestBodySchemaFineSetting",
+                      "safeName": "successInlineBetaBodyPostRequestBodySchemaFineSetting"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "success_inline_beta_body_post_request_body_schema_fine_setting",
+                      "safeName": "success_inline_beta_body_post_request_body_schema_fine_setting"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SUCCESS_INLINE_BETA_BODY_POST_REQUEST_BODY_SCHEMA_FINE_SETTING",
+                      "safeName": "SUCCESS_INLINE_BETA_BODY_POST_REQUEST_BODY_SCHEMA_FINE_SETTING"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SuccessInlineBetaBodyPostRequestBodySchemaFineSetting",
+                      "safeName": "SuccessInlineBetaBodyPostRequestBodySchemaFineSetting"
+                    }
+                  },
+                  "typeId": "SuccessInlineBetaBodyPostRequestBodySchemaFineSetting",
+                  "inline": false,
+                  "type": "named"
+                }
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

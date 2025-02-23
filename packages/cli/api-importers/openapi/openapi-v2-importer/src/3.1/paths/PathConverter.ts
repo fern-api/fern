@@ -1,6 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 
+import { TypeDeclaration } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -14,6 +15,7 @@ export declare namespace PathConverter {
 
     export interface Output {
         endpoints: OperationConverter.Output[];
+        inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
 
@@ -38,6 +40,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
 
         // Check each HTTP method
         const methods = ["get", "post", "put", "delete", "patch"] as const;
+        const inlinedTypes: Record<string, TypeDeclaration> = {};
+
         for (const method of methods) {
             const operation = this.pathItem[method];
             if (operation != null) {
@@ -50,12 +54,14 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 const convertedOperation = operationConverter.convert({ context, errorCollector });
                 if (convertedOperation != null) {
                     endpoints.push(convertedOperation);
+                    Object.assign(inlinedTypes, convertedOperation.inlinedTypes);
                 }
             }
         }
 
         return {
-            endpoints
+            endpoints,
+            inlinedTypes
         };
     }
 }

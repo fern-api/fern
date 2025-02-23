@@ -294,7 +294,58 @@
             "head": "/generateContent",
             "parts": []
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "model",
+                "camelCase": {
+                  "unsafeName": "model",
+                  "safeName": "model"
+                },
+                "snakeCase": {
+                  "unsafeName": "model",
+                  "safeName": "model"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MODEL",
+                  "safeName": "MODEL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Model",
+                  "safeName": "Model"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "model",
+                  "camelCase": {
+                    "unsafeName": "model",
+                    "safeName": "model"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "model",
+                    "safeName": "model"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MODEL",
+                    "safeName": "MODEL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Model",
+                    "safeName": "Model"
+                  }
+                },
+                "typeId": "model",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     }

@@ -238,6 +238,138 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "postV1Users_Request",
+              "camelCase": {
+                "unsafeName": "postV1UsersRequest",
+                "safeName": "postV1UsersRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_v_1_users_request",
+                "safeName": "post_v_1_users_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_V_1_USERS_REQUEST",
+                "safeName": "POST_V_1_USERS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostV1UsersRequest",
+                "safeName": "PostV1UsersRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "public_property",
+                    "camelCase": {
+                      "unsafeName": "publicProperty",
+                      "safeName": "publicProperty"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "public_property",
+                      "safeName": "public_property"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PUBLIC_PROPERTY",
+                      "safeName": "PUBLIC_PROPERTY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PublicProperty",
+                      "safeName": "PublicProperty"
+                    }
+                  },
+                  "wireValue": "public_property"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1UsersPostRequestBodySchemaPublicProperty",
+                    "camelCase": {
+                      "unsafeName": "v1UsersPostRequestBodySchemaPublicProperty",
+                      "safeName": "v1UsersPostRequestBodySchemaPublicProperty"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_users_post_request_body_schema_public_property",
+                      "safeName": "v_1_users_post_request_body_schema_public_property"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_USERS_POST_REQUEST_BODY_SCHEMA_PUBLIC_PROPERTY",
+                      "safeName": "V_1_USERS_POST_REQUEST_BODY_SCHEMA_PUBLIC_PROPERTY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1UsersPostRequestBodySchemaPublicProperty",
+                      "safeName": "V1UsersPostRequestBodySchemaPublicProperty"
+                    }
+                  },
+                  "typeId": "V1UsersPostRequestBodySchemaPublicProperty",
+                  "inline": false,
+                  "type": "named"
+                }
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "private_property",
+                    "camelCase": {
+                      "unsafeName": "privateProperty",
+                      "safeName": "privateProperty"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "private_property",
+                      "safeName": "private_property"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PRIVATE_PROPERTY",
+                      "safeName": "PRIVATE_PROPERTY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PrivateProperty",
+                      "safeName": "PrivateProperty"
+                    }
+                  },
+                  "wireValue": "private_property"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1UsersPostRequestBodySchemaPrivateProperty",
+                    "camelCase": {
+                      "unsafeName": "v1UsersPostRequestBodySchemaPrivateProperty",
+                      "safeName": "v1UsersPostRequestBodySchemaPrivateProperty"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_users_post_request_body_schema_private_property",
+                      "safeName": "v_1_users_post_request_body_schema_private_property"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_USERS_POST_REQUEST_BODY_SCHEMA_PRIVATE_PROPERTY",
+                      "safeName": "V_1_USERS_POST_REQUEST_BODY_SCHEMA_PRIVATE_PROPERTY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1UsersPostRequestBodySchemaPrivateProperty",
+                      "safeName": "V1UsersPostRequestBodySchemaPrivateProperty"
+                    }
+                  },
+                  "typeId": "V1UsersPostRequestBodySchemaPrivateProperty",
+                  "inline": false,
+                  "type": "named"
+                }
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

@@ -1115,6 +1115,87 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "user_v3_Request",
+              "camelCase": {
+                "unsafeName": "userV3Request",
+                "safeName": "userV3Request"
+              },
+              "snakeCase": {
+                "unsafeName": "user_v_3_request",
+                "safeName": "user_v_3_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "USER_V_3_REQUEST",
+                "safeName": "USER_V_3_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "UserV3Request",
+                "safeName": "UserV3Request"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "id",
+                    "camelCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "id",
+                      "safeName": "id"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ID",
+                      "safeName": "ID"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Id",
+                      "safeName": "Id"
+                    }
+                  },
+                  "wireValue": "id"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V3UsersPostRequestBodySchemaId",
+                    "camelCase": {
+                      "unsafeName": "v3UsersPostRequestBodySchemaId",
+                      "safeName": "v3UsersPostRequestBodySchemaId"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_3_users_post_request_body_schema_id",
+                      "safeName": "v_3_users_post_request_body_schema_id"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_3_USERS_POST_REQUEST_BODY_SCHEMA_ID",
+                      "safeName": "V_3_USERS_POST_REQUEST_BODY_SCHEMA_ID"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V3UsersPostRequestBodySchemaId",
+                      "safeName": "V3UsersPostRequestBodySchemaId"
+                    }
+                  },
+                  "typeId": "V3UsersPostRequestBodySchemaId",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": ""
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

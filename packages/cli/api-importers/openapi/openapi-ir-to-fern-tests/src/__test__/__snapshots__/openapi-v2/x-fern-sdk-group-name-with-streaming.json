@@ -655,6 +655,86 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "user_get_Request",
+              "camelCase": {
+                "unsafeName": "userGetRequest",
+                "safeName": "userGetRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "user_get_request",
+                "safeName": "user_get_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "USER_GET_REQUEST",
+                "safeName": "USER_GET_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "UserGetRequest",
+                "safeName": "UserGetRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "stream",
+                    "camelCase": {
+                      "unsafeName": "stream",
+                      "safeName": "stream"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "stream",
+                      "safeName": "stream"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "STREAM",
+                      "safeName": "STREAM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Stream",
+                      "safeName": "Stream"
+                    }
+                  },
+                  "wireValue": "stream"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "UserUserIdPostRequestBodySchemaStream",
+                    "camelCase": {
+                      "unsafeName": "userUserIdPostRequestBodySchemaStream",
+                      "safeName": "userUserIdPostRequestBodySchemaStream"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "user_user_id_post_request_body_schema_stream",
+                      "safeName": "user_user_id_post_request_body_schema_stream"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "USER_USER_ID_POST_REQUEST_BODY_SCHEMA_STREAM",
+                      "safeName": "USER_USER_ID_POST_REQUEST_BODY_SCHEMA_STREAM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UserUserIdPostRequestBodySchemaStream",
+                      "safeName": "UserUserIdPostRequestBodySchemaStream"
+                    }
+                  },
+                  "typeId": "UserUserIdPostRequestBodySchemaStream",
+                  "inline": false,
+                  "type": "named"
+                }
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -669,7 +749,58 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     }

@@ -33,7 +33,7 @@ export declare namespace ParameterConverter {
 
 export class ParameterConverter extends AbstractConverter<OpenAPIConverterContext3_1, ParameterConverter.Output> {
 
-    private static STRING = TypeReference.primitive({
+    public static STRING = TypeReference.primitive({
         v1: "STRING",
         v2: PrimitiveTypeV2.string({
             default: undefined,
@@ -41,7 +41,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         })
     });
     
-    private static OPTIONAL_STRING = TypeReference.container(
+    public static OPTIONAL_STRING = TypeReference.container(
         ContainerType.optional(ParameterConverter.STRING)
     );
 

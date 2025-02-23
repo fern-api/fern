@@ -2124,7 +2124,58 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "organizationId",
+                "camelCase": {
+                  "unsafeName": "organizationId",
+                  "safeName": "organizationId"
+                },
+                "snakeCase": {
+                  "unsafeName": "organization_id",
+                  "safeName": "organization_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORGANIZATION_ID",
+                  "safeName": "ORGANIZATION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrganizationId",
+                  "safeName": "OrganizationId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "organizationId",
+                  "camelCase": {
+                    "unsafeName": "organizationId",
+                    "safeName": "organizationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "organization_id",
+                    "safeName": "organization_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORGANIZATION_ID",
+                    "safeName": "ORGANIZATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrganizationId",
+                    "safeName": "OrganizationId"
+                  }
+                },
+                "typeId": "organizationId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     },
@@ -2484,7 +2535,58 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     }

@@ -1,7 +1,7 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpEndpoint, HttpHeader, HttpMethod, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter, TypeDeclaration } from "@fern-api/ir-sdk";
 
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter } from "../../AbstractConverter";
@@ -10,6 +10,7 @@ import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";
+import { RequestBodyConverter } from "./RequestBodyConverter";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractConverter.Args {
@@ -21,6 +22,7 @@ export declare namespace OperationConverter {
     export interface Output {
         group?: string[];
         endpoint: HttpEndpoint;
+        inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
 
@@ -59,6 +61,23 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
 
+        let requestBody: HttpRequestBody | undefined;
+        let inlinedTypes: Record<string, TypeDeclaration> = {};
+
+        if (this.operation.requestBody != null && !context.isReferenceObject(this.operation.requestBody)) {
+            const requestBodyConverter = new RequestBodyConverter({
+                breadcrumbs: [...this.breadcrumbs, "requestBody"],
+                requestBody: this.operation.requestBody,
+                group: group ?? [],
+                method
+            });
+            const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
+            if (convertedRequestBody != null) {
+                requestBody = convertedRequestBody.requestBody;
+                inlinedTypes = convertedRequestBody.inlinedTypes;
+            }
+        }
+
 
         // TODO: Convert operation parameters, request body, responses
         return {
@@ -73,11 +92,11 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 pathParameters: pathParameters,
                 queryParameters: queryParameters,
                 headers: headers,
-                requestBody: undefined,
+                requestBody,
                 sdkRequest: undefined,
                 response: undefined,
                 errors: [],
-                auth: false,
+                auth: this.operation.security != null || context.spec.security != null,
                 availability: undefined,
                 docs: this.operation.description,
                 userSpecifiedExamples: [],
@@ -85,10 +104,11 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 idempotent: false,
                 basePath: undefined,
                 fullPath: constructHttpPath(this.path),
-                allPathParameters: [],
+                allPathParameters: pathParameters,
                 pagination: undefined,
                 transport: undefined
-            }
+            },
+            inlinedTypes
         };
     }
 
@@ -152,6 +172,27 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                         break;
                 }
             }
+        }
+
+        // Parse path parameters from URL
+        const PATH_PARAM_REGEX = /{([^}]+)}/g;
+        const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
+
+        // Check if any path parameters are missing and add them
+        const missingPathParams = pathParams.filter(
+            (param) => !pathParameters.some((p) => p.name.originalName === param)
+        );
+        for (const param of missingPathParams) {
+            if (param == null) {
+                continue;
+            }
+            pathParameters.push({
+                name: context.casingsGenerator.generateName(param),
+                valueType: ParameterConverter.STRING,
+                docs: undefined,
+                location: "ENDPOINT",
+                variable: undefined
+            });
         }
 
         return {

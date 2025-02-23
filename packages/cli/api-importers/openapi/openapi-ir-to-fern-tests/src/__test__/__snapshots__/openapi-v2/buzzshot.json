@@ -9012,7 +9012,59 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "photo_id",
+                "camelCase": {
+                  "unsafeName": "photoId",
+                  "safeName": "photoId"
+                },
+                "snakeCase": {
+                  "unsafeName": "photo_id",
+                  "safeName": "photo_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PHOTO_ID",
+                  "safeName": "PHOTO_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PhotoId",
+                  "safeName": "PhotoId"
+                }
+              },
+              "docs": "",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "photo_id",
+                  "camelCase": {
+                    "unsafeName": "photoId",
+                    "safeName": "photoId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "photo_id",
+                    "safeName": "photo_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PHOTO_ID",
+                    "safeName": "PHOTO_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PhotoId",
+                    "safeName": "PhotoId"
+                  }
+                },
+                "typeId": "photo_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     }

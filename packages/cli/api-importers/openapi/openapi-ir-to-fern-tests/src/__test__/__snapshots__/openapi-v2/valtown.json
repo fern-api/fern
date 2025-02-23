@@ -5348,7 +5348,110 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "username",
+                "camelCase": {
+                  "unsafeName": "username",
+                  "safeName": "username"
+                },
+                "snakeCase": {
+                  "unsafeName": "username",
+                  "safeName": "username"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USERNAME",
+                  "safeName": "USERNAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Username",
+                  "safeName": "Username"
+                }
+              },
+              "docs": "Username of the user whose val you are looking for",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "username",
+                  "camelCase": {
+                    "unsafeName": "username",
+                    "safeName": "username"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "username",
+                    "safeName": "username"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USERNAME",
+                    "safeName": "USERNAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Username",
+                    "safeName": "Username"
+                  }
+                },
+                "typeId": "username",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "val_name",
+                "camelCase": {
+                  "unsafeName": "valName",
+                  "safeName": "valName"
+                },
+                "snakeCase": {
+                  "unsafeName": "val_name",
+                  "safeName": "val_name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VAL_NAME",
+                  "safeName": "VAL_NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "ValName",
+                  "safeName": "ValName"
+                }
+              },
+              "docs": "Name of the val you’re looking for",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "val_name",
+                  "camelCase": {
+                    "unsafeName": "valName",
+                    "safeName": "valName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "val_name",
+                    "safeName": "val_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VAL_NAME",
+                    "safeName": "VAL_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValName",
+                    "safeName": "ValName"
+                  }
+                },
+                "typeId": "val_name",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     },
@@ -5819,7 +5922,59 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "key",
+                "camelCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "snakeCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KEY",
+                  "safeName": "KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Key",
+                  "safeName": "Key"
+                }
+              },
+              "docs": "Key that uniquely identifies this blob",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "key",
+                  "camelCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "KEY",
+                    "safeName": "KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Key",
+                    "safeName": "Key"
+                  }
+                },
+                "typeId": "key",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         },
         {
           "id": "",
@@ -5908,7 +6063,7 @@
           "queryParameters": [],
           "headers": [],
           "errors": [],
-          "auth": false,
+          "auth": true,
           "docs": "Store data in blob storage",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [],
@@ -5922,7 +6077,59 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "key",
+                "camelCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "snakeCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KEY",
+                  "safeName": "KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Key",
+                  "safeName": "Key"
+                }
+              },
+              "docs": "Key that uniquely identifies this blob",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "key",
+                  "camelCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "KEY",
+                    "safeName": "KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Key",
+                    "safeName": "Key"
+                  }
+                },
+                "typeId": "key",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         },
         {
           "id": "",
@@ -6011,7 +6218,7 @@
           "queryParameters": [],
           "headers": [],
           "errors": [],
-          "auth": false,
+          "auth": true,
           "docs": "Delete a blob",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [],
@@ -6025,7 +6232,59 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "key",
+                "camelCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "snakeCase": {
+                  "unsafeName": "key",
+                  "safeName": "key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KEY",
+                  "safeName": "KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Key",
+                  "safeName": "Key"
+                }
+              },
+              "docs": "Key that uniquely identifies this blob",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "key",
+                  "camelCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "KEY",
+                    "safeName": "KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Key",
+                    "safeName": "Key"
+                  }
+                },
+                "typeId": "key",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     },
@@ -6292,7 +6551,59 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "user_id",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "docs": "User Id",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "user_id",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "user_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     },
@@ -6378,8 +6689,141 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "A set of statements to be run in a single batch",
+            "name": {
+              "originalName": "sqlite_batch_Request",
+              "camelCase": {
+                "unsafeName": "sqliteBatchRequest",
+                "safeName": "sqliteBatchRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "sqlite_batch_request",
+                "safeName": "sqlite_batch_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SQLITE_BATCH_REQUEST",
+                "safeName": "SQLITE_BATCH_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SqliteBatchRequest",
+                "safeName": "SqliteBatchRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "statements",
+                    "camelCase": {
+                      "unsafeName": "statements",
+                      "safeName": "statements"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "statements",
+                      "safeName": "statements"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "STATEMENTS",
+                      "safeName": "STATEMENTS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Statements",
+                      "safeName": "Statements"
+                    }
+                  },
+                  "wireValue": "statements"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1SqliteBatchPostRequestBodySchemaStatements",
+                    "camelCase": {
+                      "unsafeName": "v1SqliteBatchPostRequestBodySchemaStatements",
+                      "safeName": "v1SqliteBatchPostRequestBodySchemaStatements"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_sqlite_batch_post_request_body_schema_statements",
+                      "safeName": "v_1_sqlite_batch_post_request_body_schema_statements"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS",
+                      "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1SqliteBatchPostRequestBodySchemaStatements",
+                      "safeName": "V1SqliteBatchPostRequestBodySchemaStatements"
+                    }
+                  },
+                  "typeId": "V1SqliteBatchPostRequestBodySchemaStatements",
+                  "inline": false,
+                  "type": "named"
+                }
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "mode",
+                    "camelCase": {
+                      "unsafeName": "mode",
+                      "safeName": "mode"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "mode",
+                      "safeName": "mode"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "MODE",
+                      "safeName": "MODE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Mode",
+                      "safeName": "Mode"
+                    }
+                  },
+                  "wireValue": "mode"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1SqliteBatchPostRequestBodySchemaMode",
+                    "camelCase": {
+                      "unsafeName": "v1SqliteBatchPostRequestBodySchemaMode",
+                      "safeName": "v1SqliteBatchPostRequestBodySchemaMode"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_sqlite_batch_post_request_body_schema_mode",
+                      "safeName": "v_1_sqlite_batch_post_request_body_schema_mode"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE",
+                      "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1SqliteBatchPostRequestBodySchemaMode",
+                      "safeName": "V1SqliteBatchPostRequestBodySchemaMode"
+                    }
+                  },
+                  "typeId": "V1SqliteBatchPostRequestBodySchemaMode",
+                  "inline": false,
+                  "type": "named"
+                }
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
-          "auth": false,
+          "auth": true,
           "docs": "Execute a batch of SQLite statements and return results for all of them",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [],
@@ -6587,7 +7031,7 @@
           "queryParameters": [],
           "headers": [],
           "errors": [],
-          "auth": false,
+          "auth": true,
           "docs": "Cancel a running val",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [],
@@ -6605,7 +7049,110 @@
               }
             ]
           },
-          "allPathParameters": []
+          "allPathParameters": [
+            {
+              "name": {
+                "originalName": "val_id",
+                "camelCase": {
+                  "unsafeName": "valId",
+                  "safeName": "valId"
+                },
+                "snakeCase": {
+                  "unsafeName": "val_id",
+                  "safeName": "val_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VAL_ID",
+                  "safeName": "VAL_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ValId",
+                  "safeName": "ValId"
+                }
+              },
+              "docs": "Id of a val",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "val_id",
+                  "camelCase": {
+                    "unsafeName": "valId",
+                    "safeName": "valId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "val_id",
+                    "safeName": "val_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VAL_ID",
+                    "safeName": "VAL_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValId",
+                    "safeName": "ValId"
+                  }
+                },
+                "typeId": "val_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "evaluation_id",
+                "camelCase": {
+                  "unsafeName": "evaluationId",
+                  "safeName": "evaluationId"
+                },
+                "snakeCase": {
+                  "unsafeName": "evaluation_id",
+                  "safeName": "evaluation_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EVALUATION_ID",
+                  "safeName": "EVALUATION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "EvaluationId",
+                  "safeName": "EvaluationId"
+                }
+              },
+              "docs": "The ID of the evaluation - the specific time that a val was run - that you want to cancel",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "evaluation_id",
+                  "camelCase": {
+                    "unsafeName": "evaluationId",
+                    "safeName": "evaluationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "evaluation_id",
+                    "safeName": "evaluation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EVALUATION_ID",
+                    "safeName": "EVALUATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EvaluationId",
+                    "safeName": "EvaluationId"
+                  }
+                },
+                "typeId": "evaluation_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ]
         }
       ]
     },
@@ -6691,8 +7238,249 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Fields for an email to be sent",
+            "name": {
+              "originalName": "emails_send_Request",
+              "camelCase": {
+                "unsafeName": "emailsSendRequest",
+                "safeName": "emailsSendRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "emails_send_request",
+                "safeName": "emails_send_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "EMAILS_SEND_REQUEST",
+                "safeName": "EMAILS_SEND_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "EmailsSendRequest",
+                "safeName": "EmailsSendRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "subject",
+                    "camelCase": {
+                      "unsafeName": "subject",
+                      "safeName": "subject"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "subject",
+                      "safeName": "subject"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SUBJECT",
+                      "safeName": "SUBJECT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Subject",
+                      "safeName": "Subject"
+                    }
+                  },
+                  "wireValue": "subject"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1EmailPostRequestBodySchemaSubject",
+                    "camelCase": {
+                      "unsafeName": "v1EmailPostRequestBodySchemaSubject",
+                      "safeName": "v1EmailPostRequestBodySchemaSubject"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_email_post_request_body_schema_subject",
+                      "safeName": "v_1_email_post_request_body_schema_subject"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_SUBJECT",
+                      "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_SUBJECT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1EmailPostRequestBodySchemaSubject",
+                      "safeName": "V1EmailPostRequestBodySchemaSubject"
+                    }
+                  },
+                  "typeId": "V1EmailPostRequestBodySchemaSubject",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The subject line of the email"
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "text",
+                    "camelCase": {
+                      "unsafeName": "text",
+                      "safeName": "text"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "text",
+                      "safeName": "text"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TEXT",
+                      "safeName": "TEXT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Text",
+                      "safeName": "Text"
+                    }
+                  },
+                  "wireValue": "text"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1EmailPostRequestBodySchemaText",
+                    "camelCase": {
+                      "unsafeName": "v1EmailPostRequestBodySchemaText",
+                      "safeName": "v1EmailPostRequestBodySchemaText"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_email_post_request_body_schema_text",
+                      "safeName": "v_1_email_post_request_body_schema_text"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TEXT",
+                      "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TEXT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1EmailPostRequestBodySchemaText",
+                      "safeName": "V1EmailPostRequestBodySchemaText"
+                    }
+                  },
+                  "typeId": "V1EmailPostRequestBodySchemaText",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Text content of the email, for email clients that may not support HTML"
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "html",
+                    "camelCase": {
+                      "unsafeName": "html",
+                      "safeName": "html"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "html",
+                      "safeName": "html"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "HTML",
+                      "safeName": "HTML"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Html",
+                      "safeName": "Html"
+                    }
+                  },
+                  "wireValue": "html"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1EmailPostRequestBodySchemaHtml",
+                    "camelCase": {
+                      "unsafeName": "v1EmailPostRequestBodySchemaHtml",
+                      "safeName": "v1EmailPostRequestBodySchemaHtml"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_email_post_request_body_schema_html",
+                      "safeName": "v_1_email_post_request_body_schema_html"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_HTML",
+                      "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_HTML"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1EmailPostRequestBodySchemaHtml",
+                      "safeName": "V1EmailPostRequestBodySchemaHtml"
+                    }
+                  },
+                  "typeId": "V1EmailPostRequestBodySchemaHtml",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "HTML content of the email. Can be specified alongside text"
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "attachments",
+                    "camelCase": {
+                      "unsafeName": "attachments",
+                      "safeName": "attachments"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "attachments",
+                      "safeName": "attachments"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ATTACHMENTS",
+                      "safeName": "ATTACHMENTS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Attachments",
+                      "safeName": "Attachments"
+                    }
+                  },
+                  "wireValue": "attachments"
+                },
+                "valueType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "V1EmailPostRequestBodySchemaAttachments",
+                    "camelCase": {
+                      "unsafeName": "v1EmailPostRequestBodySchemaAttachments",
+                      "safeName": "v1EmailPostRequestBodySchemaAttachments"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "v_1_email_post_request_body_schema_attachments",
+                      "safeName": "v_1_email_post_request_body_schema_attachments"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS",
+                      "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "V1EmailPostRequestBodySchemaAttachments",
+                      "safeName": "V1EmailPostRequestBodySchemaAttachments"
+                    }
+                  },
+                  "typeId": "V1EmailPostRequestBodySchemaAttachments",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A list of attachments to add to the email"
+              }
+            ],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "errors": [],
-          "auth": false,
+          "auth": true,
           "docs": "Send emails",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [],
