@@ -36,7 +36,6 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
@@ -702,7 +701,7 @@ export class DocsDefinitionResolver {
         let ir: IntermediateRepresentation;
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext }) as any;
+            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
         } else {
             ir = generateIntermediateRepresentation({
                 workspace,

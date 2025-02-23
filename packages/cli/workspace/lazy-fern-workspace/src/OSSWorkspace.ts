@@ -14,6 +14,7 @@ import { parse } from "@fern-api/openapi-ir-parser";
 import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
 
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -76,7 +77,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    public async getIntermediateRepresentation({ context }: { context: TaskContext }): Promise<unknown> {
+    public async getIntermediateRepresentation({ context }: { context: TaskContext }): Promise<IntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({
             context,
@@ -96,7 +97,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
             }
         }
-        return {};
+        throw new Error("No OpenAPI document found");
     }
 
     public async toFernWorkspace(

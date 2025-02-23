@@ -54,6 +54,9 @@
     },
     {
       "path": "../../api-importers/openapi/openapi-v2-importer"
+    },
+    {
+      "path": "../../../ir-sdk"
     }
   ]
 }
