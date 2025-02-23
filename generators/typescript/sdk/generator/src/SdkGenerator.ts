@@ -717,19 +717,83 @@ export class SdkGenerator {
             // Next is to make below code work, and generate the websocket client
 
         
-            // this.withSourceFile({
-            //     filepath,
-            //     run: ({ sourceFile, importsManager }) => {
-            //         console.log("Generating websocket client context");
-            //         console.log("filepath:", filepath);
-            //        // const context = this.generateSdkContext({ sourceFile, importsManager });
-            //         // TODO: Add websocket client generation logic here
-            //         // context.sourceFile.addStatements([
-            //         //     "// Generated websocket client",
-            //         //     `// For: ${websocketClient.name.originalName}`
-            //         // ]);
-            //     }
-            // });
+            this.withSourceFile({
+                filepath,
+                run: ({ sourceFile, importsManager }) => {
+                    console.log("Generating websocket client context");
+
+
+                    sourceFile.addStatements([
+                        "import { ReconnectingWebsocket } from './core/websocket/ReconnectingWebsocket';",
+                        "import { WebsocketMessage } from './core/websocket/WebsocketMessage';",
+                        "",
+                        "interface WebsocketOptions {",
+                        "    reconnect?: boolean;",
+                        "    maxRetries?: number;", 
+                        "    retryDelay?: number;",
+                        "}",
+                        "",
+                        "const DEFAULT_OPTIONS: WebsocketOptions = {",
+                        "    reconnect: true,",
+                        "    maxRetries: 5,",
+                        "    retryDelay: 1000",
+                        "};"
+                    ]);
+                    sourceFile.addClass({
+                        name: "Client", 
+                        isExported: true,
+                        methods: [
+                            {
+                                name: "connect",
+                                isAsync: true,
+                                returnType: "Promise<void>",
+                                parameters: [
+                                    {
+                                        name: "url",
+                                        type: "string"
+                                    }
+                                ],
+                                statements: [
+                                    "await this._ws?.connect(url)"
+                                ]
+                            },
+                            {
+                                name: "disconnect",
+                                isAsync: true,
+                                returnType: "Promise<void>",
+                                statements: [
+                                    "await this._ws?.disconnect()"
+                                ]
+                            },
+                            {
+                                name: "send",
+                                isAsync: true,
+                                returnType: "Promise<void>",
+                                parameters: [
+                                    {
+                                        name: "data",
+                                        type: "unknown" 
+                                    }
+                                ],
+                                statements: [
+                                    "await this._ws?.send(JSON.stringify(data))"
+                                ]
+                            }
+                        ]
+                    });
+
+
+
+
+
+                   // const context = this.generateSdkContext({ sourceFile, importsManager });
+                    // TODO: Add websocket client generation logic here
+                    // context.sourceFile.addStatements([
+                    //     "// Generated websocket client",
+                    //     `// For: ${websocketClient.name.originalName}`
+                    // ]);
+                }
+            });
         }
     }
 
