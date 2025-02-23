@@ -773,6 +773,75 @@ export class SdkGenerator {
     
     private generateWebsocketClient() {
         console.log("Generating websocket client");
+
+        this.withSourceFile({
+            filepath: {
+                directories: [],
+                file: {
+                    nameOnDisk: "deep.ts",
+                }
+            },
+            run: ({ sourceFile, importsManager }) => {
+                sourceFile.addStatements([
+                    "import { ReconnectingWebsocket } from './core/websocket/ReconnectingWebsocket';",
+                    "import { WebsocketMessage } from './core/websocket/WebsocketMessage';",
+                    "",
+                    "interface WebsocketOptions {",
+                    "    reconnect?: boolean;",
+                    "    maxRetries?: number;", 
+                    "    retryDelay?: number;",
+                    "}",
+                    "",
+                    "const DEFAULT_OPTIONS: WebsocketOptions = {",
+                    "    reconnect: true,",
+                    "    maxRetries: 5,",
+                    "    retryDelay: 1000",
+                    "};"
+                ]);
+                sourceFile.addClass({
+                    name: "Client", 
+                    isExported: true,
+                    methods: [
+                        {
+                            name: "connect",
+                            isAsync: true,
+                            returnType: "Promise<void>",
+                            parameters: [
+                                {
+                                    name: "url",
+                                    type: "string"
+                                }
+                            ],
+                            statements: [
+                                "await this._ws?.connect(url)"
+                            ]
+                        },
+                        {
+                            name: "disconnect",
+                            isAsync: true,
+                            returnType: "Promise<void>",
+                            statements: [
+                                "await this._ws?.disconnect()"
+                            ]
+                        },
+                        {
+                            name: "send",
+                            isAsync: true,
+                            returnType: "Promise<void>",
+                            parameters: [
+                                {
+                                    name: "data",
+                                    type: "unknown" 
+                                }
+                            ],
+                            statements: [
+                                "await this._ws?.send(JSON.stringify(data))"
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
             
         // generate a Client.ts per channel
 
