@@ -35,6 +35,9 @@
     },
     {
       "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/ir-utils"
     }
   ]
 }

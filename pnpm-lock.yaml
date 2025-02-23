@@ -4325,6 +4325,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger
@@ -5719,6 +5722,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../../workspace/lazy-fern-workspace
@@ -5798,6 +5804,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../commons/path-utils
@@ -7686,6 +7695,55 @@ importers:
       '@types/stream-json':
         specifier: ^1.7.7
         version: 1.7.7
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/commons/ir-utils:
+    dependencies:
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/json-schema':
+        specifier: ^7.0.15
+        version: 7.0.15
+      '@types/lodash':
+        specifier: ^4.17.4
+        version: 4.17.4
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@types/title':
+        specifier: ^3.4.3
+        version: 3.4.3
+      '@types/ua-parser-js':
+        specifier: ^0.7.39
+        version: 0.7.39
+      '@types/whatwg-mimetype':
+        specifier: ^3.0.2
+        version: 3.0.2
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7

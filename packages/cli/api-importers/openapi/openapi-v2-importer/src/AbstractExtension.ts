@@ -1,33 +1,19 @@
+import { AbstractConverter } from "./AbstractConverter";
 import { AbstractConverterContext } from "./AbstractConverterContext";
-import { ErrorCollector } from "./ErrorCollector";
 
-export declare namespace AbstractExtension {
-    export interface Args {
-        breadcrumbs?: string[];
-    }
-}
-
-/**
- * Abstract base class for OpenAPI extensions
- */
-export abstract class AbstractExtension<Context extends AbstractConverterContext<any>, Output> {
-    protected breadcrumbs: string[] = [];
-
-    constructor({ breadcrumbs = [] }: AbstractExtension.Args) {
-        this.breadcrumbs = breadcrumbs;
-    }
-
+export abstract class AbstractExtension<
+    Context extends AbstractConverterContext<any>,
+    Output
+> extends AbstractConverter<Context, Output> {
     /**
-     * Validates the OpenAPI extension
-     * @param context The converter context
-     * @param errorCollector Collector to track validation errors
-     * @returns The validation output or undefined if validation fails
+     * The extension key in the OpenAPI spec, e.g. "x-fern-ignore"
      */
-    public abstract validate({
-        context,
-        errorCollector
-    }: {
-        context: Context;
-        errorCollector: ErrorCollector;
-    }): Output | undefined;
+    public abstract readonly key: string;
+
+    protected getExtensionValue(value: unknown): unknown | undefined {
+        if (typeof value !== "object" || value == null) {
+            return undefined;
+        }
+        return (value as Record<string, unknown>)[this.key];
+    }
 }

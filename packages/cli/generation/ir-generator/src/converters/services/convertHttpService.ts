@@ -26,7 +26,7 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
-import { constructHttpPath } from "./constructHttpPath";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";

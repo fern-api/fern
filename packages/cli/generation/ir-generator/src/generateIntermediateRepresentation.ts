@@ -35,7 +35,7 @@ import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup";
-import { constructHttpPath } from "./converters/services/constructHttpPath";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";

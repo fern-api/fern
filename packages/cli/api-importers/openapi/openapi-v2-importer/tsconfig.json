@@ -32,6 +32,9 @@
     },
     {
       "path": "../../../workspace/commons"
+    },
+    {
+      "path": "../../../../commons/ir-utils"
     }
   ]
 }

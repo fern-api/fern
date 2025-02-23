@@ -38,6 +38,7 @@
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

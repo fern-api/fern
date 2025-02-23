@@ -24,7 +24,7 @@ import { VariableResolver } from "../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
-import { constructHttpPath } from "./services/constructHttpPath";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from "./services/convertHttpService";
 import { getQueryParameterName } from "./services/convertQueryParameter";
 import {
