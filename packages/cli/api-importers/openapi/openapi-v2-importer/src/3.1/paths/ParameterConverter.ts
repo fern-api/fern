@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaConverter } from "../schema/SchemaConverter";
+import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
 export declare namespace ParameterConverter {
     export interface Args extends AbstractConverter.Args {
@@ -63,25 +63,15 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         // Check if parameter schema is a reference first
-        if (this.parameter.schema != null && context.isReferenceObject(this.parameter.schema)) {
-            const maybeTypeReference = context.convertReferenceToTypeReference(this.parameter.schema);
-            if (maybeTypeReference.ok) {
-                typeReference = maybeTypeReference.reference;
-            }
-        } else if (this.parameter.schema != null) {
-            const schemaId = this.parameter.name;
-            const schemaConverter = new SchemaConverter({
-                id: schemaId,
+        if (this.parameter.schema != null) {
+            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
-                schema: this.parameter.schema
+                schemaOrReference: this.parameter.schema,
             });
-            const convertedSchema = schemaConverter.convert({ context, errorCollector });
-            if (convertedSchema != null) {
-                typeReference = context.createNamedTypeReference(schemaId);
-                inlinedTypes = {
-                    ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration
-                };
+            const converted = schemaOrReferenceConverter.convert({ context, errorCollector });
+            if (converted != null) {
+                typeReference = converted.type;
+                inlinedTypes = converted.inlinedTypes ?? {};
             }
         }
 
@@ -95,7 +85,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING, 
                         allowMultiple: this.parameter.explode ?? false,
                         availability: undefined
-                    }
+                    },
+                    inlinedTypes
                 };
             case "header":
                 return {
@@ -106,7 +97,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING, 
                         env: undefined,
                         availability: undefined,
-                    }
+                    },
+                    inlinedTypes
                 };
             case "path":
                 return {
@@ -117,7 +109,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         valueType: typeReference ?? ParameterConverter.STRING, 
                         location: "ENDPOINT",
                         variable: undefined
-                    }
+                    },
+                    inlinedTypes
                 };
             default:
                 return undefined;

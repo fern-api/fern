@@ -36,6 +36,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
     private readonly operation: OpenAPIV3_1.OperationObject;
     private readonly method: OpenAPIV3_1.HttpMethods;
     private readonly path: string;
+    private inlinedTypes: Record<string, TypeDeclaration> = {};
 
     constructor({ breadcrumbs, operation, method, path }: OperationConverter.Args) {
         super({ breadcrumbs });
@@ -63,7 +64,6 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
 
         let requestBody: HttpRequestBody | undefined;
-        let inlinedTypes: Record<string, TypeDeclaration> = {};
 
         if (this.operation.requestBody != null) {
             let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
@@ -89,7 +89,10 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
             if (convertedRequestBody != null) {
                 requestBody = convertedRequestBody.requestBody;
-                inlinedTypes = convertedRequestBody.inlinedTypes;
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...convertedRequestBody.inlinedTypes
+                };
             }
         }
 
@@ -129,8 +132,8 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                         statusCode: statusCodeNum,
                         body: convertedResponseBody.responseBody
                     };
-                    inlinedTypes = {
-                        ...inlinedTypes,
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
                         ...convertedResponseBody.inlinedTypes
                     };
                     break;
@@ -143,7 +146,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         return {
             group,
             endpoint: {
-                id: ``,
+                id: `${group?.join(".") ?? ""}.${method}`,
                 displayName: this.operation.summary,
                 method: httpMethod,
                 name: context.casingsGenerator.generateName(method),
@@ -168,7 +171,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 pagination: undefined,
                 transport: undefined
             },
-            inlinedTypes
+            inlinedTypes: this.inlinedTypes
         };
     }
 
@@ -220,6 +223,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
 
             const convertedParameter = parameterConverter.convert({ context, errorCollector });
             if (convertedParameter != null) {
+                this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
                     case "path":
                         pathParameters.push(convertedParameter.parameter);

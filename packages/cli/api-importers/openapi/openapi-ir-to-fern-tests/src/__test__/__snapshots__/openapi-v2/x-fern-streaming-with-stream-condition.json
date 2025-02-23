@@ -836,7 +836,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".chat",
           "displayName": "Start a chat",
           "method": "POST",
           "name": {

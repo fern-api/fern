@@ -51,11 +51,18 @@ export class SchemaOrReferenceConverter extends AbstractConverter<OpenAPIConvert
         });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
         if (convertedSchema != null) {
+            if (convertedSchema.typeDeclaration.shape.type === "alias") {
+                return {
+                    type: convertedSchema.typeDeclaration.shape.aliasOf,
+                    inlinedTypes: convertedSchema.inlinedTypes
+                };
+            }
             return {
-                type: context.createNamedTypeReference(this.breadcrumbs.join("_")),
+                type: context.createNamedTypeReference(schemaId),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
+                    [schemaId]: convertedSchema.typeDeclaration,
                 }
             };
         }

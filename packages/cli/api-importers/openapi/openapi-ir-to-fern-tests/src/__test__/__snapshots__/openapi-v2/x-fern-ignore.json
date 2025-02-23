@@ -924,7 +924,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".list",
           "displayName": "List",
           "method": "GET",
           "name": {
@@ -976,32 +976,14 @@
                 "wireValue": "pageNumber"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "pageNumber",
-                  "camelCase": {
-                    "unsafeName": "pageNumber",
-                    "safeName": "pageNumber"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "page_number",
-                    "safeName": "page_number"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PAGE_NUMBER",
-                    "safeName": "PAGE_NUMBER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "PageNumber",
-                    "safeName": "PageNumber"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
                   }
                 },
-                "typeId": "pageNumber",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1029,32 +1011,14 @@
                 "wireValue": "limit"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "limit",
-                  "camelCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIMIT",
-                    "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
                   }
                 },
-                "typeId": "limit",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1082,32 +1046,14 @@
                 "wireValue": "ignoredParam1"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "ignoredParam1",
-                  "camelCase": {
-                    "unsafeName": "ignoredParam1",
-                    "safeName": "ignoredParam1"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "ignored_param_1",
-                    "safeName": "ignored_param_1"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "IGNORED_PARAM_1",
-                    "safeName": "IGNORED_PARAM_1"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "IgnoredParam1",
-                    "safeName": "IgnoredParam1"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "ignoredParam1",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1135,32 +1081,14 @@
                 "wireValue": "ignoredParam2"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "ignoredParam2",
-                  "camelCase": {
-                    "unsafeName": "ignoredParam2",
-                    "safeName": "ignoredParam2"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "ignored_param_2",
-                    "safeName": "ignored_param_2"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "IGNORED_PARAM_2",
-                    "safeName": "IGNORED_PARAM_2"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "IgnoredParam2",
-                    "safeName": "IgnoredParam2"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "ignoredParam2",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }

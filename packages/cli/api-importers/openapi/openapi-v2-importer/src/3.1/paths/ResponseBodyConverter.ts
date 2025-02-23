@@ -74,10 +74,7 @@ export class ResponseBodyConverter extends AbstractConverter<OpenAPIConverterCon
                 }));
                 return {
                     responseBody,
-                    inlinedTypes: {
-                        ...convertedSchema.inlinedTypes,
-                        ...(convertedSchema.schema != null ? { [schemaId]: convertedSchema.schema } : {})
-                    }
+                    inlinedTypes: convertedSchema.inlinedTypes
                 }
             }
         }

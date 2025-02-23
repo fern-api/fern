@@ -2030,7 +2030,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {
@@ -2109,7 +2109,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".updateAUser",
           "displayName": "Update a user",
           "method": "PUT",
           "name": {
@@ -2188,7 +2188,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {
@@ -2241,32 +2241,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "userId",
-                  "camelCase": {
-                    "unsafeName": "userId",
-                    "safeName": "userId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "user_id",
-                    "safeName": "user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "USER_ID",
-                    "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserId",
-                    "safeName": "UserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "userId",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -2296,32 +2278,14 @@
                 "wireValue": "activated"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "activated",
-                  "camelCase": {
-                    "unsafeName": "activated",
-                    "safeName": "activated"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "activated",
-                    "safeName": "activated"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ACTIVATED",
-                    "safeName": "ACTIVATED"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Activated",
-                    "safeName": "Activated"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "activated",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -2349,32 +2313,14 @@
                 "wireValue": "email"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "email",
-                  "camelCase": {
-                    "unsafeName": "email",
-                    "safeName": "email"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "email",
-                    "safeName": "email"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "EMAIL",
-                    "safeName": "EMAIL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Email",
-                    "safeName": "Email"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "email",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -2454,32 +2400,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "userId",
-                  "camelCase": {
-                    "unsafeName": "userId",
-                    "safeName": "userId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "user_id",
-                    "safeName": "user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "USER_ID",
-                    "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserId",
-                    "safeName": "UserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "userId",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }

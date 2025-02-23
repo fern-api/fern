@@ -82,7 +82,6 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             const arrayConverter = new ArraySchemaConverter({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,
-                inlinedTypes: {}
             });
             const arrayType = arrayConverter.convert({ context, errorCollector });
             if (arrayType != null) {

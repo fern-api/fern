@@ -1667,30 +1667,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "schemaId": {
+    "DeploymentConfigEnvItems": {
       "name": {
-        "typeId": "DiscoveryResponseItems",
+        "typeId": "DeploymentConfigEnvItems",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "DiscoveryResponseItems",
+          "originalName": "DeploymentConfigEnvItems",
           "camelCase": {
-            "unsafeName": "discoveryResponseItems",
-            "safeName": "discoveryResponseItems"
+            "unsafeName": "deploymentConfigEnvItems",
+            "safeName": "deploymentConfigEnvItems"
           },
           "snakeCase": {
-            "unsafeName": "discovery_response_items",
-            "safeName": "discovery_response_items"
+            "unsafeName": "deployment_config_env_items",
+            "safeName": "deployment_config_env_items"
           },
           "screamingSnakeCase": {
-            "unsafeName": "DISCOVERY_RESPONSE_ITEMS",
-            "safeName": "DISCOVERY_RESPONSE_ITEMS"
+            "unsafeName": "DEPLOYMENT_CONFIG_ENV_ITEMS",
+            "safeName": "DEPLOYMENT_CONFIG_ENV_ITEMS"
           },
           "pascalCase": {
-            "unsafeName": "DiscoveryResponseItems",
-            "safeName": "DiscoveryResponseItems"
+            "unsafeName": "DeploymentConfigEnvItems",
+            "safeName": "DeploymentConfigEnvItems"
           }
         }
       },
@@ -1699,25 +1699,25 @@
           {
             "name": {
               "name": {
-                "originalName": "port",
+                "originalName": "value",
                 "camelCase": {
-                  "unsafeName": "port",
-                  "safeName": "port"
+                  "unsafeName": "value",
+                  "safeName": "value"
                 },
                 "snakeCase": {
-                  "unsafeName": "port",
-                  "safeName": "port"
+                  "unsafeName": "value",
+                  "safeName": "value"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "PORT",
-                  "safeName": "PORT"
+                  "unsafeName": "VALUE",
+                  "safeName": "VALUE"
                 },
                 "pascalCase": {
-                  "unsafeName": "Port",
-                  "safeName": "Port"
+                  "unsafeName": "Value",
+                  "safeName": "Value"
                 }
               },
-              "wireValue": "port"
+              "wireValue": "value"
             },
             "valueType": {
               "fernFilepath": {
@@ -1725,25 +1725,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "DiscoveryResponseItemsPort",
+                "originalName": "DeploymentConfigEnvItemsValue",
                 "camelCase": {
-                  "unsafeName": "discoveryResponseItemsPort",
-                  "safeName": "discoveryResponseItemsPort"
+                  "unsafeName": "deploymentConfigEnvItemsValue",
+                  "safeName": "deploymentConfigEnvItemsValue"
                 },
                 "snakeCase": {
-                  "unsafeName": "discovery_response_items_port",
-                  "safeName": "discovery_response_items_port"
+                  "unsafeName": "deployment_config_env_items_value",
+                  "safeName": "deployment_config_env_items_value"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "DISCOVERY_RESPONSE_ITEMS_PORT",
-                  "safeName": "DISCOVERY_RESPONSE_ITEMS_PORT"
+                  "unsafeName": "DEPLOYMENT_CONFIG_ENV_ITEMS_VALUE",
+                  "safeName": "DEPLOYMENT_CONFIG_ENV_ITEMS_VALUE"
                 },
                 "pascalCase": {
-                  "unsafeName": "DiscoveryResponseItemsPort",
-                  "safeName": "DiscoveryResponseItemsPort"
+                  "unsafeName": "DeploymentConfigEnvItemsValue",
+                  "safeName": "DeploymentConfigEnvItemsValue"
                 }
               },
-              "typeId": "DiscoveryResponseItemsPort",
+              "typeId": "DeploymentConfigEnvItemsValue",
               "inline": false,
               "type": "named"
             }
@@ -1751,25 +1751,25 @@
           {
             "name": {
               "name": {
-                "originalName": "host",
+                "originalName": "name",
                 "camelCase": {
-                  "unsafeName": "host",
-                  "safeName": "host"
+                  "unsafeName": "name",
+                  "safeName": "name"
                 },
                 "snakeCase": {
-                  "unsafeName": "host",
-                  "safeName": "host"
+                  "unsafeName": "name",
+                  "safeName": "name"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "HOST",
-                  "safeName": "HOST"
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
                 },
                 "pascalCase": {
-                  "unsafeName": "Host",
-                  "safeName": "Host"
+                  "unsafeName": "Name",
+                  "safeName": "Name"
                 }
               },
-              "wireValue": "host"
+              "wireValue": "name"
             },
             "valueType": {
               "fernFilepath": {
@@ -1777,77 +1777,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "DiscoveryResponseItemsHost",
+                "originalName": "DeploymentConfigEnvItemsName",
                 "camelCase": {
-                  "unsafeName": "discoveryResponseItemsHost",
-                  "safeName": "discoveryResponseItemsHost"
+                  "unsafeName": "deploymentConfigEnvItemsName",
+                  "safeName": "deploymentConfigEnvItemsName"
                 },
                 "snakeCase": {
-                  "unsafeName": "discovery_response_items_host",
-                  "safeName": "discovery_response_items_host"
+                  "unsafeName": "deployment_config_env_items_name",
+                  "safeName": "deployment_config_env_items_name"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "DISCOVERY_RESPONSE_ITEMS_HOST",
-                  "safeName": "DISCOVERY_RESPONSE_ITEMS_HOST"
+                  "unsafeName": "DEPLOYMENT_CONFIG_ENV_ITEMS_NAME",
+                  "safeName": "DEPLOYMENT_CONFIG_ENV_ITEMS_NAME"
                 },
                 "pascalCase": {
-                  "unsafeName": "DiscoveryResponseItemsHost",
-                  "safeName": "DiscoveryResponseItemsHost"
+                  "unsafeName": "DeploymentConfigEnvItemsName",
+                  "safeName": "DeploymentConfigEnvItemsName"
                 }
               },
-              "typeId": "DiscoveryResponseItemsHost",
-              "inline": false,
-              "type": "named"
-            }
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "region",
-                "camelCase": {
-                  "unsafeName": "region",
-                  "safeName": "region"
-                },
-                "snakeCase": {
-                  "unsafeName": "region",
-                  "safeName": "region"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "REGION",
-                  "safeName": "REGION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Region",
-                  "safeName": "Region"
-                }
-              },
-              "wireValue": "region"
-            },
-            "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Region",
+              "typeId": "DeploymentConfigEnvItemsName",
               "inline": false,
               "type": "named"
             }
@@ -3433,6 +3381,150 @@
       "referencedTypes": {},
       "inline": false
     },
+    "BuildRegionalContainerTagsItems": {
+      "name": {
+        "typeId": "BuildRegionalContainerTagsItems",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "BuildRegionalContainerTagsItems",
+          "camelCase": {
+            "unsafeName": "buildRegionalContainerTagsItems",
+            "safeName": "buildRegionalContainerTagsItems"
+          },
+          "snakeCase": {
+            "unsafeName": "build_regional_container_tags_items",
+            "safeName": "build_regional_container_tags_items"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BUILD_REGIONAL_CONTAINER_TAGS_ITEMS",
+            "safeName": "BUILD_REGIONAL_CONTAINER_TAGS_ITEMS"
+          },
+          "pascalCase": {
+            "unsafeName": "BuildRegionalContainerTagsItems",
+            "safeName": "BuildRegionalContainerTagsItems"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "containerTag",
+                "camelCase": {
+                  "unsafeName": "containerTag",
+                  "safeName": "containerTag"
+                },
+                "snakeCase": {
+                  "unsafeName": "container_tag",
+                  "safeName": "container_tag"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONTAINER_TAG",
+                  "safeName": "CONTAINER_TAG"
+                },
+                "pascalCase": {
+                  "unsafeName": "ContainerTag",
+                  "safeName": "ContainerTag"
+                }
+              },
+              "wireValue": "containerTag"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "BuildRegionalContainerTagsItemsContainerTag",
+                "camelCase": {
+                  "unsafeName": "buildRegionalContainerTagsItemsContainerTag",
+                  "safeName": "buildRegionalContainerTagsItemsContainerTag"
+                },
+                "snakeCase": {
+                  "unsafeName": "build_regional_container_tags_items_container_tag",
+                  "safeName": "build_regional_container_tags_items_container_tag"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BUILD_REGIONAL_CONTAINER_TAGS_ITEMS_CONTAINER_TAG",
+                  "safeName": "BUILD_REGIONAL_CONTAINER_TAGS_ITEMS_CONTAINER_TAG"
+                },
+                "pascalCase": {
+                  "unsafeName": "BuildRegionalContainerTagsItemsContainerTag",
+                  "safeName": "BuildRegionalContainerTagsItemsContainerTag"
+                }
+              },
+              "typeId": "BuildRegionalContainerTagsItemsContainerTag",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "region",
+                "camelCase": {
+                  "unsafeName": "region",
+                  "safeName": "region"
+                },
+                "snakeCase": {
+                  "unsafeName": "region",
+                  "safeName": "region"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REGION",
+                  "safeName": "REGION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Region",
+                  "safeName": "Region"
+                }
+              },
+              "wireValue": "region"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "Region",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
     "BuildRegionalContainerTags": {
       "name": {
         "typeId": "BuildRegionalContainerTags",
@@ -4679,6 +4771,202 @@
           "type": "primitive"
         },
         "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "DiscoveryResponseItems": {
+      "name": {
+        "typeId": "DiscoveryResponseItems",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "DiscoveryResponseItems",
+          "camelCase": {
+            "unsafeName": "discoveryResponseItems",
+            "safeName": "discoveryResponseItems"
+          },
+          "snakeCase": {
+            "unsafeName": "discovery_response_items",
+            "safeName": "discovery_response_items"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DISCOVERY_RESPONSE_ITEMS",
+            "safeName": "DISCOVERY_RESPONSE_ITEMS"
+          },
+          "pascalCase": {
+            "unsafeName": "DiscoveryResponseItems",
+            "safeName": "DiscoveryResponseItems"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "port",
+                "camelCase": {
+                  "unsafeName": "port",
+                  "safeName": "port"
+                },
+                "snakeCase": {
+                  "unsafeName": "port",
+                  "safeName": "port"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PORT",
+                  "safeName": "PORT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Port",
+                  "safeName": "Port"
+                }
+              },
+              "wireValue": "port"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "DiscoveryResponseItemsPort",
+                "camelCase": {
+                  "unsafeName": "discoveryResponseItemsPort",
+                  "safeName": "discoveryResponseItemsPort"
+                },
+                "snakeCase": {
+                  "unsafeName": "discovery_response_items_port",
+                  "safeName": "discovery_response_items_port"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DISCOVERY_RESPONSE_ITEMS_PORT",
+                  "safeName": "DISCOVERY_RESPONSE_ITEMS_PORT"
+                },
+                "pascalCase": {
+                  "unsafeName": "DiscoveryResponseItemsPort",
+                  "safeName": "DiscoveryResponseItemsPort"
+                }
+              },
+              "typeId": "DiscoveryResponseItemsPort",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "host",
+                "camelCase": {
+                  "unsafeName": "host",
+                  "safeName": "host"
+                },
+                "snakeCase": {
+                  "unsafeName": "host",
+                  "safeName": "host"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HOST",
+                  "safeName": "HOST"
+                },
+                "pascalCase": {
+                  "unsafeName": "Host",
+                  "safeName": "Host"
+                }
+              },
+              "wireValue": "host"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "DiscoveryResponseItemsHost",
+                "camelCase": {
+                  "unsafeName": "discoveryResponseItemsHost",
+                  "safeName": "discoveryResponseItemsHost"
+                },
+                "snakeCase": {
+                  "unsafeName": "discovery_response_items_host",
+                  "safeName": "discovery_response_items_host"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DISCOVERY_RESPONSE_ITEMS_HOST",
+                  "safeName": "DISCOVERY_RESPONSE_ITEMS_HOST"
+                },
+                "pascalCase": {
+                  "unsafeName": "DiscoveryResponseItemsHost",
+                  "safeName": "DiscoveryResponseItemsHost"
+                }
+              },
+              "typeId": "DiscoveryResponseItemsHost",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "region",
+                "camelCase": {
+                  "unsafeName": "region",
+                  "safeName": "region"
+                },
+                "snakeCase": {
+                  "unsafeName": "region",
+                  "safeName": "region"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REGION",
+                  "safeName": "REGION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Region",
+                  "safeName": "Region"
+                }
+              },
+              "wireValue": "region"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "Region",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -10015,109 +10303,6 @@
       "referencedTypes": {},
       "inline": false
     },
-    "AppV1_GetApps_Response_200": {
-      "name": {
-        "typeId": "AppV1_GetApps_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "AppV1_GetApps_Response_200",
-          "camelCase": {
-            "unsafeName": "appV1GetAppsResponse200",
-            "safeName": "appV1GetAppsResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "app_v_1_get_apps_response_200",
-            "safeName": "app_v_1_get_apps_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "APP_V_1_GET_APPS_RESPONSE_200",
-            "safeName": "APP_V_1_GET_APPS_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "AppV1GetAppsResponse200",
-            "safeName": "AppV1GetAppsResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "ApplicationWithDeployment",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "ApplicationWithDeployment",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
     "AuthV1AppIdLoginAnonymousPostResponsesSchemaToken": {
       "name": {
         "typeId": "AuthV1AppIdLoginAnonymousPostResponsesSchemaToken",
@@ -10669,109 +10854,6 @@
       "referencedTypes": {},
       "inline": false
     },
-    "BuildV1_GetBuilds_Response_200": {
-      "name": {
-        "typeId": "BuildV1_GetBuilds_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "BuildV1_GetBuilds_Response_200",
-          "camelCase": {
-            "unsafeName": "buildV1GetBuildsResponse200",
-            "safeName": "buildV1GetBuildsResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "build_v_1_get_builds_response_200",
-            "safeName": "build_v_1_get_builds_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BUILD_V_1_GET_BUILDS_RESPONSE_200",
-            "safeName": "BUILD_V_1_GET_BUILDS_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "BuildV1GetBuildsResponse200",
-            "safeName": "BuildV1GetBuildsResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Build",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Build",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
     "BuildsV1AppIdRunBuildIdPostRequestBodySchemaFile": {
       "name": {
         "typeId": "BuildsV1AppIdRunBuildIdPostRequestBodySchemaFile",
@@ -10823,212 +10905,6 @@
             }
           },
           "type": "primitive"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "DeploymentV1_GetDeployments_Response_200": {
-      "name": {
-        "typeId": "DeploymentV1_GetDeployments_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "DeploymentV1_GetDeployments_Response_200",
-          "camelCase": {
-            "unsafeName": "deploymentV1GetDeploymentsResponse200",
-            "safeName": "deploymentV1GetDeploymentsResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "deployment_v_1_get_deployments_response_200",
-            "safeName": "deployment_v_1_get_deployments_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "DEPLOYMENT_V_1_GET_DEPLOYMENTS_RESPONSE_200",
-            "safeName": "DEPLOYMENT_V_1_GET_DEPLOYMENTS_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "DeploymentV1GetDeploymentsResponse200",
-            "safeName": "DeploymentV1GetDeploymentsResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Deployment",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Deployment",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "LobbyV1_ListActivePublicLobbiesDeprecated_Response_200": {
-      "name": {
-        "typeId": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_200",
-          "camelCase": {
-            "unsafeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse200",
-            "safeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_200",
-            "safeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_200",
-            "safeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse200",
-            "safeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Lobby",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Lobby",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
         },
         "type": "alias"
       },
@@ -11145,521 +11021,6 @@
       "userProvidedExamples": [],
       "referencedTypes": {},
       "inline": false
-    },
-    "LobbyV2_ListActivePublicLobbies_Response_200": {
-      "name": {
-        "typeId": "LobbyV2_ListActivePublicLobbies_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "LobbyV2_ListActivePublicLobbies_Response_200",
-          "camelCase": {
-            "unsafeName": "lobbyV2ListActivePublicLobbiesResponse200",
-            "safeName": "lobbyV2ListActivePublicLobbiesResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "lobby_v_2_list_active_public_lobbies_response_200",
-            "safeName": "lobby_v_2_list_active_public_lobbies_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LOBBY_V_2_LIST_ACTIVE_PUBLIC_LOBBIES_RESPONSE_200",
-            "safeName": "LOBBY_V_2_LIST_ACTIVE_PUBLIC_LOBBIES_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "LobbyV2ListActivePublicLobbiesResponse200",
-            "safeName": "LobbyV2ListActivePublicLobbiesResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Lobby",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Lobby",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "ProcessesV1_GetRunningProcesses_Response_200": {
-      "name": {
-        "typeId": "ProcessesV1_GetRunningProcesses_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "ProcessesV1_GetRunningProcesses_Response_200",
-          "camelCase": {
-            "unsafeName": "processesV1GetRunningProcessesResponse200",
-            "safeName": "processesV1GetRunningProcessesResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "processes_v_1_get_running_processes_response_200",
-            "safeName": "processes_v_1_get_running_processes_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PROCESSES_V_1_GET_RUNNING_PROCESSES_RESPONSE_200",
-            "safeName": "PROCESSES_V_1_GET_RUNNING_PROCESSES_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "ProcessesV1GetRunningProcessesResponse200",
-            "safeName": "ProcessesV1GetRunningProcessesResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "ProcessWithRooms",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "ProcessWithRooms",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "ProcessesV1_GetStoppedProcesses_Response_200": {
-      "name": {
-        "typeId": "ProcessesV1_GetStoppedProcesses_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "ProcessesV1_GetStoppedProcesses_Response_200",
-          "camelCase": {
-            "unsafeName": "processesV1GetStoppedProcessesResponse200",
-            "safeName": "processesV1GetStoppedProcessesResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "processes_v_1_get_stopped_processes_response_200",
-            "safeName": "processes_v_1_get_stopped_processes_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PROCESSES_V_1_GET_STOPPED_PROCESSES_RESPONSE_200",
-            "safeName": "PROCESSES_V_1_GET_STOPPED_PROCESSES_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "ProcessesV1GetStoppedProcessesResponse200",
-            "safeName": "ProcessesV1GetStoppedProcessesResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Process",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "Process",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "RoomV1_GetActiveRoomsForProcess_Response_200": {
-      "name": {
-        "typeId": "RoomV1_GetActiveRoomsForProcess_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "RoomV1_GetActiveRoomsForProcess_Response_200",
-          "camelCase": {
-            "unsafeName": "roomV1GetActiveRoomsForProcessResponse200",
-            "safeName": "roomV1GetActiveRoomsForProcessResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "room_v_1_get_active_rooms_for_process_response_200",
-            "safeName": "room_v_1_get_active_rooms_for_process_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ROOM_V_1_GET_ACTIVE_ROOMS_FOR_PROCESS_RESPONSE_200",
-            "safeName": "ROOM_V_1_GET_ACTIVE_ROOMS_FOR_PROCESS_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "RoomV1GetActiveRoomsForProcessResponse200",
-            "safeName": "RoomV1GetActiveRoomsForProcessResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "RoomWithoutAllocations",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "RoomWithoutAllocations",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "RoomV1_GetInactiveRoomsForProcess_Response_200": {
-      "name": {
-        "typeId": "RoomV1_GetInactiveRoomsForProcess_Response_200",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "RoomV1_GetInactiveRoomsForProcess_Response_200",
-          "camelCase": {
-            "unsafeName": "roomV1GetInactiveRoomsForProcessResponse200",
-            "safeName": "roomV1GetInactiveRoomsForProcessResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "room_v_1_get_inactive_rooms_for_process_response_200",
-            "safeName": "room_v_1_get_inactive_rooms_for_process_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ROOM_V_1_GET_INACTIVE_ROOMS_FOR_PROCESS_RESPONSE_200",
-            "safeName": "ROOM_V_1_GET_INACTIVE_ROOMS_FOR_PROCESS_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "RoomV1GetInactiveRoomsForProcessResponse200",
-            "safeName": "RoomV1GetInactiveRoomsForProcessResponse200"
-          }
-        }
-      },
-      "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "RoomWithoutAllocations",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "name": {
-                "originalName": "",
-                "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                },
-                "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
-                }
-              },
-              "typeId": "RoomWithoutAllocations",
-              "inline": false,
-              "type": "named"
-            },
-            "type": "list"
-          },
-          "type": "container"
-        },
-        "type": "alias"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
     }
   },
   "services": {
@@ -11717,7 +11078,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "AppV1.GetApps",
           "method": "GET",
           "name": {
             "originalName": "GetApps",
@@ -11750,32 +11111,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ApplicationWithDeployment",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/apps/v1/list_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsAppsV1ListGetResponses200Schema",
-                      "safeName": "pathsAppsV1ListGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_apps_v_1_list_get_responses_200_schema",
-                      "safeName": "paths_apps_v_1_list_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_APPS_V_1_LIST_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_APPS_V_1_LIST_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsAppsV1ListGetResponses200Schema",
-                      "safeName": "PathsAppsV1ListGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/apps/v1/list_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -11795,7 +11162,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": "AppV1.CreateApp",
           "method": "POST",
           "name": {
             "originalName": "CreateApp",
@@ -11873,7 +11240,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": "AppV1.UpdateApp",
           "method": "POST",
           "name": {
             "originalName": "UpdateApp",
@@ -12063,7 +11430,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "AppV1.GetAppInfo",
           "method": "GET",
           "name": {
             "originalName": "GetAppInfo",
@@ -12253,7 +11620,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "AppV1.DeleteApp",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteApp",
@@ -12460,7 +11827,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "AuthV1.LoginAnonymous",
           "method": "POST",
           "name": {
             "originalName": "LoginAnonymous",
@@ -12554,25 +11921,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/auth/v1/{appId}/login/anonymous_post_responses_200_schema",
+                    "originalName": "AuthV1_LoginAnonymous_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsAuthV1AppIdLoginAnonymousPostResponses200Schema",
-                      "safeName": "pathsAuthV1AppIdLoginAnonymousPostResponses200Schema"
+                      "unsafeName": "authV1LoginAnonymousResponse200",
+                      "safeName": "authV1LoginAnonymousResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_auth_v_1_app_id_login_anonymous_post_responses_200_schema",
-                      "safeName": "paths_auth_v_1_app_id_login_anonymous_post_responses_200_schema"
+                      "unsafeName": "auth_v_1_login_anonymous_response_200",
+                      "safeName": "auth_v_1_login_anonymous_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_ANONYMOUS_POST_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_ANONYMOUS_POST_RESPONSES_200_SCHEMA"
+                      "unsafeName": "AUTH_V_1_LOGIN_ANONYMOUS_RESPONSE_200",
+                      "safeName": "AUTH_V_1_LOGIN_ANONYMOUS_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsAuthV1AppIdLoginAnonymousPostResponses200Schema",
-                      "safeName": "PathsAuthV1AppIdLoginAnonymousPostResponses200Schema"
+                      "unsafeName": "AuthV1LoginAnonymousResponse200",
+                      "safeName": "AuthV1LoginAnonymousResponse200"
                     }
                   },
-                  "typeId": "paths_/auth/v1/{appId}/login/anonymous_post_responses_200_schema",
+                  "typeId": "AuthV1_LoginAnonymous_Response_200",
                   "inline": false,
                   "type": "named"
                 },
@@ -12650,7 +12017,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "AuthV1.LoginNickname",
           "method": "POST",
           "name": {
             "originalName": "LoginNickname",
@@ -12824,25 +12191,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/auth/v1/{appId}/login/nickname_post_responses_200_schema",
+                    "originalName": "AuthV1_LoginNickname_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsAuthV1AppIdLoginNicknamePostResponses200Schema",
-                      "safeName": "pathsAuthV1AppIdLoginNicknamePostResponses200Schema"
+                      "unsafeName": "authV1LoginNicknameResponse200",
+                      "safeName": "authV1LoginNicknameResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_auth_v_1_app_id_login_nickname_post_responses_200_schema",
-                      "safeName": "paths_auth_v_1_app_id_login_nickname_post_responses_200_schema"
+                      "unsafeName": "auth_v_1_login_nickname_response_200",
+                      "safeName": "auth_v_1_login_nickname_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_NICKNAME_POST_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_NICKNAME_POST_RESPONSES_200_SCHEMA"
+                      "unsafeName": "AUTH_V_1_LOGIN_NICKNAME_RESPONSE_200",
+                      "safeName": "AUTH_V_1_LOGIN_NICKNAME_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsAuthV1AppIdLoginNicknamePostResponses200Schema",
-                      "safeName": "PathsAuthV1AppIdLoginNicknamePostResponses200Schema"
+                      "unsafeName": "AuthV1LoginNicknameResponse200",
+                      "safeName": "AuthV1LoginNicknameResponse200"
                     }
                   },
-                  "typeId": "paths_/auth/v1/{appId}/login/nickname_post_responses_200_schema",
+                  "typeId": "AuthV1_LoginNickname_Response_200",
                   "inline": false,
                   "type": "named"
                 },
@@ -12920,7 +12287,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "AuthV1.LoginGoogle",
           "method": "POST",
           "name": {
             "originalName": "LoginGoogle",
@@ -13094,25 +12461,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/auth/v1/{appId}/login/google_post_responses_200_schema",
+                    "originalName": "AuthV1_LoginGoogle_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsAuthV1AppIdLoginGooglePostResponses200Schema",
-                      "safeName": "pathsAuthV1AppIdLoginGooglePostResponses200Schema"
+                      "unsafeName": "authV1LoginGoogleResponse200",
+                      "safeName": "authV1LoginGoogleResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_auth_v_1_app_id_login_google_post_responses_200_schema",
-                      "safeName": "paths_auth_v_1_app_id_login_google_post_responses_200_schema"
+                      "unsafeName": "auth_v_1_login_google_response_200",
+                      "safeName": "auth_v_1_login_google_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_GOOGLE_POST_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_AUTH_V_1_APP_ID_LOGIN_GOOGLE_POST_RESPONSES_200_SCHEMA"
+                      "unsafeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_200",
+                      "safeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsAuthV1AppIdLoginGooglePostResponses200Schema",
-                      "safeName": "PathsAuthV1AppIdLoginGooglePostResponses200Schema"
+                      "unsafeName": "AuthV1LoginGoogleResponse200",
+                      "safeName": "AuthV1LoginGoogleResponse200"
                     }
                   },
-                  "typeId": "paths_/auth/v1/{appId}/login/google_post_responses_200_schema",
+                  "typeId": "AuthV1_LoginGoogle_Response_200",
                   "inline": false,
                   "type": "named"
                 },
@@ -13245,7 +12612,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "BuildV1.GetBuilds",
           "method": "GET",
           "name": {
             "originalName": "GetBuilds",
@@ -13334,32 +12701,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Build",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/builds/v1/{appId}/list_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsBuildsV1AppIdListGetResponses200Schema",
-                      "safeName": "pathsBuildsV1AppIdListGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_builds_v_1_app_id_list_get_responses_200_schema",
-                      "safeName": "paths_builds_v_1_app_id_list_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_BUILDS_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_BUILDS_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsBuildsV1AppIdListGetResponses200Schema",
-                      "safeName": "PathsBuildsV1AppIdListGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/builds/v1/{appId}/list_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -13435,7 +12808,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "BuildV1.GetBuildInfo",
           "method": "GET",
           "name": {
             "originalName": "GetBuildInfo",
@@ -13733,7 +13106,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "BuildV1.CreateBuild",
           "method": "POST",
           "name": {
             "originalName": "CreateBuild",
@@ -13923,7 +13296,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "BuildV1.RunBuild",
           "method": "POST",
           "name": {
             "originalName": "RunBuild",
@@ -14263,7 +13636,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "BuildV1.DeleteBuild",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteBuild",
@@ -14578,7 +13951,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "DeploymentV1.GetDeployments",
           "method": "GET",
           "name": {
             "originalName": "GetDeployments",
@@ -14667,32 +14040,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Deployment",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/deployments/v1/{appId}/list_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsDeploymentsV1AppIdListGetResponses200Schema",
-                      "safeName": "pathsDeploymentsV1AppIdListGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_deployments_v_1_app_id_list_get_responses_200_schema",
-                      "safeName": "paths_deployments_v_1_app_id_list_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_DEPLOYMENTS_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_DEPLOYMENTS_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsDeploymentsV1AppIdListGetResponses200Schema",
-                      "safeName": "PathsDeploymentsV1AppIdListGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/deployments/v1/{appId}/list_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -14768,7 +14147,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "DeploymentV1.GetDeploymentInfo",
           "method": "GET",
           "name": {
             "originalName": "GetDeploymentInfo",
@@ -15066,7 +14445,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "DeploymentV1.CreateDeployment",
           "method": "POST",
           "name": {
             "originalName": "CreateDeployment",
@@ -15419,7 +14798,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "DiscoveryV1.GetPingServiceEndpoints",
           "method": "GET",
           "name": {
             "originalName": "GetPingServiceEndpoints",
@@ -15552,7 +14931,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "LobbyV1.CreatePrivateLobbyDeprecated",
           "method": "POST",
           "name": {
             "originalName": "CreatePrivateLobbyDeprecated",
@@ -15712,32 +15091,14 @@
                 "wireValue": "local"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "local",
-                  "camelCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOCAL",
-                    "safeName": "LOCAL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Local",
-                    "safeName": "Local"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "local",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -15767,32 +15128,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -15902,7 +15245,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV1.CreatePublicLobbyDeprecated",
           "method": "POST",
           "name": {
             "originalName": "CreatePublicLobbyDeprecated",
@@ -16062,32 +15405,14 @@
                 "wireValue": "local"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "local",
-                  "camelCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOCAL",
-                    "safeName": "LOCAL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Local",
-                    "safeName": "Local"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "local",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -16117,32 +15442,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -16252,7 +15559,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV1.ListActivePublicLobbiesDeprecated",
           "method": "GET",
           "name": {
             "originalName": "ListActivePublicLobbiesDeprecated",
@@ -16359,32 +15666,14 @@
                 "wireValue": "local"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "local",
-                  "camelCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "local",
-                    "safeName": "local"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOCAL",
-                    "safeName": "LOCAL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Local",
-                    "safeName": "Local"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "local",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -16467,32 +15756,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -16501,32 +15772,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Lobby",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/lobby/v1/{appId}/list_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsLobbyV1AppIdListGetResponses200Schema",
-                      "safeName": "pathsLobbyV1AppIdListGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_lobby_v_1_app_id_list_get_responses_200_schema",
-                      "safeName": "paths_lobby_v_1_app_id_list_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_LOBBY_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_LOBBY_V_1_APP_ID_LIST_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsLobbyV1AppIdListGetResponses200Schema",
-                      "safeName": "PathsLobbyV1AppIdListGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/lobby/v1/{appId}/list_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -16657,7 +15934,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "LobbyV2.CreatePrivateLobby",
           "method": "POST",
           "name": {
             "originalName": "CreatePrivateLobby",
@@ -16819,32 +16096,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -17034,7 +16293,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.CreatePublicLobby",
           "method": "POST",
           "name": {
             "originalName": "CreatePublicLobby",
@@ -17196,32 +16455,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -17411,7 +16652,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.CreateLocalLobby",
           "method": "POST",
           "name": {
             "originalName": "CreateLocalLobby",
@@ -17573,32 +16814,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -17788,7 +17011,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.CreateLobby",
           "method": "POST",
           "name": {
             "originalName": "CreateLobby",
@@ -17950,32 +17173,14 @@
                 "wireValue": "Authorization"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "Authorization",
-                  "camelCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authorization",
-                    "safeName": "authorization"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHORIZATION",
-                    "safeName": "AUTHORIZATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authorization",
-                    "safeName": "Authorization"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "Authorization",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -18217,7 +17422,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.ListActivePublicLobbies",
           "method": "GET",
           "name": {
             "originalName": "ListActivePublicLobbies",
@@ -18360,32 +17565,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Lobby",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/lobby/v2/{appId}/list/public_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsLobbyV2AppIdListPublicGetResponses200Schema",
-                      "safeName": "pathsLobbyV2AppIdListPublicGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_lobby_v_2_app_id_list_public_get_responses_200_schema",
-                      "safeName": "paths_lobby_v_2_app_id_list_public_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_LOBBY_V_2_APP_ID_LIST_PUBLIC_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_LOBBY_V_2_APP_ID_LIST_PUBLIC_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsLobbyV2AppIdListPublicGetResponses200Schema",
-                      "safeName": "PathsLobbyV2AppIdListPublicGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/lobby/v2/{appId}/list/public_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -18461,7 +17672,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.GetLobbyInfo",
           "method": "GET",
           "name": {
             "originalName": "GetLobbyInfo",
@@ -18759,7 +17970,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LobbyV2.SetLobbyState",
           "method": "POST",
           "name": {
             "originalName": "SetLobbyState",
@@ -19112,7 +18323,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "LogV1.GetLogsForApp",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForApp",
@@ -19219,32 +18430,14 @@
                 "wireValue": "follow"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "follow",
-                  "camelCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FOLLOW",
-                    "safeName": "FOLLOW"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Follow",
-                    "safeName": "Follow"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "follow",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -19424,7 +18617,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LogV1.GetLogsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForProcess",
@@ -19585,32 +18778,14 @@
                 "wireValue": "follow"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "follow",
-                  "camelCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FOLLOW",
-                    "safeName": "FOLLOW"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Follow",
-                    "safeName": "Follow"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "follow",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -19791,7 +18966,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "LogV1.GetLogsForDeployment",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForDeployment",
@@ -19952,32 +19127,14 @@
                 "wireValue": "follow"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "follow",
-                  "camelCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "follow",
-                    "safeName": "follow"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FOLLOW",
-                    "safeName": "FOLLOW"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Follow",
-                    "safeName": "Follow"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
                   }
                 },
-                "typeId": "follow",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -20213,7 +19370,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "MetricsV1.GetMetrics",
           "method": "GET",
           "name": {
             "originalName": "GetMetrics",
@@ -20374,32 +19531,38 @@
                 "wireValue": "metrics"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
+                "container": {
+                  "list": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "",
+                      "camelCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "snakeCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "pascalCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      }
+                    },
+                    "typeId": "MetricName",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "name": {
-                  "originalName": "metrics",
-                  "camelCase": {
-                    "unsafeName": "metrics",
-                    "safeName": "metrics"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "metrics",
-                    "safeName": "metrics"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "METRICS",
-                    "safeName": "METRICS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Metrics",
-                    "safeName": "Metrics"
-                  }
-                },
-                "typeId": "metrics",
-                "inline": false,
-                "type": "named"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -20427,32 +19590,14 @@
                 "wireValue": "end"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "end",
-                  "camelCase": {
-                    "unsafeName": "end",
-                    "safeName": "end"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "end",
-                    "safeName": "end"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "END",
-                    "safeName": "END"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "End",
-                    "safeName": "End"
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "validation": {},
+                    "type": "integer"
                   }
                 },
-                "typeId": "end",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -20480,32 +19625,14 @@
                 "wireValue": "start"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "start",
-                  "camelCase": {
-                    "unsafeName": "start",
-                    "safeName": "start"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "start",
-                    "safeName": "start"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "START",
-                    "safeName": "START"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Start",
-                    "safeName": "Start"
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "validation": {},
+                    "type": "integer"
                   }
                 },
-                "typeId": "start",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -20533,32 +19660,15 @@
                 "wireValue": "step"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "step",
-                  "camelCase": {
-                    "unsafeName": "step",
-                    "safeName": "step"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "step",
-                    "safeName": "step"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "STEP",
-                    "safeName": "STEP"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Step",
-                    "safeName": "Step"
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "default": 60,
+                    "validation": {},
+                    "type": "integer"
                   }
                 },
-                "typeId": "step",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -20779,7 +19889,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "ProcessesV1.GetRunningProcesses",
           "method": "GET",
           "name": {
             "originalName": "GetRunningProcesses",
@@ -20922,32 +20032,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ProcessWithRooms",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/processes/v1/{appId}/list/running_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsProcessesV1AppIdListRunningGetResponses200Schema",
-                      "safeName": "pathsProcessesV1AppIdListRunningGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_processes_v_1_app_id_list_running_get_responses_200_schema",
-                      "safeName": "paths_processes_v_1_app_id_list_running_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_PROCESSES_V_1_APP_ID_LIST_RUNNING_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_PROCESSES_V_1_APP_ID_LIST_RUNNING_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsProcessesV1AppIdListRunningGetResponses200Schema",
-                      "safeName": "PathsProcessesV1AppIdListRunningGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/processes/v1/{appId}/list/running_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -21023,7 +20139,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "ProcessesV1.GetStoppedProcesses",
           "method": "GET",
           "name": {
             "originalName": "GetStoppedProcesses",
@@ -21166,32 +20282,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Process",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/processes/v1/{appId}/list/stopped_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsProcessesV1AppIdListStoppedGetResponses200Schema",
-                      "safeName": "pathsProcessesV1AppIdListStoppedGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_processes_v_1_app_id_list_stopped_get_responses_200_schema",
-                      "safeName": "paths_processes_v_1_app_id_list_stopped_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_PROCESSES_V_1_APP_ID_LIST_STOPPED_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_PROCESSES_V_1_APP_ID_LIST_STOPPED_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsProcessesV1AppIdListStoppedGetResponses200Schema",
-                      "safeName": "PathsProcessesV1AppIdListStoppedGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/processes/v1/{appId}/list/stopped_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -21267,7 +20389,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "ProcessesV1.GetProcessInfo",
           "method": "GET",
           "name": {
             "originalName": "GetProcessInfo",
@@ -21620,7 +20742,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "RoomV1.CreateRoom",
           "method": "POST",
           "name": {
             "originalName": "CreateRoom",
@@ -21890,7 +21012,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.GetRoomInfo",
           "method": "GET",
           "name": {
             "originalName": "GetRoomInfo",
@@ -22188,7 +21310,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.GetActiveRoomsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetActiveRoomsForProcess",
@@ -22331,32 +21453,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "RoomWithoutAllocations",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/rooms/v1/{appId}/list/{processId}/active_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsRoomsV1AppIdListProcessIdActiveGetResponses200Schema",
-                      "safeName": "pathsRoomsV1AppIdListProcessIdActiveGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_rooms_v_1_app_id_list_process_id_active_get_responses_200_schema",
-                      "safeName": "paths_rooms_v_1_app_id_list_process_id_active_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_ROOMS_V_1_APP_ID_LIST_PROCESS_ID_ACTIVE_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_ROOMS_V_1_APP_ID_LIST_PROCESS_ID_ACTIVE_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsRoomsV1AppIdListProcessIdActiveGetResponses200Schema",
-                      "safeName": "PathsRoomsV1AppIdListProcessIdActiveGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/rooms/v1/{appId}/list/{processId}/active_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -22486,7 +21614,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.GetInactiveRoomsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetInactiveRoomsForProcess",
@@ -22629,32 +21757,38 @@
             "body": {
               "value": {
                 "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "RoomWithoutAllocations",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "paths_/rooms/v1/{appId}/list/{processId}/inactive_get_responses_200_schema",
-                    "camelCase": {
-                      "unsafeName": "pathsRoomsV1AppIdListProcessIdInactiveGetResponses200Schema",
-                      "safeName": "pathsRoomsV1AppIdListProcessIdInactiveGetResponses200Schema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "paths_rooms_v_1_app_id_list_process_id_inactive_get_responses_200_schema",
-                      "safeName": "paths_rooms_v_1_app_id_list_process_id_inactive_get_responses_200_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PATHS_ROOMS_V_1_APP_ID_LIST_PROCESS_ID_INACTIVE_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_ROOMS_V_1_APP_ID_LIST_PROCESS_ID_INACTIVE_GET_RESPONSES_200_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PathsRoomsV1AppIdListProcessIdInactiveGetResponses200Schema",
-                      "safeName": "PathsRoomsV1AppIdListProcessIdInactiveGetResponses200Schema"
-                    }
-                  },
-                  "typeId": "paths_/rooms/v1/{appId}/list/{processId}/inactive_get_responses_200_schema",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Ok",
                 "type": "response"
@@ -22784,7 +21918,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.DestroyRoom",
           "method": "POST",
           "name": {
             "originalName": "DestroyRoom",
@@ -23044,7 +22178,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.SuspendRoom",
           "method": "POST",
           "name": {
             "originalName": "SuspendRoom",
@@ -23304,7 +22438,7 @@
           ]
         },
         {
-          "id": "",
+          "id": "RoomV1.GetConnectionInfo",
           "method": "GET",
           "name": {
             "originalName": "GetConnectionInfo",
@@ -23652,11 +22786,23 @@
       "ActiveConnectionInfo"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "AppV1",
+      "AuthV1",
+      "BuildV1",
+      "DeploymentV1",
+      "DiscoveryV1",
+      "LobbyV1",
+      "LobbyV2",
+      "LogV1",
+      "MetricsV1",
+      "ProcessesV1",
+      "RoomV1"
+    ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "": {
+    "AppV1": {
       "name": {
         "originalName": "AppV1",
         "camelCase": {
@@ -23696,6 +22842,496 @@
           "pascalCase": {
             "unsafeName": "AppV1",
             "safeName": "AppV1"
+          }
+        }
+      },
+      "service": "AppV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "AuthV1": {
+      "name": {
+        "originalName": "AuthV1",
+        "camelCase": {
+          "unsafeName": "authV1",
+          "safeName": "authV1"
+        },
+        "snakeCase": {
+          "unsafeName": "auth_v_1",
+          "safeName": "auth_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "AUTH_V_1",
+          "safeName": "AUTH_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "AuthV1",
+          "safeName": "AuthV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "AuthV1",
+          "camelCase": {
+            "unsafeName": "authV1",
+            "safeName": "authV1"
+          },
+          "snakeCase": {
+            "unsafeName": "auth_v_1",
+            "safeName": "auth_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "AUTH_V_1",
+            "safeName": "AUTH_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "AuthV1",
+            "safeName": "AuthV1"
+          }
+        }
+      },
+      "service": "AuthV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "BuildV1": {
+      "name": {
+        "originalName": "BuildV1",
+        "camelCase": {
+          "unsafeName": "buildV1",
+          "safeName": "buildV1"
+        },
+        "snakeCase": {
+          "unsafeName": "build_v_1",
+          "safeName": "build_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "BUILD_V_1",
+          "safeName": "BUILD_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "BuildV1",
+          "safeName": "BuildV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "BuildV1",
+          "camelCase": {
+            "unsafeName": "buildV1",
+            "safeName": "buildV1"
+          },
+          "snakeCase": {
+            "unsafeName": "build_v_1",
+            "safeName": "build_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BUILD_V_1",
+            "safeName": "BUILD_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "BuildV1",
+            "safeName": "BuildV1"
+          }
+        }
+      },
+      "service": "BuildV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "DeploymentV1": {
+      "name": {
+        "originalName": "DeploymentV1",
+        "camelCase": {
+          "unsafeName": "deploymentV1",
+          "safeName": "deploymentV1"
+        },
+        "snakeCase": {
+          "unsafeName": "deployment_v_1",
+          "safeName": "deployment_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "DEPLOYMENT_V_1",
+          "safeName": "DEPLOYMENT_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "DeploymentV1",
+          "safeName": "DeploymentV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "DeploymentV1",
+          "camelCase": {
+            "unsafeName": "deploymentV1",
+            "safeName": "deploymentV1"
+          },
+          "snakeCase": {
+            "unsafeName": "deployment_v_1",
+            "safeName": "deployment_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DEPLOYMENT_V_1",
+            "safeName": "DEPLOYMENT_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "DeploymentV1",
+            "safeName": "DeploymentV1"
+          }
+        }
+      },
+      "service": "DeploymentV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "DiscoveryV1": {
+      "name": {
+        "originalName": "DiscoveryV1",
+        "camelCase": {
+          "unsafeName": "discoveryV1",
+          "safeName": "discoveryV1"
+        },
+        "snakeCase": {
+          "unsafeName": "discovery_v_1",
+          "safeName": "discovery_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "DISCOVERY_V_1",
+          "safeName": "DISCOVERY_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "DiscoveryV1",
+          "safeName": "DiscoveryV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "DiscoveryV1",
+          "camelCase": {
+            "unsafeName": "discoveryV1",
+            "safeName": "discoveryV1"
+          },
+          "snakeCase": {
+            "unsafeName": "discovery_v_1",
+            "safeName": "discovery_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DISCOVERY_V_1",
+            "safeName": "DISCOVERY_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "DiscoveryV1",
+            "safeName": "DiscoveryV1"
+          }
+        }
+      },
+      "service": "DiscoveryV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "LobbyV1": {
+      "name": {
+        "originalName": "LobbyV1",
+        "camelCase": {
+          "unsafeName": "lobbyV1",
+          "safeName": "lobbyV1"
+        },
+        "snakeCase": {
+          "unsafeName": "lobby_v_1",
+          "safeName": "lobby_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "LOBBY_V_1",
+          "safeName": "LOBBY_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "LobbyV1",
+          "safeName": "LobbyV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "LobbyV1",
+          "camelCase": {
+            "unsafeName": "lobbyV1",
+            "safeName": "lobbyV1"
+          },
+          "snakeCase": {
+            "unsafeName": "lobby_v_1",
+            "safeName": "lobby_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LOBBY_V_1",
+            "safeName": "LOBBY_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "LobbyV1",
+            "safeName": "LobbyV1"
+          }
+        }
+      },
+      "service": "LobbyV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "LobbyV2": {
+      "name": {
+        "originalName": "LobbyV2",
+        "camelCase": {
+          "unsafeName": "lobbyV2",
+          "safeName": "lobbyV2"
+        },
+        "snakeCase": {
+          "unsafeName": "lobby_v_2",
+          "safeName": "lobby_v_2"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "LOBBY_V_2",
+          "safeName": "LOBBY_V_2"
+        },
+        "pascalCase": {
+          "unsafeName": "LobbyV2",
+          "safeName": "LobbyV2"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "LobbyV2",
+          "camelCase": {
+            "unsafeName": "lobbyV2",
+            "safeName": "lobbyV2"
+          },
+          "snakeCase": {
+            "unsafeName": "lobby_v_2",
+            "safeName": "lobby_v_2"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LOBBY_V_2",
+            "safeName": "LOBBY_V_2"
+          },
+          "pascalCase": {
+            "unsafeName": "LobbyV2",
+            "safeName": "LobbyV2"
+          }
+        }
+      },
+      "service": "LobbyV2",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "LogV1": {
+      "name": {
+        "originalName": "LogV1",
+        "camelCase": {
+          "unsafeName": "logV1",
+          "safeName": "logV1"
+        },
+        "snakeCase": {
+          "unsafeName": "log_v_1",
+          "safeName": "log_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "LOG_V_1",
+          "safeName": "LOG_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "LogV1",
+          "safeName": "LogV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "LogV1",
+          "camelCase": {
+            "unsafeName": "logV1",
+            "safeName": "logV1"
+          },
+          "snakeCase": {
+            "unsafeName": "log_v_1",
+            "safeName": "log_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LOG_V_1",
+            "safeName": "LOG_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "LogV1",
+            "safeName": "LogV1"
+          }
+        }
+      },
+      "service": "LogV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "MetricsV1": {
+      "name": {
+        "originalName": "MetricsV1",
+        "camelCase": {
+          "unsafeName": "metricsV1",
+          "safeName": "metricsV1"
+        },
+        "snakeCase": {
+          "unsafeName": "metrics_v_1",
+          "safeName": "metrics_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "METRICS_V_1",
+          "safeName": "METRICS_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "MetricsV1",
+          "safeName": "MetricsV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "MetricsV1",
+          "camelCase": {
+            "unsafeName": "metricsV1",
+            "safeName": "metricsV1"
+          },
+          "snakeCase": {
+            "unsafeName": "metrics_v_1",
+            "safeName": "metrics_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "METRICS_V_1",
+            "safeName": "METRICS_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "MetricsV1",
+            "safeName": "MetricsV1"
+          }
+        }
+      },
+      "service": "MetricsV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "ProcessesV1": {
+      "name": {
+        "originalName": "ProcessesV1",
+        "camelCase": {
+          "unsafeName": "processesV1",
+          "safeName": "processesV1"
+        },
+        "snakeCase": {
+          "unsafeName": "processes_v_1",
+          "safeName": "processes_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "PROCESSES_V_1",
+          "safeName": "PROCESSES_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "ProcessesV1",
+          "safeName": "ProcessesV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "ProcessesV1",
+          "camelCase": {
+            "unsafeName": "processesV1",
+            "safeName": "processesV1"
+          },
+          "snakeCase": {
+            "unsafeName": "processes_v_1",
+            "safeName": "processes_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROCESSES_V_1",
+            "safeName": "PROCESSES_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "ProcessesV1",
+            "safeName": "ProcessesV1"
+          }
+        }
+      },
+      "service": "ProcessesV1",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "RoomV1": {
+      "name": {
+        "originalName": "RoomV1",
+        "camelCase": {
+          "unsafeName": "roomV1",
+          "safeName": "roomV1"
+        },
+        "snakeCase": {
+          "unsafeName": "room_v_1",
+          "safeName": "room_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ROOM_V_1",
+          "safeName": "ROOM_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "RoomV1",
+          "safeName": "RoomV1"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "RoomV1",
+          "camelCase": {
+            "unsafeName": "roomV1",
+            "safeName": "roomV1"
+          },
+          "snakeCase": {
+            "unsafeName": "room_v_1",
+            "safeName": "room_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ROOM_V_1",
+            "safeName": "ROOM_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "RoomV1",
+            "safeName": "RoomV1"
           }
         }
       },

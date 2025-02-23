@@ -382,7 +382,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".getExample",
           "displayName": "Get Example",
           "method": "GET",
           "name": {
@@ -421,25 +421,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/example_get_responses_200_schema",
+                    "originalName": "getExample_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsExampleGetResponses200Schema",
-                      "safeName": "pathsExampleGetResponses200Schema"
+                      "unsafeName": "getExampleResponse200",
+                      "safeName": "getExampleResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_example_get_responses_200_schema",
-                      "safeName": "paths_example_get_responses_200_schema"
+                      "unsafeName": "get_example_response_200",
+                      "safeName": "get_example_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_EXAMPLE_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_EXAMPLE_GET_RESPONSES_200_SCHEMA"
+                      "unsafeName": "GET_EXAMPLE_RESPONSE_200",
+                      "safeName": "GET_EXAMPLE_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsExampleGetResponses200Schema",
-                      "safeName": "PathsExampleGetResponses200Schema"
+                      "unsafeName": "GetExampleResponse200",
+                      "safeName": "GetExampleResponse200"
                     }
                   },
-                  "typeId": "paths_/example_get_responses_200_schema",
+                  "typeId": "getExample_Response_200",
                   "inline": false,
                   "type": "named"
                 },

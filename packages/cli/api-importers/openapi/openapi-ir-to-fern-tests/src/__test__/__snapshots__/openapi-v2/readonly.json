@@ -1724,7 +1724,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {
@@ -1803,7 +1803,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {
@@ -1856,32 +1856,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "userId",
-                  "camelCase": {
-                    "unsafeName": "userId",
-                    "safeName": "userId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "user_id",
-                    "safeName": "user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "USER_ID",
-                    "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserId",
-                    "safeName": "UserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "userId",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -1962,32 +1944,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "userId",
-                  "camelCase": {
-                    "unsafeName": "userId",
-                    "safeName": "userId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "user_id",
-                    "safeName": "user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "USER_ID",
-                    "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserId",
-                    "safeName": "UserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "userId",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }

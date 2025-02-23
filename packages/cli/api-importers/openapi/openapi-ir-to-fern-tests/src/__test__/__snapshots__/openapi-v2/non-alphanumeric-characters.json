@@ -309,7 +309,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".patchSettings",
           "method": "PATCH",
           "name": {
             "originalName": "patchSettings",

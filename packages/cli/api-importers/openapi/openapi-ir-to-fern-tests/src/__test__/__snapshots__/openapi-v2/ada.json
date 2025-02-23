@@ -59,7 +59,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "End users.getEndUserById",
           "displayName": "Get an end user by ID",
           "method": "GET",
           "name": {
@@ -113,32 +113,14 @@
               },
               "docs": "The end_user_id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "end_user_id",
-                  "camelCase": {
-                    "unsafeName": "endUserId",
-                    "safeName": "endUserId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "end_user_id",
-                    "safeName": "end_user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "END_USER_ID",
-                    "safeName": "END_USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "EndUserId",
-                    "safeName": "EndUserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "end_user_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -221,39 +203,21 @@
               },
               "docs": "The end_user_id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "end_user_id",
-                  "camelCase": {
-                    "unsafeName": "endUserId",
-                    "safeName": "endUserId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "end_user_id",
-                    "safeName": "end_user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "END_USER_ID",
-                    "safeName": "END_USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "EndUserId",
-                    "safeName": "EndUserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "end_user_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
           ]
         },
         {
-          "id": "",
+          "id": "End users.updateEndUserById",
           "displayName": "Update an end user by ID",
           "method": "PATCH",
           "name": {
@@ -307,32 +271,14 @@
               },
               "docs": "The end_user_id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "end_user_id",
-                  "camelCase": {
-                    "unsafeName": "endUserId",
-                    "safeName": "endUserId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "end_user_id",
-                    "safeName": "end_user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "END_USER_ID",
-                    "safeName": "END_USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "EndUserId",
-                    "safeName": "EndUserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "end_user_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -415,39 +361,21 @@
               },
               "docs": "The end_user_id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "end_user_id",
-                  "camelCase": {
-                    "unsafeName": "endUserId",
-                    "safeName": "endUserId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "end_user_id",
-                    "safeName": "end_user_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "END_USER_ID",
-                    "safeName": "END_USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "EndUserId",
-                    "safeName": "EndUserId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "end_user_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
           ]
         },
         {
-          "id": "",
+          "id": "End users.getEndUsers",
           "displayName": "Get multiple end users by ID",
           "method": "GET",
           "name": {
@@ -500,32 +428,14 @@
               },
               "docs": "The end user ID that marks the start or beginning of the returned profile records.",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "cursor",
-                  "camelCase": {
-                    "unsafeName": "cursor",
-                    "safeName": "cursor"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "cursor",
-                    "safeName": "cursor"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "CURSOR",
-                    "safeName": "CURSOR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Cursor",
-                    "safeName": "Cursor"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "cursor",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -554,32 +464,17 @@
               },
               "docs": "The number of end user profile records to return",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "limit",
-                  "camelCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIMIT",
-                    "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {
+                      "max": 100,
+                      "min": 1
+                    },
+                    "type": "double"
                   }
                 },
-                "typeId": "limit",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -658,11 +553,13 @@
     },
     "types": [],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "End users"
+    ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "": {
+    "End users": {
       "name": {
         "originalName": "End users",
         "camelCase": {

@@ -897,7 +897,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".defaultAndValidationRules",
           "displayName": "Default and validation rules",
           "method": "GET",
           "name": {
@@ -936,25 +936,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/example_get_responses_200_schema",
+                    "originalName": "defaultAndValidationRules_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsExampleGetResponses200Schema",
-                      "safeName": "pathsExampleGetResponses200Schema"
+                      "unsafeName": "defaultAndValidationRulesResponse200",
+                      "safeName": "defaultAndValidationRulesResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_example_get_responses_200_schema",
-                      "safeName": "paths_example_get_responses_200_schema"
+                      "unsafeName": "default_and_validation_rules_response_200",
+                      "safeName": "default_and_validation_rules_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_EXAMPLE_GET_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_EXAMPLE_GET_RESPONSES_200_SCHEMA"
+                      "unsafeName": "DEFAULT_AND_VALIDATION_RULES_RESPONSE_200",
+                      "safeName": "DEFAULT_AND_VALIDATION_RULES_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsExampleGetResponses200Schema",
-                      "safeName": "PathsExampleGetResponses200Schema"
+                      "unsafeName": "DefaultAndValidationRulesResponse200",
+                      "safeName": "DefaultAndValidationRulesResponse200"
                     }
                   },
-                  "typeId": "paths_/example_get_responses_200_schema",
+                  "typeId": "defaultAndValidationRules_Response_200",
                   "inline": false,
                   "type": "named"
                 },

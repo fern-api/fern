@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { readFile, stat } from "fs/promises";
+import { readFile, stat, writeFile } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -30,6 +30,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
+import { tmpdir } from "os";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
@@ -702,6 +703,11 @@ export class DocsDefinitionResolver {
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+            const irJson = JSON.stringify(ir, null, 2);
+            const tmpDir = tmpdir();
+            const pathToJson = join(AbsoluteFilePath.of(tmpDir), RelativeFilePath.of("ir.json"));
+            await writeFile(pathToJson, irJson);
+            console.log(pathToJson);
         } else {
             ir = generateIntermediateRepresentation({
                 workspace,

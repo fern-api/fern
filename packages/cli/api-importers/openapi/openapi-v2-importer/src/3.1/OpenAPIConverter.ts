@@ -92,7 +92,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         // convert paths
         this.convertPaths({ context, errorCollector });
 
-        return {
+        const toRet = {
             ...this.ir,
             apiName: context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {
@@ -102,6 +102,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 })
             }
         }
+        return toRet;
     }
 
     private convertSchemas({
@@ -120,7 +121,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const convertedSchema = schemaConverter.convert({ context, errorCollector });
             if (convertedSchema != null) {
                 this.ir.rootPackage.types.push(id);
-
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedSchema.inlinedTypes,
@@ -187,15 +187,14 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             };
 
             if (group !== "") {
-                const packagePath = allParts.slice(0, -1);
-                const packageId = packagePath.join(".");
-                if (this.ir.subpackages[packageId] == null) {
-                    this.ir.subpackages[packageId] = {
+                if (this.ir.subpackages[group] == null) {
+                    this.ir.subpackages[group] = {
                         name: context.casingsGenerator.generateName(group),
                         ...context.createPackage({ name: group }),
                     }
                 }
-                this.ir.subpackages[packageId].service = group;
+                this.ir.subpackages[group].service = group;
+                this.ir.rootPackage.subpackages.push(group);
             } else {
                 this.ir.rootPackage.service = group;
             }

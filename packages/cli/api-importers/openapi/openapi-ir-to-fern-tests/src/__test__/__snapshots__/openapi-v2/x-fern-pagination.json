@@ -924,7 +924,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".list",
           "displayName": "List",
           "method": "GET",
           "name": {
@@ -976,32 +976,14 @@
                 "wireValue": "pageNumber"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "pageNumber",
-                  "camelCase": {
-                    "unsafeName": "pageNumber",
-                    "safeName": "pageNumber"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "page_number",
-                    "safeName": "page_number"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PAGE_NUMBER",
-                    "safeName": "PAGE_NUMBER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "PageNumber",
-                    "safeName": "PageNumber"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
                   }
                 },
-                "typeId": "pageNumber",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -1058,7 +1040,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".list",
           "displayName": "List",
           "method": "GET",
           "name": {
@@ -1110,32 +1092,14 @@
                 "wireValue": "pageNumber"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "pageNumber",
-                  "camelCase": {
-                    "unsafeName": "pageNumber",
-                    "safeName": "pageNumber"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "page_number",
-                    "safeName": "page_number"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PAGE_NUMBER",
-                    "safeName": "PAGE_NUMBER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "PageNumber",
-                    "safeName": "PageNumber"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
                   }
                 },
-                "typeId": "pageNumber",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1163,32 +1127,14 @@
                 "wireValue": "limit"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "limit",
-                  "camelCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIMIT",
-                    "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
                   }
                 },
-                "typeId": "limit",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }

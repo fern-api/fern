@@ -207,7 +207,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "generativelanguage.GenerateContent",
           "method": "POST",
           "name": {
             "originalName": "GenerateContent",
@@ -254,32 +254,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "model",
-                  "camelCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "MODEL",
-                    "safeName": "MODEL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Model",
-                    "safeName": "Model"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "model",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -317,32 +299,14 @@
                 }
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "model",
-                  "camelCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "MODEL",
-                    "safeName": "MODEL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Model",
-                    "safeName": "Model"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "model",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -373,11 +337,13 @@
       "GenerateContentResponse"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "generativelanguage"
+    ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "": {
+    "generativelanguage": {
       "name": {
         "originalName": "generativelanguage",
         "camelCase": {

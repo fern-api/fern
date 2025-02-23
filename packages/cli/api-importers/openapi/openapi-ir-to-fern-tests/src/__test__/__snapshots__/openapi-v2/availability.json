@@ -867,7 +867,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "method": "GET",
           "name": {
             "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
@@ -932,32 +932,14 @@
               },
               "docs": "collection id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "id",
-                  "camelCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ID",
-                    "safeName": "ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Id",
-                    "safeName": "Id"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             },
@@ -983,32 +965,14 @@
               },
               "docs": "active header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "active_id",
-                  "camelCase": {
-                    "unsafeName": "activeId",
-                    "safeName": "activeId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "active_id",
-                    "safeName": "active_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ACTIVE_ID",
-                    "safeName": "ACTIVE_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ActiveId",
-                    "safeName": "ActiveId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "active_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             },
@@ -1084,32 +1048,14 @@
               },
               "docs": "active beta header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "x-fern-availability_path_param",
-                  "camelCase": {
-                    "unsafeName": "xFernAvailabilityPathParam",
-                    "safeName": "xFernAvailabilityPathParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_fern_availability_path_param",
-                    "safeName": "x_fern_availability_path_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_FERN_AVAILABILITY_PATH_PARAM",
-                    "safeName": "X_FERN_AVAILABILITY_PATH_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XFernAvailabilityPathParam",
-                    "safeName": "XFernAvailabilityPathParam"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "x-fern-availability_path_param",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
@@ -1140,32 +1086,14 @@
               },
               "docs": "language code",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "deprecated_lang",
-                  "camelCase": {
-                    "unsafeName": "deprecatedLang",
-                    "safeName": "deprecatedLang"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "deprecated_lang",
-                    "safeName": "deprecated_lang"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DEPRECATED_LANG",
-                    "safeName": "DEPRECATED_LANG"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DeprecatedLang",
-                    "safeName": "DeprecatedLang"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "deprecated_lang",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1194,32 +1122,14 @@
               },
               "docs": "language code",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "active_lang",
-                  "camelCase": {
-                    "unsafeName": "activeLang",
-                    "safeName": "activeLang"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "active_lang",
-                    "safeName": "active_lang"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ACTIVE_LANG",
-                    "safeName": "ACTIVE_LANG"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ActiveLang",
-                    "safeName": "ActiveLang"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "active_lang",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             },
@@ -1301,32 +1211,14 @@
               },
               "docs": "active beta query param",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "x-fern-availability_query_param",
-                  "camelCase": {
-                    "unsafeName": "xFernAvailabilityQueryParam",
-                    "safeName": "xFernAvailabilityQueryParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_fern_availability_query_param",
-                    "safeName": "x_fern_availability_query_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_FERN_AVAILABILITY_QUERY_PARAM",
-                    "safeName": "X_FERN_AVAILABILITY_QUERY_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XFernAvailabilityQueryParam",
-                    "safeName": "XFernAvailabilityQueryParam"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "x-fern-availability_query_param",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "allowMultiple": false
             }
@@ -1357,32 +1249,14 @@
               },
               "docs": "deprecated header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "X-Deprecated-Header",
-                  "camelCase": {
-                    "unsafeName": "xDeprecatedHeader",
-                    "safeName": "xDeprecatedHeader"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_deprecated_header",
-                    "safeName": "x_deprecated_header"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_DEPRECATED_HEADER",
-                    "safeName": "X_DEPRECATED_HEADER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XDeprecatedHeader",
-                    "safeName": "XDeprecatedHeader"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "X-Deprecated-Header",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             },
             {
@@ -1410,32 +1284,14 @@
               },
               "docs": "active header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "X-Active-Header",
-                  "camelCase": {
-                    "unsafeName": "xActiveHeader",
-                    "safeName": "xActiveHeader"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_active_header",
-                    "safeName": "x_active_header"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_ACTIVE_HEADER",
-                    "safeName": "X_ACTIVE_HEADER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XActiveHeader",
-                    "safeName": "XActiveHeader"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "X-Active-Header",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             },
             {
@@ -1515,32 +1371,14 @@
               },
               "docs": "active beta header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "x-fern-availability_header",
-                  "camelCase": {
-                    "unsafeName": "xFernAvailabilityHeader",
-                    "safeName": "xFernAvailabilityHeader"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_fern_availability_header",
-                    "safeName": "x_fern_availability_header"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_FERN_AVAILABILITY_HEADER",
-                    "safeName": "X_FERN_AVAILABILITY_HEADER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XFernAvailabilityHeader",
-                    "safeName": "XFernAvailabilityHeader"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "x-fern-availability_header",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               }
             }
           ],
@@ -1631,32 +1469,14 @@
               },
               "docs": "collection id",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "id",
-                  "camelCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ID",
-                    "safeName": "ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Id",
-                    "safeName": "Id"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             },
@@ -1682,32 +1502,14 @@
               },
               "docs": "active header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "active_id",
-                  "camelCase": {
-                    "unsafeName": "activeId",
-                    "safeName": "activeId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "active_id",
-                    "safeName": "active_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ACTIVE_ID",
-                    "safeName": "ACTIVE_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ActiveId",
-                    "safeName": "ActiveId"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "active_id",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             },
@@ -1783,39 +1585,21 @@
               },
               "docs": "active beta header",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "name": {
-                  "originalName": "x-fern-availability_path_param",
-                  "camelCase": {
-                    "unsafeName": "xFernAvailabilityPathParam",
-                    "safeName": "xFernAvailabilityPathParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "x_fern_availability_path_param",
-                    "safeName": "x_fern_availability_path_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "X_FERN_AVAILABILITY_PATH_PARAM",
-                    "safeName": "X_FERN_AVAILABILITY_PATH_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "XFernAvailabilityPathParam",
-                    "safeName": "XFernAvailabilityPathParam"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
                   }
                 },
-                "typeId": "x-fern-availability_path_param",
-                "inline": false,
-                "type": "named"
+                "type": "primitive"
               },
               "location": "ENDPOINT"
             }
           ]
         },
         {
-          "id": "",
+          "id": ".postSuccessRef",
           "method": "POST",
           "name": {
             "originalName": "postSuccessRef",
@@ -1893,7 +1677,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".postSuccessInlinePropertyDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlinePropertyDeprecation",
@@ -2103,7 +1887,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".postSuccessInlineObjectDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineObjectDeprecation",
@@ -2261,7 +2045,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".postSuccessInlineBetaBody",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineBetaBody",

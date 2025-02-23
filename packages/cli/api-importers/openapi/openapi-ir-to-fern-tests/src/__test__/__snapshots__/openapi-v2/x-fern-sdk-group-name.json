@@ -518,7 +518,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".getAuthUser",
           "method": "GET",
           "name": {
             "originalName": "getAuthUser",

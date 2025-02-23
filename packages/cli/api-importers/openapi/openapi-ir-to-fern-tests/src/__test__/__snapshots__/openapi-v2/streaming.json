@@ -1256,7 +1256,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".user",
           "method": "POST",
           "name": {
             "originalName": "user",
@@ -1415,7 +1415,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".user_v2",
           "method": "POST",
           "name": {
             "originalName": "user_v2",
@@ -1574,7 +1574,7 @@
           "allPathParameters": []
         },
         {
-          "id": "",
+          "id": ".user_v3",
           "method": "POST",
           "name": {
             "originalName": "user_v3",

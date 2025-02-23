@@ -69,9 +69,20 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 return false;
             }
 
-            // Ignore 'paths' if first crumb
-            if (index === 0 && crumb === "paths") {
-                return false;
+            // Ignore path-related crumbs
+            if (breadcrumbs[0] === "paths") {
+                // Ignore 'paths' if first crumb
+                if (index === 0) {
+                    return false;
+                }
+                // Ignore HTTP methods if second crumb
+                if (index === 1 && ["get", "post", "put", "delete", "patch"].includes(crumb)) {
+                    return false;
+                }
+                // Ignore 'parameters' if third crumb after HTTP method
+                if (index === 2 && breadcrumbs[1] != null && ["get", "post", "put", "delete", "patch"].includes(breadcrumbs[1]) && crumb === "parameters") {
+                    return false;
+                }
             }
 
             return true;
@@ -140,7 +151,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 packagePath: [],
                 file: undefined
             },
-            name: this.casingsGenerator.generateName(id),
+            name: this.casingsGenerator.generateName(id ?? "defaultName"),
             typeId: id,
             default: undefined,
             inline: false

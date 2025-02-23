@@ -5,12 +5,11 @@ import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaConverter } from "./SchemaConverter";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ArraySchemaConverter {
     export interface Args extends AbstractConverter.Args {
         schema: OpenAPIV3_1.ArraySchemaObject;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 
     export interface Output {
@@ -40,33 +39,16 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
             return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
         }
 
-        // if itmes is a reference
-        if (context.isReferenceObject(this.schema.items)) {
-            const maybeTypeReference = context.convertReferenceToTypeReference(this.schema.items);
-            if (maybeTypeReference.ok) {
-                return {
-                    typeReference: TypeReference.container(ContainerType.list(maybeTypeReference.reference))
-                };
-            }
-            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
-        }
-
-        // if items is a inlined schema
-        const itemsBreadcrumbs = [...this.breadcrumbs, "items"];
-        const schemaId = context.convertBreadcrumbsToName(itemsBreadcrumbs);
-        const itemSchemaConverter = new SchemaConverter({
-            id: schemaId,
-            breadcrumbs: itemsBreadcrumbs,
-            schema: this.schema.items
+        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            breadcrumbs: [...this.breadcrumbs, "items"],
+            schemaOrReference: this.schema.items
         });
-        const itemSchema = itemSchemaConverter.convert({ context, errorCollector });
-        if (itemSchema != null) {
+
+        const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+        if (convertedSchema != null) {
             return {
-                typeReference: TypeReference.container(ContainerType.list(context.createNamedTypeReference(schemaId))),
-                inlinedTypes: {
-                    ...itemSchema.inlinedTypes,
-                    schemaId: itemSchema.typeDeclaration
-                }
+                typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
+                inlinedTypes: convertedSchema.inlinedTypes
             };
         }
 

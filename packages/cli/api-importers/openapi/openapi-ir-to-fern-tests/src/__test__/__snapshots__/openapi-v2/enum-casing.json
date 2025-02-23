@@ -429,7 +429,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": ".getExample",
           "displayName": "Get Example",
           "method": "GET",
           "name": {

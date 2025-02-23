@@ -920,7 +920,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "",
+          "id": "auth.get-token",
           "displayName": "Request an access token",
           "method": "POST",
           "name": {
@@ -1305,25 +1305,25 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "paths_/oauth/token_post_responses_200_schema",
+                    "originalName": "auth_get-token_Response_200",
                     "camelCase": {
-                      "unsafeName": "pathsOauthTokenPostResponses200Schema",
-                      "safeName": "pathsOauthTokenPostResponses200Schema"
+                      "unsafeName": "authGetTokenResponse200",
+                      "safeName": "authGetTokenResponse200"
                     },
                     "snakeCase": {
-                      "unsafeName": "paths_oauth_token_post_responses_200_schema",
-                      "safeName": "paths_oauth_token_post_responses_200_schema"
+                      "unsafeName": "auth_get_token_response_200",
+                      "safeName": "auth_get_token_response_200"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "PATHS_OAUTH_TOKEN_POST_RESPONSES_200_SCHEMA",
-                      "safeName": "PATHS_OAUTH_TOKEN_POST_RESPONSES_200_SCHEMA"
+                      "unsafeName": "AUTH_GET_TOKEN_RESPONSE_200",
+                      "safeName": "AUTH_GET_TOKEN_RESPONSE_200"
                     },
                     "pascalCase": {
-                      "unsafeName": "PathsOauthTokenPostResponses200Schema",
-                      "safeName": "PathsOauthTokenPostResponses200Schema"
+                      "unsafeName": "AuthGetTokenResponse200",
+                      "safeName": "AuthGetTokenResponse200"
                     }
                   },
-                  "typeId": "paths_/oauth/token_post_responses_200_schema",
+                  "typeId": "auth_get-token_Response_200",
                   "inline": false,
                   "type": "named"
                 },
@@ -1368,11 +1368,13 @@
     },
     "types": [],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "auth"
+    ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "": {
+    "auth": {
       "name": {
         "originalName": "auth",
         "camelCase": {
