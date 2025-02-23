@@ -88,9 +88,167 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "foo",
+                  "camelCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FOO",
+                    "safeName": "FOO"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Foo",
+                    "safeName": "Foo"
+                  }
+                },
+                "wireValue": "foo"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "foo",
+                  "camelCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FOO",
+                    "safeName": "FOO"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Foo",
+                    "safeName": "Foo"
+                  }
+                },
+                "typeId": "foo",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-API-Version",
+                  "camelCase": {
+                    "unsafeName": "xApiVersion",
+                    "safeName": "xApiVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_api_version",
+                    "safeName": "x_api_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_API_VERSION",
+                    "safeName": "X_API_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XApiVersion",
+                    "safeName": "XApiVersion"
+                  }
+                },
+                "wireValue": "X-API-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-API-Version",
+                  "camelCase": {
+                    "unsafeName": "xApiVersion",
+                    "safeName": "xApiVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_api_version",
+                    "safeName": "x_api_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_API_VERSION",
+                    "safeName": "X_API_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XApiVersion",
+                    "safeName": "XApiVersion"
+                  }
+                },
+                "typeId": "X-API-Version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

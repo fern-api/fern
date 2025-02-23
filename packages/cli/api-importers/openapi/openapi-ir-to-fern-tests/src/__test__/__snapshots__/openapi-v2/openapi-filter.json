@@ -122929,9 +122929,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier of a given admin",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can retrieve the details of a single admin.",
@@ -123032,8 +123137,278 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "phrase",
+                  "camelCase": {
+                    "unsafeName": "phrase",
+                    "safeName": "phrase"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "phrase",
+                    "safeName": "phrase"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PHRASE",
+                    "safeName": "PHRASE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Phrase",
+                    "safeName": "Phrase"
+                  }
+                },
+                "wireValue": "phrase"
+              },
+              "docs": "The phrase within your articles to search for.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "phrase",
+                  "camelCase": {
+                    "unsafeName": "phrase",
+                    "safeName": "phrase"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "phrase",
+                    "safeName": "phrase"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PHRASE",
+                    "safeName": "PHRASE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Phrase",
+                    "safeName": "Phrase"
+                  }
+                },
+                "typeId": "phrase",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "state",
+                  "camelCase": {
+                    "unsafeName": "state",
+                    "safeName": "state"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "state",
+                    "safeName": "state"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATE",
+                    "safeName": "STATE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "State",
+                    "safeName": "State"
+                  }
+                },
+                "wireValue": "state"
+              },
+              "docs": "The state of the Articles returned. One of `published`, `draft` or `all`.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "state",
+                  "camelCase": {
+                    "unsafeName": "state",
+                    "safeName": "state"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "state",
+                    "safeName": "state"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATE",
+                    "safeName": "STATE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "State",
+                    "safeName": "State"
+                  }
+                },
+                "typeId": "state",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "help_center_id",
+                  "camelCase": {
+                    "unsafeName": "helpCenterId",
+                    "safeName": "helpCenterId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "help_center_id",
+                    "safeName": "help_center_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HELP_CENTER_ID",
+                    "safeName": "HELP_CENTER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HelpCenterId",
+                    "safeName": "HelpCenterId"
+                  }
+                },
+                "wireValue": "help_center_id"
+              },
+              "docs": "The ID of the Help Center to search in.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "help_center_id",
+                  "camelCase": {
+                    "unsafeName": "helpCenterId",
+                    "safeName": "helpCenterId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "help_center_id",
+                    "safeName": "help_center_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HELP_CENTER_ID",
+                    "safeName": "HELP_CENTER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HelpCenterId",
+                    "safeName": "HelpCenterId"
+                  }
+                },
+                "typeId": "help_center_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "highlight",
+                  "camelCase": {
+                    "unsafeName": "highlight",
+                    "safeName": "highlight"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "highlight",
+                    "safeName": "highlight"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HIGHLIGHT",
+                    "safeName": "HIGHLIGHT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Highlight",
+                    "safeName": "Highlight"
+                  }
+                },
+                "wireValue": "highlight"
+              },
+              "docs": "Return a highlighted version of the matching content within your articles. Refer to the response schema for more details.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "highlight",
+                  "camelCase": {
+                    "unsafeName": "highlight",
+                    "safeName": "highlight"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "highlight",
+                    "safeName": "highlight"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HIGHLIGHT",
+                    "safeName": "HIGHLIGHT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Highlight",
+                    "safeName": "Highlight"
+                  }
+                },
+                "typeId": "highlight",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.",
@@ -123130,7 +123505,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can list all Help Centers by making a GET request to `https://api.intercom.io/help_center/help_centers`.",
@@ -123234,9 +123662,165 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "contact_id",
+                "camelCase": {
+                  "unsafeName": "contactId",
+                  "safeName": "contactId"
+                },
+                "snakeCase": {
+                  "unsafeName": "contact_id",
+                  "safeName": "contact_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONTACT_ID",
+                  "safeName": "CONTACT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ContactId",
+                  "safeName": "ContactId"
+                }
+              },
+              "docs": "The unique identifier for the contact which is given by Intercom",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "contact_id",
+                  "camelCase": {
+                    "unsafeName": "contactId",
+                    "safeName": "contactId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "contact_id",
+                    "safeName": "contact_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONTACT_ID",
+                    "safeName": "CONTACT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ContactId",
+                    "safeName": "ContactId"
+                  }
+                },
+                "typeId": "contact_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the company which is given by Intercom",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can detach a company from a single contact.",
@@ -123345,9 +123929,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "id",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can unarchive a single contact.",
@@ -123452,9 +124141,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier of a given note",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can fetch the details of a single note.",
@@ -123556,7 +124350,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can list all subscription types. A list of subscription type objects will be returned.",
@@ -123660,9 +124507,165 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "ticket_id",
+                "camelCase": {
+                  "unsafeName": "ticketId",
+                  "safeName": "ticketId"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket_id",
+                  "safeName": "ticket_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET_ID",
+                  "safeName": "TICKET_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TicketId",
+                  "safeName": "TicketId"
+                }
+              },
+              "docs": "ticket_id",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ticket_id",
+                  "camelCase": {
+                    "unsafeName": "ticketId",
+                    "safeName": "ticketId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ticket_id",
+                    "safeName": "ticket_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TICKET_ID",
+                    "safeName": "TICKET_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TicketId",
+                    "safeName": "TicketId"
+                  }
+                },
+                "typeId": "ticket_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the tag which is given by Intercom",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.",
@@ -123771,9 +124774,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The id of the conversation to target",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can convert a conversation to a ticket.",
@@ -123878,9 +124986,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The data attribute id",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "\nYou can update a data attribute.\n\n> 🚧 Updating the data type is not possible\n>\n> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.\n",
@@ -123982,7 +125195,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.\n\n",
@@ -124082,9 +125348,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "job_identifier",
+                "camelCase": {
+                  "unsafeName": "jobIdentifier",
+                  "safeName": "jobIdentifier"
+                },
+                "snakeCase": {
+                  "unsafeName": "job_identifier",
+                  "safeName": "job_identifier"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "JOB_IDENTIFIER",
+                  "safeName": "JOB_IDENTIFIER"
+                },
+                "pascalCase": {
+                  "unsafeName": "JobIdentifier",
+                  "safeName": "JobIdentifier"
+                }
+              },
+              "docs": "job_identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "job_identifier",
+                  "camelCase": {
+                    "unsafeName": "jobIdentifier",
+                    "safeName": "jobIdentifier"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "job_identifier",
+                    "safeName": "job_identifier"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "JOB_IDENTIFIER",
+                    "safeName": "JOB_IDENTIFIER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "JobIdentifier",
+                    "safeName": "JobIdentifier"
+                  }
+                },
+                "typeId": "job_identifier",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234.\n\nYour exported message data will be streamed continuously back down to you in a gzipped CSV format.\n\n> 📘 Octet header required\n>\n> You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.\n",
@@ -124186,7 +125557,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can create a message that has been initiated by an admin. The conversation can be either an in-app message or an email.\n\n> 🚧 Sending for visitors\n>\n> There can be a short delay between when a contact is created and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in this case.\n\nThis will return the Message model that has been created.\n\n> 🚧 Retrieving Associated Conversations\n>\n> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.\n",
@@ -124286,9 +125710,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the news feed item which is given by Intercom.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can fetch the details of a single newsfeed",
@@ -124393,9 +125922,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identified of a given segment.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can fetch the details of a single segment.",
@@ -124497,7 +126131,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can use the API to deflect phone calls to the Intercom Messenger.\nCalling this endpoint will send an SMS with a link to the Messenger to the phone number specified.\n\nIf custom attributes are specified, they will be added to the user or lead's custom data attributes.\n",
@@ -124597,9 +126284,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier of a given team.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can fetch the details of a single team, containing an array of admins that belong to this team.",
@@ -124708,9 +126500,165 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "ticket_type_id",
+                "camelCase": {
+                  "unsafeName": "ticketTypeId",
+                  "safeName": "ticketTypeId"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket_type_id",
+                  "safeName": "ticket_type_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET_TYPE_ID",
+                  "safeName": "TICKET_TYPE_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TicketTypeId",
+                  "safeName": "TicketTypeId"
+                }
+              },
+              "docs": "The unique identifier for the ticket type which is given by Intercom.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ticket_type_id",
+                  "camelCase": {
+                    "unsafeName": "ticketTypeId",
+                    "safeName": "ticketTypeId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ticket_type_id",
+                    "safeName": "ticket_type_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TICKET_TYPE_ID",
+                    "safeName": "TICKET_TYPE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TicketTypeId",
+                    "safeName": "TicketTypeId"
+                  }
+                },
+                "typeId": "ticket_type_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the ticket type attribute which is given by Intercom.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can update an existing attribute for a ticket type.",
@@ -124819,9 +126767,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the ticket type which is given by Intercom.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can fetch the details of a single ticket type.",
@@ -124871,9 +126924,114 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "The unique identifier for the ticket type which is given by Intercom.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "\nYou can update a ticket type.\n\n> 📘 Updating a ticket type.\n>\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
@@ -124975,7 +127133,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`.\n\nThis will accept a query object in the body which will define your filters.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiples there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foobar\"`).\n\n| Field                                     | Type                                                                                     |\n| :---------------------------------------- | :--------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                   |\n| created_at                                | Date (UNIX timestamp)                                                                    |\n| updated_at                                | Date (UNIX timestamp)                                                                    |\n| _default_title_                           | String                                                                                   |\n| _default_description_                     | String                                                                                   |\n| category                                  | String                                                                                   |\n| ticket_type_id                            | String                                                                                   |\n| contact_ids                               | String                                                                                   |\n| teammate_ids                              | String                                                                                   |\n| admin_assignee_id                         | String                                                                                   |\n| team_assignee_id                          | String                                                                                   |\n| open                                      | Boolean                                                                                  |\n| state                                     | String                                                                                   |\n| snoozed_until                             | Date (UNIX timestamp)                                                                    |\n| ticket_attribute.{id}                     | String or Boolean or Date (UNIX timestamp) or Float or Integer                           |\n\n### Accepted Operators\n\n{% admonition type=\"info\" name=\"Searching based on `created_at`\" %}\n  You may use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
@@ -125072,7 +127283,60 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Intercom-Version",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "wireValue": "Intercom-Version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "intercom_version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "You can merge a Visitor to a Contact of role type `lead` or `user`.\n\n> 📘 What happens upon a visitor being converted?\n>\n> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.\n",

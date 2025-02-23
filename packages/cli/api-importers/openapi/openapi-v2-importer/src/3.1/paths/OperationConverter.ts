@@ -1,7 +1,7 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpEndpoint, HttpMethod } from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpHeader, HttpMethod, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter } from "../../AbstractConverter";
@@ -9,6 +9,7 @@ import { ErrorCollector } from "../../ErrorCollector";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { ParameterConverter } from "./ParameterConverter";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractConverter.Args {
@@ -56,6 +57,9 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
+        const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
+
+
         // TODO: Convert operation parameters, request body, responses
         return {
             group,
@@ -66,9 +70,9 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 name: context.casingsGenerator.generateName(method),
                 baseUrl: undefined,
                 path: constructHttpPath(this.path),
-                pathParameters: [],
-                queryParameters: [],
-                headers: [],
+                pathParameters: pathParameters,
+                queryParameters: queryParameters,
+                headers: headers,
                 requestBody: undefined,
                 sdkRequest: undefined,
                 response: undefined,
@@ -103,6 +107,58 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             default:
                 return undefined;
         }
+    }
+
+    private convertParameters({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): {
+        pathParameters: PathParameter[];
+        queryParameters: QueryParameter[];
+        headers: HttpHeader[];
+    } {
+        const pathParameters: PathParameter[] = [];
+        const queryParameters: QueryParameter[] = [];
+        const headers: HttpHeader[] = [];
+
+        if (!this.operation.parameters) {
+            return { pathParameters, queryParameters, headers };
+        }
+
+        for (const parameter of this.operation.parameters) {
+            if (context.isReferenceObject(parameter)) {
+                continue;
+            }
+
+            const parameterConverter = new ParameterConverter({
+                breadcrumbs: [...this.breadcrumbs, "parameters"],
+                parameter
+            });
+
+            const convertedParameter = parameterConverter.convert({ context, errorCollector });
+            if (convertedParameter != null) {
+                switch (convertedParameter.type) {
+                    case "path":
+                        pathParameters.push(convertedParameter.parameter);
+                        break;
+                    case "query":
+                        queryParameters.push(convertedParameter.parameter);
+                        break;
+                    case "header":
+                        headers.push(convertedParameter.parameter);
+                        break;
+                }
+            }
+        }
+
+        return {
+            pathParameters,
+            queryParameters,
+            headers
+        };
     }
 
     private computeGroupNameAndLocationFromExtensions({

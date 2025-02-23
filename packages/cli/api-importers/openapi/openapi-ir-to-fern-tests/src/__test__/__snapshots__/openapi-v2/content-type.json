@@ -84,7 +84,59 @@
             "head": "/example",
             "parts": []
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "corpus_key",
+                "camelCase": {
+                  "unsafeName": "corpusKey",
+                  "safeName": "corpusKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "corpus_key",
+                  "safeName": "corpus_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CORPUS_KEY",
+                  "safeName": "CORPUS_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CorpusKey",
+                  "safeName": "CorpusKey"
+                }
+              },
+              "docs": "The unique key",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "corpus_key",
+                  "camelCase": {
+                    "unsafeName": "corpusKey",
+                    "safeName": "corpusKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "corpus_key",
+                    "safeName": "corpus_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CORPUS_KEY",
+                    "safeName": "CORPUS_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CorpusKey",
+                    "safeName": "CorpusKey"
+                  }
+                },
+                "typeId": "corpus_key",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],

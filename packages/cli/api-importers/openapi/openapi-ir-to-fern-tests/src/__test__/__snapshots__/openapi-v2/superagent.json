@@ -3424,7 +3424,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "agentId",
+                "camelCase": {
+                  "unsafeName": "agentId",
+                  "safeName": "agentId"
+                },
+                "snakeCase": {
+                  "unsafeName": "agent_id",
+                  "safeName": "agent_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AGENT_ID",
+                  "safeName": "AGENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "AgentId",
+                  "safeName": "AgentId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "agentId",
+                  "camelCase": {
+                    "unsafeName": "agentId",
+                    "safeName": "agentId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "agent_id",
+                    "safeName": "agent_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AGENT_ID",
+                    "safeName": "AGENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AgentId",
+                    "safeName": "AgentId"
+                  }
+                },
+                "typeId": "agentId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -3627,7 +3678,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -3733,7 +3835,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "tokenId",
+                "camelCase": {
+                  "unsafeName": "tokenId",
+                  "safeName": "tokenId"
+                },
+                "snakeCase": {
+                  "unsafeName": "token_id",
+                  "safeName": "token_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOKEN_ID",
+                  "safeName": "TOKEN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TokenId",
+                  "safeName": "TokenId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "tokenId",
+                  "camelCase": {
+                    "unsafeName": "tokenId",
+                    "safeName": "tokenId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "token_id",
+                    "safeName": "token_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOKEN_ID",
+                    "safeName": "TOKEN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TokenId",
+                    "safeName": "TokenId"
+                  }
+                },
+                "typeId": "tokenId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -3785,7 +3938,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "tokenId",
+                "camelCase": {
+                  "unsafeName": "tokenId",
+                  "safeName": "tokenId"
+                },
+                "snakeCase": {
+                  "unsafeName": "token_id",
+                  "safeName": "token_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOKEN_ID",
+                  "safeName": "TOKEN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TokenId",
+                  "safeName": "TokenId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "tokenId",
+                  "camelCase": {
+                    "unsafeName": "tokenId",
+                    "safeName": "tokenId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "token_id",
+                    "safeName": "token_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOKEN_ID",
+                    "safeName": "TOKEN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TokenId",
+                    "safeName": "TokenId"
+                  }
+                },
+                "typeId": "tokenId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -3892,7 +4096,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "documentId",
+                "camelCase": {
+                  "unsafeName": "documentId",
+                  "safeName": "documentId"
+                },
+                "snakeCase": {
+                  "unsafeName": "document_id",
+                  "safeName": "document_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DOCUMENT_ID",
+                  "safeName": "DOCUMENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "DocumentId",
+                  "safeName": "DocumentId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "documentId",
+                  "camelCase": {
+                    "unsafeName": "documentId",
+                    "safeName": "documentId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "document_id",
+                    "safeName": "document_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DOCUMENT_ID",
+                    "safeName": "DOCUMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DocumentId",
+                    "safeName": "DocumentId"
+                  }
+                },
+                "typeId": "documentId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -3944,7 +4199,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "documentId",
+                "camelCase": {
+                  "unsafeName": "documentId",
+                  "safeName": "documentId"
+                },
+                "snakeCase": {
+                  "unsafeName": "document_id",
+                  "safeName": "document_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DOCUMENT_ID",
+                  "safeName": "DOCUMENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "DocumentId",
+                  "safeName": "DocumentId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "documentId",
+                  "camelCase": {
+                    "unsafeName": "documentId",
+                    "safeName": "documentId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "document_id",
+                    "safeName": "document_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DOCUMENT_ID",
+                    "safeName": "DOCUMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DocumentId",
+                    "safeName": "DocumentId"
+                  }
+                },
+                "typeId": "documentId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -4051,7 +4357,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "promptId",
+                "camelCase": {
+                  "unsafeName": "promptId",
+                  "safeName": "promptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "prompt_id",
+                  "safeName": "prompt_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROMPT_ID",
+                  "safeName": "PROMPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PromptId",
+                  "safeName": "PromptId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "promptId",
+                  "camelCase": {
+                    "unsafeName": "promptId",
+                    "safeName": "promptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "prompt_id",
+                    "safeName": "prompt_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PROMPT_ID",
+                    "safeName": "PROMPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PromptId",
+                    "safeName": "PromptId"
+                  }
+                },
+                "typeId": "promptId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -4103,7 +4460,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "promptId",
+                "camelCase": {
+                  "unsafeName": "promptId",
+                  "safeName": "promptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "prompt_id",
+                  "safeName": "prompt_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROMPT_ID",
+                  "safeName": "PROMPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PromptId",
+                  "safeName": "PromptId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "promptId",
+                  "camelCase": {
+                    "unsafeName": "promptId",
+                    "safeName": "promptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "prompt_id",
+                    "safeName": "prompt_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PROMPT_ID",
+                    "safeName": "PROMPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PromptId",
+                    "safeName": "PromptId"
+                  }
+                },
+                "typeId": "promptId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -4155,7 +4563,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "promptId",
+                "camelCase": {
+                  "unsafeName": "promptId",
+                  "safeName": "promptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "prompt_id",
+                  "safeName": "prompt_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROMPT_ID",
+                  "safeName": "PROMPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PromptId",
+                  "safeName": "PromptId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "promptId",
+                  "camelCase": {
+                    "unsafeName": "promptId",
+                    "safeName": "promptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "prompt_id",
+                    "safeName": "prompt_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PROMPT_ID",
+                    "safeName": "PROMPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PromptId",
+                    "safeName": "PromptId"
+                  }
+                },
+                "typeId": "promptId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -4262,7 +4721,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "toolId",
+                "camelCase": {
+                  "unsafeName": "toolId",
+                  "safeName": "toolId"
+                },
+                "snakeCase": {
+                  "unsafeName": "tool_id",
+                  "safeName": "tool_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOOL_ID",
+                  "safeName": "TOOL_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ToolId",
+                  "safeName": "ToolId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "toolId",
+                  "camelCase": {
+                    "unsafeName": "toolId",
+                    "safeName": "toolId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "tool_id",
+                    "safeName": "tool_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOOL_ID",
+                    "safeName": "TOOL_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ToolId",
+                    "safeName": "ToolId"
+                  }
+                },
+                "typeId": "toolId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -4314,7 +4824,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "toolId",
+                "camelCase": {
+                  "unsafeName": "toolId",
+                  "safeName": "toolId"
+                },
+                "snakeCase": {
+                  "unsafeName": "tool_id",
+                  "safeName": "tool_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOOL_ID",
+                  "safeName": "TOOL_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ToolId",
+                  "safeName": "ToolId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "toolId",
+                  "camelCase": {
+                    "unsafeName": "toolId",
+                    "safeName": "toolId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "tool_id",
+                    "safeName": "tool_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOOL_ID",
+                    "safeName": "TOOL_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ToolId",
+                    "safeName": "ToolId"
+                  }
+                },
+                "typeId": "toolId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],

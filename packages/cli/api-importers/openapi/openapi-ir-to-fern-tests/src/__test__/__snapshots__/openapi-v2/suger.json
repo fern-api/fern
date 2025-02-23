@@ -115252,7 +115252,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "buyerId",
+                "camelCase": {
+                  "unsafeName": "buyerId",
+                  "safeName": "buyerId"
+                },
+                "snakeCase": {
+                  "unsafeName": "buyer_id",
+                  "safeName": "buyer_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BUYER_ID",
+                  "safeName": "BUYER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "BuyerId",
+                  "safeName": "BuyerId"
+                }
+              },
+              "docs": "Buyer ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "buyerId",
+                  "camelCase": {
+                    "unsafeName": "buyerId",
+                    "safeName": "buyerId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "buyer_id",
+                    "safeName": "buyer_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BUYER_ID",
+                    "safeName": "BUYER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BuyerId",
+                    "safeName": "BuyerId"
+                  }
+                },
+                "typeId": "buyerId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115312,7 +115415,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "buyerId",
+                "camelCase": {
+                  "unsafeName": "buyerId",
+                  "safeName": "buyerId"
+                },
+                "snakeCase": {
+                  "unsafeName": "buyer_id",
+                  "safeName": "buyer_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BUYER_ID",
+                  "safeName": "BUYER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "BuyerId",
+                  "safeName": "BuyerId"
+                }
+              },
+              "docs": "Buyer ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "buyerId",
+                  "camelCase": {
+                    "unsafeName": "buyerId",
+                    "safeName": "buyerId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "buyer_id",
+                    "safeName": "buyer_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BUYER_ID",
+                    "safeName": "BUYER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BuyerId",
+                    "safeName": "BuyerId"
+                  }
+                },
+                "typeId": "buyerId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115427,7 +115633,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "productId",
+                "camelCase": {
+                  "unsafeName": "productId",
+                  "safeName": "productId"
+                },
+                "snakeCase": {
+                  "unsafeName": "product_id",
+                  "safeName": "product_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT_ID",
+                  "safeName": "PRODUCT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ProductId",
+                  "safeName": "ProductId"
+                }
+              },
+              "docs": "Product ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "productId",
+                  "camelCase": {
+                    "unsafeName": "productId",
+                    "safeName": "productId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "product_id",
+                    "safeName": "product_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PRODUCT_ID",
+                    "safeName": "PRODUCT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ProductId",
+                    "safeName": "ProductId"
+                  }
+                },
+                "typeId": "productId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115542,7 +115851,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "productId",
+                "camelCase": {
+                  "unsafeName": "productId",
+                  "safeName": "productId"
+                },
+                "snakeCase": {
+                  "unsafeName": "product_id",
+                  "safeName": "product_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT_ID",
+                  "safeName": "PRODUCT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ProductId",
+                  "safeName": "ProductId"
+                }
+              },
+              "docs": "Product ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "productId",
+                  "camelCase": {
+                    "unsafeName": "productId",
+                    "safeName": "productId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "product_id",
+                    "safeName": "product_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PRODUCT_ID",
+                    "safeName": "PRODUCT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ProductId",
+                    "safeName": "ProductId"
+                  }
+                },
+                "typeId": "productId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115661,7 +116073,161 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "entitlementId",
+                "camelCase": {
+                  "unsafeName": "entitlementId",
+                  "safeName": "entitlementId"
+                },
+                "snakeCase": {
+                  "unsafeName": "entitlement_id",
+                  "safeName": "entitlement_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITLEMENT_ID",
+                  "safeName": "ENTITLEMENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntitlementId",
+                  "safeName": "EntitlementId"
+                }
+              },
+              "docs": "Entitlement ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "entitlementId",
+                  "camelCase": {
+                    "unsafeName": "entitlementId",
+                    "safeName": "entitlementId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "entitlement_id",
+                    "safeName": "entitlement_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENTITLEMENT_ID",
+                    "safeName": "ENTITLEMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EntitlementId",
+                    "safeName": "EntitlementId"
+                  }
+                },
+                "typeId": "entitlementId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "entitlementTermId",
+                "camelCase": {
+                  "unsafeName": "entitlementTermId",
+                  "safeName": "entitlementTermId"
+                },
+                "snakeCase": {
+                  "unsafeName": "entitlement_term_id",
+                  "safeName": "entitlement_term_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENTITLEMENT_TERM_ID",
+                  "safeName": "ENTITLEMENT_TERM_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "EntitlementTermId",
+                  "safeName": "EntitlementTermId"
+                }
+              },
+              "docs": "Entitlement Term ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "entitlementTermId",
+                  "camelCase": {
+                    "unsafeName": "entitlementTermId",
+                    "safeName": "entitlementTermId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "entitlement_term_id",
+                    "safeName": "entitlement_term_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENTITLEMENT_TERM_ID",
+                    "safeName": "ENTITLEMENT_TERM_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EntitlementTermId",
+                    "safeName": "EntitlementTermId"
+                  }
+                },
+                "typeId": "entitlementTermId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115780,7 +116346,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "usageRecordReportId",
+                "camelCase": {
+                  "unsafeName": "usageRecordReportId",
+                  "safeName": "usageRecordReportId"
+                },
+                "snakeCase": {
+                  "unsafeName": "usage_record_report_id",
+                  "safeName": "usage_record_report_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USAGE_RECORD_REPORT_ID",
+                  "safeName": "USAGE_RECORD_REPORT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UsageRecordReportId",
+                  "safeName": "UsageRecordReportId"
+                }
+              },
+              "docs": "UsageRecordReport ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "usageRecordReportId",
+                  "camelCase": {
+                    "unsafeName": "usageRecordReportId",
+                    "safeName": "usageRecordReportId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "usage_record_report_id",
+                    "safeName": "usage_record_report_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USAGE_RECORD_REPORT_ID",
+                    "safeName": "USAGE_RECORD_REPORT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UsageRecordReportId",
+                    "safeName": "UsageRecordReportId"
+                  }
+                },
+                "typeId": "usageRecordReportId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -115899,7 +116568,161 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "partner",
+                "camelCase": {
+                  "unsafeName": "partner",
+                  "safeName": "partner"
+                },
+                "snakeCase": {
+                  "unsafeName": "partner",
+                  "safeName": "partner"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTNER",
+                  "safeName": "PARTNER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Partner",
+                  "safeName": "Partner"
+                }
+              },
+              "docs": "Cloud Partner",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "partner",
+                  "camelCase": {
+                    "unsafeName": "partner",
+                    "safeName": "partner"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "partner",
+                    "safeName": "partner"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PARTNER",
+                    "safeName": "PARTNER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Partner",
+                    "safeName": "Partner"
+                  }
+                },
+                "typeId": "partner",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "service",
+                "camelCase": {
+                  "unsafeName": "service",
+                  "safeName": "service"
+                },
+                "snakeCase": {
+                  "unsafeName": "service",
+                  "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SERVICE",
+                  "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Service",
+                  "safeName": "Service"
+                }
+              },
+              "docs": "Partner Service",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "service",
+                  "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                  }
+                },
+                "typeId": "service",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116014,8 +116837,277 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "offerId",
+                  "camelCase": {
+                    "unsafeName": "offerId",
+                    "safeName": "offerId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "offer_id",
+                    "safeName": "offer_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OFFER_ID",
+                    "safeName": "OFFER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OfferId",
+                    "safeName": "OfferId"
+                  }
+                },
+                "wireValue": "offerId"
+              },
+              "docs": "filter by offerId",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "offerId",
+                  "camelCase": {
+                    "unsafeName": "offerId",
+                    "safeName": "offerId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "offer_id",
+                    "safeName": "offer_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OFFER_ID",
+                    "safeName": "OFFER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OfferId",
+                    "safeName": "OfferId"
+                  }
+                },
+                "typeId": "offerId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "entitlementId",
+                  "camelCase": {
+                    "unsafeName": "entitlementId",
+                    "safeName": "entitlementId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "entitlement_id",
+                    "safeName": "entitlement_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENTITLEMENT_ID",
+                    "safeName": "ENTITLEMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EntitlementId",
+                    "safeName": "EntitlementId"
+                  }
+                },
+                "wireValue": "entitlementId"
+              },
+              "docs": "filter by entitlementId",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "entitlementId",
+                  "camelCase": {
+                    "unsafeName": "entitlementId",
+                    "safeName": "entitlementId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "entitlement_id",
+                    "safeName": "entitlement_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENTITLEMENT_ID",
+                    "safeName": "ENTITLEMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EntitlementId",
+                    "safeName": "EntitlementId"
+                  }
+                },
+                "typeId": "entitlementId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "crmOpportunityId",
+                  "camelCase": {
+                    "unsafeName": "crmOpportunityId",
+                    "safeName": "crmOpportunityId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "crm_opportunity_id",
+                    "safeName": "crm_opportunity_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CRM_OPPORTUNITY_ID",
+                    "safeName": "CRM_OPPORTUNITY_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CrmOpportunityId",
+                    "safeName": "CrmOpportunityId"
+                  }
+                },
+                "wireValue": "crmOpportunityId"
+              },
+              "docs": "filter by crmOpportunityId",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "crmOpportunityId",
+                  "camelCase": {
+                    "unsafeName": "crmOpportunityId",
+                    "safeName": "crmOpportunityId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "crm_opportunity_id",
+                    "safeName": "crm_opportunity_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CRM_OPPORTUNITY_ID",
+                    "safeName": "CRM_OPPORTUNITY_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CrmOpportunityId",
+                    "safeName": "CrmOpportunityId"
+                  }
+                },
+                "typeId": "crmOpportunityId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "partnerOpportunityId",
+                  "camelCase": {
+                    "unsafeName": "partnerOpportunityId",
+                    "safeName": "partnerOpportunityId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "partner_opportunity_id",
+                    "safeName": "partner_opportunity_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PARTNER_OPPORTUNITY_ID",
+                    "safeName": "PARTNER_OPPORTUNITY_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PartnerOpportunityId",
+                    "safeName": "PartnerOpportunityId"
+                  }
+                },
+                "wireValue": "partnerOpportunityId"
+              },
+              "docs": "filter by partnerOpportunityId",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "partnerOpportunityId",
+                  "camelCase": {
+                    "unsafeName": "partnerOpportunityId",
+                    "safeName": "partnerOpportunityId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "partner_opportunity_id",
+                    "safeName": "partner_opportunity_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PARTNER_OPPORTUNITY_ID",
+                    "safeName": "PARTNER_OPPORTUNITY_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PartnerOpportunityId",
+                    "safeName": "PartnerOpportunityId"
+                  }
+                },
+                "typeId": "partnerOpportunityId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -116125,7 +117217,110 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "productId",
+                "camelCase": {
+                  "unsafeName": "productId",
+                  "safeName": "productId"
+                },
+                "snakeCase": {
+                  "unsafeName": "product_id",
+                  "safeName": "product_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT_ID",
+                  "safeName": "PRODUCT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ProductId",
+                  "safeName": "ProductId"
+                }
+              },
+              "docs": "Product ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "productId",
+                  "camelCase": {
+                    "unsafeName": "productId",
+                    "safeName": "productId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "product_id",
+                    "safeName": "product_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PRODUCT_ID",
+                    "safeName": "PRODUCT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ProductId",
+                    "safeName": "ProductId"
+                  }
+                },
+                "typeId": "productId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116236,7 +117431,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "orgId",
+                "camelCase": {
+                  "unsafeName": "orgId",
+                  "safeName": "orgId"
+                },
+                "snakeCase": {
+                  "unsafeName": "org_id",
+                  "safeName": "org_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ORG_ID",
+                  "safeName": "ORG_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "OrgId",
+                  "safeName": "OrgId"
+                }
+              },
+              "docs": "Organization ID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "orgId",
+                  "camelCase": {
+                    "unsafeName": "orgId",
+                    "safeName": "orgId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "org_id",
+                    "safeName": "org_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ORG_ID",
+                    "safeName": "ORG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OrgId",
+                    "safeName": "OrgId"
+                  }
+                },
+                "typeId": "orgId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],

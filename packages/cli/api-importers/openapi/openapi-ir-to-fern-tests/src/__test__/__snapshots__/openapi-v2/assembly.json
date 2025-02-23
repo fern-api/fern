@@ -22667,7 +22667,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "transcript_id",
+                "camelCase": {
+                  "unsafeName": "transcriptId",
+                  "safeName": "transcriptId"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript_id",
+                  "safeName": "transcript_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT_ID",
+                  "safeName": "TRANSCRIPT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranscriptId",
+                  "safeName": "TranscriptId"
+                }
+              },
+              "docs": "ID of the transcript",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "transcript_id",
+                  "camelCase": {
+                    "unsafeName": "transcriptId",
+                    "safeName": "transcriptId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript_id",
+                    "safeName": "transcript_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT_ID",
+                    "safeName": "TRANSCRIPT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranscriptId",
+                    "safeName": "TranscriptId"
+                  }
+                },
+                "typeId": "transcript_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -22871,7 +22923,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "request_id",
+                "camelCase": {
+                  "unsafeName": "requestId",
+                  "safeName": "requestId"
+                },
+                "snakeCase": {
+                  "unsafeName": "request_id",
+                  "safeName": "request_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REQUEST_ID",
+                  "safeName": "REQUEST_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "RequestId",
+                  "safeName": "RequestId"
+                }
+              },
+              "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "request_id",
+                  "camelCase": {
+                    "unsafeName": "requestId",
+                    "safeName": "requestId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "request_id",
+                    "safeName": "request_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REQUEST_ID",
+                    "safeName": "REQUEST_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RequestId",
+                    "safeName": "RequestId"
+                  }
+                },
+                "typeId": "request_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],

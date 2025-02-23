@@ -116490,7 +116490,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116596,8 +116648,115 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "key",
+                  "camelCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "KEY",
+                    "safeName": "KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Key",
+                    "safeName": "Key"
+                  }
+                },
+                "wireValue": "key"
+              },
+              "docs": "Key to retrieve.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "key",
+                  "camelCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "key",
+                    "safeName": "key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "KEY",
+                    "safeName": "KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Key",
+                    "safeName": "Key"
+                  }
+                },
+                "typeId": "key",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -116647,7 +116806,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116753,7 +116964,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116859,7 +117122,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -116965,8 +117280,169 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "target_connection_id",
+                  "camelCase": {
+                    "unsafeName": "targetConnectionId",
+                    "safeName": "targetConnectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "target_connection_id",
+                    "safeName": "target_connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TARGET_CONNECTION_ID",
+                    "safeName": "TARGET_CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TargetConnectionId",
+                    "safeName": "TargetConnectionId"
+                  }
+                },
+                "wireValue": "target_connection_id"
+              },
+              "docs": "Target connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "target_connection_id",
+                  "camelCase": {
+                    "unsafeName": "targetConnectionId",
+                    "safeName": "targetConnectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "target_connection_id",
+                    "safeName": "target_connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TARGET_CONNECTION_ID",
+                    "safeName": "TARGET_CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TargetConnectionId",
+                    "safeName": "TargetConnectionId"
+                  }
+                },
+                "typeId": "target_connection_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "message",
+                  "camelCase": {
+                    "unsafeName": "message",
+                    "safeName": "message"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "message",
+                    "safeName": "message"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MESSAGE",
+                    "safeName": "MESSAGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Message",
+                    "safeName": "Message"
+                  }
+                },
+                "wireValue": "message"
+              },
+              "docs": "Message",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "message",
+                  "camelCase": {
+                    "unsafeName": "message",
+                    "safeName": "message"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "message",
+                    "safeName": "message"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MESSAGE",
+                    "safeName": "MESSAGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Message",
+                    "safeName": "Message"
+                  }
+                },
+                "typeId": "message",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -117071,7 +117547,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "cred_def_id",
+                "camelCase": {
+                  "unsafeName": "credDefId",
+                  "safeName": "credDefId"
+                },
+                "snakeCase": {
+                  "unsafeName": "cred_def_id",
+                  "safeName": "cred_def_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CRED_DEF_ID",
+                  "safeName": "CRED_DEF_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "CredDefId",
+                  "safeName": "CredDefId"
+                }
+              },
+              "docs": "Credential definition identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "cred_def_id",
+                  "camelCase": {
+                    "unsafeName": "credDefId",
+                    "safeName": "credDefId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cred_def_id",
+                    "safeName": "cred_def_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CRED_DEF_ID",
+                    "safeName": "CRED_DEF_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CredDefId",
+                    "safeName": "CredDefId"
+                  }
+                },
+                "typeId": "cred_def_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -117173,7 +117701,170 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "count",
+                  "camelCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNT",
+                    "safeName": "COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Count",
+                    "safeName": "Count"
+                  }
+                },
+                "wireValue": "count"
+              },
+              "docs": "Maximum number to retrieve",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "count",
+                  "camelCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "count",
+                    "safeName": "count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COUNT",
+                    "safeName": "COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Count",
+                    "safeName": "Count"
+                  }
+                },
+                "typeId": "count",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "Start index",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "typeId": "start",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "wql",
+                  "camelCase": {
+                    "unsafeName": "wql",
+                    "safeName": "wql"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "wql",
+                    "safeName": "wql"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WQL",
+                    "safeName": "WQL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Wql",
+                    "safeName": "Wql"
+                  }
+                },
+                "wireValue": "wql"
+              },
+              "docs": "(JSON) WQL query",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "wql",
+                  "camelCase": {
+                    "unsafeName": "wql",
+                    "safeName": "wql"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "wql",
+                    "safeName": "wql"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WQL",
+                    "safeName": "WQL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Wql",
+                    "safeName": "Wql"
+                  }
+                },
+                "typeId": "wql",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -117273,8 +117964,169 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "conn_id",
+                "camelCase": {
+                  "unsafeName": "connId",
+                  "safeName": "connId"
+                },
+                "snakeCase": {
+                  "unsafeName": "conn_id",
+                  "safeName": "conn_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONN_ID",
+                  "safeName": "CONN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConnId",
+                  "safeName": "ConnId"
+                }
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "mediation_id",
+                  "camelCase": {
+                    "unsafeName": "mediationId",
+                    "safeName": "mediationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "mediation_id",
+                    "safeName": "mediation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MEDIATION_ID",
+                    "safeName": "MEDIATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MediationId",
+                    "safeName": "MediationId"
+                  }
+                },
+                "wireValue": "mediation_id"
+              },
+              "docs": "Identifier for active mediation record to be used",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "mediation_id",
+                  "camelCase": {
+                    "unsafeName": "mediationId",
+                    "safeName": "mediationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "mediation_id",
+                    "safeName": "mediation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MEDIATION_ID",
+                    "safeName": "MEDIATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MediationId",
+                    "safeName": "MediationId"
+                  }
+                },
+                "typeId": "mediation_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "my_endpoint",
+                  "camelCase": {
+                    "unsafeName": "myEndpoint",
+                    "safeName": "myEndpoint"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_endpoint",
+                    "safeName": "my_endpoint"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_ENDPOINT",
+                    "safeName": "MY_ENDPOINT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyEndpoint",
+                    "safeName": "MyEndpoint"
+                  }
+                },
+                "wireValue": "my_endpoint"
+              },
+              "docs": "My URL endpoint",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "my_endpoint",
+                  "camelCase": {
+                    "unsafeName": "myEndpoint",
+                    "safeName": "myEndpoint"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_endpoint",
+                    "safeName": "my_endpoint"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_ENDPOINT",
+                    "safeName": "MY_ENDPOINT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyEndpoint",
+                    "safeName": "MyEndpoint"
+                  }
+                },
+                "typeId": "my_endpoint",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -117414,7 +118266,62 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "connection_id",
+                  "camelCase": {
+                    "unsafeName": "connectionId",
+                    "safeName": "connectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "connection_id",
+                    "safeName": "connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONNECTION_ID",
+                    "safeName": "CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnectionId",
+                    "safeName": "ConnectionId"
+                  }
+                },
+                "wireValue": "connection_id"
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "connection_id",
+                  "camelCase": {
+                    "unsafeName": "connectionId",
+                    "safeName": "connectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "connection_id",
+                    "safeName": "connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONNECTION_ID",
+                    "safeName": "CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnectionId",
+                    "safeName": "ConnectionId"
+                  }
+                },
+                "typeId": "connection_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -117510,7 +118417,62 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "connection_id",
+                  "camelCase": {
+                    "unsafeName": "connectionId",
+                    "safeName": "connectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "connection_id",
+                    "safeName": "connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONNECTION_ID",
+                    "safeName": "CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnectionId",
+                    "safeName": "ConnectionId"
+                  }
+                },
+                "wireValue": "connection_id"
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "connection_id",
+                  "camelCase": {
+                    "unsafeName": "connectionId",
+                    "safeName": "connectionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "connection_id",
+                    "safeName": "connection_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONNECTION_ID",
+                    "safeName": "CONNECTION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnectionId",
+                    "safeName": "ConnectionId"
+                  }
+                },
+                "typeId": "connection_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -118072,7 +119034,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "mediation_id",
+                "camelCase": {
+                  "unsafeName": "mediationId",
+                  "safeName": "mediationId"
+                },
+                "snakeCase": {
+                  "unsafeName": "mediation_id",
+                  "safeName": "mediation_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MEDIATION_ID",
+                  "safeName": "MEDIATION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "MediationId",
+                  "safeName": "MediationId"
+                }
+              },
+              "docs": "Mediation record identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "mediation_id",
+                  "camelCase": {
+                    "unsafeName": "mediationId",
+                    "safeName": "mediationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "mediation_id",
+                    "safeName": "mediation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MEDIATION_ID",
+                    "safeName": "MEDIATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MediationId",
+                    "safeName": "MediationId"
+                  }
+                },
+                "typeId": "mediation_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -118174,7 +119188,62 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "wallet_name",
+                  "camelCase": {
+                    "unsafeName": "walletName",
+                    "safeName": "walletName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "wallet_name",
+                    "safeName": "wallet_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WALLET_NAME",
+                    "safeName": "WALLET_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "WalletName",
+                    "safeName": "WalletName"
+                  }
+                },
+                "wireValue": "wallet_name"
+              },
+              "docs": "Wallet name",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "wallet_name",
+                  "camelCase": {
+                    "unsafeName": "walletName",
+                    "safeName": "walletName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "wallet_name",
+                    "safeName": "wallet_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WALLET_NAME",
+                    "safeName": "WALLET_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "WalletName",
+                    "safeName": "WalletName"
+                  }
+                },
+                "typeId": "wallet_name",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -118270,7 +119339,224 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "alias",
+                  "camelCase": {
+                    "unsafeName": "alias",
+                    "safeName": "alias"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "alias",
+                    "safeName": "alias"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ALIAS",
+                    "safeName": "ALIAS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Alias",
+                    "safeName": "Alias"
+                  }
+                },
+                "wireValue": "alias"
+              },
+              "docs": "Alias for connection",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "alias",
+                  "camelCase": {
+                    "unsafeName": "alias",
+                    "safeName": "alias"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "alias",
+                    "safeName": "alias"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ALIAS",
+                    "safeName": "ALIAS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Alias",
+                    "safeName": "Alias"
+                  }
+                },
+                "typeId": "alias",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "auto_accept",
+                  "camelCase": {
+                    "unsafeName": "autoAccept",
+                    "safeName": "autoAccept"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "auto_accept",
+                    "safeName": "auto_accept"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AUTO_ACCEPT",
+                    "safeName": "AUTO_ACCEPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AutoAccept",
+                    "safeName": "AutoAccept"
+                  }
+                },
+                "wireValue": "auto_accept"
+              },
+              "docs": "Auto-accept connection (defaults to configuration)",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "auto_accept",
+                  "camelCase": {
+                    "unsafeName": "autoAccept",
+                    "safeName": "autoAccept"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "auto_accept",
+                    "safeName": "auto_accept"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AUTO_ACCEPT",
+                    "safeName": "AUTO_ACCEPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AutoAccept",
+                    "safeName": "AutoAccept"
+                  }
+                },
+                "typeId": "auto_accept",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "mediation_id",
+                  "camelCase": {
+                    "unsafeName": "mediationId",
+                    "safeName": "mediationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "mediation_id",
+                    "safeName": "mediation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MEDIATION_ID",
+                    "safeName": "MEDIATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MediationId",
+                    "safeName": "MediationId"
+                  }
+                },
+                "wireValue": "mediation_id"
+              },
+              "docs": "Identifier for active mediation record to be used",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "mediation_id",
+                  "camelCase": {
+                    "unsafeName": "mediationId",
+                    "safeName": "mediationId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "mediation_id",
+                    "safeName": "mediation_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MEDIATION_ID",
+                    "safeName": "MEDIATION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MediationId",
+                    "safeName": "MediationId"
+                  }
+                },
+                "typeId": "mediation_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "use_existing_connection",
+                  "camelCase": {
+                    "unsafeName": "useExistingConnection",
+                    "safeName": "useExistingConnection"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "use_existing_connection",
+                    "safeName": "use_existing_connection"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USE_EXISTING_CONNECTION",
+                    "safeName": "USE_EXISTING_CONNECTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UseExistingConnection",
+                    "safeName": "UseExistingConnection"
+                  }
+                },
+                "wireValue": "use_existing_connection"
+              },
+              "docs": "Use an existing connection, if possible",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "use_existing_connection",
+                  "camelCase": {
+                    "unsafeName": "useExistingConnection",
+                    "safeName": "useExistingConnection"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "use_existing_connection",
+                    "safeName": "use_existing_connection"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USE_EXISTING_CONNECTION",
+                    "safeName": "USE_EXISTING_CONNECTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UseExistingConnection",
+                    "safeName": "UseExistingConnection"
+                  }
+                },
+                "typeId": "use_existing_connection",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -118736,7 +120022,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "did",
+                "camelCase": {
+                  "unsafeName": "did",
+                  "safeName": "did"
+                },
+                "snakeCase": {
+                  "unsafeName": "did",
+                  "safeName": "did"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DID",
+                  "safeName": "DID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Did",
+                  "safeName": "Did"
+                }
+              },
+              "docs": "DID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "did",
+                  "camelCase": {
+                    "unsafeName": "did",
+                    "safeName": "did"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "did",
+                    "safeName": "did"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DID",
+                    "safeName": "DID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Did",
+                    "safeName": "Did"
+                  }
+                },
+                "typeId": "did",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -118938,7 +120276,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "schema_id",
+                "camelCase": {
+                  "unsafeName": "schemaId",
+                  "safeName": "schemaId"
+                },
+                "snakeCase": {
+                  "unsafeName": "schema_id",
+                  "safeName": "schema_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCHEMA_ID",
+                  "safeName": "SCHEMA_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "SchemaId",
+                  "safeName": "SchemaId"
+                }
+              },
+              "docs": "Schema identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "schema_id",
+                  "camelCase": {
+                    "unsafeName": "schemaId",
+                    "safeName": "schemaId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "schema_id",
+                    "safeName": "schema_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SCHEMA_ID",
+                    "safeName": "SCHEMA_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SchemaId",
+                    "safeName": "SchemaId"
+                  }
+                },
+                "typeId": "schema_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -119044,7 +120434,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "tran_id",
+                "camelCase": {
+                  "unsafeName": "tranId",
+                  "safeName": "tranId"
+                },
+                "snakeCase": {
+                  "unsafeName": "tran_id",
+                  "safeName": "tran_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRAN_ID",
+                  "safeName": "TRAN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranId",
+                  "safeName": "TranId"
+                }
+              },
+              "docs": "Transaction identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "tran_id",
+                  "camelCase": {
+                    "unsafeName": "tranId",
+                    "safeName": "tranId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "tran_id",
+                    "safeName": "tran_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRAN_ID",
+                    "safeName": "TRAN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranId",
+                    "safeName": "TranId"
+                  }
+                },
+                "typeId": "tran_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -119150,8 +120592,115 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "tran_id",
+                "camelCase": {
+                  "unsafeName": "tranId",
+                  "safeName": "tranId"
+                },
+                "snakeCase": {
+                  "unsafeName": "tran_id",
+                  "safeName": "tran_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRAN_ID",
+                  "safeName": "TRAN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TranId",
+                  "safeName": "TranId"
+                }
+              },
+              "docs": "Transaction identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "tran_id",
+                  "camelCase": {
+                    "unsafeName": "tranId",
+                    "safeName": "tranId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "tran_id",
+                    "safeName": "tran_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRAN_ID",
+                    "safeName": "TRAN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TranId",
+                    "safeName": "TranId"
+                  }
+                },
+                "typeId": "tran_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "endorser_did",
+                  "camelCase": {
+                    "unsafeName": "endorserDid",
+                    "safeName": "endorserDid"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "endorser_did",
+                    "safeName": "endorser_did"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDORSER_DID",
+                    "safeName": "ENDORSER_DID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndorserDid",
+                    "safeName": "EndorserDid"
+                  }
+                },
+                "wireValue": "endorser_did"
+              },
+              "docs": "Endorser DID",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "endorser_did",
+                  "camelCase": {
+                    "unsafeName": "endorserDid",
+                    "safeName": "endorserDid"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "endorser_did",
+                    "safeName": "endorser_did"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDORSER_DID",
+                    "safeName": "ENDORSER_DID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndorserDid",
+                    "safeName": "EndorserDid"
+                  }
+                },
+                "typeId": "endorser_did",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -119252,7 +120801,116 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "wireValue": "conn_id"
+              },
+              "docs": "Connection identifier",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "conn_id",
+                  "camelCase": {
+                    "unsafeName": "connId",
+                    "safeName": "connId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "conn_id",
+                    "safeName": "conn_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONN_ID",
+                    "safeName": "CONN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConnId",
+                    "safeName": "ConnId"
+                  }
+                },
+                "typeId": "conn_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "create_transaction_for_endorser",
+                  "camelCase": {
+                    "unsafeName": "createTransactionForEndorser",
+                    "safeName": "createTransactionForEndorser"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "create_transaction_for_endorser",
+                    "safeName": "create_transaction_for_endorser"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATE_TRANSACTION_FOR_ENDORSER",
+                    "safeName": "CREATE_TRANSACTION_FOR_ENDORSER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreateTransactionForEndorser",
+                    "safeName": "CreateTransactionForEndorser"
+                  }
+                },
+                "wireValue": "create_transaction_for_endorser"
+              },
+              "docs": "Create Transaction For Endorser's signature",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "create_transaction_for_endorser",
+                  "camelCase": {
+                    "unsafeName": "createTransactionForEndorser",
+                    "safeName": "createTransactionForEndorser"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "create_transaction_for_endorser",
+                    "safeName": "create_transaction_for_endorser"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATE_TRANSACTION_FOR_ENDORSER",
+                    "safeName": "CREATE_TRANSACTION_FOR_ENDORSER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreateTransactionForEndorser",
+                    "safeName": "CreateTransactionForEndorser"
+                  }
+                },
+                "typeId": "create_transaction_for_endorser",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": true
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

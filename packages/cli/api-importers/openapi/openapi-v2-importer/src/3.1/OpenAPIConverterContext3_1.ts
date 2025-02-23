@@ -1,4 +1,4 @@
-import { OpenAPIV3_1 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
 
@@ -15,7 +15,12 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3_1.SchemaObject
             | OpenAPIV3_1.RequestBodyObject
             | OpenAPIV3_1.SecuritySchemeObject
-    ): parameter is OpenAPIV3_1.ReferenceObject {
+            | OpenAPIV3.ReferenceObject
+            | OpenAPIV3.ParameterObject
+            | OpenAPIV3.SchemaObject
+            | OpenAPIV3.RequestBodyObject
+            | OpenAPIV3.SecuritySchemeObject
+    ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
         return "$ref" in parameter;
     }
 

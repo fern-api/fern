@@ -950,7 +950,220 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "pageNumber",
+                  "camelCase": {
+                    "unsafeName": "pageNumber",
+                    "safeName": "pageNumber"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_number",
+                    "safeName": "page_number"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_NUMBER",
+                    "safeName": "PAGE_NUMBER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageNumber",
+                    "safeName": "PageNumber"
+                  }
+                },
+                "wireValue": "pageNumber"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "pageNumber",
+                  "camelCase": {
+                    "unsafeName": "pageNumber",
+                    "safeName": "pageNumber"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_number",
+                    "safeName": "page_number"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_NUMBER",
+                    "safeName": "PAGE_NUMBER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageNumber",
+                    "safeName": "PageNumber"
+                  }
+                },
+                "typeId": "pageNumber",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "typeId": "limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "ignoredParam1",
+                  "camelCase": {
+                    "unsafeName": "ignoredParam1",
+                    "safeName": "ignoredParam1"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ignored_param_1",
+                    "safeName": "ignored_param_1"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IGNORED_PARAM_1",
+                    "safeName": "IGNORED_PARAM_1"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IgnoredParam1",
+                    "safeName": "IgnoredParam1"
+                  }
+                },
+                "wireValue": "ignoredParam1"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ignoredParam1",
+                  "camelCase": {
+                    "unsafeName": "ignoredParam1",
+                    "safeName": "ignoredParam1"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ignored_param_1",
+                    "safeName": "ignored_param_1"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IGNORED_PARAM_1",
+                    "safeName": "IGNORED_PARAM_1"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IgnoredParam1",
+                    "safeName": "IgnoredParam1"
+                  }
+                },
+                "typeId": "ignoredParam1",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "ignoredParam2",
+                  "camelCase": {
+                    "unsafeName": "ignoredParam2",
+                    "safeName": "ignoredParam2"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ignored_param_2",
+                    "safeName": "ignored_param_2"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IGNORED_PARAM_2",
+                    "safeName": "IGNORED_PARAM_2"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IgnoredParam2",
+                    "safeName": "IgnoredParam2"
+                  }
+                },
+                "wireValue": "ignoredParam2"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ignoredParam2",
+                  "camelCase": {
+                    "unsafeName": "ignoredParam2",
+                    "safeName": "ignoredParam2"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ignored_param_2",
+                    "safeName": "ignored_param_2"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IGNORED_PARAM_2",
+                    "safeName": "IGNORED_PARAM_2"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IgnoredParam2",
+                    "safeName": "IgnoredParam2"
+                  }
+                },
+                "typeId": "ignoredParam2",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

@@ -63450,7 +63450,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -63553,7 +63604,49 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "tool_type",
+                  "camelCase": {
+                    "unsafeName": "toolType",
+                    "safeName": "toolType"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "tool_type",
+                    "safeName": "tool_type"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOOL_TYPE",
+                    "safeName": "TOOL_TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ToolType",
+                    "safeName": "ToolType"
+                  }
+                },
+                "wireValue": "tool_type"
+              },
+              "docs": "Type of tool to return the template",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -63657,8 +63750,166 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "Unique identifier for Dataset.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            },
+            {
+              "name": {
+                "originalName": "version_id",
+                "camelCase": {
+                  "unsafeName": "versionId",
+                  "safeName": "versionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "version_id",
+                  "safeName": "version_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VERSION_ID",
+                  "safeName": "VERSION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "VersionId",
+                  "safeName": "VersionId"
+                }
+              },
+              "docs": "Unique identifier for the specific version of the Dataset.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "version_id",
+                  "camelCase": {
+                    "unsafeName": "versionId",
+                    "safeName": "versionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "version_id",
+                    "safeName": "version_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VERSION_ID",
+                    "safeName": "VERSION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "VersionId",
+                    "safeName": "VersionId"
+                  }
+                },
+                "typeId": "version_id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "environment_id",
+                  "camelCase": {
+                    "unsafeName": "environmentId",
+                    "safeName": "environmentId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "environment_id",
+                    "safeName": "environment_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENVIRONMENT_ID",
+                    "safeName": "ENVIRONMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EnvironmentId",
+                    "safeName": "EnvironmentId"
+                  }
+                },
+                "wireValue": "environment_id"
+              },
+              "docs": "Unique identifier for the Environment to deploy the Version to.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "environment_id",
+                  "camelCase": {
+                    "unsafeName": "environmentId",
+                    "safeName": "environmentId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "environment_id",
+                    "safeName": "environment_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENVIRONMENT_ID",
+                    "safeName": "ENVIRONMENT_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EnvironmentId",
+                    "safeName": "EnvironmentId"
+                  }
+                },
+                "typeId": "environment_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -63768,7 +64019,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "Unique identifier for Evaluation.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -63972,7 +64275,59 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "docs": "Unique identifier for Log.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -64075,7 +64430,224 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "file_id",
+                  "camelCase": {
+                    "unsafeName": "fileId",
+                    "safeName": "fileId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "file_id",
+                    "safeName": "file_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FILE_ID",
+                    "safeName": "FILE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FileId",
+                    "safeName": "FileId"
+                  }
+                },
+                "wireValue": "file_id"
+              },
+              "docs": "Unique identifier for File to return Sessions for. Sessions that contain any Logs associated to this File will be returned.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "file_id",
+                  "camelCase": {
+                    "unsafeName": "fileId",
+                    "safeName": "fileId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "file_id",
+                    "safeName": "file_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FILE_ID",
+                    "safeName": "FILE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FileId",
+                    "safeName": "FileId"
+                  }
+                },
+                "typeId": "file_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "version_id",
+                  "camelCase": {
+                    "unsafeName": "versionId",
+                    "safeName": "versionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "version_id",
+                    "safeName": "version_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VERSION_ID",
+                    "safeName": "VERSION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "VersionId",
+                    "safeName": "VersionId"
+                  }
+                },
+                "wireValue": "version_id"
+              },
+              "docs": "Unique identifier for Version to return Sessions for. Sessions that contain any Logs associated to this Version will be returned.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "version_id",
+                  "camelCase": {
+                    "unsafeName": "versionId",
+                    "safeName": "versionId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "version_id",
+                    "safeName": "version_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VERSION_ID",
+                    "safeName": "VERSION_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "VersionId",
+                    "safeName": "VersionId"
+                  }
+                },
+                "typeId": "version_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "page",
+                  "camelCase": {
+                    "unsafeName": "page",
+                    "safeName": "page"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page",
+                    "safeName": "page"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE",
+                    "safeName": "PAGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Page",
+                    "safeName": "Page"
+                  }
+                },
+                "wireValue": "page"
+              },
+              "docs": "Page number for pagination.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "page",
+                  "camelCase": {
+                    "unsafeName": "page",
+                    "safeName": "page"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page",
+                    "safeName": "page"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE",
+                    "safeName": "PAGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Page",
+                    "safeName": "Page"
+                  }
+                },
+                "typeId": "page",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "size",
+                  "camelCase": {
+                    "unsafeName": "size",
+                    "safeName": "size"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "size",
+                    "safeName": "size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SIZE",
+                    "safeName": "SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Size",
+                    "safeName": "Size"
+                  }
+                },
+                "wireValue": "size"
+              },
+              "docs": "Page size for pagination. Number of Sessions to fetch.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "size",
+                  "camelCase": {
+                    "unsafeName": "size",
+                    "safeName": "size"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "size",
+                    "safeName": "size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SIZE",
+                    "safeName": "SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Size",
+                    "safeName": "Size"
+                  }
+                },
+                "typeId": "size",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

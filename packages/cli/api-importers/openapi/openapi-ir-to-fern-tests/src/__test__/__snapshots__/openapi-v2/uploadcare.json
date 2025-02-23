@@ -14465,7 +14465,115 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "pub_key",
+                  "camelCase": {
+                    "unsafeName": "pubKey",
+                    "safeName": "pubKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "pub_key",
+                    "safeName": "pub_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PUB_KEY",
+                    "safeName": "PUB_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PubKey",
+                    "safeName": "PubKey"
+                  }
+                },
+                "wireValue": "pub_key"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "projectPublicKeyType",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "file_id",
+                  "camelCase": {
+                    "unsafeName": "fileId",
+                    "safeName": "fileId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "file_id",
+                    "safeName": "file_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FILE_ID",
+                    "safeName": "FILE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FileId",
+                    "safeName": "FileId"
+                  }
+                },
+                "wireValue": "file_id"
+              },
+              "docs": "File's unique ID.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "file_id",
+                  "camelCase": {
+                    "unsafeName": "fileId",
+                    "safeName": "fileId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "file_id",
+                    "safeName": "file_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FILE_ID",
+                    "safeName": "FILE_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FileId",
+                    "safeName": "FileId"
+                  }
+                },
+                "typeId": "file_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -14562,7 +14670,115 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "pub_key",
+                  "camelCase": {
+                    "unsafeName": "pubKey",
+                    "safeName": "pubKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "pub_key",
+                    "safeName": "pub_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PUB_KEY",
+                    "safeName": "PUB_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PubKey",
+                    "safeName": "PubKey"
+                  }
+                },
+                "wireValue": "pub_key"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "projectPublicKeyType",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "group_id",
+                  "camelCase": {
+                    "unsafeName": "groupId",
+                    "safeName": "groupId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "group_id",
+                    "safeName": "group_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GROUP_ID",
+                    "safeName": "GROUP_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GroupId",
+                    "safeName": "GroupId"
+                  }
+                },
+                "wireValue": "group_id"
+              },
+              "docs": "Group's unique ID. Group IDs look like `UUID~N`, where the `~N` part reflects the number of the files in the group.\n",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "group_id",
+                  "camelCase": {
+                    "unsafeName": "groupId",
+                    "safeName": "groupId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "group_id",
+                    "safeName": "group_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GROUP_ID",
+                    "safeName": "GROUP_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GroupId",
+                    "safeName": "GroupId"
+                  }
+                },
+                "typeId": "group_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

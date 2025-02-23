@@ -14940,7 +14940,224 @@
             ]
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "startsOn",
+                  "camelCase": {
+                    "unsafeName": "startsOn",
+                    "safeName": "startsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "starts_on",
+                    "safeName": "starts_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STARTS_ON",
+                    "safeName": "STARTS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "StartsOn",
+                    "safeName": "StartsOn"
+                  }
+                },
+                "wireValue": "startsOn"
+              },
+              "docs": "The start of the range of dates to include in the response, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "startsOn",
+                  "camelCase": {
+                    "unsafeName": "startsOn",
+                    "safeName": "startsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "starts_on",
+                    "safeName": "starts_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STARTS_ON",
+                    "safeName": "STARTS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "StartsOn",
+                    "safeName": "StartsOn"
+                  }
+                },
+                "typeId": "startsOn",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "endsOn",
+                  "camelCase": {
+                    "unsafeName": "endsOn",
+                    "safeName": "endsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ends_on",
+                    "safeName": "ends_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDS_ON",
+                    "safeName": "ENDS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndsOn",
+                    "safeName": "EndsOn"
+                  }
+                },
+                "wireValue": "endsOn"
+              },
+              "docs": "The end of the range of dates to include in the response. in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the `startOn` date and is limited to a four year interval.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "endsOn",
+                  "camelCase": {
+                    "unsafeName": "endsOn",
+                    "safeName": "endsOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ends_on",
+                    "safeName": "ends_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ENDS_ON",
+                    "safeName": "ENDS_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndsOn",
+                    "safeName": "EndsOn"
+                  }
+                },
+                "typeId": "endsOn",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "type",
+                  "camelCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TYPE",
+                    "safeName": "TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Type",
+                    "safeName": "Type"
+                  }
+                },
+                "wireValue": "type"
+              },
+              "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that `Credit` and `Debit` here are relative to the account at the _external_ financial institution.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "transferTypeForDateRestrictions",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "risk",
+                  "camelCase": {
+                    "unsafeName": "risk",
+                    "safeName": "risk"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "risk",
+                    "safeName": "risk"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RISK",
+                    "safeName": "RISK"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Risk",
+                    "safeName": "Risk"
+                  }
+                },
+                "wireValue": "risk"
+              },
+              "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "achAccountRisk",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -15047,7 +15264,602 @@
             ]
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of items to return in this paged response.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "typeId": "limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "occurredOn",
+                  "camelCase": {
+                    "unsafeName": "occurredOn",
+                    "safeName": "occurredOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "occurred_on",
+                    "safeName": "occurred_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OCCURRED_ON",
+                    "safeName": "OCCURRED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OccurredOn",
+                    "safeName": "OccurredOn"
+                  }
+                },
+                "wireValue": "occurredOn"
+              },
+              "docs": "Return only transactions whose `occurredOn` date is in this date range. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> `2023-05-19` match transactions occurring on May 19, 2023.</li> <li> `[2023-05-01,2023-05-31]` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> `[2023-05-01,2023-06-01)` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> `[2023-05-09,]` match transactions _n_ days on or after May 9, 2023</li> <li> `(2023-05-09,)` match transactions _n_ days after May 9, 2023</li> <li> `[,2023-05-09]` match transactions _n_ days on or before May 9, 2023</li> <li> `(,2023-05-09)` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "occurredOn",
+                  "camelCase": {
+                    "unsafeName": "occurredOn",
+                    "safeName": "occurredOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "occurred_on",
+                    "safeName": "occurred_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OCCURRED_ON",
+                    "safeName": "OCCURRED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OccurredOn",
+                    "safeName": "OccurredOn"
+                  }
+                },
+                "typeId": "occurredOn",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "posted",
+                  "camelCase": {
+                    "unsafeName": "posted",
+                    "safeName": "posted"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "posted",
+                    "safeName": "posted"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "POSTED",
+                    "safeName": "POSTED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Posted",
+                    "safeName": "Posted"
+                  }
+                },
+                "wireValue": "posted"
+              },
+              "docs": "Limit transactions in the response based on the transaction's `posted` value. If `true`, include only posted transactions. If `false`, include only non-posted transactions. If omitted, do not filter based on `posted`. Note that using this filter excludes balance transactions because the `posted` property is not set on balance transactions, so neither `true` or `false` match them.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "posted",
+                  "camelCase": {
+                    "unsafeName": "posted",
+                    "safeName": "posted"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "posted",
+                    "safeName": "posted"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "POSTED",
+                    "safeName": "POSTED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Posted",
+                    "safeName": "Posted"
+                  }
+                },
+                "typeId": "posted",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "createdOn",
+                  "camelCase": {
+                    "unsafeName": "createdOn",
+                    "safeName": "createdOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "created_on",
+                    "safeName": "created_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATED_ON",
+                    "safeName": "CREATED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreatedOn",
+                    "safeName": "CreatedOn"
+                  }
+                },
+                "wireValue": "createdOn"
+              },
+              "docs": "Return only transactions whose `createdOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `createdOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `createdOn` will be removed on version `v0.9.0` of the API.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "dateRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "postedOn",
+                  "camelCase": {
+                    "unsafeName": "postedOn",
+                    "safeName": "postedOn"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "posted_on",
+                    "safeName": "posted_on"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "POSTED_ON",
+                    "safeName": "POSTED_ON"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PostedOn",
+                    "safeName": "PostedOn"
+                  }
+                },
+                "wireValue": "postedOn"
+              },
+              "docs": "Return only transactions whose `postedOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `postedOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `postedOn` will be removed on version `v0.9.0` of the API.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "dateRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "category",
+                  "camelCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CATEGORY",
+                    "safeName": "CATEGORY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Category",
+                    "safeName": "Category"
+                  }
+                },
+                "wireValue": "category"
+              },
+              "docs": "Filter transactions to only those whose `category` is in this pipe-separated list. Categories are set by a transaction cleansing service or assigned by the account holder. Categories can include names such as `\"Shopping\"`, `\"Deposit\"`, `\"Bill\"`, `\"Transfer\"`, or `\"Other\"`.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "category",
+                  "camelCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CATEGORY",
+                    "safeName": "CATEGORY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Category",
+                    "safeName": "Category"
+                  }
+                },
+                "typeId": "category",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "type",
+                  "camelCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TYPE",
+                    "safeName": "TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Type",
+                    "safeName": "Type"
+                  }
+                },
+                "wireValue": "type"
+              },
+              "docs": "Filter transactions to only those whose `type` is in this pipe-separated list.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "type",
+                  "camelCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "type",
+                    "safeName": "type_"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TYPE",
+                    "safeName": "TYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Type",
+                    "safeName": "Type"
+                  }
+                },
+                "typeId": "type",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "subtype",
+                  "camelCase": {
+                    "unsafeName": "subtype",
+                    "safeName": "subtype"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "subtype",
+                    "safeName": "subtype"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SUBTYPE",
+                    "safeName": "SUBTYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Subtype",
+                    "safeName": "Subtype"
+                  }
+                },
+                "wireValue": "subtype"
+              },
+              "docs": "Filter transactions to only those whose `subtype` is in this pipe-separated list.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "subtype",
+                  "camelCase": {
+                    "unsafeName": "subtype",
+                    "safeName": "subtype"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "subtype",
+                    "safeName": "subtype"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SUBTYPE",
+                    "safeName": "SUBTYPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Subtype",
+                    "safeName": "Subtype"
+                  }
+                },
+                "typeId": "subtype",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "amount",
+                  "camelCase": {
+                    "unsafeName": "amount",
+                    "safeName": "amount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "amount",
+                    "safeName": "amount"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AMOUNT",
+                    "safeName": "AMOUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Amount",
+                    "safeName": "Amount"
+                  }
+                },
+                "wireValue": "amount"
+              },
+              "docs": "Return only transactions whose `amount` is in this numeric range. This compares only the absolute value of the transaction. That is, the value `[1000.00,1100.00)` matches either a debit of `-1070.25` or a credit of `1021.90`.<br> Some examples of specifying an amount range: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`(999.99,1200.00]` matches items where `999.99 < amount <= 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount > 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "amountRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "checkNumber",
+                  "camelCase": {
+                    "unsafeName": "checkNumber",
+                    "safeName": "checkNumber"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "check_number",
+                    "safeName": "check_number"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHECK_NUMBER",
+                    "safeName": "CHECK_NUMBER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CheckNumber",
+                    "safeName": "CheckNumber"
+                  }
+                },
+                "wireValue": "checkNumber"
+              },
+              "docs": "Return only transactions whose `check.number` is in this integer range. Examples: <ul> <li>`1200` match the integer 1,200 exactly</li> <li>`[1000,1200)` matches items where `1000 <= number < 1200`</li> <li>`[1000,1199]` matches items where `1000 <= number <= 1199`</li> <li>`(999,1200]` matches items where `999 < number <= 1200`</li> <li>`[1200,]` matches items where `number >= 1200`</li> <li>`(1200,)` matches items where `number > 1200`</li> <li>`[,1200]` matches items where `number <= 1200`</li> <li>`(,1200)` matches items where `number < 1200`</li> </ul>",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "checkNumberRange",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "retryCount",
+                  "camelCase": {
+                    "unsafeName": "retryCount",
+                    "safeName": "retryCount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "retry_count",
+                    "safeName": "retry_count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RETRY_COUNT",
+                    "safeName": "RETRY_COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RetryCount",
+                    "safeName": "RetryCount"
+                  }
+                },
+                "wireValue": "retryCount"
+              },
+              "docs": "When retrying the operation, pass the `retryCount` from the `incompleteTransactions` response.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "retryCount",
+                  "camelCase": {
+                    "unsafeName": "retryCount",
+                    "safeName": "retryCount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "retry_count",
+                    "safeName": "retry_count"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RETRY_COUNT",
+                    "safeName": "RETRY_COUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RetryCount",
+                    "safeName": "RetryCount"
+                  }
+                },
+                "typeId": "retryCount",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

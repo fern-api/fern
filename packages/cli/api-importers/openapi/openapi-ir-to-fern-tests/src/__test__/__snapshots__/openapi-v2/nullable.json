@@ -2060,8 +2060,166 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "activated",
+                  "camelCase": {
+                    "unsafeName": "activated",
+                    "safeName": "activated"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "activated",
+                    "safeName": "activated"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACTIVATED",
+                    "safeName": "ACTIVATED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Activated",
+                    "safeName": "Activated"
+                  }
+                },
+                "wireValue": "activated"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "activated",
+                  "camelCase": {
+                    "unsafeName": "activated",
+                    "safeName": "activated"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "activated",
+                    "safeName": "activated"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACTIVATED",
+                    "safeName": "ACTIVATED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Activated",
+                    "safeName": "Activated"
+                  }
+                },
+                "typeId": "activated",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "email",
+                  "camelCase": {
+                    "unsafeName": "email",
+                    "safeName": "email"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "email",
+                    "safeName": "email"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EMAIL",
+                    "safeName": "EMAIL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Email",
+                    "safeName": "Email"
+                  }
+                },
+                "wireValue": "email"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "email",
+                  "camelCase": {
+                    "unsafeName": "email",
+                    "safeName": "email"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "email",
+                    "safeName": "email"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EMAIL",
+                    "safeName": "EMAIL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Email",
+                    "safeName": "Email"
+                  }
+                },
+                "typeId": "email",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

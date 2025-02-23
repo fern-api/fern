@@ -65655,7 +65655,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Get details for a linked account.",
@@ -65754,7 +65808,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "public_token",
+                "camelCase": {
+                  "unsafeName": "publicToken",
+                  "safeName": "publicToken"
+                },
+                "snakeCase": {
+                  "unsafeName": "public_token",
+                  "safeName": "public_token"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUBLIC_TOKEN",
+                  "safeName": "PUBLIC_TOKEN"
+                },
+                "pascalCase": {
+                  "unsafeName": "PublicToken",
+                  "safeName": "PublicToken"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "public_token",
+                  "camelCase": {
+                    "unsafeName": "publicToken",
+                    "safeName": "publicToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "public_token",
+                    "safeName": "public_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PUBLIC_TOKEN",
+                    "safeName": "PUBLIC_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PublicToken",
+                    "safeName": "PublicToken"
+                  }
+                },
+                "typeId": "public_token",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -65857,7 +65962,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a list of models and actions available for an account.",
@@ -65956,9 +66115,331 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `BankInfo` object with the given `id`.",
@@ -66062,9 +66543,223 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `Benefit` object with the given `id`.",
@@ -66168,9 +66863,169 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `Company` object with the given `id`.",
@@ -66271,7 +67126,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Delete a linked account.",
@@ -66370,9 +67279,223 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns an `EmployeePayrollRun` object with the given `id`.",
@@ -66473,7 +67596,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns metadata for `Employee` POSTs.",
@@ -66572,9 +67749,331 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns an `Employment` object with the given `id`.",
@@ -66774,9 +68273,277 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `Group` object with the given `id`.",
@@ -66880,7 +68647,58 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "errors": [],
@@ -67078,7 +68896,709 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "category",
+                  "camelCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CATEGORY",
+                    "safeName": "CATEGORY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Category",
+                    "safeName": "Category"
+                  }
+                },
+                "wireValue": "category"
+              },
+              "docs": "Options: ('hris', 'ats', 'accounting', 'ticketing', 'crm', 'mktg', 'filestorage')\n\n* `hris` - hris\n* `ats` - ats\n* `accounting` - accounting\n* `ticketing` - ticketing\n* `crm` - crm\n* `mktg` - mktg\n* `filestorage` - filestorage",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "category",
+                  "camelCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "category",
+                    "safeName": "category"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CATEGORY",
+                    "safeName": "CATEGORY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Category",
+                    "safeName": "Category"
+                  }
+                },
+                "typeId": "category",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "wireValue": "cursor"
+              },
+              "docs": "The pagination cursor value.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "typeId": "cursor",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "end_user_email_address",
+                  "camelCase": {
+                    "unsafeName": "endUserEmailAddress",
+                    "safeName": "endUserEmailAddress"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_email_address",
+                    "safeName": "end_user_email_address"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_EMAIL_ADDRESS",
+                    "safeName": "END_USER_EMAIL_ADDRESS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserEmailAddress",
+                    "safeName": "EndUserEmailAddress"
+                  }
+                },
+                "wireValue": "end_user_email_address"
+              },
+              "docs": "If provided, will only return linked accounts associated with the given email address.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "end_user_email_address",
+                  "camelCase": {
+                    "unsafeName": "endUserEmailAddress",
+                    "safeName": "endUserEmailAddress"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_email_address",
+                    "safeName": "end_user_email_address"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_EMAIL_ADDRESS",
+                    "safeName": "END_USER_EMAIL_ADDRESS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserEmailAddress",
+                    "safeName": "EndUserEmailAddress"
+                  }
+                },
+                "typeId": "end_user_email_address",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "end_user_organization_name",
+                  "camelCase": {
+                    "unsafeName": "endUserOrganizationName",
+                    "safeName": "endUserOrganizationName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_organization_name",
+                    "safeName": "end_user_organization_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORGANIZATION_NAME",
+                    "safeName": "END_USER_ORGANIZATION_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOrganizationName",
+                    "safeName": "EndUserOrganizationName"
+                  }
+                },
+                "wireValue": "end_user_organization_name"
+              },
+              "docs": "If provided, will only return linked accounts associated with the given organization name.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "end_user_organization_name",
+                  "camelCase": {
+                    "unsafeName": "endUserOrganizationName",
+                    "safeName": "endUserOrganizationName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_organization_name",
+                    "safeName": "end_user_organization_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORGANIZATION_NAME",
+                    "safeName": "END_USER_ORGANIZATION_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOrganizationName",
+                    "safeName": "EndUserOrganizationName"
+                  }
+                },
+                "typeId": "end_user_organization_name",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "end_user_origin_id",
+                  "camelCase": {
+                    "unsafeName": "endUserOriginId",
+                    "safeName": "endUserOriginId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_origin_id",
+                    "safeName": "end_user_origin_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORIGIN_ID",
+                    "safeName": "END_USER_ORIGIN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOriginId",
+                    "safeName": "EndUserOriginId"
+                  }
+                },
+                "wireValue": "end_user_origin_id"
+              },
+              "docs": "If provided, will only return linked accounts associated with the given origin ID.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "end_user_origin_id",
+                  "camelCase": {
+                    "unsafeName": "endUserOriginId",
+                    "safeName": "endUserOriginId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_origin_id",
+                    "safeName": "end_user_origin_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORIGIN_ID",
+                    "safeName": "END_USER_ORIGIN_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOriginId",
+                    "safeName": "EndUserOriginId"
+                  }
+                },
+                "typeId": "end_user_origin_id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "end_user_origin_ids",
+                  "camelCase": {
+                    "unsafeName": "endUserOriginIds",
+                    "safeName": "endUserOriginIds"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_origin_ids",
+                    "safeName": "end_user_origin_ids"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORIGIN_IDS",
+                    "safeName": "END_USER_ORIGIN_IDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOriginIds",
+                    "safeName": "EndUserOriginIds"
+                  }
+                },
+                "wireValue": "end_user_origin_ids"
+              },
+              "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "end_user_origin_ids",
+                  "camelCase": {
+                    "unsafeName": "endUserOriginIds",
+                    "safeName": "endUserOriginIds"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_user_origin_ids",
+                    "safeName": "end_user_origin_ids"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USER_ORIGIN_IDS",
+                    "safeName": "END_USER_ORIGIN_IDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUserOriginIds",
+                    "safeName": "EndUserOriginIds"
+                  }
+                },
+                "typeId": "end_user_origin_ids",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "wireValue": "id"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "ids",
+                  "camelCase": {
+                    "unsafeName": "ids",
+                    "safeName": "ids"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ids",
+                    "safeName": "ids"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IDS",
+                    "safeName": "IDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Ids",
+                    "safeName": "Ids"
+                  }
+                },
+                "wireValue": "ids"
+              },
+              "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "ids",
+                  "camelCase": {
+                    "unsafeName": "ids",
+                    "safeName": "ids"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "ids",
+                    "safeName": "ids"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IDS",
+                    "safeName": "IDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Ids",
+                    "safeName": "Ids"
+                  }
+                },
+                "typeId": "ids",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_duplicates",
+                  "camelCase": {
+                    "unsafeName": "includeDuplicates",
+                    "safeName": "includeDuplicates"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_duplicates",
+                    "safeName": "include_duplicates"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_DUPLICATES",
+                    "safeName": "INCLUDE_DUPLICATES"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeDuplicates",
+                    "safeName": "IncludeDuplicates"
+                  }
+                },
+                "wireValue": "include_duplicates"
+              },
+              "docs": "If `true`, will include complete production duplicates of the account specified by the `id` query parameter in the response. `id` must be for a complete production linked account.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_duplicates",
+                  "camelCase": {
+                    "unsafeName": "includeDuplicates",
+                    "safeName": "includeDuplicates"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_duplicates",
+                    "safeName": "include_duplicates"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_DUPLICATES",
+                    "safeName": "INCLUDE_DUPLICATES"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeDuplicates",
+                    "safeName": "IncludeDuplicates"
+                  }
+                },
+                "typeId": "include_duplicates",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "integration_name",
+                  "camelCase": {
+                    "unsafeName": "integrationName",
+                    "safeName": "integrationName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "integration_name",
+                    "safeName": "integration_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTEGRATION_NAME",
+                    "safeName": "INTEGRATION_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntegrationName",
+                    "safeName": "IntegrationName"
+                  }
+                },
+                "wireValue": "integration_name"
+              },
+              "docs": "If provided, will only return linked accounts associated with the given integration name.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "integration_name",
+                  "camelCase": {
+                    "unsafeName": "integrationName",
+                    "safeName": "integrationName"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "integration_name",
+                    "safeName": "integration_name"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTEGRATION_NAME",
+                    "safeName": "INTEGRATION_NAME"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntegrationName",
+                    "safeName": "IntegrationName"
+                  }
+                },
+                "typeId": "integration_name",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "is_test_account",
+                  "camelCase": {
+                    "unsafeName": "isTestAccount",
+                    "safeName": "isTestAccount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "is_test_account",
+                    "safeName": "is_test_account"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IS_TEST_ACCOUNT",
+                    "safeName": "IS_TEST_ACCOUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IsTestAccount",
+                    "safeName": "IsTestAccount"
+                  }
+                },
+                "wireValue": "is_test_account"
+              },
+              "docs": "If included, will only include test linked accounts. If not included, will only include non-test linked accounts.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "is_test_account",
+                  "camelCase": {
+                    "unsafeName": "isTestAccount",
+                    "safeName": "isTestAccount"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "is_test_account",
+                    "safeName": "is_test_account"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IS_TEST_ACCOUNT",
+                    "safeName": "IS_TEST_ACCOUNT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IsTestAccount",
+                    "safeName": "IsTestAccount"
+                  }
+                },
+                "typeId": "is_test_account",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "wireValue": "page_size"
+              },
+              "docs": "Number of results to return per page.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "typeId": "page_size",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                },
+                "wireValue": "status"
+              },
+              "docs": "Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                },
+                "typeId": "status",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,
@@ -67178,9 +69698,277 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `Location` object with the given `id`.",
@@ -67281,7 +70069,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Pull data from an endpoint not currently supported by Merge.",
@@ -67380,9 +70222,169 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `PayGroup` object with the given `id`.",
@@ -67486,9 +70488,277 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `PayrollRun` object with the given `id`.",
@@ -67684,8 +70954,224 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "common_model",
+                  "camelCase": {
+                    "unsafeName": "commonModel",
+                    "safeName": "commonModel"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "common_model",
+                    "safeName": "common_model"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COMMON_MODEL",
+                    "safeName": "COMMON_MODEL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CommonModel",
+                    "safeName": "CommonModel"
+                  }
+                },
+                "wireValue": "common_model"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "common_model",
+                  "camelCase": {
+                    "unsafeName": "commonModel",
+                    "safeName": "commonModel"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "common_model",
+                    "safeName": "common_model"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COMMON_MODEL",
+                    "safeName": "COMMON_MODEL"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CommonModel",
+                    "safeName": "CommonModel"
+                  }
+                },
+                "typeId": "common_model",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "wireValue": "cursor"
+              },
+              "docs": "The pagination cursor value.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "typeId": "cursor",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "wireValue": "page_size"
+              },
+              "docs": "Number of results to return per page.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "typeId": "page_size",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Get metadata for the conditions available to a linked account.",
@@ -67780,8 +71266,171 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "wireValue": "cursor"
+              },
+              "docs": "The pagination cursor value.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "typeId": "cursor",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "wireValue": "page_size"
+              },
+              "docs": "Number of results to return per page.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "page_size",
+                  "camelCase": {
+                    "unsafeName": "pageSize",
+                    "safeName": "pageSize"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "page_size",
+                    "safeName": "page_size"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PAGE_SIZE",
+                    "safeName": "PAGE_SIZE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PageSize",
+                    "safeName": "PageSize"
+                  }
+                },
+                "typeId": "page_size",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
@@ -67877,7 +71526,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
@@ -67976,9 +71679,223 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `Team` object with the given `id`.",
@@ -68079,7 +71996,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns metadata for `TimeOff` POSTs.",
@@ -68178,9 +72149,331 @@
               }
             ]
           },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Id",
+                    "safeName": "Id"
+                  }
+                },
+                "typeId": "id",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "wireValue": "expand"
+              },
+              "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "expand",
+                  "camelCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "expand",
+                    "safeName": "expand"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPAND",
+                    "safeName": "EXPAND"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Expand",
+                    "safeName": "Expand"
+                  }
+                },
+                "typeId": "expand",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "wireValue": "include_remote_data"
+              },
+              "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "include_remote_data",
+                  "camelCase": {
+                    "unsafeName": "includeRemoteData",
+                    "safeName": "includeRemoteData"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "include_remote_data",
+                    "safeName": "include_remote_data"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INCLUDE_REMOTE_DATA",
+                    "safeName": "INCLUDE_REMOTE_DATA"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IncludeRemoteData",
+                    "safeName": "IncludeRemoteData"
+                  }
+                },
+                "typeId": "include_remote_data",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "wireValue": "remote_fields"
+              },
+              "docs": "Deprecated. Use show_enum_origins.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "remote_fields",
+                  "camelCase": {
+                    "unsafeName": "remoteFields",
+                    "safeName": "remoteFields"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "remote_fields",
+                    "safeName": "remote_fields"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REMOTE_FIELDS",
+                    "safeName": "REMOTE_FIELDS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RemoteFields",
+                    "safeName": "RemoteFields"
+                  }
+                },
+                "typeId": "remote_fields",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "wireValue": "show_enum_origins"
+              },
+              "docs": "Which fields should be returned in non-normalized form.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "show_enum_origins",
+                  "camelCase": {
+                    "unsafeName": "showEnumOrigins",
+                    "safeName": "showEnumOrigins"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "show_enum_origins",
+                    "safeName": "show_enum_origins"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SHOW_ENUM_ORIGINS",
+                    "safeName": "SHOW_ENUM_ORIGINS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ShowEnumOrigins",
+                    "safeName": "ShowEnumOrigins"
+                  }
+                },
+                "typeId": "show_enum_origins",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a `TimeOffBalance` object with the given `id`.",
@@ -68281,7 +72574,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Returns a list of `WebhookReceiver` objects.",
@@ -68322,7 +72669,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "wireValue": "X-Account-Token"
+              },
+              "docs": "Token identifying the end user.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "X-Account-Token",
+                  "camelCase": {
+                    "unsafeName": "xAccountToken",
+                    "safeName": "xAccountToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_account_token",
+                    "safeName": "x_account_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_ACCOUNT_TOKEN",
+                    "safeName": "X_ACCOUNT_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XAccountToken",
+                    "safeName": "XAccountToken"
+                  }
+                },
+                "typeId": "X-Account-Token",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "docs": "Creates a `WebhookReceiver` object with the given values.",

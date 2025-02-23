@@ -86,7 +86,116 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "wireValue": "cursor"
+              },
+              "docs": "The end user ID that marks the start or beginning of the returned profile records.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "cursor",
+                  "camelCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "cursor",
+                    "safeName": "cursor"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CURSOR",
+                    "safeName": "CURSOR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Cursor",
+                    "safeName": "Cursor"
+                  }
+                },
+                "typeId": "cursor",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The number of end user profile records to return",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "typeId": "limit",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "errors": [],
           "auth": false,

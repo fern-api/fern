@@ -601,9 +601,269 @@
               }
             ]
           },
-          "pathParameters": [],
+          "pathParameters": [
+            {
+              "name": {
+                "originalName": "userId",
+                "camelCase": {
+                  "unsafeName": "userId",
+                  "safeName": "userId"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
+                }
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "userId",
+                  "camelCase": {
+                    "unsafeName": "userId",
+                    "safeName": "userId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "user_id",
+                    "safeName": "user_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "USER_ID",
+                    "safeName": "USER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UserId",
+                    "safeName": "UserId"
+                  }
+                },
+                "typeId": "userId",
+                "inline": false,
+                "type": "named"
+              },
+              "location": "ENDPOINT"
+            }
+          ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "my-api-key",
+                  "camelCase": {
+                    "unsafeName": "myApiKey",
+                    "safeName": "myApiKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_api_key",
+                    "safeName": "my_api_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_API_KEY",
+                    "safeName": "MY_API_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyApiKey",
+                    "safeName": "MyApiKey"
+                  }
+                },
+                "wireValue": "my-api-key"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "my-api-key",
+                  "camelCase": {
+                    "unsafeName": "myApiKey",
+                    "safeName": "myApiKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_api_key",
+                    "safeName": "my_api_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_API_KEY",
+                    "safeName": "MY_API_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyApiKey",
+                    "safeName": "MyApiKey"
+                  }
+                },
+                "typeId": "my-api-key",
+                "inline": false,
+                "type": "named"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "another_header",
+                  "camelCase": {
+                    "unsafeName": "anotherHeader",
+                    "safeName": "anotherHeader"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "another_header",
+                    "safeName": "another_header"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ANOTHER_HEADER",
+                    "safeName": "ANOTHER_HEADER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AnotherHeader",
+                    "safeName": "AnotherHeader"
+                  }
+                },
+                "wireValue": "another_header"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "another_header",
+                  "camelCase": {
+                    "unsafeName": "anotherHeader",
+                    "safeName": "anotherHeader"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "another_header",
+                    "safeName": "another_header"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ANOTHER_HEADER",
+                    "safeName": "ANOTHER_HEADER"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AnotherHeader",
+                    "safeName": "AnotherHeader"
+                  }
+                },
+                "typeId": "another_header",
+                "inline": false,
+                "type": "named"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "x-api-key",
+                  "camelCase": {
+                    "unsafeName": "xApiKey",
+                    "safeName": "xApiKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_api_key",
+                    "safeName": "x_api_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_API_KEY",
+                    "safeName": "X_API_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XApiKey",
+                    "safeName": "XApiKey"
+                  }
+                },
+                "wireValue": "x-api-key"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "x-api-key",
+                  "camelCase": {
+                    "unsafeName": "xApiKey",
+                    "safeName": "xApiKey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "x_api_key",
+                    "safeName": "x_api_key"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "X_API_KEY",
+                    "safeName": "X_API_KEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "XApiKey",
+                    "safeName": "XApiKey"
+                  }
+                },
+                "typeId": "x-api-key",
+                "inline": false,
+                "type": "named"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "my-api-version",
+                  "camelCase": {
+                    "unsafeName": "myApiVersion",
+                    "safeName": "myApiVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_api_version",
+                    "safeName": "my_api_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_API_VERSION",
+                    "safeName": "MY_API_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyApiVersion",
+                    "safeName": "MyApiVersion"
+                  }
+                },
+                "wireValue": "my-api-version"
+              },
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "my-api-version",
+                  "camelCase": {
+                    "unsafeName": "myApiVersion",
+                    "safeName": "myApiVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "my_api_version",
+                    "safeName": "my_api_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MY_API_VERSION",
+                    "safeName": "MY_API_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MyApiVersion",
+                    "safeName": "MyApiVersion"
+                  }
+                },
+                "typeId": "my-api-version",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
