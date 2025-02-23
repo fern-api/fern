@@ -2221,6 +2221,44 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "User",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "User retrieved successfully",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

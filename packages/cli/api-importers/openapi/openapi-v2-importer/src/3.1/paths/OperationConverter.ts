@@ -1,7 +1,7 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter, TypeDeclaration } from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpRequestBody, HttpResponse, PathParameter, QueryParameter, TypeDeclaration } from "@fern-api/ir-sdk";
 
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter } from "../../AbstractConverter";
@@ -11,6 +11,7 @@ import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name"
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";
 import { RequestBodyConverter } from "./RequestBodyConverter";
+import { ResponseBodyConverter } from "./ResponseBodyConverter";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractConverter.Args {
@@ -92,6 +93,51 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             }
         }
 
+        let httpResponse: HttpResponse | undefined;
+        if (this.operation.responses != null) {
+            for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+                // Skip if not a 2xx status code
+                const statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                    continue;
+                }
+
+                let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
+                if (context.isReferenceObject(response)) {
+                    const resolvedReference = context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
+                    if (resolvedReference.resolved) {
+                        resolvedResponse = resolvedReference.value;
+                    }
+                } else {
+                    resolvedResponse = response;
+                }
+
+                if (resolvedResponse == null) {
+                    continue;
+                }
+
+                const responseBodyConverter = new ResponseBodyConverter({
+                    breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                    responseBody: resolvedResponse,
+                    group: group ?? [],
+                    method,
+                    statusCode
+                });
+                const convertedResponseBody = responseBodyConverter.convert({ context, errorCollector });
+                if (convertedResponseBody != null) {
+                    httpResponse = {
+                        statusCode: statusCodeNum,
+                        body: convertedResponseBody.responseBody
+                    };
+                    inlinedTypes = {
+                        ...inlinedTypes,
+                        ...convertedResponseBody.inlinedTypes
+                    };
+                    break;
+                }
+            }
+        }
+
 
         // TODO: Convert operation parameters, request body, responses
         return {
@@ -108,7 +154,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 headers: headers,
                 requestBody,
                 sdkRequest: undefined,
-                response: undefined,
+                response: httpResponse,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
                 availability: undefined,

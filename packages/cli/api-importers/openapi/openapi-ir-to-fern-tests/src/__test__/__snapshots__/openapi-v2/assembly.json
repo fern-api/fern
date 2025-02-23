@@ -22568,6 +22568,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "UploadedFile",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "File uploaded successfully",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
@@ -22722,6 +22760,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "RedactedAudioResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The redacted audio object containing the status and URL to the redacted audio.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
@@ -22876,6 +22952,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "RealtimeTemporaryTokenResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Temporary authentication token generated.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "Create a temporary authentication token for real-time transcription",
@@ -23030,6 +23144,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "PurgeLemurRequestDataResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "LeMUR request data deleted.",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "Delete the data for a previously submitted LeMUR request.\nThe LLM response data, as well as any context provided in the original request will be removed.\n",

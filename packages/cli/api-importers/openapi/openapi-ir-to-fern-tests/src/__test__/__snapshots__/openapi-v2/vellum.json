@@ -34668,6 +34668,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "DeploymentRead",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a deployment given its ID or name.\n",
@@ -34821,6 +34859,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "DocumentIndexRead",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCreates a new document index.",
@@ -34917,6 +34993,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "UploadDocumentResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",
@@ -35166,6 +35280,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ModelVersionCompilePromptResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCompiles the prompt backing the model version using the provided input values.",
@@ -35319,6 +35471,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "RegisterPromptResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",

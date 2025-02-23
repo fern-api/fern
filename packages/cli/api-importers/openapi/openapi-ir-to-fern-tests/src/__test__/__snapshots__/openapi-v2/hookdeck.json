@@ -54066,6 +54066,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "IssueTrigger",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single issue trigger",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -54275,6 +54313,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "EventAttempt",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single attempt",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -54565,6 +54641,44 @@
             "extraProperties": true,
             "type": "inlinedRequestBody"
           },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "EventArray",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Array of created events",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -54774,6 +54888,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Destination",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single destination",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -54983,6 +55135,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Event",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single event",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -55192,6 +55382,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "BatchOperation",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single events bulk retry",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -55401,6 +55629,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "BatchOperation",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single ignored events bulk retry",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -55664,6 +55930,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "DetachedIntegrationFromSource",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Detach operation success status",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -55927,6 +56231,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "IssueWithData",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single issue",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -56162,6 +56504,44 @@
             "extraProperties": true,
             "type": "inlinedRequestBody"
           },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Issue",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Updated issue",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -56316,6 +56696,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Issue",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Dismissed issue",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -56805,6 +57223,44 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "IgnoredEventPaginatedResult",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "List of ignored events",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -57014,6 +57470,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "BatchOperation",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single requests bulk retry",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -57223,6 +57717,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Ruleset",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single ruleset",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -57432,6 +57964,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Source",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single source",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -57772,6 +58342,44 @@
             "extraProperties": true,
             "type": "inlinedRequestBody"
           },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ToggleWebhookNotifications",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Toggle operation status response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -57979,6 +58587,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "TransformationExecution",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single transformation execution",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",
@@ -58242,6 +58888,44 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Connection",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "A single connection",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "",

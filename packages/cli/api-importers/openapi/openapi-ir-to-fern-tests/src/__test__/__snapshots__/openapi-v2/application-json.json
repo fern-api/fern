@@ -341,6 +341,44 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "Data",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Success",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

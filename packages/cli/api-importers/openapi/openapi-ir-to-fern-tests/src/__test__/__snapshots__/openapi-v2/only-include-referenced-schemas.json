@@ -123877,6 +123877,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "admin",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Admin found",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can retrieve the details of a single admin.",
@@ -124301,6 +124339,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "article_search_response",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Search successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.",
@@ -124451,6 +124527,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "help_center_list",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Help Centers found",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can list all Help Centers by making a GET request to `https://api.intercom.io/help_center/help_centers`.",
@@ -124713,6 +124827,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "company",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can detach a company from a single contact.",
@@ -125032,6 +125184,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "contact_unarchived",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can unarchive a single contact.",
@@ -125296,6 +125486,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "note",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Note found",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can fetch the details of a single note.",
@@ -125503,6 +125731,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "subscription_type_list",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can list all subscription types. A list of subscription type objects will be returned.",
@@ -125846,6 +126112,44 @@
             "extraProperties": false,
             "type": "inlinedRequestBody"
           },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "tag",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.",
@@ -126165,6 +126469,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ticket",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can convert a conversation to a ticket.",
@@ -126429,6 +126771,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "data_attribute",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "\nYou can update a data attribute.\n\n> 🚧 Updating the data type is not possible\n>\n> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.\n",
@@ -127050,6 +127430,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "message",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "admin message created",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can create a message that has been initiated by an admin. The conversation can be either an in-app message or an email.\n\n> 🚧 Sending for visitors\n>\n> There can be a short delay between when a contact is created and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in this case.\n\nThis will return the Message model that has been created.\n\n> 🚧 Retrieving Associated Conversations\n>\n> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.\n",
@@ -127257,6 +127675,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "newsfeed",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can fetch the details of a single newsfeed",
@@ -127521,6 +127977,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "segment",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Successful response",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can fetch the details of a single segment.",
@@ -127728,6 +128222,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "phone_switch",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can use the API to deflect phone calls to the Intercom Messenger.\nCalling this endpoint will send an SMS with a link to the Messenger to the phone number specified.\n\nIf custom attributes are specified, they will be added to the user or lead's custom data attributes.\n",
@@ -127935,6 +128467,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "team",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can fetch the details of a single team, containing an array of admins that belong to this team.",
@@ -128254,6 +128824,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ticket_type_attribute",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Ticket Type Attribute updated",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can update an existing attribute for a ticket type.",
@@ -128573,6 +129181,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ticket_type",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Ticket type found",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can fetch the details of a single ticket type.",
@@ -128782,6 +129428,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ticket_type",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Ticket type updated",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "\nYou can update a ticket type.\n\n> 📘 Updating a ticket type.\n>\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
@@ -128989,6 +129673,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "ticket_list",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`.\n\nThis will accept a query object in the body which will define your filters.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiples there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foobar\"`).\n\n| Field                                     | Type                                                                                     |\n| :---------------------------------------- | :--------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                   |\n| created_at                                | Date (UNIX timestamp)                                                                    |\n| updated_at                                | Date (UNIX timestamp)                                                                    |\n| _default_title_                           | String                                                                                   |\n| _default_description_                     | String                                                                                   |\n| category                                  | String                                                                                   |\n| ticket_type_id                            | String                                                                                   |\n| contact_ids                               | String                                                                                   |\n| teammate_ids                              | String                                                                                   |\n| admin_assignee_id                         | String                                                                                   |\n| team_assignee_id                          | String                                                                                   |\n| open                                      | Boolean                                                                                  |\n| state                                     | String                                                                                   |\n| snoozed_until                             | Date (UNIX timestamp)                                                                    |\n| ticket_attribute.{id}                     | String or Boolean or Date (UNIX timestamp) or Float or Integer                           |\n\n### Accepted Operators\n\n{% admonition type=\"info\" name=\"Searching based on `created_at`\" %}\n  You may use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
@@ -129139,6 +129861,44 @@
               }
             }
           ],
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "",
+                    "camelCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "snakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    },
+                    "pascalCase": {
+                      "unsafeName": "",
+                      "safeName": ""
+                    }
+                  },
+                  "typeId": "contact",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "successful",
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
           "errors": [],
           "auth": true,
           "docs": "You can merge a Visitor to a Contact of role type `lead` or `user`.\n\n> 📘 What happens upon a visitor being converted?\n>\n> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.\n",
