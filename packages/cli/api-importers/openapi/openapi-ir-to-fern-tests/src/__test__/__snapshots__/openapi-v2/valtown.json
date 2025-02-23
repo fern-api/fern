@@ -478,51 +478,298 @@
     },
     "schemaId": {
       "name": {
-        "typeId": "ResultSetRowsItems",
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItems",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "ResultSetRowsItems",
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItems",
           "camelCase": {
-            "unsafeName": "resultSetRowsItems",
-            "safeName": "resultSetRowsItems"
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItems",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItems"
           },
           "snakeCase": {
-            "unsafeName": "result_set_rows_items",
-            "safeName": "result_set_rows_items"
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items"
           },
           "screamingSnakeCase": {
-            "unsafeName": "RESULT_SET_ROWS_ITEMS",
-            "safeName": "RESULT_SET_ROWS_ITEMS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS"
           },
           "pascalCase": {
-            "unsafeName": "ResultSetRowsItems",
-            "safeName": "ResultSetRowsItems"
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItems"
           }
         }
       },
       "shape": {
-        "aliasOf": {
-          "container": {
-            "list": {
-              "type": "unknown"
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "content",
+                "camelCase": {
+                  "unsafeName": "content",
+                  "safeName": "content"
+                },
+                "snakeCase": {
+                  "unsafeName": "content",
+                  "safeName": "content"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONTENT",
+                  "safeName": "CONTENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Content",
+                  "safeName": "Content"
+                }
+              },
+              "wireValue": "content"
             },
-            "type": "list"
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContent",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContent"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items_content",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items_content"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+              "inline": false,
+              "type": "named"
+            }
           },
-          "type": "container"
-        },
-        "resolvedType": {
-          "container": {
-            "list": {
-              "type": "unknown"
+          {
+            "name": {
+              "name": {
+                "originalName": "filename",
+                "camelCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "snakeCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILENAME",
+                  "safeName": "FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Filename",
+                  "safeName": "Filename"
+                }
+              },
+              "wireValue": "filename"
             },
-            "type": "list"
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsFilename"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items_filename",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items_filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_FILENAME",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+              "inline": false,
+              "type": "named"
+            }
           },
-          "type": "container"
-        },
-        "type": "alias"
+          {
+            "name": {
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              },
+              "wireValue": "type"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsType",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsType"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items_type",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_TYPE",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsType"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "disposition",
+                "camelCase": {
+                  "unsafeName": "disposition",
+                  "safeName": "disposition"
+                },
+                "snakeCase": {
+                  "unsafeName": "disposition",
+                  "safeName": "disposition"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DISPOSITION",
+                  "safeName": "DISPOSITION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Disposition",
+                  "safeName": "Disposition"
+                }
+              },
+              "wireValue": "disposition"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsDisposition"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items_disposition",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items_disposition"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_DISPOSITION",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_DISPOSITION"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "contentId",
+                "camelCase": {
+                  "unsafeName": "contentId",
+                  "safeName": "contentId"
+                },
+                "snakeCase": {
+                  "unsafeName": "content_id",
+                  "safeName": "content_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONTENT_ID",
+                  "safeName": "CONTENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ContentId",
+                  "safeName": "ContentId"
+                }
+              },
+              "wireValue": "contentId"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContentId"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items_content_id",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items_content_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT_ID",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -4871,6 +5118,2204 @@
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
       "docs": "Links to use for pagination",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1SqliteBatchPostRequestBodySchemaStatements": {
+      "name": {
+        "typeId": "V1SqliteBatchPostRequestBodySchemaStatements",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1SqliteBatchPostRequestBodySchemaStatements",
+          "camelCase": {
+            "unsafeName": "v1SqliteBatchPostRequestBodySchemaStatements",
+            "safeName": "v1SqliteBatchPostRequestBodySchemaStatements"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_sqlite_batch_post_request_body_schema_statements",
+            "safeName": "v_1_sqlite_batch_post_request_body_schema_statements"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS",
+            "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS"
+          },
+          "pascalCase": {
+            "unsafeName": "V1SqliteBatchPostRequestBodySchemaStatements",
+            "safeName": "V1SqliteBatchPostRequestBodySchemaStatements"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "resolvedType": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1SqliteBatchPostRequestBodySchemaMode": {
+      "name": {
+        "typeId": "V1SqliteBatchPostRequestBodySchemaMode",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1SqliteBatchPostRequestBodySchemaMode",
+          "camelCase": {
+            "unsafeName": "v1SqliteBatchPostRequestBodySchemaMode",
+            "safeName": "v1SqliteBatchPostRequestBodySchemaMode"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_sqlite_batch_post_request_body_schema_mode",
+            "safeName": "v_1_sqlite_batch_post_request_body_schema_mode"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE",
+            "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1SqliteBatchPostRequestBodySchemaMode",
+            "safeName": "V1SqliteBatchPostRequestBodySchemaMode"
+          }
+        }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "write",
+                "camelCase": {
+                  "unsafeName": "write",
+                  "safeName": "write"
+                },
+                "snakeCase": {
+                  "unsafeName": "write",
+                  "safeName": "write"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WRITE",
+                  "safeName": "WRITE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Write",
+                  "safeName": "Write"
+                }
+              },
+              "wireValue": "write"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "read",
+                "camelCase": {
+                  "unsafeName": "read",
+                  "safeName": "read"
+                },
+                "snakeCase": {
+                  "unsafeName": "read",
+                  "safeName": "read"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "READ",
+                  "safeName": "READ"
+                },
+                "pascalCase": {
+                  "unsafeName": "Read",
+                  "safeName": "Read"
+                }
+              },
+              "wireValue": "read"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "deferred",
+                "camelCase": {
+                  "unsafeName": "deferred",
+                  "safeName": "deferred"
+                },
+                "snakeCase": {
+                  "unsafeName": "deferred",
+                  "safeName": "deferred"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEFERRED",
+                  "safeName": "DEFERRED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Deferred",
+                  "safeName": "Deferred"
+                }
+              },
+              "wireValue": "deferred"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EvalPostRequestBodySchemaCode": {
+      "name": {
+        "typeId": "V1EvalPostRequestBodySchemaCode",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EvalPostRequestBodySchemaCode",
+          "camelCase": {
+            "unsafeName": "v1EvalPostRequestBodySchemaCode",
+            "safeName": "v1EvalPostRequestBodySchemaCode"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_eval_post_request_body_schema_code",
+            "safeName": "v_1_eval_post_request_body_schema_code"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EVAL_POST_REQUEST_BODY_SCHEMA_CODE",
+            "safeName": "V_1_EVAL_POST_REQUEST_BODY_SCHEMA_CODE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EvalPostRequestBodySchemaCode",
+            "safeName": "V1EvalPostRequestBodySchemaCode"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "TypeScript source code",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EvalPostRequestBodySchemaArgs": {
+      "name": {
+        "typeId": "V1EvalPostRequestBodySchemaArgs",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EvalPostRequestBodySchemaArgs",
+          "camelCase": {
+            "unsafeName": "v1EvalPostRequestBodySchemaArgs",
+            "safeName": "v1EvalPostRequestBodySchemaArgs"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_eval_post_request_body_schema_args",
+            "safeName": "v_1_eval_post_request_body_schema_args"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EVAL_POST_REQUEST_BODY_SCHEMA_ARGS",
+            "safeName": "V_1_EVAL_POST_REQUEST_BODY_SCHEMA_ARGS"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EvalPostRequestBodySchemaArgs",
+            "safeName": "V1EvalPostRequestBodySchemaArgs"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "resolvedType": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If `args` is not present, no function calls are made, but you can still return a value using `export default myVariable`.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1RunValnamePostRequestBodySchemaArgs": {
+      "name": {
+        "typeId": "V1RunValnamePostRequestBodySchemaArgs",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1RunValnamePostRequestBodySchemaArgs",
+          "camelCase": {
+            "unsafeName": "v1RunValnamePostRequestBodySchemaArgs",
+            "safeName": "v1RunValnamePostRequestBodySchemaArgs"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_run_valname_post_request_body_schema_args",
+            "safeName": "v_1_run_valname_post_request_body_schema_args"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_RUN_VALNAME_POST_REQUEST_BODY_SCHEMA_ARGS",
+            "safeName": "V_1_RUN_VALNAME_POST_REQUEST_BODY_SCHEMA_ARGS"
+          },
+          "pascalCase": {
+            "unsafeName": "V1RunValnamePostRequestBodySchemaArgs",
+            "safeName": "V1RunValnamePostRequestBodySchemaArgs"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "resolvedType": {
+          "container": {
+            "list": {
+              "type": "unknown"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaSubject": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaSubject",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaSubject",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaSubject",
+            "safeName": "v1EmailPostRequestBodySchemaSubject"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_subject",
+            "safeName": "v_1_email_post_request_body_schema_subject"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_SUBJECT",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_SUBJECT"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaSubject",
+            "safeName": "V1EmailPostRequestBodySchemaSubject"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "The subject line of the email",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaText": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaText",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaText",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaText",
+            "safeName": "v1EmailPostRequestBodySchemaText"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_text",
+            "safeName": "v_1_email_post_request_body_schema_text"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TEXT",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TEXT"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaText",
+            "safeName": "V1EmailPostRequestBodySchemaText"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Text content of the email, for email clients that may not support HTML",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaHtml": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaHtml",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaHtml",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaHtml",
+            "safeName": "v1EmailPostRequestBodySchemaHtml"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_html",
+            "safeName": "v_1_email_post_request_body_schema_html"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_HTML",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_HTML"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaHtml",
+            "safeName": "V1EmailPostRequestBodySchemaHtml"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "HTML content of the email. Can be specified alongside text",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachmentsItemsContent": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContent",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContent"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items_content",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items_content"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContent"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachmentsItemsFilename": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsFilename"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items_filename",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items_filename"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_FILENAME",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_FILENAME"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsFilename"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachmentsItemsType": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsType",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsType"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items_type",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_TYPE",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsType",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsType"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsDisposition"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items_disposition",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items_disposition"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_DISPOSITION",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_DISPOSITION"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsDisposition"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachmentsItemsContentId": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+            "safeName": "v1EmailPostRequestBodySchemaAttachmentsItemsContentId"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments_items_content_id",
+            "safeName": "v_1_email_post_request_body_schema_attachments_items_content_id"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT_ID",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS_CONTENT_ID"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId",
+            "safeName": "V1EmailPostRequestBodySchemaAttachmentsItemsContentId"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1EmailPostRequestBodySchemaAttachments": {
+      "name": {
+        "typeId": "V1EmailPostRequestBodySchemaAttachments",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1EmailPostRequestBodySchemaAttachments",
+          "camelCase": {
+            "unsafeName": "v1EmailPostRequestBodySchemaAttachments",
+            "safeName": "v1EmailPostRequestBodySchemaAttachments"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_email_post_request_body_schema_attachments",
+            "safeName": "v_1_email_post_request_body_schema_attachments"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS"
+          },
+          "pascalCase": {
+            "unsafeName": "V1EmailPostRequestBodySchemaAttachments",
+            "safeName": "V1EmailPostRequestBodySchemaAttachments"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "container": {
+            "list": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItems",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItems"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItems"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItems",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "resolvedType": {
+          "container": {
+            "list": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                "camelCase": {
+                  "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItems",
+                  "safeName": "v1EmailPostRequestBodySchemaAttachmentsItems"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_email_post_request_body_schema_attachments_items",
+                  "safeName": "v_1_email_post_request_body_schema_attachments_items"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS",
+                  "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                  "safeName": "V1EmailPostRequestBodySchemaAttachmentsItems"
+                }
+              },
+              "typeId": "V1EmailPostRequestBodySchemaAttachmentsItems",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "list"
+          },
+          "type": "container"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "A list of attachments to add to the email",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPostRequestBodySchemaCode": {
+      "name": {
+        "typeId": "V1ValsPostRequestBodySchemaCode",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPostRequestBodySchemaCode",
+          "camelCase": {
+            "unsafeName": "v1ValsPostRequestBodySchemaCode",
+            "safeName": "v1ValsPostRequestBodySchemaCode"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_post_request_body_schema_code",
+            "safeName": "v_1_vals_post_request_body_schema_code"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_CODE",
+            "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_CODE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPostRequestBodySchemaCode",
+            "safeName": "V1ValsPostRequestBodySchemaCode"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Val source code as TypeScript",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPostRequestBodySchemaName": {
+      "name": {
+        "typeId": "V1ValsPostRequestBodySchemaName",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPostRequestBodySchemaName",
+          "camelCase": {
+            "unsafeName": "v1ValsPostRequestBodySchemaName",
+            "safeName": "v1ValsPostRequestBodySchemaName"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_post_request_body_schema_name",
+            "safeName": "v_1_vals_post_request_body_schema_name"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_NAME",
+            "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_NAME"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPostRequestBodySchemaName",
+            "safeName": "V1ValsPostRequestBodySchemaName"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s name",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPostRequestBodySchemaReadme": {
+      "name": {
+        "typeId": "V1ValsPostRequestBodySchemaReadme",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPostRequestBodySchemaReadme",
+          "camelCase": {
+            "unsafeName": "v1ValsPostRequestBodySchemaReadme",
+            "safeName": "v1ValsPostRequestBodySchemaReadme"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_post_request_body_schema_readme",
+            "safeName": "v_1_vals_post_request_body_schema_readme"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_README",
+            "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_README"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPostRequestBodySchemaReadme",
+            "safeName": "V1ValsPostRequestBodySchemaReadme"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Readme contents, as Markdown",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPostRequestBodySchemaPrivacy": {
+      "name": {
+        "typeId": "V1ValsPostRequestBodySchemaPrivacy",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPostRequestBodySchemaPrivacy",
+          "camelCase": {
+            "unsafeName": "v1ValsPostRequestBodySchemaPrivacy",
+            "safeName": "v1ValsPostRequestBodySchemaPrivacy"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_post_request_body_schema_privacy",
+            "safeName": "v_1_vals_post_request_body_schema_privacy"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
+            "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPostRequestBodySchemaPrivacy",
+            "safeName": "V1ValsPostRequestBodySchemaPrivacy"
+          }
+        }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "public",
+                "camelCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "snakeCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUBLIC",
+                  "safeName": "PUBLIC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Public",
+                  "safeName": "Public"
+                }
+              },
+              "wireValue": "public"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "unlisted",
+                "camelCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "snakeCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNLISTED",
+                  "safeName": "UNLISTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Unlisted",
+                  "safeName": "Unlisted"
+                }
+              },
+              "wireValue": "unlisted"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "private",
+                "camelCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "snakeCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRIVATE",
+                  "safeName": "PRIVATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Private",
+                  "safeName": "Private"
+                }
+              },
+              "wireValue": "private"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPostRequestBodySchemaType": {
+      "name": {
+        "typeId": "V1ValsPostRequestBodySchemaType",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPostRequestBodySchemaType",
+          "camelCase": {
+            "unsafeName": "v1ValsPostRequestBodySchemaType",
+            "safeName": "v1ValsPostRequestBodySchemaType"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_post_request_body_schema_type",
+            "safeName": "v_1_vals_post_request_body_schema_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE",
+            "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPostRequestBodySchemaType",
+            "safeName": "V1ValsPostRequestBodySchemaType"
+          }
+        }
+      },
+      "shape": {
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "script",
+              "camelCase": {
+                "unsafeName": "script",
+                "safeName": "script"
+              },
+              "snakeCase": {
+                "unsafeName": "script",
+                "safeName": "script"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SCRIPT",
+                "safeName": "SCRIPT"
+              },
+              "pascalCase": {
+                "unsafeName": "Script",
+                "safeName": "Script"
+              }
+            },
+            "wireValue": "script"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "http",
+                "camelCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "snakeCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HTTP",
+                  "safeName": "HTTP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Http",
+                  "safeName": "Http"
+                }
+              },
+              "wireValue": "http"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "script",
+                "camelCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "snakeCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCRIPT",
+                  "safeName": "SCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Script",
+                  "safeName": "Script"
+                }
+              },
+              "wireValue": "script"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "email",
+                "camelCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "snakeCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMAIL",
+                  "safeName": "EMAIL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Email",
+                  "safeName": "Email"
+                }
+              },
+              "wireValue": "email"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPutRequestBodySchemaCode": {
+      "name": {
+        "typeId": "V1ValsPutRequestBodySchemaCode",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPutRequestBodySchemaCode",
+          "camelCase": {
+            "unsafeName": "v1ValsPutRequestBodySchemaCode",
+            "safeName": "v1ValsPutRequestBodySchemaCode"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_put_request_body_schema_code",
+            "safeName": "v_1_vals_put_request_body_schema_code"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_PUT_REQUEST_BODY_SCHEMA_CODE",
+            "safeName": "V_1_VALS_PUT_REQUEST_BODY_SCHEMA_CODE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPutRequestBodySchemaCode",
+            "safeName": "V1ValsPutRequestBodySchemaCode"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Val source code as TypeScript",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsPutRequestBodySchemaName": {
+      "name": {
+        "typeId": "V1ValsPutRequestBodySchemaName",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsPutRequestBodySchemaName",
+          "camelCase": {
+            "unsafeName": "v1ValsPutRequestBodySchemaName",
+            "safeName": "v1ValsPutRequestBodySchemaName"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_put_request_body_schema_name",
+            "safeName": "v_1_vals_put_request_body_schema_name"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_PUT_REQUEST_BODY_SCHEMA_NAME",
+            "safeName": "V_1_VALS_PUT_REQUEST_BODY_SCHEMA_NAME"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsPutRequestBodySchemaName",
+            "safeName": "V1ValsPutRequestBodySchemaName"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s name",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdPutRequestBodySchemaName": {
+      "name": {
+        "typeId": "V1ValsValIdPutRequestBodySchemaName",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdPutRequestBodySchemaName",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdPutRequestBodySchemaName",
+            "safeName": "v1ValsValIdPutRequestBodySchemaName"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_put_request_body_schema_name",
+            "safeName": "v_1_vals_val_id_put_request_body_schema_name"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_NAME",
+            "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_NAME"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdPutRequestBodySchemaName",
+            "safeName": "V1ValsValIdPutRequestBodySchemaName"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s name",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdPutRequestBodySchemaReadme": {
+      "name": {
+        "typeId": "V1ValsValIdPutRequestBodySchemaReadme",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdPutRequestBodySchemaReadme",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdPutRequestBodySchemaReadme",
+            "safeName": "v1ValsValIdPutRequestBodySchemaReadme"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_put_request_body_schema_readme",
+            "safeName": "v_1_vals_val_id_put_request_body_schema_readme"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_README",
+            "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_README"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdPutRequestBodySchemaReadme",
+            "safeName": "V1ValsValIdPutRequestBodySchemaReadme"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Readme contents, as Markdown",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdPutRequestBodySchemaPrivacy": {
+      "name": {
+        "typeId": "V1ValsValIdPutRequestBodySchemaPrivacy",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdPutRequestBodySchemaPrivacy",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdPutRequestBodySchemaPrivacy",
+            "safeName": "v1ValsValIdPutRequestBodySchemaPrivacy"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_put_request_body_schema_privacy",
+            "safeName": "v_1_vals_val_id_put_request_body_schema_privacy"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY",
+            "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdPutRequestBodySchemaPrivacy",
+            "safeName": "V1ValsValIdPutRequestBodySchemaPrivacy"
+          }
+        }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "public",
+                "camelCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "snakeCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUBLIC",
+                  "safeName": "PUBLIC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Public",
+                  "safeName": "Public"
+                }
+              },
+              "wireValue": "public"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "unlisted",
+                "camelCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "snakeCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNLISTED",
+                  "safeName": "UNLISTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Unlisted",
+                  "safeName": "Unlisted"
+                }
+              },
+              "wireValue": "unlisted"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "private",
+                "camelCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "snakeCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRIVATE",
+                  "safeName": "PRIVATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Private",
+                  "safeName": "Private"
+                }
+              },
+              "wireValue": "private"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdPutRequestBodySchemaType": {
+      "name": {
+        "typeId": "V1ValsValIdPutRequestBodySchemaType",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdPutRequestBodySchemaType",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdPutRequestBodySchemaType",
+            "safeName": "v1ValsValIdPutRequestBodySchemaType"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_put_request_body_schema_type",
+            "safeName": "v_1_vals_val_id_put_request_body_schema_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE",
+            "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdPutRequestBodySchemaType",
+            "safeName": "V1ValsValIdPutRequestBodySchemaType"
+          }
+        }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "http",
+                "camelCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "snakeCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HTTP",
+                  "safeName": "HTTP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Http",
+                  "safeName": "Http"
+                }
+              },
+              "wireValue": "http"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "script",
+                "camelCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "snakeCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCRIPT",
+                  "safeName": "SCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Script",
+                  "safeName": "Script"
+                }
+              },
+              "wireValue": "script"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "email",
+                "camelCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "snakeCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMAIL",
+                  "safeName": "EMAIL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Email",
+                  "safeName": "Email"
+                }
+              },
+              "wireValue": "email"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdVersionsPostRequestBodySchemaCode": {
+      "name": {
+        "typeId": "V1ValsValIdVersionsPostRequestBodySchemaCode",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdVersionsPostRequestBodySchemaCode",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaCode",
+            "safeName": "v1ValsValIdVersionsPostRequestBodySchemaCode"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_code",
+            "safeName": "v_1_vals_val_id_versions_post_request_body_schema_code"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_CODE",
+            "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_CODE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaCode",
+            "safeName": "V1ValsValIdVersionsPostRequestBodySchemaCode"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 256000
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Val source code as TypeScript",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdVersionsPostRequestBodySchemaName": {
+      "name": {
+        "typeId": "V1ValsValIdVersionsPostRequestBodySchemaName",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdVersionsPostRequestBodySchemaName",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaName",
+            "safeName": "v1ValsValIdVersionsPostRequestBodySchemaName"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_name",
+            "safeName": "v_1_vals_val_id_versions_post_request_body_schema_name"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_NAME",
+            "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_NAME"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaName",
+            "safeName": "V1ValsValIdVersionsPostRequestBodySchemaName"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "minLength": 1,
+                "maxLength": 48
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s name",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdVersionsPostRequestBodySchemaReadme": {
+      "name": {
+        "typeId": "V1ValsValIdVersionsPostRequestBodySchemaReadme",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdVersionsPostRequestBodySchemaReadme",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaReadme",
+            "safeName": "v1ValsValIdVersionsPostRequestBodySchemaReadme"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_readme",
+            "safeName": "v_1_vals_val_id_versions_post_request_body_schema_readme"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_README",
+            "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_README"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaReadme",
+            "safeName": "V1ValsValIdVersionsPostRequestBodySchemaReadme"
+          }
+        }
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "maxLength": 8192
+              },
+              "type": "string"
+            }
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Readme contents, as Markdown",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdVersionsPostRequestBodySchemaPrivacy": {
+      "name": {
+        "typeId": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+            "safeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy",
+            "safeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
+            "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+            "safeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy"
+          }
+        }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "public",
+                "camelCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "snakeCase": {
+                  "unsafeName": "public",
+                  "safeName": "public_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUBLIC",
+                  "safeName": "PUBLIC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Public",
+                  "safeName": "Public"
+                }
+              },
+              "wireValue": "public"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "unlisted",
+                "camelCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "snakeCase": {
+                  "unsafeName": "unlisted",
+                  "safeName": "unlisted"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNLISTED",
+                  "safeName": "UNLISTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Unlisted",
+                  "safeName": "Unlisted"
+                }
+              },
+              "wireValue": "unlisted"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "private",
+                "camelCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "snakeCase": {
+                  "unsafeName": "private",
+                  "safeName": "private_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRIVATE",
+                  "safeName": "PRIVATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Private",
+                  "safeName": "Private"
+                }
+              },
+              "wireValue": "private"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "V1ValsValIdVersionsPostRequestBodySchemaType": {
+      "name": {
+        "typeId": "V1ValsValIdVersionsPostRequestBodySchemaType",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "V1ValsValIdVersionsPostRequestBodySchemaType",
+          "camelCase": {
+            "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaType",
+            "safeName": "v1ValsValIdVersionsPostRequestBodySchemaType"
+          },
+          "snakeCase": {
+            "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_type",
+            "safeName": "v_1_vals_val_id_versions_post_request_body_schema_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE",
+            "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaType",
+            "safeName": "V1ValsValIdVersionsPostRequestBodySchemaType"
+          }
+        }
+      },
+      "shape": {
+        "default": {
+          "name": {
+            "name": {
+              "originalName": "script",
+              "camelCase": {
+                "unsafeName": "script",
+                "safeName": "script"
+              },
+              "snakeCase": {
+                "unsafeName": "script",
+                "safeName": "script"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SCRIPT",
+                "safeName": "SCRIPT"
+              },
+              "pascalCase": {
+                "unsafeName": "Script",
+                "safeName": "Script"
+              }
+            },
+            "wireValue": "script"
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "http",
+                "camelCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "snakeCase": {
+                  "unsafeName": "http",
+                  "safeName": "http"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HTTP",
+                  "safeName": "HTTP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Http",
+                  "safeName": "Http"
+                }
+              },
+              "wireValue": "http"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "script",
+                "camelCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "snakeCase": {
+                  "unsafeName": "script",
+                  "safeName": "script"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCRIPT",
+                  "safeName": "SCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Script",
+                  "safeName": "Script"
+                }
+              },
+              "wireValue": "script"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "email",
+                "camelCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "snakeCase": {
+                  "unsafeName": "email",
+                  "safeName": "email"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMAIL",
+                  "safeName": "EMAIL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Email",
+                  "safeName": "Email"
+                }
+              },
+              "wireValue": "email"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
       "referencedTypes": {},
       "inline": false
     }

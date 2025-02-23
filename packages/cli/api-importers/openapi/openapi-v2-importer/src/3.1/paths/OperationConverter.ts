@@ -64,10 +64,24 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         let requestBody: HttpRequestBody | undefined;
         let inlinedTypes: Record<string, TypeDeclaration> = {};
 
-        if (this.operation.requestBody != null && !context.isReferenceObject(this.operation.requestBody)) {
+        if (this.operation.requestBody != null) {
+            let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
+            if (context.isReferenceObject(this.operation.requestBody)) {
+                const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(this.operation.requestBody);
+                if (resolvedReference.resolved) {
+                    resolvedRequestBody = resolvedReference.value;
+                }
+            } else {
+                resolvedRequestBody = this.operation.requestBody;
+            }
+
+            if (resolvedRequestBody == null) {
+                return undefined;
+            }
+
             const requestBodyConverter = new RequestBodyConverter({
                 breadcrumbs: [...this.breadcrumbs, "requestBody"],
-                requestBody: this.operation.requestBody,
+                requestBody: resolvedRequestBody,
                 group: group ?? [],
                 method
             });

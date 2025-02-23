@@ -92,6 +92,10 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     }
                     groupToEndpoints[group].push(endpoint.endpoint);
                 }
+                ir.types = {
+                    ...ir.types,
+                    ...convertedPath.inlinedTypes
+                };
             }
             for (const [group, endpoints] of Object.entries(groupToEndpoints)) {
                 const allParts = group.split(".").map((part) => context.casingsGenerator.generateName(part));
