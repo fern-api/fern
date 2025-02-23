@@ -696,47 +696,29 @@ export class DocsDefinitionResolver {
             return node.get();
         }
 
-        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
-            const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
-            if (api == null) {
-                throw new Error("Failed to generate API Definition from OpenAPI workspace");
-            }
-            await this.registerApiV2({
-                api,
-                snippetsConfig,
-                apiName: item.apiName
-            });
-            const node = new ApiReferenceNodeConverterLatest(
-                item,
-                api,
-                parentSlug,
-                workspace,
-                this.docsWorkspace,
-                this.taskContext,
-                this.markdownFilesToFullSlugs,
-                this.markdownFilesToNoIndex,
-                this.#idgen
-            );
-            return node.get();
-        }
-
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = generateIntermediateRepresentation({
-            workspace,
-            audiences: item.audiences,
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false,
-            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
-            readme: undefined,
-            version: undefined,
-            packageName: undefined,
-            context: this.taskContext,
-            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-        });
+
+        let ir: IntermediateRepresentation;
+        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext }) as any;
+        } else {
+            ir = generateIntermediateRepresentation({
+                workspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+            });
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
