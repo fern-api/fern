@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
-# goal: get this working
 channel:
   path: /realtime/{id}
   auth: true
@@ -16,7 +15,7 @@ channel:
       body: string
 
     receive:
-      display-name: "Websocket Receive Test 123"
+      display-name: "Receive"
       origin: server
       body:
         name: ReceiveEvent
