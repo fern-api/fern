@@ -192,7 +192,6 @@ class UsersClient:
             The object that contains the cursor used for pagination
             in order to fetch the next page of results.
 
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -439,7 +438,6 @@ class UsersClient:
         pagination : typing.Optional[WithPage]
             The object that contains the offset used for pagination
             in order to fetch the next page of results.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1113,7 +1111,6 @@ class AsyncUsersClient:
             The object that contains the cursor used for pagination
             in order to fetch the next page of results.
 
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1384,7 +1381,6 @@ class AsyncUsersClient:
         pagination : typing.Optional[WithPage]
             The object that contains the offset used for pagination
             in order to fetch the next page of results.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
