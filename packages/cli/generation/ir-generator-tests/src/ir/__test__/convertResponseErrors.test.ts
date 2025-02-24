@@ -1,10 +1,6 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    constructCasingsGenerator,
-    constructFernFileContext,
-    convertResponseErrors,
-    convertToFernFilepath
-} from "@fern-api/ir-generator";
+import { constructFernFileContext, convertResponseErrors, convertToFernFilepath } from "@fern-api/ir-generator";
 import { ResponseErrors } from "@fern-api/ir-sdk";
 
 describe("convertResponseErrors", () => {

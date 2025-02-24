@@ -2,6 +2,16 @@ import { Values } from "@fern-api/core-utils";
 
 export const FernAsyncAPIExtension = {
     /**
+     * The x-fern-optional allows you to specify that a channel parameter is optional.
+     *
+     * parameters:
+     *   MyChannelParam:
+     *     description: This is a description of the parameter
+     *     x-fern-optional: true
+     */
+    FERN_PARAMETER_OPTIONAL: "x-fern-optional",
+
+    /**
      * The x-fern-summary allows you to specify a display name for the websocket channel.
      */
     FERN_DISPLAY_NAME: "x-fern-display-name",

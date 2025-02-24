@@ -27,11 +27,24 @@ function itFixture(fixtureName: string) {
                 reject: false
             });
 
-            expect(
-                stripAnsi(stdout)
-                    // for some reason, locally the output contains a newline that Circle doesn't
-                    .trim()
-            ).toMatchSnapshot();
+            if (fixtureName == "simple") {
+                expect(
+                    stripAnsi(stdout)
+                        // for some reason, locally the output contains a newline that Circle doesn't
+                        .trim()
+                        // The expected stdout for the "simple" fixture includes
+                        // an elapsed time that can change on every test run.
+                        // So, we truncate the last 15 characters to remove the
+                        // variable part of the output.
+                        .slice(0, -15)
+                ).toMatchSnapshot();
+            } else {
+                expect(
+                    stripAnsi(stdout)
+                        // for some reason, locally the output contains a newline that Circle doesn't
+                        .trim()
+                ).toMatchSnapshot();
+            }
         },
         90_000
     );

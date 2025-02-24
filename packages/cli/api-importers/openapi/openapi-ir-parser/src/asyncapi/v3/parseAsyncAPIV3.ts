@@ -23,6 +23,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getSchemas } from "../../utils/getSchemas";
 import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
+import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ChannelId, ServerContext } from "../sharedTypes";
@@ -198,8 +199,9 @@ export function parseAsyncAPIV3({
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters)) {
                 const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
+                const isOptional = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
-                const parameterSchema =
+                let parameterSchema: SchemaWithExample =
                     parameter.enum != null && Array.isArray(parameter.enum)
                         ? buildEnumSchema({
                               parameterName,
@@ -225,7 +227,18 @@ export function parseAsyncAPIV3({
                               groupName: undefined,
                               nameOverride: undefined
                           });
-
+                if (isOptional) {
+                    parameterSchema = SchemaWithExample.optional({
+                        value: parameterSchema,
+                        description: undefined,
+                        availability: undefined,
+                        generatedName: "",
+                        title: parameterName,
+                        groupName: undefined,
+                        nameOverride: undefined,
+                        inline: undefined
+                    });
+                }
                 const parameterObject = {
                     name: parameterKey,
                     description: parameter.description,
@@ -255,17 +268,33 @@ export function parseAsyncAPIV3({
             (channelSchemas[channelPath] != null &&
                 (channelSchemas[channelPath].publish != null || channelSchemas[channelPath].subscribe != null))
         ) {
-            const examples: WebsocketSessionExample[] = [];
-            const autogenExample = exampleFactory.buildWebsocketSessionExample({
-                handshake: {
-                    headers,
-                    queryParameters
-                },
-                publish: channelSchemas[channelPath]?.publish,
-                subscribe: channelSchemas[channelPath]?.subscribe
-            });
-            if (autogenExample != null) {
-                examples.push(autogenExample);
+            const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
+            let examples: WebsocketSessionExample[] = [];
+            if (fernExamples.length > 0) {
+                examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
+                    context,
+                    extensionExamples: fernExamples,
+                    handshake: {
+                        headers,
+                        queryParameters
+                    },
+                    publish: channelSchemas[channelPath]?.publish,
+                    subscribe: channelSchemas[channelPath]?.subscribe,
+                    source,
+                    namespace: context.namespace
+                });
+            } else {
+                const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                    handshake: {
+                        headers,
+                        queryParameters
+                    },
+                    publish: channelSchemas[channelPath]?.publish,
+                    subscribe: channelSchemas[channelPath]?.subscribe
+                });
+                if (autogenExample != null) {
+                    examples.push(autogenExample);
+                }
             }
 
             parsedChannels[channelPath] = {

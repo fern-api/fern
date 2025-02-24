@@ -1199,7 +1199,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",
@@ -1602,7 +1602,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",

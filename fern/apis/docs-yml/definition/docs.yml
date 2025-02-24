@@ -1007,8 +1007,14 @@ types:
           This behavior is unstable and may change in the future.
       openapi-parser-v2:
         type: optional<boolean>
+        availability: deprecated
         docs: |
-          If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern.
+          OpenAPI parser rewrite, now deprecated.  
+      openapi-parser-v3:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          OpenAPI parser in alpha.
 
   PlaygroundSettings:
     properties:

@@ -15,7 +15,7 @@ public partial class ImdbClient
     }
 
     /// <summary>
-    /// Add a movie to the database
+    /// Add a movie to the database using the movies/* /... path.
     /// </summary>
     /// <example>
     /// <code>
