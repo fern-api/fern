@@ -32,7 +32,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, InterfaceDeclarationStructure, ModuleDeclarationStructure, OptionalKind, Project, PropertySignatureStructure, SourceFile, StructureKind, ts } from "ts-morph";
+import { Directory, InterfaceDeclarationStructure, ModuleDeclarationStructure, OptionalKind, Project, PropertySignatureStructure, Scope, SourceFile, StructureKind, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
@@ -849,46 +849,80 @@ export class SdkGenerator {
                     sourceFile.addModule(serviceModule);
 
                     sourceFile.addClass({
-                        name: "Client", 
+                        name: "Chat",
                         isExported: true,
-                        methods: [
-                            {
-                                name: "connect",
-                                isAsync: true,
-                                returnType: "Promise<void>",
-                                parameters: [
-                                    {
-                                        name: "url",
-                                        type: "string"
-                                    }
-                                ],
-                                statements: [
-                                    "await this._ws?.connect(url)"
-                                ]
-                            },
-                            {
-                                name: "disconnect",
-                                isAsync: true,
-                                returnType: "Promise<void>",
-                                statements: [
-                                    "await this._ws?.disconnect()"
-                                ]
-                            },
-                            {
-                                name: "send",
-                                isAsync: true,
-                                returnType: "Promise<void>",
-                                parameters: [
-                                    {
-                                        name: "data",
-                                        type: "unknown" 
-                                    }
-                                ],
-                                statements: [
-                                    "await this._ws?.send(JSON.stringify(data))"
-                                ]
-                            }
-                        ]
+                        ctors: [{
+                            parameters: [{
+                                name: "_options",
+                                type: "Chat.Options",
+                                isReadonly: true,
+                                scope: Scope.Protected
+                            }]
+                        }],
+                        methods: [{
+                            name: "connect",
+                            parameters: [{
+                                name: "args",
+                                type: "Chat.ConnectArgs",
+                                hasQuestionToken: true,
+                                initializer: "{}"
+                            }],
+                            returnType: "ChatSocket",
+                            statements: [
+                                "const queryParams: Record<string, string | string[] | object | object[]> = {};",
+                                "",
+                                'queryParams["fernSdkLanguage"] = "JavaScript";',
+                                'queryParams["fernSdkVersion"] = SDK_VERSION;',
+                                "",
+                                "if (this._options.accessToken != null) {",
+                                '    queryParams["accessToken"] = this._options.accessToken;',
+                                "} else if (this._options.apiKey != null) {",
+                                '    queryParams["apiKey"] = this._options.apiKey;',
+                                "}",
+                                "",
+                                'if (args.configId !== null && args.configId !== undefined && args.configId !== "") {',
+                                '    queryParams["config_id"] = args.configId;',
+                                "}",
+                                "",
+                                'if (args.configVersion !== null && args.configVersion !== undefined && args.configVersion !== "") {',
+                                '    queryParams["config_version"] = args.configVersion;',
+                                "}",
+                                "",
+                                "if (",
+                                "    args.resumedChatGroupId !== null &&",
+                                "    args.resumedChatGroupId !== undefined &&",
+                                '    args.resumedChatGroupId !== ""',
+                                ") {",
+                                '    queryParams["resumed_chat_group_id"] = args.resumedChatGroupId;',
+                                "}",
+                                "",
+                                "if (args.verboseTranscription !== null) {",
+                                '    queryParams["verbose_transcription"] = args.verboseTranscription ? "true" : "false";',
+                                "}",
+                                "",
+                                "if (args.queryParams !== null && args.queryParams !== undefined) {",
+                                "    for (const [name, value] of Object.entries(args.queryParams)) {",
+                                "        queryParams[name] = value;",
+                                "    }",
+                                "}",
+                                "",
+                                "const socket = new core.ReconnectingWebSocket(",
+                                '    `wss://${(core.Supplier.get(this._options.environment) ?? environments.HumeEnvironment.Production).replace(',
+                                '        "https://",' ,
+                                '        ""',
+                                '    )}/v0/evi/chat?${qs.stringify(queryParams)}`,',
+                                "    [],",
+                                "    {",
+                                "        debug: args.debug ?? false,",
+                                "        maxRetries: args.reconnectAttempts ?? 30,",
+                                "    }",
+                                ");",
+                                "",
+                                "return new ChatSocket({",
+                                "    socket,",
+                                "});"
+                            ]
+                        }]
                     });
 
 

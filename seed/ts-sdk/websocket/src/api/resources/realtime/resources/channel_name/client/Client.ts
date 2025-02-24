@@ -34,16 +34,61 @@ export declare namespace Chat {
     }
 }
 
-export class Client {
-    async connect(url: string): Promise<void> {
-        await this._ws?.connect(url);
-    }
+export class Chat {
+    constructor(protected readonly _options: Chat.Options) {}
 
-    async disconnect(): Promise<void> {
-        await this._ws?.disconnect();
-    }
+    connect(args?: Chat.ConnectArgs = {}): ChatSocket {
+        const queryParams: Record<string, string | string[] | object | object[]> = {};
 
-    async send(data: unknown): Promise<void> {
-        await this._ws?.send(JSON.stringify(data));
+        queryParams["fernSdkLanguage"] = "JavaScript";
+        queryParams["fernSdkVersion"] = SDK_VERSION;
+
+        if (this._options.accessToken != null) {
+            queryParams["accessToken"] = this._options.accessToken;
+        } else if (this._options.apiKey != null) {
+            queryParams["apiKey"] = this._options.apiKey;
+        }
+
+        if (args.configId !== null && args.configId !== undefined && args.configId !== "") {
+            queryParams["config_id"] = args.configId;
+        }
+
+        if (args.configVersion !== null && args.configVersion !== undefined && args.configVersion !== "") {
+            queryParams["config_version"] = args.configVersion;
+        }
+
+        if (
+            args.resumedChatGroupId !== null &&
+            args.resumedChatGroupId !== undefined &&
+            args.resumedChatGroupId !== ""
+        ) {
+            queryParams["resumed_chat_group_id"] = args.resumedChatGroupId;
+        }
+
+        if (args.verboseTranscription !== null) {
+            queryParams["verbose_transcription"] = args.verboseTranscription ? "true" : "false";
+        }
+
+        if (args.queryParams !== null && args.queryParams !== undefined) {
+            for (const [name, value] of Object.entries(args.queryParams)) {
+                queryParams[name] = value;
+            }
+        }
+
+        const socket = new core.ReconnectingWebSocket(
+            `wss://${(core.Supplier.get(this._options.environment) ?? environments.HumeEnvironment.Production).replace(
+                "https://",
+                "",
+            )}/v0/evi/chat?${qs.stringify(queryParams)}`,
+            [],
+            {
+                debug: args.debug ?? false,
+                maxRetries: args.reconnectAttempts ?? 30,
+            },
+        );
+
+        return new ChatSocket({
+            socket,
+        });
     }
 }
