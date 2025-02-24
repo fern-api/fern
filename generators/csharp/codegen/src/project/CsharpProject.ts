@@ -509,13 +509,18 @@ class CsProj {
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
 
+    <PropertyGroup>
+        <UsePortableDateOnly>false</UsePortableDateOnly>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
         <UsePortableDateOnly>true</UsePortableDateOnly>
     </PropertyGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
-        <PackageReference Include="Portable.System.DateTimeOnly.Json" Version="8.0.2" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
+        <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
 
     <ItemGroup>

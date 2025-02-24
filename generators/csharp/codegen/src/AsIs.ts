@@ -28,7 +28,7 @@ export const AsIsFiles = {
     Json: {
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
         DateTimeSerializer: "DateTimeSerializer.Template.cs",
-        DateAsDateTimeConverter: "DateAsDateTimeConverter.Template.cs",
+        DateOnlyConverter: "DateOnlyConverter.Template.cs",
         EnumConverter: "EnumConverter.Template.cs",
         EnumSerializer: "EnumSerializer.Template.cs",
         JsonConfiguration: "JsonConfiguration.Template.cs",

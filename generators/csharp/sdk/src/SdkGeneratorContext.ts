@@ -144,6 +144,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.Json.CollectionItemSerializer,
+            AsIsFiles.Json.DateOnlyConverter,
             AsIsFiles.Json.DateTimeSerializer,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer,
