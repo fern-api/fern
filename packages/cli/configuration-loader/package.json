@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

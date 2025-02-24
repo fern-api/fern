@@ -68,7 +68,16 @@ export async function checkIfPathnameExists({
 
     if (absoluteFilepath != null) {
         // if the pathname does not start with a `/`, it is a relative path.
-        // first, we'll check if the pathname is a relativized path
+
+        // If pathname is `.` we'll check if the current directory exists.
+        if (pathname === ".") {
+            const currentDirPath = dirname(absoluteFilepath);
+            if (await doesPathExist(currentDirPath, "directory")) {
+                return true;
+            }
+        }
+
+        // We'll check if the pathname is a relativized path
         const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
 
         if (await doesPathExist(relativizedPathname, "file")) {

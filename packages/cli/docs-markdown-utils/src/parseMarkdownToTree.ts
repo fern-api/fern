@@ -7,21 +7,11 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { gfm } from "micromark-extension-gfm";
 import { math } from "micromark-extension-math";
 import { mdxjs } from "micromark-extension-mdxjs";
-import { UnreachableCaseError } from "ts-essentials";
 
-export function parseMarkdownToTree(markdown: string, format: "mdx" | "md" = "mdx"): MdastRoot {
+export function parseMarkdownToTree(markdown: string): MdastRoot {
     const { content } = grayMatter(markdown);
-    if (format === "md") {
-        return fromMarkdown(content, {
-            extensions: [gfm(), math()],
-            mdastExtensions: [gfmFromMarkdown(), mathFromMarkdown()]
-        });
-    } else if (format === "mdx") {
-        return fromMarkdown(content, {
-            extensions: [mdxjs(), gfm(), math()],
-            mdastExtensions: [mdxFromMarkdown(), gfmFromMarkdown(), mathFromMarkdown()]
-        });
-    } else {
-        throw new UnreachableCaseError(format);
-    }
+    return fromMarkdown(content, {
+        extensions: [mdxjs(), gfm(), math()],
+        mdastExtensions: [mdxFromMarkdown(), gfmFromMarkdown(), mathFromMarkdown()]
+    });
 }

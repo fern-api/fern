@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Add a movie to the database
+Add a movie to the database using the movies/* /... path.
 </dd>
 </dl>
 </dd>

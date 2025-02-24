@@ -33,8 +33,6 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "font/ttf"
 ]);
 
-const ALLOWED_EXTENSIONS = new Set(["js", "svg"]);
-
 // allowed text encodings
 const ALLOWED_ENCODINGS = new Set([
     "ASCII", // 7-bit American Standard Code for Information Interchange
@@ -116,33 +114,24 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         extension = extension.substring(1);
     }
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
-    if (ALLOWED_EXTENSIONS.has(extension)) {
-        const encoding = chardet.detect(file);
-        if (encoding == null) {
-            return [
-                {
-                    severity: "fatal",
-                    message: `The encoding of the file could not be detected: ${absoluteFilepath}`
-                }
-            ];
-        }
-        if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
-            return [
-                {
-                    severity: "fatal",
-                    message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
-                }
-            ];
-        }
-
-        return [];
+    const encoding = chardet.detect(file);
+    if (encoding == null) {
+        return [
+            {
+                severity: "fatal",
+                message: `The encoding of the file could not be detected: ${absoluteFilepath}`
+            }
+        ];
     }
 
-    // in all other cases, return false
-    return [
-        {
-            severity: "fatal",
-            message: `File is not allowed to be uploaded: ${absoluteFilepath}`
-        }
-    ];
+    if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
+        return [
+            {
+                severity: "fatal",
+                message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
+            }
+        ];
+    }
+
+    return [];
 };

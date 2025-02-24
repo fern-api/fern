@@ -665,9 +665,6 @@ layout:
   searchbar-placement: header
   tabs-placement: header
 
-js:
-  - ./js/koala.js
-
 analytics:
   posthog:
     api-key: ${POSTHOG_API_KEY}

@@ -724,19 +724,27 @@ export class DocsDefinitionResolver {
 
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = generateIntermediateRepresentation({
-            workspace,
-            audiences: item.audiences,
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false,
-            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
-            readme: undefined,
-            version: undefined,
-            packageName: undefined,
-            context: this.taskContext,
-            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-        });
+
+        let ir: IntermediateRepresentation;
+        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+        } else {
+            ir = generateIntermediateRepresentation({
+                workspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+            });
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,

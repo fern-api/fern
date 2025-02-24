@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ApiConfigurationV2SpecsSchema = FernDefinition.AsyncApiOrOpenApiSpecSchema[] | FernDefinition.ConjureSchema;
+export type ApiConfigurationV2SpecsSchema = FernDefinition.SpecSchema[] | FernDefinition.ConjureSchema;

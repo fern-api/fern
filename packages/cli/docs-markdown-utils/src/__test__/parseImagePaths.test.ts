@@ -569,6 +569,26 @@ describe("parseImagePaths", () => {
         `);
     });
 
+    it("should parse src file inside of a Download", () => {
+        const page = `
+<Download src="path/to/file.zip">
+    Download file
+</Download>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/file.zip"]);
+    });
+
+    it("should parse src file inside of video", () => {
+        const page = `
+<video>
+    <source src="path/to/file.mp4" />
+</video>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/file.mp4"]);
+    });
+
     describe("image path resolution", () => {
         const MOCK_FILE_IDS = {
             "/Volume/git/fern/absolute/path/image.png": "absolute-file-id",
