@@ -141,7 +141,7 @@ public class ParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()));
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -181,7 +181,7 @@ public class ParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()));
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

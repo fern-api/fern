@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
+import com.seed.pagination.core.QueryStringMapper;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
@@ -69,17 +70,20 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get().toString());
         }
         if (request.getPerPage().isPresent()) {
-            httpUrl.addQueryParameter("per_page", request.getPerPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get().toString());
         }
         if (request.getOrder().isPresent()) {
-            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get().toString());
         }
         if (request.getStartingAfter().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "starting_after", request.getStartingAfter().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -133,7 +137,8 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "cursor", request.getCursor().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -252,17 +257,20 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get().toString());
         }
         if (request.getPerPage().isPresent()) {
-            httpUrl.addQueryParameter("per_page", request.getPerPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get().toString());
         }
         if (request.getOrder().isPresent()) {
-            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get().toString());
         }
         if (request.getStartingAfter().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "starting_after", request.getStartingAfter().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -314,17 +322,20 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get().toString());
         }
         if (request.getPerPage().isPresent()) {
-            httpUrl.addQueryParameter("per_page", request.getPerPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get().toString());
         }
         if (request.getOrder().isPresent()) {
-            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get().toString());
         }
         if (request.getStartingAfter().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "starting_after", request.getStartingAfter().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -440,13 +451,16 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get().toString());
         }
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString());
         }
         if (request.getOrder().isPresent()) {
-            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -499,13 +513,16 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get().toString());
         }
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString());
         }
         if (request.getOrder().isPresent()) {
-            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -557,7 +574,8 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "cursor", request.getCursor().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -610,7 +628,8 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "cursor", request.getCursor().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -662,8 +681,8 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getStartingAfter().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "starting_after", request.getStartingAfter().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -714,7 +733,8 @@ public class UsersClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getOffset().isPresent()) {
-            httpUrl.addQueryParameter("offset", request.getOffset().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "offset", request.getOffset().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.nullable.core.ClientOptions;
 import com.seed.nullable.core.MediaTypes;
 import com.seed.nullable.core.ObjectMappers;
+import com.seed.nullable.core.QueryStringMapper;
 import com.seed.nullable.core.RequestOptions;
 import com.seed.nullable.core.SeedNullableApiException;
 import com.seed.nullable.core.SeedNullableException;
@@ -45,19 +46,24 @@ public class NullableClient {
                 .newBuilder()
                 .addPathSegments("users");
         if (request.getUsernames().isPresent()) {
-            httpUrl.addQueryParameter("usernames", request.getUsernames().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "usernames", request.getUsernames().get());
         }
         if (request.getAvatar().isPresent()) {
-            httpUrl.addQueryParameter("avatar", request.getAvatar().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "avatar", request.getAvatar().get());
         }
         if (request.getActivated().isPresent()) {
-            httpUrl.addQueryParameter("activated", request.getActivated().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "activated", request.getActivated().get().toString());
         }
         if (request.getTags().isPresent()) {
-            httpUrl.addQueryParameter("tags", request.getTags().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "tags", request.getTags().get());
         }
         if (request.getExtra().isPresent()) {
-            httpUrl.addQueryParameter("extra", request.getExtra().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "extra", request.getExtra().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

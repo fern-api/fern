@@ -19,14 +19,13 @@ public class QueryStringMapper {
         JsonNode nested = MAPPER.valueToTree(value);
 
         ObjectNode flat;
-
         if (nested.isObject()) {
             flat = flattenObject((ObjectNode) nested);
         } else if (nested.isArray()) {
             flat = flattenArray((ArrayNode) nested, "");
         } else {
-            throw new IllegalArgumentException("Expected value to serialize to JSON object or array. Instead, got "
-                    + (value == null ? null : value.toString()));
+            httpUrl.addQueryParameter(key, value.toString());
+            return;
         }
 
         Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
