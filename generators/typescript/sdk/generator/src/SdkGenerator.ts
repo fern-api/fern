@@ -749,11 +749,13 @@ export class SdkGenerator {
                         hasDeclareKeyword: true
                     };
 
-                    const properties: OptionalKind<PropertySignatureStructure>[] = [];
+                    // build the options interface
+
+                    const optionsInterfaceProperties: OptionalKind<PropertySignatureStructure>[] = [];
 
                     // add the environment property
                     const generatedEnvironments = context.environments.getGeneratedEnvironments();
-                    properties.push({
+                    optionsInterfaceProperties.push({
                         name: 'environment',
                         type: getTextOfTsNode(
                             context.coreUtilities.fetcher.Supplier._getReferenceToType(
@@ -764,70 +766,87 @@ export class SdkGenerator {
                     });
 
                     // add the api key property
-                    properties.push({
+                    optionsInterfaceProperties.push({
                         name: 'apiKey',
                         type: 'core.Supplier<string | undefined>',
                         hasQuestionToken: true
                     });
 
                     // add the fetcher property
-                    properties.push({
-                        name: 'fetcher',
-                        type: 'core.FetchFunction',
+                    optionsInterfaceProperties.push({
+                        name: 'accessToken',
+                        type: 'core.Supplier<string | undefined>',
                         hasQuestionToken: true
                     });
-                    
-                    
                     
 
                     const optionsInterface: InterfaceDeclarationStructure = {
                         kind: StructureKind.Interface,
                         name: "Options",
-                        properties,
+                        properties: optionsInterfaceProperties,
                         isExported: true
                     };
 
                     // dont need request options interface here
 
+                    // build the ConnectArgs interface
+                    const connectArgsInterfaceProperties: OptionalKind<PropertySignatureStructure>[] = [];
 
-                    serviceModule.statements = [optionsInterface];
+                    connectArgsInterfaceProperties.push(
+                        {
+                            name: "debug",
+                            type: "boolean",
+                            hasQuestionToken: true,
+                            docs: ["Enable debug mode on the websocket. Defaults to false."]
+                        },
+                        {
+                            name: "reconnectAttempts", 
+                            type: "number",
+                            hasQuestionToken: true,
+                            docs: ["Number of reconnect attempts. Defaults to 30."]
+                        },
+                        {
+                            name: "configId",
+                            type: "string",
+                            hasQuestionToken: true,
+                            docs: ["The ID of the configuration."]
+                        },
+                        {
+                            name: "configVersion",
+                            type: "string", 
+                            hasQuestionToken: true,
+                            docs: ["The version of the configuration."]
+                        },
+                        {
+                            name: "resumedChatGroupId",
+                            type: "string",
+                            hasQuestionToken: true,
+                            docs: ["The ID of a chat group, used to resume a previous chat."]
+                        },
+                        {
+                            name: "verboseTranscription",
+                            type: "boolean",
+                            hasQuestionToken: true,
+                            docs: ["A flag to enable verbose transcription. Set this query parameter to `true` to have unfinalized user transcripts be sent to the client as interim UserMessage messages. The [interim](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.interim) field on a [UserMessage](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.type) denotes whether the message is \"interim\" or \"final.\""]
+                        },
+                        {
+                            name: "queryParams",
+                            type: "Record<string, string | string[] | object | object[]>",
+                            hasQuestionToken: true,
+                            docs: ["Extra query parameters sent at WebSocket connection"]
+                        }
+                    );
+
+                    const connectArgsInterface: InterfaceDeclarationStructure = {
+                        kind: StructureKind.Interface,
+                        name: "ConnectArgs",
+                        properties: connectArgsInterfaceProperties,
+                        isExported: true
+                    };
+
+                    serviceModule.statements = [optionsInterface, connectArgsInterface];
 
                     sourceFile.addModule(serviceModule);
-
-
-                    
-
-                    
-                    // console.log("Adding namespace");
-                    // // add the namespace
-                    // sourceFile.addStatements([
-                    //     'export declare namespace Chat {',
-                    // ]);
-
-                    // console.log("Adding interface");
-                    // // add the body of the namespace
-                    // // add the interface
-
-                    // // add a test interface
-                    // // sourceFile.addInterface({
-                    // //     name: "Test",
-                    // //     isExported: true,
-                    // //     properties: [
-                    // //         {
-                    // //             name: "test",
-                    // //             type: "string",
-                    // //             hasQuestionToken: true,
-                    // //         }
-                    // //     ]
-                    // // });
-
-                    // console.log("closing namespace");
-
-                    // // close the namespace
-                    // sourceFile.addStatements([
-                    //     '}'
-                    // ]);
-
 
                     sourceFile.addClass({
                         name: "Client", 
