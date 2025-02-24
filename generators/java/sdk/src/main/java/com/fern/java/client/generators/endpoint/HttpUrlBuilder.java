@@ -29,13 +29,10 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Stream;
 import okhttp3.HttpUrl;
 import org.immutables.value.Value;
@@ -145,38 +142,22 @@ public final class HttpUrlBuilder {
         }
         queryParamProperties.forEach(queryParamProperty -> {
             boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
-            boolean isCollection = isTypeNameCollection(queryParamProperty.poetTypeName());
-            boolean isObject = isTypeNameObject(queryParamProperty.poetTypeName());
             if (isOptional) {
                 codeBlock.beginControlFlow(
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
-            if (isCollection || isObject) {
-                codeBlock.addStatement(
-                        "$T.addQueryParameter($L, $S, $L)",
-                        context.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                        httpUrlname,
-                        queryParamProperty.wireKey().get(),
-                        PoetTypeNameStringifier.stringify(
-                                CodeBlock.of(
-                                                "$L.$N()" + (isOptional ? ".get()" : ""),
-                                                requestName,
-                                                queryParamProperty.getterProperty())
-                                        .toString(),
-                                queryParamProperty.poetTypeName()));
-            } else {
-                codeBlock.addStatement(
-                        "$L.addQueryParameter($S, $L)",
-                        httpUrlname,
-                        queryParamProperty.wireKey().get(),
-                        PoetTypeNameStringifier.stringify(
-                                CodeBlock.of(
-                                                "$L.$N()" + (isOptional ? ".get()" : ""),
-                                                requestName,
-                                                queryParamProperty.getterProperty())
-                                        .toString(),
-                                queryParamProperty.poetTypeName()));
-            }
+            codeBlock.addStatement(
+                    "$T.addQueryParameter($L, $S, $L)",
+                    context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                    httpUrlname,
+                    queryParamProperty.wireKey().get(),
+                    PoetTypeNameStringifier.stringify(
+                            CodeBlock.of(
+                                            "$L.$N()" + (isOptional ? ".get()" : ""),
+                                            requestName,
+                                            queryParamProperty.getterProperty())
+                                    .toString(),
+                            queryParamProperty.poetTypeName()));
             if (isOptional) {
                 codeBlock.endControlFlow();
             }
@@ -271,24 +252,6 @@ public final class HttpUrlBuilder {
     private static boolean isTypeNameOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
-    }
-
-    private static boolean isTypeNameCollection(TypeName typeName) {
-        return typeName instanceof ParameterizedTypeName
-                && (((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(List.class))
-                        || ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Set.class)));
-    }
-
-    private static boolean isTypeNameObject(TypeName typeName) {
-        boolean isMap = typeName instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Map.class));
-
-        boolean isObject = (typeName instanceof ClassName) && !typeName.isBoxedPrimitive();
-        boolean isStandardObject = typeName.equals(ClassName.get(String.class))
-                || typeName.equals(ClassName.get(OffsetDateTime.class))
-                || typeName.equals(ClassName.get(UUID.class));
-
-        return isMap || (isObject && !isStandardObject);
     }
 
     @Value.Immutable

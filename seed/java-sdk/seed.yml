@@ -130,7 +130,6 @@ allowedFailures:
   - exhaustive:local-files
   - extends
   - oauth-client-credentials-custom
-  - query-parameters
   - trace
   - streaming-parameter
   - literal
