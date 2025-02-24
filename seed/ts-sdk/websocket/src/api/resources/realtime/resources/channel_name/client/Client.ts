@@ -13,7 +13,24 @@ export declare namespace Chat {
     export interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
-        fetcher?: core.FetchFunction;
+        accessToken?: core.Supplier<string | undefined>;
+    }
+
+    export interface ConnectArgs {
+        /** Enable debug mode on the websocket. Defaults to false. */
+        debug?: boolean;
+        /** Number of reconnect attempts. Defaults to 30. */
+        reconnectAttempts?: number;
+        /** The ID of the configuration. */
+        configId?: string;
+        /** The version of the configuration. */
+        configVersion?: string;
+        /** The ID of a chat group, used to resume a previous chat. */
+        resumedChatGroupId?: string;
+        /** A flag to enable verbose transcription. Set this query parameter to `true` to have unfinalized user transcripts be sent to the client as interim UserMessage messages. The [interim](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.interim) field on a [UserMessage](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.type) denotes whether the message is "interim" or "final." */
+        verboseTranscription?: boolean;
+        /** Extra query parameters sent at WebSocket connection */
+        queryParams?: Record<string, string | string[] | object | object[]>;
     }
 }
 
