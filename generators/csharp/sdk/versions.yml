@@ -7,6 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.32
+  createdAt: "2025-02-24"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: JSON serialize `DateOnly` to `yyyy-MM-dd` format.
+    - type: internal
+      summary: Add test for serializing and deserializing `DateOnly` abd `DateTime`.
+
 - version: 1.9.31
   createdAt: "2025-02-15"
   irVersion: 53
@@ -68,7 +77,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts 
+        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts
         when a type named `System` exists in the current namespace.
 
 - version: 1.9.24
@@ -85,7 +94,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T> 
+        Fix method return types to use unqualified Task<T> instead of System.Threading.Tasks.Task<T>
         when the method returns a response.
 
 - version: 1.9.22

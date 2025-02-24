@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -20,7 +20,7 @@ public partial class SyspropClient
     /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
     /// </code>
     /// </example>
-    public async Task SetNumWarmInstancesAsync(
+    public async global::System.Threading.Tasks.Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
         RequestOptions? options = null,
