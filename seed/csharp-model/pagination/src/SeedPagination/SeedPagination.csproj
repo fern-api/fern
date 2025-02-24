@@ -1,6 +1,5 @@
 
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -14,8 +13,18 @@
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <PropertyGroup>
+        <UsePortableDateOnly>false</UsePortableDateOnly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
+        <UsePortableDateOnly>true</UsePortableDateOnly>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
+        <Compile Remove="Core\DateOnlyConverter.cs" />
     </ItemGroup>
 
     <ItemGroup>

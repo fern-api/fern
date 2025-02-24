@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using OneOf;
 using SeedEnum.Core;
 
@@ -20,7 +20,7 @@ public partial class PathParamClient
     /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
     /// </code>
     /// </example>
-    public async Task SendAsync(
+    public async global::System.Threading.Tasks.Task SendAsync(
         Operand operand,
         OneOf<Color, Operand> operandOrColor,
         RequestOptions? options = null,

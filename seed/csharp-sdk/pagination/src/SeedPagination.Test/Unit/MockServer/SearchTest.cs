@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination;
 
@@ -8,7 +8,7 @@ namespace SeedPagination.Test.Unit.MockServer;
 public class SearchTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {

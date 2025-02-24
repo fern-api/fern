@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using FluentAssertions.Json;
+using global::System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAnyAuth;
@@ -11,7 +11,7 @@ namespace SeedAnyAuth.Test.Unit.MockServer;
 public class GetTokenTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
