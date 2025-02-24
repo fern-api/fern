@@ -34,7 +34,6 @@ export interface GetDefaultStarterFilesRequest {
      *   - Less Than `<``
      *   - Equals `=`
      *   - Period `.`
-     *
      */
     methodName: string;
 }
