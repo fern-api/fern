@@ -13,7 +13,7 @@
   changelogEntry:
     - type: fix
       summary: JSON serialize `DateOnly` to `yyyy-MM-dd` format.
-    - type: feat
+    - type: internal
       summary: Add test for serializing and deserializing `DateOnly` abd `DateTime`.
 
 - version: 1.9.31
