@@ -14,7 +14,6 @@ public class QueryStringMapper {
         JsonNode nested = MAPPER.valueToTree(value);
 
         ObjectNode flat;
-
         if (nested.isObject()) {
             flat = flattenObject((ObjectNode) nested);
         } else if (nested.isArray()) {
