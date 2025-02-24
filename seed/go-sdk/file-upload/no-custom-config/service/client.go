@@ -281,3 +281,53 @@ func (c *Client) WithContentType(
 	}
 	return nil
 }
+
+func (c *Client) WithFormEncoding(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithFormEncodingRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/with-form-encoding"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+		return err
+	}
+	if err := writer.WriteField("foo", fmt.Sprintf("%v", request.Foo)); err != nil {
+		return err
+	}
+	if err := writer.WriteJSON("bar", request.Bar); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
