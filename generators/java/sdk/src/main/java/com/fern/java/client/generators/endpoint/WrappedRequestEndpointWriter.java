@@ -319,20 +319,20 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             .beginControlFlow(
                                     "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
                             .addStatement(
-                                    "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
+                                    "$T.addFormDataPart($L, $S, $L)",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getQueryStringMapperClassName(),
                                     getMultipartBodyPropertiesName(),
                                     jsonProperty.wireKey().get(),
-                                    generatedObjectMapper.getClassName(),
-                                    generatedObjectMapper.jsonMapperStaticField().name,
                                     requestParameterName + "." + jsonProperty.getterProperty().name + "()")
                             .endControlFlow();
                 } else {
                     requestBodyCodeBlock.addStatement(
-                            "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
+                            "$T.addFormDataPart($L, $S, $L)",
+                            clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
                             getMultipartBodyPropertiesName(),
                             jsonProperty.wireKey().get(),
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
                             requestParameterName + "." + jsonProperty.getterProperty().name + "()");
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {

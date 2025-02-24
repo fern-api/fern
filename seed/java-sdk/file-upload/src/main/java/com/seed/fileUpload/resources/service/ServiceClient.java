@@ -53,10 +53,9 @@ public class ServiceClient {
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             if (request.getMaybeString().isPresent()) {
-                body.addFormDataPart(
-                        "maybe_string", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeString()));
+                QueryStringMapper.addFormDataPart(body, "maybe_string", request.getMaybeString());
             }
-            body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
+            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger());
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
@@ -85,29 +84,20 @@ public class ServiceClient {
                         RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
             }
             if (request.getMaybeInteger().isPresent()) {
-                body.addFormDataPart(
-                        "maybe_integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeInteger()));
+                QueryStringMapper.addFormDataPart(body, "maybe_integer", request.getMaybeInteger());
             }
             if (request.getOptionalListOfStrings().isPresent()) {
-                body.addFormDataPart(
-                        "optional_list_of_strings",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalListOfStrings()));
+                QueryStringMapper.addFormDataPart(body, "optional_list_of_strings", request.getOptionalListOfStrings());
             }
-            body.addFormDataPart(
-                    "list_of_objects", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getListOfObjects()));
+            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects());
             if (request.getOptionalMetadata().isPresent()) {
-                body.addFormDataPart(
-                        "optional_metadata",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMetadata()));
+                QueryStringMapper.addFormDataPart(body, "optional_metadata", request.getOptionalMetadata());
             }
             if (request.getOptionalObjectType().isPresent()) {
-                body.addFormDataPart(
-                        "optional_object_type",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalObjectType()));
+                QueryStringMapper.addFormDataPart(body, "optional_object_type", request.getOptionalObjectType());
             }
             if (request.getOptionalId().isPresent()) {
-                body.addFormDataPart(
-                        "optional_id", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalId()));
+                QueryStringMapper.addFormDataPart(body, "optional_id", request.getOptionalId());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -248,10 +238,10 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
-            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo());
+            QueryStringMapper.addFormDataPart(body, "bar", request.getBar());
             if (request.getFooBar().isPresent()) {
-                body.addFormDataPart("foo_bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFooBar()));
+                QueryStringMapper.addFormDataPart(body, "foo_bar", request.getFooBar());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -294,8 +284,8 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
-            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo());
+            QueryStringMapper.addFormDataPart(body, "bar", request.getBar());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

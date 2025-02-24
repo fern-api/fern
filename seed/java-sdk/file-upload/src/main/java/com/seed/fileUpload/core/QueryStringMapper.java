@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import okhttp3.HttpUrl;
+import okhttp3.MultipartBody;
 
 public class QueryStringMapper {
 
@@ -35,6 +37,24 @@ public class QueryStringMapper {
                 httpUrl.addQueryParameter(key + field.getKey(), field.getValue().textValue());
             } else {
                 httpUrl.addQueryParameter(key + field.getKey(), field.getValue().toString());
+            }
+        }
+    }
+
+    public static void addFormDataPart(MultipartBody.Builder multipartBody, String key, Object value) {
+        // Hack to be able to leverage our query string implementation
+        HttpUrl.Builder httpUrl = HttpUrl.parse("https://example.org/").newBuilder();
+        addQueryParameter(httpUrl, key, value);
+
+        String queryString = Objects.requireNonNull(httpUrl.build().encodedQuery(), "Got null query string.");
+
+        for (String queryStringEntry : queryString.split("&")) {
+            if (queryStringEntry.contains("=") && queryStringEntry.split("=").length == 2) {
+                String[] keyAndValue = queryStringEntry.split("=");
+                multipartBody.addFormDataPart(keyAndValue[0], keyAndValue[1]);
+            } else {
+                throw new IllegalArgumentException(
+                        "Got invalid query parameter " + queryStringEntry + " as part of query string " + queryString);
             }
         }
     }
