@@ -731,6 +731,7 @@ types:
       go: optional<SnippetLanguageConfiguration>
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
+      csharp: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
