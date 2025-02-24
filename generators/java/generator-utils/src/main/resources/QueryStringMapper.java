@@ -26,7 +26,11 @@ public class QueryStringMapper {
         Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> field = fields.next();
-            httpUrl.addQueryParameter(key + field.getKey(), field.getValue().toString());
+            if (field.getValue().isTextual()) {
+                httpUrl.addQueryParameter(key + field.getKey(), field.getValue().textValue());
+            } else {
+                httpUrl.addQueryParameter(key + field.getKey(), field.getValue().toString());
+            }
         }
     }
 
