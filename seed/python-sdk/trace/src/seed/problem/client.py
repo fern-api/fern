@@ -417,7 +417,6 @@ class ProblemClient:
               - Equals `=`
               - Period `.`
 
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -898,7 +897,6 @@ class AsyncProblemClient:
               - Less Than `<``
               - Equals `=`
               - Period `.`
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
