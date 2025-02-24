@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedEnum.Core;
 
 namespace SeedEnum;
@@ -21,7 +21,7 @@ public partial class QueryParamClient
     /// );
     /// </code>
     /// </example>
-    public async Task SendAsync(
+    public async global::System.Threading.Tasks.Task SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +76,7 @@ public partial class QueryParamClient
     /// );
     /// </code>
     /// </example>
-    public async Task SendListAsync(
+    public async global::System.Threading.Tasks.Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

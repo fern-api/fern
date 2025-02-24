@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using FluentAssertions.Json;
+using global::System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAuthEnvironmentVariables;
@@ -11,7 +11,7 @@ namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 public class GetWithHeaderTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"
