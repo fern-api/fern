@@ -3,4 +3,3 @@ seed/** linguist-generated=true
 seed/**/seed.yml linguist-generated=false
 seed/**/.mock linguist-generated=true
 packages/ir-sdk/src/sdk/** linguist-generated=true
-packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/__snapshots__/openapi-v2-baseline/*.json filter=lfs diff=lfs merge=lfs -text
