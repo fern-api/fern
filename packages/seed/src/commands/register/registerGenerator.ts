@@ -7,6 +7,8 @@ import { GeneratorType } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
 
+// test
+
 // TODO: we should share the language and generator type with the FDR definition
 export async function registerGenerator({
     generator,
