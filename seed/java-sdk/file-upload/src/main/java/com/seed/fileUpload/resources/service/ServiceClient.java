@@ -5,6 +5,7 @@ package com.seed.fileUpload.resources.service;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.ObjectMappers;
+import com.seed.fileUpload.core.QueryStringMapper;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.core.SeedFileUploadApiException;
 import com.seed.fileUpload.core.SeedFileUploadException;
@@ -186,17 +187,20 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file-with-query-params");
         if (request.getMaybeString().isPresent()) {
-            httpUrl.addQueryParameter("maybeString", request.getMaybeString().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "maybeString", request.getMaybeString().get());
         }
-        httpUrl.addQueryParameter("integer", Integer.toString(request.getInteger()));
+        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()));
         if (request.getMaybeInteger().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "maybeInteger", request.getMaybeInteger().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString());
         }
-        httpUrl.addQueryParameter("listOfStrings", request.getListOfStrings());
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings());
         if (request.getOptionalListOfStrings().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalListOfStrings", request.getOptionalListOfStrings().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "optionalListOfStrings",
+                    request.getOptionalListOfStrings().get());
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {

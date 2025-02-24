@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.QueryStringMapper;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.SeedTraceApiException;
 import com.seed.trace.core.SeedTraceException;
@@ -49,10 +50,13 @@ public class PlaylistClient {
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("create");
-        httpUrl.addQueryParameter("datetime", request.getDatetime().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "datetime", request.getDatetime().toString());
         if (request.getOptionalDatetime().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalDatetime", request.getOptionalDatetime().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "optionalDatetime",
+                    request.getOptionalDatetime().get().toString());
         }
         RequestBody body;
         try {
@@ -104,15 +108,18 @@ public class PlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("all");
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString());
         }
-        httpUrl.addQueryParameter("otherField", request.getOtherField());
-        httpUrl.addQueryParameter("multiLineDocs", request.getMultiLineDocs());
+        QueryStringMapper.addQueryParameter(httpUrl, "otherField", request.getOtherField());
+        QueryStringMapper.addQueryParameter(httpUrl, "multiLineDocs", request.getMultiLineDocs());
         if (request.getOptionalMultipleField().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalMultipleField", request.getOptionalMultipleField().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "optionalMultipleField",
+                    request.getOptionalMultipleField().get());
         }
-        httpUrl.addQueryParameter("multipleField", request.getMultipleField());
+        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
