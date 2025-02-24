@@ -725,29 +725,55 @@ export class SdkGenerator {
                 filepath: {
                     directories: [],
                     file: {
-                        nameOnDisk: "/resources/realtime/resources/channel_name/client/Client.ts",
+                        nameOnDisk: "/api/resources/realtime/resources/channel_name/client/Client.ts",
                     }
                 },
                 run: ({ sourceFile, importsManager }) => {
                     console.log("Generating websocket client context");
 
-
+                    // add the imports
                     sourceFile.addStatements([
-                        "import { ReconnectingWebsocket } from './core/websocket/ReconnectingWebsocket';",
-                        "import { WebsocketMessage } from './core/websocket/WebsocketMessage';",
-                        "",
-                        "interface WebsocketOptions {",
-                        "    reconnect?: boolean;",
-                        "    maxRetries?: number;", 
-                        "    retryDelay?: number;",
-                        "}",
-                        "",
-                        "const DEFAULT_OPTIONS: WebsocketOptions = {",
-                        "    reconnect: true,",
-                        "    maxRetries: 5,",
-                        "    retryDelay: 1000",
-                        "};"
+                        'import * as environments from "../../../../../../environments";',
+                        'import * as core from "../../../../../../core";',
+                        'import qs from "qs";',
+                        'import { ChatSocket } from "./Socket";',
+                        'import { SDK_VERSION } from "../../../../../../version";',
                     ]);
+
+                    // // add the namespace
+                    // sourceFile.addStatements([
+                    //     'export declare namespace Chat {',
+                    // ]);
+                    // // add the body of the namespace
+                    // // add the interface
+                    // sourceFile.addInterface({
+                    //     name: "Options",
+                    //     isExported: false,
+                    //     properties: [
+                    //         {
+                    //             name: "environment",
+                    //             type: "core.Supplier<environments.HumeEnvironment | string>",
+                    //             hasQuestionToken: true,
+                    //         },
+                    //         {
+                    //             name: "apiKey",
+                    //             type: "core.Supplier<string | undefined>",
+                    //             hasQuestionToken: true,
+                    //         },
+                    //         {
+                    //             name: "accessToken",
+                    //             type: "core.Supplier<string | undefined>",
+                    //             hasQuestionToken: true,
+                    //         }
+                    //     ]
+                    // });
+
+                    // // close the namespace
+                    // sourceFile.addStatements([
+                    //     '}'
+                    // ]);
+
+
                     sourceFile.addClass({
                         name: "Client", 
                         isExported: true,
