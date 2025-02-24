@@ -33,7 +33,7 @@ export function createDocsConfigFileAstVisitorForRules({
                         ruleViolations.map((violation) => ({
                             name: violation.name,
                             severity: violation.severity,
-                            relativeFilepath,
+                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath,
                             message: violation.message
                         }))
