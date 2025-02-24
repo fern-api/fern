@@ -44,30 +44,19 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
                 typeReference: property.valueType
             });
-
-            let field: csharp.Field | csharp.DateOnlyField;
-            const fieldArgs: csharp.Field.Args = {
-                name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
-                type: fieldType,
-                access: csharp.Access.Public,
-                get: true,
-                set: true,
-                summary: property.docs,
-                jsonPropertyName: property.name.wireValue,
-                useRequired: true,
-                initializer: maybeLiteralInitializer
-            };
-            const underlyingOrOriginalType = fieldType.underlyingTypeIfOptional() ?? fieldType;
-            if (underlyingOrOriginalType.internalType.type === "dateOnly") {
-                field = csharp.dateOnlyField({
-                    ...fieldArgs,
-                    dateTypeOption: this.context.getDateTypeOption()
-                });
-            } else {
-                field = csharp.field(fieldArgs);
-            }
-
-            class_.addField(field);
+            class_.addField(
+                csharp.field({
+                    name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
+                    type: fieldType,
+                    access: csharp.Access.Public,
+                    get: true,
+                    set: true,
+                    summary: property.docs,
+                    jsonPropertyName: property.name.wireValue,
+                    useRequired: true,
+                    initializer: maybeLiteralInitializer
+                })
+            );
         });
 
         class_.addMethod(this.context.getToStringMethod());

@@ -54,7 +54,6 @@ export const AsIsFiles = {
             OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
             StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs",
-            DateAsDateTimeJsonTests: "test/Json/DateAsDateTimeJsonTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",
             DateTimeJsonTests: "test/Json/DateTimeJsonTests.Template.cs"
         }

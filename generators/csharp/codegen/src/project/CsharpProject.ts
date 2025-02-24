@@ -9,7 +9,6 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../cli";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { DateTypeOption } from "../custom-config/DateTypeOption";
 import { CSharpFile } from "./CSharpFile";
 
 const SRC_DIRECTORY_NAME = "src";
@@ -509,9 +508,7 @@ class CsProj {
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
-${
-    this.context.getDateTypeOption() === DateTypeOption.USE_DATE_ONLY_PORTABLE
-        ? `
+
     <PropertyGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
         <UsePortableDateOnly>true</UsePortableDateOnly>
@@ -520,9 +517,7 @@ ${
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
         <PackageReference Include="Portable.System.DateTimeOnly.Json" Version="8.0.2" />
     </ItemGroup>
-`
-        : ""
-}
+
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </ItemGroup>

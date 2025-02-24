@@ -1,7 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles, DateTypeOption, csharp } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -164,13 +164,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.Json.EnumSerializer);
         }
 
-        const dateTimeOption = this.getDateTypeOption();
-        switch (dateTimeOption) {
-            case DateTypeOption.USE_DATE_TIME:
-            case DateTypeOption.USE_DATE_ONLY_ON_NET6_PLUS:
-                files.push(AsIsFiles.Json.DateAsDateTimeConverter);
-        }
-
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
@@ -185,6 +178,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getCoreTestAsIsFiles(): string[] {
         const files = [
             AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.RawClientTests
         ];
@@ -195,20 +189,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
-        }
-
-        const dateTimeOption = this.getDateTypeOption();
-        switch (dateTimeOption) {
-            case DateTypeOption.USE_DATE_TIME:
-                files.push(AsIsFiles.Test.Json.DateAsDateTimeJsonTests);
-                break;
-            case DateTypeOption.USE_DATE_ONLY_ON_NET6_PLUS:
-                files.push(AsIsFiles.Test.Json.DateAsDateTimeJsonTests);
-                files.push(AsIsFiles.Test.Json.DateOnlyJsonTests);
-                break;
-            case DateTypeOption.USE_DATE_ONLY_PORTABLE:
-                files.push(AsIsFiles.Test.Json.DateOnlyJsonTests);
-                break;
         }
 
         return files;

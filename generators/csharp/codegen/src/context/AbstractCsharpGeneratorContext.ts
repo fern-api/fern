@@ -16,7 +16,7 @@ import {
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
-import { DateTypeOption, convertReadOnlyPrimitiveTypes, csharp } from "..";
+import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
@@ -86,10 +86,6 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getPackageId(): string {
         return this.customConfig["package-id"] ?? this.getNamespace();
-    }
-
-    public getDateTypeOption(): DateTypeOption {
-        return this.customConfig["date-type"] ?? DateTypeOption.USE_DATE_ONLY_PORTABLE;
     }
 
     public getCoreNamespace(): string {
