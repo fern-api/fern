@@ -41,7 +41,7 @@ describe("openapi-v2-baseline", async () => {
                         audiences: { type: "all" },
                         keywords: undefined,
                         smartCasing: true,
-                        exampleGeneration: { disabled: false },
+                        exampleGeneration: { disabled: true },
                         readme: undefined,
                         version: undefined,
                         packageName: undefined,
