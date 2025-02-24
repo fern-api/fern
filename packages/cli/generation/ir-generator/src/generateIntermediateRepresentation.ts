@@ -1,6 +1,7 @@
 import { mapValues, pickBy } from "lodash-es";
 
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
@@ -17,6 +18,7 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { RelativeFilePath, dirname, join } from "@fern-api/path-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
@@ -24,7 +26,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernFileContext, constructFernFileContext, constructRootApiFileContext } from "./FernFileContext";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
-import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertApiVersionScheme } from "./converters/convertApiVersionScheme";
@@ -35,7 +36,6 @@ import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup";
-import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
