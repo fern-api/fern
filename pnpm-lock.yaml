@@ -6836,6 +6836,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
