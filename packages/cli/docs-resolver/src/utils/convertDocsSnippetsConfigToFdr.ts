@@ -71,5 +71,19 @@ export function convertDocsSnippetsConfigToFdr(
                               : snippetsConfiguration.ruby.version
                   }
                 : undefined
+        // TODO: Upgrade to the latest FDR version.
+        // csharpSdk:
+        //     snippetsConfiguration.csharp != null
+        //         ? {
+        //               package:
+        //                   typeof snippetsConfiguration.csharp === "string"
+        //                       ? snippetsConfiguration.csharp
+        //                       : snippetsConfiguration.csharp.package,
+        //               version:
+        //                   typeof snippetsConfiguration.csharp === "string"
+        //                       ? undefined
+        //                       : snippetsConfiguration.csharp.version
+        //           }
+        //         : undefined,
     };
 }
