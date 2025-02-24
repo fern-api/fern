@@ -15,6 +15,7 @@ import { parse } from "@fern-api/openapi-ir-parser";
 import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
 
+import { OpenAPIV3_1 } from "openapi-types";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -98,7 +99,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
-                    spec: document.value as any
+                    spec: document.value as OpenAPIV3_1.Document
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
                 return converter.convert({

@@ -11,7 +11,7 @@ export declare namespace AbstractConverter {
  * Interface for converting OpenAPI specifications to a target type
  * @template Output The target type to convert to
  */
-export abstract class AbstractConverter<Context extends AbstractConverterContext<any>, Output> {
+export abstract class AbstractConverter<Context extends AbstractConverterContext<object>, Output> {
     protected breadcrumbs: string[] = [];
 
     constructor({ breadcrumbs = [] }: AbstractConverter.Args = {}) {

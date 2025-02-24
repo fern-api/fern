@@ -75,17 +75,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): IntermediateRepresentation {
-        // convert servers
         this.convertServers({ context, errorCollector });
 
-        // convert security schemes
-        for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
-        }
+        // for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
+        // }
 
-        // convert schemas
         this.convertSchemas({ context, errorCollector });
 
-        // convert paths
         this.convertPaths({ context, errorCollector });
 
         const toRet = {

@@ -69,6 +69,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                 typeDeclaration: this.createTypeDeclaration({
                     shape: Type.alias({
                         aliasOf: primitiveType,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         resolvedType: primitiveType as any
                     }),
                     context
@@ -89,6 +90,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                     typeDeclaration: this.createTypeDeclaration({
                         shape: Type.alias({
                             aliasOf: arrayType.typeReference,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             resolvedType: arrayType.typeReference as any
                         }),
                         context

@@ -77,7 +77,7 @@ export class RequestBodyConverter extends AbstractConverter<
 
             if (convertedSchema.schema?.shape.type === "object") {
                 const requestBody = HttpRequestBody.inlinedRequestBody({
-                    contentType: contentType,
+                    contentType,
                     docs: this.requestBody.description,
                     name: context.casingsGenerator.generateName(schemaId),
                     extendedProperties: convertedSchema.schema?.shape.extendedProperties,

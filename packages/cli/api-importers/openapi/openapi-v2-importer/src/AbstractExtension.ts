@@ -2,7 +2,7 @@ import { AbstractConverter } from "./AbstractConverter";
 import { AbstractConverterContext } from "./AbstractConverterContext";
 
 export abstract class AbstractExtension<
-    Context extends AbstractConverterContext<any>,
+    Context extends AbstractConverterContext<object>,
     Output
 > extends AbstractConverter<Context, Output> {
     /**

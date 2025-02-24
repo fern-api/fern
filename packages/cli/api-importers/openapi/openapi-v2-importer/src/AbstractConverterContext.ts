@@ -134,19 +134,20 @@ export abstract class AbstractConverterContext<Spec extends object> {
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document with all the keys
-        let resolvedReference: any = this.spec;
+        let resolvedReference = this.spec;
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };
             }
-            resolvedReference = resolvedReference[key];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            resolvedReference = (resolvedReference as any)[key];
         }
 
         if (resolvedReference == null) {
             return { resolved: false };
         }
 
-        return { resolved: true, value: resolvedReference as T };
+        return { resolved: true, value: resolvedReference as unknown as T };
     }
 
     public createNamedTypeReference(id: string): TypeReference {
