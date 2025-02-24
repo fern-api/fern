@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { readFile, stat, writeFile } from "fs/promises";
+import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -30,13 +30,13 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
-import { tmpdir } from "os";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
@@ -696,18 +696,39 @@ export class DocsDefinitionResolver {
             return node.get();
         }
 
+        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
+            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
+            if (api == null) {
+                throw new Error("Failed to generate API Definition from OpenAPI workspace");
+            }
+            await this.registerApiV2({
+                api,
+                snippetsConfig,
+                apiName: item.apiName
+            });
+            const node = new ApiReferenceNodeConverterLatest(
+                item,
+                api,
+                parentSlug,
+                workspace,
+                this.docsWorkspace,
+                this.taskContext,
+                this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
+                this.#idgen
+            );
+            return node.get();
+        }
+
         const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation;
-        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
+        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
-            const irJson = JSON.stringify(ir, null, 2);
-            const tmpDir = tmpdir();
-            const pathToJson = join(AbsoluteFilePath.of(tmpDir), RelativeFilePath.of("ir.json"));
-            await writeFile(pathToJson, irJson);
-            console.log(pathToJson);
         } else {
             ir = generateIntermediateRepresentation({
                 workspace,

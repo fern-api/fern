@@ -1,5 +1,7 @@
-import { TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -18,7 +20,10 @@ export declare namespace SchemaOrReferenceConverter {
     }
 }
 
-export class SchemaOrReferenceConverter extends AbstractConverter<OpenAPIConverterContext3_1, SchemaOrReferenceConverter.Output | undefined> {
+export class SchemaOrReferenceConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    SchemaOrReferenceConverter.Output | undefined
+> {
     private readonly schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly schemaIdOverride: string | undefined;
 
@@ -40,14 +45,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<OpenAPIConvert
             if (!response.ok) {
                 return undefined;
             }
-            return  { type: response.reference, inlinedTypes: {} };
+            return { type: response.reference, inlinedTypes: {} };
         }
 
         const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
         const schemaConverter = new SchemaConverter({
             breadcrumbs: this.breadcrumbs,
             schema: this.schemaOrReference,
-            id: schemaId,
+            id: schemaId
         });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
         if (convertedSchema != null) {
@@ -62,11 +67,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<OpenAPIConvert
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration,
+                    [schemaId]: convertedSchema.typeDeclaration
                 }
             };
         }
-        
+
         return undefined;
     }
 }

@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-
 import { TypeDeclaration } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";

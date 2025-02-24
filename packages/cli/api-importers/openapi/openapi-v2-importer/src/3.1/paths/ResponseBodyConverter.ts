@@ -1,5 +1,7 @@
-import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -14,12 +16,15 @@ export declare namespace ResponseBodyConverter {
     }
 
     export interface Output {
-        responseBody: HttpResponseBody
+        responseBody: HttpResponseBody;
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
 
-export class ResponseBodyConverter extends AbstractConverter<OpenAPIConverterContext3_1, ResponseBodyConverter.Output | undefined> {
+export class ResponseBodyConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    ResponseBodyConverter.Output | undefined
+> {
     private readonly responseBody: OpenAPIV3_1.ResponseObject;
     private readonly group: string[];
     private readonly method: string;
@@ -44,7 +49,7 @@ export class ResponseBodyConverter extends AbstractConverter<OpenAPIConverterCon
             return undefined;
         }
 
-        const jsonContentTypes = Object.keys(this.responseBody.content).filter(type => type.includes('json'));
+        const jsonContentTypes = Object.keys(this.responseBody.content).filter((type) => type.includes("json"));
 
         for (const contentType of [...jsonContentTypes]) {
             const mediaTypeObject = this.responseBody.content[contentType];
@@ -68,14 +73,16 @@ export class ResponseBodyConverter extends AbstractConverter<OpenAPIConverterCon
             }
 
             if (contentType.includes("json")) {
-                const responseBody = HttpResponseBody.json(JsonResponse.response({
-                    responseBodyType: convertedSchema.type,
-                    docs: this.responseBody.description,
-                }));
+                const responseBody = HttpResponseBody.json(
+                    JsonResponse.response({
+                        responseBodyType: convertedSchema.type,
+                        docs: this.responseBody.description
+                    })
+                );
                 return {
                     responseBody,
                     inlinedTypes: convertedSchema.inlinedTypes
-                }
+                };
             }
         }
 

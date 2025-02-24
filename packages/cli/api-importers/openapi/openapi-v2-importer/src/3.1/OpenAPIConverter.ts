@@ -1,6 +1,6 @@
 import { FernIr, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
-
 import { constructHttpPath } from "@fern-api/ir-utils";
+
 import { AbstractConverter } from "../AbstractConverter";
 import { ErrorCollector } from "../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
@@ -8,9 +8,7 @@ import { PathConverter } from "./paths/PathConverter";
 import { SchemaConverter } from "./schema/SchemaConverter";
 import { ServersConverter } from "./servers/ServersConverter";
 
-export type BaseIntermediateRepresentation = Omit<
-    IntermediateRepresentation,  "apiName" | "constants"
->;
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
 export declare namespace OpenAPIConverter {
     export interface Args extends AbstractConverter.Args {
@@ -19,7 +17,6 @@ export declare namespace OpenAPIConverter {
 }
 
 export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
-
     private ir: BaseIntermediateRepresentation;
 
     constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
@@ -28,7 +25,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             auth: {
                 docs: undefined,
                 requirement: FernIr.AuthSchemesRequirement.All,
-                schemes: [],
+                schemes: []
             },
             types: {},
             services: {},
@@ -65,12 +62,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     language: "",
                     sdkName: "",
                     sdkVersion: "",
-                    userAgent: undefined,
+                    userAgent: undefined
                 }
             }
         };
     }
-
 
     public convert({
         context,
@@ -101,7 +97,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     name: "errorInstanceId"
                 })
             }
-        }
+        };
         return toRet;
     }
 
@@ -145,7 +141,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 };
             }
         }
-        
     }
 
     private convertPaths({
@@ -156,7 +151,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         errorCollector: ErrorCollector;
     }): void {
         const groupToEndpoints: Record<string, HttpEndpoint[]> = {};
-        
+
         for (const [path, pathItem] of Object.entries(context.spec.paths ?? {})) {
             if (pathItem == null) {
                 continue;
@@ -164,7 +159,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const pathConverter = new PathConverter({
                 breadcrumbs: ["paths", path],
                 pathItem,
-                path,
+                path
             });
             const convertedPath = pathConverter.convert({ context, errorCollector });
             if (convertedPath != null) {
@@ -207,8 +202,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 if (this.ir.subpackages[group] == null) {
                     this.ir.subpackages[group] = {
                         name: context.casingsGenerator.generateName(group),
-                        ...context.createPackage({ name: group }),
-                    }
+                        ...context.createPackage({ name: group })
+                    };
                 }
                 this.ir.subpackages[group].service = group;
                 this.ir.rootPackage.subpackages.push(group);

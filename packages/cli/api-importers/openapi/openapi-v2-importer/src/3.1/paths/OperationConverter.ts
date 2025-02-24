@@ -1,9 +1,18 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpRequestBody, HttpResponse, PathParameter, QueryParameter, TypeDeclaration } from "@fern-api/ir-sdk";
-
+import {
+    HttpEndpoint,
+    HttpHeader,
+    HttpMethod,
+    HttpRequestBody,
+    HttpResponse,
+    PathParameter,
+    QueryParameter,
+    TypeDeclaration
+} from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
@@ -68,7 +77,9 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         if (this.operation.requestBody != null) {
             let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
             if (context.isReferenceObject(this.operation.requestBody)) {
-                const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(this.operation.requestBody);
+                const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
+                    this.operation.requestBody
+                );
                 if (resolvedReference.resolved) {
                     resolvedRequestBody = resolvedReference.value;
                 }
@@ -141,7 +152,6 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             }
         }
 
-
         // TODO: Convert operation parameters, request body, responses
         return {
             group,
@@ -179,7 +189,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         switch (this.method) {
             case "get":
                 return HttpMethod.Get;
-            case "post": 
+            case "post":
                 return HttpMethod.Post;
             case "put":
                 return HttpMethod.Put;
@@ -329,7 +339,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         for (let i = 0; i < tagTokens.length; ++i) {
             const tagToken = tagTokens[i];
             const operationIdToken = operationIdTokens[i];
-            
+
             // If tokens don't match, tag and operationId have diverged
             if (tagToken == null || tagToken !== operationIdToken) {
                 return {

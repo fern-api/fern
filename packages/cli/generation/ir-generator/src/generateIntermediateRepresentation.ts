@@ -18,6 +18,7 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { RelativeFilePath, dirname, join } from "@fern-api/path-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
@@ -35,7 +36,6 @@ import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup";
-import { constructHttpPath } from "@fern-api/ir-utils";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";

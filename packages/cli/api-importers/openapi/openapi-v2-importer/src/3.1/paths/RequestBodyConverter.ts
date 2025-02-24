@@ -1,5 +1,7 @@
-import { HttpRequestBody, TypeDeclaration } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { HttpRequestBody, TypeDeclaration } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -18,7 +20,10 @@ export declare namespace RequestBodyConverter {
     }
 }
 
-export class RequestBodyConverter extends AbstractConverter<OpenAPIConverterContext3_1, RequestBodyConverter.Output | undefined> {
+export class RequestBodyConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    RequestBodyConverter.Output | undefined
+> {
     private readonly requestBody: OpenAPIV3_1.RequestBodyObject;
     private readonly group: string[];
     private readonly method: string;
@@ -41,9 +46,13 @@ export class RequestBodyConverter extends AbstractConverter<OpenAPIConverterCont
             return undefined;
         }
 
-        const jsonContentTypes = Object.keys(this.requestBody.content).filter(type => type.includes('json'));
-        const multipartContentTypes = Object.keys(this.requestBody.content).filter(type => type.includes('multipart'));
-        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter(type => type.includes('x-www-form-urlencoded'));
+        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
+        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("multipart")
+        );
+        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("x-www-form-urlencoded")
+        );
 
         for (const contentType of [...jsonContentTypes, ...multipartContentTypes, ...urlEncodedContentTypes]) {
             const mediaTypeObject = this.requestBody.content[contentType];
@@ -81,7 +90,7 @@ export class RequestBodyConverter extends AbstractConverter<OpenAPIConverterCont
                     inlinedTypes: Object.fromEntries(
                         Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
                     )
-                }
+                };
             }
         }
 

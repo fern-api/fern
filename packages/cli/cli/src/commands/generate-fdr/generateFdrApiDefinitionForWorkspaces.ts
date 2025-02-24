@@ -6,7 +6,6 @@ import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";
 
@@ -25,22 +24,17 @@ export async function generateFdrApiDefinitionForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
-                let ir;
-                if (fernWorkspace instanceof OSSWorkspace) {
-                    ir = await fernWorkspace.getIntermediateRepresentation({ context });
-                } else {
-                    ir = await generateIrForFernWorkspace({
-                        workspace: fernWorkspace,
-                        context,
-                        generationLanguage: undefined,
-                        audiences,
-                        keywords: undefined,
-                        smartCasing: false,
-                        disableExamples: false,
-                        readme: undefined,
-                        includeDynamicExamples: false
-                    });
-                }
+                const ir = await generateIrForFernWorkspace({
+                    workspace: fernWorkspace,
+                    context,
+                    generationLanguage: undefined,
+                    audiences,
+                    keywords: undefined,
+                    smartCasing: false,
+                    disableExamples: false,
+                    readme: undefined,
+                    includeDynamicExamples: false
+                });
 
                 const apiDefinition = convertIrToFdrApi({
                     ir,

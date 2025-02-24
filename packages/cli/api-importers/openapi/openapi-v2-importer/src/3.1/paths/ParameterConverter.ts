@@ -1,5 +1,16 @@
-import { ContainerType, HttpHeader, PathParameter, PrimitiveTypeV2, QueryParameter, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import {
+    ContainerType,
+    HttpHeader,
+    PathParameter,
+    PrimitiveTypeV2,
+    QueryParameter,
+    TypeDeclaration,
+    TypeId,
+    TypeReference
+} from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -19,7 +30,7 @@ export declare namespace ParameterConverter {
     }
 
     export interface HeaderParameterOutput extends BaseParameterOutput {
-        type: "header"; 
+        type: "header";
         parameter: HttpHeader;
     }
 
@@ -32,18 +43,15 @@ export declare namespace ParameterConverter {
 }
 
 export class ParameterConverter extends AbstractConverter<OpenAPIConverterContext3_1, ParameterConverter.Output> {
-
     public static STRING = TypeReference.primitive({
         v1: "STRING",
         v2: PrimitiveTypeV2.string({
             default: undefined,
-            validation: undefined,
+            validation: undefined
         })
     });
-    
-    public static OPTIONAL_STRING = TypeReference.container(
-        ContainerType.optional(ParameterConverter.STRING)
-    );
+
+    public static OPTIONAL_STRING = TypeReference.container(ContainerType.optional(ParameterConverter.STRING));
 
     private readonly parameter: OpenAPIV3_1.ParameterObject;
 
@@ -66,7 +74,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: this.parameter.schema,
+                schemaOrReference: this.parameter.schema
             });
             const converted = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (converted != null) {
@@ -80,9 +88,12 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                 return {
                     type: "query",
                     parameter: {
-                        name: context.casingsGenerator.generateNameAndWireValue({ name: this.parameter.name, wireValue: this.parameter.name }),
+                        name: context.casingsGenerator.generateNameAndWireValue({
+                            name: this.parameter.name,
+                            wireValue: this.parameter.name
+                        }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING, 
+                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
                         availability: undefined
                     },
@@ -90,13 +101,16 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                 };
             case "header":
                 return {
-                    type: "header", 
+                    type: "header",
                     parameter: {
-                        name: context.casingsGenerator.generateNameAndWireValue({ name: this.parameter.name, wireValue: this.parameter.name }),
+                        name: context.casingsGenerator.generateNameAndWireValue({
+                            name: this.parameter.name,
+                            wireValue: this.parameter.name
+                        }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING, 
+                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         env: undefined,
-                        availability: undefined,
+                        availability: undefined
                     },
                     inlinedTypes
                 };
@@ -106,7 +120,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                     parameter: {
                         name: context.casingsGenerator.generateName(this.parameter.name),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.STRING, 
+                        valueType: typeReference ?? ParameterConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined
                     },

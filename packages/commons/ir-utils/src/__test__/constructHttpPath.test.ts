@@ -1,4 +1,5 @@
 import { HttpPath } from "@fern-api/ir-sdk";
+
 import { constructHttpPath } from "../constructHttpPath";
 
 describe("constructHttpPath", () => {

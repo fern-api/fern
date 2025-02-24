@@ -42,4 +42,3 @@ export { hashJSON } from "./utils/hashJSON";
 export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
-

@@ -80,7 +80,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
                     return false;
                 }
                 // Ignore 'parameters' if third crumb after HTTP method
-                if (index === 2 && breadcrumbs[1] != null && ["get", "post", "put", "delete", "patch"].includes(breadcrumbs[1]) && crumb === "parameters") {
+                if (
+                    index === 2 &&
+                    breadcrumbs[1] != null &&
+                    ["get", "post", "put", "delete", "patch"].includes(breadcrumbs[1]) &&
+                    crumb === "parameters"
+                ) {
                     return false;
                 }
             }
@@ -102,7 +107,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             fernFilepath: {
                 allParts: [],
                 packagePath: [],
-                file: args.name != null ? this.casingsGenerator.generateName(args.name) : undefined,
+                file: args.name != null ? this.casingsGenerator.generateName(args.name) : undefined
             },
             service: undefined,
             types: [],
