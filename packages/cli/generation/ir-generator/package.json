@@ -28,6 +28,7 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
@@ -37,6 +38,7 @@
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
