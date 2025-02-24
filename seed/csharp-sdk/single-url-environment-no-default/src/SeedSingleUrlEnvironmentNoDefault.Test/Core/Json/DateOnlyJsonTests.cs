@@ -1,4 +1,3 @@
-#if NET6_0_OR_GREATER
 using NUnit.Framework;
 using SeedSingleUrlEnvironmentNoDefault.Core;
 
@@ -43,5 +42,35 @@ public class DateOnlyJsonTests
             Assert.That(dateOnly, Is.EqualTo(expected));
         }
     }
+
+    [Test]
+    public void SerializeNullableDateOnly_ShouldMatchExpectedFormat()
+    {
+        (DateOnly? dateOnly, string expected)[] testCases =
+        [
+            (new DateOnly(2023, 10, 5), "\"2023-10-05\""),
+            (null, "null"),
+        ];
+        foreach (var (dateOnly, expected) in testCases)
+        {
+            var json = JsonUtils.Serialize(dateOnly);
+            Assert.That(json, Is.EqualTo(expected));
+        }
+    }
+
+    [Test]
+    public void DeserializeNullableDateOnly_ShouldMatchExpectedDateOnly()
+    {
+        (DateOnly? expected, string json)[] testCases =
+        [
+            (new DateOnly(2023, 10, 5), "\"2023-10-05\""),
+            (null, "null"),
+        ];
+
+        foreach (var (expected, json) in testCases)
+        {
+            var dateOnly = JsonUtils.Deserialize<DateOnly?>(json);
+            Assert.That(dateOnly, Is.EqualTo(expected));
+        }
+    }
 }
-#endif

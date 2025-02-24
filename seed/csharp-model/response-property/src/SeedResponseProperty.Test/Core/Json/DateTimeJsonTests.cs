@@ -69,4 +69,42 @@ public class DateTimeJsonTests
             Assert.That(dateTime, Is.EqualTo(expected));
         }
     }
+
+    [Test]
+    public void SerializeNullableDateTime_ShouldMatchExpectedFormat()
+    {
+        (DateTime? expected, string json)[] testCases =
+        [
+            (
+                new DateTime(2023, 10, 5, 14, 30, 0, DateTimeKind.Utc),
+                "\"2023-10-05T14:30:00.000Z\""
+            ),
+            (null, "null"),
+        ];
+
+        foreach (var (expected, json) in testCases)
+        {
+            var dateTime = JsonUtils.Deserialize<DateTime?>(json);
+            Assert.That(dateTime, Is.EqualTo(expected));
+        }
+    }
+
+    [Test]
+    public void DeserializeNullableDateTime_ShouldMatchExpectedDateTime()
+    {
+        (DateTime? expected, string json)[] testCases =
+        [
+            (
+                new DateTime(2023, 10, 5, 14, 30, 0, DateTimeKind.Utc),
+                "\"2023-10-05T14:30:00.000Z\""
+            ),
+            (null, "null"),
+        ];
+
+        foreach (var (expected, json) in testCases)
+        {
+            var dateTime = JsonUtils.Deserialize<DateTime?>(json);
+            Assert.That(dateTime, Is.EqualTo(expected));
+        }
+    }
 }
