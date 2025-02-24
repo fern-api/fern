@@ -5,6 +5,7 @@ package com.seed.queryParameters.resources.user;
 
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
+import com.seed.queryParameters.core.QueryStringMapper;
 import com.seed.queryParameters.core.RequestOptions;
 import com.seed.queryParameters.core.SeedQueryParametersApiException;
 import com.seed.queryParameters.core.SeedQueryParametersException;
@@ -38,23 +39,26 @@ public class UserClient {
         httpUrl.addQueryParameter("date", request.getDate());
         httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
         httpUrl.addQueryParameter("bytes", request.getBytes().toString());
-        httpUrl.addQueryParameter("user", request.getUser().toString());
-        httpUrl.addQueryParameter("userList", request.getUserList().toString());
+        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "userList", request.getUserList().toString());
         if (request.getOptionalDeadline().isPresent()) {
             httpUrl.addQueryParameter(
                     "optionalDeadline", request.getOptionalDeadline().get().toString());
         }
-        httpUrl.addQueryParameter("keyValue", request.getKeyValue());
+        QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue());
         if (request.getOptionalString().isPresent()) {
             httpUrl.addQueryParameter(
                     "optionalString", request.getOptionalString().get());
         }
-        httpUrl.addQueryParameter("nestedUser", request.getNestedUser().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "nestedUser", request.getNestedUser().toString());
         if (request.getOptionalUser().isPresent()) {
             httpUrl.addQueryParameter(
                     "optionalUser", request.getOptionalUser().get().toString());
         }
-        httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "excludeUser", request.getExcludeUser().toString());
         httpUrl.addQueryParameter("filter", request.getFilter());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

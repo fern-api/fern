@@ -29,11 +29,13 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Stream;
 import okhttp3.HttpUrl;
 import org.immutables.value.Value;
@@ -278,8 +280,15 @@ public final class HttpUrlBuilder {
     }
 
     private static boolean isTypeNameObject(TypeName typeName) {
-        // TODO(ajgateno): Can we use the same logic for Maps?
-        return (typeName instanceof ClassName) && !typeName.isBoxedPrimitive();
+        boolean isMap = typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Map.class));
+
+        boolean isObject = (typeName instanceof ClassName) && !typeName.isBoxedPrimitive();
+        boolean isStandardObject = typeName.equals(ClassName.get(String.class))
+                || typeName.equals(ClassName.get(OffsetDateTime.class))
+                || typeName.equals(ClassName.get(UUID.class));
+
+        return isMap || (isObject && !isStandardObject);
     }
 
     @Value.Immutable
