@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support form-data with deep object query params
+      type: feat
+  createdAt: '2025-02-24'
+  irVersion: 55
+  version: 2.18.0
+- changelogEntry:
+    - summary: |
         Support deep object query parameters
       type: feat
   createdAt: '2025-02-24'
