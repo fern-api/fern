@@ -7,10 +7,11 @@ import * as core from "../../../../../../core";
 import qs from "qs";
 import { ChatSocket } from "./Socket";
 import { SDK_VERSION } from "../../../../../../version";
+import * as core from "../../../../../../core";
 
 export declare namespace Chat {
     export interface Options {
-        environment?: core.Supplier<environments.HumeEnvironment | string>;
+        environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }

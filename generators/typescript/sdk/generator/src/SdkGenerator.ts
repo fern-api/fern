@@ -731,6 +731,7 @@ export class SdkGenerator {
                 },
                 run: ({ sourceFile, importsManager }) => {
                     console.log("Generating websocket client context");
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
 
                     // add the imports
                     sourceFile.addStatements([
@@ -748,28 +749,41 @@ export class SdkGenerator {
                         hasDeclareKeyword: true
                     };
 
-                    // const properties: OptionalKind<PropertySignatureStructure>[] = [];
+                    const properties: OptionalKind<PropertySignatureStructure>[] = [];
+
+                    // add the environment property
+                    const generatedEnvironments = context.environments.getGeneratedEnvironments();
+                    properties.push({
+                        name: 'environment',
+                        type: getTextOfTsNode(
+                            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                                generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
+                            )
+                        ),
+                        hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
+                    });
+
+                    // add the api key property
+                    properties.push({
+                        name: 'apiKey',
+                        type: 'core.Supplier<string | undefined>',
+                        hasQuestionToken: true
+                    });
+
+                    // add the fetcher property
+                    properties.push({
+                        name: 'fetcher',
+                        type: 'core.FetchFunction',
+                        hasQuestionToken: true
+                    });
+                    
+                    
+                    
 
                     const optionsInterface: InterfaceDeclarationStructure = {
                         kind: StructureKind.Interface,
                         name: "Options",
-                        properties: [
-                            {
-                                name: "environment",
-                                type: "core.Supplier<environments.HumeEnvironment | string>",
-                                hasQuestionToken: true
-                            },
-                            {
-                                name: "apiKey",
-                                type: "core.Supplier<string | undefined>",
-                                hasQuestionToken: true
-                            },
-                            {
-                                name: "fetcher",
-                                type: "core.FetchFunction",
-                                hasQuestionToken: true
-                            },
-                        ],
+                        properties,
                         isExported: true
                     };
 
