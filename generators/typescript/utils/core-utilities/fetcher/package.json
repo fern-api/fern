@@ -29,9 +29,11 @@
     "formdata-node": "^6.0.3",
     "node-fetch": "2.7.0",
     "qs": "6.12.1",
-    "readable-stream": "^4.5.2"
+    "readable-stream": "^4.5.2",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
+    "@types/ws": "^8.5.10",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.14",
     "@types/multer": "^1.4.11",

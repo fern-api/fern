@@ -3764,6 +3764,9 @@ importers:
       readable-stream:
         specifier: ^4.5.2
         version: 4.5.2
+      ws:
+        specifier: ^8.16.0
+        version: 8.17.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -3792,6 +3795,9 @@ importers:
       '@types/readable-stream':
         specifier: ^4.0.15
         version: 4.0.15
+      '@types/ws':
+        specifier: ^8.5.10
+        version: 8.5.10
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
