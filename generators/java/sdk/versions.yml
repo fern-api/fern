@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support deep object query parameters
+      type: feat
+  createdAt: '2025-02-24'
+  irVersion: 55
+  version: 2.17.0
+- changelogEntry:
+    - summary: |
         Upgrade IR version dependency to v55
       type: chore
   createdAt: '2025-02-20'
