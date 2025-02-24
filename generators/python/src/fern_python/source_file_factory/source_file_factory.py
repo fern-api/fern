@@ -59,5 +59,5 @@ class SourceFileFactory:
 
     def _log_generating_file_update(self, *, filepath: Filepath, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         generator_exec_wrapper.send_update(
-            GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generating 5 file: {filepath}"))
+            GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generating {filepath}"))
         )

@@ -487,7 +487,7 @@ export class ExpressGenerator {
         filepath: ExportedFilePath;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
-        this.context.logger.debug(`Generating 7 file ${filepathStr}`);
+        this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
         const importsManager = new ImportsManager();
