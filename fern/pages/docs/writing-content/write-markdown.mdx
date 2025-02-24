@@ -157,6 +157,21 @@ Common video attributes:
 For more details about the HTML video element and its attributes, see the [MDN documentation on the video element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video).
 </Note>
 
+## Embed YouTube or Loom Videos
+
+You can embed videos from YouTube, Loom, and other streaming platforms using an `<iframe>` element.
+
+```mdx
+<iframe
+  src="https://www.loom.com/embed/..."
+  width="100%"
+  height="450px"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+
+See an example of [Markdown](https://github.com/elevenlabs/elevenlabs-docs/blob/6dba2b35a68edd8285762e18b4c7684c04bdf1ca/fern/conversational-ai/pages/guides/zendesk.mdx?plain=1#L14-L23) used for embedding videos and [how it renders](https://elevenlabs.io/docs/conversational-ai/guides/integrations/zendesk#demo-video) on the corresponding docs page from the ElevenLabs documentation.
+
 ## LaTeX
 
 Fern supports [LaTeX](https://www.latex-project.org/) math equations. To use LaTeX, wrap your inline math equations in `$`. For example, `$(x^2 + y^2 = z^2)$` will render $x^2 + y^2 = z^2$.
