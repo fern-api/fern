@@ -4,6 +4,72 @@
             "id": {
                 "path": "/{id}",
                 "method": "GET",
+                "identifierOverride": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.get(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.update",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.update_many(request: )",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.get(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.update",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "client": "require \"fern_unions\"\n\nunions = SeedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nunions.bigunion.update_many(request: )",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
                 "identifierOverride": "endpoint_union.get"
             },
             "snippet": {
