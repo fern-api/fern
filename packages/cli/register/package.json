@@ -38,7 +38,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.130.0-8bf179148",
+    "@fern-fern/fdr-cjs-sdk": "0.130.1-6a9e22770",
     "lodash-es": "^4.17.21",
     "uuid": "^9.0.1"
   },

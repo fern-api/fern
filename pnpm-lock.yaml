@@ -6831,8 +6831,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.130.0-8bf179148
-        version: 0.130.0-8bf179148
+        specifier: 0.130.1-6a9e22770
+        version: 0.130.1-6a9e22770
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -9394,9 +9394,6 @@ packages:
 
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
-
-  '@fern-fern/fdr-cjs-sdk@0.130.0-8bf179148':
-    resolution: {integrity: sha512-lDVZXObTBPfuPd8FSwJZk5XRoMzrwL2NjuCX4sR14yGOWAR0gIZbfWIDe3hFneUCqi4eOOsQn35rhxtuQLlRjw==}
 
   '@fern-fern/fdr-cjs-sdk@0.130.1-6a9e22770':
     resolution: {integrity: sha512-ssRk6VfIVvDTWHZHZdMDnw4s0wUYW6DjaC5jAPWQMqwlMc7uM4M3TDVTpGGuv9yWq7egBCelqa4FR7uaEF35bQ==}
@@ -17288,17 +17285,6 @@ snapshots:
       - encoding
 
   '@fern-fern/docs-config@0.0.80': {}
-
-  '@fern-fern/fdr-cjs-sdk@0.130.0-8bf179148':
-    dependencies:
-      form-data: 4.0.1
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/fdr-cjs-sdk@0.130.1-6a9e22770':
     dependencies:
