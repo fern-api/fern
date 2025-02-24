@@ -42,7 +42,6 @@ public class QueryStringMapper {
     }
 
     public static void addFormDataPart(MultipartBody.Builder multipartBody, String key, Object value) {
-        // Hack to be able to leverage our query string implementation
         HttpUrl.Builder httpUrl = HttpUrl.parse("https://example.org/").newBuilder();
         addQueryParameter(httpUrl, key, value);
 
