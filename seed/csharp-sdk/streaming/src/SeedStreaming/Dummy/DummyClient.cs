@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedStreaming.Core;
 
 namespace SeedStreaming;
@@ -20,7 +20,7 @@ public partial class DummyClient
     /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
     /// </code>
     /// </example>
-    public async Task GenerateStreamAsync(
+    public async global::System.Threading.Tasks.Task GenerateStreamAsync(
         GenerateStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

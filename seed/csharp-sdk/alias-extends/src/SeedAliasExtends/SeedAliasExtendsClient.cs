@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
@@ -36,7 +36,7 @@ public partial class SeedAliasExtendsClient
     /// await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
     /// </code>
     /// </example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

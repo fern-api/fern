@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using FluentAssertions.Json;
+using global::System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedStreaming;
@@ -11,7 +11,7 @@ namespace SeedStreaming.Test.Unit.MockServer;
 public class GenerateTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -53,7 +53,7 @@ public class GenerateTest : BaseMockServerTest
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {

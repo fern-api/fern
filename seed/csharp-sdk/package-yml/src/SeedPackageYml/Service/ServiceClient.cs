@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
@@ -19,7 +19,7 @@ public partial class ServiceClient
     /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
     /// </code>
     /// </example>
-    public async Task NopAsync(
+    public async global::System.Threading.Tasks.Task NopAsync(
         string id,
         string nestedId,
         RequestOptions? options = null,

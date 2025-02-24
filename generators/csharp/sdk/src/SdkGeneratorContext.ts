@@ -138,15 +138,16 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.CollectionItemSerializer,
             AsIsFiles.Constants,
-            AsIsFiles.DateTimeSerializer,
             AsIsFiles.Extensions,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
-            AsIsFiles.JsonConfiguration,
-            AsIsFiles.OneOfSerializer,
+            AsIsFiles.Json.CollectionItemSerializer,
+            AsIsFiles.Json.DateOnlyConverter,
+            AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonConfiguration,
+            AsIsFiles.Json.OneOfSerializer,
             AsIsFiles.RawClient
         ];
         if (this.hasGrpcEndpoints()) {
@@ -159,10 +160,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.StringEnumSerializer);
+            files.push(AsIsFiles.Json.StringEnumSerializer);
         } else {
-            files.push(AsIsFiles.EnumSerializer);
+            files.push(AsIsFiles.Json.EnumSerializer);
         }
+
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
@@ -175,15 +177,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.Test.RawClientTests, AsIsFiles.Test.OneOfSerializerTests];
+        const files = [
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.OneOfSerializerTests,
+            AsIsFiles.Test.RawClientTests
+        ];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.Test.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.Test.EnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
         }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
+
         return files;
     }
 
