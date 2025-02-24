@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
@@ -5,9 +7,8 @@ import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { PlaygroundConfig, convertAuth } from "./convertAuth";
 import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertType, convertTypeReference } from "./convertTypeShape";
-
-import { v4 as uuid } from "uuid";
-
+import { getConvertedEndpoints } from "./getConvertedEndpoints";
+import { getConvertedTypes } from "./getConvertedTypes";
 
 export function convertIrToFdrApi({
     ir,
@@ -18,22 +19,24 @@ export function convertIrToFdrApi({
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
 }): FdrCjsSdk.api.latest.ApiDefinition {
-    // rootPackage: convertPackage(ir.rootPackage, ir),
     const fdrApi: FdrCjsSdk.api.latest.ApiDefinition = {
         id: FdrCjsSdk.ApiDefinitionId(uuid()),
-        endpoints: {},
+        endpoints: getConvertedEndpoints(ir),
         websockets: {},
         webhooks: {},
-        types: {},
+        types: getConvertedTypes(ir),
         subpackages: {},
-        auths: ir.auth != null ? Object.entries(ir.auth).reduce(
-            (acc, [authId, authScheme]) => ({
-                ...acc,
-                [authId]: convertAuth({ scheme: authScheme, playgroundConfig })
-            }),
-            {}
-        ) : {},
-        // snippetsConfiguration: snippetsConfig,
+        auths:
+            ir.auth != null
+                ? Object.entries(ir.auth).reduce(
+                      (acc, [authId, authScheme]) => ({
+                          ...acc,
+                          [authId]: convertAuth({ scheme: authScheme, playgroundConfig })
+                      }),
+                      {}
+                  )
+                : {},
+        snippetsConfiguration: snippetsConfig,
         globalHeaders: ir.headers.map(
             (header): FdrCjsSdk.api.latest.ObjectProperty => ({
                 availability: convertIrAvailability(header.availability),
@@ -41,8 +44,7 @@ export function convertIrToFdrApi({
                 key: FdrCjsSdk.PropertyKey(header.name.wireValue),
                 valueShape: convertTypeReference(header.valueType)
             })
-        ),
-        // navigation: undefined
+        )
     };
 
     for (const [typeId, type] of Object.entries(ir.types)) {

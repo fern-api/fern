@@ -76,7 +76,9 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
                                         properties: [
                                             {
                                                 key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
-                                                valueType: convertTypeShapeToTypeReference(convertTypeReference(singleProperty.type)),
+                                                valueType: convertTypeShapeToTypeReference(
+                                                    convertTypeReference(singleProperty.type)
+                                                ),
                                                 description: undefined,
                                                 availability: undefined
                                             },
@@ -121,13 +123,14 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
     });
 }
 
-export function convertTypeShapeToTypeReference(typeShape: FdrCjsSdk.api.latest.TypeShape): FdrCjsSdk.api.latest.TypeReference {
+export function convertTypeShapeToTypeReference(
+    typeShape: FdrCjsSdk.api.latest.TypeShape
+): FdrCjsSdk.api.latest.TypeReference {
     if (typeShape.type === "alias") {
         return typeShape.value;
     }
     throw new Error("Failed to convert API Definition for docs. Please reach out to support@buildwithfern.com");
 }
-
 
 export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FdrCjsSdk.api.latest.TypeShape {
     return irTypeReference._visit<FdrCjsSdk.api.latest.TypeShape>({
@@ -158,7 +161,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         value: {
                             type: "optional",
                             shape: convertTypeReference(itemType),
-                            default: undefined,
+                            default: undefined
                         }
                     };
                 },
@@ -168,7 +171,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         value: {
                             type: "nullable",
                             shape: convertTypeReference(itemType),
-                            default: undefined,
+                            default: undefined
                         }
                     };
                 },
@@ -185,7 +188,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     return Ir.types.Literal._visit<FdrCjsSdk.api.latest.TypeShape>(literal, {
                         boolean: (booleanLiteral) => {
                             return {
-                                type: "alias", 
+                                type: "alias",
                                 value: {
                                     type: "literal",
                                     value: {
@@ -231,7 +234,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             return {
                 type: "alias",
                 value: {
-                    type: "primitive", 
+                    type: "primitive",
                     value: Ir.types.PrimitiveTypeV1._visit<FdrCjsSdk.api.latest.PrimitiveType>(primitive.v1, {
                         integer: () => {
                             return convertInteger(primitive.v2);
@@ -314,7 +317,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 type: "alias",
                 value: {
                     type: "unknown",
-                    displayName: undefined,
+                    displayName: undefined
                 }
             };
         },

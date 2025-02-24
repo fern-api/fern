@@ -1,8 +1,25 @@
-import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation, FernIr as Ir } from "@fern-api/ir-sdk";
 
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { convertIrAvailability } from "./convertPackage";
+
+export function getConvertedTypes(
+    ir: IntermediateRepresentation
+): Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.latest.TypeDefinition> {
+    const types: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.latest.TypeDefinition> = {};
+
+    for (const [typeId, type] of Object.entries(ir.types)) {
+        types[FdrCjsSdk.TypeId(typeId)] = {
+            description: type.docs ?? undefined,
+            name: type.name.name.originalName,
+            shape: convertType(type.shape),
+            availability: convertIrAvailability(type.availability)
+        };
+    }
+
+    return types;
+}
 
 export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeShape {
     return irType._visit<FdrCjsSdk.api.latest.TypeShape>({
@@ -17,7 +34,7 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
                 type: "enum",
                 default: enum_.default != null ? enum_.default.name.wireValue : undefined,
                 values: enum_.values.map(
-                    (value): FdrCjsSdk.api.v1.register.EnumValue => ({
+                    (value): FdrCjsSdk.api.latest.EnumValue => ({
                         description: value.docs ?? undefined,
                         value: value.name.wireValue,
                         availability: convertIrAvailability(value.availability)
@@ -30,10 +47,10 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
                 type: "object",
                 extends: object.extends.map((extension) => FdrCjsSdk.TypeId(extension.typeId)),
                 properties: object.properties.map(
-                    (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
+                    (property): FdrCjsSdk.api.latest.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: FdrCjsSdk.PropertyKey(property.name.wireValue),
-                        valueType: convertTypeShapeToTypeReference(convertTypeReference(property.valueType)),
+                        valueShape: convertTypeReference(property.valueType),
                         availability: convertIrAvailability(property.availability)
                     })
                 ),
@@ -41,11 +58,11 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
             };
         },
         union: (union) => {
-            const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
-                (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
+            const baseProperties: FdrCjsSdk.api.latest.ObjectProperty[] = union.baseProperties.map(
+                (baseProperty): FdrCjsSdk.api.latest.ObjectProperty => {
                     return {
                         key: FdrCjsSdk.PropertyKey(baseProperty.name.wireValue),
-                        valueType: convertTypeShapeToTypeReference(convertTypeReference(baseProperty.valueType)),
+                        valueShape: convertTypeReference(baseProperty.valueType),
                         availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs
                     };
@@ -53,51 +70,42 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
             );
             return {
                 type: "discriminatedUnion",
-                discriminant: union.discriminant.wireValue,
-                variants: union.types.map((variant): FdrCjsSdk.api.v1.register.DiscriminatedUnionVariant => {
+                discriminant: FdrCjsSdk.PropertyKey(union.discriminant.wireValue),
+                variants: union.types.map((variant): FdrCjsSdk.api.latest.DiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
                         displayName: variant.displayName,
                         availability:
                             variant.availability != null ? convertIrAvailability(variant.availability) : undefined,
-                        additionalProperties:
-                            Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
-                                variant.shape,
-                                {
-                                    samePropertiesAsObject: (extension) => ({
-                                        extends: [FdrCjsSdk.TypeId(extension.typeId)],
-                                        properties: baseProperties,
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    singleProperty: (singleProperty) => ({
-                                        extends: [],
-                                        properties: [
-                                            {
-                                                key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
-                                                valueType: convertTypeShapeToTypeReference(convertTypeReference(singleProperty.type)),
-                                                description: undefined,
-                                                availability: undefined
-                                            },
-                                            ...baseProperties
-                                        ],
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    noProperties: () => ({
-                                        extends: [],
-                                        properties: baseProperties,
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    _other: () => {
-                                        throw new Error(
-                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                        );
-                                    }
-                                }
-                            )
+                        ...Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.latest.ObjectType>(variant.shape, {
+                            samePropertiesAsObject: (extension) => ({
+                                extends: [FdrCjsSdk.TypeId(extension.typeId)],
+                                properties: baseProperties,
+                                extraProperties: undefined
+                            }),
+                            singleProperty: (singleProperty) => ({
+                                extends: [],
+                                properties: [
+                                    {
+                                        key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
+                                        valueShape: convertTypeReference(singleProperty.type),
+                                        description: undefined,
+                                        availability: undefined
+                                    },
+                                    ...baseProperties
+                                ],
+                                extraProperties: undefined
+                            }),
+                            noProperties: () => ({
+                                extends: [],
+                                properties: baseProperties,
+                                extraProperties: undefined
+                            }),
+                            _other: () => {
+                                throw new Error("Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType);
+                            }
+                        })
                     };
                 })
             };
@@ -105,11 +113,11 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
         undiscriminatedUnion: (union) => {
             return {
                 type: "undiscriminatedUnion",
-                variants: union.members.map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => {
+                variants: union.members.map((variant): FdrCjsSdk.api.latest.UndiscriminatedUnionVariant => {
                     return {
-                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
+                        displayName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
-                        type: convertTypeShapeToTypeReference(convertTypeReference(variant.type)),
+                        shape: convertTypeReference(variant.type),
                         availability: undefined
                     };
                 })
@@ -121,13 +129,14 @@ export function convertType(irType: Ir.types.Type): FdrCjsSdk.api.latest.TypeSha
     });
 }
 
-export function convertTypeShapeToTypeReference(typeShape: FdrCjsSdk.api.latest.TypeShape): FdrCjsSdk.api.latest.TypeReference {
+export function convertTypeShapeToTypeReference(
+    typeShape: FdrCjsSdk.api.latest.TypeShape
+): FdrCjsSdk.api.latest.TypeReference {
     if (typeShape.type === "alias") {
         return typeShape.value;
     }
     throw new Error("Failed to convert API Definition for docs. Please reach out to support@buildwithfern.com");
 }
-
 
 export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FdrCjsSdk.api.latest.TypeShape {
     return irTypeReference._visit<FdrCjsSdk.api.latest.TypeShape>({
@@ -158,7 +167,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         value: {
                             type: "optional",
                             shape: convertTypeReference(itemType),
-                            default: undefined,
+                            default: undefined
                         }
                     };
                 },
@@ -168,7 +177,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         value: {
                             type: "nullable",
                             shape: convertTypeReference(itemType),
-                            default: undefined,
+                            default: undefined
                         }
                     };
                 },
@@ -185,7 +194,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     return Ir.types.Literal._visit<FdrCjsSdk.api.latest.TypeShape>(literal, {
                         boolean: (booleanLiteral) => {
                             return {
-                                type: "alias", 
+                                type: "alias",
                                 value: {
                                     type: "literal",
                                     value: {
@@ -231,7 +240,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             return {
                 type: "alias",
                 value: {
-                    type: "primitive", 
+                    type: "primitive",
                     value: Ir.types.PrimitiveTypeV1._visit<FdrCjsSdk.api.latest.PrimitiveType>(primitive.v1, {
                         integer: () => {
                             return convertInteger(primitive.v2);
@@ -314,7 +323,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 type: "alias",
                 value: {
                     type: "unknown",
-                    displayName: undefined,
+                    displayName: undefined
                 }
             };
         },
@@ -324,7 +333,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
     });
 }
 
-function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.latest.PrimitiveType {
     const rules: Ir.StringValidationRules | undefined =
         primitive != null && primitive.type === "string" ? primitive.validation : undefined;
     return {
@@ -337,7 +346,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
     };
 }
 
-function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.latest.PrimitiveType {
     const rules: Ir.IntegerValidationRules | undefined =
         primitive != null && primitive.type === "integer" ? primitive.validation : undefined;
     return {
@@ -348,7 +357,7 @@ function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.ap
     };
 }
 
-function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.latest.PrimitiveType {
     const rules: Ir.DoubleValidationRules | undefined =
         primitive != null && primitive.type === "double" ? primitive.validation : undefined;
     return {
@@ -361,16 +370,16 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
-): FdrCjsSdk.api.v1.register.TypeReference | undefined {
+): FdrCjsSdk.api.latest.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return extraProperties ? TypeReference.unknown() : undefined;
+        return extraProperties ? { type: "unknown", displayName: undefined } : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",
-            value: FdrCjsSdk.TypeId(extraProperties),
+            id: FdrCjsSdk.TypeId(extraProperties),
             default: undefined
         };
     } else {
-        return convertTypeReference(extraProperties);
+        return convertTypeShapeToTypeReference(convertTypeReference(extraProperties));
     }
 }
