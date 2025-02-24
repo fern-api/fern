@@ -228,6 +228,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .objectProperty(generatedObject
                                     .objectPropertyGetters()
                                     .get(requestBodyProperties.get(jsonPropertyIndex)))
+                            .rawProperty(irFileUploadProperty.getBodyProperty().get())
                             .build());
                     ++jsonPropertyIndex;
                 }

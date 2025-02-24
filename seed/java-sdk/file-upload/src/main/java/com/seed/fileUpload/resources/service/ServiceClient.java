@@ -294,8 +294,8 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
-            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo());
+            QueryStringMapper.addFormDataPart(body, "bar", request.getBar());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
