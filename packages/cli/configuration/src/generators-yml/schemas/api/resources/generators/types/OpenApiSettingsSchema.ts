@@ -4,24 +4,17 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface OpenApiSettingsSchema {
-    "title-as-schema-name"?: boolean;
-    "optional-additional-properties"?: boolean;
-    "coerce-enums-to-literals"?: boolean;
-    /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
-    "idiomatic-request-names"?: boolean;
+export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSchema {
+    /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
+    "only-include-referenced-schemas"?: boolean;
+    /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
+    "inline-path-parameters"?: boolean;
     /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
     "prefer-undiscriminated-unions-with-literals"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
-    /** Preserves nullable schemas in OpenAPI specifications. Defaults to false, where nullable schemas are treated as optional. */
-    "respect-nullable-schemas"?: boolean;
-    /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
-    "only-include-referenced-schemas"?: boolean;
-    /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
-    "inline-path-parameters"?: boolean;
     /** The default encoding of form parameters. Defaults to JSON. */
     "default-form-parameter-encoding"?: FernDefinition.FormParameterEncoding;
     /** Filter to apply to the OpenAPI specification. */

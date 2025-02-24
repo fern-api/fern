@@ -23,6 +23,7 @@ export async function validateDocsBrokenLinks({
     }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        const startTime = performance.now();
         const fernWorkspaces = await Promise.all(
             project.apiWorkspaces.map(async (workspace) => {
                 return workspace.toFernWorkspace({ context });
@@ -30,7 +31,9 @@ export async function validateDocsBrokenLinks({
         );
         const ossWorkspaces = await filterOssWorkspaces(project);
         const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, ossWorkspaces, true);
-        logViolations({ violations, context, logWarnings: true, logSummary: true });
+
+        const elapsedMillis = performance.now() - startTime;
+        logViolations({ violations, context, logWarnings: true, logSummary: true, elapsedMillis });
 
         if (violations.length > 0 && errorOnBrokenLinks) {
             context.failAndThrow();

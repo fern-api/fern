@@ -1836,6 +1836,2541 @@ errors:
       - value: User does not have sufficient permissions.
 ",
     },
+    "agent.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "agent": {},
+                    "type": "SettingsConfiguration",
+                  },
+                  "type": "publish",
+                },
+                {
+                  "body": {
+                    "type": "InjectionRefused",
+                  },
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
+          "headers": {
+            "Sec-Websocket-Protocol": {
+              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+              "name": "secWebsocketProtocol",
+              "type": "string",
+            },
+          },
+          "messages": {
+            "publish": {
+              "body": "AgentPublishEvent",
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": "AgentSubscribeEvent",
+              "origin": "server",
+            },
+          },
+          "path": "/agent",
+          "url": "public",
+        },
+        "types": {
+          "AgentAudioDone": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier indicating the agent has finished sending audio",
+                "type": "literal<"AgentAudioDone">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "AgentErrorResponse": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "message": {
+                "docs": "A description of what went wrong",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier for error responses",
+                "type": "literal<"Error">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "AgentKeepAlive": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier for agent keep alive signal",
+                "type": "literal<"KeepAlive">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "AgentPublishEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "SettingsConfiguration",
+              "UpdateInstructions",
+              "UpdateSpeak",
+              "InjectAgentMessage",
+              "FunctionCallResponse",
+              "AgentKeepAlive",
+            ],
+          },
+          "AgentStartedSpeaking": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "total_latency": {
+                "docs": "Seconds from receiving the user's utterance to producing the agent's reply",
+                "type": "float",
+              },
+              "tts_latency": {
+                "docs": "The portion of total latency attributable to text-to-speech",
+                "type": "float",
+              },
+              "ttt_latency": {
+                "docs": "The portion of total latency attributable to text-to-text (usually an LLM)",
+                "type": "float",
+              },
+              "type": {
+                "docs": "Message type identifier for agent started speaking",
+                "type": "literal<"AgentStartedSpeaking">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "AgentSubscribeEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "InjectionRefused",
+              "WelcomeMessage",
+              "SettingsApplied",
+              "ConversationText",
+              "UserStartedSpeaking",
+              "AgentThinking",
+              "FunctionCallRequest",
+              "FunctionCalling",
+              "AgentStartedSpeaking",
+              "AgentAudioDone",
+              "AgentErrorResponse",
+            ],
+          },
+          "AgentThinking": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "content": {
+                "docs": "The text of the agent's thought process",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier for agent thinking",
+                "type": "literal<"AgentThinking">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ConversationText": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "content": {
+                "docs": "The actual statement that was spoken",
+                "type": "string",
+              },
+              "role": {
+                "docs": "Identifies who spoke the statement",
+                "type": "ConversationTextRole",
+              },
+              "type": {
+                "docs": "Message type identifier for conversation text",
+                "type": "literal<"ConversationText">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ConversationTextRole": {
+            "docs": "Identifies who spoke the statement",
+            "enum": [
+              "user",
+              "assistant",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "FunctionCallRequest": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "function_call_id": {
+                "docs": "Unique identifier to correlate the response with this request",
+                "type": "string",
+              },
+              "function_name": {
+                "docs": "The name specified in the function definition",
+                "type": "string",
+              },
+              "input": {
+                "docs": "Parameters defined for this function in the function definition",
+                "type": "map<string, unknown>",
+              },
+              "type": {
+                "docs": "Message type identifier for function call requests",
+                "type": "literal<"FunctionCallRequest">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "FunctionCallResponse": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "function_call_id": {
+                "docs": "The unique identifier matching the original function call request",
+                "type": "string",
+              },
+              "output": {
+                "docs": "The result of the function call execution",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier for function call responses",
+                "type": "literal<"FunctionCallResponse">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "FunctionCalling": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier for function calling status",
+                "type": "literal<"FunctionCalling">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "InjectAgentMessage": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "message": {
+                "docs": "The statement that the agent should say",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier for injecting an agent message",
+                "type": "literal<"InjectAgentMessage">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "InjectionRefused": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier for injection refused",
+                "type": "literal<"InjectionRefused">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsApplied": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier for settings applied confirmation",
+                "type": "literal<"SettingsApplied">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfiguration": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "agent": "SettingsConfigurationAgent",
+              "audio": {
+                "docs": "Optional audio configuration settings",
+                "type": "optional<SettingsConfigurationAudio>",
+              },
+              "context": "optional<SettingsConfigurationContext>",
+              "type": "literal<"SettingsConfiguration">",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgent": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "listen": "optional<SettingsConfigurationAgentListen>",
+              "speak": "optional<SettingsConfigurationAgentSpeak>",
+              "think": "optional<SettingsConfigurationAgentThink>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentListen": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "model": {
+                "default": "nova-2",
+                "docs": "Model to use for speech recognition",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentSpeak": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "model": {
+                "default": "aura-asteria-en",
+                "docs": "Text-to-speech model",
+                "type": "optional<string>",
+              },
+              "provider": {
+                "docs": "Alternative TTS provider",
+                "type": "optional<SettingsConfigurationAgentSpeakProvider>",
+              },
+              "voice_id": {
+                "docs": "Unique voice identifier for the selected provider",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentSpeakProvider": {
+            "docs": "Alternative TTS provider",
+            "enum": [
+              "eleven_labs",
+              "cartesia",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThink": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "functions": "optional<list<SettingsConfigurationAgentThinkFunctionsItem>>",
+              "instructions": {
+                "docs": "LLM System prompt",
+                "type": "optional<string>",
+              },
+              "model": {
+                "docs": "LLM model to use",
+                "type": "optional<string>",
+              },
+              "provider": "optional<SettingsConfigurationAgentThinkProvider>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThinkFunctionsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "description": {
+                "docs": "Description of function purpose and usage",
+                "type": "optional<string>",
+              },
+              "headers": "optional<list<SettingsConfigurationAgentThinkFunctionsItemHeadersItem>>",
+              "method": {
+                "default": "post",
+                "docs": "HTTP method for function call",
+                "type": "optional<string>",
+              },
+              "name": {
+                "docs": "Function name",
+                "type": "optional<string>",
+              },
+              "parameters": "optional<SettingsConfigurationAgentThinkFunctionsItemParameters>",
+              "url": {
+                "docs": "Function endpoint URL",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThinkFunctionsItemHeadersItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "key": "optional<string>",
+              "value": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThinkFunctionsItemParameters": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "properties": "optional<map<string, SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>",
+              "required": "optional<list<string>>",
+              "type": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "description": "optional<string>",
+              "type": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAgentThinkProvider": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "LLM provider type",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAudio": {
+            "docs": "Optional audio configuration settings",
+            "inline": true,
+            "properties": {
+              "input": {
+                "docs": "Optional audio input configuration settings",
+                "type": "optional<SettingsConfigurationAudioInput>",
+              },
+              "output": {
+                "docs": "Audio output configuration settings",
+                "type": "optional<SettingsConfigurationAudioOutput>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAudioInput": {
+            "docs": "Optional audio input configuration settings",
+            "inline": true,
+            "properties": {
+              "encoding": {
+                "default": "linear16",
+                "docs": "Audio encoding format",
+                "type": "optional<string>",
+              },
+              "sample_rate": {
+                "default": 24000,
+                "docs": "Sample rate in Hz",
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationAudioOutput": {
+            "docs": "Audio output configuration settings",
+            "inline": true,
+            "properties": {
+              "bitrate": "optional<integer>",
+              "container": "optional<string>",
+              "encoding": "optional<string>",
+              "sample_rate": {
+                "default": 24000,
+                "docs": "Sample rate in Hz",
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SettingsConfigurationContext": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "messages": {
+                "docs": "LLM message history for conversation restoration",
+                "type": "optional<list<map<string, unknown>>>",
+              },
+              "replay": {
+                "default": false,
+                "docs": "Whether to replay the last assistant message",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UpdateInstructions": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "instructions": {
+                "docs": "The new instructions to give to the Think model",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier",
+                "type": "literal<"UpdateInstructions">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UpdateSpeak": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "model": {
+                "docs": "The new Text-to-Speech model to use",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type identifier for updating the speak model",
+                "type": "literal<"UpdateSpeak">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UserStartedSpeaking": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": {
+                "docs": "Message type identifier indicating that the user has begun speaking",
+                "type": "literal<"UserStartedSpeaking">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "WelcomeMessage": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "session_id": {
+                "docs": "Unique identifier for the websocket session",
+                "type": "string",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "type": {
+                "docs": "Message type identifier for welcome message",
+                "type": "literal<"Welcome">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /agent
+  url: public
+  auth: false
+  headers:
+    Sec-Websocket-Protocol:
+      type: string
+      name: secWebsocketProtocol
+      docs: >-
+        Used to establish a WebSocket connection with authentication. Format
+        should be 'token, <DEEPGRAM_API_KEY>'
+  messages:
+    subscribe:
+      origin: server
+      body: AgentSubscribeEvent
+    publish:
+      origin: client
+      body: AgentPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body:
+            type: SettingsConfiguration
+            agent: {}
+        - type: subscribe
+          body:
+            type: InjectionRefused
+types:
+  InjectionRefused:
+    properties:
+      type:
+        type: literal<"InjectionRefused">
+        docs: Message type identifier for injection refused
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  WelcomeMessage:
+    properties:
+      type:
+        type: literal<"Welcome">
+        docs: Message type identifier for welcome message
+      session_id:
+        type: string
+        docs: Unique identifier for the websocket session
+        validation:
+          format: uuid
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsApplied:
+    properties:
+      type:
+        type: literal<"SettingsApplied">
+        docs: Message type identifier for settings applied confirmation
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ConversationTextRole:
+    enum:
+      - user
+      - assistant
+    docs: Identifies who spoke the statement
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  ConversationText:
+    properties:
+      type:
+        type: literal<"ConversationText">
+        docs: Message type identifier for conversation text
+      role:
+        type: ConversationTextRole
+        docs: Identifies who spoke the statement
+      content:
+        type: string
+        docs: The actual statement that was spoken
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  UserStartedSpeaking:
+    properties:
+      type:
+        type: literal<"UserStartedSpeaking">
+        docs: Message type identifier indicating that the user has begun speaking
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentThinking:
+    properties:
+      type:
+        type: literal<"AgentThinking">
+        docs: Message type identifier for agent thinking
+      content:
+        type: string
+        docs: The text of the agent's thought process
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  FunctionCallRequest:
+    properties:
+      type:
+        type: literal<"FunctionCallRequest">
+        docs: Message type identifier for function call requests
+      function_name:
+        type: string
+        docs: The name specified in the function definition
+      function_call_id:
+        type: string
+        docs: Unique identifier to correlate the response with this request
+      input:
+        type: map<string, unknown>
+        docs: Parameters defined for this function in the function definition
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  FunctionCalling:
+    properties:
+      type:
+        type: literal<"FunctionCalling">
+        docs: Message type identifier for function calling status
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentStartedSpeaking:
+    properties:
+      type:
+        type: literal<"AgentStartedSpeaking">
+        docs: Message type identifier for agent started speaking
+      total_latency:
+        type: float
+        docs: >-
+          Seconds from receiving the user's utterance to producing the agent's
+          reply
+      tts_latency:
+        type: float
+        docs: The portion of total latency attributable to text-to-speech
+      ttt_latency:
+        type: float
+        docs: >-
+          The portion of total latency attributable to text-to-text (usually an
+          LLM)
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentAudioDone:
+    properties:
+      type:
+        type: literal<"AgentAudioDone">
+        docs: >-
+          Message type identifier indicating the agent has finished sending
+          audio
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentErrorResponse:
+    properties:
+      type:
+        type: literal<"Error">
+        docs: Message type identifier for error responses
+      message:
+        type: string
+        docs: A description of what went wrong
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentSubscribeEvent:
+    discriminated: false
+    union:
+      - InjectionRefused
+      - WelcomeMessage
+      - SettingsApplied
+      - ConversationText
+      - UserStartedSpeaking
+      - AgentThinking
+      - FunctionCallRequest
+      - FunctionCalling
+      - AgentStartedSpeaking
+      - AgentAudioDone
+      - AgentErrorResponse
+    source:
+      openapi: ../asyncapi.yml
+  SettingsConfigurationAudioInput:
+    docs: Optional audio input configuration settings
+    properties:
+      encoding:
+        type: optional<string>
+        docs: Audio encoding format
+        default: linear16
+      sample_rate:
+        type: optional<integer>
+        docs: Sample rate in Hz
+        default: 24000
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAudioOutput:
+    docs: Audio output configuration settings
+    properties:
+      encoding: optional<string>
+      sample_rate:
+        type: optional<integer>
+        docs: Sample rate in Hz
+        default: 24000
+      bitrate: optional<integer>
+      container: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAudio:
+    docs: Optional audio configuration settings
+    properties:
+      input:
+        type: optional<SettingsConfigurationAudioInput>
+        docs: Optional audio input configuration settings
+      output:
+        type: optional<SettingsConfigurationAudioOutput>
+        docs: Audio output configuration settings
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentListen:
+    properties:
+      model:
+        type: optional<string>
+        docs: Model to use for speech recognition
+        default: nova-2
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThinkProvider:
+    properties:
+      type:
+        type: optional<string>
+        docs: LLM provider type
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThinkFunctionsItemHeadersItem:
+    properties:
+      key: optional<string>
+      value: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue:
+    properties:
+      type: optional<string>
+      description: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThinkFunctionsItemParameters:
+    properties:
+      type: optional<string>
+      properties: >-
+        optional<map<string,
+        SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>
+      required: optional<list<string>>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThinkFunctionsItem:
+    properties:
+      name:
+        type: optional<string>
+        docs: Function name
+      description:
+        type: optional<string>
+        docs: Description of function purpose and usage
+      url:
+        type: optional<string>
+        docs: Function endpoint URL
+      headers: optional<list<SettingsConfigurationAgentThinkFunctionsItemHeadersItem>>
+      method:
+        type: optional<string>
+        docs: HTTP method for function call
+        default: post
+      parameters: optional<SettingsConfigurationAgentThinkFunctionsItemParameters>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentThink:
+    properties:
+      provider: optional<SettingsConfigurationAgentThinkProvider>
+      model:
+        type: optional<string>
+        docs: LLM model to use
+      instructions:
+        type: optional<string>
+        docs: LLM System prompt
+      functions: optional<list<SettingsConfigurationAgentThinkFunctionsItem>>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgentSpeakProvider:
+    enum:
+      - eleven_labs
+      - cartesia
+    docs: Alternative TTS provider
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  SettingsConfigurationAgentSpeak:
+    properties:
+      model:
+        type: optional<string>
+        docs: Text-to-speech model
+        default: aura-asteria-en
+      provider:
+        type: optional<SettingsConfigurationAgentSpeakProvider>
+        docs: Alternative TTS provider
+      voice_id:
+        type: optional<string>
+        docs: Unique voice identifier for the selected provider
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationAgent:
+    properties:
+      listen: optional<SettingsConfigurationAgentListen>
+      think: optional<SettingsConfigurationAgentThink>
+      speak: optional<SettingsConfigurationAgentSpeak>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfigurationContext:
+    properties:
+      messages:
+        type: optional<list<map<string, unknown>>>
+        docs: LLM message history for conversation restoration
+      replay:
+        type: optional<boolean>
+        docs: Whether to replay the last assistant message
+        default: false
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SettingsConfiguration:
+    properties:
+      type: literal<"SettingsConfiguration">
+      audio:
+        type: optional<SettingsConfigurationAudio>
+        docs: Optional audio configuration settings
+      agent: SettingsConfigurationAgent
+      context: optional<SettingsConfigurationContext>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  UpdateInstructions:
+    properties:
+      type:
+        type: literal<"UpdateInstructions">
+        docs: Message type identifier
+      instructions:
+        type: string
+        docs: The new instructions to give to the Think model
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  UpdateSpeak:
+    properties:
+      type:
+        type: literal<"UpdateSpeak">
+        docs: Message type identifier for updating the speak model
+      model:
+        type: string
+        docs: The new Text-to-Speech model to use
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  InjectAgentMessage:
+    properties:
+      type:
+        type: literal<"InjectAgentMessage">
+        docs: Message type identifier for injecting an agent message
+      message:
+        type: string
+        docs: The statement that the agent should say
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  FunctionCallResponse:
+    properties:
+      type:
+        type: literal<"FunctionCallResponse">
+        docs: Message type identifier for function call responses
+      function_call_id:
+        type: string
+        docs: The unique identifier matching the original function call request
+      output:
+        type: string
+        docs: The result of the function call execution
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentKeepAlive:
+    properties:
+      type:
+        type: literal<"KeepAlive">
+        docs: Message type identifier for agent keep alive signal
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  AgentPublishEvent:
+    discriminated: false
+    union:
+      - SettingsConfiguration
+      - UpdateInstructions
+      - UpdateSpeak
+      - InjectAgentMessage
+      - FunctionCallResponse
+      - AgentKeepAlive
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "listen.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+                {
+                  "body": {},
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
+          "headers": {
+            "Sec-Websocket-Protocol": {
+              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+              "name": "secWebsocketProtocol",
+              "type": "string",
+            },
+          },
+          "messages": {
+            "publish": {
+              "body": "ListenPublishEvent",
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": "ListenSubscribeEvent",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/listen",
+          "query-parameters": {
+            "callback": {
+              "docs": "URL to which we'll make the callback request",
+              "type": "string",
+            },
+            "callback_method": {
+              "default": "POST",
+              "docs": "HTTP method by which the callback request will be made",
+              "type": "ListenCallbackMethod",
+            },
+            "channels": {
+              "default": "1",
+              "docs": "The number of channels in the submitted audio",
+              "type": "string",
+            },
+            "diarize": {
+              "default": "false",
+              "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+              "type": "ListenDiarize",
+            },
+            "diarize_version": {
+              "default": "v2",
+              "docs": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
+              "type": "string",
+            },
+            "dictation": {
+              "default": "false",
+              "docs": "Identify and extract key entities from content in submitted audio",
+              "type": "ListenDictation",
+            },
+            "encoding": {
+              "docs": "Specify the expected encoding of your submitted audio",
+              "type": "ListenEncoding",
+            },
+            "endpointing": {
+              "default": "10",
+              "docs": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
+              "type": "string",
+            },
+            "extra": {
+              "docs": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
+              "type": "string",
+            },
+            "filler_words": {
+              "default": "false",
+              "docs": "Filler Words can help transcribe interruptions in your audio, like "uh" and "um"",
+              "type": "ListenFillerWords",
+            },
+            "interim_results": {
+              "default": "false",
+              "docs": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
+              "type": "ListenInterimResults",
+            },
+            "keyterm": {
+              "docs": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
+              "type": "string",
+            },
+            "keywords": {
+              "docs": "Keywords can boost or suppress specialized terminology and brands",
+              "type": "string",
+            },
+            "language": {
+              "default": "en",
+              "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
+              "type": "ListenLanguage",
+            },
+            "model": {
+              "docs": "AI model to use for the transcription",
+              "type": "ListenModel",
+            },
+            "multichannel": {
+              "default": "false",
+              "docs": "Transcribe each audio channel independently",
+              "type": "ListenMultichannel",
+            },
+            "numerals": {
+              "default": "false",
+              "docs": "Convert numbers from written format to numerical format",
+              "type": "ListenNumerals",
+            },
+            "profanity_filter": {
+              "default": "false",
+              "docs": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
+              "type": "ListenProfanityFilter",
+            },
+            "punctuate": {
+              "default": "false",
+              "docs": "Add punctuation and capitalization to the transcript",
+              "type": "ListenPunctuate",
+            },
+            "redact": {
+              "default": "false",
+              "docs": "Redaction removes sensitive information from your transcripts",
+              "type": "ListenRedact",
+            },
+            "replace": {
+              "docs": "Search for terms or phrases in submitted audio and replaces them",
+              "type": "string",
+            },
+            "sample_rate": {
+              "docs": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
+              "type": "string",
+            },
+            "search": {
+              "docs": "Search for terms or phrases in submitted audio",
+              "type": "string",
+            },
+            "smart_format": {
+              "default": "false",
+              "docs": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
+              "type": "ListenSmartFormat",
+            },
+            "tag": {
+              "docs": "Label your requests for the purpose of identification during usage reporting",
+              "type": "string",
+            },
+            "utterance_end": {
+              "docs": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
+              "type": "string",
+            },
+            "vad_events": {
+              "default": "false",
+              "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+              "type": "ListenVadEvents",
+            },
+            "version": {
+              "default": "latest",
+              "docs": "Version of an AI model to use",
+              "type": "string",
+            },
+          },
+          "url": "public",
+        },
+        "types": {
+          "ControlMessageResponse": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "ControlMessageResponseZero",
+              "ControlMessageResponseOne",
+              "ControlMessageResponseTwo",
+            ],
+          },
+          "ControlMessageResponseOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "channels": {
+                "docs": "Number of audio channels",
+                "type": "optional<integer>",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": undefined,
+                  "min": 0,
+                  "multipleOf": undefined,
+                },
+              },
+              "created": {
+                "docs": "Timestamp when the response was created",
+                "type": "optional<datetime>",
+              },
+              "duration": {
+                "docs": "Duration of the audio in seconds",
+                "type": "optional<float>",
+              },
+              "request_id": {
+                "docs": "Unique identifier for the request",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "sha256": {
+                "docs": "SHA-256 hash of the audio content",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": "^[a-fA-F0-9]{64}$",
+                },
+              },
+              "transaction_key": {
+                "docs": "Deprecated field",
+                "type": "optional<string>",
+              },
+              "type": "optional<literal<"Metadata">>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ControlMessageResponseTwo": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "channels": {
+                "docs": "Number of audio channels",
+                "type": "optional<integer>",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": undefined,
+                  "min": 0,
+                  "multipleOf": undefined,
+                },
+              },
+              "created": {
+                "docs": "Timestamp when the response was created",
+                "type": "optional<datetime>",
+              },
+              "duration": {
+                "docs": "Duration of the audio in seconds",
+                "type": "optional<float>",
+              },
+              "request_id": {
+                "docs": "Unique identifier for the request",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "sha256": {
+                "docs": "SHA-256 hash of the audio content",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": "^[a-fA-F0-9]{64}$",
+                },
+              },
+              "transaction_key": {
+                "docs": "Deprecated field",
+                "type": "optional<string>",
+              },
+              "type": "optional<literal<"CloseStream">>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ControlMessageResponseZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "channel": {
+                "docs": "The channel number being finalized",
+                "type": "optional<integer>",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": undefined,
+                  "min": 0,
+                  "multipleOf": undefined,
+                },
+              },
+              "type": "optional<literal<"Finalize">>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenCallbackMethod": {
+            "default": "POST",
+            "docs": "HTTP method by which the callback request will be made",
+            "enum": [
+              "POST",
+              "GET",
+              "PUT",
+              "DELETE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequest": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": {
+              "CloseStream": "ListenControlMessagesRequestCloseStream",
+              "Finalize": "ListenControlMessagesRequestFinalize",
+              "KeepAlive": "ListenControlMessagesRequestKeepAlive",
+            },
+          },
+          "ListenControlMessagesRequestCloseStream": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequestFinalize": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequestKeepAlive": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenDiarize": {
+            "default": "false",
+            "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenDictation": {
+            "default": "false",
+            "docs": "Identify and extract key entities from content in submitted audio",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenEncoding": {
+            "docs": "Specify the expected encoding of your submitted audio",
+            "enum": [
+              "linear16",
+              "flac",
+              "mulaw",
+              {
+                "name": "AmrNb",
+                "value": "amr-nb",
+              },
+              {
+                "name": "AmrWb",
+                "value": "amr-wb",
+              },
+              "opus",
+              "speex",
+              "g729",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenFillerWords": {
+            "default": "false",
+            "docs": "Filler Words can help transcribe interruptions in your audio, like "uh" and "um"",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenInterimResults": {
+            "default": "false",
+            "docs": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenLanguage": {
+            "default": "en",
+            "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
+            "enum": [
+              "bg",
+              "ca",
+              "cs",
+              "da",
+              {
+                "name": "DaDk",
+                "value": "da-DK",
+              },
+              "de",
+              {
+                "name": "DeCh",
+                "value": "de-CH",
+              },
+              "el",
+              "en",
+              {
+                "name": "EnAu",
+                "value": "en-AU",
+              },
+              {
+                "name": "EnGb",
+                "value": "en-GB",
+              },
+              {
+                "name": "EnIn",
+                "value": "en-IN",
+              },
+              {
+                "name": "EnNz",
+                "value": "en-NZ",
+              },
+              {
+                "name": "EnUs",
+                "value": "en-US",
+              },
+              "es",
+              {
+                "name": "Es419",
+                "value": "es-419",
+              },
+              {
+                "name": "EsLatam",
+                "value": "es-LATAM",
+              },
+              "et",
+              "fi",
+              "fr",
+              {
+                "name": "FrCa",
+                "value": "fr-CA",
+              },
+              "hi",
+              {
+                "name": "HiLatn",
+                "value": "hi-Latn",
+              },
+              "hu",
+              "id",
+              "it",
+              "ja",
+              "ko",
+              {
+                "name": "KoKr",
+                "value": "ko-KR",
+              },
+              "lt",
+              "lv",
+              "ms",
+              "nl",
+              {
+                "name": "NlBe",
+                "value": "nl-BE",
+              },
+              "no",
+              "pl",
+              "pt",
+              {
+                "name": "PtBr",
+                "value": "pt-BR",
+              },
+              {
+                "name": "PtPt",
+                "value": "pt-PT",
+              },
+              "ro",
+              "ru",
+              "sk",
+              "sv",
+              {
+                "name": "SvSe",
+                "value": "sv-SE",
+              },
+              "taq",
+              "th",
+              {
+                "name": "ThTh",
+                "value": "th-TH",
+              },
+              "tr",
+              "uk",
+              "vi",
+              "zh",
+              {
+                "name": "ZhCn",
+                "value": "zh-CN",
+              },
+              {
+                "name": "ZhHk",
+                "value": "zh-HK",
+              },
+              {
+                "name": "ZhHans",
+                "value": "zh-Hans",
+              },
+              {
+                "name": "ZhHant",
+                "value": "zh-Hant",
+              },
+              {
+                "name": "ZhTw",
+                "value": "zh-TW",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenModel": {
+            "docs": "AI model to use for the transcription",
+            "enum": [
+              {
+                "name": "Nova3",
+                "value": "nova-3",
+              },
+              {
+                "name": "Nova3General",
+                "value": "nova-3-general",
+              },
+              {
+                "name": "Nova2",
+                "value": "nova-2",
+              },
+              {
+                "name": "Nova2General",
+                "value": "nova-2-general",
+              },
+              {
+                "name": "Nova2Meeting",
+                "value": "nova-2-meeting",
+              },
+              {
+                "name": "Nova2Finance",
+                "value": "nova-2-finance",
+              },
+              {
+                "name": "Nova2Conversationalai",
+                "value": "nova-2-conversationalai",
+              },
+              {
+                "name": "Nova2Voicemail",
+                "value": "nova-2-voicemail",
+              },
+              {
+                "name": "Nova2Video",
+                "value": "nova-2-video",
+              },
+              {
+                "name": "Nova2Medical",
+                "value": "nova-2-medical",
+              },
+              {
+                "name": "Nova2Drivethru",
+                "value": "nova-2-drivethru",
+              },
+              {
+                "name": "Nova2Automotive",
+                "value": "nova-2-automotive",
+              },
+              "nova",
+              {
+                "name": "NovaGeneral",
+                "value": "nova-general",
+              },
+              {
+                "name": "NovaPhonecall",
+                "value": "nova-phonecall",
+              },
+              {
+                "name": "NovaMedical",
+                "value": "nova-medical",
+              },
+              "enhanced",
+              {
+                "name": "EnhancedGeneral",
+                "value": "enhanced-general",
+              },
+              {
+                "name": "EnhancedMeeting",
+                "value": "enhanced-meeting",
+              },
+              {
+                "name": "EnhancedPhonecall",
+                "value": "enhanced-phonecall",
+              },
+              {
+                "name": "EnhancedFinance",
+                "value": "enhanced-finance",
+              },
+              "base",
+              "meeting",
+              "phonecall",
+              "finance",
+              "conversationalai",
+              "voicemail",
+              "video",
+              "custom",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenMultichannel": {
+            "default": "false",
+            "docs": "Transcribe each audio channel independently",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenNumerals": {
+            "default": "false",
+            "docs": "Convert numbers from written format to numerical format",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenProfanityFilter": {
+            "default": "false",
+            "docs": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenPublishEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              {
+                "docs": "Raw audio data to be transcribed. Should be sent as a binary WebSocket message without base64 encoding",
+                "type": "string",
+                "validation": {
+                  "format": "binary",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "ListenControlMessagesRequest",
+            ],
+          },
+          "ListenPunctuate": {
+            "default": "false",
+            "docs": "Add punctuation and capitalization to the transcript",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenRedact": {
+            "default": "false",
+            "docs": "Redaction removes sensitive information from your transcripts",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenSmartFormat": {
+            "default": "false",
+            "docs": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenSubscribeEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "TranscriptionResponse",
+              "ControlMessageResponse",
+            ],
+          },
+          "ListenVadEvents": {
+            "default": "false",
+            "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponse": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "channel": "optional<TranscriptionResponseChannel>",
+              "channel_index": "optional<list<integer>>",
+              "duration": "optional<float>",
+              "from_finalize": "optional<boolean>",
+              "is_final": "optional<boolean>",
+              "metadata": "optional<TranscriptionResponseMetadata>",
+              "speech_final": "optional<boolean>",
+              "start": "optional<float>",
+              "type": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponseChannel": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "alternatives": "optional<list<TranscriptionResponseChannelAlternativesItem>>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponseChannelAlternativesItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "confidence": {
+                "docs": "Overall confidence score",
+                "type": "optional<float>",
+              },
+              "transcript": {
+                "docs": "Complete transcribed text",
+                "type": "optional<string>",
+              },
+              "words": "optional<list<TranscriptionResponseChannelAlternativesItemWordsItem>>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponseChannelAlternativesItemWordsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "confidence": "optional<float>",
+              "end": "optional<float>",
+              "punctuated_word": "optional<string>",
+              "start": "optional<float>",
+              "word": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponseMetadata": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "model_info": "optional<TranscriptionResponseMetadataModelInfo>",
+              "model_uuid": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "request_id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "TranscriptionResponseMetadataModelInfo": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "arch": "optional<string>",
+              "name": "optional<string>",
+              "version": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  ListenCallbackMethod:
+    enum:
+      - POST
+      - GET
+      - PUT
+      - DELETE
+    docs: HTTP method by which the callback request will be made
+    default: POST
+    source:
+      openapi: ../asyncapi.yml
+  ListenDictation:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Identify and extract key entities from content in submitted audio
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenDiarize:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Recognize speaker changes. Each word in the transcript will be assigned a
+      speaker number starting at 0
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenEncoding:
+    enum:
+      - linear16
+      - flac
+      - mulaw
+      - value: amr-nb
+        name: AmrNb
+      - value: amr-wb
+        name: AmrWb
+      - opus
+      - speex
+      - g729
+    docs: Specify the expected encoding of your submitted audio
+    source:
+      openapi: ../asyncapi.yml
+  ListenFillerWords:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Filler Words can help transcribe interruptions in your audio, like "uh"
+      and "um"
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenInterimResults:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Specifies whether the streaming endpoint should provide ongoing
+      transcription updates as more audio is received. When set to true, the
+      endpoint sends continuous updates, meaning transcription results may
+      evolve over time
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenLanguage:
+    enum:
+      - bg
+      - ca
+      - cs
+      - da
+      - value: da-DK
+        name: DaDk
+      - de
+      - value: de-CH
+        name: DeCh
+      - el
+      - en
+      - value: en-AU
+        name: EnAu
+      - value: en-GB
+        name: EnGb
+      - value: en-IN
+        name: EnIn
+      - value: en-NZ
+        name: EnNz
+      - value: en-US
+        name: EnUs
+      - es
+      - value: es-419
+        name: Es419
+      - value: es-LATAM
+        name: EsLatam
+      - et
+      - fi
+      - fr
+      - value: fr-CA
+        name: FrCa
+      - hi
+      - value: hi-Latn
+        name: HiLatn
+      - hu
+      - id
+      - it
+      - ja
+      - ko
+      - value: ko-KR
+        name: KoKr
+      - lt
+      - lv
+      - ms
+      - nl
+      - value: nl-BE
+        name: NlBe
+      - 'no'
+      - pl
+      - pt
+      - value: pt-BR
+        name: PtBr
+      - value: pt-PT
+        name: PtPt
+      - ro
+      - ru
+      - sk
+      - sv
+      - value: sv-SE
+        name: SvSe
+      - taq
+      - th
+      - value: th-TH
+        name: ThTh
+      - tr
+      - uk
+      - vi
+      - zh
+      - value: zh-CN
+        name: ZhCn
+      - value: zh-HK
+        name: ZhHk
+      - value: zh-Hans
+        name: ZhHans
+      - value: zh-Hant
+        name: ZhHant
+      - value: zh-TW
+        name: ZhTw
+    docs: >-
+      The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at
+      the primary spoken language. Depending on the Model you choose only
+      certain languages are available
+    default: en
+    source:
+      openapi: ../asyncapi.yml
+  ListenModel:
+    enum:
+      - value: nova-3
+        name: Nova3
+      - value: nova-3-general
+        name: Nova3General
+      - value: nova-2
+        name: Nova2
+      - value: nova-2-general
+        name: Nova2General
+      - value: nova-2-meeting
+        name: Nova2Meeting
+      - value: nova-2-finance
+        name: Nova2Finance
+      - value: nova-2-conversationalai
+        name: Nova2Conversationalai
+      - value: nova-2-voicemail
+        name: Nova2Voicemail
+      - value: nova-2-video
+        name: Nova2Video
+      - value: nova-2-medical
+        name: Nova2Medical
+      - value: nova-2-drivethru
+        name: Nova2Drivethru
+      - value: nova-2-automotive
+        name: Nova2Automotive
+      - nova
+      - value: nova-general
+        name: NovaGeneral
+      - value: nova-phonecall
+        name: NovaPhonecall
+      - value: nova-medical
+        name: NovaMedical
+      - enhanced
+      - value: enhanced-general
+        name: EnhancedGeneral
+      - value: enhanced-meeting
+        name: EnhancedMeeting
+      - value: enhanced-phonecall
+        name: EnhancedPhonecall
+      - value: enhanced-finance
+        name: EnhancedFinance
+      - base
+      - meeting
+      - phonecall
+      - finance
+      - conversationalai
+      - voicemail
+      - video
+      - custom
+    docs: AI model to use for the transcription
+    source:
+      openapi: ../asyncapi.yml
+  ListenMultichannel:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Transcribe each audio channel independently
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenNumerals:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Convert numbers from written format to numerical format
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenProfanityFilter:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Profanity Filter looks for recognized profanity and converts it to the
+      nearest recognized non-profane word or removes it from the transcript
+      completely
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenPunctuate:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Add punctuation and capitalization to the transcript
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenRedact:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Redaction removes sensitive information from your transcripts
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenSmartFormat:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Apply formatting to transcript output. When set to true, additional
+      formatting will be applied to transcripts to improve readability
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenVadEvents:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      Indicates that speech has started. You'll begin receiving Speech Started
+      messages upon speech starting
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  TranscriptionResponseChannelAlternativesItemWordsItem:
+    properties:
+      word: optional<string>
+      start: optional<float>
+      end: optional<float>
+      confidence: optional<float>
+      punctuated_word: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  TranscriptionResponseChannelAlternativesItem:
+    properties:
+      transcript:
+        type: optional<string>
+        docs: Complete transcribed text
+      confidence:
+        type: optional<float>
+        docs: Overall confidence score
+      words: optional<list<TranscriptionResponseChannelAlternativesItemWordsItem>>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  TranscriptionResponseChannel:
+    properties:
+      alternatives: optional<list<TranscriptionResponseChannelAlternativesItem>>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  TranscriptionResponseMetadataModelInfo:
+    properties:
+      name: optional<string>
+      version: optional<string>
+      arch: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  TranscriptionResponseMetadata:
+    properties:
+      model_info: optional<TranscriptionResponseMetadataModelInfo>
+      request_id:
+        type: optional<string>
+        validation:
+          format: uuid
+      model_uuid:
+        type: optional<string>
+        validation:
+          format: uuid
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  TranscriptionResponse:
+    properties:
+      channel: optional<TranscriptionResponseChannel>
+      metadata: optional<TranscriptionResponseMetadata>
+      type: optional<string>
+      channel_index: optional<list<integer>>
+      duration: optional<float>
+      start: optional<float>
+      is_final: optional<boolean>
+      from_finalize: optional<boolean>
+      speech_final: optional<boolean>
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ControlMessageResponseZero:
+    properties:
+      type: optional<literal<"Finalize">>
+      channel:
+        type: optional<integer>
+        docs: The channel number being finalized
+        validation:
+          min: 0
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ControlMessageResponseOne:
+    properties:
+      type: optional<literal<"Metadata">>
+      transaction_key:
+        type: optional<string>
+        docs: Deprecated field
+      request_id:
+        type: optional<string>
+        docs: Unique identifier for the request
+        validation:
+          format: uuid
+      sha256:
+        type: optional<string>
+        docs: SHA-256 hash of the audio content
+        validation:
+          pattern: ^[a-fA-F0-9]{64}$
+      created:
+        type: optional<datetime>
+        docs: Timestamp when the response was created
+      duration:
+        type: optional<float>
+        docs: Duration of the audio in seconds
+      channels:
+        type: optional<integer>
+        docs: Number of audio channels
+        validation:
+          min: 0
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ControlMessageResponseTwo:
+    properties:
+      type: optional<literal<"CloseStream">>
+      transaction_key:
+        type: optional<string>
+        docs: Deprecated field
+      request_id:
+        type: optional<string>
+        docs: Unique identifier for the request
+        validation:
+          format: uuid
+      sha256:
+        type: optional<string>
+        docs: SHA-256 hash of the audio content
+        validation:
+          pattern: ^[a-fA-F0-9]{64}$
+      created:
+        type: optional<datetime>
+        docs: Timestamp when the response was created
+      duration:
+        type: optional<float>
+        docs: Duration of the audio in seconds
+      channels:
+        type: optional<integer>
+        docs: Number of audio channels
+        validation:
+          min: 0
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ControlMessageResponse:
+    discriminated: false
+    union:
+      - ControlMessageResponseZero
+      - ControlMessageResponseOne
+      - ControlMessageResponseTwo
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ListenSubscribeEvent:
+    discriminated: false
+    union:
+      - TranscriptionResponse
+      - ControlMessageResponse
+    source:
+      openapi: ../asyncapi.yml
+  ListenControlMessagesRequestFinalize:
+    properties: {}
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ListenControlMessagesRequestCloseStream:
+    properties: {}
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ListenControlMessagesRequestKeepAlive:
+    properties: {}
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  ListenControlMessagesRequest:
+    discriminant: type
+    base-properties: {}
+    union:
+      Finalize: ListenControlMessagesRequestFinalize
+      CloseStream: ListenControlMessagesRequestCloseStream
+      KeepAlive: ListenControlMessagesRequestKeepAlive
+    source:
+      openapi: ../asyncapi.yml
+  ListenPublishEvent:
+    discriminated: false
+    union:
+      - type: string
+        docs: >-
+          Raw audio data to be transcribed. Should be sent as a binary WebSocket
+          message without base64 encoding
+        validation:
+          format: binary
+      - ListenControlMessagesRequest
+    source:
+      openapi: ../asyncapi.yml
+channel:
+  path: /v1/listen
+  url: public
+  auth: false
+  query-parameters:
+    callback:
+      type: string
+      docs: URL to which we'll make the callback request
+    callback_method:
+      type: ListenCallbackMethod
+      default: POST
+      docs: HTTP method by which the callback request will be made
+    channels:
+      type: string
+      default: '1'
+      docs: The number of channels in the submitted audio
+    dictation:
+      type: ListenDictation
+      default: 'false'
+      docs: Identify and extract key entities from content in submitted audio
+    diarize:
+      type: ListenDiarize
+      default: 'false'
+      docs: >-
+        Recognize speaker changes. Each word in the transcript will be assigned
+        a speaker number starting at 0
+    diarize_version:
+      type: string
+      default: v2
+      docs: >-
+        Version of the diarization feature to use. Only used when the
+        diarization feature is enabled (`diarize=true` is passed to the API)
+    encoding:
+      type: ListenEncoding
+      docs: Specify the expected encoding of your submitted audio
+    endpointing:
+      type: string
+      default: '10'
+      docs: >-
+        Indicates how long Deepgram will wait to detect whether a speaker has
+        finished speaking or pauses for a significant period of time. When set
+        to a value, the streaming endpoint immediately finalizes the
+        transcription for the processed time range and returns the transcript
+        with a speech_final parameter set to true. Can also be set to false to
+        disable endpointing
+    extra:
+      type: string
+      docs: >-
+        Arbitrary key-value pairs that are attached to the API response for
+        usage in downstream processing
+    filler_words:
+      type: ListenFillerWords
+      default: 'false'
+      docs: >-
+        Filler Words can help transcribe interruptions in your audio, like "uh"
+        and "um"
+    interim_results:
+      type: ListenInterimResults
+      default: 'false'
+      docs: >-
+        Specifies whether the streaming endpoint should provide ongoing
+        transcription updates as more audio is received. When set to true, the
+        endpoint sends continuous updates, meaning transcription results may
+        evolve over time
+    keywords:
+      type: string
+      docs: Keywords can boost or suppress specialized terminology and brands
+    keyterm:
+      type: string
+      docs: >-
+        Key term prompting can boost or suppress specialized terminology and
+        brands. Only compatible with Nova-3
+    language:
+      type: ListenLanguage
+      default: en
+      docs: >-
+        The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints
+        at the primary spoken language. Depending on the Model you choose only
+        certain languages are available
+    model:
+      type: ListenModel
+      docs: AI model to use for the transcription
+    multichannel:
+      type: ListenMultichannel
+      default: 'false'
+      docs: Transcribe each audio channel independently
+    numerals:
+      type: ListenNumerals
+      default: 'false'
+      docs: Convert numbers from written format to numerical format
+    profanity_filter:
+      type: ListenProfanityFilter
+      default: 'false'
+      docs: >-
+        Profanity Filter looks for recognized profanity and converts it to the
+        nearest recognized non-profane word or removes it from the transcript
+        completely
+    punctuate:
+      type: ListenPunctuate
+      default: 'false'
+      docs: Add punctuation and capitalization to the transcript
+    redact:
+      type: ListenRedact
+      default: 'false'
+      docs: Redaction removes sensitive information from your transcripts
+    replace:
+      type: string
+      docs: Search for terms or phrases in submitted audio and replaces them
+    sample_rate:
+      type: string
+      docs: >-
+        Sample rate of submitted audio. Required (and only read) when a value is
+        provided for encoding
+    search:
+      type: string
+      docs: Search for terms or phrases in submitted audio
+    smart_format:
+      type: ListenSmartFormat
+      default: 'false'
+      docs: >-
+        Apply formatting to transcript output. When set to true, additional
+        formatting will be applied to transcripts to improve readability
+    tag:
+      type: string
+      docs: >-
+        Label your requests for the purpose of identification during usage
+        reporting
+    utterance_end:
+      type: string
+      docs: >-
+        Indicates how long Deepgram will wait to send an UtteranceEnd message
+        after a word has been transcribed. Use with interim_results
+    vad_events:
+      type: ListenVadEvents
+      default: 'false'
+      docs: >-
+        Indicates that speech has started. You'll begin receiving Speech Started
+        messages upon speech starting
+    version:
+      type: string
+      default: latest
+      docs: Version of an AI model to use
+  headers:
+    Sec-Websocket-Protocol:
+      type: string
+      name: secWebsocketProtocol
+      docs: >-
+        Used to establish a WebSocket connection with authentication. Format
+        should be 'token, <DEEPGRAM_API_KEY>'
+  messages:
+    subscribe:
+      origin: server
+      body: ListenSubscribeEvent
+    publish:
+      origin: client
+      body: ListenPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body: string
+        - type: subscribe
+          body: {}
+",
+    },
     "managementApi.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
@@ -7063,6 +9598,414 @@ service:
 docs: Manage your projects
 ",
     },
+    "speak.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "text": "text",
+                    "type": "Speak",
+                  },
+                  "type": "publish",
+                },
+                {
+                  "body": "string",
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
+          "headers": {
+            "Sec-Websocket-Protocol": {
+              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+              "name": "secWebsocketProtocol",
+              "type": "string",
+            },
+          },
+          "messages": {
+            "publish": {
+              "body": "SpeakPublishEvent",
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": "SpeakSubscribeEvent",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/speak",
+          "query-parameters": {
+            "encoding": {
+              "default": "mp3",
+              "docs": "Encoding allows you to specify the expected encoding of your audio output",
+              "type": "SpeakEncoding",
+            },
+            "model": {
+              "default": "aura-asteria-en",
+              "docs": "AI model used to process submitted text",
+              "type": "SpeakModel",
+            },
+            "sample_rate": {
+              "default": "24000",
+              "docs": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+              "type": "SpeakSampleRate",
+            },
+          },
+          "url": "public",
+        },
+        "types": {
+          "ControlMessagesResponse": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "sequence_id": {
+                "docs": "The sequence ID of the response",
+                "type": "optional<integer>",
+              },
+              "type": {
+                "docs": "The type of control message response",
+                "type": "ControlMessagesResponseType",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ControlMessagesResponseType": {
+            "docs": "The type of control message response",
+            "enum": [
+              "flush",
+              "clear",
+              "close",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakControlMessagesRequest": {
+            "enum": [
+              "Flush",
+              "Clear",
+              "Close",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakEncoding": {
+            "default": "mp3",
+            "docs": "Encoding allows you to specify the expected encoding of your audio output",
+            "enum": [
+              "linear16",
+              "mulaw",
+              "alaw",
+              "opus",
+              "mp3",
+              "flac",
+              "aac",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakModel": {
+            "default": "aura-asteria-en",
+            "docs": "AI model used to process submitted text",
+            "enum": [
+              {
+                "name": "AuraAsteriaEn",
+                "value": "aura-asteria-en",
+              },
+              {
+                "name": "AuraLunaEn",
+                "value": "aura-luna-en",
+              },
+              {
+                "name": "AuraStellaEn",
+                "value": "aura-stella-en",
+              },
+              {
+                "name": "AuraAthenaEn",
+                "value": "aura-athena-en",
+              },
+              {
+                "name": "AuraHeraEn",
+                "value": "aura-hera-en",
+              },
+              {
+                "name": "AuraOrionEn",
+                "value": "aura-orion-en",
+              },
+              {
+                "name": "AuraArcasEn",
+                "value": "aura-arcas-en",
+              },
+              {
+                "name": "AuraPerseusEn",
+                "value": "aura-perseus-en",
+              },
+              {
+                "name": "AuraAngusEn",
+                "value": "aura-angus-en",
+              },
+              {
+                "name": "AuraOrpheusEn",
+                "value": "aura-orpheus-en",
+              },
+              {
+                "name": "AuraHeliosEn",
+                "value": "aura-helios-en",
+              },
+              {
+                "name": "AuraZeusEn",
+                "value": "aura-zeus-en",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakPublishEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "TextToSpeechRequest",
+              "SpeakControlMessagesRequest",
+            ],
+          },
+          "SpeakSampleRate": {
+            "default": "24000",
+            "docs": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+            "enum": [
+              {
+                "name": "EightThousand",
+                "value": "8000",
+              },
+              "16000",
+              "24000",
+              "44100",
+              "48000",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakSubscribeEvent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              {
+                "docs": "Audio data in the format specified by the request parameters",
+                "type": "string",
+                "validation": {
+                  "format": "binary",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "ControlMessagesResponse",
+            ],
+          },
+          "TextToSpeechRequest": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "text": {
+                "docs": "The input text to be converted to speech",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Message type indicating a text-to-speech request",
+                "type": "literal<"Speak">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  SpeakEncoding:
+    enum:
+      - linear16
+      - mulaw
+      - alaw
+      - opus
+      - mp3
+      - flac
+      - aac
+    docs: Encoding allows you to specify the expected encoding of your audio output
+    default: mp3
+    source:
+      openapi: ../asyncapi.yml
+  SpeakModel:
+    enum:
+      - value: aura-asteria-en
+        name: AuraAsteriaEn
+      - value: aura-luna-en
+        name: AuraLunaEn
+      - value: aura-stella-en
+        name: AuraStellaEn
+      - value: aura-athena-en
+        name: AuraAthenaEn
+      - value: aura-hera-en
+        name: AuraHeraEn
+      - value: aura-orion-en
+        name: AuraOrionEn
+      - value: aura-arcas-en
+        name: AuraArcasEn
+      - value: aura-perseus-en
+        name: AuraPerseusEn
+      - value: aura-angus-en
+        name: AuraAngusEn
+      - value: aura-orpheus-en
+        name: AuraOrpheusEn
+      - value: aura-helios-en
+        name: AuraHeliosEn
+      - value: aura-zeus-en
+        name: AuraZeusEn
+    docs: AI model used to process submitted text
+    default: aura-asteria-en
+    source:
+      openapi: ../asyncapi.yml
+  SpeakSampleRate:
+    enum:
+      - value: '8000'
+        name: EightThousand
+      - '16000'
+      - '24000'
+      - '44100'
+      - '48000'
+    docs: >-
+      Sample Rate specifies the sample rate for the output audio. Based on
+      encoding 8000 or 24000 are possible defaults. For some encodings sample
+      rate is not configurable.
+    default: '24000'
+    source:
+      openapi: ../asyncapi.yml
+  ControlMessagesResponseType:
+    enum:
+      - flush
+      - clear
+      - close
+    docs: The type of control message response
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  ControlMessagesResponse:
+    properties:
+      type:
+        type: ControlMessagesResponseType
+        docs: The type of control message response
+      sequence_id:
+        type: optional<integer>
+        docs: The sequence ID of the response
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SpeakSubscribeEvent:
+    discriminated: false
+    union:
+      - type: string
+        docs: Audio data in the format specified by the request parameters
+        validation:
+          format: binary
+      - ControlMessagesResponse
+    source:
+      openapi: ../asyncapi.yml
+  TextToSpeechRequest:
+    properties:
+      type:
+        type: literal<"Speak">
+        docs: Message type indicating a text-to-speech request
+      text:
+        type: string
+        docs: The input text to be converted to speech
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
+  SpeakControlMessagesRequest:
+    enum:
+      - Flush
+      - Clear
+      - Close
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  SpeakPublishEvent:
+    discriminated: false
+    union:
+      - TextToSpeechRequest
+      - SpeakControlMessagesRequest
+    source:
+      openapi: ../asyncapi.yml
+channel:
+  path: /v1/speak
+  url: public
+  auth: false
+  query-parameters:
+    encoding:
+      type: SpeakEncoding
+      default: mp3
+      docs: >-
+        Encoding allows you to specify the expected encoding of your audio
+        output
+    model:
+      type: SpeakModel
+      default: aura-asteria-en
+      docs: AI model used to process submitted text
+    sample_rate:
+      type: SpeakSampleRate
+      default: '24000'
+      docs: >-
+        Sample Rate specifies the sample rate for the output audio. Based on
+        encoding 8000 or 24000 are possible defaults. For some encodings sample
+        rate is not configurable.
+  headers:
+    Sec-Websocket-Protocol:
+      type: string
+      name: secWebsocketProtocol
+      docs: >-
+        Used to establish a WebSocket connection with authentication. Format
+        should be 'token, <DEEPGRAM_API_KEY>'
+  messages:
+    subscribe:
+      origin: server
+      body: SpeakSubscribeEvent
+    publish:
+      origin: client
+      body: SpeakPublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body:
+            type: Speak
+            text: text
+        - type: subscribe
+          body: string
+",
+    },
     "speechToText.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
@@ -8714,23 +11657,33 @@ docs: Transform text to speech
         },
       },
       "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "Deepgram API Specification",
       "environments": {
-        "Default": "https://api.deepgram.com",
+        "Default": {
+          "urls": {
+            "Base": "https://api.deepgram.com",
+            "public": "wss://api.deepgram.com",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Deepgram API Specification
 environments:
-  Default: https://api.deepgram.com
+  Default:
+    urls:
+      Base: https://api.deepgram.com
+      public: wss://api.deepgram.com
 default-environment: Default
+default-url: Base
 auth-schemes:
   ApiKeyAuth:
     header: Authorization

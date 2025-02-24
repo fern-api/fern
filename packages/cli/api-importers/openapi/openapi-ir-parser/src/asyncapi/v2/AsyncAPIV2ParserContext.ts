@@ -1,9 +1,14 @@
 import { OpenAPIV3 } from "openapi-types";
 
 import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext";
+import { WebsocketSessionExampleMessage } from "../getFernExamples";
 import { AsyncAPIV2 } from "../v2";
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIParserContext<AsyncAPIV2.DocumentV2> {
+    public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {
+        return `#/components/messages/${message.messageId}`;
+    }
+
     public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV2.MessageV2 {
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
         const components = this.document.components;

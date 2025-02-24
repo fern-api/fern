@@ -2443,6 +2443,16 @@
               "type": "null"
             }
           ]
+        },
+        "openapi-parser-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
