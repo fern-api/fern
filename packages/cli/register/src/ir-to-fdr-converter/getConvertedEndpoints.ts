@@ -1,7 +1,6 @@
 import { assertNever, isNonNullish, MediaType } from "@fern-api/core-utils";
 import { IntermediateRepresentation, FernIr as Ir } from "@fern-api/ir-sdk";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { startCase } from "lodash-es";
 import { convertTypeReference, convertTypeShapeToTypeReference } from "./getConvertedTypes";
 
 export function getConvertedEndpoints(
@@ -24,9 +23,13 @@ function convertEndpoint(
     irService: Ir.http.HttpService,
     ir: Ir.ir.IntermediateRepresentation
 ): FdrCjsSdk.api.latest.EndpointDefinition {
+
+    const request = irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined;
+    const response = irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined;
+
     return {
         availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
-        auth: irEndpoint.auth,
+        auth: undefined,
         description: irEndpoint.docs ?? undefined,
         method: convertHttpMethod(irEndpoint.method),
         defaultEnvironment: ir.environments?.defaultEnvironment != null 
@@ -36,9 +39,17 @@ function convertEndpoint(
             ? convertIrEnvironments({ environmentsConfig: ir.environments, endpoint: irEndpoint })
             : undefined,
         id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
-        originalEndpointId: irEndpoint.id,
-        name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
+        displayName: irEndpoint.displayName ?? irEndpoint.name.originalName,
+        operationId: irEndpoint.id,
         path: convertHttpPath(irEndpoint.fullPath),
+        pathParameters: irEndpoint.allPathParameters.map(
+            (pathParameter): FdrCjsSdk.api.latest.ObjectProperty => ({
+                description: pathParameter.docs ?? undefined,
+                key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                valueShape: convertTypeReference(pathParameter.valueType),
+                availability: undefined,
+            })
+        ),
         queryParameters: irEndpoint.queryParameters.map(
             (queryParameter): FdrCjsSdk.api.latest.ObjectProperty => ({
                 description: queryParameter.docs ?? undefined,
@@ -47,7 +58,7 @@ function convertEndpoint(
                 availability: convertIrAvailability(queryParameter.availability)
             })
         ),
-        headers: [...irService.headers, ...irEndpoint.headers].map(
+        requestHeaders: [...irService.headers, ...irEndpoint.headers].map(
             (header): FdrCjsSdk.api.latest.ObjectProperty => ({
                 description: header.docs ?? undefined,
                 key: FdrCjsSdk.PropertyKey(header.name.wireValue),
@@ -55,15 +66,19 @@ function convertEndpoint(
                 availability: convertIrAvailability(header.availability)
             })
         ),
-        request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-        response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
+        responseHeaders: undefined,
+        requests: request != null ? [ request ] : undefined,
+        responses: response != null ? [ response ] : undefined,
         errors: convertErrors(irEndpoint.errors, ir),
+        snippetTemplates: undefined,
+        protocol: undefined,
+        namespace: undefined,
         examples: []
     };
 }
 
 function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.latest.HttpRequest | undefined {
-    const requestBodyShape = Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.latest.HttpRequest | undefined>(
+    return Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.latest.HttpRequest | undefined>(
         irRequest,
         {
             inlinedRequestBody: (inlinedRequestBody): FdrCjsSdk.api.latest.HttpRequest => {
@@ -106,7 +121,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.l
                         .map((property) => {
                             return property._visit<FdrCjsSdk.api.latest.FormDataField | undefined>({
                                 file: (file) => {
-                                    const fileValue = file._visit<
+                                    const form = file._visit<
                                         FdrCjsSdk.api.latest.FormDataField | undefined
                                     >({
                                         file: (singleFile) => ({
@@ -126,14 +141,13 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.l
                                             description: undefined,
                                             availability: undefined,
                                             exploded: undefined,
-
                                         }),
                                         _other: () => undefined
                                     });
-                                    if (fileValue == null) {
-                                        return;
+                                    if (form == null) {
+                                        return undefined;
                                     }
-                                    return { type: "file", value: fileValue };
+                                    return form;
                                 },
                                 bodyProperty: (bodyProperty) => ({
                                     type: "property",
@@ -164,7 +178,6 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.l
             }
         }
     );
-    return requestBodyShape != null ? { type: requestBodyShape, description: irRequest.docs } : undefined;
 }
 
 
@@ -242,77 +255,83 @@ function convertErrors(
     if (ir.errorDiscriminationStrategy.type === "statusCode") {
         for (const irResponseError of irResponseErrors) {
             const errorDeclaration = ir.errors[irResponseError.error.errorId];
-            if (errorDeclaration) {
-                errors.push({
-                    shape: {
-                        type: "alias",
-                        value: errorDeclaration.type != null ? convertTypeReference(errorDeclaration.type) : { type: "unknown", displayName: undefined }
-                    },
-                    statusCode: errorDeclaration.statusCode,
-                    description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.name.name.originalName,
-                    availability: undefined,
-                    examples: errorDeclaration.examples.map((irExample) => {
-                        return {
-                            name: irExample.name?.originalName,
-                            responseBody: { type: "json", value: irExample.jsonExample },
-                            description: irExample.docs
-                        };
-                    })
-                });
+            if (errorDeclaration == null) {
+                continue;
             }
+            errors.push({
+                shape: {
+                    type: "alias",
+                    value: errorDeclaration.type != null ? convertTypeShapeToTypeReference(convertTypeReference(errorDeclaration.type)) : { type: "unknown", displayName: undefined }
+                },
+                statusCode: errorDeclaration.statusCode,
+                description: errorDeclaration.docs ?? undefined,
+                name: errorDeclaration.name.name.originalName,
+                availability: undefined,
+                examples: errorDeclaration.examples.map((irExample) => {
+                    return {
+                        name: irExample.name?.originalName,
+                        responseBody: { type: "json", value: irExample.jsonExample },
+                        description: irExample.docs
+                    };
+                })
+            });
         }
     } else {
         for (const irResponseError of irResponseErrors) {
             const errorDeclaration = ir.errors[irResponseError.error.errorId];
-            if (errorDeclaration) {
-                const properties: FdrCjsSdk.api.latest.ObjectProperty[] = [
-                    {
-                        key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.discriminant.wireValue),
-                        valueType: {
+            if (errorDeclaration == null) {
+                continue;
+            }
+            
+            const properties: FdrCjsSdk.api.latest.ObjectProperty[] = [
+                {
+                    key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.discriminant.wireValue),
+                    valueShape: {
+                        type: "alias",
+                        value: {
                             type: "literal",
                             value: {
                                 type: "stringLiteral",
                                 value: errorDeclaration.discriminantValue.name.originalName
                             }
-                        },
-                        description: errorDeclaration.docs,
-                        availability: undefined
-                    }
-                ];
-
-                if (errorDeclaration.type != null) {
-                    properties.push({
-                        key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.contentProperty.wireValue),
-                        valueType: convertTypeReference(errorDeclaration.type),
-                        description: errorDeclaration.docs,
-                        availability: undefined
-                    });
+                        }
+                    },
+                    description: errorDeclaration.docs,
+                    availability: undefined
                 }
+            ];
 
-                errors.push({
-                    type:
-                        errorDeclaration.type == null
-                            ? undefined
-                            : {
-                                  type: "object",
-                                  extends: [],
-                                  properties,
-                                  extraProperties: undefined
-                              },
-                    statusCode: errorDeclaration.statusCode,
-                    description: errorDeclaration.docs ?? undefined,
-                    availability: undefined,
-                    name: errorDeclaration.name.name.originalName,
-                    examples: errorDeclaration.examples.map((irExample) => {
-                        return {
-                            name: irExample.name?.originalName,
-                            responseBody: { type: "json", value: irExample.jsonExample },
-                            description: irExample.docs
-                        };
-                    })
+            if (errorDeclaration.type != null) {
+                properties.push({
+                    key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.contentProperty.wireValue),
+                    valueShape: convertTypeReference(errorDeclaration.type),
+                    description: errorDeclaration.docs,
+                    availability: undefined
                 });
             }
+
+            errors.push({
+                shape:
+                    errorDeclaration.type == null
+                        ? undefined
+                        : {
+                              type: "object",
+                              extends: [],
+                              properties,
+                              extraProperties: undefined
+                          },
+                statusCode: errorDeclaration.statusCode,
+                description: errorDeclaration.docs ?? undefined,
+                availability: undefined,
+                name: errorDeclaration.name.name.originalName,
+                examples: errorDeclaration.examples.map((irExample) => {
+                    return {
+                        name: irExample.name?.originalName,
+                        responseBody: { type: "json", value: irExample.jsonExample },
+                        description: irExample.docs
+                    };
+                })
+            });
         }
     }
     return errors;
