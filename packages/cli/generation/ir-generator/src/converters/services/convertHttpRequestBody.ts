@@ -27,22 +27,20 @@ export function convertHttpRequestBody({
 }): HttpRequestBody | undefined {
     const bytesRequest = request != null ? parseBytesRequest(request) : undefined;
     if (bytesRequest != null) {
-        const response = HttpRequestBody.bytes({
+        return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
             contentType: typeof request === "string" ? undefined : request?.["content-type"],
             docs: typeof request === "string" ? undefined : request?.docs
         });
-        return response;
     }
 
     if (typeof request === "string") {
-        const response = HttpRequestBody.reference(
+        return HttpRequestBody.reference(
             convertReferenceHttpRequestBody({
                 requestBody: request,
                 file
             })
         );
-        return response;
     }
 
     if (request?.body == null) {
@@ -51,7 +49,7 @@ export function convertHttpRequestBody({
 
     const fileUploadRequest = parseFileUploadRequest(request);
     if (fileUploadRequest != null) {
-        const response = HttpRequestBody.fileUpload({
+        return HttpRequestBody.fileUpload({
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
@@ -94,7 +92,6 @@ export function convertHttpRequestBody({
             }),
             docs: request.docs
         });
-        return response;
     }
 
     if (isInlineRequestBody(request.body)) {
@@ -102,7 +99,7 @@ export function convertHttpRequestBody({
             throw new Error("Name is missing for inlined request");
         }
 
-        const response = HttpRequestBody.inlinedRequestBody({
+        return HttpRequestBody.inlinedRequestBody({
             name: file.casingsGenerator.generateName(request.name),
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
@@ -127,17 +124,15 @@ export function convertHttpRequestBody({
             extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined
         });
-        return response;
     }
 
-    const response = HttpRequestBody.reference(
+    return HttpRequestBody.reference(
         convertReferenceHttpRequestBody({
             requestBody: request.body,
             file,
             contentType: request["content-type"]
         })
     );
-    return response;
 }
 
 export function convertReferenceHttpRequestBody({
