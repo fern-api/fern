@@ -64,8 +64,7 @@ export class SnippetJsonGenerator {
                             method: httpEndpoint.method,
                             identifierOverride: httpEndpoint.id
                         },
-                        // TODO: Use csharp type when available
-                        snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                        snippet: FernGeneratorExec.EndpointSnippet.csharp({
                             client: csharpSnippet
                         })
                     };

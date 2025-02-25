@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetAsync(\"string\");\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_union.getMetadata"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
             }
         }
