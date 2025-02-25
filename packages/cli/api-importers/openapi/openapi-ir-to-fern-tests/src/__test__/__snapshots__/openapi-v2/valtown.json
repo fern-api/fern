@@ -2373,16 +2373,22 @@
               "wireValue": "prev"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "URL of the previous page, if any"
           },
@@ -2410,16 +2416,22 @@
               "wireValue": "next"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "URL of the next page, if any"
           }
@@ -5540,14 +5552,20 @@
               "wireValue": "size"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Size in bytes of the object"
           },
@@ -5575,16 +5593,22 @@
               "wireValue": "lastModified"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Creation date of the object"
           }
@@ -6400,14 +6424,20 @@
               "wireValue": "type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6434,14 +6464,20 @@
               "wireValue": "disposition"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6468,14 +6504,20 @@
               "wireValue": "contentId"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -10424,32 +10466,38 @@
                   "wireValue": "mode"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1SqliteBatchPostRequestBodySchemaMode",
+                        "camelCase": {
+                          "unsafeName": "v1SqliteBatchPostRequestBodySchemaMode",
+                          "safeName": "v1SqliteBatchPostRequestBodySchemaMode"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_sqlite_batch_post_request_body_schema_mode",
+                          "safeName": "v_1_sqlite_batch_post_request_body_schema_mode"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE",
+                          "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1SqliteBatchPostRequestBodySchemaMode",
+                          "safeName": "V1SqliteBatchPostRequestBodySchemaMode"
+                        }
+                      },
+                      "typeId": "V1SqliteBatchPostRequestBodySchemaMode",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1SqliteBatchPostRequestBodySchemaMode",
-                    "camelCase": {
-                      "unsafeName": "v1SqliteBatchPostRequestBodySchemaMode",
-                      "safeName": "v1SqliteBatchPostRequestBodySchemaMode"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_sqlite_batch_post_request_body_schema_mode",
-                      "safeName": "v_1_sqlite_batch_post_request_body_schema_mode"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE",
-                      "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_MODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1SqliteBatchPostRequestBodySchemaMode",
-                      "safeName": "V1SqliteBatchPostRequestBodySchemaMode"
-                    }
-                  },
-                  "typeId": "V1SqliteBatchPostRequestBodySchemaMode",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 }
               }
             ],
@@ -10682,10 +10730,16 @@
                 },
                 "valueType": {
                   "container": {
-                    "list": {
-                      "type": "unknown"
+                    "optional": {
+                      "container": {
+                        "list": {
+                          "type": "unknown"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "optional"
                   },
                   "type": "container"
                 },
@@ -11222,10 +11276,16 @@
                 },
                 "valueType": {
                   "container": {
-                    "list": {
-                      "type": "unknown"
+                    "optional": {
+                      "container": {
+                        "list": {
+                          "type": "unknown"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "optional"
                   },
                   "type": "container"
                 }
@@ -11403,17 +11463,23 @@
                   "wireValue": "name"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1,
-                        "maxLength": 48
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1,
+                            "maxLength": 48
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "This val’s name"
               },
@@ -11441,16 +11507,22 @@
                   "wireValue": "readme"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 8192
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 8192
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Readme contents, as Markdown"
               },
@@ -11478,32 +11550,38 @@
                   "wireValue": "privacy"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsPostRequestBodySchemaPrivacy",
+                        "camelCase": {
+                          "unsafeName": "v1ValsPostRequestBodySchemaPrivacy",
+                          "safeName": "v1ValsPostRequestBodySchemaPrivacy"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_post_request_body_schema_privacy",
+                          "safeName": "v_1_vals_post_request_body_schema_privacy"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
+                          "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsPostRequestBodySchemaPrivacy",
+                          "safeName": "V1ValsPostRequestBodySchemaPrivacy"
+                        }
+                      },
+                      "typeId": "V1ValsPostRequestBodySchemaPrivacy",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsPostRequestBodySchemaPrivacy",
-                    "camelCase": {
-                      "unsafeName": "v1ValsPostRequestBodySchemaPrivacy",
-                      "safeName": "v1ValsPostRequestBodySchemaPrivacy"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_post_request_body_schema_privacy",
-                      "safeName": "v_1_vals_post_request_body_schema_privacy"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
-                      "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsPostRequestBodySchemaPrivacy",
-                      "safeName": "V1ValsPostRequestBodySchemaPrivacy"
-                    }
-                  },
-                  "typeId": "V1ValsPostRequestBodySchemaPrivacy",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them."
               },
@@ -11531,32 +11609,38 @@
                   "wireValue": "type"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsPostRequestBodySchemaType",
+                        "camelCase": {
+                          "unsafeName": "v1ValsPostRequestBodySchemaType",
+                          "safeName": "v1ValsPostRequestBodySchemaType"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_post_request_body_schema_type",
+                          "safeName": "v_1_vals_post_request_body_schema_type"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE",
+                          "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsPostRequestBodySchemaType",
+                          "safeName": "V1ValsPostRequestBodySchemaType"
+                        }
+                      },
+                      "typeId": "V1ValsPostRequestBodySchemaType",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsPostRequestBodySchemaType",
-                    "camelCase": {
-                      "unsafeName": "v1ValsPostRequestBodySchemaType",
-                      "safeName": "v1ValsPostRequestBodySchemaType"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_post_request_body_schema_type",
-                      "safeName": "v_1_vals_post_request_body_schema_type"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE",
-                      "safeName": "V_1_VALS_POST_REQUEST_BODY_SCHEMA_TYPE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsPostRequestBodySchemaType",
-                      "safeName": "V1ValsPostRequestBodySchemaType"
-                    }
-                  },
-                  "typeId": "V1ValsPostRequestBodySchemaType",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet."
               }
@@ -12040,17 +12124,23 @@
                   "wireValue": "name"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1,
-                        "maxLength": 48
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1,
+                            "maxLength": 48
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "This val’s name"
               },
@@ -12078,16 +12168,22 @@
                   "wireValue": "readme"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 8192
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 8192
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Readme contents, as Markdown"
               },
@@ -12115,32 +12211,38 @@
                   "wireValue": "privacy"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsValIdPutRequestBodySchemaPrivacy",
+                        "camelCase": {
+                          "unsafeName": "v1ValsValIdPutRequestBodySchemaPrivacy",
+                          "safeName": "v1ValsValIdPutRequestBodySchemaPrivacy"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_val_id_put_request_body_schema_privacy",
+                          "safeName": "v_1_vals_val_id_put_request_body_schema_privacy"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY",
+                          "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsValIdPutRequestBodySchemaPrivacy",
+                          "safeName": "V1ValsValIdPutRequestBodySchemaPrivacy"
+                        }
+                      },
+                      "typeId": "V1ValsValIdPutRequestBodySchemaPrivacy",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsValIdPutRequestBodySchemaPrivacy",
-                    "camelCase": {
-                      "unsafeName": "v1ValsValIdPutRequestBodySchemaPrivacy",
-                      "safeName": "v1ValsValIdPutRequestBodySchemaPrivacy"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_val_id_put_request_body_schema_privacy",
-                      "safeName": "v_1_vals_val_id_put_request_body_schema_privacy"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY",
-                      "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_PRIVACY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsValIdPutRequestBodySchemaPrivacy",
-                      "safeName": "V1ValsValIdPutRequestBodySchemaPrivacy"
-                    }
-                  },
-                  "typeId": "V1ValsValIdPutRequestBodySchemaPrivacy",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them."
               },
@@ -12168,32 +12270,38 @@
                   "wireValue": "type"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsValIdPutRequestBodySchemaType",
+                        "camelCase": {
+                          "unsafeName": "v1ValsValIdPutRequestBodySchemaType",
+                          "safeName": "v1ValsValIdPutRequestBodySchemaType"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_val_id_put_request_body_schema_type",
+                          "safeName": "v_1_vals_val_id_put_request_body_schema_type"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE",
+                          "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsValIdPutRequestBodySchemaType",
+                          "safeName": "V1ValsValIdPutRequestBodySchemaType"
+                        }
+                      },
+                      "typeId": "V1ValsValIdPutRequestBodySchemaType",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsValIdPutRequestBodySchemaType",
-                    "camelCase": {
-                      "unsafeName": "v1ValsValIdPutRequestBodySchemaType",
-                      "safeName": "v1ValsValIdPutRequestBodySchemaType"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_val_id_put_request_body_schema_type",
-                      "safeName": "v_1_vals_val_id_put_request_body_schema_type"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE",
-                      "safeName": "V_1_VALS_VAL_ID_PUT_REQUEST_BODY_SCHEMA_TYPE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsValIdPutRequestBodySchemaType",
-                      "safeName": "V1ValsValIdPutRequestBodySchemaType"
-                    }
-                  },
-                  "typeId": "V1ValsValIdPutRequestBodySchemaType",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet."
               }
@@ -12775,17 +12883,23 @@
                   "wireValue": "name"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1,
-                        "maxLength": 48
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1,
+                            "maxLength": 48
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "This val’s name"
               },
@@ -12813,16 +12927,22 @@
                   "wireValue": "readme"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 8192
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 8192
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Readme contents, as Markdown"
               },
@@ -12850,32 +12970,38 @@
                   "wireValue": "privacy"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+                        "camelCase": {
+                          "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+                          "safeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy",
+                          "safeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
+                          "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+                          "safeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy"
+                        }
+                      },
+                      "typeId": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
-                    "camelCase": {
-                      "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy",
-                      "safeName": "v1ValsValIdVersionsPostRequestBodySchemaPrivacy"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy",
-                      "safeName": "v_1_vals_val_id_versions_post_request_body_schema_privacy"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY",
-                      "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_PRIVACY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
-                      "safeName": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy"
-                    }
-                  },
-                  "typeId": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them."
               },
@@ -12903,32 +13029,38 @@
                   "wireValue": "type"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "V1ValsValIdVersionsPostRequestBodySchemaType",
+                        "camelCase": {
+                          "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaType",
+                          "safeName": "v1ValsValIdVersionsPostRequestBodySchemaType"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_type",
+                          "safeName": "v_1_vals_val_id_versions_post_request_body_schema_type"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE",
+                          "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaType",
+                          "safeName": "V1ValsValIdVersionsPostRequestBodySchemaType"
+                        }
+                      },
+                      "typeId": "V1ValsValIdVersionsPostRequestBodySchemaType",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "V1ValsValIdVersionsPostRequestBodySchemaType",
-                    "camelCase": {
-                      "unsafeName": "v1ValsValIdVersionsPostRequestBodySchemaType",
-                      "safeName": "v1ValsValIdVersionsPostRequestBodySchemaType"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "v_1_vals_val_id_versions_post_request_body_schema_type",
-                      "safeName": "v_1_vals_val_id_versions_post_request_body_schema_type"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE",
-                      "safeName": "V_1_VALS_VAL_ID_VERSIONS_POST_REQUEST_BODY_SCHEMA_TYPE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "V1ValsValIdVersionsPostRequestBodySchemaType",
-                      "safeName": "V1ValsValIdVersionsPostRequestBodySchemaType"
-                    }
-                  },
-                  "typeId": "V1ValsValIdVersionsPostRequestBodySchemaType",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet."
               }
@@ -13919,14 +14051,20 @@
                   "wireValue": "subject"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "The subject line of the email"
               },
@@ -13954,14 +14092,20 @@
                   "wireValue": "text"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Text content of the email, for email clients that may not support HTML"
               },
@@ -13989,14 +14133,20 @@
                   "wireValue": "html"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "HTML content of the email. Can be specified alongside text"
               },
@@ -14025,35 +14175,41 @@
                 },
                 "valueType": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "optional": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                            "camelCase": {
+                              "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItems",
+                              "safeName": "v1EmailPostRequestBodySchemaAttachmentsItems"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "v_1_email_post_request_body_schema_attachments_items",
+                              "safeName": "v_1_email_post_request_body_schema_attachments_items"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS",
+                              "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                              "safeName": "V1EmailPostRequestBodySchemaAttachmentsItems"
+                            }
+                          },
+                          "typeId": "V1EmailPostRequestBodySchemaAttachmentsItems",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "V1EmailPostRequestBodySchemaAttachmentsItems",
-                        "camelCase": {
-                          "unsafeName": "v1EmailPostRequestBodySchemaAttachmentsItems",
-                          "safeName": "v1EmailPostRequestBodySchemaAttachmentsItems"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "v_1_email_post_request_body_schema_attachments_items",
-                          "safeName": "v_1_email_post_request_body_schema_attachments_items"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS",
-                          "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_ATTACHMENTS_ITEMS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "V1EmailPostRequestBodySchemaAttachmentsItems",
-                          "safeName": "V1EmailPostRequestBodySchemaAttachmentsItems"
-                        }
-                      },
-                      "typeId": "V1EmailPostRequestBodySchemaAttachmentsItems",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "optional"
                   },
                   "type": "container"
                 },

@@ -57,16 +57,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -133,16 +139,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

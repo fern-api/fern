@@ -57,14 +57,20 @@
               "wireValue": "type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -91,14 +97,20 @@
               "wireValue": "number"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -125,14 +137,20 @@
               "wireValue": "opening_balance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -159,14 +177,20 @@
               "wireValue": "closing_balance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -193,14 +217,20 @@
               "wireValue": "iso_currency_code"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -319,14 +349,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -482,14 +518,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the account holder"
           }
@@ -594,14 +636,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the account holder"
           },
@@ -1036,14 +1084,20 @@
               "wireValue": "street"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1070,14 +1124,20 @@
               "wireValue": "postcode"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1104,14 +1164,20 @@
               "wireValue": "city"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1138,14 +1204,20 @@
               "wireValue": "state"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1172,14 +1244,20 @@
               "wireValue": "country"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -1379,14 +1457,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the bank statement file, if available."
           },
@@ -1544,14 +1628,20 @@
               "wireValue": "number"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The account number, if available."
           },
@@ -1579,14 +1669,20 @@
               "wireValue": "opening_balance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The opening balance of the account for the statement period."
           },
@@ -1614,14 +1710,20 @@
               "wireValue": "closing_balance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The closing balance of the account for the statement period."
           },
@@ -1649,16 +1751,22 @@
               "wireValue": "start_date"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The start date of the statement period."
           },
@@ -1686,16 +1794,22 @@
               "wireValue": "end_date"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The end date of the statement period."
           },
@@ -1723,13 +1837,19 @@
               "wireValue": "is_balance_reconciled"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Indicates whether the balance has been reconciled."
           },
@@ -1757,14 +1877,20 @@
               "wireValue": "total_incoming"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The sum of amounts of all incoming transactions."
           },
@@ -1792,14 +1918,20 @@
               "wireValue": "total_outgoing"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The sum of amounts of all outgoing transactions."
           },
@@ -2173,14 +2305,20 @@
               "wireValue": "size"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The size of the bank statement file in bytes, if available."
           }
@@ -2606,14 +2744,20 @@
               "wireValue": "running_balance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The account's balance when this transaction was performed"
           }
@@ -3324,14 +3468,20 @@
               "wireValue": "general"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The category of the transaction. View the valid set of categories for your key [here](./docs/v3/enrichment/entities)."
           }
@@ -3653,14 +3803,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique UUID identifier of the entity"
           },
@@ -3688,14 +3844,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the entity"
           },
@@ -3723,14 +3885,20 @@
               "wireValue": "website"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The website URL of the entity"
           },
@@ -3758,14 +3926,20 @@
               "wireValue": "logo"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Logo's URL"
           },
@@ -3794,17 +3968,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -14272,35 +14452,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Intermediary",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "Intermediary",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -14370,14 +14556,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique UUID identifier of the entity"
           },
@@ -14405,14 +14597,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the entity"
           },
@@ -14440,14 +14638,20 @@
               "wireValue": "website"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The website URL of the entity"
           },
@@ -14475,14 +14679,20 @@
               "wireValue": "logo"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Logo's URL"
           },
@@ -14511,17 +14721,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -14678,35 +14894,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ValidationError",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ValidationError",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -14775,14 +14997,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique UUID identifier of the entity"
           },
@@ -14810,14 +15038,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the entity"
           },
@@ -14845,14 +15079,20 @@
               "wireValue": "website"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The website URL of the entity"
           },
@@ -14880,14 +15120,20 @@
               "wireValue": "logo"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Logo's URL"
           },
@@ -14916,17 +15162,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -15134,14 +15386,20 @@
               "wireValue": "raw_address"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "An unstructured string containing the address"
           }
@@ -15209,14 +15467,20 @@
               "wireValue": "raw_address"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "An unstructured string containing the address"
           }
@@ -15285,14 +15549,20 @@
               "wireValue": "street"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The street name and number of the location"
           },
@@ -15320,14 +15590,20 @@
               "wireValue": "city"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The city where the location is situated"
           },
@@ -15355,14 +15631,20 @@
               "wireValue": "state"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The state or region of the location"
           },
@@ -15390,14 +15672,20 @@
               "wireValue": "postcode"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The postal code or ZIP code of the location"
           },
@@ -15425,14 +15713,20 @@
               "wireValue": "country_code"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The country code of the location in ISO 3166-2 format"
           },
@@ -15460,14 +15754,20 @@
               "wireValue": "country"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The full name of the country"
           },
@@ -15495,14 +15795,20 @@
               "wireValue": "latitude"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The latitude coordinate of the location"
           },
@@ -15530,14 +15836,20 @@
               "wireValue": "longitude"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The longitude coordinate of the location"
           },
@@ -15565,14 +15877,20 @@
               "wireValue": "google_maps_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A URL link to view the location on Google Maps"
           },
@@ -15600,14 +15918,20 @@
               "wireValue": "apple_maps_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A URL link to view the location on Apple Maps"
           },
@@ -15635,14 +15959,20 @@
               "wireValue": "store_number"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A unique identifier for a specific store or branch, if applicable"
           }
@@ -16106,14 +16436,20 @@
               "wireValue": "next_cursor"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -17346,14 +17682,20 @@
               "wireValue": "rejection_reason"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "An explanation of why the report was rejected"
           }
@@ -17708,14 +18050,20 @@
               "wireValue": "institution"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -17742,16 +18090,22 @@
               "wireValue": "start_date"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -17778,16 +18132,22 @@
               "wireValue": "end_date"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -17867,35 +18227,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Account",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "Account",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -18555,16 +18921,22 @@
               "wireValue": "account_holder_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique ID of the account holder of the transaction"
           },
@@ -19616,16 +19988,22 @@
               "wireValue": "token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook"
           },
@@ -20102,16 +20480,22 @@
               "wireValue": "token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook"
           }
@@ -20384,18 +20768,24 @@
               "wireValue": "url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1,
-                    "maxLength": 1024,
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The URL of the webhook"
           },
@@ -20424,35 +20814,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "WebhookPatchEventsItems",
+                        "camelCase": {
+                          "unsafeName": "webhookPatchEventsItems",
+                          "safeName": "webhookPatchEventsItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "webhook_patch_events_items",
+                          "safeName": "webhook_patch_events_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "WEBHOOK_PATCH_EVENTS_ITEMS",
+                          "safeName": "WEBHOOK_PATCH_EVENTS_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "WebhookPatchEventsItems",
+                          "safeName": "WebhookPatchEventsItems"
+                        }
+                      },
+                      "typeId": "WebhookPatchEventsItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "WebhookPatchEventsItems",
-                    "camelCase": {
-                      "unsafeName": "webhookPatchEventsItems",
-                      "safeName": "webhookPatchEventsItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "webhook_patch_events_items",
-                      "safeName": "webhook_patch_events_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "WEBHOOK_PATCH_EVENTS_ITEMS",
-                      "safeName": "WEBHOOK_PATCH_EVENTS_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "WebhookPatchEventsItems",
-                      "safeName": "WebhookPatchEventsItems"
-                    }
-                  },
-                  "typeId": "WebhookPatchEventsItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -20482,16 +20878,22 @@
               "wireValue": "token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook"
           },
@@ -20519,13 +20921,19 @@
               "wireValue": "enabled"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Whether the webhook is enabled or not."
           }
@@ -21754,35 +22162,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Action",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "Action",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -21812,35 +22226,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "Action",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "Action",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }

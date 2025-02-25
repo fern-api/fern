@@ -57,14 +57,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -91,14 +97,20 @@
               "wireValue": "username"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -125,14 +137,20 @@
               "wireValue": "email"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -159,16 +177,22 @@
               "wireValue": "createdAt"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -235,14 +259,20 @@
               "wireValue": "accessToken"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -269,14 +299,20 @@
               "wireValue": "tokenType"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -303,14 +339,20 @@
               "wireValue": "expiresIn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

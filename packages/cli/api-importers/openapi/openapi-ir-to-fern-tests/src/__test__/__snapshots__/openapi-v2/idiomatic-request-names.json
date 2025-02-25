@@ -57,14 +57,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -91,14 +97,20 @@
               "wireValue": "email"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -218,35 +230,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "User",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "User",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -315,14 +333,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -349,14 +373,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -383,14 +413,20 @@
               "wireValue": "email"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -417,16 +453,22 @@
               "wireValue": "createdAt"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -597,14 +639,20 @@
               "wireValue": "theme"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -631,13 +679,19 @@
               "wireValue": "notifications"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -664,16 +718,22 @@
               "wireValue": "lastModified"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -849,14 +909,20 @@
               "wireValue": "totalLogins"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -883,16 +949,22 @@
               "wireValue": "lastLoginTime"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -919,32 +991,38 @@
               "wireValue": "accountStatus"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "UserStatsAccountStatus",
+                    "camelCase": {
+                      "unsafeName": "userStatsAccountStatus",
+                      "safeName": "userStatsAccountStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "user_stats_account_status",
+                      "safeName": "user_stats_account_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "USER_STATS_ACCOUNT_STATUS",
+                      "safeName": "USER_STATS_ACCOUNT_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UserStatsAccountStatus",
+                      "safeName": "UserStatsAccountStatus"
+                    }
+                  },
+                  "typeId": "UserStatsAccountStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "UserStatsAccountStatus",
-                "camelCase": {
-                  "unsafeName": "userStatsAccountStatus",
-                  "safeName": "userStatsAccountStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_stats_account_status",
-                  "safeName": "user_stats_account_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_STATS_ACCOUNT_STATUS",
-                  "safeName": "USER_STATS_ACCOUNT_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserStatsAccountStatus",
-                  "safeName": "UserStatsAccountStatus"
-                }
-              },
-              "typeId": "UserStatsAccountStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],

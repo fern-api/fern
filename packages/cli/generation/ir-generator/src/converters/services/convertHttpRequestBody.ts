@@ -25,15 +25,13 @@ export function convertHttpRequestBody({
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
 }): HttpRequestBody | undefined {
-    console.log("REQUEST (v1 convertHttpRequestBody)", JSON.stringify(request, null, 2));
     const bytesRequest = request != null ? parseBytesRequest(request) : undefined;
     if (bytesRequest != null) {
         const response = HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
             contentType: typeof request === "string" ? undefined : request?.["content-type"],
             docs: typeof request === "string" ? undefined : request?.docs
-        })
-        console.log("Bytes", JSON.stringify(response, null, 2));
+        });
         return response;
     }
 
@@ -43,8 +41,7 @@ export function convertHttpRequestBody({
                 requestBody: request,
                 file
             })
-        )
-        console.log("v1 Reference", JSON.stringify(response, null, 2));
+        );
         return response;
     }
 
@@ -97,7 +94,6 @@ export function convertHttpRequestBody({
             }),
             docs: request.docs
         });
-        console.log("v1 File Upload", JSON.stringify(response, null, 2));
         return response;
     }
 
@@ -131,7 +127,6 @@ export function convertHttpRequestBody({
             extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined
         });
-        console.log("v1 Inlined Request Body", JSON.stringify(response, null, 2));
         return response;
     }
 
@@ -142,7 +137,6 @@ export function convertHttpRequestBody({
             contentType: request["content-type"]
         })
     );
-    console.log("v1 Reference", JSON.stringify(response, null, 2));
     return response;
 }
 

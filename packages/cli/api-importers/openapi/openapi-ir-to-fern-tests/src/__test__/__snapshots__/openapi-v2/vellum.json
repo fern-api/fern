@@ -703,14 +703,20 @@
               "wireValue": "source_handle_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -1023,14 +1029,20 @@
               "wireValue": "text"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1057,14 +1069,20 @@
               "wireValue": "delta"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -1579,16 +1597,22 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 1000
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 1000
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded."
           }
@@ -1846,16 +1870,22 @@
               "wireValue": "copy_documents_from_index_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index"
           }
@@ -2232,14 +2262,20 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system."
           },
@@ -2539,14 +2575,20 @@
               "wireValue": "target"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be."
           }
@@ -2614,14 +2656,20 @@
               "wireValue": "target"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be."
           }
@@ -2689,16 +2737,22 @@
               "wireValue": "workflow_deployment_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name."
           },
@@ -2726,16 +2780,22 @@
               "wireValue": "workflow_deployment_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id."
           },
@@ -2763,16 +2823,22 @@
               "wireValue": "release_tag"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
           },
@@ -2858,16 +2924,22 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Optionally include a unique identifier for tracking purposes."
           }
@@ -3045,16 +3117,22 @@
               "wireValue": "deployment_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The ID of the deployment. Must provide either this or deployment_name."
           },
@@ -3082,16 +3160,22 @@
               "wireValue": "deployment_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the deployment. Must provide either this or deployment_id."
           },
@@ -3294,35 +3378,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ChatMessageRequest",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ChatMessageRequest",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -3353,19 +3443,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -3708,16 +3804,22 @@
               "wireValue": "deployment_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The ID of the deployment. Must provide either this or deployment_name."
           },
@@ -3745,16 +3847,22 @@
               "wireValue": "deployment_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the deployment. Must provide either this or deployment_id."
           },
@@ -4853,14 +4961,20 @@
               "wireValue": "prompt_template"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The template used to generate prompts for this model version."
           },
@@ -4940,14 +5054,20 @@
               "wireValue": "prompt_syntax_version"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -5185,17 +5305,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -5224,14 +5350,20 @@
               "wireValue": "top_k"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -5707,16 +5839,22 @@
               "wireValue": "prompt_index"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The index of the prompt in the sandbox snapshot."
           },
@@ -5744,14 +5882,20 @@
               "wireValue": "prompt_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The id of the prompt in the sandbox snapshot."
           },
@@ -6127,14 +6271,20 @@
               "wireValue": "count"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6161,16 +6311,22 @@
               "wireValue": "next"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6197,16 +6353,22 @@
               "wireValue": "previous"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6234,35 +6396,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "SlimDocument",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "SlimDocument",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -6687,14 +6855,20 @@
               "wireValue": "text"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -6721,14 +6895,20 @@
               "wireValue": "delta"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -7237,14 +7417,20 @@
               "wireValue": "chat_message_unterminated"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7271,14 +7457,20 @@
               "wireValue": "template"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7305,14 +7497,20 @@
               "wireValue": "function_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7339,14 +7537,20 @@
               "wireValue": "function_description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7374,35 +7578,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "PromptTemplateBlock",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "PromptTemplateBlock",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -7471,14 +7681,20 @@
               "wireValue": "chat_message_unterminated"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7505,14 +7721,20 @@
               "wireValue": "template"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7539,16 +7761,22 @@
               "wireValue": "function_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7575,16 +7803,22 @@
               "wireValue": "function_description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -7612,35 +7846,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "PromptTemplateBlockRequest",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "PromptTemplateBlockRequest",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -8488,14 +8728,20 @@
               "wireValue": "top_k"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -8740,15 +8986,21 @@
               "wireValue": "prompt_syntax_version"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 2,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 2,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -9677,14 +9929,20 @@
               "wireValue": "text"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -9711,14 +9969,20 @@
               "wireValue": "delta"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -9785,15 +10049,21 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "Untitled Scenario",
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "Untitled Scenario",
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -10040,14 +10310,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -10075,35 +10351,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ChatMessage",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ChatMessage",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -10208,14 +10490,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -10243,35 +10531,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ChatMessageRequest",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ChatMessageRequest",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -10502,19 +10796,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -10777,14 +11077,20 @@
               "wireValue": "text_output_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -10811,14 +11117,20 @@
               "wireValue": "text"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -10885,16 +11197,22 @@
               "wireValue": "index_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The ID of the index to search against. Must provide either this or index_name."
           },
@@ -10922,16 +11240,22 @@
               "wireValue": "index_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the index to search against. Must provide either this or index_id."
           },
@@ -11036,14 +11360,20 @@
               "wireValue": "limit"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The maximum number of results to return."
           }
@@ -11581,16 +11911,22 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 1000
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 1000
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The external ID that was originally provided when uploading the document."
           },
@@ -11693,17 +12029,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -11893,16 +12235,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id."
           },
@@ -11930,16 +12278,22 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id."
           },
@@ -11967,14 +12321,20 @@
               "wireValue": "text"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Text representing what the completion _should_ have been."
           },
@@ -12002,17 +12362,23 @@
               "wireValue": "quality"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {
-                    "max": 1,
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {
+                        "max": 1,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best."
           },
@@ -12040,16 +12406,22 @@
               "wireValue": "timestamp"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes."
           }
@@ -12191,16 +12563,22 @@
               "wireValue": "deployment_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The ID of the deployment. Must provide either this or deployment_name."
           },
@@ -12228,16 +12606,22 @@
               "wireValue": "deployment_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The name of the deployment. Must provide either this or deployment_id."
           },
@@ -13128,14 +13512,20 @@
               "wireValue": "test_case_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended."
           },
@@ -13163,14 +13553,20 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A human-friendly label for the test case."
           }
@@ -13238,16 +13634,22 @@
               "wireValue": "test_case_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended."
           },
@@ -13275,14 +13677,20 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A human-friendly label for the test case."
           }
@@ -13351,19 +13759,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -13393,16 +13807,22 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed."
           },
@@ -13505,19 +13925,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 1
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 1
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -13738,15 +14164,21 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "Untitled Scenario",
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "Untitled Scenario",
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -13832,16 +14264,22 @@
               "wireValue": "scenario_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 1
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended."
           },
@@ -14207,14 +14645,20 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -14401,14 +14845,20 @@
               "wireValue": "external_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -14932,16 +15382,22 @@
               "wireValue": "ts"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -16071,35 +16527,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ChatMessage",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ChatMessage",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }

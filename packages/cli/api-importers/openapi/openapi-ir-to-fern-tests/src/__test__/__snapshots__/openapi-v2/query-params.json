@@ -57,14 +57,20 @@
               "wireValue": "latitude"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -91,14 +97,20 @@
               "wireValue": "longitude"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -165,14 +177,20 @@
               "wireValue": "city"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -199,14 +217,20 @@
               "wireValue": "country"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -233,32 +257,38 @@
               "wireValue": "coordinates"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SearchGetParametersSchemaLocationCoordinates",
+                    "camelCase": {
+                      "unsafeName": "searchGetParametersSchemaLocationCoordinates",
+                      "safeName": "searchGetParametersSchemaLocationCoordinates"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "search_get_parameters_schema_location_coordinates",
+                      "safeName": "search_get_parameters_schema_location_coordinates"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA_LOCATION_COORDINATES",
+                      "safeName": "SEARCH_GET_PARAMETERS_SCHEMA_LOCATION_COORDINATES"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SearchGetParametersSchemaLocationCoordinates",
+                      "safeName": "SearchGetParametersSchemaLocationCoordinates"
+                    }
+                  },
+                  "typeId": "SearchGetParametersSchemaLocationCoordinates",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "SearchGetParametersSchemaLocationCoordinates",
-                "camelCase": {
-                  "unsafeName": "searchGetParametersSchemaLocationCoordinates",
-                  "safeName": "searchGetParametersSchemaLocationCoordinates"
-                },
-                "snakeCase": {
-                  "unsafeName": "search_get_parameters_schema_location_coordinates",
-                  "safeName": "search_get_parameters_schema_location_coordinates"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA_LOCATION_COORDINATES",
-                  "safeName": "SEARCH_GET_PARAMETERS_SCHEMA_LOCATION_COORDINATES"
-                },
-                "pascalCase": {
-                  "unsafeName": "SearchGetParametersSchemaLocationCoordinates",
-                  "safeName": "SearchGetParametersSchemaLocationCoordinates"
-                }
-              },
-              "typeId": "SearchGetParametersSchemaLocationCoordinates",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -411,17 +441,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }

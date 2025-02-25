@@ -699,16 +699,22 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 80
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 80
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`."
           },
@@ -1792,18 +1798,24 @@
               "wireValue": "taxId"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "minLength": 4,
-                    "maxLength": 4,
-                    "pattern": "^[0-9]{4}$"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "minLength": 4,
+                        "maxLength": 4,
+                        "pattern": "^[0-9]{4}$"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll."
           },
@@ -1907,14 +1919,20 @@
               "wireValue": "disallowDebitCardAccess"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "If `true`, the invitee is not allowed to order or manage debit cards for the account."
           }
@@ -3415,16 +3433,22 @@
               "wireValue": "creditOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`."
           },
@@ -3452,16 +3476,22 @@
               "wireValue": "debitOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`."
           }
@@ -3712,16 +3742,22 @@
               "wireValue": "createdOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema."
           },
@@ -3749,16 +3785,22 @@
               "wireValue": "postedOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema."
           },
@@ -3839,13 +3881,19 @@
               "wireValue": "posted"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "If `true`, the transaction has been posted (cleared) and applied to the account. If `false`, the transaction is still pending and might be canceled. `posted` is only valid for credit and debit transactions and omitted for balance transactions."
           },
@@ -3926,16 +3974,22 @@
               "wireValue": "memo"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The user-settable transaction memo."
           },
@@ -3963,16 +4017,22 @@
               "wireValue": "description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The transaction description assigned by the transaction cleansing service."
           },
@@ -4198,16 +4258,22 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 32
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 32
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The merchant\\'s name."
           },
@@ -4235,17 +4301,23 @@
               "wireValue": "website_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 400,
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 400,
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The merchant's website URL."
           },
@@ -4273,17 +4345,23 @@
               "wireValue": "logo_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 400,
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 400,
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters."
           }
@@ -4389,17 +4467,23 @@
               "wireValue": "imageFront_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 400,
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 400,
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The URL for downloading the image of the front of the check."
           },
@@ -4427,17 +4511,23 @@
               "wireValue": "imageBack_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 400,
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 400,
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The URL for downloading the image of the front of the check."
           }
@@ -4982,16 +5072,22 @@
               "wireValue": "scheduledOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format."
           },
@@ -5123,16 +5219,22 @@
               "wireValue": "endsOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`."
           },
@@ -5160,17 +5262,23 @@
               "wireValue": "count"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 1,
-                  "validation": {
-                    "min": 1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 1,
+                      "validation": {
+                        "min": 1
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "For recurring schedules (`frequency` is not `once`), this is the total number of transfers to make, including the first transfer. This property is ignored if `frequency` is `once`."
           },
@@ -5345,16 +5453,22 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 80
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 80
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`."
           },
@@ -5688,16 +5802,22 @@
               "wireValue": "memo"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A customer-defined memo to describe the transfer."
           }
@@ -7358,16 +7478,22 @@
               "wireValue": "createdAt"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable."
           },
@@ -7395,16 +7521,22 @@
               "wireValue": "updatedAt"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable."
           }
@@ -7473,16 +7605,22 @@
               "wireValue": "type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be `\"about:blank\"`.\n"
           },
@@ -7510,14 +7648,20 @@
               "wireValue": "title"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same `type`.\n"
           },
@@ -7545,17 +7689,23 @@
               "wireValue": "status"
             },
             "valueType": {
-              "primitive": {
-                "v1": "INTEGER",
-                "v2": {
-                  "validation": {
-                    "max": 599,
-                    "min": 100
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {
+                        "max": 599,
+                        "min": 100
+                      },
+                      "type": "integer"
+                    }
                   },
-                  "type": "integer"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.\n"
           },
@@ -7583,14 +7733,20 @@
               "wireValue": "detail"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A human-readable explanation specific to this occurrence of the problem.\n"
           },
@@ -7618,16 +7774,22 @@
               "wireValue": "instance"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment\n"
           },
@@ -7762,35 +7924,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "apiProblem",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "apiProblem",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -8511,17 +8679,23 @@
               "wireValue": "nextPage_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 8000,
-                    "format": "uri-reference"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 8000,
+                        "format": "uri-reference"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection."
           }
@@ -8627,16 +8801,22 @@
               "wireValue": "address2"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 35
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 35
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address."
           },
@@ -8833,19 +9013,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 40
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 40
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },

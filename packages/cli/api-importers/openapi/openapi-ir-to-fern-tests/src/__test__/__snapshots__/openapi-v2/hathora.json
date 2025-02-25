@@ -186,32 +186,38 @@
               "wireValue": "google"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ApplicationAuthConfigurationGoogle",
+                    "camelCase": {
+                      "unsafeName": "applicationAuthConfigurationGoogle",
+                      "safeName": "applicationAuthConfigurationGoogle"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "application_auth_configuration_google",
+                      "safeName": "application_auth_configuration_google"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "APPLICATION_AUTH_CONFIGURATION_GOOGLE",
+                      "safeName": "APPLICATION_AUTH_CONFIGURATION_GOOGLE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ApplicationAuthConfigurationGoogle",
+                      "safeName": "ApplicationAuthConfigurationGoogle"
+                    }
+                  },
+                  "typeId": "ApplicationAuthConfigurationGoogle",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ApplicationAuthConfigurationGoogle",
-                "camelCase": {
-                  "unsafeName": "applicationAuthConfigurationGoogle",
-                  "safeName": "applicationAuthConfigurationGoogle"
-                },
-                "snakeCase": {
-                  "unsafeName": "application_auth_configuration_google",
-                  "safeName": "application_auth_configuration_google"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "APPLICATION_AUTH_CONFIGURATION_GOOGLE",
-                  "safeName": "APPLICATION_AUTH_CONFIGURATION_GOOGLE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ApplicationAuthConfigurationGoogle",
-                  "safeName": "ApplicationAuthConfigurationGoogle"
-                }
-              },
-              "typeId": "ApplicationAuthConfigurationGoogle",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -1639,32 +1645,38 @@
               "wireValue": "google"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "AppConfigAuthConfigurationGoogle",
+                    "camelCase": {
+                      "unsafeName": "appConfigAuthConfigurationGoogle",
+                      "safeName": "appConfigAuthConfigurationGoogle"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "app_config_auth_configuration_google",
+                      "safeName": "app_config_auth_configuration_google"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "APP_CONFIG_AUTH_CONFIGURATION_GOOGLE",
+                      "safeName": "APP_CONFIG_AUTH_CONFIGURATION_GOOGLE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "AppConfigAuthConfigurationGoogle",
+                      "safeName": "AppConfigAuthConfigurationGoogle"
+                    }
+                  },
+                  "typeId": "AppConfigAuthConfigurationGoogle",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "AppConfigAuthConfigurationGoogle",
-                "camelCase": {
-                  "unsafeName": "appConfigAuthConfigurationGoogle",
-                  "safeName": "appConfigAuthConfigurationGoogle"
-                },
-                "snakeCase": {
-                  "unsafeName": "app_config_auth_configuration_google",
-                  "safeName": "app_config_auth_configuration_google"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "APP_CONFIG_AUTH_CONFIGURATION_GOOGLE",
-                  "safeName": "APP_CONFIG_AUTH_CONFIGURATION_GOOGLE"
-                },
-                "pascalCase": {
-                  "unsafeName": "AppConfigAuthConfigurationGoogle",
-                  "safeName": "AppConfigAuthConfigurationGoogle"
-                }
-              },
-              "typeId": "AppConfigAuthConfigurationGoogle",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -3969,35 +3981,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "MetricValue",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "MetricValue",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4027,35 +4045,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "MetricValue",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "MetricValue",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4085,35 +4109,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "MetricValue",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "MetricValue",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4143,35 +4173,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "MetricValue",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "MetricValue",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }

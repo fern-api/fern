@@ -57,14 +57,20 @@
               "wireValue": "api_key"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "API key"
           },
@@ -92,13 +98,19 @@
               "wireValue": "created_at"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Creation time of the key"
           },
@@ -126,13 +138,19 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "ID of the key"
           },
@@ -160,14 +178,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Name of the key"
           },
@@ -195,13 +219,19 @@
               "wireValue": "updated_at"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Last updated time of the key"
           },
@@ -229,14 +259,20 @@
               "wireValue": "user_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "User ID to whom the key belongs"
           }
@@ -572,14 +608,20 @@
               "wireValue": "access_token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -606,13 +648,19 @@
               "wireValue": "expires_in"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Expiration time, in seconds from the issue time"
           },
@@ -640,32 +688,38 @@
               "wireValue": "scope"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "AccessTokenScope",
+                    "camelCase": {
+                      "unsafeName": "accessTokenScope",
+                      "safeName": "accessTokenScope"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "access_token_scope",
+                      "safeName": "access_token_scope"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ACCESS_TOKEN_SCOPE",
+                      "safeName": "ACCESS_TOKEN_SCOPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "AccessTokenScope",
+                      "safeName": "AccessTokenScope"
+                    }
+                  },
+                  "typeId": "AccessTokenScope",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "AccessTokenScope",
-                "camelCase": {
-                  "unsafeName": "accessTokenScope",
-                  "safeName": "accessTokenScope"
-                },
-                "snakeCase": {
-                  "unsafeName": "access_token_scope",
-                  "safeName": "access_token_scope"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ACCESS_TOKEN_SCOPE",
-                  "safeName": "ACCESS_TOKEN_SCOPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "AccessTokenScope",
-                  "safeName": "AccessTokenScope"
-                }
-              },
-              "typeId": "AccessTokenScope",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The scope, or a space-delimited list of scopes the token is issued for"
           },
@@ -693,32 +747,38 @@
               "wireValue": "token_type"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "AccessTokenTokenType",
+                    "camelCase": {
+                      "unsafeName": "accessTokenTokenType",
+                      "safeName": "accessTokenTokenType"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "access_token_token_type",
+                      "safeName": "access_token_token_type"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ACCESS_TOKEN_TOKEN_TYPE",
+                      "safeName": "ACCESS_TOKEN_TOKEN_TYPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "AccessTokenTokenType",
+                      "safeName": "AccessTokenTokenType"
+                    }
+                  },
+                  "typeId": "AccessTokenTokenType",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "AccessTokenTokenType",
-                "camelCase": {
-                  "unsafeName": "accessTokenTokenType",
-                  "safeName": "accessTokenTokenType"
-                },
-                "snakeCase": {
-                  "unsafeName": "access_token_token_type",
-                  "safeName": "access_token_token_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ACCESS_TOKEN_TOKEN_TYPE",
-                  "safeName": "ACCESS_TOKEN_TOKEN_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "AccessTokenTokenType",
-                  "safeName": "AccessTokenTokenType"
-                }
-              },
-              "typeId": "AccessTokenTokenType",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Token type"
           }
@@ -1107,32 +1167,38 @@
               "wireValue": "scope"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "CreateAccessTokenRequestScope",
+                    "camelCase": {
+                      "unsafeName": "createAccessTokenRequestScope",
+                      "safeName": "createAccessTokenRequestScope"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "create_access_token_request_scope",
+                      "safeName": "create_access_token_request_scope"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CREATE_ACCESS_TOKEN_REQUEST_SCOPE",
+                      "safeName": "CREATE_ACCESS_TOKEN_REQUEST_SCOPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "CreateAccessTokenRequestScope",
+                      "safeName": "CreateAccessTokenRequestScope"
+                    }
+                  },
+                  "typeId": "CreateAccessTokenRequestScope",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "CreateAccessTokenRequestScope",
-                "camelCase": {
-                  "unsafeName": "createAccessTokenRequestScope",
-                  "safeName": "createAccessTokenRequestScope"
-                },
-                "snakeCase": {
-                  "unsafeName": "create_access_token_request_scope",
-                  "safeName": "create_access_token_request_scope"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATE_ACCESS_TOKEN_REQUEST_SCOPE",
-                  "safeName": "CREATE_ACCESS_TOKEN_REQUEST_SCOPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreateAccessTokenRequestScope",
-                  "safeName": "CreateAccessTokenRequestScope"
-                }
-              },
-              "typeId": "CreateAccessTokenRequestScope",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The scope, or a space-delimited list of scopes the token is requested for\nin: body"
           }
@@ -1200,14 +1266,20 @@
               "wireValue": "locale"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1234,14 +1306,20 @@
               "wireValue": "preview_audio"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -1442,35 +1520,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "CreateVoiceLanguage",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "CreateVoiceLanguage",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -1499,32 +1583,38 @@
               "wireValue": "name"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "CreateVoiceModelName",
+                    "camelCase": {
+                      "unsafeName": "createVoiceModelName",
+                      "safeName": "createVoiceModelName"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "create_voice_model_name",
+                      "safeName": "create_voice_model_name"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CREATE_VOICE_MODEL_NAME",
+                      "safeName": "CREATE_VOICE_MODEL_NAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "CreateVoiceModelName",
+                      "safeName": "CreateVoiceModelName"
+                    }
+                  },
+                  "typeId": "CreateVoiceModelName",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "CreateVoiceModelName",
-                "camelCase": {
-                  "unsafeName": "createVoiceModelName",
-                  "safeName": "createVoiceModelName"
-                },
-                "snakeCase": {
-                  "unsafeName": "create_voice_model_name",
-                  "safeName": "create_voice_model_name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATE_VOICE_MODEL_NAME",
-                  "safeName": "CREATE_VOICE_MODEL_NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreateVoiceModelName",
-                  "safeName": "CreateVoiceModelName"
-                }
-              },
-              "typeId": "CreateVoiceModelName",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -1676,14 +1766,20 @@
               "wireValue": "display_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1710,14 +1806,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -1745,35 +1847,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "CreateVoiceModel",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "CreateVoiceModel",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -1802,32 +1910,38 @@
               "wireValue": "type"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "CreatedVoiceType",
+                    "camelCase": {
+                      "unsafeName": "createdVoiceType",
+                      "safeName": "createdVoiceType"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "created_voice_type",
+                      "safeName": "created_voice_type"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CREATED_VOICE_TYPE",
+                      "safeName": "CREATED_VOICE_TYPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "CreatedVoiceType",
+                      "safeName": "CreatedVoiceType"
+                    }
+                  },
+                  "typeId": "CreatedVoiceType",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "CreatedVoiceType",
-                "camelCase": {
-                  "unsafeName": "createdVoiceType",
-                  "safeName": "createdVoiceType"
-                },
-                "snakeCase": {
-                  "unsafeName": "created_voice_type",
-                  "safeName": "created_voice_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATED_VOICE_TYPE",
-                  "safeName": "CREATED_VOICE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreatedVoiceType",
-                  "safeName": "CreatedVoiceType"
-                }
-              },
-              "typeId": "CreatedVoiceType",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -2087,14 +2201,20 @@
               "wireValue": "language"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support."
           },
@@ -2122,32 +2242,38 @@
               "wireValue": "model"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ExperimentalStreamRequestModel",
+                    "camelCase": {
+                      "unsafeName": "experimentalStreamRequestModel",
+                      "safeName": "experimentalStreamRequestModel"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "experimental_stream_request_model",
+                      "safeName": "experimental_stream_request_model"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "EXPERIMENTAL_STREAM_REQUEST_MODEL",
+                      "safeName": "EXPERIMENTAL_STREAM_REQUEST_MODEL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ExperimentalStreamRequestModel",
+                      "safeName": "ExperimentalStreamRequestModel"
+                    }
+                  },
+                  "typeId": "ExperimentalStreamRequestModel",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ExperimentalStreamRequestModel",
-                "camelCase": {
-                  "unsafeName": "experimentalStreamRequestModel",
-                  "safeName": "experimentalStreamRequestModel"
-                },
-                "snakeCase": {
-                  "unsafeName": "experimental_stream_request_model",
-                  "safeName": "experimental_stream_request_model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EXPERIMENTAL_STREAM_REQUEST_MODEL",
-                  "safeName": "EXPERIMENTAL_STREAM_REQUEST_MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExperimentalStreamRequestModel",
-                  "safeName": "ExperimentalStreamRequestModel"
-                }
-              },
-              "typeId": "ExperimentalStreamRequestModel",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo"
           },
@@ -2251,14 +2377,20 @@
               "wireValue": "audio_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "URL to the synthesized audio file. It includes the expiration time and a signature in the query params.\nThe audio file will be available for download until the expiration time.\nFor the URL to work correctly, it must be used verbatim, with all the query parameters."
           },
@@ -2286,14 +2418,20 @@
               "wireValue": "expires"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Expiry time of the audio file, in ISO-8601 format."
           }
@@ -2362,14 +2500,20 @@
               "wireValue": "loudness_normalization"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": true,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments."
           }
@@ -2754,32 +2898,38 @@
               "wireValue": "audio_format"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetSpeechRequestAudioFormat",
+                    "camelCase": {
+                      "unsafeName": "getSpeechRequestAudioFormat",
+                      "safeName": "getSpeechRequestAudioFormat"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_speech_request_audio_format",
+                      "safeName": "get_speech_request_audio_format"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_SPEECH_REQUEST_AUDIO_FORMAT",
+                      "safeName": "GET_SPEECH_REQUEST_AUDIO_FORMAT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetSpeechRequestAudioFormat",
+                      "safeName": "GetSpeechRequestAudioFormat"
+                    }
+                  },
+                  "typeId": "GetSpeechRequestAudioFormat",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetSpeechRequestAudioFormat",
-                "camelCase": {
-                  "unsafeName": "getSpeechRequestAudioFormat",
-                  "safeName": "getSpeechRequestAudioFormat"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_speech_request_audio_format",
-                  "safeName": "get_speech_request_audio_format"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_SPEECH_REQUEST_AUDIO_FORMAT",
-                  "safeName": "GET_SPEECH_REQUEST_AUDIO_FORMAT"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetSpeechRequestAudioFormat",
-                  "safeName": "GetSpeechRequestAudioFormat"
-                }
-              },
-              "typeId": "GetSpeechRequestAudioFormat",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The format for the output audio. Note, that the current default is \"wav\", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect."
           },
@@ -2842,14 +2992,20 @@
               "wireValue": "language"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support."
           },
@@ -2877,32 +3033,38 @@
               "wireValue": "model"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetSpeechRequestModel",
+                    "camelCase": {
+                      "unsafeName": "getSpeechRequestModel",
+                      "safeName": "getSpeechRequestModel"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_speech_request_model",
+                      "safeName": "get_speech_request_model"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_SPEECH_REQUEST_MODEL",
+                      "safeName": "GET_SPEECH_REQUEST_MODEL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetSpeechRequestModel",
+                      "safeName": "GetSpeechRequestModel"
+                    }
+                  },
+                  "typeId": "GetSpeechRequestModel",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetSpeechRequestModel",
-                "camelCase": {
-                  "unsafeName": "getSpeechRequestModel",
-                  "safeName": "getSpeechRequestModel"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_speech_request_model",
-                  "safeName": "get_speech_request_model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_SPEECH_REQUEST_MODEL",
-                  "safeName": "GET_SPEECH_REQUEST_MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetSpeechRequestModel",
-                  "safeName": "GetSpeechRequestModel"
-                }
-              },
-              "typeId": "GetSpeechRequestModel",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo"
           },
@@ -3193,17 +3355,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "validation": {},
-                      "type": "integer"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "validation": {},
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -3233,32 +3401,38 @@
               "wireValue": "audio_format"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetSpeechResponseAudioFormat",
+                    "camelCase": {
+                      "unsafeName": "getSpeechResponseAudioFormat",
+                      "safeName": "getSpeechResponseAudioFormat"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_speech_response_audio_format",
+                      "safeName": "get_speech_response_audio_format"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_SPEECH_RESPONSE_AUDIO_FORMAT",
+                      "safeName": "GET_SPEECH_RESPONSE_AUDIO_FORMAT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetSpeechResponseAudioFormat",
+                      "safeName": "GetSpeechResponseAudioFormat"
+                    }
+                  },
+                  "typeId": "GetSpeechResponseAudioFormat",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetSpeechResponseAudioFormat",
-                "camelCase": {
-                  "unsafeName": "getSpeechResponseAudioFormat",
-                  "safeName": "getSpeechResponseAudioFormat"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_speech_response_audio_format",
-                  "safeName": "get_speech_response_audio_format"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_SPEECH_RESPONSE_AUDIO_FORMAT",
-                  "safeName": "GET_SPEECH_RESPONSE_AUDIO_FORMAT"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetSpeechResponseAudioFormat",
-                  "safeName": "GetSpeechResponseAudioFormat"
-                }
-              },
-              "typeId": "GetSpeechResponseAudioFormat",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The format of the audio data"
           },
@@ -3286,13 +3460,19 @@
               "wireValue": "billable_characters_count"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The number of billable characters processed in the request."
           },
@@ -3412,14 +3592,20 @@
               "wireValue": "loudness_normalization"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": true,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments."
           }
@@ -3681,14 +3867,20 @@
               "wireValue": "language"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support."
           },
@@ -3716,32 +3908,38 @@
               "wireValue": "model"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetStreamRequestModel",
+                    "camelCase": {
+                      "unsafeName": "getStreamRequestModel",
+                      "safeName": "getStreamRequestModel"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_stream_request_model",
+                      "safeName": "get_stream_request_model"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_STREAM_REQUEST_MODEL",
+                      "safeName": "GET_STREAM_REQUEST_MODEL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetStreamRequestModel",
+                      "safeName": "GetStreamRequestModel"
+                    }
+                  },
+                  "typeId": "GetStreamRequestModel",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetStreamRequestModel",
-                "camelCase": {
-                  "unsafeName": "getStreamRequestModel",
-                  "safeName": "getStreamRequestModel"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_stream_request_model",
-                  "safeName": "get_stream_request_model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_STREAM_REQUEST_MODEL",
-                  "safeName": "GET_STREAM_REQUEST_MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetStreamRequestModel",
-                  "safeName": "GetStreamRequestModel"
-                }
-              },
-              "typeId": "GetStreamRequestModel",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo"
           },
@@ -4091,14 +4289,20 @@
               "wireValue": "avatar_image"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4125,14 +4329,20 @@
               "wireValue": "display_name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4159,32 +4369,38 @@
               "wireValue": "gender"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetVoiceGender",
+                    "camelCase": {
+                      "unsafeName": "getVoiceGender",
+                      "safeName": "getVoiceGender"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_voice_gender",
+                      "safeName": "get_voice_gender"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_VOICE_GENDER",
+                      "safeName": "GET_VOICE_GENDER"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetVoiceGender",
+                      "safeName": "GetVoiceGender"
+                    }
+                  },
+                  "typeId": "GetVoiceGender",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetVoiceGender",
-                "camelCase": {
-                  "unsafeName": "getVoiceGender",
-                  "safeName": "getVoiceGender"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_voice_gender",
-                  "safeName": "get_voice_gender"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_VOICE_GENDER",
-                  "safeName": "GET_VOICE_GENDER"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetVoiceGender",
-                  "safeName": "GetVoiceGender"
-                }
-              },
-              "typeId": "GetVoiceGender",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -4211,14 +4427,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4246,35 +4468,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "GetVoicesModel",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "GetVoicesModel",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4303,14 +4531,20 @@
               "wireValue": "preview_audio"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4338,17 +4572,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4377,32 +4617,38 @@
               "wireValue": "type"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetVoiceType",
+                    "camelCase": {
+                      "unsafeName": "getVoiceType",
+                      "safeName": "getVoiceType"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_voice_type",
+                      "safeName": "get_voice_type"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_VOICE_TYPE",
+                      "safeName": "GET_VOICE_TYPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetVoiceType",
+                      "safeName": "GetVoiceType"
+                    }
+                  },
+                  "typeId": "GetVoiceType",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetVoiceType",
-                "camelCase": {
-                  "unsafeName": "getVoiceType",
-                  "safeName": "getVoiceType"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_voice_type",
-                  "safeName": "get_voice_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_VOICE_TYPE",
-                  "safeName": "GET_VOICE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetVoiceType",
-                  "safeName": "GetVoiceType"
-                }
-              },
-              "typeId": "GetVoiceType",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -4469,14 +4715,20 @@
               "wireValue": "locale"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4503,14 +4755,20 @@
               "wireValue": "preview_audio"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -4711,35 +4969,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "GetVoiceLanguage",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "GetVoiceLanguage",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -4768,32 +5032,38 @@
               "wireValue": "name"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetVoicesModelName",
+                    "camelCase": {
+                      "unsafeName": "getVoicesModelName",
+                      "safeName": "getVoicesModelName"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_voices_model_name",
+                      "safeName": "get_voices_model_name"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_VOICES_MODEL_NAME",
+                      "safeName": "GET_VOICES_MODEL_NAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetVoicesModelName",
+                      "safeName": "GetVoicesModelName"
+                    }
+                  },
+                  "typeId": "GetVoicesModelName",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetVoicesModelName",
-                "camelCase": {
-                  "unsafeName": "getVoicesModelName",
-                  "safeName": "getVoicesModelName"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_voices_model_name",
-                  "safeName": "get_voices_model_name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_VOICES_MODEL_NAME",
-                  "safeName": "GET_VOICES_MODEL_NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetVoicesModelName",
-                  "safeName": "GetVoicesModelName"
-                }
-              },
-              "typeId": "GetVoicesModelName",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -4860,13 +5130,19 @@
               "wireValue": "end"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4893,14 +5169,20 @@
               "wireValue": "end_time"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4927,13 +5209,19 @@
               "wireValue": "start"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4960,14 +5248,20 @@
               "wireValue": "start_time"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -4994,14 +5288,20 @@
               "wireValue": "type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5028,14 +5328,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -5260,32 +5566,38 @@
               "wireValue": "error"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "OAuthErrorError",
+                    "camelCase": {
+                      "unsafeName": "oAuthErrorError",
+                      "safeName": "oAuthErrorError"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "o_auth_error_error",
+                      "safeName": "o_auth_error_error"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "O_AUTH_ERROR_ERROR",
+                      "safeName": "O_AUTH_ERROR_ERROR"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "OAuthErrorError",
+                      "safeName": "OAuthErrorError"
+                    }
+                  },
+                  "typeId": "OAuthErrorError",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "OAuthErrorError",
-                "camelCase": {
-                  "unsafeName": "oAuthErrorError",
-                  "safeName": "oAuthErrorError"
-                },
-                "snakeCase": {
-                  "unsafeName": "o_auth_error_error",
-                  "safeName": "o_auth_error_error"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "O_AUTH_ERROR_ERROR",
-                  "safeName": "O_AUTH_ERROR_ERROR"
-                },
-                "pascalCase": {
-                  "unsafeName": "OAuthErrorError",
-                  "safeName": "OAuthErrorError"
-                }
-              },
-              "typeId": "OAuthErrorError",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -5312,14 +5624,20 @@
               "wireValue": "error_description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -5387,35 +5705,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "NestedChunk",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "NestedChunk",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -5445,13 +5769,19 @@
               "wireValue": "end"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5478,14 +5808,20 @@
               "wireValue": "end_time"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5512,13 +5848,19 @@
               "wireValue": "start"
             },
             "valueType": {
-              "primitive": {
-                "v1": "LONG",
-                "v2": {
-                  "type": "long"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "LONG",
+                    "v2": {
+                      "type": "long"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5545,14 +5887,20 @@
               "wireValue": "start_time"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5579,14 +5927,20 @@
               "wireValue": "type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -5613,14 +5967,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

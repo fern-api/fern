@@ -57,14 +57,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "FLOAT",
-                "v2": {
-                  "validation": {},
-                  "type": "float"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "FLOAT",
+                    "v2": {
+                      "validation": {},
+                      "type": "float"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -132,14 +138,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "FLOAT",
-                "v2": {
-                  "validation": {},
-                  "type": "float"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "FLOAT",
+                    "v2": {
+                      "validation": {},
+                      "type": "float"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -166,14 +178,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "FLOAT",
-                "v2": {
-                  "validation": {},
-                  "type": "float"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "FLOAT",
+                    "v2": {
+                      "validation": {},
+                      "type": "float"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

@@ -112,13 +112,19 @@
               "wireValue": "deprecated_setting"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -145,13 +151,19 @@
               "wireValue": "new_setting"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -218,13 +230,19 @@
               "wireValue": "fine_setting"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -291,13 +309,19 @@
               "wireValue": "not_deprecated_setting"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -1285,13 +1309,19 @@
                   "wireValue": "deprecated_setting"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 }
               },
               {
@@ -1318,13 +1348,19 @@
                   "wireValue": "new_setting"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 }
               }
             ],
@@ -1457,13 +1493,19 @@
                   "wireValue": "fine_setting"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 }
               }
             ],
@@ -1596,13 +1638,19 @@
                   "wireValue": "fine_setting"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 }
               }
             ],

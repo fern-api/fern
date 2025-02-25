@@ -36,6 +36,7 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): ObjectSchemaConverter.Output | undefined {
+        // TODO: return empty object if no properties and set extraProperties to true
         if (!this.schema.properties) {
             return undefined;
         }
@@ -50,7 +51,8 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: propertyBreadcrumbs,
                 schemaOrReference: propertySchema,
-                schemaIdOverride: propertyId
+                schemaIdOverride: propertyId,
+                wrapAsOptional: !this.schema.required?.includes(propertyName)
             });
             const convertedProperty = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedProperty != null) {

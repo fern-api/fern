@@ -35,6 +35,35 @@ export class RequestBodyConverter extends AbstractConverter<
         this.method = method;
     }
 
+    private tryGetConvertedSchema({
+        schemaId,
+        contentType,
+        context,
+        errorCollector
+    }: {
+        schemaId: string;
+        contentType: string;
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): SchemaOrReferenceConverter.Output | undefined {
+        const mediaTypeObject = this.requestBody.content[contentType];
+        if (mediaTypeObject == null || mediaTypeObject.schema == null) {
+            return undefined;
+        }
+
+        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            breadcrumbs: [...this.breadcrumbs, "schema"],
+            schemaOrReference: mediaTypeObject.schema,
+            schemaIdOverride: schemaId
+        });
+        const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+        if (convertedSchema == null) {
+            return undefined;
+        }
+
+        return convertedSchema;
+    }
+
     public convert({
         context,
         errorCollector
@@ -42,25 +71,19 @@ export class RequestBodyConverter extends AbstractConverter<
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): RequestBodyConverter.Output | undefined {
-        console.log("Request Body (v3 RequestBodyConverter)", JSON.stringify(this.requestBody, null, 2));
         if (!this.requestBody.content) {
             return undefined;
         }
 
         const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
         for (const contentType of [...jsonContentTypes]) {
-            const mediaTypeObject = this.requestBody.content[contentType];
-            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
-                continue;
-            }
-
             const schemaId = [...this.group, this.method, "Request"].join("_");
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: mediaTypeObject.schema,
-                schemaIdOverride: schemaId
+            const convertedSchema = this.tryGetConvertedSchema({
+                schemaId,
+                contentType,
+                context,
+                errorCollector
             });
-            const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedSchema == null) {
                 continue;
             }
@@ -86,7 +109,7 @@ export class RequestBodyConverter extends AbstractConverter<
                 const requestBody = HttpRequestBody.reference({
                     contentType,
                     docs: this.requestBody.description,
-                    requestBodyType: convertedSchema.type,
+                    requestBodyType: convertedSchema.type
                 });
 
                 return {
@@ -96,21 +119,17 @@ export class RequestBodyConverter extends AbstractConverter<
             }
         }
 
-        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("multipart")); 
+        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("multipart")
+        );
         for (const contentType of multipartContentTypes) {
-            const mediaTypeObject = this.requestBody.content[contentType];
-            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
-                continue;
-            }
-
             const schemaId = [...this.group, this.method, "Request"].join("_");
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: mediaTypeObject.schema,
-                schemaIdOverride: schemaId
+            const convertedSchema = this.tryGetConvertedSchema({
+                schemaId,
+                contentType,
+                context,
+                errorCollector
             });
-
-            const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedSchema == null) {
                 continue;
             }
@@ -120,21 +139,26 @@ export class RequestBodyConverter extends AbstractConverter<
                     docs: this.requestBody.description,
                     name: context.casingsGenerator.generateName(schemaId),
                     properties: convertedSchema.schema?.shape.properties.map((property) => {
-                        if (property.valueType.type === "primitive" && 
+                        // refactor to helper function
+                        if (
+                            property.valueType.type === "primitive" &&
                             property.valueType.primitive.v2?.type === "string" &&
-                            property.valueType.primitive.v2.validation?.format === "binary") {
-                            return FileUploadRequestProperty.file(FileProperty.file({
-                                key: property.name,
-                                isOptional: false,
-                                contentType,
-                            }));
+                            property.valueType.primitive.v2.validation?.format === "binary"
+                        ) {
+                            return FileUploadRequestProperty.file(
+                                FileProperty.file({
+                                    key: property.name,
+                                    isOptional: false,
+                                    contentType
+                                })
+                            );
                         }
                         return FileUploadRequestProperty.bodyProperty({
                             ...property,
                             contentType,
-                            style: undefined, 
+                            style: undefined,
                             name: property.name
-                        })
+                        });
                     })
                 });
                 return {
@@ -146,7 +170,9 @@ export class RequestBodyConverter extends AbstractConverter<
             }
         }
 
-        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("urlencoded"));
+        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("urlencoded")
+        );
 
         return undefined;
     }

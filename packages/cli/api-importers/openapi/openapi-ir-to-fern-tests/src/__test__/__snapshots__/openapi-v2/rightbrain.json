@@ -173,16 +173,22 @@
               "wireValue": "task_file"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "binary"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "binary"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Image file to be provided to the LLM, only required when `image_required` is set to `true`."
           }
@@ -285,19 +291,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "binary"
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "binary"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -401,19 +413,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "binary"
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "binary"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -1950,14 +1968,20 @@
               "wireValue": "documents_have_been_modified"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -2373,32 +2397,38 @@
               "wireValue": "llm"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ChatConfigInputLlm",
+                    "camelCase": {
+                      "unsafeName": "chatConfigInputLlm",
+                      "safeName": "chatConfigInputLlm"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "chat_config_input_llm",
+                      "safeName": "chat_config_input_llm"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CHAT_CONFIG_INPUT_LLM",
+                      "safeName": "CHAT_CONFIG_INPUT_LLM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ChatConfigInputLlm",
+                      "safeName": "ChatConfigInputLlm"
+                    }
+                  },
+                  "typeId": "ChatConfigInputLlm",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ChatConfigInputLlm",
-                "camelCase": {
-                  "unsafeName": "chatConfigInputLlm",
-                  "safeName": "chatConfigInputLlm"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat_config_input_llm",
-                  "safeName": "chat_config_input_llm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT_CONFIG_INPUT_LLM",
-                  "safeName": "CHAT_CONFIG_INPUT_LLM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ChatConfigInputLlm",
-                  "safeName": "ChatConfigInputLlm"
-                }
-              },
-              "typeId": "ChatConfigInputLlm",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -2425,18 +2455,24 @@
               "wireValue": "temperature"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 0.5,
-                  "validation": {
-                    "max": 1,
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 0.5,
+                      "validation": {
+                        "max": 1,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -2463,15 +2499,21 @@
               "wireValue": "knn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 5,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 5,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -2498,14 +2540,20 @@
               "wireValue": "query_expansion"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval"
           }
@@ -2922,32 +2970,38 @@
               "wireValue": "llm"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ChatConfigOutputLlm",
+                    "camelCase": {
+                      "unsafeName": "chatConfigOutputLlm",
+                      "safeName": "chatConfigOutputLlm"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "chat_config_output_llm",
+                      "safeName": "chat_config_output_llm"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CHAT_CONFIG_OUTPUT_LLM",
+                      "safeName": "CHAT_CONFIG_OUTPUT_LLM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ChatConfigOutputLlm",
+                      "safeName": "ChatConfigOutputLlm"
+                    }
+                  },
+                  "typeId": "ChatConfigOutputLlm",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ChatConfigOutputLlm",
-                "camelCase": {
-                  "unsafeName": "chatConfigOutputLlm",
-                  "safeName": "chatConfigOutputLlm"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat_config_output_llm",
-                  "safeName": "chat_config_output_llm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT_CONFIG_OUTPUT_LLM",
-                  "safeName": "CHAT_CONFIG_OUTPUT_LLM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ChatConfigOutputLlm",
-                  "safeName": "ChatConfigOutputLlm"
-                }
-              },
-              "typeId": "ChatConfigOutputLlm",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -2974,18 +3028,24 @@
               "wireValue": "temperature"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 0.5,
-                  "validation": {
-                    "max": 1,
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 0.5,
+                      "validation": {
+                        "max": 1,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -3012,15 +3072,21 @@
               "wireValue": "knn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 5,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 5,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -3047,14 +3113,20 @@
               "wireValue": "query_expansion"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval"
           }
@@ -4383,35 +4455,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ChatIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "chatIamMemberRoleUpdateAddItems",
+                          "safeName": "chatIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "chat_iam_member_role_update_add_items",
+                          "safeName": "chat_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ChatIamMemberRoleUpdateAddItems",
+                          "safeName": "ChatIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "ChatIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "ChatIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "chatIamMemberRoleUpdateAddItems",
-                      "safeName": "chatIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "chat_iam_member_role_update_add_items",
-                      "safeName": "chat_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ChatIamMemberRoleUpdateAddItems",
-                      "safeName": "ChatIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "ChatIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -4442,35 +4520,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ChatIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "chatIamMemberRoleUpdateRemoveItems",
+                          "safeName": "chatIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "chat_iam_member_role_update_remove_items",
+                          "safeName": "chat_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ChatIamMemberRoleUpdateRemoveItems",
+                          "safeName": "ChatIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "ChatIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "ChatIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "chatIamMemberRoleUpdateRemoveItems",
-                      "safeName": "chatIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "chat_iam_member_role_update_remove_items",
-                      "safeName": "chat_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "CHAT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ChatIamMemberRoleUpdateRemoveItems",
-                      "safeName": "ChatIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "ChatIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -5728,35 +5812,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ChatDocumentEmbeddingInstance",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ChatDocumentEmbeddingInstance",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -5945,19 +6035,25 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "uuid"
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "uuid"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -6328,35 +6424,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "CollectionIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "collectionIamMemberRoleUpdateAddItems",
+                          "safeName": "collectionIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "collection_iam_member_role_update_add_items",
+                          "safeName": "collection_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "CollectionIamMemberRoleUpdateAddItems",
+                          "safeName": "CollectionIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "CollectionIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "CollectionIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "collectionIamMemberRoleUpdateAddItems",
-                      "safeName": "collectionIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "collection_iam_member_role_update_add_items",
-                      "safeName": "collection_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "CollectionIamMemberRoleUpdateAddItems",
-                      "safeName": "CollectionIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "CollectionIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -6387,35 +6489,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "CollectionIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "collectionIamMemberRoleUpdateRemoveItems",
+                          "safeName": "collectionIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "collection_iam_member_role_update_remove_items",
+                          "safeName": "collection_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "CollectionIamMemberRoleUpdateRemoveItems",
+                          "safeName": "CollectionIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "CollectionIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "CollectionIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "collectionIamMemberRoleUpdateRemoveItems",
-                      "safeName": "collectionIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "collection_iam_member_role_update_remove_items",
-                      "safeName": "collection_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "COLLECTION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "CollectionIamMemberRoleUpdateRemoveItems",
-                      "safeName": "CollectionIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "CollectionIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -7697,32 +7805,38 @@
               "wireValue": "language"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ComposeInitLanguage",
+                    "camelCase": {
+                      "unsafeName": "composeInitLanguage",
+                      "safeName": "composeInitLanguage"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "compose_init_language",
+                      "safeName": "compose_init_language"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "COMPOSE_INIT_LANGUAGE",
+                      "safeName": "COMPOSE_INIT_LANGUAGE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ComposeInitLanguage",
+                      "safeName": "ComposeInitLanguage"
+                    }
+                  },
+                  "typeId": "ComposeInitLanguage",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ComposeInitLanguage",
-                "camelCase": {
-                  "unsafeName": "composeInitLanguage",
-                  "safeName": "composeInitLanguage"
-                },
-                "snakeCase": {
-                  "unsafeName": "compose_init_language",
-                  "safeName": "compose_init_language"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "COMPOSE_INIT_LANGUAGE",
-                  "safeName": "COMPOSE_INIT_LANGUAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ComposeInitLanguage",
-                  "safeName": "ComposeInitLanguage"
-                }
-              },
-              "typeId": "ComposeInitLanguage",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -8011,15 +8125,21 @@
               "wireValue": "category"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "blog",
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "blog",
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -8121,35 +8241,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "InputConversationalGuardrailDefinition",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "InputConversationalGuardrailDefinition",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -8180,35 +8306,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "OutputConversationalGuardrailDefinition",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "OutputConversationalGuardrailDefinition",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -8495,15 +8627,21 @@
               "wireValue": "token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -9150,32 +9288,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "DatasourceSyncRunStatus",
+                    "camelCase": {
+                      "unsafeName": "datasourceSyncRunStatus",
+                      "safeName": "datasourceSyncRunStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "datasource_sync_run_status",
+                      "safeName": "datasource_sync_run_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "DATASOURCE_SYNC_RUN_STATUS",
+                      "safeName": "DATASOURCE_SYNC_RUN_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "DatasourceSyncRunStatus",
+                      "safeName": "DatasourceSyncRunStatus"
+                    }
+                  },
+                  "typeId": "DatasourceSyncRunStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "DatasourceSyncRunStatus",
-                "camelCase": {
-                  "unsafeName": "datasourceSyncRunStatus",
-                  "safeName": "datasourceSyncRunStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "datasource_sync_run_status",
-                  "safeName": "datasource_sync_run_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DATASOURCE_SYNC_RUN_STATUS",
-                  "safeName": "DATASOURCE_SYNC_RUN_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "DatasourceSyncRunStatus",
-                  "safeName": "DatasourceSyncRunStatus"
-                }
-              },
-              "typeId": "DatasourceSyncRunStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -9876,35 +10020,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "DocumentIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "documentIamMemberRoleUpdateAddItems",
+                          "safeName": "documentIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "document_iam_member_role_update_add_items",
+                          "safeName": "document_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "DocumentIamMemberRoleUpdateAddItems",
+                          "safeName": "DocumentIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "DocumentIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "DocumentIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "documentIamMemberRoleUpdateAddItems",
-                      "safeName": "documentIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "document_iam_member_role_update_add_items",
-                      "safeName": "document_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "DocumentIamMemberRoleUpdateAddItems",
-                      "safeName": "DocumentIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "DocumentIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -9935,35 +10085,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "DocumentIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "documentIamMemberRoleUpdateRemoveItems",
+                          "safeName": "documentIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "document_iam_member_role_update_remove_items",
+                          "safeName": "document_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "DocumentIamMemberRoleUpdateRemoveItems",
+                          "safeName": "DocumentIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "DocumentIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "DocumentIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "documentIamMemberRoleUpdateRemoveItems",
-                      "safeName": "documentIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "document_iam_member_role_update_remove_items",
-                      "safeName": "document_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "DOCUMENT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "DocumentIamMemberRoleUpdateRemoveItems",
-                      "safeName": "DocumentIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "DocumentIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -10576,35 +10732,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ValidationError",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ValidationError",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -10927,17 +11089,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -10967,15 +11135,21 @@
               "wireValue": "total_subjects"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 1,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 1,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The total number of subjects that the member represents, which may be a value other than `1` if the member is not a User."
           }
@@ -12607,35 +12781,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "KratosWebhookDetailedMessage",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "KratosWebhookDetailedMessage",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -13607,15 +13787,21 @@
               "wireValue": "scope"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -13883,14 +14069,20 @@
               "wireValue": "synced"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -13918,35 +14110,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "ObjectTags",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "ObjectTags",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -15402,35 +15600,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "OrganizationIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "organizationIamMemberRoleUpdateAddItems",
+                          "safeName": "organizationIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "organization_iam_member_role_update_add_items",
+                          "safeName": "organization_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "OrganizationIamMemberRoleUpdateAddItems",
+                          "safeName": "OrganizationIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "OrganizationIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "OrganizationIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "organizationIamMemberRoleUpdateAddItems",
-                      "safeName": "organizationIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "organization_iam_member_role_update_add_items",
-                      "safeName": "organization_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "OrganizationIamMemberRoleUpdateAddItems",
-                      "safeName": "OrganizationIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "OrganizationIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -15461,35 +15665,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "OrganizationIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "organizationIamMemberRoleUpdateRemoveItems",
+                          "safeName": "organizationIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "organization_iam_member_role_update_remove_items",
+                          "safeName": "organization_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "OrganizationIamMemberRoleUpdateRemoveItems",
+                          "safeName": "OrganizationIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "OrganizationIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "OrganizationIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "organizationIamMemberRoleUpdateRemoveItems",
-                      "safeName": "organizationIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "organization_iam_member_role_update_remove_items",
-                      "safeName": "organization_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "ORGANIZATION_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "OrganizationIamMemberRoleUpdateRemoveItems",
-                      "safeName": "OrganizationIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "OrganizationIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -18743,32 +18953,38 @@
               "wireValue": "llm"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ProjectConfigInputLlm",
+                    "camelCase": {
+                      "unsafeName": "projectConfigInputLlm",
+                      "safeName": "projectConfigInputLlm"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "project_config_input_llm",
+                      "safeName": "project_config_input_llm"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PROJECT_CONFIG_INPUT_LLM",
+                      "safeName": "PROJECT_CONFIG_INPUT_LLM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ProjectConfigInputLlm",
+                      "safeName": "ProjectConfigInputLlm"
+                    }
+                  },
+                  "typeId": "ProjectConfigInputLlm",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ProjectConfigInputLlm",
-                "camelCase": {
-                  "unsafeName": "projectConfigInputLlm",
-                  "safeName": "projectConfigInputLlm"
-                },
-                "snakeCase": {
-                  "unsafeName": "project_config_input_llm",
-                  "safeName": "project_config_input_llm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PROJECT_CONFIG_INPUT_LLM",
-                  "safeName": "PROJECT_CONFIG_INPUT_LLM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ProjectConfigInputLlm",
-                  "safeName": "ProjectConfigInputLlm"
-                }
-              },
-              "typeId": "ProjectConfigInputLlm",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -18795,18 +19011,24 @@
               "wireValue": "temperature"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 0.5,
-                  "validation": {
-                    "max": 1,
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 0.5,
+                      "validation": {
+                        "max": 1,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -18833,15 +19055,21 @@
               "wireValue": "knn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 4,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 4,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -18868,14 +19096,20 @@
               "wireValue": "query_expansion"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval"
           }
@@ -19292,32 +19526,38 @@
               "wireValue": "llm"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ProjectConfigOutputLlm",
+                    "camelCase": {
+                      "unsafeName": "projectConfigOutputLlm",
+                      "safeName": "projectConfigOutputLlm"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "project_config_output_llm",
+                      "safeName": "project_config_output_llm"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PROJECT_CONFIG_OUTPUT_LLM",
+                      "safeName": "PROJECT_CONFIG_OUTPUT_LLM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ProjectConfigOutputLlm",
+                      "safeName": "ProjectConfigOutputLlm"
+                    }
+                  },
+                  "typeId": "ProjectConfigOutputLlm",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ProjectConfigOutputLlm",
-                "camelCase": {
-                  "unsafeName": "projectConfigOutputLlm",
-                  "safeName": "projectConfigOutputLlm"
-                },
-                "snakeCase": {
-                  "unsafeName": "project_config_output_llm",
-                  "safeName": "project_config_output_llm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PROJECT_CONFIG_OUTPUT_LLM",
-                  "safeName": "PROJECT_CONFIG_OUTPUT_LLM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ProjectConfigOutputLlm",
-                  "safeName": "ProjectConfigOutputLlm"
-                }
-              },
-              "typeId": "ProjectConfigOutputLlm",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -19344,18 +19584,24 @@
               "wireValue": "temperature"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 0.5,
-                  "validation": {
-                    "max": 1,
-                    "min": 0
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 0.5,
+                      "validation": {
+                        "max": 1,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -19382,15 +19628,21 @@
               "wireValue": "knn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 4,
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 4,
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -19417,14 +19669,20 @@
               "wireValue": "query_expansion"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval"
           }
@@ -20025,35 +20283,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ProjectIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "projectIamMemberRoleUpdateAddItems",
+                          "safeName": "projectIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "project_iam_member_role_update_add_items",
+                          "safeName": "project_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ProjectIamMemberRoleUpdateAddItems",
+                          "safeName": "ProjectIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "ProjectIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "ProjectIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "projectIamMemberRoleUpdateAddItems",
-                      "safeName": "projectIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "project_iam_member_role_update_add_items",
-                      "safeName": "project_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ProjectIamMemberRoleUpdateAddItems",
-                      "safeName": "ProjectIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "ProjectIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -20084,35 +20348,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ProjectIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "projectIamMemberRoleUpdateRemoveItems",
+                          "safeName": "projectIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "project_iam_member_role_update_remove_items",
+                          "safeName": "project_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ProjectIamMemberRoleUpdateRemoveItems",
+                          "safeName": "ProjectIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "ProjectIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "ProjectIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "projectIamMemberRoleUpdateRemoveItems",
-                      "safeName": "projectIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "project_iam_member_role_update_remove_items",
-                      "safeName": "project_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "PROJECT_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ProjectIamMemberRoleUpdateRemoveItems",
-                      "safeName": "ProjectIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "ProjectIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -21049,35 +21319,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "",
+                        "camelCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "snakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        },
+                        "pascalCase": {
+                          "unsafeName": "",
+                          "safeName": ""
+                        }
+                      },
+                      "typeId": "DatasourceConnectionPublic",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "",
-                    "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    },
-                    "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
-                    }
-                  },
-                  "typeId": "DatasourceConnectionPublic",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -21189,17 +21465,23 @@
               "wireValue": "max_crawl_depth"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 3,
-                  "validation": {
-                    "max": 7
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 3,
+                      "validation": {
+                        "max": 7
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -22340,14 +22622,20 @@
               "wireValue": "image_required"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "When `true` it requires an image to be sent in the Task Run request."
           },
@@ -23151,35 +23439,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "TaskIamMemberRoleUpdateAddItems",
+                        "camelCase": {
+                          "unsafeName": "taskIamMemberRoleUpdateAddItems",
+                          "safeName": "taskIamMemberRoleUpdateAddItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "task_iam_member_role_update_add_items",
+                          "safeName": "task_iam_member_role_update_add_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TASK_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
+                          "safeName": "TASK_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TaskIamMemberRoleUpdateAddItems",
+                          "safeName": "TaskIamMemberRoleUpdateAddItems"
+                        }
+                      },
+                      "typeId": "TaskIamMemberRoleUpdateAddItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "TaskIamMemberRoleUpdateAddItems",
-                    "camelCase": {
-                      "unsafeName": "taskIamMemberRoleUpdateAddItems",
-                      "safeName": "taskIamMemberRoleUpdateAddItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "task_iam_member_role_update_add_items",
-                      "safeName": "task_iam_member_role_update_add_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TASK_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS",
-                      "safeName": "TASK_IAM_MEMBER_ROLE_UPDATE_ADD_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TaskIamMemberRoleUpdateAddItems",
-                      "safeName": "TaskIamMemberRoleUpdateAddItems"
-                    }
-                  },
-                  "typeId": "TaskIamMemberRoleUpdateAddItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -23210,35 +23504,41 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                "optional": {
+                  "container": {
+                    "list": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "TaskIamMemberRoleUpdateRemoveItems",
+                        "camelCase": {
+                          "unsafeName": "taskIamMemberRoleUpdateRemoveItems",
+                          "safeName": "taskIamMemberRoleUpdateRemoveItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "task_iam_member_role_update_remove_items",
+                          "safeName": "task_iam_member_role_update_remove_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TASK_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
+                          "safeName": "TASK_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TaskIamMemberRoleUpdateRemoveItems",
+                          "safeName": "TaskIamMemberRoleUpdateRemoveItems"
+                        }
+                      },
+                      "typeId": "TaskIamMemberRoleUpdateRemoveItems",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "list"
                   },
-                  "name": {
-                    "originalName": "TaskIamMemberRoleUpdateRemoveItems",
-                    "camelCase": {
-                      "unsafeName": "taskIamMemberRoleUpdateRemoveItems",
-                      "safeName": "taskIamMemberRoleUpdateRemoveItems"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "task_iam_member_role_update_remove_items",
-                      "safeName": "task_iam_member_role_update_remove_items"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TASK_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS",
-                      "safeName": "TASK_IAM_MEMBER_ROLE_UPDATE_REMOVE_ITEMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TaskIamMemberRoleUpdateRemoveItems",
-                      "safeName": "TaskIamMemberRoleUpdateRemoveItems"
-                    }
-                  },
-                  "typeId": "TaskIamMemberRoleUpdateRemoveItems",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -23684,19 +23984,25 @@
               "wireValue": "temperature"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 0.2,
-                  "validation": {
-                    "max": 1,
-                    "min": 0,
-                    "multipleOf": 0.1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 0.2,
+                      "validation": {
+                        "max": 1,
+                        "min": 0,
+                        "multipleOf": 0.1
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Controls randomness in the output. Lower values make the output more focused and deterministic, while higher values make it more creative and diverse."
           }
@@ -24253,14 +24559,20 @@
               "wireValue": "image_required"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "When `true` it requires an image to be sent in the Task Run request."
           },
@@ -24399,14 +24711,20 @@
               "wireValue": "active"
             },
             "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "default": false,
-                  "type": "boolean"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "default": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "When `true` the Revision is the currently active version and will be activated when the Task Run is executed."
           }

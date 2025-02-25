@@ -124,21 +124,27 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 50,
-                  "validation": {
-                    "max": 100,
-                    "min": 10,
-                    "exclusiveMax": false,
-                    "exclusiveMin": true,
-                    "multipleOf": 10
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 50,
+                      "validation": {
+                        "max": 100,
+                        "min": 10,
+                        "exclusiveMax": false,
+                        "exclusiveMin": true,
+                        "multipleOf": 10
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique ID of the type."
           },
@@ -166,21 +172,27 @@
               "wireValue": "age"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 50,
-                  "validation": {
-                    "max": 2147483648,
-                    "min": -2147483649,
-                    "exclusiveMax": false,
-                    "exclusiveMin": true,
-                    "multipleOf": 10
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 50,
+                      "validation": {
+                        "max": 2147483648,
+                        "min": -2147483649,
+                        "exclusiveMax": false,
+                        "exclusiveMin": true,
+                        "multipleOf": 10
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The age of the type."
           },
@@ -208,20 +220,26 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "type",
-                  "validation": {
-                    "minLength": 3,
-                    "maxLength": 10,
-                    "pattern": "^[a-zA-Z0-9]*$",
-                    "format": "custom"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "type",
+                      "validation": {
+                        "minLength": 3,
+                        "maxLength": 10,
+                        "pattern": "^[a-zA-Z0-9]*$",
+                        "format": "custom"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The unique name of the type."
           },
@@ -249,19 +267,25 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "default": 1.1,
-                  "validation": {
-                    "max": 2.2,
-                    "min": 1.1,
-                    "multipleOf": 1.1
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": 1.1,
+                      "validation": {
+                        "max": 2.2,
+                        "min": 1.1,
+                        "multipleOf": 1.1
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The value of the type."
           }
@@ -329,14 +353,20 @@
               "wireValue": "message"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

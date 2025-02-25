@@ -135,13 +135,19 @@
                   "wireValue": "send"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 }
               }
             ],

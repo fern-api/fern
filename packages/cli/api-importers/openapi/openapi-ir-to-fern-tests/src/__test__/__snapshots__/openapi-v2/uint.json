@@ -57,14 +57,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "INTEGER",
-                "v2": {
-                  "validation": {},
-                  "type": "integer"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {},
+                      "type": "integer"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -91,14 +97,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "UINT_64",
-                "v2": {
-                  "validation": {},
-                  "type": "uint64"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "UINT_64",
+                    "v2": {
+                      "validation": {},
+                      "type": "uint64"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -166,14 +178,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "INTEGER",
-                "v2": {
-                  "validation": {},
-                  "type": "integer"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {},
+                      "type": "integer"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -200,14 +218,20 @@
               "wireValue": "value"
             },
             "valueType": {
-              "primitive": {
-                "v1": "UINT_64",
-                "v2": {
-                  "validation": {},
-                  "type": "uint64"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "UINT_64",
+                    "v2": {
+                      "validation": {},
+                      "type": "uint64"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],

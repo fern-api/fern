@@ -58,17 +58,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -224,17 +230,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             }
@@ -887,32 +899,38 @@
                   "wireValue": "access"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+                        "camelCase": {
+                          "unsafeName": "organizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+                          "safeName": "organizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "organizations_organization_id_search_post_request_body_schema_access",
+                          "safeName": "organizations_organization_id_search_post_request_body_schema_access"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ORGANIZATIONS_ORGANIZATION_ID_SEARCH_POST_REQUEST_BODY_SCHEMA_ACCESS",
+                          "safeName": "ORGANIZATIONS_ORGANIZATION_ID_SEARCH_POST_REQUEST_BODY_SCHEMA_ACCESS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+                          "safeName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        }
+                      },
+                      "typeId": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
-                    "camelCase": {
-                      "unsafeName": "organizationsOrganizationIdSearchPostRequestBodySchemaAccess",
-                      "safeName": "organizationsOrganizationIdSearchPostRequestBodySchemaAccess"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "organizations_organization_id_search_post_request_body_schema_access",
-                      "safeName": "organizations_organization_id_search_post_request_body_schema_access"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ORGANIZATIONS_ORGANIZATION_ID_SEARCH_POST_REQUEST_BODY_SCHEMA_ACCESS",
-                      "safeName": "ORGANIZATIONS_ORGANIZATION_ID_SEARCH_POST_REQUEST_BODY_SCHEMA_ACCESS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
-                      "safeName": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
-                    }
-                  },
-                  "typeId": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Access level"
               }

@@ -953,14 +953,20 @@
               "wireValue": "s3_bucket"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project."
           }
@@ -1115,32 +1121,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "FileUploadInfoWaitingStatusStatus",
+                    "camelCase": {
+                      "unsafeName": "fileUploadInfoWaitingStatusStatus",
+                      "safeName": "fileUploadInfoWaitingStatusStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file_upload_info_waiting_status_status",
+                      "safeName": "file_upload_info_waiting_status_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE_UPLOAD_INFO_WAITING_STATUS_STATUS",
+                      "safeName": "FILE_UPLOAD_INFO_WAITING_STATUS_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FileUploadInfoWaitingStatusStatus",
+                      "safeName": "FileUploadInfoWaitingStatusStatus"
+                    }
+                  },
+                  "typeId": "FileUploadInfoWaitingStatusStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "FileUploadInfoWaitingStatusStatus",
-                "camelCase": {
-                  "unsafeName": "fileUploadInfoWaitingStatusStatus",
-                  "safeName": "fileUploadInfoWaitingStatusStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "file_upload_info_waiting_status_status",
-                  "safeName": "file_upload_info_waiting_status_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FILE_UPLOAD_INFO_WAITING_STATUS_STATUS",
-                  "safeName": "FILE_UPLOAD_INFO_WAITING_STATUS_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "FileUploadInfoWaitingStatusStatus",
-                  "safeName": "FileUploadInfoWaitingStatusStatus"
-                }
-              },
-              "typeId": "FileUploadInfoWaitingStatusStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The system is preparing to handle the request.\n"
           }
@@ -1294,32 +1306,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "FileUploadInfoProgressStatusStatus",
+                    "camelCase": {
+                      "unsafeName": "fileUploadInfoProgressStatusStatus",
+                      "safeName": "fileUploadInfoProgressStatusStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file_upload_info_progress_status_status",
+                      "safeName": "file_upload_info_progress_status_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE_UPLOAD_INFO_PROGRESS_STATUS_STATUS",
+                      "safeName": "FILE_UPLOAD_INFO_PROGRESS_STATUS_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FileUploadInfoProgressStatusStatus",
+                      "safeName": "FileUploadInfoProgressStatusStatus"
+                    }
+                  },
+                  "typeId": "FileUploadInfoProgressStatusStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "FileUploadInfoProgressStatusStatus",
-                "camelCase": {
-                  "unsafeName": "fileUploadInfoProgressStatusStatus",
-                  "safeName": "fileUploadInfoProgressStatusStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "file_upload_info_progress_status_status",
-                  "safeName": "file_upload_info_progress_status_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FILE_UPLOAD_INFO_PROGRESS_STATUS_STATUS",
-                  "safeName": "FILE_UPLOAD_INFO_PROGRESS_STATUS_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "FileUploadInfoProgressStatusStatus",
-                  "safeName": "FileUploadInfoProgressStatusStatus"
-                }
-              },
-              "typeId": "FileUploadInfoProgressStatusStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The system is fetching/uploading the file.\n"
           },
@@ -1347,14 +1365,20 @@
               "wireValue": "total"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The expected size of the fetched file (in bytes).\n\n**Note:** the value can be missing if the server we are fetching the file from\ndoes not provide the information or if the server is returning the file in, for\nexample, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).\n"
           },
@@ -1382,14 +1406,20 @@
               "wireValue": "done"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "How many bytes of the file have been fetched so far.\n"
           }
@@ -1543,32 +1573,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "FileUploadInfoErrorStatusStatus",
+                    "camelCase": {
+                      "unsafeName": "fileUploadInfoErrorStatusStatus",
+                      "safeName": "fileUploadInfoErrorStatusStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file_upload_info_error_status_status",
+                      "safeName": "file_upload_info_error_status_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE_UPLOAD_INFO_ERROR_STATUS_STATUS",
+                      "safeName": "FILE_UPLOAD_INFO_ERROR_STATUS_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FileUploadInfoErrorStatusStatus",
+                      "safeName": "FileUploadInfoErrorStatusStatus"
+                    }
+                  },
+                  "typeId": "FileUploadInfoErrorStatusStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "FileUploadInfoErrorStatusStatus",
-                "camelCase": {
-                  "unsafeName": "fileUploadInfoErrorStatusStatus",
-                  "safeName": "fileUploadInfoErrorStatusStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "file_upload_info_error_status_status",
-                  "safeName": "file_upload_info_error_status_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FILE_UPLOAD_INFO_ERROR_STATUS_STATUS",
-                  "safeName": "FILE_UPLOAD_INFO_ERROR_STATUS_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "FileUploadInfoErrorStatusStatus",
-                  "safeName": "FileUploadInfoErrorStatusStatus"
-                }
-              },
-              "typeId": "FileUploadInfoErrorStatusStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The system failed to fetch and/or upload the file.\n"
           },
@@ -1596,14 +1632,20 @@
               "wireValue": "error"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Human readable description of the issue with the fetch/upload task.\n"
           },
@@ -1631,14 +1673,20 @@
               "wireValue": "error_code"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Machine readable error code.\n\nNote: See the [Errors > FromURL upload errors](#tag/Errors) section of this\npage for a full list of all possible error codes.\n"
           }
@@ -1792,32 +1840,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "FileUploadInfoUnknownStatusStatus",
+                    "camelCase": {
+                      "unsafeName": "fileUploadInfoUnknownStatusStatus",
+                      "safeName": "fileUploadInfoUnknownStatusStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file_upload_info_unknown_status_status",
+                      "safeName": "file_upload_info_unknown_status_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE_UPLOAD_INFO_UNKNOWN_STATUS_STATUS",
+                      "safeName": "FILE_UPLOAD_INFO_UNKNOWN_STATUS_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FileUploadInfoUnknownStatusStatus",
+                      "safeName": "FileUploadInfoUnknownStatusStatus"
+                    }
+                  },
+                  "typeId": "FileUploadInfoUnknownStatusStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "FileUploadInfoUnknownStatusStatus",
-                "camelCase": {
-                  "unsafeName": "fileUploadInfoUnknownStatusStatus",
-                  "safeName": "fileUploadInfoUnknownStatusStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "file_upload_info_unknown_status_status",
-                  "safeName": "file_upload_info_unknown_status_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FILE_UPLOAD_INFO_UNKNOWN_STATUS_STATUS",
-                  "safeName": "FILE_UPLOAD_INFO_UNKNOWN_STATUS_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "FileUploadInfoUnknownStatusStatus",
-                  "safeName": "FileUploadInfoUnknownStatusStatus"
-                }
-              },
-              "typeId": "FileUploadInfoUnknownStatusStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "The system does not have information about the task.\n\nNote: Uploadcare stores information about the `/from_url/` tasks for a limited\nperiod of time only. The endpoint can return the status `unknown` for the tasks\nthat are tool old (or that have not been created at all).\n"
           }
@@ -1946,32 +2000,38 @@
               "wireValue": "type"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "FromUrlUploadResponseSchemaType",
+                    "camelCase": {
+                      "unsafeName": "fromUrlUploadResponseSchemaType",
+                      "safeName": "fromUrlUploadResponseSchemaType"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "from_url_upload_response_schema_type",
+                      "safeName": "from_url_upload_response_schema_type"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FROM_URL_UPLOAD_RESPONSE_SCHEMA_TYPE",
+                      "safeName": "FROM_URL_UPLOAD_RESPONSE_SCHEMA_TYPE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FromUrlUploadResponseSchemaType",
+                      "safeName": "FromUrlUploadResponseSchemaType"
+                    }
+                  },
+                  "typeId": "FromUrlUploadResponseSchemaType",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "FromUrlUploadResponseSchemaType",
-                "camelCase": {
-                  "unsafeName": "fromUrlUploadResponseSchemaType",
-                  "safeName": "fromUrlUploadResponseSchemaType"
-                },
-                "snakeCase": {
-                  "unsafeName": "from_url_upload_response_schema_type",
-                  "safeName": "from_url_upload_response_schema_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FROM_URL_UPLOAD_RESPONSE_SCHEMA_TYPE",
-                  "safeName": "FROM_URL_UPLOAD_RESPONSE_SCHEMA_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "FromUrlUploadResponseSchemaType",
-                  "safeName": "FromUrlUploadResponseSchemaType"
-                }
-              },
-              "typeId": "FromUrlUploadResponseSchemaType",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -1998,16 +2058,22 @@
               "wireValue": "token"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Token to identify a `/from_url/` request."
           }
@@ -2076,14 +2142,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Group's unique ID."
           },
@@ -2111,16 +2183,22 @@
               "wireValue": "datetime_created"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "ISO-8601 date and time when the group was created."
           },
@@ -2148,16 +2226,22 @@
               "wireValue": "datetime_stored"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "ISO-8601 date and time when the group was marked as stored."
           },
@@ -2185,14 +2269,20 @@
               "wireValue": "files_count"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Number of the files in the group."
           },
@@ -2220,16 +2310,22 @@
               "wireValue": "cdn_url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Group's CDN URL."
           },
@@ -2257,16 +2353,22 @@
               "wireValue": "url"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uri"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uri"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details."
           },
@@ -2295,10 +2397,16 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "type": "unknown"
+                "optional": {
+                  "container": {
+                    "list": {
+                      "type": "unknown"
+                    },
+                    "type": "list"
+                  },
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -6771,14 +6879,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's bitrate."
           },
@@ -6806,14 +6920,20 @@
               "wireValue": "codec"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's codec."
           },
@@ -6841,14 +6961,20 @@
               "wireValue": "sample_rate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's sample rate."
           },
@@ -6876,14 +7002,20 @@
               "wireValue": "channels"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's number of channels."
           }
@@ -6952,14 +7084,20 @@
               "wireValue": "height"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's image height."
           },
@@ -6987,14 +7125,20 @@
               "wireValue": "width"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's image width."
           },
@@ -7022,14 +7166,20 @@
               "wireValue": "frame_rate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's frame rate."
           },
@@ -7057,14 +7207,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's bitrate."
           },
@@ -7092,14 +7248,20 @@
               "wireValue": "codec"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream codec."
           }
@@ -7168,14 +7330,20 @@
               "wireValue": "duration"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video file's duration in milliseconds."
           },
@@ -7203,14 +7371,20 @@
               "wireValue": "format"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video file's format."
           },
@@ -7238,14 +7412,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video file's bitrate."
           },
@@ -7273,32 +7453,38 @@
               "wireValue": "audio"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "LegacyVideoInfoAudio",
+                    "camelCase": {
+                      "unsafeName": "legacyVideoInfoAudio",
+                      "safeName": "legacyVideoInfoAudio"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "legacy_video_info_audio",
+                      "safeName": "legacy_video_info_audio"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
+                      "safeName": "LEGACY_VIDEO_INFO_AUDIO"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "LegacyVideoInfoAudio",
+                      "safeName": "LegacyVideoInfoAudio"
+                    }
+                  },
+                  "typeId": "LegacyVideoInfoAudio",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "LegacyVideoInfoAudio",
-                "camelCase": {
-                  "unsafeName": "legacyVideoInfoAudio",
-                  "safeName": "legacyVideoInfoAudio"
-                },
-                "snakeCase": {
-                  "unsafeName": "legacy_video_info_audio",
-                  "safeName": "legacy_video_info_audio"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
-                  "safeName": "LEGACY_VIDEO_INFO_AUDIO"
-                },
-                "pascalCase": {
-                  "unsafeName": "LegacyVideoInfoAudio",
-                  "safeName": "LegacyVideoInfoAudio"
-                }
-              },
-              "typeId": "LegacyVideoInfoAudio",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Audio stream's metadata."
           },
@@ -7326,32 +7512,38 @@
               "wireValue": "video"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "LegacyVideoInfoVideo",
+                    "camelCase": {
+                      "unsafeName": "legacyVideoInfoVideo",
+                      "safeName": "legacyVideoInfoVideo"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "legacy_video_info_video",
+                      "safeName": "legacy_video_info_video"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LEGACY_VIDEO_INFO_VIDEO",
+                      "safeName": "LEGACY_VIDEO_INFO_VIDEO"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "LegacyVideoInfoVideo",
+                      "safeName": "LegacyVideoInfoVideo"
+                    }
+                  },
+                  "typeId": "LegacyVideoInfoVideo",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "LegacyVideoInfoVideo",
-                "camelCase": {
-                  "unsafeName": "legacyVideoInfoVideo",
-                  "safeName": "legacyVideoInfoVideo"
-                },
-                "snakeCase": {
-                  "unsafeName": "legacy_video_info_video",
-                  "safeName": "legacy_video_info_video"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LEGACY_VIDEO_INFO_VIDEO",
-                  "safeName": "LEGACY_VIDEO_INFO_VIDEO"
-                },
-                "pascalCase": {
-                  "unsafeName": "LegacyVideoInfoVideo",
-                  "safeName": "LegacyVideoInfoVideo"
-                }
-              },
-              "typeId": "LegacyVideoInfoVideo",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Video stream's metadata."
           }
@@ -9088,32 +9280,38 @@
               "wireValue": "mime"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ContentInfoMime",
+                    "camelCase": {
+                      "unsafeName": "contentInfoMime",
+                      "safeName": "contentInfoMime"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "content_info_mime",
+                      "safeName": "content_info_mime"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CONTENT_INFO_MIME",
+                      "safeName": "CONTENT_INFO_MIME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ContentInfoMime",
+                      "safeName": "ContentInfoMime"
+                    }
+                  },
+                  "typeId": "ContentInfoMime",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ContentInfoMime",
-                "camelCase": {
-                  "unsafeName": "contentInfoMime",
-                  "safeName": "contentInfoMime"
-                },
-                "snakeCase": {
-                  "unsafeName": "content_info_mime",
-                  "safeName": "content_info_mime"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CONTENT_INFO_MIME",
-                  "safeName": "CONTENT_INFO_MIME"
-                },
-                "pascalCase": {
-                  "unsafeName": "ContentInfoMime",
-                  "safeName": "ContentInfoMime"
-                }
-              },
-              "typeId": "ContentInfoMime",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "MIME type."
           },
@@ -9286,16 +9484,22 @@
               "wireValue": "filename"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -10356,18 +10560,24 @@
                   "wireValue": "part_size"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "default": 5242880,
-                      "validation": {
-                        "max": 5368709120,
-                        "min": 5242880
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "default": 5242880,
+                          "validation": {
+                            "max": 5368709120,
+                            "min": 5242880
+                          },
+                          "type": "double"
+                        }
                       },
-                      "type": "double"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n",
                 "contentType": "multipart/form-data",
@@ -11086,14 +11296,20 @@
                   "wireValue": "filename"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "docs": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n",
                 "contentType": "multipart/form-data",
@@ -11123,32 +11339,38 @@
                   "wireValue": "check_URL_duplicates"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                        "camelCase": {
+                          "unsafeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                          "safeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "from_url_post_request_body_schema_check_url_duplicates",
+                          "safeName": "from_url_post_request_body_schema_check_url_duplicates"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES",
+                          "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                          "safeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                        }
+                      },
+                      "typeId": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
-                    "camelCase": {
-                      "unsafeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates",
-                      "safeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "from_url_post_request_body_schema_check_url_duplicates",
-                      "safeName": "from_url_post_request_body_schema_check_url_duplicates"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES",
-                      "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
-                      "safeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates"
-                    }
-                  },
-                  "typeId": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
                 "contentType": "multipart/form-data",
@@ -11178,32 +11400,38 @@
                   "wireValue": "save_URL_duplicates"
                 },
                 "valueType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "optional": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                        "camelCase": {
+                          "unsafeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                          "safeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "from_url_post_request_body_schema_save_url_duplicates",
+                          "safeName": "from_url_post_request_body_schema_save_url_duplicates"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES",
+                          "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                          "safeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                        }
+                      },
+                      "typeId": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "name": {
-                    "originalName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
-                    "camelCase": {
-                      "unsafeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates",
-                      "safeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "from_url_post_request_body_schema_save_url_duplicates",
-                      "safeName": "from_url_post_request_body_schema_save_url_duplicates"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES",
-                      "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
-                      "safeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates"
-                    }
-                  },
-                  "typeId": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "docs": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
                 "contentType": "multipart/form-data",

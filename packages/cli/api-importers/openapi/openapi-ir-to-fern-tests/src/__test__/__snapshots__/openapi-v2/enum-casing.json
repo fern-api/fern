@@ -142,32 +142,38 @@
               "wireValue": "status"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ExampleResponseStatus",
+                    "camelCase": {
+                      "unsafeName": "exampleResponseStatus",
+                      "safeName": "exampleResponseStatus"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "example_response_status",
+                      "safeName": "example_response_status"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                      "safeName": "EXAMPLE_RESPONSE_STATUS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ExampleResponseStatus",
+                      "safeName": "ExampleResponseStatus"
+                    }
+                  },
+                  "typeId": "ExampleResponseStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "ExampleResponseStatus",
-                "camelCase": {
-                  "unsafeName": "exampleResponseStatus",
-                  "safeName": "exampleResponseStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "example_response_status",
-                  "safeName": "example_response_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                  "safeName": "EXAMPLE_RESPONSE_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExampleResponseStatus",
-                  "safeName": "ExampleResponseStatus"
-                }
-              },
-              "typeId": "ExampleResponseStatus",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -194,14 +200,20 @@
               "wireValue": "message"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
