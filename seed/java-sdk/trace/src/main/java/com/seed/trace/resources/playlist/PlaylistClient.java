@@ -51,12 +51,13 @@ public class PlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("create");
         QueryStringMapper.addQueryParameter(
-                httpUrl, "datetime", request.getDatetime().toString());
+                httpUrl, "datetime", request.getDatetime().toString(), false);
         if (request.getOptionalDatetime().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalDatetime",
-                    request.getOptionalDatetime().get().toString());
+                    request.getOptionalDatetime().get().toString(),
+                    false);
         }
         RequestBody body;
         try {
@@ -109,17 +110,18 @@ public class PlaylistClient {
                 .addPathSegments("all");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString());
+                    httpUrl, "limit", request.getLimit().get().toString(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "otherField", request.getOtherField());
-        QueryStringMapper.addQueryParameter(httpUrl, "multiLineDocs", request.getMultiLineDocs());
+        QueryStringMapper.addQueryParameter(httpUrl, "otherField", request.getOtherField(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "multiLineDocs", request.getMultiLineDocs(), false);
         if (request.getOptionalMultipleField().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalMultipleField",
-                    request.getOptionalMultipleField().get());
+                    request.getOptionalMultipleField().get(),
+                    false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField());
+        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

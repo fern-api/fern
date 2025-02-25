@@ -1,3 +1,5 @@
+import { cloneDeep } from "lodash-es";
+
 import { assertNever } from "@fern-api/core-utils";
 
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
@@ -23,7 +25,7 @@ type InternalType =
     | Boolean_
     | Float
     | Double
-    | Date
+    | DateOnly
     | DateTime
     | Uuid
     | Object_
@@ -72,8 +74,8 @@ interface Double {
     type: "double";
 }
 
-interface Date {
-    type: "date";
+interface DateOnly {
+    type: "dateOnly";
 }
 
 interface DateTime {
@@ -182,7 +184,7 @@ export class Type extends AstNode {
             case "double":
                 writer.write("double");
                 break;
-            case "date":
+            case "dateOnly":
                 writer.write("DateOnly");
                 break;
             case "dateTime":
@@ -347,6 +349,18 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public cloneOptionalWithUnderlyingType(underlyingType: Type): Type {
+        switch (this.internalType.type) {
+            case "optional":
+                return new Type({
+                    type: "optional",
+                    value: this.internalType.value.cloneOptionalWithUnderlyingType(underlyingType)
+                });
+            default:
+                return new Type(cloneDeep(underlyingType.internalType));
+        }
+    }
+
     /* Static factory methods for creating a Type */
     public static string(): Type {
         return new this({
@@ -396,9 +410,9 @@ export class Type extends AstNode {
         });
     }
 
-    public static date(): Type {
+    public static dateOnly(): Type {
         return new this({
-            type: "date"
+            type: "dateOnly"
         });
     }
 

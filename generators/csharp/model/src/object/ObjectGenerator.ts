@@ -44,7 +44,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
                 typeReference: property.valueType
             });
-
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),

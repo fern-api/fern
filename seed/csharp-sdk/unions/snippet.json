@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_bigunion.get"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.GetAsync(\"id\");\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_bigunion.update"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(new NormalSweet { Value = \"value\" });\n"
             }
         },
@@ -33,7 +33,7 @@
                 "identifier_override": "endpoint_bigunion.update-many"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<object>()\n    {\n        new NormalSweet { Value = \"value\" },\n        new NormalSweet { Value = \"value\" },\n    }\n);\n"
             }
         },
@@ -45,7 +45,7 @@
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.GetAsync(\"id\");\n"
             }
         },
@@ -57,7 +57,7 @@
                 "identifier_override": "endpoint_union.update"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.UpdateAsync(new Circle { Radius = 1.1 });\n"
             }
         }

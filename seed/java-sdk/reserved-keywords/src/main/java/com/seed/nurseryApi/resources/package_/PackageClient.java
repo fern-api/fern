@@ -34,7 +34,7 @@ public class PackageClient {
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
-        QueryStringMapper.addQueryParameter(httpUrl, "for", request.getFor());
+        QueryStringMapper.addQueryParameter(httpUrl, "for", request.getFor(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))

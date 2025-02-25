@@ -75,6 +75,12 @@ public record Type
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }
 
+    [JsonPropertyName("twentyfour")]
+    public DateTime? Twentyfour { get; set; }
+
+    [JsonPropertyName("twentyfive")]
+    public DateOnly? Twentyfive { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
