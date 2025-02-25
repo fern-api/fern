@@ -4,7 +4,15 @@ import yaml from "js-yaml";
 import YAML from "yaml";
 
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, Directory, File, RelativeFilePath, doesPathExist, getDirectoryContents, join } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    Directory,
+    File,
+    RelativeFilePath,
+    doesPathExist,
+    getDirectoryContents,
+    join
+} from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { Migration } from "../../../types/Migration";
@@ -285,7 +293,7 @@ async function parseApiSpec({
     const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
     const absoluteSpecPath = join(absoluteFilepathToWorkspace, RelativeFilePath.of(spec.path));
-    
+
     if (!(await doesPathExist(absoluteSpecPath))) {
         context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
         return null;

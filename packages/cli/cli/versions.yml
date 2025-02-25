@@ -1,4 +1,10 @@
 - changelogEntry:
+    - summary: Migration to specs configuration handles yaml/json files and checks for file existence.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc8
+
+- changelogEntry:
     - summary: Add Java generator versions to migrations file from v55 to v54
       type: chore
   irVersion: 55
