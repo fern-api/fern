@@ -1169,6 +1169,62 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "list_of_objects_with_optionals: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                            "isOptional": true,
+                                            "inputDelimiter": ",\n\t\t\t\t",
+                                            "templateInputs": [
+                                                {
+                                                    "value": {
+                                                        "imports": [],
+                                                        "templateString": "prop: $FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "prop",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "type": "template"
+                                                },
+                                                {
+                                                    "value": {
+                                                        "imports": [],
+                                                        "templateString": "optionalProp: $FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "optionalProp",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "type": "template"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "list_of_objects_with_optionals",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"

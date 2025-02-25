@@ -401,6 +401,8 @@ public class ServiceClient {
                 QueryStringMapper.addFormDataPart(
                         body, "optional_id", request.getOptionalId().get(), false);
             }
+            QueryStringMapper.addFormDataPart(
+                    body, "list_of_objects_with_optionals", request.getListOfObjectsWithOptionals(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

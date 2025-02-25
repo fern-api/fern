@@ -13,4 +13,5 @@ export interface MyOtherRequest {
     optional_metadata?: unknown;
     optional_object_type?: SeedFileUpload.ObjectType;
     optional_id?: SeedFileUpload.Id;
+    list_of_objects_with_optionals: SeedFileUpload.MyObjectWithOptional[];
 }

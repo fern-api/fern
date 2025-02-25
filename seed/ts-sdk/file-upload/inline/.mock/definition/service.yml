@@ -128,9 +128,17 @@ service:
             optional_id: 
               type: optional<Id>
               style: form
+            list_of_objects_with_optionals:
+              type: list<MyObjectWithOptional>
+              style: form
 
 types:
   Id: string
+
+  MyObjectWithOptional:
+    properties:
+      prop: string
+      optionalProp: optional<string>
 
   MyObject:
     properties:

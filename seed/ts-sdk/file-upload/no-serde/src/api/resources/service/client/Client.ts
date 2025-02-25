@@ -525,6 +525,12 @@ export class Service {
             }
         }
 
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_objects_with_optionals: request.list_of_objects_with_optionals }),
+        )) {
+            _request.append(key, value);
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url:

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MyObject;
+import com.seed.fileUpload.resources.service.types.MyObjectWithOptional;
 import com.seed.fileUpload.resources.service.types.ObjectType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,8 @@ public final class MyOtherRequest {
 
     private final Optional<String> optionalId;
 
+    private final List<MyObjectWithOptional> listOfObjectsWithOptionals;
+
     private final Map<String, Object> additionalProperties;
 
     private MyOtherRequest(
@@ -51,6 +54,7 @@ public final class MyOtherRequest {
             Optional<Object> optionalMetadata,
             Optional<ObjectType> optionalObjectType,
             Optional<String> optionalId,
+            List<MyObjectWithOptional> listOfObjectsWithOptionals,
             Map<String, Object> additionalProperties) {
         this.maybeString = maybeString;
         this.integer = integer;
@@ -60,6 +64,7 @@ public final class MyOtherRequest {
         this.optionalMetadata = optionalMetadata;
         this.optionalObjectType = optionalObjectType;
         this.optionalId = optionalId;
+        this.listOfObjectsWithOptionals = listOfObjectsWithOptionals;
         this.additionalProperties = additionalProperties;
     }
 
@@ -103,6 +108,11 @@ public final class MyOtherRequest {
         return optionalId;
     }
 
+    @JsonProperty("list_of_objects_with_optionals")
+    public List<MyObjectWithOptional> getListOfObjectsWithOptionals() {
+        return listOfObjectsWithOptionals;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -122,7 +132,8 @@ public final class MyOtherRequest {
                 && listOfObjects.equals(other.listOfObjects)
                 && optionalMetadata.equals(other.optionalMetadata)
                 && optionalObjectType.equals(other.optionalObjectType)
-                && optionalId.equals(other.optionalId);
+                && optionalId.equals(other.optionalId)
+                && listOfObjectsWithOptionals.equals(other.listOfObjectsWithOptionals);
     }
 
     @java.lang.Override
@@ -135,7 +146,8 @@ public final class MyOtherRequest {
                 this.listOfObjects,
                 this.optionalMetadata,
                 this.optionalObjectType,
-                this.optionalId);
+                this.optionalId,
+                this.listOfObjectsWithOptionals);
     }
 
     @java.lang.Override
@@ -185,11 +197,19 @@ public final class MyOtherRequest {
         _FinalStage optionalId(Optional<String> optionalId);
 
         _FinalStage optionalId(String optionalId);
+
+        _FinalStage listOfObjectsWithOptionals(List<MyObjectWithOptional> listOfObjectsWithOptionals);
+
+        _FinalStage addListOfObjectsWithOptionals(MyObjectWithOptional listOfObjectsWithOptionals);
+
+        _FinalStage addAllListOfObjectsWithOptionals(List<MyObjectWithOptional> listOfObjectsWithOptionals);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IntegerStage, _FinalStage {
         private int integer;
+
+        private List<MyObjectWithOptional> listOfObjectsWithOptionals = new ArrayList<>();
 
         private Optional<String> optionalId = Optional.empty();
 
@@ -220,6 +240,7 @@ public final class MyOtherRequest {
             optionalMetadata(other.getOptionalMetadata());
             optionalObjectType(other.getOptionalObjectType());
             optionalId(other.getOptionalId());
+            listOfObjectsWithOptionals(other.getListOfObjectsWithOptionals());
             return this;
         }
 
@@ -227,6 +248,26 @@ public final class MyOtherRequest {
         @JsonSetter("integer")
         public _FinalStage integer(int integer) {
             this.integer = integer;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllListOfObjectsWithOptionals(List<MyObjectWithOptional> listOfObjectsWithOptionals) {
+            this.listOfObjectsWithOptionals.addAll(listOfObjectsWithOptionals);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addListOfObjectsWithOptionals(MyObjectWithOptional listOfObjectsWithOptionals) {
+            this.listOfObjectsWithOptionals.add(listOfObjectsWithOptionals);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "list_of_objects_with_optionals", nulls = Nulls.SKIP)
+        public _FinalStage listOfObjectsWithOptionals(List<MyObjectWithOptional> listOfObjectsWithOptionals) {
+            this.listOfObjectsWithOptionals.clear();
+            this.listOfObjectsWithOptionals.addAll(listOfObjectsWithOptionals);
             return this;
         }
 
@@ -339,6 +380,7 @@ public final class MyOtherRequest {
                     optionalMetadata,
                     optionalObjectType,
                     optionalId,
+                    listOfObjectsWithOptionals,
                     additionalProperties);
         }
     }
