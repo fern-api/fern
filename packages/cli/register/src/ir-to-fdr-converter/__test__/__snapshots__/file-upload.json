@@ -12,6 +12,36 @@
         }
       }
     },
+    "type_service:MyObjectWithOptional": {
+      "name": "MyObjectWithOptional",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "optionalProp",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_service:MyObject": {
       "name": "MyObject",
       "shape": {
@@ -497,12 +527,194 @@
           },
           "errorsV2": [],
           "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "withFormEncodedContainers",
+          "originalEndpointId": "endpoint_service.withFormEncodedContainers",
+          "name": "With Form Encoded Containers",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "MyOtherRequest",
+                "properties": [
+                  {
+                    "type": "bodyProperty",
+                    "key": "maybe_string",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "integer",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false
+                    }
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "fileArray",
+                      "key": "file_list",
+                      "isOptional": false
+                    }
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "maybe_file",
+                      "isOptional": true
+                    }
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "fileArray",
+                      "key": "maybe_file_list",
+                      "isOptional": true
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "maybe_integer",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "optional_list_of_strings",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "list_of_objects",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyObject"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "optional_metadata",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "unknown"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "optional_object_type",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:ObjectType"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "optional_id",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:Id"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "list_of_objects_with_optionals",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyObjectWithOptional"
+                      }
+                    },
+                    "exploded": false
+                  }
+                ]
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": []
         }
       ],
       "webhooks": [],
       "websockets": [],
       "types": [
         "type_service:Id",
+        "type_service:MyObjectWithOptional",
         "type_service:MyObject",
         "type_service:ObjectType"
       ],
