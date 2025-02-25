@@ -40,7 +40,7 @@ public class FooClient {
 
         if (request.getOptionalString().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalString", request.getOptionalString().get());
+                    httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
         Map<String, Object> properties = new HashMap<>();
         if (request.getPublicProperty().isPresent()) {

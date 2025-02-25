@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_service.getWithApiKey"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\");\nawait client.Service.GetWithApiKeyAsync();\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_service.getWithHeader"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\");\nawait client.Service.GetWithHeaderAsync(\n    new HeaderAuthRequest { XEndpointHeader = \"X-Endpoint-Header\" }\n);\n"
             }
         }

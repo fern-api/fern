@@ -34,35 +34,36 @@ public class UserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("user");
-        QueryStringMapper.addQueryParameter(httpUrl, "limit", Integer.toString(request.getLimit()));
-        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId().toString());
-        QueryStringMapper.addQueryParameter(httpUrl, "date", request.getDate());
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", Integer.toString(request.getLimit()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "date", request.getDate(), false);
         QueryStringMapper.addQueryParameter(
-                httpUrl, "deadline", request.getDeadline().toString());
-        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes().toString());
-        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString());
+                httpUrl, "deadline", request.getDeadline().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString(), false);
         QueryStringMapper.addQueryParameter(
-                httpUrl, "userList", request.getUserList().toString());
+                httpUrl, "userList", request.getUserList().toString(), false);
         if (request.getOptionalDeadline().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalDeadline",
-                    request.getOptionalDeadline().get().toString());
+                    request.getOptionalDeadline().get().toString(),
+                    false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue());
+        QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue(), false);
         if (request.getOptionalString().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalString", request.getOptionalString().get());
+                    httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
         QueryStringMapper.addQueryParameter(
-                httpUrl, "nestedUser", request.getNestedUser().toString());
+                httpUrl, "nestedUser", request.getNestedUser().toString(), false);
         if (request.getOptionalUser().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalUser", request.getOptionalUser().get().toString());
+                    httpUrl, "optionalUser", request.getOptionalUser().get().toString(), false);
         }
         QueryStringMapper.addQueryParameter(
-                httpUrl, "excludeUser", request.getExcludeUser().toString());
-        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter());
+                httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

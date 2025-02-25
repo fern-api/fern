@@ -1,4 +1,22 @@
 - changelogEntry:
+  - summary: Migrate generators.yml without any specs.
+    type: chore
+  irVersion: 55
+  version: 0.54.0-rc10
+
+- changelogEntry:
+  - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
+    type: chore
+  irVersion: 55
+  version: 0.54.0-rc9
+
+- changelogEntry:
+    - summary: Migration to specs configuration handles yaml/json files and checks for file existence.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc8
+
+- changelogEntry:
     - summary: Add Java generator versions to migrations file from v55 to v54
       type: chore
   irVersion: 55
@@ -9,7 +27,7 @@
       type: fix
   irVersion: 55
   version: 0.54.0-rc6
-  
+
 - changelogEntry:
     - summary: |
         Bump `docs-resolvers` to `0.0.64` to fix an issue with endpoint-level server parsing.

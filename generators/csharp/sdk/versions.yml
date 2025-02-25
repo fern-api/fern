@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.9.33
+  createdAt: "2025-02-24"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Upload C# snippets to the registry.
+
 - version: 1.9.32
   createdAt: "2025-02-24"
   irVersion: 53

@@ -119,10 +119,10 @@ public class ServiceClient {
                 .addPathSegments("metadata");
         if (request.getShallow().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "shallow", request.getShallow().get().toString());
+                    httpUrl, "shallow", request.getShallow().get().toString(), false);
         }
         if (request.getTag().isPresent()) {
-            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get());
+            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

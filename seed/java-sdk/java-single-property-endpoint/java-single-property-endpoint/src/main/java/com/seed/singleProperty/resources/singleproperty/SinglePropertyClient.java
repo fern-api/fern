@@ -41,7 +41,8 @@ public class SinglePropertyClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "include-remote-data",
-                    request.getIncludeRemoteData().get().toString());
+                    request.getIncludeRemoteData().get().toString(),
+                    false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
