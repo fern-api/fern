@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import okhttp3.HttpUrl;
 import okhttp3.MultipartBody;
 
@@ -37,18 +36,27 @@ public class QueryStringMapper {
     }
 
     public static void addFormDataPart(MultipartBody.Builder multipartBody, String key, Object value) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse("https://example.org/").newBuilder();
-        addQueryParameter(httpUrl, key, value);
+        JsonNode nested = MAPPER.valueToTree(value);
 
-        String queryString = Objects.requireNonNull(httpUrl.build().encodedQuery(), "Got null query string.");
+        ObjectNode flat;
+        if (nested.isObject()) {
+            flat = flattenObject((ObjectNode) nested);
+        } else if (nested.isArray()) {
+            flat = flattenArray((ArrayNode) nested, "");
+        } else {
+            multipartBody.addFormDataPart(key, value.toString());
+            return;
+        }
 
-        for (String queryStringEntry : queryString.split("&")) {
-            if (queryStringEntry.contains("=") && queryStringEntry.split("=").length == 2) {
-                String[] keyAndValue = queryStringEntry.split("=");
-                multipartBody.addFormDataPart(keyAndValue[0], keyAndValue[1]);
+        Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> field = fields.next();
+            if (field.getValue().isTextual()) {
+                multipartBody.addFormDataPart(
+                        key + field.getKey(), field.getValue().textValue());
             } else {
-                throw new IllegalArgumentException(
-                        "Got invalid query parameter " + queryStringEntry + " as part of query string " + queryString);
+                multipartBody.addFormDataPart(
+                        key + field.getKey(), field.getValue().toString());
             }
         }
     }
