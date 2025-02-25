@@ -57,7 +57,7 @@ public class UserClient {
                 .addPathSegments("users");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString());
+                    httpUrl, "limit", request.getLimit().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

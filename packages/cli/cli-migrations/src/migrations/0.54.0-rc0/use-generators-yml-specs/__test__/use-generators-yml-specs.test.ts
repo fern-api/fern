@@ -12,6 +12,8 @@ const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("
 const SINGLE_WORKSPACE_FIXTURES = [
     "root-settings",
     "openapi-single",
+    "openapi-json",
+    "swagger",
     "asyncapi-single",
     "api-array",
     "api-namespaces",

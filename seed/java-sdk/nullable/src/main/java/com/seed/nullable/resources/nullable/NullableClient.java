@@ -47,23 +47,23 @@ public class NullableClient {
                 .addPathSegments("users");
         if (request.getUsernames().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "usernames", request.getUsernames().get());
+                    httpUrl, "usernames", request.getUsernames().get(), false);
         }
         if (request.getAvatar().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "avatar", request.getAvatar().get());
+                    httpUrl, "avatar", request.getAvatar().get(), false);
         }
         if (request.getActivated().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "activated", request.getActivated().get().toString());
+                    httpUrl, "activated", request.getActivated().get().toString(), false);
         }
         if (request.getTags().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "tags", request.getTags().get());
+                    httpUrl, "tags", request.getTags().get(), false);
         }
         if (request.getExtra().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "extra", request.getExtra().get().toString());
+                    httpUrl, "extra", request.getExtra().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

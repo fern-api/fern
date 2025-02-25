@@ -35,34 +35,37 @@ public class QueryClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("query");
-        QueryStringMapper.addQueryParameter(httpUrl, "prompt", request.getPrompt());
+        QueryStringMapper.addQueryParameter(httpUrl, "prompt", request.getPrompt(), false);
         if (request.getOptionalPrompt().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "optional_prompt", request.getOptionalPrompt().get());
+                    httpUrl, "optional_prompt", request.getOptionalPrompt().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "alias_prompt", request.getAliasPrompt());
+        QueryStringMapper.addQueryParameter(httpUrl, "alias_prompt", request.getAliasPrompt(), false);
         if (request.getAliasOptionalPrompt().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "alias_optional_prompt",
-                    request.getAliasOptionalPrompt().get());
+                    request.getAliasOptionalPrompt().get(),
+                    false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         QueryStringMapper.addQueryParameter(
-                httpUrl, "stream", request.getStream().toString());
+                httpUrl, "stream", request.getStream().toString(), false);
         if (request.getOptionalStream().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optional_stream",
-                    request.getOptionalStream().get().toString());
+                    request.getOptionalStream().get().toString(),
+                    false);
         }
         QueryStringMapper.addQueryParameter(
-                httpUrl, "alias_stream", request.getAliasStream().toString());
+                httpUrl, "alias_stream", request.getAliasStream().toString(), false);
         if (request.getAliasOptionalStream().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "alias_optional_stream",
-                    request.getAliasOptionalStream().get().toString());
+                    request.getAliasOptionalStream().get().toString(),
+                    false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
