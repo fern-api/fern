@@ -10044,49 +10044,34 @@
                 "type": "bodyProperty"
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "{filename}",
-                    "camelCase": {
-                      "unsafeName": "filename",
-                      "safeName": "filename"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "filename",
-                      "safeName": "filename"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "FILENAME",
-                      "safeName": "FILENAME"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Filename",
-                      "safeName": "Filename"
-                    }
-                  },
-                  "wireValue": "{filename}"
-                },
-                "valueType": {
-                  "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {
-                            "format": "binary"
-                          },
-                          "type": "string"
-                        }
+                "value": {
+                  "key": {
+                    "name": {
+                      "originalName": "{filename}",
+                      "camelCase": {
+                        "unsafeName": "filename",
+                        "safeName": "filename"
                       },
-                      "type": "primitive"
+                      "snakeCase": {
+                        "unsafeName": "filename",
+                        "safeName": "filename"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "FILENAME",
+                        "safeName": "FILENAME"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Filename",
+                        "safeName": "Filename"
+                      }
                     },
-                    "type": "list"
+                    "wireValue": "{filename}"
                   },
-                  "type": "container"
+                  "isOptional": false,
+                  "contentType": "multipart/form-data",
+                  "type": "fileArray"
                 },
-                "docs": "File's content",
-                "contentType": "multipart/form-data",
-                "type": "bodyProperty"
+                "type": "file"
               },
               {
                 "name": {

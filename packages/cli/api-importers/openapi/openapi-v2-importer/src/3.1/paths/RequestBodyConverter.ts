@@ -1,6 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpRequestBody, TypeDeclaration } from "@fern-api/ir-sdk";
+import {
+    FileProperty,
+    FileUploadRequestProperty,
+    HttpRequestBody,
+    ObjectProperty,
+    TypeDeclaration
+} from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -62,6 +68,84 @@ export class RequestBodyConverter extends AbstractConverter<
         }
 
         return convertedSchema;
+    }
+
+    private convertRequestBodyProperty({
+        context,
+        property,
+        contentType
+    }: {
+        context: OpenAPIConverterContext3_1;
+        property: ObjectProperty;
+        contentType: string;
+    }) {
+        if (context.isFile(property.valueType)) {
+            return FileUploadRequestProperty.file(
+                FileProperty.file({
+                    key: property.name,
+                    isOptional: false,
+                    contentType
+                })
+            );
+        } else if (
+            context.isOptional(property.valueType) &&
+            // @ts-ignore: TS2339
+            context.isFile(property.valueType.container.optional)
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.file({
+                    key: property.name,
+                    isOptional: true,
+                    contentType
+                })
+            );
+        } else if (
+            context.isList(property.valueType) &&
+            // @ts-ignore: TS2339
+            context.isFile(property.valueType.container.list)
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.fileArray({
+                    key: property.name,
+                    isOptional: false,
+                    contentType
+                })
+            );
+        } else if (
+            context.isList(property.valueType) &&
+            // @ts-ignore: TS2339
+            context.isOptional(property.valueType.container.list) &&
+            // @ts-ignore: TS2339
+            context.isFile(property.valueType.container.list.container.optional)
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.fileArray({
+                    key: property.name,
+                    isOptional: false,
+                    contentType
+                })
+            );
+        } else if (
+            context.isOptional(property.valueType) &&
+            // @ts-ignore: TS2339
+            context.isList(property.valueType.container.optional) &&
+            // @ts-ignore: TS2339
+            context.isFile(property.valueType.container.optional.container.list)
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.fileArray({
+                    key: property.name,
+                    isOptional: true,
+                    contentType
+                })
+            );
+        }
+        return FileUploadRequestProperty.bodyProperty({
+            ...property,
+            contentType,
+            style: undefined,
+            name: property.name
+        });
     }
 
     public convert({
@@ -139,7 +223,7 @@ export class RequestBodyConverter extends AbstractConverter<
                     docs: this.requestBody.description,
                     name: context.casingsGenerator.generateName(schemaId),
                     properties: convertedSchema.schema?.shape.properties.map((property) => {
-                        return context.convertRequestBodyProperty(property, contentType);
+                        return this.convertRequestBodyProperty({ context, property, contentType });
                     })
                 });
                 return {
