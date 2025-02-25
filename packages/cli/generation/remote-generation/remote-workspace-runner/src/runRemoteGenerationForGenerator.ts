@@ -76,7 +76,8 @@ export async function runRemoteGenerationForGenerator({
             pythonSdk: undefined,
             javaSdk: undefined,
             rubySdk: undefined,
-            goSdk: undefined
+            goSdk: undefined,
+            csharpSdk: undefined
         }
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
