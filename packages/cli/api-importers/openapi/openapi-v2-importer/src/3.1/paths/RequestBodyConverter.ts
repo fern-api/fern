@@ -198,7 +198,9 @@ export class RequestBodyConverter extends AbstractConverter<
 
                 return {
                     requestBody,
-                    inlinedTypes: convertedSchema.inlinedTypes
+                    inlinedTypes: Object.fromEntries(
+                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                    )
                 };
             }
         }
