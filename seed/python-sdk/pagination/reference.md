@@ -283,7 +283,6 @@ for page in response.iter_pages():
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
-
     
 </dd>
 </dl>
@@ -536,7 +535,6 @@ for page in response.iter_pages():
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
-
     
 </dd>
 </dl>

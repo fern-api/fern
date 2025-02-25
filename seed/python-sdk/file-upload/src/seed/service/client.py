@@ -11,6 +11,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import json
 from ..core.jsonable_encoder import jsonable_encoder
+from .types.my_object_with_optional import MyObjectWithOptional
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -291,6 +292,94 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def with_form_encoded_containers(
+        self,
+        *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+        maybe_string: typing.Optional[str] = OMIT,
+        maybe_file: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+        maybe_integer: typing.Optional[int] = OMIT,
+        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
+        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_object_type: typing.Optional[ObjectType] = OMIT,
+        optional_id: typing.Optional[Id] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        integer : int
+
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.List[MyObject]
+
+        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
+
+        maybe_string : typing.Optional[str]
+
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        maybe_integer : typing.Optional[int]
+
+        optional_list_of_strings : typing.Optional[typing.List[str]]
+
+        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            data={
+                "maybe_string": maybe_string,
+                "integer": integer,
+                "maybe_integer": maybe_integer,
+                "optional_list_of_strings": optional_list_of_strings,
+                "list_of_objects": list_of_objects,
+                "optional_metadata": optional_metadata,
+                "optional_object_type": optional_object_type,
+                "optional_id": optional_id,
+                "list_of_objects_with_optionals": list_of_objects_with_optionals,
+            },
+            files={
+                "file": file,
+                "file_list": file_list,
+                "maybe_file": maybe_file,
+                "maybe_file_list": maybe_file_list,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -554,6 +643,94 @@ class AsyncServiceClient:
             },
             files={
                 "file": core.with_content_type(file=file, default_content_type="application/octet-stream"),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def with_form_encoded_containers(
+        self,
+        *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+        maybe_string: typing.Optional[str] = OMIT,
+        maybe_file: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+        maybe_integer: typing.Optional[int] = OMIT,
+        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
+        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_object_type: typing.Optional[ObjectType] = OMIT,
+        optional_id: typing.Optional[Id] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        integer : int
+
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.List[MyObject]
+
+        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
+
+        maybe_string : typing.Optional[str]
+
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        maybe_integer : typing.Optional[int]
+
+        optional_list_of_strings : typing.Optional[typing.List[str]]
+
+        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            data={
+                "maybe_string": maybe_string,
+                "integer": integer,
+                "maybe_integer": maybe_integer,
+                "optional_list_of_strings": optional_list_of_strings,
+                "list_of_objects": list_of_objects,
+                "optional_metadata": optional_metadata,
+                "optional_object_type": optional_object_type,
+                "optional_id": optional_id,
+                "list_of_objects_with_optionals": list_of_objects_with_optionals,
+            },
+            files={
+                "file": file,
+                "file_list": file_list,
+                "maybe_file": maybe_file,
+                "maybe_file_list": maybe_file_list,
             },
             request_options=request_options,
             omit=OMIT,
