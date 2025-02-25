@@ -48,13 +48,13 @@ paths:
               properties:
                 name:
                   type: string
-                  description: |
+                  description: |-
                     The name of the user to create.
                     This name is unique to each user.
                 age:
                   type: integer
                   nullable: true
-                  description: |
+                  description: |-
                     The age of the user.
                     This property is not required.
               required:
