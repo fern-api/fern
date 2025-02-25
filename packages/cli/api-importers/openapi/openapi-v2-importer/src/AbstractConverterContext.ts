@@ -3,7 +3,14 @@ import { camelCase } from "lodash-es";
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { DeclaredTypeName, Package, TypeReference } from "@fern-api/ir-sdk";
+import {
+    DeclaredTypeName,
+    FileProperty,
+    FileUploadRequestProperty,
+    ObjectProperty,
+    Package,
+    TypeReference
+} from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
 
 export declare namespace Spec {
@@ -178,6 +185,42 @@ export abstract class AbstractConverterContext<Spec extends object> {
             },
             name: this.casingsGenerator.generateName(typeId)
         };
+    }
+
+    public convertRequestBodyProperty(property: ObjectProperty, contentType: string): FileUploadRequestProperty {
+        if (
+            property.valueType.type === "primitive" &&
+            property.valueType.primitive.v2?.type === "string" &&
+            property.valueType.primitive.v2.validation?.format === "binary"
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.file({
+                    key: property.name,
+                    isOptional: false,
+                    contentType
+                })
+            );
+        } else if (
+            property.valueType.type === "container" &&
+            property.valueType.container.type === "optional" &&
+            property.valueType.container.optional.type === "primitive" &&
+            property.valueType.container.optional.primitive.v2?.type === "string" &&
+            property.valueType.container.optional.primitive.v2.validation?.format === "binary"
+        ) {
+            return FileUploadRequestProperty.file(
+                FileProperty.file({
+                    key: property.name,
+                    isOptional: true,
+                    contentType
+                })
+            );
+        }
+        return FileUploadRequestProperty.bodyProperty({
+            ...property,
+            contentType,
+            style: undefined,
+            name: property.name
+        });
     }
 
     /**

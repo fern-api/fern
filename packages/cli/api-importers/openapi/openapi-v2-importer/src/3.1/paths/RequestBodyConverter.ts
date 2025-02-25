@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FileProperty, FileUploadRequestProperty, HttpRequestBody, TypeDeclaration } from "@fern-api/ir-sdk";
+import { HttpRequestBody, TypeDeclaration } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -139,26 +139,7 @@ export class RequestBodyConverter extends AbstractConverter<
                     docs: this.requestBody.description,
                     name: context.casingsGenerator.generateName(schemaId),
                     properties: convertedSchema.schema?.shape.properties.map((property) => {
-                        // refactor to helper function
-                        if (
-                            property.valueType.type === "primitive" &&
-                            property.valueType.primitive.v2?.type === "string" &&
-                            property.valueType.primitive.v2.validation?.format === "binary"
-                        ) {
-                            return FileUploadRequestProperty.file(
-                                FileProperty.file({
-                                    key: property.name,
-                                    isOptional: false,
-                                    contentType
-                                })
-                            );
-                        }
-                        return FileUploadRequestProperty.bodyProperty({
-                            ...property,
-                            contentType,
-                            style: undefined,
-                            name: property.name
-                        });
+                        return context.convertRequestBodyProperty(property, contentType);
                     })
                 });
                 return {

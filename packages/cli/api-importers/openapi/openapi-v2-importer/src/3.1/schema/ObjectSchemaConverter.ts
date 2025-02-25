@@ -36,15 +36,25 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): ObjectSchemaConverter.Output | undefined {
-        // TODO: return empty object if no properties and set extraProperties to true
         if (!this.schema.properties) {
-            return undefined;
+            if (this.schema.additionalProperties != null) {
+                return {
+                    object: Type.object({
+                        properties: [],
+                        extends: [],
+                        extendedProperties: [],
+                        extraProperties: true
+                    })
+                };
+            } else {
+                return undefined;
+            }
         }
 
         const properties: ObjectProperty[] = [];
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        for (const [propertyName, propertySchema] of Object.entries(this.schema.properties)) {
+        for (const [propertyName, propertySchema] of Object.entries(this.schema.properties ?? {})) {
             const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
 
             const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);

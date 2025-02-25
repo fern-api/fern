@@ -221,49 +221,34 @@
                 "type": "file"
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "maybe_file",
-                    "camelCase": {
-                      "unsafeName": "maybeFile",
-                      "safeName": "maybeFile"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "maybe_file",
-                      "safeName": "maybe_file"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "MAYBE_FILE",
-                      "safeName": "MAYBE_FILE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MaybeFile",
-                      "safeName": "MaybeFile"
-                    }
-                  },
-                  "wireValue": "maybe_file"
-                },
-                "valueType": {
-                  "container": {
-                    "optional": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {
-                            "format": "binary"
-                          },
-                          "type": "string"
-                        }
+                "value": {
+                  "key": {
+                    "name": {
+                      "originalName": "maybe_file",
+                      "camelCase": {
+                        "unsafeName": "maybeFile",
+                        "safeName": "maybeFile"
                       },
-                      "type": "primitive"
+                      "snakeCase": {
+                        "unsafeName": "maybe_file",
+                        "safeName": "maybe_file"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "MAYBE_FILE",
+                        "safeName": "MAYBE_FILE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "MaybeFile",
+                        "safeName": "MaybeFile"
+                      }
                     },
-                    "type": "optional"
+                    "wireValue": "maybe_file"
                   },
-                  "type": "container"
+                  "isOptional": true,
+                  "contentType": "multipart/form-data",
+                  "type": "file"
                 },
-                "docs": "An optional file to upload",
-                "contentType": "multipart/form-data",
-                "type": "bodyProperty"
+                "type": "file"
               }
             ],
             "type": "fileUpload"
@@ -361,49 +346,34 @@
                 "type": "file"
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "maybe_file",
-                    "camelCase": {
-                      "unsafeName": "maybeFile",
-                      "safeName": "maybeFile"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "maybe_file",
-                      "safeName": "maybe_file"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "MAYBE_FILE",
-                      "safeName": "MAYBE_FILE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MaybeFile",
-                      "safeName": "MaybeFile"
-                    }
-                  },
-                  "wireValue": "maybe_file"
-                },
-                "valueType": {
-                  "container": {
-                    "optional": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {
-                            "format": "binary"
-                          },
-                          "type": "string"
-                        }
+                "value": {
+                  "key": {
+                    "name": {
+                      "originalName": "maybe_file",
+                      "camelCase": {
+                        "unsafeName": "maybeFile",
+                        "safeName": "maybeFile"
                       },
-                      "type": "primitive"
+                      "snakeCase": {
+                        "unsafeName": "maybe_file",
+                        "safeName": "maybe_file"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "MAYBE_FILE",
+                        "safeName": "MAYBE_FILE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "MaybeFile",
+                        "safeName": "MaybeFile"
+                      }
                     },
-                    "type": "optional"
+                    "wireValue": "maybe_file"
                   },
-                  "type": "container"
+                  "isOptional": true,
+                  "contentType": "multipart/form-data",
+                  "type": "file"
                 },
-                "docs": "An optional file to upload",
-                "contentType": "multipart/form-data",
-                "type": "bodyProperty"
+                "type": "file"
               },
               {
                 "name": {

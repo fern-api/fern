@@ -6084,6 +6084,36 @@
               "inline": false,
               "type": "named"
             }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EvalPostResponsesSchemaOneOf",
+                "camelCase": {
+                  "unsafeName": "v1EvalPostResponsesSchemaOneOf",
+                  "safeName": "v1EvalPostResponsesSchemaOneOf"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_eval_post_responses_schema_one_of",
+                  "safeName": "v_1_eval_post_responses_schema_one_of"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EVAL_POST_RESPONSES_SCHEMA_ONE_OF",
+                  "safeName": "V_1_EVAL_POST_RESPONSES_SCHEMA_ONE_OF"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EvalPostResponsesSchemaOneOf",
+                  "safeName": "V1EvalPostResponsesSchemaOneOf"
+                }
+              },
+              "typeId": "V1EvalPostResponsesSchemaOneOf",
+              "inline": false,
+              "type": "named"
+            }
           }
         ],
         "type": "undiscriminatedUnion"
@@ -6175,6 +6205,36 @@
       },
       "shape": {
         "members": [
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "V1EvalCodeGetResponsesSchemaOneOf",
+                "camelCase": {
+                  "unsafeName": "v1EvalCodeGetResponsesSchemaOneOf",
+                  "safeName": "v1EvalCodeGetResponsesSchemaOneOf"
+                },
+                "snakeCase": {
+                  "unsafeName": "v_1_eval_code_get_responses_schema_one_of",
+                  "safeName": "v_1_eval_code_get_responses_schema_one_of"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "V_1_EVAL_CODE_GET_RESPONSES_SCHEMA_ONE_OF",
+                  "safeName": "V_1_EVAL_CODE_GET_RESPONSES_SCHEMA_ONE_OF"
+                },
+                "pascalCase": {
+                  "unsafeName": "V1EvalCodeGetResponsesSchemaOneOf",
+                  "safeName": "V1EvalCodeGetResponsesSchemaOneOf"
+                }
+              },
+              "typeId": "V1EvalCodeGetResponsesSchemaOneOf",
+              "inline": false,
+              "type": "named"
+            }
+          },
           {
             "type": {
               "fernFilepath": {
