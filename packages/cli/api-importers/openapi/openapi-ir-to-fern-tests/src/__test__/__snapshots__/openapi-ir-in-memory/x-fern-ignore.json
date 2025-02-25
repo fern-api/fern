@@ -57,6 +57,19 @@
             }
           ]
         }
+      },
+      "/ignored-operation": {
+        "get": {
+          "operationId": "ignored-operation",
+          "x-fern-ignore": true,
+          "summary": "Ignored operation",
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
       }
     },
     "components": {

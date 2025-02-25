@@ -15,6 +15,7 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
+import { FernIgnoreExtension } from "../../extensions/x-fern-ignore";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -61,6 +62,15 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): OperationConverter.Output | undefined {
+        const shouldIgnore = new FernIgnoreExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        }).convert({ context, errorCollector })?.ignore;
+
+        if (shouldIgnore) {
+            return undefined;
+        }
+
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
