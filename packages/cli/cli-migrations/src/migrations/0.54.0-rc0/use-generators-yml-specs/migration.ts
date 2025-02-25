@@ -210,7 +210,7 @@ async function addApiConfigurationToSingleWorkspace({
     }
 
     if (specs.length === 0) {
-        context.logger.warn("No API specs found. Leaving generators.yml unchanged.");
+        context.logger.debug("No API specs found. Leaving generators.yml unchanged.");
         return;
     }
 
