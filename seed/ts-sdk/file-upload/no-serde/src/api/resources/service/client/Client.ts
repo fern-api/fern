@@ -434,4 +434,149 @@ export class Service {
                 });
         }
     }
+
+    /**
+     * @param {File | fs.ReadStream | Blob} file
+     * @param {File[] | fs.ReadStream[] | Blob[]} file_list
+     * @param {File | fs.ReadStream | Blob | undefined} maybe_file
+     * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybe_file_list
+     * @param {SeedFileUpload.MyOtherRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public async withFormEncodedContainers(
+        file: File | fs.ReadStream | Blob,
+        file_list: File[] | fs.ReadStream[] | Blob[],
+        maybe_file: File | fs.ReadStream | Blob | undefined,
+        maybe_file_list: File[] | fs.ReadStream[] | Blob[] | undefined,
+        request: SeedFileUpload.MyOtherRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<void> {
+        const _request = await core.newFormData();
+        if (request.maybe_string != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ maybe_string: request.maybe_string }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ integer: request.integer }))) {
+            _request.append(key, value);
+        }
+
+        await _request.appendFile("file", file);
+        for (const _file of file_list) {
+            await _request.appendFile("file_list", _file);
+        }
+
+        if (maybe_file != null) {
+            await _request.appendFile("maybe_file", maybe_file);
+        }
+
+        if (maybe_file_list != null) {
+            for (const _file of maybe_file_list) {
+                await _request.appendFile("maybe_file_list", _file);
+            }
+        }
+
+        if (request.maybe_integer != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ maybe_integer: request.maybe_integer }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        if (request.optional_list_of_strings != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ optional_list_of_strings: request.optional_list_of_strings }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_objects: request.list_of_objects }),
+        )) {
+            _request.append(key, value);
+        }
+
+        if (request.optional_metadata != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ optional_metadata: request.optional_metadata }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        if (request.optional_object_type != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ optional_object_type: request.optional_object_type }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        if (request.optional_id != null) {
+            for (const [key, value] of Object.entries(
+                core.encodeAsFormParameter({ optional_id: request.optional_id }),
+            )) {
+                _request.append(key, value);
+            }
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_objects_with_optionals: request.list_of_objects_with_optionals }),
+        )) {
+            _request.append(key, value);
+        }
+
+        const _maybeEncodedRequest = await _request.getRequest();
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/file-upload",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/file-upload/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
+            },
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
 }

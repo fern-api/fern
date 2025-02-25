@@ -84,9 +84,61 @@ service:
             bar:
               type: MyObject
               style: form            
+    
+    withFormEncodedContainers:
+      path: ""
+      method: POST
+      request:
+        name: MyOtherRequest
+        body:
+          properties:
+            maybe_string: 
+              type: optional<string>
+              style: form
+            integer: 
+              type: integer
+              style: form
+            file: 
+              type: file
+              style: form
+            file_list: 
+              type: list<file>
+              style: form
+            maybe_file: 
+              type: optional<file>
+              style: form
+            maybe_file_list: 
+              type: optional<list<file>>
+              style: form
+            maybe_integer: 
+              type: optional<integer>
+              style: form
+            optional_list_of_strings: 
+              type: optional<list<string>>
+              style: form
+            list_of_objects: 
+              type: list<MyObject>
+              style: form
+            optional_metadata: 
+              type: optional<unknown>
+              style: form
+            optional_object_type: 
+              type: optional<ObjectType>
+              style: form
+            optional_id: 
+              type: optional<Id>
+              style: form
+            list_of_objects_with_optionals:
+              type: list<MyObjectWithOptional>
+              style: form
 
 types:
   Id: string
+
+  MyObjectWithOptional:
+    properties:
+      prop: string
+      optionalProp: optional<string>
 
   MyObject:
     properties:

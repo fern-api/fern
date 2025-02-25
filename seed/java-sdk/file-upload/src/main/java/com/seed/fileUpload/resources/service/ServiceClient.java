@@ -11,6 +11,7 @@ import com.seed.fileUpload.core.SeedFileUploadApiException;
 import com.seed.fileUpload.core.SeedFileUploadException;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
+import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
@@ -188,19 +189,20 @@ public class ServiceClient {
                 .addPathSegments("just-file-with-query-params");
         if (request.getMaybeString().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeString", request.getMaybeString().get());
+                    httpUrl, "maybeString", request.getMaybeString().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()));
+        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()), false);
         if (request.getMaybeInteger().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString());
+                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings());
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), false);
         if (request.getOptionalListOfStrings().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get());
+                    request.getOptionalListOfStrings().get(),
+                    false);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
@@ -294,8 +296,113 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo());
-            QueryStringMapper.addFormDataPart(body, "bar", request.getBar());
+            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
+            QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return;
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
+        }
+    }
+
+    public void withFormEncodedContainers(
+            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
+        withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
+    }
+
+    public void withFormEncodedContainers(
+            File file,
+            File fileList,
+            Optional<File> maybeFile,
+            Optional<File> maybeFileList,
+            MyOtherRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            if (request.getMaybeString().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body, "maybe_string", request.getMaybeString().get(), false);
+            }
+            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+            body.addFormDataPart(
+                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
+            if (maybeFile.isPresent()) {
+                String maybeFileMimeType =
+                        Files.probeContentType(maybeFile.get().toPath());
+                MediaType maybeFileMimeTypeMediaType =
+                        maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                body.addFormDataPart(
+                        "maybe_file",
+                        maybeFile.get().getName(),
+                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+            }
+            if (maybeFileList.isPresent()) {
+                String maybeFileListMimeType =
+                        Files.probeContentType(maybeFileList.get().toPath());
+                MediaType maybeFileListMimeTypeMediaType =
+                        maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
+                body.addFormDataPart(
+                        "maybe_file_list",
+                        maybeFileList.get().getName(),
+                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+            }
+            if (request.getMaybeInteger().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body, "maybe_integer", request.getMaybeInteger().get(), false);
+            }
+            if (request.getOptionalListOfStrings().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body,
+                        "optional_list_of_strings",
+                        request.getOptionalListOfStrings().get(),
+                        false);
+            }
+            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects(), false);
+            if (request.getOptionalMetadata().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body, "optional_metadata", request.getOptionalMetadata().get(), false);
+            }
+            if (request.getOptionalObjectType().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body,
+                        "optional_object_type",
+                        request.getOptionalObjectType().get(),
+                        false);
+            }
+            if (request.getOptionalId().isPresent()) {
+                QueryStringMapper.addFormDataPart(
+                        body, "optional_id", request.getOptionalId().get(), false);
+            }
+            QueryStringMapper.addFormDataPart(
+                    body, "list_of_objects_with_optionals", request.getListOfObjectsWithOptionals(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

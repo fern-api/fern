@@ -40,7 +40,7 @@ public class MetadataClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users/events/metadata");
-        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId());
+        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

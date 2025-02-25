@@ -323,7 +323,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 .beginControlFlow(
                                         "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
                                 .addStatement(
-                                        "$T.addFormDataPart($L, $S, $L)",
+                                        "$T.addFormDataPart($L, $S, $L.get(), false)",
                                         clientGeneratorContext
                                                 .getPoetClassNameFactory()
                                                 .getQueryStringMapperClassName(),
@@ -333,7 +333,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 .endControlFlow();
                     } else {
                         requestBodyCodeBlock.addStatement(
-                                "$T.addFormDataPart($L, $S, $L)",
+                                "$T.addFormDataPart($L, $S, $L, false)",
                                 clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
                                 getMultipartBodyPropertiesName(),
                                 jsonProperty.wireKey().get(),
