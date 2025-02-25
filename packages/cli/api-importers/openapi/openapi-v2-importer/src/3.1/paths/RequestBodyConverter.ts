@@ -53,48 +53,10 @@ export class RequestBodyConverter extends AbstractConverter<
         }
 
         const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
-        for (const contentType of [...jsonContentTypes]) {
-            const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = this.tryGetConvertedSchema({
-                schemaId,
-                contentType,
-                context,
-                errorCollector
-            });
-            if (convertedSchema == null) {
-                continue;
-            }
-
-            if (convertedSchema.schema?.shape.type === "object") {
-                const requestBody = HttpRequestBody.inlinedRequestBody({
-                    contentType,
-                    docs: this.requestBody.description,
-                    name: context.casingsGenerator.generateName(schemaId),
-                    extendedProperties: convertedSchema.schema?.shape.extendedProperties,
-                    extends: convertedSchema.schema?.shape.extends,
-                    properties: convertedSchema.schema?.shape.properties,
-                    extraProperties: convertedSchema.schema?.shape.extraProperties
-                });
-
-                return {
-                    requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
-                };
-            } else {
-                const requestBody = HttpRequestBody.reference({
-                    contentType,
-                    docs: this.requestBody.description,
-                    requestBodyType: convertedSchema.type
-                });
-
-                return {
-                    requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
-                };
+        for (const contentType of jsonContentTypes) {
+            const result = this.handleJsonOrFormContent({ contentType, context, errorCollector });
+            if (result != null) {
+                return result;
             }
         }
 
@@ -133,7 +95,12 @@ export class RequestBodyConverter extends AbstractConverter<
         const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
             type.includes("urlencoded")
         );
-        // TODO: Implement urlencoded request body
+        for (const contentType of urlEncodedContentTypes) {
+            const result = this.handleJsonOrFormContent({ contentType, context, errorCollector });
+            if (result != null) {
+                return result;
+            }
+        }
 
         return undefined;
     }
@@ -166,6 +133,59 @@ export class RequestBodyConverter extends AbstractConverter<
 
         return convertedSchema;
     }
+
+    private handleJsonOrFormContent = ({
+        contentType,
+        context,
+        errorCollector
+    }: {
+        contentType: string;
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): RequestBodyConverter.Output | undefined => {
+        const schemaId = [...this.group, this.method, "Request"].join("_");
+        const convertedSchema = this.tryGetConvertedSchema({
+            schemaId,
+            contentType,
+            context,
+            errorCollector
+        });
+        if (convertedSchema == null) {
+            return undefined;
+        }
+
+        if (convertedSchema.schema?.shape.type === "object") {
+            const requestBody = HttpRequestBody.inlinedRequestBody({
+                contentType,
+                docs: this.requestBody.description,
+                name: context.casingsGenerator.generateName(schemaId),
+                extendedProperties: convertedSchema.schema?.shape.extendedProperties,
+                extends: convertedSchema.schema?.shape.extends,
+                properties: convertedSchema.schema?.shape.properties,
+                extraProperties: convertedSchema.schema?.shape.extraProperties
+            });
+
+            return {
+                requestBody,
+                inlinedTypes: Object.fromEntries(
+                    Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                )
+            };
+        } else {
+            const requestBody = HttpRequestBody.reference({
+                contentType,
+                docs: this.requestBody.description,
+                requestBodyType: convertedSchema.type
+            });
+
+            return {
+                requestBody,
+                inlinedTypes: Object.fromEntries(
+                    Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                )
+            };
+        }
+    };
 
     private convertRequestBodyProperty({
         context,
