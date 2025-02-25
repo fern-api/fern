@@ -10,10 +10,10 @@ export abstract class AbstractExtension<
      */
     public abstract readonly key: string;
 
-    protected getExtensionValue(value: unknown): unknown | undefined {
+    protected getExtensionValue<T>(value: unknown): T | undefined {
         if (typeof value !== "object" || value == null) {
             return undefined;
         }
-        return (value as Record<string, unknown>)[this.key];
+        return (value as Record<string, unknown>)[this.key] as T | undefined;
     }
 }

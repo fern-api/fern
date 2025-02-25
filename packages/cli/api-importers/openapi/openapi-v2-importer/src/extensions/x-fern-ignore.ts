@@ -29,7 +29,7 @@ export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterConte
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): FernIgnoreExtension.Output | undefined {
-        const extensionValue = this.getExtensionValue(this.operation);
+        const extensionValue = this.getExtensionValue<boolean>(this.operation);
         if (extensionValue == null) {
             return undefined;
         }
