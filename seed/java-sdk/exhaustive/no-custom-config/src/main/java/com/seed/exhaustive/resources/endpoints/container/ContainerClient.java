@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -24,6 +27,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 public class ContainerClient {
     protected final ClientOptions clientOptions;
@@ -32,11 +36,7 @@ public class ContainerClient {
         this.clientOptions = clientOptions;
     }
 
-    public List<String> getAndReturnListOfPrimitives(List<String> request) {
-        return getAndReturnListOfPrimitives(request, null);
-    }
-
-    public List<String> getAndReturnListOfPrimitives(List<String> request, RequestOptions requestOptions) {
+    private Request prepareGetAndReturnListOfPrimitives(List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
@@ -49,18 +49,26 @@ public class ContainerClient {
         } catch (JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
-        Request okhttpRequest = new Request.Builder()
+        return new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
+    }
+
+    public List<String> getAndReturnListOfPrimitives(List<String> request) {
+        return getAndReturnListOfPrimitives(request, null);
+    }
+
+    public List<String> getAndReturnListOfPrimitives(List<String> request, RequestOptions requestOptions) {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
+        try (Response response = client.newCall(prepareGetAndReturnListOfPrimitives(request, requestOptions))
+                .execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
@@ -73,6 +81,44 @@ public class ContainerClient {
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
+    }
+
+    public CompletableFuture<List<String>> getAndReturnListOfPrimitivesAsync(List<String> request) {
+        return getAndReturnListOfPrimitivesAsync(request, null);
+    }
+
+    public CompletableFuture<List<String>> getAndReturnListOfPrimitivesAsync(
+            List<String> request, RequestOptions requestOptions) {
+
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<List<String>> future = new CompletableFuture<>();
+        client.newCall(prepareGetAndReturnListOfPrimitives(request, requestOptions))
+                .enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        future.completeExceptionally(
+                                new SeedExhaustiveException("Network error executing HTTP request", e));
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        ResponseBody responseBody = response.body();
+                        if (response.isSuccessful()) {
+                            future.complete(ObjectMappers.JSON_MAPPER.readValue(
+                                    responseBody.string(), new TypeReference<List<String>>() {}));
+                            return;
+                        }
+                        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                        future.completeExceptionally(new SeedExhaustiveApiException(
+                                "Error with status code " + response.code(),
+                                response.code(),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                    }
+                });
+        return future;
     }
 
     public List<ObjectWithRequiredField> getAndReturnListOfObjects(List<ObjectWithRequiredField> request) {
