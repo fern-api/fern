@@ -7,6 +7,7 @@ import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaConverter } from "./SchemaConverter";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ObjectSchemaConverter {
     export interface Args extends AbstractConverter.Args {
@@ -45,45 +46,26 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         for (const [propertyName, propertySchema] of Object.entries(this.schema.properties)) {
             const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
 
-            // if property is a reference
-            if (context.isReferenceObject(propertySchema)) {
-                const maybeTypeReference = context.convertReferenceToTypeReference(propertySchema);
-                if (maybeTypeReference.ok) {
-                    properties.push({
-                        name: context.casingsGenerator.generateNameAndWireValue({
-                            name: propertyName,
-                            wireValue: propertyName
-                        }),
-                        valueType: maybeTypeReference.reference,
-                        docs: propertySchema.description,
-                        availability: undefined
-                    });
-                }
-                continue;
-            }
-
-            // if property is inlined
             const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
-            const propertySchemaConverter = new SchemaConverter({
-                id: propertyId,
+            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: propertyBreadcrumbs,
-                schema: propertySchema
+                schemaOrReference: propertySchema,
+                schemaIdOverride: propertyId
             });
-            const convertedProperty = propertySchemaConverter.convert({ context, errorCollector });
+            const convertedProperty = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedProperty != null) {
                 properties.push({
                     name: context.casingsGenerator.generateNameAndWireValue({
                         name: propertyName,
                         wireValue: propertyName
                     }),
-                    valueType: context.createNamedTypeReference(propertyId),
+                    valueType: convertedProperty.type,
                     docs: propertySchema.description,
                     availability: undefined
                 });
                 inlinedTypes = {
                     ...inlinedTypes,
-                    ...convertedProperty.inlinedTypes,
-                    [propertyId]: convertedProperty.typeDeclaration
+                    ...convertedProperty.inlinedTypes
                 };
             }
         }
