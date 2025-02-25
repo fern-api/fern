@@ -22875,6 +22875,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to create a transcript.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CreateTranscriptParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -24268,6 +24301,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to create a temporary authentication token.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CreateRealtimeTemporaryTokenParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -24403,6 +24469,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to generate the summary.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "LemurSummaryParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -24483,6 +24582,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to ask questions about the transcripts.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "LemurQuestionAnswerParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -24563,6 +24695,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to generate action items from transcripts.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "LemurActionItemsParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -24643,6 +24808,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Parameters to run the custom task.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "LemurTaskParameters",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {

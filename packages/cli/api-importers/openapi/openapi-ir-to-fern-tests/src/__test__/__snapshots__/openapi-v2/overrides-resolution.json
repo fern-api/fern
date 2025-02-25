@@ -2190,6 +2190,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UserCreate",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -2269,6 +2301,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UserUpdate",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {

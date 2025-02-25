@@ -74615,6 +74615,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "EmployeeEndpointRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -75198,6 +75230,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "IgnoreCommonModelRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.",
@@ -76595,6 +76659,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "GenerateRemoteKeyRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -78498,6 +78594,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "EndUserDetailsRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -80237,6 +80365,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "DataPassthroughRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -82257,6 +82417,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "RemoteKeyForRegenerationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -82548,6 +82740,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "LinkedAccountSelectiveSyncConfigurationListRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -85101,6 +85325,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "TimeOffEndpointRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -87046,6 +87302,38 @@
               }
             }
           ],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "WebhookReceiverRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {

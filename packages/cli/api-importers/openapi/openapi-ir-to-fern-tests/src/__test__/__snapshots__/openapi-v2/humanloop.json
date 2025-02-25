@@ -63310,6 +63310,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "PromptRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -63780,6 +63812,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UpdatePromptRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -64514,6 +64578,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CommitRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -64782,6 +64878,38 @@
             }
           ],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "PromptLogRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -65013,6 +65141,38 @@
             }
           ],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "PromptCallRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "Call a Prompt.\n\nCalling a Prompt subsequently calls the model provider before logging\nthe data to Humanloop.\n\nYou can use query parameters version_id, or environment, to target\nan existing version of the Prompt. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt, if not we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
@@ -65132,6 +65292,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "EvaluatorActivationDeactivationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -65616,6 +65808,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "ToolRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -66086,6 +66310,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UpdateToolRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -66820,6 +67076,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CommitRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -67088,6 +67376,38 @@
             }
           ],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "ToolLogRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -67245,6 +67565,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "EvaluatorActivationDeactivationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -67931,6 +68283,38 @@
             }
           ],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "src__external__app__models__v5__datasets__DatasetRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -68437,6 +68821,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UpdateDatasetRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -69211,6 +69627,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CommitRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -69886,6 +70334,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CreateEvaluationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -70283,6 +70763,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CreateEvaluationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -70441,6 +70953,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "Body_Evaluations_updateStatus",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -71084,6 +71628,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "src__external__app__models__v5__evaluators__EvaluatorRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -71554,6 +72130,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "UpdateEvaluatorRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -72288,6 +72896,38 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "CommitRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -72530,6 +73170,38 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "RunSyncEvaluationRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {

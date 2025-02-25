@@ -15449,6 +15449,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "The replacement overdraft accounts.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "overdraftProtectionPatch",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -15594,6 +15627,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Data necessary to invite a joint owner.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "newJointOwnerInvitation",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -18134,6 +18200,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "The data necessary to create a new transfer.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "newTransfer",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -18393,6 +18492,39 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/merge-patch+json",
+            "docs": "The fields to update within the transfer.",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "transferPatch",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 200,
             "body": {

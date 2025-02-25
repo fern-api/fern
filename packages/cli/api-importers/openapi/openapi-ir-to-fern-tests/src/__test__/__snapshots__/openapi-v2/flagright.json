@@ -53227,6 +53227,39 @@
             }
           ],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "Transaction",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "## POST Transactions\n\n`/transactions` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)\n\nIn order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. \n\n\n### Payload\n\nHere are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):\n\n* `type`: Type of transaction (Ex: `WITHDRAWAL`, `DEPOSIT`, `TRANSFER` etc). \n* `transactionId` - Unique Identifier for the transaction. Flagright API will generate a `transactionId` if this field is left empty\n* `timestamp` - UNIX timestamp in *milliseconds* of when the transaction took place\n* `transactionState` - The state of the transaction, set to `CREATED` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)\n* `originUserId` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `destinationUserId` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `originAmountDetails` - Details of the amount being sent from the origin\n* `destinationAmountDetails` - Details of the amount being received at the destination\n* `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.\n* `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
@@ -53427,6 +53460,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "TransactionEvent",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -53507,6 +53573,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "User",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "## POST Consumer User\n\n`/consumer/user` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\nEach consumer User entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system\n",
@@ -53707,6 +53806,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "Business",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "## POST Business User\n\n`/business/user` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\n\nEach consumer Business entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system",
@@ -53907,6 +54039,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "ConsumerUserEvent",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {
@@ -53987,6 +54152,39 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "BusinessUserEvent",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
           "response": {
             "statusCode": 201,
             "body": {

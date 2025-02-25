@@ -14635,6 +14635,359 @@
       "referencedTypes": {},
       "inline": false
     },
+    "Upload_baseUpload_Request": {
+      "name": {
+        "typeId": "Upload_baseUpload_Request",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Upload_baseUpload_Request",
+          "camelCase": {
+            "unsafeName": "uploadBaseUploadRequest",
+            "safeName": "uploadBaseUploadRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_base_upload_request",
+            "safeName": "upload_base_upload_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_BASE_UPLOAD_REQUEST",
+            "safeName": "UPLOAD_BASE_UPLOAD_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadBaseUploadRequest",
+            "safeName": "UploadBaseUploadRequest"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "UPLOADCARE_PUB_KEY",
+                "camelCase": {
+                  "unsafeName": "uploadcarePubKey",
+                  "safeName": "uploadcarePubKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "uploadcare_pub_key",
+                  "safeName": "uploadcare_pub_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPLOADCARE_PUB_KEY",
+                  "safeName": "UPLOADCARE_PUB_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "UploadcarePubKey",
+                  "safeName": "UploadcarePubKey"
+                }
+              },
+              "wireValue": "UPLOADCARE_PUB_KEY"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "projectPublicKeyType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "UPLOADCARE_STORE",
+                "camelCase": {
+                  "unsafeName": "uploadcareStore",
+                  "safeName": "uploadcareStore"
+                },
+                "snakeCase": {
+                  "unsafeName": "uploadcare_store",
+                  "safeName": "uploadcare_store"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPLOADCARE_STORE",
+                  "safeName": "UPLOADCARE_STORE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UploadcareStore",
+                  "safeName": "UploadcareStore"
+                }
+              },
+              "wireValue": "UPLOADCARE_STORE"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "storeType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "{filename}",
+                "camelCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "snakeCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILENAME",
+                  "safeName": "FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Filename",
+                  "safeName": "Filename"
+                }
+              },
+              "wireValue": "{filename}"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "BasePostRequestBodySchemaFilename",
+                "camelCase": {
+                  "unsafeName": "basePostRequestBodySchemaFilename",
+                  "safeName": "basePostRequestBodySchemaFilename"
+                },
+                "snakeCase": {
+                  "unsafeName": "base_post_request_body_schema_filename",
+                  "safeName": "base_post_request_body_schema_filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BASE_POST_REQUEST_BODY_SCHEMA_FILENAME",
+                  "safeName": "BASE_POST_REQUEST_BODY_SCHEMA_FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "BasePostRequestBodySchemaFilename",
+                  "safeName": "BasePostRequestBodySchemaFilename"
+                }
+              },
+              "typeId": "BasePostRequestBodySchemaFilename",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "File's content"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "metadata[{key}]",
+                "camelCase": {
+                  "unsafeName": "metadataKey",
+                  "safeName": "metadataKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "metadata_key",
+                  "safeName": "metadata_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_KEY",
+                  "safeName": "METADATA_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataKey",
+                  "safeName": "MetadataKey"
+                }
+              },
+              "wireValue": "metadata[{key}]"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "metadataValue",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "signature",
+                "camelCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "snakeCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIGNATURE",
+                  "safeName": "SIGNATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Signature",
+                  "safeName": "Signature"
+                }
+              },
+              "wireValue": "signature"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "signatureType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "expire",
+                "camelCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "snakeCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXPIRE",
+                  "safeName": "EXPIRE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Expire",
+                  "safeName": "Expire"
+                }
+              },
+              "wireValue": "expire"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "expireType",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
     "BasePostResponsesSchemaFilename": {
       "name": {
         "typeId": "BasePostResponsesSchemaFilename",
@@ -15019,6 +15372,519 @@
       "referencedTypes": {},
       "inline": false
     },
+    "Upload_multipartFileUploadStart_Request": {
+      "name": {
+        "typeId": "Upload_multipartFileUploadStart_Request",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Upload_multipartFileUploadStart_Request",
+          "camelCase": {
+            "unsafeName": "uploadMultipartFileUploadStartRequest",
+            "safeName": "uploadMultipartFileUploadStartRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_multipart_file_upload_start_request",
+            "safeName": "upload_multipart_file_upload_start_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_MULTIPART_FILE_UPLOAD_START_REQUEST",
+            "safeName": "UPLOAD_MULTIPART_FILE_UPLOAD_START_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadMultipartFileUploadStartRequest",
+            "safeName": "UploadMultipartFileUploadStartRequest"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "UPLOADCARE_PUB_KEY",
+                "camelCase": {
+                  "unsafeName": "uploadcarePubKey",
+                  "safeName": "uploadcarePubKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "uploadcare_pub_key",
+                  "safeName": "uploadcare_pub_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPLOADCARE_PUB_KEY",
+                  "safeName": "UPLOADCARE_PUB_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "UploadcarePubKey",
+                  "safeName": "UploadcarePubKey"
+                }
+              },
+              "wireValue": "UPLOADCARE_PUB_KEY"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "projectPublicKeyType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "UPLOADCARE_STORE",
+                "camelCase": {
+                  "unsafeName": "uploadcareStore",
+                  "safeName": "uploadcareStore"
+                },
+                "snakeCase": {
+                  "unsafeName": "uploadcare_store",
+                  "safeName": "uploadcare_store"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPLOADCARE_STORE",
+                  "safeName": "UPLOADCARE_STORE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UploadcareStore",
+                  "safeName": "UploadcareStore"
+                }
+              },
+              "wireValue": "UPLOADCARE_STORE"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "storeType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "filename",
+                "camelCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "snakeCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILENAME",
+                  "safeName": "FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Filename",
+                  "safeName": "Filename"
+                }
+              },
+              "wireValue": "filename"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "MultipartStartPostRequestBodySchemaFilename",
+                "camelCase": {
+                  "unsafeName": "multipartStartPostRequestBodySchemaFilename",
+                  "safeName": "multipartStartPostRequestBodySchemaFilename"
+                },
+                "snakeCase": {
+                  "unsafeName": "multipart_start_post_request_body_schema_filename",
+                  "safeName": "multipart_start_post_request_body_schema_filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_FILENAME",
+                  "safeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "MultipartStartPostRequestBodySchemaFilename",
+                  "safeName": "MultipartStartPostRequestBodySchemaFilename"
+                }
+              },
+              "typeId": "MultipartStartPostRequestBodySchemaFilename",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Original file name of the uploaded file"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "size",
+                "camelCase": {
+                  "unsafeName": "size",
+                  "safeName": "size"
+                },
+                "snakeCase": {
+                  "unsafeName": "size",
+                  "safeName": "size"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIZE",
+                  "safeName": "SIZE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Size",
+                  "safeName": "Size"
+                }
+              },
+              "wireValue": "size"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "MultipartStartPostRequestBodySchemaSize",
+                "camelCase": {
+                  "unsafeName": "multipartStartPostRequestBodySchemaSize",
+                  "safeName": "multipartStartPostRequestBodySchemaSize"
+                },
+                "snakeCase": {
+                  "unsafeName": "multipart_start_post_request_body_schema_size",
+                  "safeName": "multipart_start_post_request_body_schema_size"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_SIZE",
+                  "safeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_SIZE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MultipartStartPostRequestBodySchemaSize",
+                  "safeName": "MultipartStartPostRequestBodySchemaSize"
+                }
+              },
+              "typeId": "MultipartStartPostRequestBodySchemaSize",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "part_size",
+                "camelCase": {
+                  "unsafeName": "partSize",
+                  "safeName": "partSize"
+                },
+                "snakeCase": {
+                  "unsafeName": "part_size",
+                  "safeName": "part_size"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PART_SIZE",
+                  "safeName": "PART_SIZE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartSize",
+                  "safeName": "PartSize"
+                }
+              },
+              "wireValue": "part_size"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "MultipartStartPostRequestBodySchemaPartSize",
+                "camelCase": {
+                  "unsafeName": "multipartStartPostRequestBodySchemaPartSize",
+                  "safeName": "multipartStartPostRequestBodySchemaPartSize"
+                },
+                "snakeCase": {
+                  "unsafeName": "multipart_start_post_request_body_schema_part_size",
+                  "safeName": "multipart_start_post_request_body_schema_part_size"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_PART_SIZE",
+                  "safeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_PART_SIZE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MultipartStartPostRequestBodySchemaPartSize",
+                  "safeName": "MultipartStartPostRequestBodySchemaPartSize"
+                }
+              },
+              "typeId": "MultipartStartPostRequestBodySchemaPartSize",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "content_type",
+                "camelCase": {
+                  "unsafeName": "contentType",
+                  "safeName": "contentType"
+                },
+                "snakeCase": {
+                  "unsafeName": "content_type",
+                  "safeName": "content_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONTENT_TYPE",
+                  "safeName": "CONTENT_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "ContentType",
+                  "safeName": "ContentType"
+                }
+              },
+              "wireValue": "content_type"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "MultipartStartPostRequestBodySchemaContentType",
+                "camelCase": {
+                  "unsafeName": "multipartStartPostRequestBodySchemaContentType",
+                  "safeName": "multipartStartPostRequestBodySchemaContentType"
+                },
+                "snakeCase": {
+                  "unsafeName": "multipart_start_post_request_body_schema_content_type",
+                  "safeName": "multipart_start_post_request_body_schema_content_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_CONTENT_TYPE",
+                  "safeName": "MULTIPART_START_POST_REQUEST_BODY_SCHEMA_CONTENT_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MultipartStartPostRequestBodySchemaContentType",
+                  "safeName": "MultipartStartPostRequestBodySchemaContentType"
+                }
+              },
+              "typeId": "MultipartStartPostRequestBodySchemaContentType",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "File's MIME-type."
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "metadata[{key}]",
+                "camelCase": {
+                  "unsafeName": "metadataKey",
+                  "safeName": "metadataKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "metadata_key",
+                  "safeName": "metadata_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_KEY",
+                  "safeName": "METADATA_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataKey",
+                  "safeName": "MetadataKey"
+                }
+              },
+              "wireValue": "metadata[{key}]"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "metadataValue",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "signature",
+                "camelCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "snakeCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIGNATURE",
+                  "safeName": "SIGNATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Signature",
+                  "safeName": "Signature"
+                }
+              },
+              "wireValue": "signature"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "signatureType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "expire",
+                "camelCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "snakeCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXPIRE",
+                  "safeName": "EXPIRE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Expire",
+                  "safeName": "Expire"
+                }
+              },
+              "wireValue": "expire"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "expireType",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "Multipart upload parameters to start multipart uploading.",
+      "referencedTypes": {},
+      "inline": false
+    },
     "MultipartStartPostResponsesSchemaUuid": {
       "name": {
         "typeId": "MultipartStartPostResponsesSchemaUuid",
@@ -15355,6 +16221,151 @@
       "referencedTypes": {},
       "inline": false
     },
+    "Upload_multipartFileUploadComplete_Request": {
+      "name": {
+        "typeId": "Upload_multipartFileUploadComplete_Request",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Upload_multipartFileUploadComplete_Request",
+          "camelCase": {
+            "unsafeName": "uploadMultipartFileUploadCompleteRequest",
+            "safeName": "uploadMultipartFileUploadCompleteRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_multipart_file_upload_complete_request",
+            "safeName": "upload_multipart_file_upload_complete_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_MULTIPART_FILE_UPLOAD_COMPLETE_REQUEST",
+            "safeName": "UPLOAD_MULTIPART_FILE_UPLOAD_COMPLETE_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadMultipartFileUploadCompleteRequest",
+            "safeName": "UploadMultipartFileUploadCompleteRequest"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "UPLOADCARE_PUB_KEY",
+                "camelCase": {
+                  "unsafeName": "uploadcarePubKey",
+                  "safeName": "uploadcarePubKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "uploadcare_pub_key",
+                  "safeName": "uploadcare_pub_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPLOADCARE_PUB_KEY",
+                  "safeName": "UPLOADCARE_PUB_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "UploadcarePubKey",
+                  "safeName": "UploadcarePubKey"
+                }
+              },
+              "wireValue": "UPLOADCARE_PUB_KEY"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "projectPublicKeyType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "uuid",
+                "camelCase": {
+                  "unsafeName": "uuid",
+                  "safeName": "uuid"
+                },
+                "snakeCase": {
+                  "unsafeName": "uuid",
+                  "safeName": "uuid"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UUID",
+                  "safeName": "UUID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Uuid",
+                  "safeName": "Uuid"
+                }
+              },
+              "wireValue": "uuid"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "MultipartCompletePostRequestBodySchemaUuid",
+                "camelCase": {
+                  "unsafeName": "multipartCompletePostRequestBodySchemaUuid",
+                  "safeName": "multipartCompletePostRequestBodySchemaUuid"
+                },
+                "snakeCase": {
+                  "unsafeName": "multipart_complete_post_request_body_schema_uuid",
+                  "safeName": "multipart_complete_post_request_body_schema_uuid"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MULTIPART_COMPLETE_POST_REQUEST_BODY_SCHEMA_UUID",
+                  "safeName": "MULTIPART_COMPLETE_POST_REQUEST_BODY_SCHEMA_UUID"
+                },
+                "pascalCase": {
+                  "unsafeName": "MultipartCompletePostRequestBodySchemaUuid",
+                  "safeName": "MultipartCompletePostRequestBodySchemaUuid"
+                }
+              },
+              "typeId": "MultipartCompletePostRequestBodySchemaUuid",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "File's UUID from the `/multipart/start/` endpoint."
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
     "FromUrlPostRequestBodySchemaSourceUrl": {
       "name": {
         "typeId": "FromUrlPostRequestBodySchemaSourceUrl",
@@ -15667,6 +16678,518 @@
       "referencedTypes": {},
       "inline": false
     },
+    "Upload_fromURLUpload_Request": {
+      "name": {
+        "typeId": "Upload_fromURLUpload_Request",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Upload_fromURLUpload_Request",
+          "camelCase": {
+            "unsafeName": "uploadFromUrlUploadRequest",
+            "safeName": "uploadFromUrlUploadRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_from_url_upload_request",
+            "safeName": "upload_from_url_upload_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_FROM_URL_UPLOAD_REQUEST",
+            "safeName": "UPLOAD_FROM_URL_UPLOAD_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadFromUrlUploadRequest",
+            "safeName": "UploadFromUrlUploadRequest"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "pub_key",
+                "camelCase": {
+                  "unsafeName": "pubKey",
+                  "safeName": "pubKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "pub_key",
+                  "safeName": "pub_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUB_KEY",
+                  "safeName": "PUB_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "PubKey",
+                  "safeName": "PubKey"
+                }
+              },
+              "wireValue": "pub_key"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "projectPublicKeyType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "source_url",
+                "camelCase": {
+                  "unsafeName": "sourceUrl",
+                  "safeName": "sourceUrl"
+                },
+                "snakeCase": {
+                  "unsafeName": "source_url",
+                  "safeName": "source_url"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SOURCE_URL",
+                  "safeName": "SOURCE_URL"
+                },
+                "pascalCase": {
+                  "unsafeName": "SourceUrl",
+                  "safeName": "SourceUrl"
+                }
+              },
+              "wireValue": "source_url"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "FromUrlPostRequestBodySchemaSourceUrl",
+                "camelCase": {
+                  "unsafeName": "fromUrlPostRequestBodySchemaSourceUrl",
+                  "safeName": "fromUrlPostRequestBodySchemaSourceUrl"
+                },
+                "snakeCase": {
+                  "unsafeName": "from_url_post_request_body_schema_source_url",
+                  "safeName": "from_url_post_request_body_schema_source_url"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SOURCE_URL",
+                  "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SOURCE_URL"
+                },
+                "pascalCase": {
+                  "unsafeName": "FromUrlPostRequestBodySchemaSourceUrl",
+                  "safeName": "FromUrlPostRequestBodySchemaSourceUrl"
+                }
+              },
+              "typeId": "FromUrlPostRequestBodySchemaSourceUrl",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "store",
+                "camelCase": {
+                  "unsafeName": "store",
+                  "safeName": "store"
+                },
+                "snakeCase": {
+                  "unsafeName": "store",
+                  "safeName": "store"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STORE",
+                  "safeName": "STORE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Store",
+                  "safeName": "Store"
+                }
+              },
+              "wireValue": "store"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "storeType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "filename",
+                "camelCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "snakeCase": {
+                  "unsafeName": "filename",
+                  "safeName": "filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILENAME",
+                  "safeName": "FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Filename",
+                  "safeName": "Filename"
+                }
+              },
+              "wireValue": "filename"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "FromUrlPostRequestBodySchemaFilename",
+                "camelCase": {
+                  "unsafeName": "fromUrlPostRequestBodySchemaFilename",
+                  "safeName": "fromUrlPostRequestBodySchemaFilename"
+                },
+                "snakeCase": {
+                  "unsafeName": "from_url_post_request_body_schema_filename",
+                  "safeName": "from_url_post_request_body_schema_filename"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_FILENAME",
+                  "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_FILENAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "FromUrlPostRequestBodySchemaFilename",
+                  "safeName": "FromUrlPostRequestBodySchemaFilename"
+                }
+              },
+              "typeId": "FromUrlPostRequestBodySchemaFilename",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "check_URL_duplicates",
+                "camelCase": {
+                  "unsafeName": "checkUrlDuplicates",
+                  "safeName": "checkUrlDuplicates"
+                },
+                "snakeCase": {
+                  "unsafeName": "check_url_duplicates",
+                  "safeName": "check_url_duplicates"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHECK_URL_DUPLICATES",
+                  "safeName": "CHECK_URL_DUPLICATES"
+                },
+                "pascalCase": {
+                  "unsafeName": "CheckUrlDuplicates",
+                  "safeName": "CheckUrlDuplicates"
+                }
+              },
+              "wireValue": "check_URL_duplicates"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                "camelCase": {
+                  "unsafeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                  "safeName": "fromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                },
+                "snakeCase": {
+                  "unsafeName": "from_url_post_request_body_schema_check_url_duplicates",
+                  "safeName": "from_url_post_request_body_schema_check_url_duplicates"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES",
+                  "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_CHECK_URL_DUPLICATES"
+                },
+                "pascalCase": {
+                  "unsafeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+                  "safeName": "FromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                }
+              },
+              "typeId": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "save_URL_duplicates",
+                "camelCase": {
+                  "unsafeName": "saveUrlDuplicates",
+                  "safeName": "saveUrlDuplicates"
+                },
+                "snakeCase": {
+                  "unsafeName": "save_url_duplicates",
+                  "safeName": "save_url_duplicates"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAVE_URL_DUPLICATES",
+                  "safeName": "SAVE_URL_DUPLICATES"
+                },
+                "pascalCase": {
+                  "unsafeName": "SaveUrlDuplicates",
+                  "safeName": "SaveUrlDuplicates"
+                }
+              },
+              "wireValue": "save_URL_duplicates"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                "camelCase": {
+                  "unsafeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                  "safeName": "fromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                },
+                "snakeCase": {
+                  "unsafeName": "from_url_post_request_body_schema_save_url_duplicates",
+                  "safeName": "from_url_post_request_body_schema_save_url_duplicates"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES",
+                  "safeName": "FROM_URL_POST_REQUEST_BODY_SCHEMA_SAVE_URL_DUPLICATES"
+                },
+                "pascalCase": {
+                  "unsafeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+                  "safeName": "FromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                }
+              },
+              "typeId": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "metadata[{key}]",
+                "camelCase": {
+                  "unsafeName": "metadataKey",
+                  "safeName": "metadataKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "metadata_key",
+                  "safeName": "metadata_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_KEY",
+                  "safeName": "METADATA_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataKey",
+                  "safeName": "MetadataKey"
+                }
+              },
+              "wireValue": "metadata[{key}]"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "metadataValue",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "signature",
+                "camelCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "snakeCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIGNATURE",
+                  "safeName": "SIGNATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Signature",
+                  "safeName": "Signature"
+                }
+              },
+              "wireValue": "signature"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "signatureType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "expire",
+                "camelCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "snakeCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXPIRE",
+                  "safeName": "EXPIRE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Expire",
+                  "safeName": "Expire"
+                }
+              },
+              "wireValue": "expire"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "expireType",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
     "GroupPostRequestBodySchemaFiles": {
       "name": {
         "typeId": "GroupPostRequestBodySchemaFiles",
@@ -15732,6 +17255,255 @@
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
       "docs": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n",
+      "referencedTypes": {},
+      "inline": false
+    },
+    "Groups_createFilesGroup_Request": {
+      "name": {
+        "typeId": "Groups_createFilesGroup_Request",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Groups_createFilesGroup_Request",
+          "camelCase": {
+            "unsafeName": "groupsCreateFilesGroupRequest",
+            "safeName": "groupsCreateFilesGroupRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "groups_create_files_group_request",
+            "safeName": "groups_create_files_group_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GROUPS_CREATE_FILES_GROUP_REQUEST",
+            "safeName": "GROUPS_CREATE_FILES_GROUP_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "GroupsCreateFilesGroupRequest",
+            "safeName": "GroupsCreateFilesGroupRequest"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "pub_key",
+                "camelCase": {
+                  "unsafeName": "pubKey",
+                  "safeName": "pubKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "pub_key",
+                  "safeName": "pub_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUB_KEY",
+                  "safeName": "PUB_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "PubKey",
+                  "safeName": "PubKey"
+                }
+              },
+              "wireValue": "pub_key"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "projectPublicKeyType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "files[]",
+                "camelCase": {
+                  "unsafeName": "files",
+                  "safeName": "files"
+                },
+                "snakeCase": {
+                  "unsafeName": "files",
+                  "safeName": "files"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILES",
+                  "safeName": "FILES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Files",
+                  "safeName": "Files"
+                }
+              },
+              "wireValue": "files[]"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "GroupPostRequestBodySchemaFiles",
+                "camelCase": {
+                  "unsafeName": "groupPostRequestBodySchemaFiles",
+                  "safeName": "groupPostRequestBodySchemaFiles"
+                },
+                "snakeCase": {
+                  "unsafeName": "group_post_request_body_schema_files",
+                  "safeName": "group_post_request_body_schema_files"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GROUP_POST_REQUEST_BODY_SCHEMA_FILES",
+                  "safeName": "GROUP_POST_REQUEST_BODY_SCHEMA_FILES"
+                },
+                "pascalCase": {
+                  "unsafeName": "GroupPostRequestBodySchemaFiles",
+                  "safeName": "GroupPostRequestBodySchemaFiles"
+                }
+              },
+              "typeId": "GroupPostRequestBodySchemaFiles",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n"
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "signature",
+                "camelCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "snakeCase": {
+                  "unsafeName": "signature",
+                  "safeName": "signature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIGNATURE",
+                  "safeName": "SIGNATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Signature",
+                  "safeName": "Signature"
+                }
+              },
+              "wireValue": "signature"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "signatureType",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "expire",
+                "camelCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "snakeCase": {
+                  "unsafeName": "expire",
+                  "safeName": "expire"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXPIRE",
+                  "safeName": "EXPIRE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Expire",
+                  "safeName": "Expire"
+                }
+              },
+              "wireValue": "expire"
+            },
+            "valueType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              },
+              "typeId": "expireType",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
       "referencedTypes": {},
       "inline": false
     }
@@ -15892,9 +17664,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -15947,9 +17718,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16003,9 +17773,8 @@
                   "type": "named"
                 },
                 "docs": "File's content",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16058,9 +17827,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16113,9 +17881,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16168,9 +17935,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               }
             ],
             "type": "fileUpload"
@@ -16327,9 +18093,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16382,9 +18147,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16438,9 +18202,8 @@
                   "type": "named"
                 },
                 "docs": "Original file name of the uploaded file",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16494,9 +18257,8 @@
                   "type": "named"
                 },
                 "docs": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16550,9 +18312,8 @@
                   "type": "named"
                 },
                 "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16606,9 +18367,8 @@
                   "type": "named"
                 },
                 "docs": "File's MIME-type.",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16661,9 +18421,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16716,9 +18475,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -16771,9 +18529,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               }
             ],
             "type": "fileUpload"
@@ -16972,9 +18729,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17028,9 +18784,8 @@
                   "type": "named"
                 },
                 "docs": "File's UUID from the `/multipart/start/` endpoint.",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               }
             ],
             "type": "fileUpload"
@@ -17187,9 +18942,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17243,9 +18997,8 @@
                   "type": "named"
                 },
                 "docs": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17298,9 +19051,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17354,9 +19106,8 @@
                   "type": "named"
                 },
                 "docs": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17410,9 +19161,8 @@
                   "type": "named"
                 },
                 "docs": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17466,9 +19216,8 @@
                   "type": "named"
                 },
                 "docs": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17521,9 +19270,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17576,9 +19324,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -17631,9 +19378,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               }
             ],
             "type": "fileUpload"
@@ -18060,9 +19806,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -18116,9 +19861,8 @@
                   "type": "named"
                 },
                 "docs": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n",
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -18171,9 +19915,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -18226,9 +19969,8 @@
                   "inline": false,
                   "type": "named"
                 },
-                "type": "bodyProperty",
                 "contentType": "multipart/form-data",
-                "style": "form"
+                "type": "bodyProperty"
               }
             ],
             "type": "fileUpload"

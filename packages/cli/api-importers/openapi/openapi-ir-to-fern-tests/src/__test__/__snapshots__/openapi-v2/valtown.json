@@ -16489,6 +16489,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "Binary input data",
+            "requestBodyType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "validation": {
+                    "format": "binary"
+                  },
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "reference"
+          },
           "errors": [],
           "auth": true,
           "docs": "Store data in blob storage",
