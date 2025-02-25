@@ -45,6 +45,10 @@ describe("CrossPlatformFormData", () => {
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value);
+            const myList = ["hello", "world", "this", "is", "data"];
+            for (const item of myList) {
+                await formData.append("listOfStrings", item);
+            }
 
             const request = await formData.getRequest();
             const decoder = new TextDecoder("utf-8");
@@ -52,6 +56,9 @@ describe("CrossPlatformFormData", () => {
             for await (const chunk of request.body) {
                 data += decoder.decode(chunk);
             }
+
+            console.log(data);
+
             expect(data).toContain("testfile.txt");
         });
 

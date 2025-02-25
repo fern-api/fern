@@ -189,19 +189,20 @@ public class ServiceClient {
                 .addPathSegments("just-file-with-query-params");
         if (request.getMaybeString().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeString", request.getMaybeString().get());
+                    httpUrl, "maybeString", request.getMaybeString().get(), true);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()));
+        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()), true);
         if (request.getMaybeInteger().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString());
+                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), true);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings());
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), true);
         if (request.getOptionalListOfStrings().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get());
+                    request.getOptionalListOfStrings().get(),
+                    true);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
@@ -295,8 +296,8 @@ public class ServiceClient {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo());
-            QueryStringMapper.addFormDataPart(body, "bar", request.getBar());
+            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), true);
+            QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -343,9 +344,9 @@ public class ServiceClient {
         try {
             if (request.getMaybeString().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "maybe_string", request.getMaybeString().get());
+                        body, "maybe_string", request.getMaybeString().get(), true);
             }
-            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger());
+            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), true);
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
@@ -375,28 +376,30 @@ public class ServiceClient {
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "maybe_integer", request.getMaybeInteger().get());
+                        body, "maybe_integer", request.getMaybeInteger().get(), true);
             }
             if (request.getOptionalListOfStrings().isPresent()) {
                 QueryStringMapper.addFormDataPart(
                         body,
                         "optional_list_of_strings",
-                        request.getOptionalListOfStrings().get());
+                        request.getOptionalListOfStrings().get(),
+                        true);
             }
-            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects());
+            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects(), true);
             if (request.getOptionalMetadata().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "optional_metadata", request.getOptionalMetadata().get());
+                        body, "optional_metadata", request.getOptionalMetadata().get(), true);
             }
             if (request.getOptionalObjectType().isPresent()) {
                 QueryStringMapper.addFormDataPart(
                         body,
                         "optional_object_type",
-                        request.getOptionalObjectType().get());
+                        request.getOptionalObjectType().get(),
+                        true);
             }
             if (request.getOptionalId().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "optional_id", request.getOptionalId().get());
+                        body, "optional_id", request.getOptionalId().get(), true);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

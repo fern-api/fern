@@ -2,7 +2,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import okhttp3.HttpUrl;
 import okhttp3.MultipartBody;
@@ -11,22 +14,20 @@ public class QueryStringMapper {
 
     private static final ObjectMapper MAPPER = ObjectMappers.JSON_MAPPER;
 
-    public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value) {
+    public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value, boolean arraysAsRepeats) {
         JsonNode nested = MAPPER.valueToTree(value);
 
-        ObjectNode flat;
+        List<Map.Entry<String, JsonNode>> flat;
         if (nested.isObject()) {
-            flat = flattenObject((ObjectNode) nested);
+            flat = flattenObject((ObjectNode) nested, arraysAsRepeats);
         } else if (nested.isArray()) {
-            flat = flattenArray((ArrayNode) nested, "");
+            flat = flattenArray((ArrayNode) nested, "", arraysAsRepeats);
         } else {
             httpUrl.addQueryParameter(key, value.toString());
             return;
         }
 
-        Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> field = fields.next();
+        for (Map.Entry<String, JsonNode> field : flat) {
             if (field.getValue().isTextual()) {
                 httpUrl.addQueryParameter(key + field.getKey(), field.getValue().textValue());
             } else {
@@ -35,22 +36,21 @@ public class QueryStringMapper {
         }
     }
 
-    public static void addFormDataPart(MultipartBody.Builder multipartBody, String key, Object value) {
+    public static void addFormDataPart(
+            MultipartBody.Builder multipartBody, String key, Object value, boolean arraysAsRepeats) {
         JsonNode nested = MAPPER.valueToTree(value);
 
-        ObjectNode flat;
+        List<Map.Entry<String, JsonNode>> flat;
         if (nested.isObject()) {
-            flat = flattenObject((ObjectNode) nested);
+            flat = flattenObject((ObjectNode) nested, arraysAsRepeats);
         } else if (nested.isArray()) {
-            flat = flattenArray((ArrayNode) nested, "");
+            flat = flattenArray((ArrayNode) nested, "", arraysAsRepeats);
         } else {
             multipartBody.addFormDataPart(key, value.toString());
             return;
         }
 
-        Iterator<Map.Entry<String, JsonNode>> fields = flat.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> field = fields.next();
+        for (Map.Entry<String, JsonNode> field : flat) {
             if (field.getValue().isTextual()) {
                 multipartBody.addFormDataPart(
                         key + field.getKey(), field.getValue().textValue());
@@ -61,8 +61,8 @@ public class QueryStringMapper {
         }
     }
 
-    public static ObjectNode flattenObject(ObjectNode object) {
-        ObjectNode flat = MAPPER.createObjectNode();
+    public static List<Map.Entry<String, JsonNode>> flattenObject(ObjectNode object, boolean arraysAsRepeats) {
+        List<Map.Entry<String, JsonNode>> flat = new ArrayList<>();
 
         Iterator<Map.Entry<String, JsonNode>> fields = object.fields();
         while (fields.hasNext()) {
@@ -71,21 +71,24 @@ public class QueryStringMapper {
             String key = "[" + field.getKey() + "]";
 
             if (field.getValue().isObject()) {
-                ObjectNode flatField = flattenObject((ObjectNode) field.getValue());
-                setAll(flat, flatField, key);
+                List<Map.Entry<String, JsonNode>> flatField =
+                        flattenObject((ObjectNode) field.getValue(), arraysAsRepeats);
+                addAll(flat, flatField, key);
             } else if (field.getValue().isArray()) {
-                ObjectNode flatField = flattenArray((ArrayNode) field.getValue(), key);
-                setAll(flat, flatField, "");
+                List<Map.Entry<String, JsonNode>> flatField =
+                        flattenArray((ArrayNode) field.getValue(), key, arraysAsRepeats);
+                addAll(flat, flatField, "");
             } else {
-                flat.set(key, field.getValue());
+                flat.add(new AbstractMap.SimpleEntry<>(key, field.getValue()));
             }
         }
 
         return flat;
     }
 
-    private static ObjectNode flattenArray(ArrayNode array, String key) {
-        ObjectNode flat = MAPPER.createObjectNode();
+    private static List<Map.Entry<String, JsonNode>> flattenArray(
+            ArrayNode array, String key, boolean arraysAsRepeats) {
+        List<Map.Entry<String, JsonNode>> flat = new ArrayList<>();
 
         Iterator<JsonNode> elements = array.elements();
 
@@ -95,14 +98,18 @@ public class QueryStringMapper {
 
             String indexKey = key + "[" + index + "]";
 
+            if (arraysAsRepeats) {
+                indexKey = key;
+            }
+
             if (element.isObject()) {
-                ObjectNode flatField = flattenObject((ObjectNode) element);
-                setAll(flat, flatField, indexKey);
+                List<Map.Entry<String, JsonNode>> flatField = flattenObject((ObjectNode) element, arraysAsRepeats);
+                addAll(flat, flatField, indexKey);
             } else if (element.isArray()) {
-                ObjectNode flatField = flattenArray((ArrayNode) element, "");
-                setAll(flat, flatField, indexKey);
+                List<Map.Entry<String, JsonNode>> flatField = flattenArray((ArrayNode) element, "", arraysAsRepeats);
+                addAll(flat, flatField, indexKey);
             } else {
-                flat.set(indexKey, element);
+                flat.add(new AbstractMap.SimpleEntry<>(indexKey, element));
             }
 
             index++;
@@ -111,11 +118,12 @@ public class QueryStringMapper {
         return flat;
     }
 
-    private static void setAll(ObjectNode target, ObjectNode source, String prefix) {
-        Iterator<Map.Entry<String, JsonNode>> fields = source.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> entry = fields.next();
-            target.set(prefix + entry.getKey(), entry.getValue());
+    private static void addAll(
+            List<Map.Entry<String, JsonNode>> target, List<Map.Entry<String, JsonNode>> source, String prefix) {
+        for (Map.Entry<String, JsonNode> entry : source) {
+            Map.Entry<String, JsonNode> entryToAdd =
+                    new AbstractMap.SimpleEntry<>(prefix + entry.getKey(), entry.getValue());
+            target.add(entryToAdd);
         }
     }
 }
