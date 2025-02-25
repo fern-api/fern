@@ -15821,7 +15821,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_baseUpload_Request",
               "camelCase": {
@@ -15841,8 +15840,6 @@
                 "safeName": "UploadBaseUploadRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -15894,7 +15891,10 @@
                   "typeId": "projectPublicKeyType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -15946,7 +15946,10 @@
                   "typeId": "storeType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -15999,7 +16002,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "File's content"
+                "docs": "File's content",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16051,7 +16057,10 @@
                   "typeId": "metadataValue",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16103,7 +16112,10 @@
                   "typeId": "signatureType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16155,11 +16167,13 @@
                   "typeId": "expireType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,
@@ -16242,7 +16256,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_multipartFileUploadStart_Request",
               "camelCase": {
@@ -16262,8 +16275,6 @@
                 "safeName": "UploadMultipartFileUploadStartRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -16315,7 +16326,10 @@
                   "typeId": "projectPublicKeyType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16367,7 +16381,10 @@
                   "typeId": "storeType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16420,7 +16437,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Original file name of the uploaded file"
+                "docs": "Original file name of the uploaded file",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16473,7 +16493,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n"
+                "docs": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16526,7 +16549,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n"
+                "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16579,7 +16605,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "File's MIME-type."
+                "docs": "File's MIME-type.",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16631,7 +16660,10 @@
                   "typeId": "metadataValue",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16683,7 +16715,10 @@
                   "typeId": "signatureType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16735,11 +16770,13 @@
                   "typeId": "expireType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,
@@ -16864,7 +16901,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_multipartFileUploadComplete_Request",
               "camelCase": {
@@ -16884,8 +16920,6 @@
                 "safeName": "UploadMultipartFileUploadCompleteRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -16937,7 +16971,10 @@
                   "typeId": "projectPublicKeyType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -16990,11 +17027,13 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "File's UUID from the `/multipart/start/` endpoint."
+                "docs": "File's UUID from the `/multipart/start/` endpoint.",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,
@@ -17077,7 +17116,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_fromURLUpload_Request",
               "camelCase": {
@@ -17097,8 +17135,6 @@
                 "safeName": "UploadFromUrlUploadRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -17150,7 +17186,10 @@
                   "typeId": "projectPublicKeyType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17203,7 +17242,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n"
+                "docs": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17255,7 +17297,10 @@
                   "typeId": "storeType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17308,7 +17353,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n"
+                "docs": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17361,7 +17409,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n"
+                "docs": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17414,7 +17465,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n"
+                "docs": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17466,7 +17520,10 @@
                   "typeId": "metadataValue",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17518,7 +17575,10 @@
                   "typeId": "signatureType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -17570,11 +17630,13 @@
                   "typeId": "expireType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "errors": [],
           "auth": false,
@@ -17927,7 +17989,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Groups_createFilesGroup_Request",
               "camelCase": {
@@ -17947,8 +18008,6 @@
                 "safeName": "GroupsCreateFilesGroupRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -18000,7 +18059,10 @@
                   "typeId": "projectPublicKeyType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -18053,7 +18115,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n"
+                "docs": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -18105,7 +18170,10 @@
                   "typeId": "signatureType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -18157,11 +18225,13 @@
                   "typeId": "expireType",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,

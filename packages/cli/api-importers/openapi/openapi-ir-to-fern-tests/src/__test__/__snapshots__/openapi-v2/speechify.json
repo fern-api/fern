@@ -10686,7 +10686,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "voices_CreateVoice_Request",
               "camelCase": {
@@ -10706,8 +10705,6 @@
                 "safeName": "VoicesCreateVoiceRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -10760,7 +10757,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Name of the personal voice"
+                "docs": "Name of the personal voice",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -10813,7 +10813,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Audio sample file"
+                "docs": "Audio sample file",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -10866,11 +10869,13 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "User consent information in JSON format: {\"fullName\": \"\", \"email\": \"\"}\nFor example, {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}\nThis should include the fullName and email of the consenting individual."
+                "docs": "User consent information in JSON format: {\"fullName\": \"\", \"email\": \"\"}\nFor example, {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}\nThis should include the fullName and email of the consenting individual.",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "errors": [],
           "auth": true,

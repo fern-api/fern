@@ -92,6 +92,8 @@ export function convertRequest({
     source: Source;
     namespace: string | undefined;
 }): RequestWithExample | undefined {
+    console.log("Request (v1 convertRequest)", JSON.stringify(requestBody, null, 2));
+
     const resolvedRequestBody = isReferenceObject(requestBody)
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;

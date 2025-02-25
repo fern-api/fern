@@ -8,11 +8,12 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-v2-baseline", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (!fixture.isDirectory() || (filterFixture && fixture.name !== filterFixture)) {
             continue;
         }
 

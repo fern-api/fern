@@ -477,7 +477,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "upload-file_Request",
               "camelCase": {
@@ -497,8 +496,6 @@
                 "safeName": "UploadFileRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -551,7 +548,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "The file to upload"
+                "docs": "The file to upload",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -604,11 +604,13 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "An optional file to upload"
+                "docs": "An optional file to upload",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "errors": [],
           "auth": false,
@@ -652,7 +654,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "upload-file_Request",
               "camelCase": {
@@ -672,8 +673,6 @@
                 "safeName": "UploadFileRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -726,7 +725,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "The file to upload"
+                "docs": "The file to upload",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -779,7 +781,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "An optional file to upload"
+                "docs": "An optional file to upload",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               },
               {
                 "name": {
@@ -831,11 +836,13 @@
                   "typeId": "UploadWithContentTypePostRequestBodySchemaData",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "errors": [],
           "auth": false,

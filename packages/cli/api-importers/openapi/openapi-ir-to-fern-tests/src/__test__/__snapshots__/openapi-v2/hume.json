@@ -17648,7 +17648,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Start Job_Request",
               "camelCase": {
@@ -17668,8 +17667,6 @@
                 "safeName": "StartJobRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -17722,11 +17719,13 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)."
+                "docs": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).",
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,

@@ -240,7 +240,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "docs": "Test request body\n",
             "name": {
               "originalName": "testUpload_Request",
@@ -261,8 +260,6 @@
                 "safeName": "TestUploadRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -315,7 +312,10 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Optional multipart section to override the filename."
+                "docs": "Optional multipart section to override the filename.",
+                "contentType": "multipart/form-data",
+                "style": "form",
+                "type": "bodyProperty"
               },
               {
                 "name": {
@@ -368,11 +368,13 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Binary file contents. The file name of the file will be used as the document ID."
+                "docs": "Binary file contents. The file name of the file will be used as the document ID.",
+                "contentType": "multipart/form-data",
+                "style": "form",
+                "type": "bodyProperty"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 201,
@@ -402,136 +404,6 @@
           "idempotent": false,
           "fullPath": {
             "head": "/test",
-            "parts": []
-          },
-          "allPathParameters": [
-            {
-              "name": {
-                "originalName": "corpus_key",
-                "camelCase": {
-                  "unsafeName": "corpusKey",
-                  "safeName": "corpusKey"
-                },
-                "snakeCase": {
-                  "unsafeName": "corpus_key",
-                  "safeName": "corpus_key"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CORPUS_KEY",
-                  "safeName": "CORPUS_KEY"
-                },
-                "pascalCase": {
-                  "unsafeName": "CorpusKey",
-                  "safeName": "CorpusKey"
-                }
-              },
-              "docs": "The unique key",
-              "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "location": "ENDPOINT"
-            }
-          ]
-        },
-        {
-          "id": ".testWithDualContentTypeRequestTypes",
-          "displayName": "Test with dual Content-Type request types",
-          "method": "POST",
-          "name": {
-            "originalName": "testWithDualContentTypeRequestTypes",
-            "camelCase": {
-              "unsafeName": "testWithDualContentTypeRequestTypes",
-              "safeName": "testWithDualContentTypeRequestTypes"
-            },
-            "snakeCase": {
-              "unsafeName": "test_with_dual_content_type_request_types",
-              "safeName": "test_with_dual_content_type_request_types"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_WITH_DUAL_CONTENT_TYPE_REQUEST_TYPES",
-              "safeName": "TEST_WITH_DUAL_CONTENT_TYPE_REQUEST_TYPES"
-            },
-            "pascalCase": {
-              "unsafeName": "TestWithDualContentTypeRequestTypes",
-              "safeName": "TestWithDualContentTypeRequestTypes"
-            }
-          },
-          "path": {
-            "head": "/example",
-            "parts": []
-          },
-          "pathParameters": [
-            {
-              "name": {
-                "originalName": "corpus_key",
-                "camelCase": {
-                  "unsafeName": "corpusKey",
-                  "safeName": "corpusKey"
-                },
-                "snakeCase": {
-                  "unsafeName": "corpus_key",
-                  "safeName": "corpus_key"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CORPUS_KEY",
-                  "safeName": "CORPUS_KEY"
-                },
-                "pascalCase": {
-                  "unsafeName": "CorpusKey",
-                  "safeName": "CorpusKey"
-                }
-              },
-              "docs": "The unique key",
-              "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "location": "ENDPOINT"
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "response": {
-            "statusCode": 201,
-            "body": {
-              "value": {
-                "responseBodyType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
-                  },
-                  "type": "primitive"
-                },
-                "docs": "The sample response",
-                "type": "response"
-              },
-              "type": "json"
-            }
-          },
-          "errors": [],
-          "auth": false,
-          "docs": "Test request with dual content types.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/example",
             "parts": []
           },
           "allPathParameters": [

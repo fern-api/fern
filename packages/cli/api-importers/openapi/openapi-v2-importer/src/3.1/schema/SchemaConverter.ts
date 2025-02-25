@@ -43,6 +43,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): SchemaConverter.Output | undefined {
+        console.log("Input Schema (SchemaConverter)", JSON.stringify(this.schema, null, 2));
         // Try to convert as enum
         if (this.schema.enum?.length) {
             const enumConverter = new EnumSchemaConverter({
@@ -115,6 +116,26 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                         context
                     }),
                     inlinedTypes: oneOfType.inlinedTypes ?? {}
+                };
+            }
+        }
+
+        if (this.schema.type === "object") {
+            console.log("Object Schema (SchemaConverter)", JSON.stringify(this.schema, null, 2));
+            const objectConverter = new ObjectSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema,
+                inlinedTypes: {}
+            });
+            const objectType = objectConverter.convert({ context, errorCollector });
+            console.log("Object Type (SchemaConverter)", JSON.stringify(objectType, null, 2));
+            if (objectType != null) {
+                return {
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: objectType.object,
+                        context
+                    }),
+                    inlinedTypes: objectType.inlinedTypes ?? {}
                 };
             }
         }

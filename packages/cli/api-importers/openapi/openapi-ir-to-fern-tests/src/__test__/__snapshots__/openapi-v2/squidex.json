@@ -74269,7 +74269,6 @@
           ],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "assets_postAsset_Request",
               "camelCase": {
@@ -74289,8 +74288,6 @@
                 "safeName": "AssetsPostAssetRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -74342,11 +74339,13 @@
                   "typeId": "ApiAppsAppAssetsPostRequestBodySchemaFile",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 201,
@@ -75005,7 +75004,6 @@
           ],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "assets_postUpsertAsset_Request",
               "camelCase": {
@@ -75025,8 +75023,6 @@
                 "safeName": "AssetsPostUpsertAssetRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -75078,11 +75074,13 @@
                   "typeId": "ApiAppsAppAssetsIdPostRequestBodySchemaFile",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,
@@ -75975,7 +75973,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "assets_putAssetContent_Request",
               "camelCase": {
@@ -75995,8 +75992,6 @@
                 "safeName": "AssetsPutAssetContentRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -76048,11 +76043,13 @@
                   "typeId": "ApiAppsAppAssetsIdContentPutRequestBodySchemaFile",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,
@@ -78451,7 +78448,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "apps_uploadImage_Request",
               "camelCase": {
@@ -78471,8 +78467,6 @@
                 "safeName": "AppsUploadImageRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -78524,11 +78518,13 @@
                   "typeId": "ApiAppsAppImagePostRequestBodySchemaFile",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "response": {
             "statusCode": 200,

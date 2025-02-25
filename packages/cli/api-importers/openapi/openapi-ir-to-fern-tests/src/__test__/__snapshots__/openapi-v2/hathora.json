@@ -13435,7 +13435,6 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "contentType": "multipart/form-data",
             "name": {
               "originalName": "BuildV1_RunBuild_Request",
               "camelCase": {
@@ -13455,8 +13454,6 @@
                 "safeName": "BuildV1RunBuildRequest"
               }
             },
-            "extendedProperties": [],
-            "extends": [],
             "properties": [
               {
                 "name": {
@@ -13508,11 +13505,13 @@
                   "typeId": "BuildsV1AppIdRunBuildIdPostRequestBodySchemaFile",
                   "inline": false,
                   "type": "named"
-                }
+                },
+                "type": "bodyProperty",
+                "contentType": "multipart/form-data",
+                "style": "form"
               }
             ],
-            "extraProperties": false,
-            "type": "inlinedRequestBody"
+            "type": "fileUpload"
           },
           "errors": [],
           "auth": true,

@@ -49,12 +49,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         }
 
         const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
+        console.log("Input SchemaOrReference (SchemaOrReferenceConverter)", JSON.stringify(this.schemaOrReference, null, 2));
         const schemaConverter = new SchemaConverter({
             breadcrumbs: this.breadcrumbs,
             schema: this.schemaOrReference,
             id: schemaId
         });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
+        console.log("Converted Schema (SchemaOrReferenceConverter)", JSON.stringify(convertedSchema, null, 2));
         if (convertedSchema != null) {
             if (convertedSchema.typeDeclaration.shape.type === "alias") {
                 return {
