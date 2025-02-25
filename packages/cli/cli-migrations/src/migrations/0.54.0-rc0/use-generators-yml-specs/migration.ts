@@ -209,6 +209,11 @@ async function addApiConfigurationToSingleWorkspace({
         }
     }
 
+    if (specs.length === 0) {
+        context.logger.warn("No API specs found. Leaving generators.yml unchanged.");
+        return;
+    }
+
     const firstLine = generatorsYmlFile.contents.split("\n")[0];
     let schemaComment: string | undefined;
     if (firstLine?.startsWith("# yaml-language-server:")) {
