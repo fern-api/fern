@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Migrate generators.yml without any specs.
+    type: chore
+  irVersion: 55
+  version: 0.54.0-rc10
+
+- changelogEntry:
   - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
     type: chore
   irVersion: 55
