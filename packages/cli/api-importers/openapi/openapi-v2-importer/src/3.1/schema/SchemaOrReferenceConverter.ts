@@ -12,6 +12,7 @@ export declare namespace SchemaOrReferenceConverter {
         schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         schemaIdOverride?: string;
         wrapAsOptional?: boolean;
+        wrapAsNullable?: boolean;
     }
 
     export interface Output {
@@ -28,17 +29,20 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     private readonly schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly schemaIdOverride: string | undefined;
     private readonly wrapAsOptional: boolean;
+    private readonly wrapAsNullable: boolean;
 
     constructor({
         breadcrumbs,
         schemaOrReference,
         schemaIdOverride,
-        wrapAsOptional = false
+        wrapAsOptional = false,
+        wrapAsNullable = false
     }: SchemaOrReferenceConverter.Args) {
         super({ breadcrumbs });
         this.schemaOrReference = schemaOrReference;
         this.schemaIdOverride = schemaIdOverride;
         this.wrapAsOptional = wrapAsOptional;
+        this.wrapAsNullable = wrapAsNullable;
     }
 
     public convert({
@@ -68,13 +72,21 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (convertedSchema.typeDeclaration.shape.type === "alias") {
                 const type = convertedSchema.typeDeclaration.shape.aliasOf;
                 return {
-                    type: this.wrapAsOptional ? this.wrapInOptional(type) : type,
+                    type: this.wrapTypeReference({
+                        type,
+                        wrapAsOptional: this.wrapAsOptional,
+                        wrapAsNullable: this.wrapAsNullable
+                    }),
                     inlinedTypes: convertedSchema.inlinedTypes
                 };
             }
             const type = context.createNamedTypeReference(schemaId);
             return {
-                type: this.wrapAsOptional ? this.wrapInOptional(type) : type,
+                type: this.wrapTypeReference({
+                    type,
+                    wrapAsOptional: this.wrapAsOptional,
+                    wrapAsNullable: this.wrapAsNullable
+                }),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
@@ -86,7 +98,32 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         return undefined;
     }
 
+    private wrapTypeReference({
+        type,
+        wrapAsOptional,
+        wrapAsNullable
+    }: {
+        type: TypeReference;
+        wrapAsOptional: boolean;
+        wrapAsNullable: boolean;
+    }): TypeReference {
+        if (wrapAsOptional && wrapAsNullable) {
+            return this.wrapInOptional(this.wrapInNullable(type));
+        }
+        if (wrapAsOptional) {
+            return this.wrapInOptional(type);
+        }
+        if (wrapAsNullable) {
+            return this.wrapInNullable(type);
+        }
+        return type;
+    }
+
     private wrapInOptional(type: TypeReference): TypeReference {
         return TypeReference.container(ContainerType.optional(type));
+    }
+
+    private wrapInNullable(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.nullable(type));
     }
 }

@@ -910,14 +910,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -951,14 +957,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -993,35 +1005,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "ToolCall",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "ToolCall",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -1097,14 +1115,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1138,14 +1162,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1180,35 +1210,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "ToolCall",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "ToolCall",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },

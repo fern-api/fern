@@ -96,14 +96,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -137,14 +143,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -178,14 +190,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -220,17 +238,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -856,17 +880,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 100
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 100
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -900,17 +930,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 1000
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 1000
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -944,17 +980,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 100
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 100
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1090,14 +1132,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1132,17 +1180,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -3070,14 +3124,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3262,17 +3322,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -3308,16 +3374,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3351,16 +3423,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3394,14 +3472,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3435,14 +3519,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3476,14 +3566,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3645,14 +3741,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3686,14 +3788,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4159,14 +4267,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4253,14 +4367,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4294,16 +4414,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4390,14 +4516,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4631,14 +4763,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4804,35 +4942,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "SortNode",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "SortNode",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -5676,14 +5820,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -5851,14 +6001,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6381,14 +6537,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6656,14 +6818,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7868,17 +8036,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 100
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 100
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7912,17 +8086,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 1000
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 1000
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7956,14 +8136,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7997,14 +8183,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8038,14 +8230,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8114,17 +8312,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -8200,14 +8404,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8241,14 +8451,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8282,14 +8498,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8323,14 +8545,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8364,14 +8592,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8405,14 +8639,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8576,14 +8816,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8805,14 +9051,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8940,17 +9192,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -8987,17 +9245,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -9393,17 +9657,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -9440,17 +9710,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -9487,35 +9763,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "UpsertSchemaFieldDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "UpsertSchemaFieldDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -9551,32 +9833,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "UpsertSchemaDtoPreviewUrls",
+                        "camelCase": {
+                          "unsafeName": "upsertSchemaDtoPreviewUrls",
+                          "safeName": "upsertSchemaDtoPreviewUrls"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "upsert_schema_dto_preview_urls",
+                          "safeName": "upsert_schema_dto_preview_urls"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "UPSERT_SCHEMA_DTO_PREVIEW_URLS",
+                          "safeName": "UPSERT_SCHEMA_DTO_PREVIEW_URLS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "UpsertSchemaDtoPreviewUrls",
+                          "safeName": "UpsertSchemaDtoPreviewUrls"
+                        }
+                      },
+                      "typeId": "UpsertSchemaDtoPreviewUrls",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "UpsertSchemaDtoPreviewUrls",
-                    "camelCase": {
-                      "unsafeName": "upsertSchemaDtoPreviewUrls",
-                      "safeName": "upsertSchemaDtoPreviewUrls"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "upsert_schema_dto_preview_urls",
-                      "safeName": "upsert_schema_dto_preview_urls"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPSERT_SCHEMA_DTO_PREVIEW_URLS",
-                      "safeName": "UPSERT_SCHEMA_DTO_PREVIEW_URLS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UpsertSchemaDtoPreviewUrls",
-                      "safeName": "UpsertSchemaDtoPreviewUrls"
-                    }
-                  },
-                  "typeId": "UpsertSchemaDtoPreviewUrls",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -9611,35 +9899,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "FieldRuleDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "FieldRuleDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -9675,14 +9969,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -9930,14 +10230,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10025,35 +10331,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "UpsertSchemaNestedFieldDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "UpsertSchemaNestedFieldDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -10362,17 +10674,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 100
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 100
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10406,17 +10724,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 1000
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 1000
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10450,14 +10774,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10491,14 +10821,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10532,14 +10868,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10608,17 +10950,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -10694,14 +11042,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10815,35 +11169,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "FieldRuleDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "FieldRuleDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -10989,14 +11349,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11030,14 +11396,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11071,14 +11443,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11112,14 +11490,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11376,17 +11760,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -11422,14 +11812,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11933,14 +12329,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12501,14 +12903,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12648,13 +13056,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12840,14 +13254,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12881,14 +13301,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12922,14 +13348,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13715,14 +14147,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13756,14 +14194,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13797,16 +14241,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "uri"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "uri"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14091,14 +14541,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14132,14 +14588,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14173,14 +14635,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14214,14 +14682,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14708,14 +15182,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15546,17 +16026,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -15592,14 +16078,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15633,14 +16125,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15970,16 +16468,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16094,35 +16598,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "CommentDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "CommentDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -16159,35 +16669,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "CommentDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "CommentDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -16224,17 +16740,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -16486,16 +17008,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "uri"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "uri"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16606,16 +17134,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "uri"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "uri"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16938,16 +17472,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -17074,16 +17614,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "pattern": "^[a-z0-9]+(\\-[a-z0-9]+)*$"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "pattern": "^[a-z0-9]+(\\-[a-z0-9]+)*$"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18170,35 +18716,41 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "",
+                            "camelCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "snakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            },
+                            "pascalCase": {
+                              "unsafeName": "",
+                              "safeName": ""
+                            }
+                          },
+                          "typeId": "BulkUpdateAssetsJobDto",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
                       },
-                      "name": {
-                        "originalName": "",
-                        "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        },
-                        "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
-                        }
-                      },
-                      "typeId": "BulkUpdateAssetsJobDto",
-                      "inline": false,
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -18569,14 +19121,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18610,14 +19168,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18651,13 +19215,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18692,17 +19262,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -18738,32 +19314,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "BulkUpdateAssetsJobDtoMetadata",
+                        "camelCase": {
+                          "unsafeName": "bulkUpdateAssetsJobDtoMetadata",
+                          "safeName": "bulkUpdateAssetsJobDtoMetadata"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "bulk_update_assets_job_dto_metadata",
+                          "safeName": "bulk_update_assets_job_dto_metadata"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "BULK_UPDATE_ASSETS_JOB_DTO_METADATA",
+                          "safeName": "BULK_UPDATE_ASSETS_JOB_DTO_METADATA"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "BulkUpdateAssetsJobDtoMetadata",
+                          "safeName": "BulkUpdateAssetsJobDtoMetadata"
+                        }
+                      },
+                      "typeId": "BulkUpdateAssetsJobDtoMetadata",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "BulkUpdateAssetsJobDtoMetadata",
-                    "camelCase": {
-                      "unsafeName": "bulkUpdateAssetsJobDtoMetadata",
-                      "safeName": "bulkUpdateAssetsJobDtoMetadata"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "bulk_update_assets_job_dto_metadata",
-                      "safeName": "bulk_update_assets_job_dto_metadata"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "BULK_UPDATE_ASSETS_JOB_DTO_METADATA",
-                      "safeName": "BULK_UPDATE_ASSETS_JOB_DTO_METADATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "BulkUpdateAssetsJobDtoMetadata",
-                      "safeName": "BulkUpdateAssetsJobDtoMetadata"
-                    }
-                  },
-                  "typeId": "BulkUpdateAssetsJobDtoMetadata",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19067,14 +19649,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19108,14 +19696,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19149,13 +19743,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19190,17 +19790,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -19236,32 +19842,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "AnnotateAssetDtoMetadata",
+                        "camelCase": {
+                          "unsafeName": "annotateAssetDtoMetadata",
+                          "safeName": "annotateAssetDtoMetadata"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "annotate_asset_dto_metadata",
+                          "safeName": "annotate_asset_dto_metadata"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ANNOTATE_ASSET_DTO_METADATA",
+                          "safeName": "ANNOTATE_ASSET_DTO_METADATA"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "AnnotateAssetDtoMetadata",
+                          "safeName": "AnnotateAssetDtoMetadata"
+                        }
+                      },
+                      "typeId": "AnnotateAssetDtoMetadata",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "AnnotateAssetDtoMetadata",
-                    "camelCase": {
-                      "unsafeName": "annotateAssetDtoMetadata",
-                      "safeName": "annotateAssetDtoMetadata"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "annotate_asset_dto_metadata",
-                      "safeName": "annotate_asset_dto_metadata"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ANNOTATE_ASSET_DTO_METADATA",
-                      "safeName": "ANNOTATE_ASSET_DTO_METADATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "AnnotateAssetDtoMetadata",
-                      "safeName": "AnnotateAssetDtoMetadata"
-                    }
-                  },
-                  "typeId": "AnnotateAssetDtoMetadata",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19416,14 +20028,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19457,14 +20075,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19498,14 +20122,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19539,14 +20169,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19580,14 +20216,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19621,14 +20263,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19662,14 +20310,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19821,17 +20475,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "minLength": 0,
-                        "maxLength": 20
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "minLength": 0,
+                            "maxLength": 20
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19865,14 +20525,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19906,13 +20572,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19946,13 +20618,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "LONG",
-                    "v2": {
-                      "type": "long"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "LONG",
+                        "v2": {
+                          "type": "long"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19986,13 +20664,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "LONG",
-                    "v2": {
-                      "type": "long"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "LONG",
+                        "v2": {
+                          "type": "long"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20143,13 +20827,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20224,17 +20914,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -20565,14 +21261,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20646,14 +21348,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20687,14 +21395,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20768,14 +21482,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20919,14 +21639,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -21447,14 +22173,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -21568,14 +22300,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -21610,17 +22348,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -21696,14 +22440,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -21738,17 +22488,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -21941,14 +22697,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -22036,17 +22798,23 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "validation": {},
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },

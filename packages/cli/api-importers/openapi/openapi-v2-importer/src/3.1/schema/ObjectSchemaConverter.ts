@@ -56,13 +56,15 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
 
         for (const [propertyName, propertySchema] of Object.entries(this.schema.properties ?? {})) {
             const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
+            const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
             const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: propertyBreadcrumbs,
                 schemaOrReference: propertySchema,
                 schemaIdOverride: propertyId,
-                wrapAsOptional: !this.schema.required?.includes(propertyName)
+                wrapAsOptional: !this.schema.required?.includes(propertyName),
+                wrapAsNullable: isNullable
             });
             const convertedProperty = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedProperty != null) {

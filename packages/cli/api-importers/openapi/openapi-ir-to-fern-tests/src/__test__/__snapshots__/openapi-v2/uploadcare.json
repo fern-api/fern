@@ -955,14 +955,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1367,14 +1373,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2228,16 +2240,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date-time"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "date-time"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2399,10 +2417,16 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "type": "unknown"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "type": "unknown"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -6530,17 +6554,23 @@
               "wireValue": "orientation"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {
-                    "max": 8,
-                    "min": 0
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {
+                        "max": 8,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Image orientation from EXIF."
           },
@@ -6707,32 +6737,38 @@
               "wireValue": "geo_location"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "ImageInfoGeoLocation",
+                    "camelCase": {
+                      "unsafeName": "imageInfoGeoLocation",
+                      "safeName": "imageInfoGeoLocation"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "image_info_geo_location",
+                      "safeName": "image_info_geo_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "IMAGE_INFO_GEO_LOCATION",
+                      "safeName": "IMAGE_INFO_GEO_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ImageInfoGeoLocation",
+                      "safeName": "ImageInfoGeoLocation"
+                    }
+                  },
+                  "typeId": "ImageInfoGeoLocation",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "ImageInfoGeoLocation",
-                "camelCase": {
-                  "unsafeName": "imageInfoGeoLocation",
-                  "safeName": "imageInfoGeoLocation"
-                },
-                "snakeCase": {
-                  "unsafeName": "image_info_geo_location",
-                  "safeName": "image_info_geo_location"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IMAGE_INFO_GEO_LOCATION",
-                  "safeName": "IMAGE_INFO_GEO_LOCATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "ImageInfoGeoLocation",
-                  "safeName": "ImageInfoGeoLocation"
-                }
-              },
-              "typeId": "ImageInfoGeoLocation",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Geo-location of image from EXIF."
           },
@@ -6760,16 +6796,22 @@
               "wireValue": "datetime_original"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF."
           },
@@ -6798,17 +6840,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                "nullable": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6881,14 +6929,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6922,14 +6976,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6963,14 +7023,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7004,14 +7070,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7455,32 +7527,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "LegacyVideoInfoAudio",
+                        "camelCase": {
+                          "unsafeName": "legacyVideoInfoAudio",
+                          "safeName": "legacyVideoInfoAudio"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "legacy_video_info_audio",
+                          "safeName": "legacy_video_info_audio"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
+                          "safeName": "LEGACY_VIDEO_INFO_AUDIO"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "LegacyVideoInfoAudio",
+                          "safeName": "LegacyVideoInfoAudio"
+                        }
+                      },
+                      "typeId": "LegacyVideoInfoAudio",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "LegacyVideoInfoAudio",
-                    "camelCase": {
-                      "unsafeName": "legacyVideoInfoAudio",
-                      "safeName": "legacyVideoInfoAudio"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "legacy_video_info_audio",
-                      "safeName": "legacy_video_info_audio"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
-                      "safeName": "LEGACY_VIDEO_INFO_AUDIO"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "LegacyVideoInfoAudio",
-                      "safeName": "LegacyVideoInfoAudio"
-                    }
-                  },
-                  "typeId": "LegacyVideoInfoAudio",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8126,17 +8204,23 @@
               "wireValue": "orientation"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {
-                    "max": 8,
-                    "min": 0
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {
+                        "max": 8,
+                        "min": 0
+                      },
+                      "type": "double"
+                    }
                   },
-                  "type": "double"
-                }
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Image orientation from EXIF."
           },
@@ -8303,32 +8387,38 @@
               "wireValue": "geo_location"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SchemasImageInfoGeoLocation",
+                    "camelCase": {
+                      "unsafeName": "schemasImageInfoGeoLocation",
+                      "safeName": "schemasImageInfoGeoLocation"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "schemas_image_info_geo_location",
+                      "safeName": "schemas_image_info_geo_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
+                      "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SchemasImageInfoGeoLocation",
+                      "safeName": "SchemasImageInfoGeoLocation"
+                    }
+                  },
+                  "typeId": "SchemasImageInfoGeoLocation",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "SchemasImageInfoGeoLocation",
-                "camelCase": {
-                  "unsafeName": "schemasImageInfoGeoLocation",
-                  "safeName": "schemasImageInfoGeoLocation"
-                },
-                "snakeCase": {
-                  "unsafeName": "schemas_image_info_geo_location",
-                  "safeName": "schemas_image_info_geo_location"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
-                  "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "SchemasImageInfoGeoLocation",
-                  "safeName": "SchemasImageInfoGeoLocation"
-                }
-              },
-              "typeId": "SchemasImageInfoGeoLocation",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Geo-location of image from EXIF."
           },
@@ -8356,16 +8446,22 @@
               "wireValue": "datetime_original"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date-time"
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date-time"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF."
           },
@@ -8394,17 +8490,23 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                "nullable": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8475,14 +8577,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's bitrate."
           },
@@ -8510,14 +8618,20 @@
               "wireValue": "codec"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's codec."
           },
@@ -8545,14 +8659,20 @@
               "wireValue": "sample_rate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's sample rate."
           },
@@ -8580,14 +8700,20 @@
               "wireValue": "channels"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Audio stream's number of channels."
           }
@@ -8761,14 +8887,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's bitrate."
           },
@@ -8796,14 +8928,20 @@
               "wireValue": "codec"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video stream's codec."
           }
@@ -8872,14 +9010,20 @@
               "wireValue": "duration"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video file's duration in milliseconds."
           },
@@ -8942,14 +9086,20 @@
               "wireValue": "bitrate"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Video file's bitrate."
           },

@@ -41,6 +41,103 @@ export class RequestBodyConverter extends AbstractConverter<
         this.method = method;
     }
 
+    public convert({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): RequestBodyConverter.Output | undefined {
+        if (!this.requestBody.content) {
+            return undefined;
+        }
+
+        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
+        for (const contentType of [...jsonContentTypes]) {
+            const schemaId = [...this.group, this.method, "Request"].join("_");
+            const convertedSchema = this.tryGetConvertedSchema({
+                schemaId,
+                contentType,
+                context,
+                errorCollector
+            });
+            if (convertedSchema == null) {
+                continue;
+            }
+
+            if (convertedSchema.schema?.shape.type === "object") {
+                const requestBody = HttpRequestBody.inlinedRequestBody({
+                    contentType,
+                    docs: this.requestBody.description,
+                    name: context.casingsGenerator.generateName(schemaId),
+                    extendedProperties: convertedSchema.schema?.shape.extendedProperties,
+                    extends: convertedSchema.schema?.shape.extends,
+                    properties: convertedSchema.schema?.shape.properties,
+                    extraProperties: convertedSchema.schema?.shape.extraProperties
+                });
+
+                return {
+                    requestBody,
+                    inlinedTypes: Object.fromEntries(
+                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                    )
+                };
+            } else {
+                const requestBody = HttpRequestBody.reference({
+                    contentType,
+                    docs: this.requestBody.description,
+                    requestBodyType: convertedSchema.type
+                });
+
+                return {
+                    requestBody,
+                    inlinedTypes: Object.fromEntries(
+                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                    )
+                };
+            }
+        }
+
+        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("multipart")
+        );
+        for (const contentType of multipartContentTypes) {
+            const schemaId = [...this.group, this.method, "Request"].join("_");
+            const convertedSchema = this.tryGetConvertedSchema({
+                schemaId,
+                contentType,
+                context,
+                errorCollector
+            });
+            if (convertedSchema == null) {
+                continue;
+            }
+
+            if (convertedSchema.schema?.shape.type === "object") {
+                const requestBody = HttpRequestBody.fileUpload({
+                    docs: this.requestBody.description,
+                    name: context.casingsGenerator.generateName(schemaId),
+                    properties: convertedSchema.schema?.shape.properties.map((property) => {
+                        return this.convertRequestBodyProperty({ context, property, contentType });
+                    })
+                });
+                return {
+                    requestBody,
+                    inlinedTypes: Object.fromEntries(
+                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
+                    )
+                };
+            }
+        }
+
+        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("urlencoded")
+        );
+        // TODO: Implement urlencoded request body
+
+        return undefined;
+    }
+
     private tryGetConvertedSchema({
         schemaId,
         contentType,
@@ -146,101 +243,5 @@ export class RequestBodyConverter extends AbstractConverter<
             style: undefined,
             name: property.name
         });
-    }
-
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: OpenAPIConverterContext3_1;
-        errorCollector: ErrorCollector;
-    }): RequestBodyConverter.Output | undefined {
-        if (!this.requestBody.content) {
-            return undefined;
-        }
-
-        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
-        for (const contentType of [...jsonContentTypes]) {
-            const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = this.tryGetConvertedSchema({
-                schemaId,
-                contentType,
-                context,
-                errorCollector
-            });
-            if (convertedSchema == null) {
-                continue;
-            }
-
-            if (convertedSchema.schema?.shape.type === "object") {
-                const requestBody = HttpRequestBody.inlinedRequestBody({
-                    contentType,
-                    docs: this.requestBody.description,
-                    name: context.casingsGenerator.generateName(schemaId),
-                    extendedProperties: convertedSchema.schema?.shape.extendedProperties,
-                    extends: convertedSchema.schema?.shape.extends,
-                    properties: convertedSchema.schema?.shape.properties,
-                    extraProperties: convertedSchema.schema?.shape.extraProperties
-                });
-
-                return {
-                    requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
-                };
-            } else {
-                const requestBody = HttpRequestBody.reference({
-                    contentType,
-                    docs: this.requestBody.description,
-                    requestBodyType: convertedSchema.type
-                });
-
-                return {
-                    requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
-                };
-            }
-        }
-
-        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) =>
-            type.includes("multipart")
-        );
-        for (const contentType of multipartContentTypes) {
-            const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = this.tryGetConvertedSchema({
-                schemaId,
-                contentType,
-                context,
-                errorCollector
-            });
-            if (convertedSchema == null) {
-                continue;
-            }
-
-            if (convertedSchema.schema?.shape.type === "object") {
-                const requestBody = HttpRequestBody.fileUpload({
-                    docs: this.requestBody.description,
-                    name: context.casingsGenerator.generateName(schemaId),
-                    properties: convertedSchema.schema?.shape.properties.map((property) => {
-                        return this.convertRequestBodyProperty({ context, property, contentType });
-                    })
-                });
-                return {
-                    requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
-                };
-            }
-        }
-
-        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
-            type.includes("urlencoded")
-        );
-
-        return undefined;
     }
 }

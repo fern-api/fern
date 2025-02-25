@@ -3078,14 +3078,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4233,14 +4239,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -4872,14 +4884,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6396,14 +6414,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6635,16 +6659,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 255
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 255
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6678,16 +6708,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 255
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 255
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6919,14 +6955,20 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Unique reference of a team"
           },
@@ -6954,14 +6996,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Name of a team"
           }
@@ -8212,14 +8260,20 @@
               "wireValue": "probation_period"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -8334,14 +8388,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -9122,14 +9182,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10240,14 +10306,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10281,16 +10353,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 255
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 255
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10365,14 +10443,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10498,16 +10582,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 255
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 255
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10541,16 +10631,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "maxLength": 255
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "maxLength": 255
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10712,14 +10808,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10753,14 +10855,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10794,14 +10902,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11044,32 +11158,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ContractToCreateSharedSeniority",
+                        "camelCase": {
+                          "unsafeName": "contractToCreateSharedSeniority",
+                          "safeName": "contractToCreateSharedSeniority"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "contract_to_create_shared_seniority",
+                          "safeName": "contract_to_create_shared_seniority"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONTRACT_TO_CREATE_SHARED_SENIORITY",
+                          "safeName": "CONTRACT_TO_CREATE_SHARED_SENIORITY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ContractToCreateSharedSeniority",
+                          "safeName": "ContractToCreateSharedSeniority"
+                        }
+                      },
+                      "typeId": "ContractToCreateSharedSeniority",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "ContractToCreateSharedSeniority",
-                    "camelCase": {
-                      "unsafeName": "contractToCreateSharedSeniority",
-                      "safeName": "contractToCreateSharedSeniority"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "contract_to_create_shared_seniority",
-                      "safeName": "contract_to_create_shared_seniority"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CONTRACT_TO_CREATE_SHARED_SENIORITY",
-                      "safeName": "CONTRACT_TO_CREATE_SHARED_SENIORITY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ContractToCreateSharedSeniority",
-                      "safeName": "ContractToCreateSharedSeniority"
-                    }
-                  },
-                  "typeId": "ContractToCreateSharedSeniority",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11259,14 +11379,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11300,32 +11426,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ContractToCreateSharedWorker",
+                        "camelCase": {
+                          "unsafeName": "contractToCreateSharedWorker",
+                          "safeName": "contractToCreateSharedWorker"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "contract_to_create_shared_worker",
+                          "safeName": "contract_to_create_shared_worker"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONTRACT_TO_CREATE_SHARED_WORKER",
+                          "safeName": "CONTRACT_TO_CREATE_SHARED_WORKER"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ContractToCreateSharedWorker",
+                          "safeName": "ContractToCreateSharedWorker"
+                        }
+                      },
+                      "typeId": "ContractToCreateSharedWorker",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "ContractToCreateSharedWorker",
-                    "camelCase": {
-                      "unsafeName": "contractToCreateSharedWorker",
-                      "safeName": "contractToCreateSharedWorker"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "contract_to_create_shared_worker",
-                      "safeName": "contract_to_create_shared_worker"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CONTRACT_TO_CREATE_SHARED_WORKER",
-                      "safeName": "CONTRACT_TO_CREATE_SHARED_WORKER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ContractToCreateSharedWorker",
-                      "safeName": "ContractToCreateSharedWorker"
-                    }
-                  },
-                  "typeId": "ContractToCreateSharedWorker",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12447,14 +12579,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16143,14 +16281,20 @@
               "wireValue": "quantity"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -16213,14 +16357,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16253,14 +16403,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16343,32 +16499,38 @@
               "wireValue": "worksheet"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "BasicTimesheetWorksheet",
+                    "camelCase": {
+                      "unsafeName": "basicTimesheetWorksheet",
+                      "safeName": "basicTimesheetWorksheet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "basic_timesheet_worksheet",
+                      "safeName": "basic_timesheet_worksheet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BASIC_TIMESHEET_WORKSHEET",
+                      "safeName": "BASIC_TIMESHEET_WORKSHEET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "BasicTimesheetWorksheet",
+                      "safeName": "BasicTimesheetWorksheet"
+                    }
+                  },
+                  "typeId": "BasicTimesheetWorksheet",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "BasicTimesheetWorksheet",
-                "camelCase": {
-                  "unsafeName": "basicTimesheetWorksheet",
-                  "safeName": "basicTimesheetWorksheet"
-                },
-                "snakeCase": {
-                  "unsafeName": "basic_timesheet_worksheet",
-                  "safeName": "basic_timesheet_worksheet"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASIC_TIMESHEET_WORKSHEET",
-                  "safeName": "BASIC_TIMESHEET_WORKSHEET"
-                },
-                "pascalCase": {
-                  "unsafeName": "BasicTimesheetWorksheet",
-                  "safeName": "BasicTimesheetWorksheet"
-                }
-              },
-              "typeId": "BasicTimesheetWorksheet",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -16395,32 +16557,38 @@
               "wireValue": "reviewed_by"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "BasicTimesheetReviewedBy",
+                    "camelCase": {
+                      "unsafeName": "basicTimesheetReviewedBy",
+                      "safeName": "basicTimesheetReviewedBy"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "basic_timesheet_reviewed_by",
+                      "safeName": "basic_timesheet_reviewed_by"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BASIC_TIMESHEET_REVIEWED_BY",
+                      "safeName": "BASIC_TIMESHEET_REVIEWED_BY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "BasicTimesheetReviewedBy",
+                      "safeName": "BasicTimesheetReviewedBy"
+                    }
+                  },
+                  "typeId": "BasicTimesheetReviewedBy",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "BasicTimesheetReviewedBy",
-                "camelCase": {
-                  "unsafeName": "basicTimesheetReviewedBy",
-                  "safeName": "basicTimesheetReviewedBy"
-                },
-                "snakeCase": {
-                  "unsafeName": "basic_timesheet_reviewed_by",
-                  "safeName": "basic_timesheet_reviewed_by"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASIC_TIMESHEET_REVIEWED_BY",
-                  "safeName": "BASIC_TIMESHEET_REVIEWED_BY"
-                },
-                "pascalCase": {
-                  "unsafeName": "BasicTimesheetReviewedBy",
-                  "safeName": "BasicTimesheetReviewedBy"
-                }
-              },
-              "typeId": "BasicTimesheetReviewedBy",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -17983,14 +18151,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18645,14 +18819,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -18865,14 +19045,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -19215,14 +19401,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -22755,14 +22947,20 @@
               "wireValue": "quantity"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DOUBLE",
-                "v2": {
-                  "validation": {},
-                  "type": "double"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "validation": {},
+                      "type": "double"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
@@ -22877,14 +23075,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -22917,14 +23121,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -23007,32 +23217,38 @@
               "wireValue": "worksheet"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "BasicInvoiceAdjustmentWorksheet",
+                    "camelCase": {
+                      "unsafeName": "basicInvoiceAdjustmentWorksheet",
+                      "safeName": "basicInvoiceAdjustmentWorksheet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "basic_invoice_adjustment_worksheet",
+                      "safeName": "basic_invoice_adjustment_worksheet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BASIC_INVOICE_ADJUSTMENT_WORKSHEET",
+                      "safeName": "BASIC_INVOICE_ADJUSTMENT_WORKSHEET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "BasicInvoiceAdjustmentWorksheet",
+                      "safeName": "BasicInvoiceAdjustmentWorksheet"
+                    }
+                  },
+                  "typeId": "BasicInvoiceAdjustmentWorksheet",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "BasicInvoiceAdjustmentWorksheet",
-                "camelCase": {
-                  "unsafeName": "basicInvoiceAdjustmentWorksheet",
-                  "safeName": "basicInvoiceAdjustmentWorksheet"
-                },
-                "snakeCase": {
-                  "unsafeName": "basic_invoice_adjustment_worksheet",
-                  "safeName": "basic_invoice_adjustment_worksheet"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASIC_INVOICE_ADJUSTMENT_WORKSHEET",
-                  "safeName": "BASIC_INVOICE_ADJUSTMENT_WORKSHEET"
-                },
-                "pascalCase": {
-                  "unsafeName": "BasicInvoiceAdjustmentWorksheet",
-                  "safeName": "BasicInvoiceAdjustmentWorksheet"
-                }
-              },
-              "typeId": "BasicInvoiceAdjustmentWorksheet",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -23059,32 +23275,38 @@
               "wireValue": "reviewed_by"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "BasicInvoiceAdjustmentReviewedBy",
+                    "camelCase": {
+                      "unsafeName": "basicInvoiceAdjustmentReviewedBy",
+                      "safeName": "basicInvoiceAdjustmentReviewedBy"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "basic_invoice_adjustment_reviewed_by",
+                      "safeName": "basic_invoice_adjustment_reviewed_by"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BASIC_INVOICE_ADJUSTMENT_REVIEWED_BY",
+                      "safeName": "BASIC_INVOICE_ADJUSTMENT_REVIEWED_BY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "BasicInvoiceAdjustmentReviewedBy",
+                      "safeName": "BasicInvoiceAdjustmentReviewedBy"
+                    }
+                  },
+                  "typeId": "BasicInvoiceAdjustmentReviewedBy",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "BasicInvoiceAdjustmentReviewedBy",
-                "camelCase": {
-                  "unsafeName": "basicInvoiceAdjustmentReviewedBy",
-                  "safeName": "basicInvoiceAdjustmentReviewedBy"
-                },
-                "snakeCase": {
-                  "unsafeName": "basic_invoice_adjustment_reviewed_by",
-                  "safeName": "basic_invoice_adjustment_reviewed_by"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASIC_INVOICE_ADJUSTMENT_REVIEWED_BY",
-                  "safeName": "BASIC_INVOICE_ADJUSTMENT_REVIEWED_BY"
-                },
-                "pascalCase": {
-                  "unsafeName": "BasicInvoiceAdjustmentReviewedBy",
-                  "safeName": "BasicInvoiceAdjustmentReviewedBy"
-                }
-              },
-              "typeId": "BasicInvoiceAdjustmentReviewedBy",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -24046,14 +24268,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -24940,14 +25168,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -25557,14 +25791,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -28175,14 +28415,20 @@
               "wireValue": "state_type"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Identifies the type of sub-territory within a country where local laws may apply. Some countries may have states, provinces, prefectures or regions."
           },
@@ -31602,14 +31848,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -35191,32 +35443,38 @@
               "wireValue": "reviewed_by"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "MilestoneReviewedBy",
+                    "camelCase": {
+                      "unsafeName": "milestoneReviewedBy",
+                      "safeName": "milestoneReviewedBy"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "milestone_reviewed_by",
+                      "safeName": "milestone_reviewed_by"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "MILESTONE_REVIEWED_BY",
+                      "safeName": "MILESTONE_REVIEWED_BY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "MilestoneReviewedBy",
+                      "safeName": "MilestoneReviewedBy"
+                    }
+                  },
+                  "typeId": "MilestoneReviewedBy",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "MilestoneReviewedBy",
-                "camelCase": {
-                  "unsafeName": "milestoneReviewedBy",
-                  "safeName": "milestoneReviewedBy"
-                },
-                "snakeCase": {
-                  "unsafeName": "milestone_reviewed_by",
-                  "safeName": "milestone_reviewed_by"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MILESTONE_REVIEWED_BY",
-                  "safeName": "MILESTONE_REVIEWED_BY"
-                },
-                "pascalCase": {
-                  "unsafeName": "MilestoneReviewedBy",
-                  "safeName": "MilestoneReviewedBy"
-                }
-              },
-              "typeId": "MilestoneReviewedBy",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "docs": "Reviewer's information."
           },
@@ -35725,14 +35983,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -36074,14 +36338,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -39097,32 +39367,38 @@
               "wireValue": "reviewed_by"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "OffCyclePaymentReviewedBy",
+                    "camelCase": {
+                      "unsafeName": "offCyclePaymentReviewedBy",
+                      "safeName": "offCyclePaymentReviewedBy"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "off_cycle_payment_reviewed_by",
+                      "safeName": "off_cycle_payment_reviewed_by"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "OFF_CYCLE_PAYMENT_REVIEWED_BY",
+                      "safeName": "OFF_CYCLE_PAYMENT_REVIEWED_BY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "OffCyclePaymentReviewedBy",
+                      "safeName": "OffCyclePaymentReviewedBy"
+                    }
+                  },
+                  "typeId": "OffCyclePaymentReviewedBy",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "OffCyclePaymentReviewedBy",
-                "camelCase": {
-                  "unsafeName": "offCyclePaymentReviewedBy",
-                  "safeName": "offCyclePaymentReviewedBy"
-                },
-                "snakeCase": {
-                  "unsafeName": "off_cycle_payment_reviewed_by",
-                  "safeName": "off_cycle_payment_reviewed_by"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OFF_CYCLE_PAYMENT_REVIEWED_BY",
-                  "safeName": "OFF_CYCLE_PAYMENT_REVIEWED_BY"
-                },
-                "pascalCase": {
-                  "unsafeName": "OffCyclePaymentReviewedBy",
-                  "safeName": "OffCyclePaymentReviewedBy"
-                }
-              },
-              "typeId": "OffCyclePaymentReviewedBy",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -40418,14 +40694,20 @@
               "wireValue": "description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Task description."
           },
@@ -40848,14 +41130,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -40889,13 +41177,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -46778,14 +47072,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -47098,32 +47398,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "EorContractToCreateEmployeeAddress",
+                        "camelCase": {
+                          "unsafeName": "eorContractToCreateEmployeeAddress",
+                          "safeName": "eorContractToCreateEmployeeAddress"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "eor_contract_to_create_employee_address",
+                          "safeName": "eor_contract_to_create_employee_address"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "EOR_CONTRACT_TO_CREATE_EMPLOYEE_ADDRESS",
+                          "safeName": "EOR_CONTRACT_TO_CREATE_EMPLOYEE_ADDRESS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "EorContractToCreateEmployeeAddress",
+                          "safeName": "EorContractToCreateEmployeeAddress"
+                        }
+                      },
+                      "typeId": "EorContractToCreateEmployeeAddress",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "EorContractToCreateEmployeeAddress",
-                    "camelCase": {
-                      "unsafeName": "eorContractToCreateEmployeeAddress",
-                      "safeName": "eorContractToCreateEmployeeAddress"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "eor_contract_to_create_employee_address",
-                      "safeName": "eor_contract_to_create_employee_address"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EOR_CONTRACT_TO_CREATE_EMPLOYEE_ADDRESS",
-                      "safeName": "EOR_CONTRACT_TO_CREATE_EMPLOYEE_ADDRESS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "EorContractToCreateEmployeeAddress",
-                      "safeName": "EorContractToCreateEmployeeAddress"
-                    }
-                  },
-                  "typeId": "EorContractToCreateEmployeeAddress",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -47420,14 +47726,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -47665,14 +47977,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -47806,14 +48124,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -48049,14 +48373,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -48454,14 +48784,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -48495,32 +48831,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "EorContractToCreateCompensationDetailsVariableCompensationType",
+                        "camelCase": {
+                          "unsafeName": "eorContractToCreateCompensationDetailsVariableCompensationType",
+                          "safeName": "eorContractToCreateCompensationDetailsVariableCompensationType"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "eor_contract_to_create_compensation_details_variable_compensation_type",
+                          "safeName": "eor_contract_to_create_compensation_details_variable_compensation_type"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "EOR_CONTRACT_TO_CREATE_COMPENSATION_DETAILS_VARIABLE_COMPENSATION_TYPE",
+                          "safeName": "EOR_CONTRACT_TO_CREATE_COMPENSATION_DETAILS_VARIABLE_COMPENSATION_TYPE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "EorContractToCreateCompensationDetailsVariableCompensationType",
+                          "safeName": "EorContractToCreateCompensationDetailsVariableCompensationType"
+                        }
+                      },
+                      "typeId": "EorContractToCreateCompensationDetailsVariableCompensationType",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "EorContractToCreateCompensationDetailsVariableCompensationType",
-                    "camelCase": {
-                      "unsafeName": "eorContractToCreateCompensationDetailsVariableCompensationType",
-                      "safeName": "eorContractToCreateCompensationDetailsVariableCompensationType"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "eor_contract_to_create_compensation_details_variable_compensation_type",
-                      "safeName": "eor_contract_to_create_compensation_details_variable_compensation_type"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EOR_CONTRACT_TO_CREATE_COMPENSATION_DETAILS_VARIABLE_COMPENSATION_TYPE",
-                      "safeName": "EOR_CONTRACT_TO_CREATE_COMPENSATION_DETAILS_VARIABLE_COMPENSATION_TYPE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "EorContractToCreateCompensationDetailsVariableCompensationType",
-                      "safeName": "EorContractToCreateCompensationDetailsVariableCompensationType"
-                    }
-                  },
-                  "typeId": "EorContractToCreateCompensationDetailsVariableCompensationType",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -48970,14 +49312,20 @@
               "wireValue": "job_title"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Employee's job title."
           },
@@ -49163,32 +49511,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "EorContractToCreateQuoteAdditionalFields",
+                        "camelCase": {
+                          "unsafeName": "eorContractToCreateQuoteAdditionalFields",
+                          "safeName": "eorContractToCreateQuoteAdditionalFields"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "eor_contract_to_create_quote_additional_fields",
+                          "safeName": "eor_contract_to_create_quote_additional_fields"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "EOR_CONTRACT_TO_CREATE_QUOTE_ADDITIONAL_FIELDS",
+                          "safeName": "EOR_CONTRACT_TO_CREATE_QUOTE_ADDITIONAL_FIELDS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "EorContractToCreateQuoteAdditionalFields",
+                          "safeName": "EorContractToCreateQuoteAdditionalFields"
+                        }
+                      },
+                      "typeId": "EorContractToCreateQuoteAdditionalFields",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "EorContractToCreateQuoteAdditionalFields",
-                    "camelCase": {
-                      "unsafeName": "eorContractToCreateQuoteAdditionalFields",
-                      "safeName": "eorContractToCreateQuoteAdditionalFields"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "eor_contract_to_create_quote_additional_fields",
-                      "safeName": "eor_contract_to_create_quote_additional_fields"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EOR_CONTRACT_TO_CREATE_QUOTE_ADDITIONAL_FIELDS",
-                      "safeName": "EOR_CONTRACT_TO_CREATE_QUOTE_ADDITIONAL_FIELDS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "EorContractToCreateQuoteAdditionalFields",
-                      "safeName": "EorContractToCreateQuoteAdditionalFields"
-                    }
-                  },
-                  "typeId": "EorContractToCreateQuoteAdditionalFields",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -49489,14 +49843,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -49611,14 +49971,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -50035,14 +50401,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -50912,32 +51284,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "EorContractCreatedHealthPlan",
+                        "camelCase": {
+                          "unsafeName": "eorContractCreatedHealthPlan",
+                          "safeName": "eorContractCreatedHealthPlan"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "eor_contract_created_health_plan",
+                          "safeName": "eor_contract_created_health_plan"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "EOR_CONTRACT_CREATED_HEALTH_PLAN",
+                          "safeName": "EOR_CONTRACT_CREATED_HEALTH_PLAN"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "EorContractCreatedHealthPlan",
+                          "safeName": "EorContractCreatedHealthPlan"
+                        }
+                      },
+                      "typeId": "EorContractCreatedHealthPlan",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "EorContractCreatedHealthPlan",
-                    "camelCase": {
-                      "unsafeName": "eorContractCreatedHealthPlan",
-                      "safeName": "eorContractCreatedHealthPlan"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "eor_contract_created_health_plan",
-                      "safeName": "eor_contract_created_health_plan"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EOR_CONTRACT_CREATED_HEALTH_PLAN",
-                      "safeName": "EOR_CONTRACT_CREATED_HEALTH_PLAN"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "EorContractCreatedHealthPlan",
-                      "safeName": "EorContractCreatedHealthPlan"
-                    }
-                  },
-                  "typeId": "EorContractCreatedHealthPlan",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -53285,32 +53663,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "EorCountryValidationsHealthInsurance",
+                        "camelCase": {
+                          "unsafeName": "eorCountryValidationsHealthInsurance",
+                          "safeName": "eorCountryValidationsHealthInsurance"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "eor_country_validations_health_insurance",
+                          "safeName": "eor_country_validations_health_insurance"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "EOR_COUNTRY_VALIDATIONS_HEALTH_INSURANCE",
+                          "safeName": "EOR_COUNTRY_VALIDATIONS_HEALTH_INSURANCE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "EorCountryValidationsHealthInsurance",
+                          "safeName": "EorCountryValidationsHealthInsurance"
+                        }
+                      },
+                      "typeId": "EorCountryValidationsHealthInsurance",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "EorCountryValidationsHealthInsurance",
-                    "camelCase": {
-                      "unsafeName": "eorCountryValidationsHealthInsurance",
-                      "safeName": "eorCountryValidationsHealthInsurance"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "eor_country_validations_health_insurance",
-                      "safeName": "eor_country_validations_health_insurance"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EOR_COUNTRY_VALIDATIONS_HEALTH_INSURANCE",
-                      "safeName": "EOR_COUNTRY_VALIDATIONS_HEALTH_INSURANCE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "EorCountryValidationsHealthInsurance",
-                      "safeName": "EorCountryValidationsHealthInsurance"
-                    }
-                  },
-                  "typeId": "EorCountryValidationsHealthInsurance",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -53585,14 +53969,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55409,13 +55799,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55449,13 +55845,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55621,14 +56023,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55662,14 +56070,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55703,13 +56117,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55743,14 +56163,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -55987,13 +56413,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -59745,14 +60177,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription name."
           },
@@ -59780,14 +60218,20 @@
               "wireValue": "description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription description."
           },
@@ -59903,14 +60347,20 @@
               "wireValue": "signing_key"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The webhook's signing key, used to generate webhook signatures."
           },
@@ -60087,13 +60537,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -60349,14 +60805,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription name."
           },
@@ -60384,14 +60846,20 @@
               "wireValue": "description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription description."
           },
@@ -60507,14 +60975,20 @@
               "wireValue": "signing_key"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The webhook's signing key, used to generate webhook signatures."
           },
@@ -60836,14 +61310,20 @@
               "wireValue": "name"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription name."
           },
@@ -60871,14 +61351,20 @@
               "wireValue": "description"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "Webhook subscription description."
           },
@@ -60994,14 +61480,20 @@
               "wireValue": "signing_key"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "The webhook's signing key, used to generate webhook signatures."
           },
@@ -61576,14 +62068,20 @@
               "wireValue": "picUrl"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
+              "container": {
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "docs": "URL to worker's Deel avatar."
           },
@@ -61613,14 +62111,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -64625,14 +65129,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -64874,14 +65384,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -64915,14 +65431,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -64955,14 +65477,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -64996,14 +65524,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -65037,14 +65571,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {},
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {},
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -65078,13 +65618,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -65118,13 +65664,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -67055,32 +67607,38 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "HrisDirectEmployeeVacationInfo",
+                        "camelCase": {
+                          "unsafeName": "hrisDirectEmployeeVacationInfo",
+                          "safeName": "hrisDirectEmployeeVacationInfo"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "hris_direct_employee_vacation_info",
+                          "safeName": "hris_direct_employee_vacation_info"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "HRIS_DIRECT_EMPLOYEE_VACATION_INFO",
+                          "safeName": "HRIS_DIRECT_EMPLOYEE_VACATION_INFO"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "HrisDirectEmployeeVacationInfo",
+                          "safeName": "HrisDirectEmployeeVacationInfo"
+                        }
+                      },
+                      "typeId": "HrisDirectEmployeeVacationInfo",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
-                  "name": {
-                    "originalName": "HrisDirectEmployeeVacationInfo",
-                    "camelCase": {
-                      "unsafeName": "hrisDirectEmployeeVacationInfo",
-                      "safeName": "hrisDirectEmployeeVacationInfo"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "hris_direct_employee_vacation_info",
-                      "safeName": "hris_direct_employee_vacation_info"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "HRIS_DIRECT_EMPLOYEE_VACATION_INFO",
-                      "safeName": "HRIS_DIRECT_EMPLOYEE_VACATION_INFO"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "HrisDirectEmployeeVacationInfo",
-                      "safeName": "HrisDirectEmployeeVacationInfo"
-                    }
-                  },
-                  "typeId": "HrisDirectEmployeeVacationInfo",
-                  "inline": false,
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -70343,14 +70901,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -70507,14 +71071,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -70548,14 +71118,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -70589,14 +71165,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -70671,14 +71253,20 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {},
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
