@@ -186,7 +186,7 @@ export class RequestBodyConverter extends AbstractConverter<
             );
         } else if (
             context.isOptional(property.valueType) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an optional typeReference.
             context.isFile(property.valueType.container.optional)
         ) {
             return FileUploadRequestProperty.file(
@@ -198,7 +198,7 @@ export class RequestBodyConverter extends AbstractConverter<
             );
         } else if (
             context.isList(property.valueType) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an list typeReference.
             context.isFile(property.valueType.container.list)
         ) {
             return FileUploadRequestProperty.file(
@@ -210,9 +210,9 @@ export class RequestBodyConverter extends AbstractConverter<
             );
         } else if (
             context.isList(property.valueType) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an list typeReference.
             context.isOptional(property.valueType.container.list) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an optional typeReference.
             context.isFile(property.valueType.container.list.container.optional)
         ) {
             return FileUploadRequestProperty.file(
@@ -224,9 +224,9 @@ export class RequestBodyConverter extends AbstractConverter<
             );
         } else if (
             context.isOptional(property.valueType) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an optional typeReference.
             context.isList(property.valueType.container.optional) &&
-            // @ts-expect-error: TS2339
+            // @ts-expect-error: TS2339 we know this is an list typeReference.
             context.isFile(property.valueType.container.optional.container.list)
         ) {
             return FileUploadRequestProperty.file(
