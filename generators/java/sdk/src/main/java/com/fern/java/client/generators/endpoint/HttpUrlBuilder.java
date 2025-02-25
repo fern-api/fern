@@ -147,7 +147,7 @@ public final class HttpUrlBuilder {
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
             codeBlock.addStatement(
-                    "$T.addQueryParameter($L, $S, $L, true)",
+                    "$T.addQueryParameter($L, $S, $L, false)",
                     context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                     httpUrlname,
                     queryParamProperty.wireKey().get(),
