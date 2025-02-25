@@ -1,4 +1,10 @@
 - changelogEntry:
+    - summary: Add Java generator versions to migrations file from v55 to v54
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc7
+
+- changelogEntry:
     - summary: Improve generators.yml migration to `api.specs` syntax.
       type: fix
   irVersion: 55
