@@ -293,21 +293,15 @@ async function parseApiSpec({
     const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
     const absoluteSpecPath = join(absoluteFilepathToWorkspace, RelativeFilePath.of(spec.path));
-
-    if (!(await doesPathExist(absoluteSpecPath))) {
+    const allFiles = [...files, ...directories.flatMap(getAllFilesInDirectory)];
+    const specFile = allFiles.find((file) => file.absolutePath === absoluteSpecPath);
+    if (specFile == null) {
         context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
         return null;
     }
     let specContent;
     try {
-        const fileContents = (await readFile(absoluteSpecPath)).toString();
-        // Try parsing as JSON first
-        try {
-            specContent = JSON.parse(fileContents);
-        } catch {
-            // If JSON parse fails, try YAML
-            specContent = yaml.load(fileContents);
-        }
+        specContent = yaml.load(specFile.contents);
     } catch (e) {
         context.logger.warn(`Failed to read API spec file ${spec.path}. Error: ${e}. Skipping...`);
         return null;
@@ -330,7 +324,7 @@ async function parseApiSpec({
             origin: asyncApi.origin,
             settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
         };
-    } else if ("openapi" in specContent) {
+    } else if ("openapi" in specContent || "swagger" in specContent) {
         const openApi = spec as generatorsYml.ApiDefinitionWithOverridesSchema;
         return {
             openapi: openApi.path,
