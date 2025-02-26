@@ -57,6 +57,21 @@ export const FernAsyncAPIExtension = {
     BASE_PATH: "x-fern-base-path",
 
     /**
+     * The x-fern-enum allows you to specify docs for the enum value.
+     * If your enum is not codegen friendly (not alphanumeric), then you can specify a codegen name as well.
+     *
+     * MyEnum:
+     *   enum:
+     *     - VARIANT_ONE
+     *     - VARIANT_TWO
+     *   x-fern-enum:
+     *     VARIANT_ONE:
+     *       description: These are docs about the enum
+     *       name: ONE
+     */
+    FERN_ENUM: "x-fern-enum",
+
+    /**
      * Used to tell fern to ignore channels.
      *
      * channels:

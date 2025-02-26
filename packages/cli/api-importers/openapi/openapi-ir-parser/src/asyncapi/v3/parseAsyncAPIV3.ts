@@ -15,6 +15,7 @@ import {
 
 import { FernOpenAPIExtension } from "../..";
 import { getExtension } from "../../getExtension";
+import { FernEnumConfig } from "../../openapi/v3/extensions/getFernEnum";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertEnum } from "../../schema/convertEnum";
 import { convertSchema } from "../../schema/convertSchemas";
@@ -201,10 +202,12 @@ export function parseAsyncAPIV3({
                 const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
                 const isOptional = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
+                const fernEnum = getExtension<FernEnumConfig>(parameter, FernAsyncAPIExtension.FERN_ENUM);
                 let parameterSchema: SchemaWithExample =
                     parameter.enum != null && Array.isArray(parameter.enum)
                         ? buildEnumSchema({
                               parameterName,
+                              fernEnum,
                               parameterDescription: parameter.description,
                               enumValues: parameter.enum,
                               defaultValue: parameter.default,
@@ -397,6 +400,7 @@ function getServerNameFromServerRef(
 
 function buildEnumSchema({
     parameterName,
+    fernEnum,
     parameterDescription,
     enumValues,
     defaultValue,
@@ -404,6 +408,7 @@ function buildEnumSchema({
     source
 }: {
     parameterName: string;
+    fernEnum: FernEnumConfig | undefined;
     parameterDescription: string | undefined;
     enumValues: string[];
     defaultValue: string | undefined;
@@ -417,7 +422,7 @@ function buildEnumSchema({
         wrapAsNullable: false,
         description: parameterDescription ?? undefined,
         availability: undefined,
-        fernEnum: {},
+        fernEnum: fernEnum ?? {},
         enumVarNames: undefined,
         enumValues,
         _default: defaultValue,

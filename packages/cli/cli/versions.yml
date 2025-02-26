@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
+    type: feat
+  irVersion: 55
+  version: 0.54.1
+
+- changelogEntry:
   - summary: Add support for specifying C# snippets in the `generators.yml` file.
     type: feat
   irVersion: 55
