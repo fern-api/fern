@@ -1,5 +1,5 @@
 {
-  "title": "Test file upload",
+  "title": "Test file upload v1",
   "servers": [],
   "websocketServers": [],
   "tags": {
@@ -39,7 +39,7 @@
           }
         ],
         "source": {
-          "file": "../openapi.yml",
+          "file": "../openapi-v1.yml",
           "type": "openapi"
         },
         "type": "multipart"
@@ -63,7 +63,7 @@
         }
       ],
       "source": {
-        "file": "../openapi.yml",
+        "file": "../openapi-v1.yml",
         "type": "openapi"
       }
     },
@@ -98,7 +98,7 @@
           }
         ],
         "source": {
-          "file": "../openapi.yml",
+          "file": "../openapi-v2.yml",
           "type": "openapi"
         },
         "type": "multipart"
@@ -122,7 +122,7 @@
         }
       ],
       "source": {
-        "file": "../openapi.yml",
+        "file": "../openapi-v2.yml",
         "type": "openapi"
       }
     },
@@ -221,7 +221,7 @@
                   "fullExamples": [],
                   "additionalProperties": false,
                   "source": {
-                    "file": "../openapi.yml",
+                    "file": "../openapi-v3.yml",
                     "type": "openapi"
                   },
                   "type": "object"
@@ -235,7 +235,7 @@
           }
         ],
         "source": {
-          "file": "../openapi.yml",
+          "file": "../openapi-v3.yml",
           "type": "openapi"
         },
         "type": "multipart"
@@ -259,7 +259,7 @@
         }
       ],
       "source": {
-        "file": "../openapi.yml",
+        "file": "../openapi-v3.yml",
         "type": "openapi"
       }
     }

@@ -38,7 +38,7 @@
                 "query-parameters": undefined,
               },
               "source": {
-                "openapi": "../openapi.yml",
+                "openapi": "../openapi-v1.yml",
               },
             },
             "upload-list": {
@@ -67,7 +67,7 @@
                 "query-parameters": undefined,
               },
               "source": {
-                "openapi": "../openapi.yml",
+                "openapi": "../openapi-v2.yml",
               },
             },
             "upload-with-content-type": {
@@ -109,12 +109,12 @@
                 "query-parameters": undefined,
               },
               "source": {
-                "openapi": "../openapi.yml",
+                "openapi": "../openapi-v3.yml",
               },
             },
           },
           "source": {
-            "openapi": "../openapi.yml",
+            "openapi": "../openapi-v3.yml",
           },
         },
         "types": {
@@ -125,7 +125,7 @@
               "datum": "optional<string>",
             },
             "source": {
-              "openapi": "../openapi.yml",
+              "openapi": "../openapi-v3.yml",
             },
           },
         },
@@ -139,7 +139,7 @@
       method: POST
       auth: false
       source:
-        openapi: ../openapi.yml
+        openapi: ../openapi-v1.yml
       display-name: Upload a file
       request:
         name: UploadFileRequest
@@ -157,7 +157,7 @@
       method: POST
       auth: false
       source:
-        openapi: ../openapi.yml
+        openapi: ../openapi-v2.yml
       display-name: Upload a list of files
       request:
         name: UploadListRequest
@@ -173,7 +173,7 @@
       method: POST
       auth: false
       source:
-        openapi: ../openapi.yml
+        openapi: ../openapi-v3.yml
       display-name: Upload a file with a content type
       request:
         name: UploadWithContentTypeRequest
@@ -195,13 +195,13 @@
       examples:
         - request: {}
   source:
-    openapi: ../openapi.yml
+    openapi: ../openapi-v3.yml
 types:
   UploadWithContentTypeRequestData:
     properties:
       datum: optional<string>
     source:
-      openapi: ../openapi.yml
+      openapi: ../openapi-v3.yml
     inline: true
 ",
     },
@@ -209,7 +209,7 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "display-name": "Test file upload",
+      "display-name": "Test file upload v1",
       "error-discrimination": {
         "strategy": "status-code",
       },
@@ -219,7 +219,7 @@ types:
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
-display-name: Test file upload
+display-name: Test file upload v1
 ",
   },
 }

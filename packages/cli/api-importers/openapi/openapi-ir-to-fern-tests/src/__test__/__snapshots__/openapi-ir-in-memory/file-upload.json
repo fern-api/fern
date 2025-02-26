@@ -75,8 +75,8 @@
       },
       "/upload-with-content-type": {
         "post": {
-          "summary": "Upload a file",
-          "operationId": "upload-file",
+          "summary": "Upload a file with a content type",
+          "operationId": "upload-with-content-type",
           "requestBody": {
             "content": {
               "multipart/form-data": {
