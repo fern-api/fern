@@ -1,4 +1,4 @@
-import { DefinitionFile } from "@fern-api/conjure-sdk";
+import { ConjureAuthDefinitionType, DefinitionFile } from "@fern-api/conjure-sdk";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils";
@@ -133,8 +133,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         continue;
                     }
 
+                    const auth = endpointDeclaration.auth ?? serviceDeclaration.defaultAuth;
+
                     const endpoint: RawSchemas.HttpEndpointSchema = {
-                        auth: true,
+                        auth: auth === ConjureAuthDefinitionType.None ? false : true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
                         response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
