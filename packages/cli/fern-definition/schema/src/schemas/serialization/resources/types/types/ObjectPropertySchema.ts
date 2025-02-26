@@ -5,13 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { TypeReferenceDeclarationWithNameSchema } from "./TypeReferenceDeclarationWithNameSchema";
+import { ObjectPropertyWithAccessSchema } from "./ObjectPropertyWithAccessSchema";
 
 export const ObjectPropertySchema: core.serialization.Schema<
     serializers.ObjectPropertySchema.Raw,
     FernDefinition.ObjectPropertySchema
-> = TypeReferenceDeclarationWithNameSchema;
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), ObjectPropertyWithAccessSchema]);
 
 export declare namespace ObjectPropertySchema {
-    export type Raw = TypeReferenceDeclarationWithNameSchema.Raw;
+    export type Raw = string | ObjectPropertyWithAccessSchema.Raw;
 }
