@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Enable overriding literal headers
+      type: feat
+  createdAt: '2025-02-26'
+  irVersion: 55
+  version: 2.19.0
+- changelogEntry:
+    - summary: |
         Fix form body serialization
       type: fix
   createdAt: '2025-02-25'
