@@ -3,7 +3,7 @@ import { camelCase } from "lodash-es";
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { DeclaredTypeName, Package, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, DeclaredTypeName, Package, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
 
 export declare namespace Spec {
@@ -180,15 +180,33 @@ export abstract class AbstractConverterContext<Spec extends object> {
         };
     }
 
+    public removeSchemaFromInlinedTypes({
+        id,
+        inlinedTypes
+    }: {
+        id: string;
+        inlinedTypes: Record<TypeId, TypeDeclaration>;
+    }): Record<TypeId, TypeDeclaration> {
+        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
+    }
+
+    public maybeTrimPrefix(value: string, prefix: string): string {
+        if (value.startsWith(prefix)) {
+            return value.slice(prefix.length);
+        }
+        return value;
+    }
+
     /**
      * TypeReference helper methods to check various properties
      */
-
-    public isOptional(valueType: TypeReference): boolean {
+    public isOptional(
+        valueType: TypeReference
+    ): valueType is TypeReference.Container & { container: ContainerType.Optional } {
         return valueType.type === "container" && valueType.container.type === "optional";
     }
 
-    public isList(valueType: TypeReference): boolean {
+    public isList(valueType: TypeReference): valueType is TypeReference.Container & { container: ContainerType.List } {
         return valueType.type === "container" && valueType.container.type === "list";
     }
 

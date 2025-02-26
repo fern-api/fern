@@ -65,7 +65,7 @@ export class RequestBodyConverter extends AbstractConverter<
         );
         for (const contentType of multipartContentTypes) {
             const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = this.tryGetConvertedSchema({
+            const convertedSchema = this.convertRequestSchemaForMediaType({
                 schemaId,
                 contentType,
                 context,
@@ -85,9 +85,10 @@ export class RequestBodyConverter extends AbstractConverter<
                 });
                 return {
                     requestBody,
-                    inlinedTypes: Object.fromEntries(
-                        Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                    )
+                    inlinedTypes: context.removeSchemaFromInlinedTypes({
+                        id: schemaId,
+                        inlinedTypes: convertedSchema.inlinedTypes
+                    })
                 };
             }
         }
@@ -105,7 +106,7 @@ export class RequestBodyConverter extends AbstractConverter<
         return undefined;
     }
 
-    private tryGetConvertedSchema({
+    private convertRequestSchemaForMediaType({
         schemaId,
         contentType,
         context,
@@ -144,7 +145,7 @@ export class RequestBodyConverter extends AbstractConverter<
         errorCollector: ErrorCollector;
     }): RequestBodyConverter.Output | undefined => {
         const schemaId = [...this.group, this.method, "Request"].join("_");
-        const convertedSchema = this.tryGetConvertedSchema({
+        const convertedSchema = this.convertRequestSchemaForMediaType({
             schemaId,
             contentType,
             context,
@@ -167,9 +168,10 @@ export class RequestBodyConverter extends AbstractConverter<
 
             return {
                 requestBody,
-                inlinedTypes: Object.fromEntries(
-                    Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                )
+                inlinedTypes: context.removeSchemaFromInlinedTypes({
+                    id: schemaId,
+                    inlinedTypes: convertedSchema.inlinedTypes
+                })
             };
         } else {
             const requestBody = HttpRequestBody.reference({
@@ -180,9 +182,10 @@ export class RequestBodyConverter extends AbstractConverter<
 
             return {
                 requestBody,
-                inlinedTypes: Object.fromEntries(
-                    Object.entries(convertedSchema.inlinedTypes).filter(([key]) => key !== schemaId)
-                )
+                inlinedTypes: context.removeSchemaFromInlinedTypes({
+                    id: schemaId,
+                    inlinedTypes: convertedSchema.inlinedTypes
+                })
             };
         }
     };
@@ -204,11 +207,8 @@ export class RequestBodyConverter extends AbstractConverter<
                     contentType
                 })
             );
-        } else if (
-            context.isOptional(property.valueType) &&
-            // @ts-expect-error: TS2339 we know this is an optional typeReference.
-            context.isFile(property.valueType.container.optional)
-        ) {
+        }
+        if (context.isOptional(property.valueType) && context.isFile(property.valueType.container.optional)) {
             return FileUploadRequestProperty.file(
                 FileProperty.file({
                     key: property.name,
@@ -216,11 +216,8 @@ export class RequestBodyConverter extends AbstractConverter<
                     contentType
                 })
             );
-        } else if (
-            context.isList(property.valueType) &&
-            // @ts-expect-error: TS2339 we know this is an list typeReference.
-            context.isFile(property.valueType.container.list)
-        ) {
+        }
+        if (context.isList(property.valueType) && context.isFile(property.valueType.container.list)) {
             return FileUploadRequestProperty.file(
                 FileProperty.fileArray({
                     key: property.name,
@@ -228,11 +225,10 @@ export class RequestBodyConverter extends AbstractConverter<
                     contentType
                 })
             );
-        } else if (
+        }
+        if (
             context.isList(property.valueType) &&
-            // @ts-expect-error: TS2339 we know this is an list typeReference.
             context.isOptional(property.valueType.container.list) &&
-            // @ts-expect-error: TS2339 we know this is an optional typeReference.
             context.isFile(property.valueType.container.list.container.optional)
         ) {
             return FileUploadRequestProperty.file(
@@ -242,11 +238,10 @@ export class RequestBodyConverter extends AbstractConverter<
                     contentType
                 })
             );
-        } else if (
+        }
+        if (
             context.isOptional(property.valueType) &&
-            // @ts-expect-error: TS2339 we know this is an optional typeReference.
             context.isList(property.valueType.container.optional) &&
-            // @ts-expect-error: TS2339 we know this is an list typeReference.
             context.isFile(property.valueType.container.optional.container.list)
         ) {
             return FileUploadRequestProperty.file(

@@ -72,21 +72,13 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (convertedSchema.typeDeclaration.shape.type === "alias") {
                 const type = convertedSchema.typeDeclaration.shape.aliasOf;
                 return {
-                    type: this.wrapTypeReference({
-                        type,
-                        wrapAsOptional: this.wrapAsOptional,
-                        wrapAsNullable: this.wrapAsNullable
-                    }),
+                    type: this.wrapTypeReference(type),
                     inlinedTypes: convertedSchema.inlinedTypes
                 };
             }
             const type = context.createNamedTypeReference(schemaId);
             return {
-                type: this.wrapTypeReference({
-                    type,
-                    wrapAsOptional: this.wrapAsOptional,
-                    wrapAsNullable: this.wrapAsNullable
-                }),
+                type: this.wrapTypeReference(type),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
@@ -98,22 +90,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         return undefined;
     }
 
-    private wrapTypeReference({
-        type,
-        wrapAsOptional,
-        wrapAsNullable
-    }: {
-        type: TypeReference;
-        wrapAsOptional: boolean;
-        wrapAsNullable: boolean;
-    }): TypeReference {
-        if (wrapAsOptional && wrapAsNullable) {
+    private wrapTypeReference(type: TypeReference): TypeReference {
+        if (this.wrapAsOptional && this.wrapAsNullable) {
             return this.wrapInOptional(this.wrapInNullable(type));
         }
-        if (wrapAsOptional) {
+        if (this.wrapAsOptional) {
             return this.wrapInOptional(type);
         }
-        if (wrapAsNullable) {
+        if (this.wrapAsNullable) {
             return this.wrapInNullable(type);
         }
         return type;

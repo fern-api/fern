@@ -115,25 +115,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             }
         }
 
-        if (this.schema.type === "object") {
-            const objectConverter = new ObjectSchemaConverter({
-                breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
-                inlinedTypes: {}
-            });
-            const objectType = objectConverter.convert({ context, errorCollector });
-            if (objectType != null) {
-                return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: objectType.object,
-                        context
-                    }),
-                    inlinedTypes: objectType.inlinedTypes ?? {}
-                };
-            }
-        }
-
-        if (this.schema.properties != null || this.schema.allOf != null) {
+        if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,

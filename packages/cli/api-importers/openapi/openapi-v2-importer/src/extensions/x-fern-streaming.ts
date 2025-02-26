@@ -60,41 +60,34 @@ export class FernStreamingExtension extends AbstractExtension<
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): FernStreamingExtension.Output | undefined {
-        const extensionValue = this.getExtensionValue<Raw.StreamingExtensionSchema>(this.operation);
+        const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
         }
 
         if (typeof extensionValue === "boolean") {
-            return extensionValue
-                ? {
-                      type: "stream",
-                      format: "json"
-                  }
-                : undefined;
+            return extensionValue ? { type: "stream", format: "json" } : undefined;
         }
 
-        if (extensionValue["stream-condition"] == null && extensionValue.format != null) {
-            return {
-                type: "stream",
-                format: extensionValue.format
-            };
+        if (typeof extensionValue !== "object") {
+            errorCollector.collect({
+                message: "Received unexpected non-object value for x-fern-streaming",
+                path: this.breadcrumbs
+            });
+            return undefined;
         }
 
+        const extensionObject = extensionValue as Raw.StreamingExtensionObjectSchema;
+        if (extensionObject["stream-condition"] == null && extensionObject.format != null) {
+            return { type: "stream", format: extensionObject.format };
+        }
         return {
             type: "streamCondition",
-            format: extensionValue.format ?? "json", // Default to "json"
-            streamDescription: extensionValue["stream-description"],
-            streamConditionProperty: this.maybeTrimRequestPrefix(extensionValue["stream-condition"]),
-            responseStream: extensionValue["response-stream"],
-            response: extensionValue.response
+            format: extensionObject.format ?? "json",
+            streamDescription: extensionObject["stream-description"],
+            streamConditionProperty: context.maybeTrimPrefix(extensionObject["stream-condition"], REQUEST_PREFIX),
+            responseStream: extensionObject["response-stream"],
+            response: extensionObject.response
         };
-    }
-
-    private maybeTrimRequestPrefix(streamCondition: string): string {
-        if (streamCondition.startsWith(REQUEST_PREFIX)) {
-            return streamCondition.slice(REQUEST_PREFIX.length);
-        }
-        return streamCondition;
     }
 }

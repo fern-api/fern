@@ -65,7 +65,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         const shouldIgnore = new FernIgnoreExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
-        }).convert({ context, errorCollector })?.ignore;
+        }).convert({ context, errorCollector });
 
         if (shouldIgnore) {
             return undefined;

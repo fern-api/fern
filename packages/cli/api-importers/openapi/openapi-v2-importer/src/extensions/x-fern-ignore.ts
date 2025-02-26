@@ -7,13 +7,9 @@ export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractConverter.Args {
         operation: object;
     }
-
-    export interface Output {
-        ignore: boolean;
-    }
 }
 
-export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterContext3_1, FernIgnoreExtension.Output> {
+export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterContext3_1, boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-ignore";
 
@@ -28,18 +24,20 @@ export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterConte
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): FernIgnoreExtension.Output | undefined {
-        const extensionValue = this.getExtensionValue<boolean>(this.operation);
+    }): boolean | undefined {
+        const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
         }
 
         if (typeof extensionValue !== "boolean") {
+            errorCollector.collect({
+                message: "Received unexpected non-boolean value for x-fern-ignore",
+                path: this.breadcrumbs
+            });
             return undefined;
         }
 
-        return {
-            ignore: extensionValue
-        };
+        return extensionValue;
     }
 }

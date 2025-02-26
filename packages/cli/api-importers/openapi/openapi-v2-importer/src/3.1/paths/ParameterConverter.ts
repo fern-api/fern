@@ -71,7 +71,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         const shouldIgnore = new FernIgnoreExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.parameter
-        }).convert({ context, errorCollector })?.ignore;
+        }).convert({ context, errorCollector });
 
         if (shouldIgnore) {
             return undefined;

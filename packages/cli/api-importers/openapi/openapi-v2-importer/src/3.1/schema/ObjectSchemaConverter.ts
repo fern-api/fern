@@ -36,19 +36,16 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): ObjectSchemaConverter.Output | undefined {
-        if (!this.schema.properties) {
-            if (this.schema.additionalProperties != null) {
-                return {
-                    object: Type.object({
-                        properties: [],
-                        extends: [],
-                        extendedProperties: [],
-                        extraProperties: true
-                    })
-                };
-            } else {
-                return undefined;
-            }
+        // TODO (eden): Refine this logic to handle more complex cases
+        if (!this.schema.properties && !this.schema.allOf) {
+            return {
+                object: Type.object({
+                    properties: [],
+                    extends: [],
+                    extendedProperties: [],
+                    extraProperties: this.schema.additionalProperties != null
+                })
+            };
         }
 
         const properties: ObjectProperty[] = [];
@@ -59,14 +56,14 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
             const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            const propertySchemaConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: propertyBreadcrumbs,
                 schemaOrReference: propertySchema,
                 schemaIdOverride: propertyId,
                 wrapAsOptional: !this.schema.required?.includes(propertyName),
                 wrapAsNullable: isNullable
             });
-            const convertedProperty = schemaOrReferenceConverter.convert({ context, errorCollector });
+            const convertedProperty = propertySchemaConverter.convert({ context, errorCollector });
             if (convertedProperty != null) {
                 properties.push({
                     name: context.casingsGenerator.generateNameAndWireValue({
