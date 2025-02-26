@@ -228,9 +228,9 @@ function createLinkViolationMessage({
         // for relative paths, print out the resolved path that is broken
         msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
     }
-    const relativeFilepathToFile = relative(absoluteFilepathToWorkspace, sourceFilepath);
-    msg += `\n\tfix here: ${relativeFilepathToFile.slice(2)}:${position.start.line}:${position.start.column}`;
-    return [msg, relativeFilepathToFile];
+    const relativeFilepath = relative(absoluteFilepathToWorkspace, sourceFilepath);
+    msg += `\n\tfix here: ${relativeFilepath.slice(2)}:${position.start.line}:${position.start.column}`;
+    return [msg, relativeFilepath];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
