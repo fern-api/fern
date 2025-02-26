@@ -19,9 +19,9 @@ import java.util.Objects;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = User.Builder.class)
 public final class User {
-    @JsonInclude(JsonInclude.Include.NON_ABSENT)
     private final String name;
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableValueFilter.class)
