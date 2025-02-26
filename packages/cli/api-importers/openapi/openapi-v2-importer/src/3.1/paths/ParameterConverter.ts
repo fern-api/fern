@@ -13,7 +13,6 @@ import {
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
-import { FernIgnoreExtension } from "../../extensions/x-fern-ignore";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
@@ -68,15 +67,6 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): ParameterConverter.Output | undefined {
-        const shouldIgnore = new FernIgnoreExtension({
-            breadcrumbs: this.breadcrumbs,
-            operation: this.parameter
-        }).convert({ context, errorCollector });
-
-        if (shouldIgnore) {
-            return undefined;
-        }
-
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
