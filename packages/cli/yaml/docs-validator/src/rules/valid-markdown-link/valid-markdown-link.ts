@@ -229,7 +229,7 @@ function createLinkViolationMessage({
         msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
     }
     const relativeFilepath = relative(absoluteFilepathToWorkspace, sourceFilepath);
-    msg += `\n\tfix here: ${relativeFilepath.slice(2)}:${position.start.line}:${position.start.column}`;
+    msg += `\n\tfix here: ${relativeFilepath}:${position.start.line}:${position.start.column}`;
     return [msg, relativeFilepath];
 }
 
