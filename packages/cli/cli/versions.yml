@@ -1,36 +1,42 @@
 - changelogEntry:
-  - summary: The Fern definition now supports specifying object properties as `read-only` or `write-only`.
-    type: feat
+    - summary: The Conjure Importer now correctly handles the `auth` property in endpoint definitions.
+      type: fix
+  irVersion: 55
+  version: 0.55.1
+
+- changelogEntry:
+    - summary: The Fern definition now supports specifying object properties as `read-only` or `write-only`.
+      type: feat
   irVersion: 55
   version: 0.55.0
 
 - changelogEntry:
-  - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
-    type: feat
+    - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
+      type: feat
   irVersion: 55
   version: 0.54.1
 
 - changelogEntry:
-  - summary: Add support for specifying C# snippets in the `generators.yml` file.
-    type: feat
+    - summary: Add support for specifying C# snippets in the `generators.yml` file.
+      type: feat
   irVersion: 55
   version: 0.54.0-rc12
 
 - changelogEntry:
-  - summary: Improve error logging in AsyncAPI v3 parser when parsing location headers.
-    type: fix
+    - summary: Improve error logging in AsyncAPI v3 parser when parsing location headers.
+      type: fix
   irVersion: 55
   version: 0.54.0-rc11
 
 - changelogEntry:
-  - summary: Migrate generators.yml without any specs.
-    type: chore
+    - summary: Migrate generators.yml without any specs.
+      type: chore
   irVersion: 55
   version: 0.54.0-rc10
 
 - changelogEntry:
-  - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
-    type: chore
+    - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
+      type: chore
   irVersion: 55
   version: 0.54.0-rc9
 

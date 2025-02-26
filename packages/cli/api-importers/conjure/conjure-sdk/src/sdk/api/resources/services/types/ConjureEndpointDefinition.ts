@@ -4,9 +4,10 @@
 
 import * as FernConjure from "../../../index";
 
-export interface ConjureEndpoint extends FernConjure.WithDocs {
+export interface ConjureEndpointDefinition extends FernConjure.WithDocs {
     /** The method and path (e.g. GET /users) */
     http: string;
+    auth: FernConjure.ConjureAuthDefinition | undefined;
     args: Record<string, FernConjure.ConjureArgument> | undefined;
     returns: FernConjure.ConjureTypeReference | undefined;
 }
