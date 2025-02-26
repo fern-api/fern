@@ -82,6 +82,7 @@ public class AsyncObjectClient {
                 if (response.isSuccessful()) {
                     future.complete(
                             ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
+                    return;
                 }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 future.completeExceptionally(new SeedExhaustiveApiException(
@@ -249,6 +250,7 @@ public class AsyncObjectClient {
                 if (response.isSuccessful()) {
                     future.complete(ObjectMappers.JSON_MAPPER.readValue(
                             responseBody.string(), NestedObjectWithOptionalField.class));
+                    return;
                 }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 future.completeExceptionally(new SeedExhaustiveApiException(
@@ -359,6 +361,7 @@ public class AsyncObjectClient {
                 if (response.isSuccessful()) {
                     future.complete(ObjectMappers.JSON_MAPPER.readValue(
                             responseBody.string(), NestedObjectWithRequiredField.class));
+                    return;
                 }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 future.completeExceptionally(new SeedExhaustiveApiException(

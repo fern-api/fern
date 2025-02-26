@@ -77,6 +77,7 @@ public class AsyncParamsClient {
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful()) {
                     future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+                    return;
                 }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 future.completeExceptionally(new SeedExhaustiveApiException(
@@ -136,6 +137,7 @@ public class AsyncParamsClient {
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful()) {
                     future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+                    return;
                 }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 future.completeExceptionally(new SeedExhaustiveApiException(
