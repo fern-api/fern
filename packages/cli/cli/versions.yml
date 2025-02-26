@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Add support for specifying C# snippets in the `generators.yml` file.
+    type: feat
+  irVersion: 55
+  version: 0.54.0-rc12
+
+- changelogEntry:
   - summary: Improve error logging in AsyncAPI v3 parser when parsing location headers.
     type: fix
   irVersion: 55
