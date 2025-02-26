@@ -3812,7 +3812,8 @@
               },
               "type": "container"
             },
-            "docs": "State per RFC 23"
+            "docs": "State per RFC 23",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -4261,7 +4262,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -10779,7 +10781,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -11197,7 +11200,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -13226,7 +13230,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14710,7 +14715,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14930,7 +14936,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -29150,7 +29157,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -29446,7 +29454,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -31296,7 +31305,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -31510,7 +31520,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -32362,7 +32373,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -35231,7 +35243,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -35452,7 +35465,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -35945,7 +35959,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -36131,7 +36146,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -36671,7 +36687,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -54335,7 +54352,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -54824,7 +54842,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -56002,7 +56021,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -56341,7 +56361,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -58038,7 +58059,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -60243,7 +60265,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -60923,7 +60946,8 @@
               },
               "type": "container"
             },
-            "docs": "Message type"
+            "docs": "Message type",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
