@@ -73,7 +73,7 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                     valueType: convertedProperty.type,
                     docs: propertySchema.description,
                     availability: undefined,
-                    propertyAccess: undefined
+                    propertyAccess: context.getPropertyAccess(propertySchema)
                 });
                 inlinedTypes = {
                     ...inlinedTypes,

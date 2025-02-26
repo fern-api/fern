@@ -36932,7 +36932,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "PublishedAt is the time at which the Thing was published.\n"
+            "docs": "PublishedAt is the time at which the Thing was published.\n",
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],

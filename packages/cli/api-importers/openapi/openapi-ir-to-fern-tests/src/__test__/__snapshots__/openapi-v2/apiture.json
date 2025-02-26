@@ -716,7 +716,8 @@
               },
               "type": "container"
             },
-            "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`."
+            "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -956,7 +957,8 @@
               },
               "type": "primitive"
             },
-            "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`."
+            "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1568,7 +1570,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The account ID."
+            "docs": "The account ID.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1621,7 +1624,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The time when the balance values were last updated from the banking core."
+            "docs": "The time when the balance values were last updated from the banking core.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -3573,7 +3577,8 @@
               },
               "type": "primitive"
             },
-            "docs": "This transaction's unique identifier."
+            "docs": "This transaction's unique identifier.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -3716,7 +3721,8 @@
               },
               "type": "primitive"
             },
-            "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable."
+            "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -3759,7 +3765,8 @@
               },
               "type": "container"
             },
-            "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema."
+            "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -3802,7 +3809,8 @@
               },
               "type": "container"
             },
-            "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema."
+            "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -4661,7 +4669,8 @@
               },
               "type": "primitive"
             },
-            "docs": "The unique ID of this transaction's category."
+            "docs": "The unique ID of this transaction's category.",
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],
@@ -7495,7 +7504,8 @@
               },
               "type": "container"
             },
-            "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable."
+            "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7538,7 +7548,8 @@
               },
               "type": "container"
             },
-            "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable."
+            "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],
@@ -7884,7 +7895,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The unique identifier for this problem. This is an immutable opaque string."
+            "docs": "The unique identifier for this problem. This is an immutable opaque string.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7937,7 +7949,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC."
+            "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -8561,7 +8574,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses."
+            "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -8614,7 +8628,8 @@
               "inline": false,
               "type": "named"
             },
-            "docs": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses."
+            "docs": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -8796,7 +8811,8 @@
               },
               "type": "container"
             },
-            "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection."
+            "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],

@@ -585,7 +585,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -883,7 +884,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1177,7 +1179,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1213,7 +1216,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1329,7 +1333,8 @@
                 "type": "list"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1552,7 +1557,8 @@
               },
               "type": "primitive"
             },
-            "docs": "The ID of the document."
+            "docs": "The ID of the document.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1715,7 +1721,8 @@
               },
               "type": "primitive"
             },
-            "docs": "Vellum-generated ID that uniquely identifies this link."
+            "docs": "Vellum-generated ID that uniquely identifies this link.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1752,7 +1759,8 @@
               },
               "type": "primitive"
             },
-            "docs": "Vellum-generated ID that uniquely identifies the index this document is included in."
+            "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],
@@ -2120,7 +2128,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -2156,7 +2165,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -6046,7 +6056,8 @@
               },
               "type": "primitive"
             },
-            "docs": "Vellum-generated ID that uniquely identifies this model version."
+            "docs": "Vellum-generated ID that uniquely identifies this model version.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -6083,7 +6094,8 @@
               },
               "type": "primitive"
             },
-            "docs": "Timestamp of when this model version was created."
+            "docs": "Timestamp of when this model version was created.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -6542,7 +6554,8 @@
                 "type": "nullable"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extends": [],
@@ -7435,7 +7448,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -10983,7 +10997,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -12116,7 +12131,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -13203,7 +13219,8 @@
               },
               "type": "primitive"
             },
-            "docs": "Vellum-generated ID that uniquely identifies this document."
+            "docs": "Vellum-generated ID that uniquely identifies this document.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14157,7 +14174,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14363,7 +14381,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14489,7 +14508,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -14869,7 +14889,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -16372,7 +16393,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -16578,7 +16600,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -18247,7 +18270,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -18288,7 +18312,8 @@
               },
               "type": "container"
             },
-            "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING."
+            "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -18591,7 +18616,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -18632,7 +18658,8 @@
               },
               "type": "container"
             },
-            "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING."
+            "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -18884,7 +18911,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
