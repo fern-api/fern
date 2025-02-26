@@ -61,7 +61,7 @@ hideOnThisPage: true
         └─ imdb.yml # endpoints, types, and errors
     ```
 
-    ### openapi
+    ### --openapi
 
     Use `--openapi` to initialize a project from an OpenAPI specification:
 
@@ -73,7 +73,7 @@ hideOnThisPage: true
     fern init --openapi https://link.buildwithfern.com/petstore-openapi
     ```
 
-    ### docs
+    ### --docs
 
     By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
 
@@ -96,7 +96,7 @@ hideOnThisPage: true
 
     To publish the API docs, run [`fern generate --docs`](/learn/cli-api/cli-reference/commands#fern-generate---docs).
 
-    ### mintlify
+    ### --mintlify
 
     By adding `--mintlify PATH_TO_MINT_CONFIG`, the CLI will automatically convert your Mintlify docs folder into a Fern docs site, based on the `mint.json` file.
 
@@ -113,7 +113,7 @@ hideOnThisPage: true
     └─ ... # any other files / pages needed in your docs
     ```
 
-    ### readme
+    ### --readme
 
     By adding `--readme URL_TO_README_DOCS_SITE`, the CLI will automatically convert the Readme generated docs site into a Fern docs site.
 
@@ -144,7 +144,7 @@ hideOnThisPage: true
     ```
     </CodeBlock>
 
-    ### preview
+    ### --preview
 
     Use `--preview` to test SDK changes locally before publishing. This is especially useful during development:
     - Generates SDK into a local `.preview/` folder
@@ -159,7 +159,7 @@ hideOnThisPage: true
     fern generate --group python-sdk --preview
     ```
 
-    ### group
+    ### --group
 
     Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared.
 
@@ -167,7 +167,7 @@ hideOnThisPage: true
     fern generate --group internal
     ```
 
-    ### api
+    ### --api
 
     Use `--api <api>` to specify the API for SDK generation.
 
@@ -175,7 +175,7 @@ hideOnThisPage: true
     fern generate --api public-api
     ```
 
-    ### version
+    ### --version
 
     Use `--version` to specify a version for SDKs and documentation. Adherence to [semantic versioning](https://semver.org/) is advised.
 
@@ -197,7 +197,7 @@ hideOnThisPage: true
     ```
     </CodeBlock>
 
-    ### api
+    ### --api
 
     Use `--api <api>` to specify which API you'd like to check. 
 
@@ -205,7 +205,7 @@ hideOnThisPage: true
     fern check --api public-api
     ```
 
-    ### warnings
+    ### --warnings
 
     Use `--warnings` to log warnings in addition to errors. 
 
@@ -213,7 +213,7 @@ hideOnThisPage: true
     fern check --warnings
     ```
 
-    ### strict-broken-links
+    ### --strict-broken-links
 
     Use `--strict-broken-links` to fail the command if any broken links are found in your API docs.
 
@@ -262,7 +262,7 @@ hideOnThisPage: true
     ```
     </CodeBlock>
 
-    ### instance
+    ### --instance
 
     Use `--instance` to specify which instance URL in your `docs.yml` to generate documentation for.
 
@@ -270,7 +270,7 @@ hideOnThisPage: true
     fern generate --docs --instance your-organization.docs.buildwithfern.com
     ```
 
-    ### preview
+    ### --preview
 
     Use `--preview` to preview updates to your documentation before publishing changes to your production site. 
 
@@ -290,7 +290,7 @@ hideOnThisPage: true
     ```
     </CodeBlock>
 
-    ### port
+    ### --port
 
     Use `--port <port-number>` to specify the port the docs preview will be run on. 
 
@@ -324,7 +324,7 @@ hideOnThisPage: true
     ```
     </CodeBlock>
 
-    ### device-code
+    ### --device-code
 
     Use `--device-code` to login via device code authorization. 
 
@@ -397,7 +397,7 @@ hideOnThisPage: true
     - Rename the `.definition/` folder to `definition/`.
     - Remove or rename the `openapi/` folder. For example, you can rename it to `.openapi/`. 
 
-    ### api
+    ### --api
 
     Use `--api` to specify the API to write the definition for if you have multiple defined in your `fern/apis/` folder. 
 
@@ -429,7 +429,7 @@ hideOnThisPage: true
         └─ openapi.json
     ```
 
-    ### api
+    ### --api
 
     Use `--api` to specify the API to run the command on if multiple are defined.  
 
@@ -437,7 +437,7 @@ hideOnThisPage: true
     fern write-overrides --api public-api
     ```
 
-    ### exclude-models
+    ### --exclude-models
 
     Use `--exclude-models` to stub the models while generating the initial overrides (in addition to the endpoints).
 
@@ -480,7 +480,7 @@ hideOnThisPage: true
     └───────────────────────────────────────────────────────────────────────────────────┘
     ```
 
-    ### list
+    ### --list
 
     Use `--list` to see the full list of generator upgrades available.
 
@@ -488,7 +488,7 @@ hideOnThisPage: true
     fern generator upgrade --list
     ```
 
-    ### generator
+    ### --generator
 
     Use `--generator` to specify a particular generator type to upgrade.
 
@@ -497,7 +497,7 @@ hideOnThisPage: true
     fern generator upgrade --generator fernapi/fern-python-sdk
     ```
 
-    ### group
+    ### --group
 
     Use `--group` to upgrade generators within a specific group in your `generators.yml`. If not specified, all generators of the specified type will be upgraded.
 
