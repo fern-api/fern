@@ -135,6 +135,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": {
                             "status": "PRE_RELEASE",
                             "message": null

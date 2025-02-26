@@ -72,7 +72,8 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                     }),
                     valueType: convertedProperty.type,
                     docs: propertySchema.description,
-                    availability: undefined
+                    availability: undefined,
+                    propertyAccess: undefined
                 });
                 inlinedTypes = {
                     ...inlinedTypes,
@@ -114,7 +115,8 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                             }),
                             valueType: maybeTypeReference.reference,
                             docs: propertySchema.description,
-                            availability: undefined
+                            availability: undefined,
+                            propertyAccess: undefined
                         });
                     }
                     continue;
@@ -136,7 +138,8 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                         }),
                         valueType: context.createNamedTypeReference(propertySchemaId),
                         docs: propertySchema.description,
-                        availability: undefined
+                        availability: undefined,
+                        propertyAccess: undefined
                     });
                     inlinedTypes = {
                         ...inlinedTypes,
