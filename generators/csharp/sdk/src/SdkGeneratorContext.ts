@@ -277,21 +277,30 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
     }
 
-    public getRootClientClassName({ asSnippet }: { asSnippet?: boolean } = {}): string {
-        if (asSnippet) {
-            if (this.customConfig["exported-client-class-name"] != null) {
-                return this.customConfig["exported-client-class-name"];
-            }
-        }
+    public getRootClientClassName(): string {
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
         }
         return `${this.getComputedClientName()}Client`;
     }
 
-    public getRootClientClassReference({ asSnippet }: { asSnippet?: boolean } = {}): csharp.ClassReference {
+    public getRootClientClassNameForSnippets(): string {
+        if (this.customConfig["exported-client-class-name"] != null) {
+            return this.customConfig["exported-client-class-name"];
+        }
+        return this.getRootClientClassName();
+    }
+
+    public getRootClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: this.getRootClientClassName({ asSnippet }),
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getRootClientClassReferenceForSnippets(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassNameForSnippets(),
             namespace: this.getNamespace()
         });
     }

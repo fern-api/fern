@@ -1,3 +1,5 @@
+import { assign } from "lodash-es";
+
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -387,7 +389,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             );
         }
         return csharp.instantiateClass({
-            classReference: this.context.getRootClientClassReference({ asSnippet }),
+            classReference: asSnippet
+                ? this.context.getRootClientClassReferenceForSnippets()
+                : this.context.getRootClientClassReference(),
             arguments_
         });
     }
