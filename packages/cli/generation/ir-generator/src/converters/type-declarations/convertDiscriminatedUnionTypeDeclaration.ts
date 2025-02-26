@@ -8,7 +8,7 @@ import { getDisplayName } from "../../utils/getDisplayName";
 import { getDocs } from "../../utils/getDocs";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclaration";
+import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
@@ -37,9 +37,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                           name: getPropertyName({ propertyKey, property: propertyDefinition }).name
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
-
-                      // TODO(amckinney): Add support for property access.
-                      propertyAccess: undefined
+                      propertyAccess: getPropertyAccess({ property: propertyDefinition })
                   }))
                 : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {

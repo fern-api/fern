@@ -1,5 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { ObjectProperty, Type } from "@fern-api/ir-sdk";
+import { ObjectProperty, ObjectPropertyAccess, Type } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -34,9 +35,7 @@ export function getObjectPropertiesFromRawObjectSchema(
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
         valueType: file.parseTypeReference(propertyDefinition),
-
-        // TODO(amckinney): Add support for property access.
-        propertyAccess: undefined
+        propertyAccess: getPropertyAccess({ property: propertyDefinition })
     }));
 }
 
@@ -68,4 +67,26 @@ export function getPropertyName({
         name: propertyKey,
         wasExplicitlySet: false
     };
+}
+
+export function getPropertyAccess({
+    property
+}: {
+    property: RawSchemas.ObjectPropertySchema;
+}): ObjectPropertyAccess | undefined {
+    if (typeof property === "string") {
+        return undefined;
+    }
+    const propertyAccess = property["access"];
+    if (propertyAccess != null) {
+        switch (propertyAccess) {
+            case "read-only":
+                return ObjectPropertyAccess.ReadOnly;
+            case "write-only":
+                return ObjectPropertyAccess.WriteOnly;
+            default:
+                assertNever(propertyAccess);
+        }
+    }
+    return undefined;
 }

@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: The Fern definition now supports specifying object properties as `read-only` or `write-only`.
+    type: feat
+  irVersion: 55
+  version: 0.55.0
+
+- changelogEntry:
   - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
     type: feat
   irVersion: 55
