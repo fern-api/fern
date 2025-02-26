@@ -359,18 +359,25 @@ function convertChannelParameterLocation(location: string): {
     type: "header" | "path" | "payload";
     parameterKey: string;
 } {
-    const [messageType, parameterKey] = location.split("#/");
-    if (messageType == null || parameterKey == null) {
-        throw new Error(`Invalid location format: ${location}`);
+    try {
+        const [messageType, parameterKey] = location.split("#/");
+        if (messageType == null || parameterKey == null) {
+            throw new Error(`Invalid location format: ${location}; unable to parse message type and parameter key`);
+        }
+        if (!messageType.startsWith(LOCATION_PREFIX)) {
+            throw new Error(`Invalid location format: ${location}; expected ${LOCATION_PREFIX} prefix`);
+        }
+        const type = messageType.substring(LOCATION_PREFIX.length);
+        if (type !== "header" && type !== "path" && type !== "payload") {
+            throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
+        }
+        return { type, parameterKey };
+    } catch (error) {
+        throw new Error(
+            `Invalid location format: ${location}; see here for more details: ` +
+                "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression"
+        );
     }
-    if (!messageType.startsWith(LOCATION_PREFIX)) {
-        throw new Error(`Invalid location format: ${location}`);
-    }
-    const type = messageType.substring(LOCATION_PREFIX.length);
-    if (type !== "header" && type !== "path" && type !== "payload") {
-        throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
-    }
-    return { type, parameterKey };
 }
 
 function getServerNameFromServerRef(
