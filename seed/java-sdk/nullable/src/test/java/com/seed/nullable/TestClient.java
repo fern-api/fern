@@ -3,9 +3,27 @@
  */
 package com.seed.nullable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.nullable.core.ObjectMappers;
+import com.seed.nullable.resources.nullable.types.Metadata;
+import com.seed.nullable.resources.nullable.types.User;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+
 public final class TestClient {
+
+    @Test
     public void test() {
-        // Add tests here and mark this file in .fernignore
-        assert true;
+        User u = User.builder()
+                .name("Bob the Builder")
+                .metadata((Metadata) null)
+                .tags(Optional.empty())
+                .build();
+
+        try {
+            System.out.println(ObjectMappers.JSON_MAPPER.writeValueAsString(u));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 }
