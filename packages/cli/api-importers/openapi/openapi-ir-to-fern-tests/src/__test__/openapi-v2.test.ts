@@ -33,9 +33,9 @@ describe("openapi-v2", async () => {
                 }
 
                 if (workspace.workspace instanceof OSSWorkspace) {
-                    const intermediateRepresentation = await (
-                        workspace.workspace as OSSWorkspace
-                    ).getIntermediateRepresentation({ context });
+                    const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+                        context
+                    });
                     // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                         `./__snapshots__/openapi-v2/${fixture.name}.json`

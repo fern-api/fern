@@ -1,6 +1,6 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { TypeReference } from "@fern-api/ir-sdk";
+import { ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "../AbstractConverterContext";
 
@@ -51,5 +51,36 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 inline: false
             })
         };
+    }
+
+    public getPropertyAccess(
+        schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+    ): ObjectPropertyAccess | undefined {
+        let schema = schemaOrReference;
+
+        // Keep resolving references until we get to a schema object
+        while (this.isReferenceObject(schema)) {
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            schema = resolved.value;
+        }
+
+        // Now we have the actual schema object
+        if (schema.readOnly && schema.writeOnly) {
+            // Can't be both readonly and writeonly
+            return undefined;
+        }
+
+        if (schema.readOnly) {
+            return ObjectPropertyAccess.ReadOnly;
+        }
+
+        if (schema.writeOnly) {
+            return ObjectPropertyAccess.WriteOnly;
+        }
+
+        return undefined;
     }
 }
