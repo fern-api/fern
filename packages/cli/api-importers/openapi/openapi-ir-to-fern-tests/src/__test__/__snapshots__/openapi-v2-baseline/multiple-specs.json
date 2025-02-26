@@ -18,7 +18,7 @@
       "safeName": "API"
     }
   },
-  "apiDisplayName": "Test file upload",
+  "apiDisplayName": "Test file upload v1",
   "auth": {
     "requirement": "ALL",
     "schemes": []

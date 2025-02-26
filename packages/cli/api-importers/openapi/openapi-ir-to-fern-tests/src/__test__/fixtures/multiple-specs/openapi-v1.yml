@@ -1,0 +1,24 @@
+openapi: 3.0.3
+info:
+  title: Test file upload v1
+  version: 1.0.0
+paths:
+  /upload:
+    post:
+      summary: Upload a file
+      operationId: upload-file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+                maybe_file:
+                  type: string
+                  format: binary
+                  description: An optional file to upload
+              required: [file]
