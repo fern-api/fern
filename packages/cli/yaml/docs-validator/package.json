@@ -55,7 +55,6 @@
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "strip-ansi": "^7.1.0",
-    "terminal-link": "^3.0.0",
     "tinycolor2": "^1.6.0",
     "unist-util-visit": "^5.0.0",
     "url-join": "^5.0.0",
