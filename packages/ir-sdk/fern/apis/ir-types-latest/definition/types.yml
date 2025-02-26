@@ -104,11 +104,18 @@ types:
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean
+
   ObjectProperty:
     extends: commons.Declaration
     properties:
       name: commons.NameAndWireValue
       valueType: TypeReference
+      propertyAccess: optional<ObjectPropertyAccess>
+
+  ObjectPropertyAccess:
+    enum:
+      - READ_ONLY
+      - WRITE_ONLY
 
   UnionTypeDeclaration:
     properties:

@@ -33,7 +33,10 @@ export function getObjectPropertiesFromRawObjectSchema(
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
-        valueType: file.parseTypeReference(propertyDefinition)
+        valueType: file.parseTypeReference(propertyDefinition),
+
+        // TODO(amckinney): Add support for property access.
+        propertyAccess: undefined
     }));
 }
 
