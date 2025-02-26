@@ -6,6 +6,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "base-api-exception-class-name": z.string().optional(),
     "base-exception-class-name": z.string().optional(),
     "client-class-name": z.string().optional(),
+    "exported-client-class-name": z.string().optional(),
+    "package-id": z.string().optional(),
     "explicit-namespaces": z.boolean().optional(),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "pascal-case-environments": z.boolean().optional(),
@@ -18,8 +20,7 @@ export const SdkCustomConfigSchema = z.strictObject({
         ),
     "read-only-memory-types": z.optional(z.array(z.string())),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
-    "generate-mock-server-tests": z.boolean().optional(),
-    "package-id": z.string().optional()
+    "generate-mock-server-tests": z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

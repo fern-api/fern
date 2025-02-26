@@ -321,10 +321,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     public generateExampleClientInstantiationSnippet({
         clientOptionsArgument,
-        includeEnvVarArguments
+        includeEnvVarArguments,
+        asSnippet
     }: {
         clientOptionsArgument?: csharp.ClassInstantiation;
         includeEnvVarArguments?: boolean;
+        asSnippet?: boolean;
     }): csharp.ClassInstantiation {
         csharp.instantiateClass({
             classReference: this.context.getClientOptionsClassReference(),
@@ -385,7 +387,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             );
         }
         return csharp.instantiateClass({
-            classReference: this.context.getRootClientClassReference(),
+            classReference: this.context.getRootClientClassReference({ asSnippet }),
             arguments_
         });
     }

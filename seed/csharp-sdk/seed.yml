@@ -71,6 +71,10 @@ fixtures:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
+    - customConfig:
+        client-class-name: BaseClient
+        exported-client-class-name: CustomClient
+      outputFolder: exported-client-class-name
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
