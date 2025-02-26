@@ -35,6 +35,14 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets xApiVersion
+     */
+    public SeedAuthEnvironmentVariablesClientBuilder xApiVersion(String xApiVersion) {
+        this.xApiVersion = xApiVersion;
+        return this;
+    }
+
     public SeedAuthEnvironmentVariablesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
