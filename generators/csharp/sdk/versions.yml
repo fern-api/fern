@@ -7,6 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.10.0
+  createdAt: "2025-02-26"
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for `exported-client-class-name` to allow you to export the client class name.
+        This is useful when you want to use a custom client class name for code snippets.
+
 - version: 1.9.33
   createdAt: "2025-02-24"
   irVersion: 53
