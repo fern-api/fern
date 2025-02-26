@@ -284,9 +284,23 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${this.getComputedClientName()}Client`;
     }
 
+    public getRootClientClassNameForSnippets(): string {
+        if (this.customConfig["exported-client-class-name"] != null) {
+            return this.customConfig["exported-client-class-name"];
+        }
+        return this.getRootClientClassName();
+    }
+
     public getRootClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getRootClientClassReferenceForSnippets(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassNameForSnippets(),
             namespace: this.getNamespace()
         });
     }
