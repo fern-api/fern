@@ -84,7 +84,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
         this.convertPaths({ context, errorCollector });
 
-        const toRet = {
+        return {
             ...this.ir,
             apiName: context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {
@@ -94,7 +94,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 })
             }
         };
-        return toRet;
     }
 
     private convertServers({

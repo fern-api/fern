@@ -102,10 +102,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     spec: document.value as OpenAPIV3_1.Document
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
-                return converter.convert({
+                const errorCollector = new ErrorCollector({ logger: context.logger });
+                const result = converter.convert({
                     context: converterContext,
-                    errorCollector: new ErrorCollector()
+                    errorCollector
                 });
+                if (errorCollector.hasErrors()) {
+                    context.logger.info("OpenAPI 3.1 Converter encountered errors:");
+                    errorCollector.logErrors();
+                }
+                return result;
             }
         }
         throw new Error("No OpenAPI document found");
