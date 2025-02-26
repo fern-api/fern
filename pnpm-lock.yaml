@@ -4322,6 +4322,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../commons/casings-generator
+      '@fern-api/cli-logger':
+        specifier: workspace:*
+        version: link:../../../cli-logger
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
@@ -4337,6 +4340,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger
+      chalk:
+        specifier: ^5.3.0
+        version: 5.4.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -19108,7 +19114,7 @@ snapshots:
     dependencies:
       ansi-align: 3.0.1
       camelcase: 7.0.1
-      chalk: 5.3.0
+      chalk: 5.4.1
       cli-boxes: 3.0.0
       string-width: 5.1.2
       type-fest: 2.18.0
@@ -21224,7 +21230,7 @@ snapshots:
       '@inquirer/figures': 1.0.8
       '@ljharb/through': 2.3.13
       ansi-escapes: 4.3.2
-      chalk: 5.3.0
+      chalk: 5.4.1
       cli-cursor: 3.1.0
       cli-width: 4.1.0
       external-editor: 3.1.0
@@ -22127,7 +22133,7 @@ snapshots:
 
   log-symbols@5.1.0:
     dependencies:
-      chalk: 5.3.0
+      chalk: 5.4.1
       is-unicode-supported: 1.3.0
 
   log-update@5.0.1:
@@ -22996,7 +23002,7 @@ snapshots:
 
   ora@7.0.1:
     dependencies:
-      chalk: 5.3.0
+      chalk: 5.4.1
       cli-cursor: 4.0.0
       cli-spinners: 2.9.1
       is-interactive: 2.0.0

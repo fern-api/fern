@@ -43,7 +43,6 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): SchemaConverter.Output | undefined {
-        // Try to convert as enum
         if (this.schema.enum?.length) {
             const enumConverter = new EnumSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
@@ -61,7 +60,6 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             }
         }
 
-        // Try to convert as primitive schema
         const primitiveConverter = new PrimitiveSchemaConverter({ schema: this.schema });
         const primitiveType = primitiveConverter.convert({ context, errorCollector });
         if (primitiveType != null) {
@@ -78,7 +76,6 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             };
         }
 
-        // Try to convert as array schema
         if (this.schema.type === "array") {
             const arrayConverter = new ArraySchemaConverter({
                 breadcrumbs: this.breadcrumbs,
@@ -100,7 +97,6 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             }
         }
 
-        // Try to convert as oneOf schema
         if (this.schema.oneOf != null) {
             const oneOfConverter = new OneOfSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
@@ -119,8 +115,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             }
         }
 
-        // Try to convert as object schema
-        if (this.schema.properties != null || this.schema.allOf != null) {
+        if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,

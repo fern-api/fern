@@ -51,6 +51,35 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "upload-list": {
+              "auth": false,
+              "display-name": "Upload a list of files",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-list",
+              "request": {
+                "body": {
+                  "properties": {
+                    "list_file": "list<file>",
+                    "maybe_list_file": "optional<list<file>>",
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadListRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
@@ -96,6 +125,22 @@
             data:
               type: optional<UploadFileRequestData>
               style: exploded
+        content-type: multipart/form-data
+      examples:
+        - request: {}
+    upload-list:
+      path: /upload-list
+      method: POST
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      display-name: Upload a list of files
+      request:
+        name: UploadListRequest
+        body:
+          properties:
+            list_file: list<file>
+            maybe_list_file: optional<list<file>>
         content-type: multipart/form-data
       examples:
         - request: {}

@@ -68,6 +68,65 @@
       }
     },
     {
+      "summary": "Upload a list of files",
+      "audiences": [],
+      "operationId": "upload-list",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadListRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "list_file",
+            "schema": {
+              "isOptional": false,
+              "isArray": true,
+              "type": "file"
+            },
+            "exploded": false
+          },
+          {
+            "key": "maybe_list_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": true,
+              "type": "file"
+            },
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload-list",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
       "summary": "Upload a file",
       "audiences": [],
       "operationId": "upload-file",
