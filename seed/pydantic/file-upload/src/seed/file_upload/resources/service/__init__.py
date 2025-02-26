@@ -2,6 +2,7 @@
 
 from .id import Id
 from .my_object import MyObject
+from .my_object_with_optional import MyObjectWithOptional
 from .object_type import ObjectType
 
-__all__ = ["Id", "MyObject", "ObjectType"]
+__all__ = ["Id", "MyObject", "MyObjectWithOptional", "ObjectType"]
