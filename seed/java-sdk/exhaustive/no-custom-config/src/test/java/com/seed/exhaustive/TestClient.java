@@ -3,9 +3,46 @@
  */
 package com.seed.exhaustive;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import org.junit.jupiter.api.Test;
+
 public final class TestClient {
-    public void test() {
-        // Add tests here and mark this file in .fernignore
-        assert true;
+    @Test
+    public void test_responseWithContent() {
+        List<String> request = new ArrayList<>();
+        request.add("foo");
+        request.add("bar");
+
+        // Blocking
+        SeedExhaustiveClient blockingClient =
+                SeedExhaustiveClient.builder().url("https://fake-website.com/").build();
+        List<String> blockingResponse = blockingClient.endpoints().container().getAndReturnListOfPrimitives(request);
+        System.out.println(blockingResponse);
+
+        // Async
+        AsyncSeedExhaustiveClient asyncClient = AsyncSeedExhaustiveClient.builder()
+                .url("https://fake-website.com/")
+                .build();
+        CompletableFuture<List<String>> asyncResponse =
+                asyncClient.endpoints().container().getAndReturnListOfPrimitives(request);
+
+        // No timeout
+        try {
+            System.out.println(asyncResponse.get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Timeout
+        try {
+            System.out.println(asyncResponse.get(10, TimeUnit.SECONDS));
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
