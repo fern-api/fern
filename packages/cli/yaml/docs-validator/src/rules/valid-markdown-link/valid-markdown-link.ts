@@ -1,12 +1,11 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
-import terminalLink from "terminal-link";
 
 import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, convertIrToApiDefinition, wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -116,11 +115,11 @@ export const ValidMarkdownLinks: Rule = {
                         }
 
                         return exists.map((brokenPathname) => {
-                            const [message, relFilePath] = createLinkViolationMessage(
+                            const [message, relFilePath] = createLinkViolationMessage({
                                 pathnameToCheck,
-                                brokenPathname,
-                                workspace.absoluteFilePath
-                            );
+                                targetPathname: brokenPathname,
+                                absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                            });
                             return {
                                 name: ValidMarkdownLinks.name,
                                 severity: violationSeverity,
@@ -183,15 +182,12 @@ export const ValidMarkdownLinks: Rule = {
                                     return [];
                                 }
 
-                                // TODO: we don't have the position of the description, so we can't create a useful message
-                                // that points to the endpoint definition file and line number.
-                                // We could potentially add this information in the future, but it's not a huge deal right now.
                                 return exists.map((brokenPathname) => {
-                                    const [message, relFilePath] = createLinkViolationMessage(
+                                    const [message, relFilePath] = createLinkViolationMessage({
                                         pathnameToCheck,
-                                        brokenPathname,
-                                        workspace.absoluteFilePath
-                                    );
+                                        targetPathname: brokenPathname,
+                                        absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                                    });
                                     return {
                                         name: ValidMarkdownLinks.name,
                                         severity: "error" as const,
@@ -212,11 +208,15 @@ export const ValidMarkdownLinks: Rule = {
     }
 };
 
-function createLinkViolationMessage(
-    pathnameToCheck: PathnameToCheck,
-    targetPathname: string,
-    workspaceAbsPath: string
-): [msg: string, relFilePath: RelativeFilePath] {
+function createLinkViolationMessage({
+    pathnameToCheck,
+    targetPathname,
+    absoluteFilepathToWorkspace
+}: {
+    pathnameToCheck: PathnameToCheck;
+    targetPathname: string;
+    absoluteFilepathToWorkspace: AbsoluteFilePath;
+}): [msg: string, relFilePath: RelativeFilePath] {
     let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
     if (sourceFilepath == null || position == null) {
@@ -228,9 +228,9 @@ function createLinkViolationMessage(
         // for relative paths, print out the resolved path that is broken
         msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
     }
-    const relFilePath = RelativeFilePath.of(sourceFilepath.toString().replace(workspaceAbsPath, "."));
-    msg += `\n\tfix here: ${relFilePath.slice(2)}:${position.start.line}:${position.start.column}`;
-    return [msg, relFilePath];
+    const relativeFilepathToFile = relative(absoluteFilepathToWorkspace, sourceFilepath);
+    msg += `\n\tfix here: ${relativeFilepathToFile.slice(2)}:${position.start.line}:${position.start.column}`;
+    return [msg, relativeFilepathToFile];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
