@@ -1,6 +1,13 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeDeclaration, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeDeclaration,
+    TypeId,
+    UndiscriminatedUnionMember
+} from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -20,7 +27,10 @@ export declare namespace OneOfSchemaConverter {
     }
 }
 
-export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, OneOfSchemaConverter.Output | undefined> {
+export class OneOfSchemaConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    OneOfSchemaConverter.Output | undefined
+> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: OneOfSchemaConverter.Args) {
@@ -65,7 +75,10 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
             if (convertedSchema?.schema != null && typeId != null) {
                 unionTypes.push({
                     docs: undefined,
-                    discriminantValue: context.casingsGenerator.generateNameAndWireValue({ name: discriminant, wireValue: discriminant }),
+                    discriminantValue: context.casingsGenerator.generateNameAndWireValue({
+                        name: discriminant,
+                        wireValue: discriminant
+                    }),
                     availability: convertedSchema.availability,
                     displayName: undefined,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
@@ -74,13 +87,13 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
                         fernFilepath: {
                             allParts: [],
                             packagePath: [],
-                            file: undefined,
+                            file: undefined
                         }
                     })
-                })
+                });
                 inlinedTypes = {
                     ...inlinedTypes,
-                    ...convertedSchema.inlinedTypes,
+                    ...convertedSchema.inlinedTypes
                 };
             }
         }
@@ -88,7 +101,10 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
         return {
             union: Type.union({
                 baseProperties: [],
-                discriminant: context.casingsGenerator.generateNameAndWireValue({ name: this.schema.discriminator.propertyName, wireValue: this.schema.discriminator.propertyName}),
+                discriminant: context.casingsGenerator.generateNameAndWireValue({
+                    name: this.schema.discriminator.propertyName,
+                    wireValue: this.schema.discriminator.propertyName
+                }),
                 extends: [],
                 types: unionTypes
             }),
