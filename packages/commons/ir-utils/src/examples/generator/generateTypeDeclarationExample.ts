@@ -187,24 +187,21 @@ export function generateTypeDeclarationExample({
                         if (typeDeclaration == null) {
                             throw new Error(`Failed to find type declaration with id ${samePropertiesAsObject.typeId}`);
                         }
-                        if (typeDeclaration.shape.type !== "object") {
-                            throw new Error(
-                                `Same properties as object union is not an object ${typeDeclaration.shape.type}`
-                            );
-                        }
-                        const objectExample = generateObjectDeclarationExample({
+
+                        const typeDeclarationExample = generateTypeDeclarationExample({
                             currentDepth,
                             maxDepth,
                             fieldName,
-                            objectTypeDeclaration: typeDeclaration.shape,
                             typeDeclaration,
                             typeDeclarations,
                             skipOptionalProperties
                         });
-                        if (objectExample.type === "failure") {
-                            return objectExample;
+
+                        if (typeDeclarationExample.type === "failure") {
+                            return typeDeclarationExample;
                         }
-                        const { example, jsonExample } = objectExample;
+                        
+                        const { example, jsonExample } = typeDeclarationExample;
                         return {
                             type: "success",
                             example: ExampleTypeShape.union({
@@ -213,7 +210,7 @@ export function generateTypeDeclarationExample({
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
-                                        object: example
+                                        object: example.type === "object" ? example : { properties: [] },
                                     })
                                 }
                             }),

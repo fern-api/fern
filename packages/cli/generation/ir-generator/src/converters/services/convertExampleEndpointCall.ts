@@ -27,7 +27,7 @@ import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { hashJSON } from "../../utils/hashJSON";
+import { hashJSON } from "@fern-api/ir-utils";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,

@@ -22,7 +22,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { hashJSON } from "../../utils/hashJSON";
+import { hashJSON } from "../../hashJSON";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
