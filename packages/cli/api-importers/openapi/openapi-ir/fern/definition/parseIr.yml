@@ -278,6 +278,7 @@ types:
       key: string
       schema: SchemaWithExample
       readonly: optional<boolean>
+      writeonly: optional<boolean>
       audiences: list<string>
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>

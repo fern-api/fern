@@ -43585,7 +43585,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,

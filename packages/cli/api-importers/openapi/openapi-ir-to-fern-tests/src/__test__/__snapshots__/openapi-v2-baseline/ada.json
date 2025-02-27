@@ -411,7 +411,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The end user's device information captured by Ada",
@@ -451,7 +452,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The end user's browser information captured by Ada",
@@ -491,7 +493,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The end user's browser version captured by Ada",
@@ -531,7 +534,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "Whether the introductory message of a campaign has been displayed to the end user",
@@ -571,7 +575,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The ID for the last answer displayed to the end user during a conversation",
@@ -611,7 +616,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The last question asked by the end user",
@@ -651,7 +657,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The ID for the first message sent to the end user via Sunshine Conversations",
@@ -691,7 +698,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The ID for the Sunshine Conversation for this end user",
@@ -731,7 +739,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The channel used to communicate with the end user via Sunshine Conversations",
@@ -771,7 +780,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date the end user signed up for Sunshine Conversations",
@@ -811,7 +821,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The Sunshine Conversations user ID for the end user",
@@ -851,7 +862,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -1244,7 +1256,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The end user's profile information",
@@ -1342,7 +1355,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date and time the end user was updated",
@@ -1382,7 +1396,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
