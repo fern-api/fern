@@ -333,7 +333,7 @@ export abstract class AbstractCsharpGeneratorContext<
             return undefined;
         }
 
-        let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
         if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
