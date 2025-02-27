@@ -534,6 +534,11 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("smart-casing", {
                     boolean: true,
                     description: "Whether to use smart casing"
+                })
+                .option("direct-from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -549,7 +554,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                readme: undefined
+                readme: undefined,
+                directFromOpenapi: argv.directFromOpenapi
             });
         }
     );
