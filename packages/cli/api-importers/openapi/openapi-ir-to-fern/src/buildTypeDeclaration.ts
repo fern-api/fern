@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { ObjectPropertyAccess } from "@fern-api/fern-definition-schema/src/schemas";
 import {
     ArraySchema,
     CasingOverrides,
@@ -727,7 +726,7 @@ function convertPropertyTypeReferenceToTypeDefinition({
     audiences: string[];
     name?: string | undefined;
     availability?: RawSchemas.AvailabilityUnionSchema;
-    propertyAccess?: ObjectPropertyAccess | undefined;
+    propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined;
 }): RawSchemas.ObjectPropertySchema {
     if (audiences.length === 0 && name == null && availability == null && propertyAccess == null) {
         return typeReference;
@@ -755,15 +754,15 @@ function getInline(schema: WithInline, declarationDepth: number): boolean | unde
     return declarationDepth > 0 ? true : undefined;
 }
 
-function getPropertyAccess(property: ObjectProperty): ObjectPropertyAccess | undefined {
+function getPropertyAccess(property: ObjectProperty): RawSchemas.ObjectPropertyAccess | undefined {
     if (property.readonly && property.writeonly) {
         return undefined;
     }
     if (property.readonly) {
-        return ObjectPropertyAccess.ReadOnly;
+        return RawSchemas.ObjectPropertyAccess.ReadOnly;
     }
     if (property.writeonly) {
-        return ObjectPropertyAccess.WriteOnly;
+        return RawSchemas.ObjectPropertyAccess.WriteOnly;
     }
     return undefined;
 }
