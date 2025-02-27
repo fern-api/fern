@@ -72,7 +72,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             });
             const typeId = context.getTypeIdFromSchemaReference({ $ref: reference });
 
-            const convertedSchema = singleUnionTypeSchemaConverter.convert({ context, errorCollector });            
+            const convertedSchema = singleUnionTypeSchemaConverter.convert({ context, errorCollector });
 
             if (convertedSchema?.type != null && typeId != null) {
                 const nameAndWireValue = context.casingsGenerator.generateNameAndWireValue({
