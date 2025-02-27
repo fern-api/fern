@@ -21591,7 +21591,10 @@
               },
               "type": "container"
             },
-            "docs": "[DEPRECATED] Your custom string used to refer to a manufacturer location."
+            "docs": "[DEPRECATED] Your custom string used to refer to a manufacturer location.",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -22506,7 +22509,10 @@
               },
               "type": "container"
             },
-            "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location."
+            "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location.",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -26879,7 +26885,10 @@
               },
               "type": "container"
             },
-            "docs": "[DEPRECATED] - Use the country_of_origin on the supplier field. The country the product was manufactured"
+            "docs": "[DEPRECATED] - Use the country_of_origin on the supplier field. The country the product was manufactured",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -27049,7 +27058,10 @@
               },
               "type": "container"
             },
-            "docs": "DEPRECATED - HS codes can be found in the classifications array"
+            "docs": "DEPRECATED - HS codes can be found in the classifications array",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -88404,7 +88416,10 @@
                 },
                 "type": "primitive"
               },
-              "allowMultiple": false
+              "allowMultiple": false,
+              "availability": {
+                "status": "DEPRECATED"
+              }
             },
             {
               "name": {
@@ -88440,7 +88455,10 @@
                 },
                 "type": "primitive"
               },
-              "allowMultiple": false
+              "allowMultiple": false,
+              "availability": {
+                "status": "DEPRECATED"
+              }
             }
           ],
           "headers": [],

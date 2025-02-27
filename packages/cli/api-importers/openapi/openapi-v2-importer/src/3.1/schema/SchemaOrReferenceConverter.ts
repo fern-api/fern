@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -19,6 +19,7 @@ export declare namespace SchemaOrReferenceConverter {
         type: TypeReference;
         schema?: TypeDeclaration;
         inlinedTypes: Record<string, TypeDeclaration>;
+        availability?: Availability;
     }
 }
 
@@ -66,6 +67,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             schema: this.schemaOrReference,
             id: schemaId
         });
+        const availability = context.getAvailability({
+            node: this.schemaOrReference,
+            breadcrumbs: this.breadcrumbs,
+            errorCollector
+        });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
 
         if (convertedSchema != null) {
@@ -73,7 +79,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 const type = convertedSchema.typeDeclaration.shape.aliasOf;
                 return {
                     type: this.wrapTypeReference(type),
-                    inlinedTypes: convertedSchema.inlinedTypes
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    availability
                 };
             }
             const type = context.createNamedTypeReference(schemaId);
@@ -83,7 +90,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
                     [schemaId]: convertedSchema.typeDeclaration
-                }
+                },
+                availability
             };
         }
 
