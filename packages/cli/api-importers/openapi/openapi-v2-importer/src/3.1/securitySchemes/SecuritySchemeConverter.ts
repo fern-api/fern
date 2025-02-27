@@ -1,5 +1,7 @@
-import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
+
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -52,7 +54,14 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                             name: context.casingsGenerator.generateName(this.securityScheme.name),
                             wireValue: this.securityScheme.name
                         },
-                        valueType: TypeReference.container(ContainerType.optional(TypeReference.primitive({ v1: "STRING", v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined})}))),
+                        valueType: TypeReference.container(
+                            ContainerType.optional(
+                                TypeReference.primitive({
+                                    v1: "STRING",
+                                    v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                                })
+                            )
+                        ),
                         prefix: undefined,
                         headerEnvVar: undefined,
                         docs: this.securityScheme.description
@@ -72,5 +81,3 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
         return undefined;
     }
 }
-
-
