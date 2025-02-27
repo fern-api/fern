@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
 namespace SeedPagination;
@@ -7,6 +8,7 @@ public record ListUsersOffsetStepPaginationRequest
     /// <summary>
     /// Defaults to first page
     /// </summary>
+    [JsonIgnore]
     public int? Page { get; set; }
 
     /// <summary>
@@ -14,8 +16,10 @@ public record ListUsersOffsetStepPaginationRequest
     /// This is also used as the step size in this
     /// paginated endpoint.
     /// </summary>
+    [JsonIgnore]
     public int? Limit { get; set; }
 
+    [JsonIgnore]
     public Order? Order { get; set; }
 
     public override string ToString()

@@ -661,7 +661,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): csharp.MethodInvocation | undefined {
         const service = this.context.getHttpServiceOrThrow(serviceId);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments(example, parseDatetimes);
+        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
