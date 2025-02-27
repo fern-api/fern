@@ -514,6 +514,31 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
+    public hasCustomPager(): boolean {
+        return this.customConfig["custom-pager-name"] != null;
+    }
+
+    public getCustomPagerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getCustomPagerName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getCustomPagerFactoryClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Factory`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getCustomPagerName(): string {
+        if (!this.customConfig["custom-pager-name"]) {
+            throw new Error("Custom pager is not enabled");
+        }
+        return this.customConfig["custom-pager-name"];
+    }
+
     public abstract getRawAsIsFiles(): string[];
 
     public abstract getCoreAsIsFiles(): string[];

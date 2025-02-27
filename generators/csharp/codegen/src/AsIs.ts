@@ -18,6 +18,7 @@ export const AsIsFiles = {
     HttpMethodExtensions: "HttpMethodExtensions.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",
+    CustomPager: "CustomPager.Template.cs",
     ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
     RawClient: "RawClient.Template.cs",
     RawGrpcClient: "RawGrpcClient.Template.cs",
