@@ -42,6 +42,29 @@
         ]
       }
     },
+    "type_service:MyAliasObject": {
+      "name": "MyAliasObject",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "value": "type_service:MyObject"
+        }
+      }
+    },
+    "type_service:MyCollectionAliasObject": {
+      "name": "MyCollectionAliasObject",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "type_service:MyObject"
+          }
+        }
+      }
+    },
     "type_service:MyObject": {
       "name": "MyObject",
       "shape": {
@@ -239,6 +262,36 @@
                         "type": "id",
                         "value": "type_service:Id"
                       }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "alias_object",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyAliasObject"
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "list_of_alias_object",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyAliasObject"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "alias_list_of_object",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyCollectionAliasObject"
                     },
                     "exploded": false
                   }
@@ -701,6 +754,36 @@
                       }
                     },
                     "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "alias_object",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyAliasObject"
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "list_of_alias_object",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyAliasObject"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "alias_list_of_object",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyCollectionAliasObject"
+                    },
+                    "exploded": false
                   }
                 ]
               }
@@ -715,6 +798,8 @@
       "types": [
         "type_service:Id",
         "type_service:MyObjectWithOptional",
+        "type_service:MyAliasObject",
+        "type_service:MyCollectionAliasObject",
         "type_service:MyObject",
         "type_service:ObjectType"
       ],
