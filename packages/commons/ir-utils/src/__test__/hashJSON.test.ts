@@ -1,4 +1,4 @@
-import { hashJSON } from "@fern-api/ir-generator";
+import { hashJSON } from "../hashJSON";
 
 describe("hashJSON Function", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
