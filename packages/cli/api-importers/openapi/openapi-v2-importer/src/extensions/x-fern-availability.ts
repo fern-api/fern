@@ -11,7 +11,10 @@ export declare namespace AvailabilityExtension {
     }
 }
 
-export class AvailabilityExtension extends AbstractExtension<OpenAPIConverterContext3_1, AvailabilityStatus | undefined> {
+export class AvailabilityExtension extends AbstractExtension<
+    OpenAPIConverterContext3_1,
+    AvailabilityStatus | undefined
+> {
     private readonly node: unknown;
     public readonly key = "x-fern-availability";
 
@@ -41,7 +44,7 @@ export class AvailabilityExtension extends AbstractExtension<OpenAPIConverterCon
             case "IN_DEVELOPMENT":
                 return AvailabilityStatus.InDevelopment;
             case "PRE_RELEASE":
-                return AvailabilityStatus.PreRelease; 
+                return AvailabilityStatus.PreRelease;
             case "GENERAL_AVAILABILITY":
                 return AvailabilityStatus.GeneralAvailability;
             case "DEPRECATED":

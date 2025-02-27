@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ContainerType, TypeDeclaration, TypeReference, Availability } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -67,7 +67,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             schema: this.schemaOrReference,
             id: schemaId
         });
-        const availability = context.getAvailability({ node: this.schemaOrReference, breadcrumbs: this.breadcrumbs, errorCollector });
+        const availability = context.getAvailability({
+            node: this.schemaOrReference,
+            breadcrumbs: this.breadcrumbs,
+            errorCollector
+        });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
 
         if (convertedSchema != null) {

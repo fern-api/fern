@@ -90,7 +90,11 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         breadcrumbs,
         errorCollector
     }: {
-        node: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject | OpenAPIV3_1.OperationObject | OpenAPIV3_1.ParameterObject;
+        node:
+            | OpenAPIV3_1.ReferenceObject
+            | OpenAPIV3_1.SchemaObject
+            | OpenAPIV3_1.OperationObject
+            | OpenAPIV3_1.ParameterObject;
         breadcrumbs: string[];
         errorCollector: ErrorCollector;
     }): Availability | undefined {
@@ -106,7 +110,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         // First check for x-fern-availability extension
         const availabilityExtension = new AvailabilityExtension({
             node,
-            breadcrumbs,
+            breadcrumbs
         });
         const availability = availabilityExtension.convert({
             context: this,

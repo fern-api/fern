@@ -54,7 +54,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                     typeDeclaration: this.createTypeDeclaration({
                         shape: enumType.enum,
                         context,
-                        errorCollector,
+                        errorCollector
                     }),
                     inlinedTypes: {}
                 };
@@ -72,7 +72,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                         resolvedType: primitiveType as any
                     }),
                     context,
-                    errorCollector,
+                    errorCollector
                 }),
                 inlinedTypes: {}
             };
@@ -93,7 +93,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                             resolvedType: arrayType.typeReference as any
                         }),
                         context,
-                        errorCollector,
+                        errorCollector
                     }),
                     inlinedTypes: arrayType.inlinedTypes ?? {}
                 };
@@ -112,7 +112,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                     typeDeclaration: this.createTypeDeclaration({
                         shape: oneOfType.union,
                         context,
-                        errorCollector,
+                        errorCollector
                     }),
                     inlinedTypes: oneOfType.inlinedTypes ?? {}
                 };
@@ -131,7 +131,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                     typeDeclaration: this.createTypeDeclaration({
                         shape: objectType.object,
                         context,
-                        errorCollector,
+                        errorCollector
                     }),
                     inlinedTypes: objectType.inlinedTypes ?? {}
                 };
