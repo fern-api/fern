@@ -118,6 +118,11 @@ fixtures:
     - outputFolder: java-pagination-deep-cursor-path
   accept-header:
     - outputFolder: accept-header
+  file-upload:
+    - customConfig:
+        wrapped-aliases: true
+      outputFolder: wrapped-aliases
+    - outputFolder: no-custom-config
 scripts:
   - docker: fernapi/java-seed
     commands:

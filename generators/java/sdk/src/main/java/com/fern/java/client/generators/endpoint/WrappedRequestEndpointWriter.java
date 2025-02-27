@@ -16,9 +16,18 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.*;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.MapType;
+import com.fern.ir.model.types.NamedType;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.TypeReference;
+import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -317,50 +326,74 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 Optional<FileUploadBodyPropertyEncoding> style = ((JsonFileUploadProperty) fileUploadProperty)
                         .rawProperty()
                         .getStyle();
-                if (style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM)) {
-                    if (typeNameIsOptional(jsonProperty.poetTypeName())) {
-                        requestBodyCodeBlock
-                                .beginControlFlow(
-                                        "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
-                                .addStatement(
-                                        "$T.addFormDataPart($L, $S, $L.get(), false)",
-                                        clientGeneratorContext
-                                                .getPoetClassNameFactory()
-                                                .getQueryStringMapperClassName(),
-                                        getMultipartBodyPropertiesName(),
-                                        jsonProperty.wireKey().get(),
-                                        requestParameterName + "." + jsonProperty.getterProperty().name + "()")
-                                .endControlFlow();
-                    } else {
-                        requestBodyCodeBlock.addStatement(
-                                "$T.addFormDataPart($L, $S, $L, false)",
-                                clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                                getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                requestParameterName + "." + jsonProperty.getterProperty().name + "()");
-                    }
+                boolean isOptional = typeNameIsOptional(jsonProperty.poetTypeName());
+                boolean formStyle = style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM);
+                boolean isCollection = ((JsonFileUploadProperty) fileUploadProperty)
+                        .rawProperty()
+                        .getValueType()
+                        .visit(new TypeReferenceIsCollection(clientGeneratorContext));
+
+                CodeBlock addDataPart;
+
+                if (formStyle) {
+                    addDataPart = CodeBlock.of(
+                            "$T.addFormDataPart($L, $S, $L, false)",
+                            clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                            getMultipartBodyPropertiesName(),
+                            jsonProperty.wireKey().get(),
+                            requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                                    + (isOptional ? ".get()" : ""));
                 } else {
-                    if (typeNameIsOptional(jsonProperty.poetTypeName())) {
-                        requestBodyCodeBlock
-                                .beginControlFlow(
-                                        "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
-                                .addStatement(
-                                        "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
-                                        getMultipartBodyPropertiesName(),
-                                        jsonProperty.wireKey().get(),
-                                        generatedObjectMapper.getClassName(),
-                                        generatedObjectMapper.jsonMapperStaticField().name,
-                                        requestParameterName + "." + jsonProperty.getterProperty().name + "()")
-                                .endControlFlow();
-                    } else {
-                        requestBodyCodeBlock.addStatement(
-                                "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
-                                getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                requestParameterName + "." + jsonProperty.getterProperty().name + "()");
+                    CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
+                    String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                            + (isOptional ? ".get()" : "");
+
+                    if (isCollection) {
+                        String collection = writeValueParameter;
+                        // Only way a collection is named is being an alias.
+                        boolean collectionIsAlias = ((JsonFileUploadProperty) fileUploadProperty)
+                                .rawProperty()
+                                .getValueType()
+                                .isNamed();
+                        if (clientGeneratorContext.getCustomConfig().wrappedAliases() && collectionIsAlias) {
+                            collection += ".get()";
+                        }
+                        writeValueParameter = "item";
+                        dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
+                        dataPartBuilder.indent();
+                        dataPartBuilder.beginControlFlow("try");
                     }
+
+                    dataPartBuilder.add(
+                            "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
+                            getMultipartBodyPropertiesName(),
+                            jsonProperty.wireKey().get(),
+                            generatedObjectMapper.getClassName(),
+                            generatedObjectMapper.jsonMapperStaticField().name,
+                            writeValueParameter);
+
+                    if (isCollection) {
+                        dataPartBuilder.endControlFlow();
+                        dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
+                        dataPartBuilder.add(
+                                "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
+                        dataPartBuilder.endControlFlow();
+                        dataPartBuilder.unindent();
+                        dataPartBuilder.add("})");
+                    }
+
+                    addDataPart = dataPartBuilder.build();
+                }
+
+                if (isOptional) {
+                    requestBodyCodeBlock.beginControlFlow(
+                            "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty());
+                }
+
+                requestBodyCodeBlock.addStatement(addDataPart);
+
+                if (isOptional) {
+                    requestBodyCodeBlock.endControlFlow();
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
@@ -437,5 +470,85 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .getName()
                 .getCamelCase()
                 .getSafeName();
+    }
+
+    private static final class TypeReferenceIsCollection
+            implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> context;
+
+        private TypeReferenceIsCollection(AbstractGeneratorContext<?, ?> context) {
+            this.context = context;
+        }
+
+        @Override
+        public Boolean visitContainer(ContainerType containerType) {
+            return containerType.visit(this);
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType namedType) {
+            TypeDeclaration declaration = Optional.ofNullable(
+                            context.getTypeDeclarations().get(namedType.getTypeId()))
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Received type id " + namedType.getTypeId() + " with no corresponding type declaration."));
+            if (declaration.getShape().getAlias().isPresent()) {
+                Optional<ContainerType> maybeContainer = declaration
+                        .getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .getContainer();
+                return maybeContainer.isPresent()
+                        && (maybeContainer.get().isList()
+                                || maybeContainer.get().isSet());
+            }
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitiveType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitList(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitMap(MapType mapType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitNullable(TypeReference typeReference) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitOptional(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitSet(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitLiteral(Literal literal) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object o) {
+            return false;
+        }
     }
 }
