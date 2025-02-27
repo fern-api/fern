@@ -4969,7 +4969,10 @@
               },
               "type": "primitive"
             },
-            "docs": "The language model that was used for the transcription"
+            "docs": "The language model that was used for the transcription",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -5004,7 +5007,10 @@
               },
               "type": "primitive"
             },
-            "docs": "The acoustic model that was used for the transcription"
+            "docs": "The acoustic model that was used for the transcription",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {

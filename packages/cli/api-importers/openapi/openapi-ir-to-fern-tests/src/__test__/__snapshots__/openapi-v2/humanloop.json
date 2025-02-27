@@ -14484,7 +14484,10 @@
               },
               "type": "container"
             },
-            "docs": "NB: Deprecated with tools field. Definition of tools shown to the model."
+            "docs": "NB: Deprecated with tools field. Definition of tools shown to the model.",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {

@@ -3766,6 +3766,9 @@
               "type": "container"
             },
             "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
+            "availability": {
+              "status": "DEPRECATED"
+            },
             "propertyAccess": "READ_ONLY"
           },
           {
@@ -3810,6 +3813,9 @@
               "type": "container"
             },
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
+            "availability": {
+              "status": "DEPRECATED"
+            },
             "propertyAccess": "READ_ONLY"
           },
           {
@@ -12608,7 +12614,10 @@
                 "inline": false,
                 "type": "named"
               },
-              "allowMultiple": false
+              "allowMultiple": false,
+              "availability": {
+                "status": "DEPRECATED"
+              }
             },
             {
               "name": {
@@ -12662,7 +12671,10 @@
                 "inline": false,
                 "type": "named"
               },
-              "allowMultiple": false
+              "allowMultiple": false,
+              "availability": {
+                "status": "DEPRECATED"
+              }
             },
             {
               "name": {

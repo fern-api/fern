@@ -888,6 +888,9 @@
                 "type": "optional"
               },
               "type": "container"
+            },
+            "availability": {
+              "status": "DEPRECATED"
             }
           },
           {

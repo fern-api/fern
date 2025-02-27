@@ -14140,7 +14140,10 @@
               },
               "type": "container"
             },
-            "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field."
+            "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
@@ -16678,7 +16681,10 @@
               },
               "type": "container"
             },
-            "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field."
+            "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
+            "availability": {
+              "status": "DEPRECATED"
+            }
           },
           {
             "name": {
