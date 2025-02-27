@@ -375,7 +375,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -489,7 +490,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -759,7 +761,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -952,7 +955,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -988,7 +992,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {

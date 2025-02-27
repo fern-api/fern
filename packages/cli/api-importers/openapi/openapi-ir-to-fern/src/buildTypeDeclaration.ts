@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ObjectPropertyAccess } from "@fern-api/fern-definition-schema/src/schemas";
 import {
     ArraySchema,
     CasingOverrides,
@@ -195,11 +196,13 @@ export function buildObjectTypeDeclaration({
         const audiences = property.audiences;
         const name = property.nameOverride;
         const availability = convertAvailability(property.availability);
+        const propertyAccess = getPropertyAccess(property);
         properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
             typeReference,
             audiences,
             name,
-            availability
+            availability,
+            propertyAccess
         });
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
@@ -717,21 +720,24 @@ function convertPropertyTypeReferenceToTypeDefinition({
     typeReference,
     audiences,
     name,
-    availability
+    availability,
+    propertyAccess
 }: {
     typeReference: RawSchemas.TypeReferenceSchema;
     audiences: string[];
     name?: string | undefined;
     availability?: RawSchemas.AvailabilityUnionSchema;
+    propertyAccess?: ObjectPropertyAccess | undefined;
 }): RawSchemas.ObjectPropertySchema {
-    if (audiences.length === 0 && name == null && availability == null) {
+    if (audiences.length === 0 && name == null && availability == null && propertyAccess == null) {
         return typeReference;
     } else {
         return {
             ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
-            ...(availability != null ? { availability } : {})
+            ...(availability != null ? { availability } : {}),
+            ...(propertyAccess != null ? { access: propertyAccess } : {})
         };
     }
 }
@@ -747,4 +753,17 @@ function getInline(schema: WithInline, declarationDepth: number): boolean | unde
         return true;
     }
     return declarationDepth > 0 ? true : undefined;
+}
+
+function getPropertyAccess(property: ObjectProperty): ObjectPropertyAccess | undefined {
+    if (property.readonly && property.writeonly) {
+        return undefined;
+    }
+    if (property.readonly) {
+        return ObjectPropertyAccess.ReadOnly;
+    }
+    if (property.writeonly) {
+        return ObjectPropertyAccess.WriteOnly;
+    }
+    return undefined;
 }
