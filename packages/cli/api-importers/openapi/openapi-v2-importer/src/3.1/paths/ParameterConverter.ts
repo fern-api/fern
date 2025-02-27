@@ -83,6 +83,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
             }
         }
 
+        const availability = context.getAvailability({ node: this.parameter, breadcrumbs: this.breadcrumbs, errorCollector });
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -95,7 +97,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
-                        availability: undefined
+                        availability
                     },
                     inlinedTypes
                 };
@@ -110,7 +112,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         env: undefined,
-                        availability: undefined
+                        availability,
                     },
                     inlinedTypes
                 };

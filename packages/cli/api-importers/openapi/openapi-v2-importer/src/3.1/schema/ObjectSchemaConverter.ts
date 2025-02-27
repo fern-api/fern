@@ -6,7 +6,6 @@ import { ObjectProperty, Type, TypeDeclaration, TypeId, TypeReference } from "@f
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ObjectSchemaConverter {
@@ -72,7 +71,7 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                     }),
                     valueType: convertedProperty.type,
                     docs: propertySchema.description,
-                    availability: undefined,
+                    availability: convertedProperty.availability,
                     propertyAccess: context.getPropertyAccess(propertySchema)
                 });
                 inlinedTypes = {
@@ -104,30 +103,13 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             for (const [propertyName, propertySchema] of Object.entries(allOfSchema.properties ?? {})) {
                 const propertyBreadcrumbs = [...subBreadcrumbs, propertyName];
 
-                // if property is a reference
-                if (context.isReferenceObject(propertySchema)) {
-                    const maybeTypeReference = context.convertReferenceToTypeReference(propertySchema);
-                    if (maybeTypeReference.ok) {
-                        properties.push({
-                            name: context.casingsGenerator.generateNameAndWireValue({
-                                name: propertyName,
-                                wireValue: propertyName
-                            }),
-                            valueType: maybeTypeReference.reference,
-                            docs: propertySchema.description,
-                            availability: undefined,
-                            propertyAccess: undefined
-                        });
-                    }
-                    continue;
-                }
-
-                // if property is inlined
                 const propertySchemaId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
-                const propertySchemaConverter = new SchemaConverter({
-                    id: propertySchemaId,
+                const propertySchemaConverter = new SchemaOrReferenceConverter({
                     breadcrumbs: propertyBreadcrumbs,
-                    schema: propertySchema
+                    schemaOrReference: propertySchema,
+                    schemaIdOverride: propertySchemaId,
+                    wrapAsOptional: !allOfSchema.required?.includes(propertyName),
+                    wrapAsNullable: "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false
                 });
                 const convertedProperty = propertySchemaConverter.convert({ context, errorCollector });
                 if (convertedProperty != null) {
@@ -136,15 +118,14 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
                             name: propertyName,
                             wireValue: propertyName
                         }),
-                        valueType: context.createNamedTypeReference(propertySchemaId),
+                        valueType: convertedProperty.type,
                         docs: propertySchema.description,
-                        availability: undefined,
-                        propertyAccess: undefined
+                        availability: convertedProperty.availability,
+                        propertyAccess: context.getPropertyAccess(propertySchema)
                     });
                     inlinedTypes = {
                         ...inlinedTypes,
-                        ...convertedProperty.inlinedTypes,
-                        [propertySchemaId]: convertedProperty.typeDeclaration
+                        ...convertedProperty.inlinedTypes
                     };
                 }
             }

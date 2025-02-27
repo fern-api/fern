@@ -1,8 +1,10 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "../AbstractConverterContext";
+import { ErrorCollector } from "../ErrorCollector";
+import { AvailabilityExtension } from "../extensions/x-fern-availability";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -79,6 +81,50 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         if (schema.writeOnly) {
             return ObjectPropertyAccess.WriteOnly;
+        }
+
+        return undefined;
+    }
+    public getAvailability({
+        node,
+        breadcrumbs,
+        errorCollector
+    }: {
+        node: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject | OpenAPIV3_1.OperationObject | OpenAPIV3_1.ParameterObject;
+        breadcrumbs: string[];
+        errorCollector: ErrorCollector;
+    }): Availability | undefined {
+        // Keep resolving references until we get to a schema object
+        while (this.isReferenceObject(node)) {
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            node = resolved.value;
+        }
+
+        // First check for x-fern-availability extension
+        const availabilityExtension = new AvailabilityExtension({
+            node,
+            breadcrumbs,
+        });
+        const availability = availabilityExtension.convert({
+            context: this,
+            errorCollector
+        });
+        if (availability != null) {
+            return {
+                status: availability,
+                message: undefined
+            };
+        }
+
+        // If no availability extension, check for deprecated flag
+        if (node.deprecated === true) {
+            return {
+                status: AvailabilityStatus.Deprecated,
+                message: undefined
+            };
         }
 
         return undefined;
