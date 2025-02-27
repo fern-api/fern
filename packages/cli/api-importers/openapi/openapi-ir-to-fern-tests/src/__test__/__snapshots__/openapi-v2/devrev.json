@@ -1061,7 +1061,263 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "google_apps",
+                "camelCase": {
+                  "unsafeName": "googleApps",
+                  "safeName": "googleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "google_apps",
+                  "safeName": "google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GOOGLE_APPS",
+                  "safeName": "GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "GoogleApps",
+                  "safeName": "GoogleApps"
+                }
+              },
+              "wireValue": "google_apps"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-google-apps",
+              "name": {
+                "originalName": "auth-connection-options-google-apps",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsGoogleApps",
+                  "safeName": "authConnectionOptionsGoogleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_google_apps",
+                  "safeName": "auth_connection_options_google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsGoogleApps",
+                  "safeName": "AuthConnectionOptionsGoogleApps"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "oidc",
+                "camelCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OIDC",
+                  "safeName": "OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Oidc",
+                  "safeName": "Oidc"
+                }
+              },
+              "wireValue": "oidc"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-oidc",
+              "name": {
+                "originalName": "auth-connection-options-oidc",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsOidc",
+                  "safeName": "authConnectionOptionsOidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_oidc",
+                  "safeName": "auth_connection_options_oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_OIDC",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsOidc",
+                  "safeName": "AuthConnectionOptionsOidc"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "samlp",
+                "camelCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "snakeCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAMLP",
+                  "safeName": "SAMLP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Samlp",
+                  "safeName": "Samlp"
+                }
+              },
+              "wireValue": "samlp"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-saml",
+              "name": {
+                "originalName": "auth-connection-options-saml",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsSaml",
+                  "safeName": "authConnectionOptionsSaml"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_saml",
+                  "safeName": "auth_connection_options_saml"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_SAML",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_SAML"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsSaml",
+                  "safeName": "AuthConnectionOptionsSaml"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "social",
+                "camelCase": {
+                  "unsafeName": "social",
+                  "safeName": "social"
+                },
+                "snakeCase": {
+                  "unsafeName": "social",
+                  "safeName": "social"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SOCIAL",
+                  "safeName": "SOCIAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Social",
+                  "safeName": "Social"
+                }
+              },
+              "wireValue": "social"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-social",
+              "name": {
+                "originalName": "auth-connection-options-social",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsSocial",
+                  "safeName": "authConnectionOptionsSocial"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_social",
+                  "safeName": "auth_connection_options_social"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_SOCIAL",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_SOCIAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsSocial",
+                  "safeName": "AuthConnectionOptionsSocial"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "waad",
+                "camelCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "snakeCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WAAD",
+                  "safeName": "WAAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Waad",
+                  "safeName": "Waad"
+                }
+              },
+              "wireValue": "waad"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-azure-ad",
+              "name": {
+                "originalName": "auth-connection-options-azure-ad",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsAzureAd",
+                  "safeName": "authConnectionOptionsAzureAd"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_azure_ad",
+                  "safeName": "auth_connection_options_azure_ad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsAzureAd",
+                  "safeName": "AuthConnectionOptionsAzureAd"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -5202,7 +5458,212 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "google_apps",
+                "camelCase": {
+                  "unsafeName": "googleApps",
+                  "safeName": "googleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "google_apps",
+                  "safeName": "google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GOOGLE_APPS",
+                  "safeName": "GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "GoogleApps",
+                  "safeName": "GoogleApps"
+                }
+              },
+              "wireValue": "google_apps"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-google-apps",
+              "name": {
+                "originalName": "auth-connection-options-google-apps",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsGoogleApps",
+                  "safeName": "authConnectionOptionsGoogleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_google_apps",
+                  "safeName": "auth_connection_options_google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsGoogleApps",
+                  "safeName": "AuthConnectionOptionsGoogleApps"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "oidc",
+                "camelCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OIDC",
+                  "safeName": "OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Oidc",
+                  "safeName": "Oidc"
+                }
+              },
+              "wireValue": "oidc"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-oidc",
+              "name": {
+                "originalName": "auth-connection-options-oidc",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsOidc",
+                  "safeName": "authConnectionOptionsOidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_oidc",
+                  "safeName": "auth_connection_options_oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_OIDC",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsOidc",
+                  "safeName": "AuthConnectionOptionsOidc"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "samlp",
+                "camelCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "snakeCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAMLP",
+                  "safeName": "SAMLP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Samlp",
+                  "safeName": "Samlp"
+                }
+              },
+              "wireValue": "samlp"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-saml",
+              "name": {
+                "originalName": "auth-connection-options-saml",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsSaml",
+                  "safeName": "authConnectionOptionsSaml"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_saml",
+                  "safeName": "auth_connection_options_saml"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_SAML",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_SAML"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsSaml",
+                  "safeName": "AuthConnectionOptionsSaml"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "waad",
+                "camelCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "snakeCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WAAD",
+                  "safeName": "WAAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Waad",
+                  "safeName": "Waad"
+                }
+              },
+              "wireValue": "waad"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-azure-ad",
+              "name": {
+                "originalName": "auth-connection-options-azure-ad",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsAzureAd",
+                  "safeName": "authConnectionOptionsAzureAd"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_azure_ad",
+                  "safeName": "auth_connection_options_azure_ad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsAzureAd",
+                  "safeName": "AuthConnectionOptionsAzureAd"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -5887,7 +6348,263 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "google_apps",
+                "camelCase": {
+                  "unsafeName": "googleApps",
+                  "safeName": "googleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "google_apps",
+                  "safeName": "google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GOOGLE_APPS",
+                  "safeName": "GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "GoogleApps",
+                  "safeName": "GoogleApps"
+                }
+              },
+              "wireValue": "google_apps"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-google-apps",
+              "name": {
+                "originalName": "auth-connection-options-google-apps",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsGoogleApps",
+                  "safeName": "authConnectionOptionsGoogleApps"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_google_apps",
+                  "safeName": "auth_connection_options_google_apps"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_GOOGLE_APPS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsGoogleApps",
+                  "safeName": "AuthConnectionOptionsGoogleApps"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "none",
+                "camelCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "snakeCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NONE",
+                  "safeName": "NONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "None",
+                  "safeName": "None"
+                }
+              },
+              "wireValue": "none"
+            },
+            "shape": {
+              "typeId": "empty",
+              "name": {
+                "originalName": "empty",
+                "camelCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "snakeCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMPTY",
+                  "safeName": "EMPTY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Empty",
+                  "safeName": "Empty"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "oidc",
+                "camelCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "oidc",
+                  "safeName": "oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OIDC",
+                  "safeName": "OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "Oidc",
+                  "safeName": "Oidc"
+                }
+              },
+              "wireValue": "oidc"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-oidc",
+              "name": {
+                "originalName": "auth-connection-options-oidc",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsOidc",
+                  "safeName": "authConnectionOptionsOidc"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_oidc",
+                  "safeName": "auth_connection_options_oidc"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_OIDC",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_OIDC"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsOidc",
+                  "safeName": "AuthConnectionOptionsOidc"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "samlp",
+                "camelCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "snakeCase": {
+                  "unsafeName": "samlp",
+                  "safeName": "samlp"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SAMLP",
+                  "safeName": "SAMLP"
+                },
+                "pascalCase": {
+                  "unsafeName": "Samlp",
+                  "safeName": "Samlp"
+                }
+              },
+              "wireValue": "samlp"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-saml",
+              "name": {
+                "originalName": "auth-connection-options-saml",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsSaml",
+                  "safeName": "authConnectionOptionsSaml"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_saml",
+                  "safeName": "auth_connection_options_saml"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_SAML",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_SAML"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsSaml",
+                  "safeName": "AuthConnectionOptionsSaml"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "waad",
+                "camelCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "snakeCase": {
+                  "unsafeName": "waad",
+                  "safeName": "waad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WAAD",
+                  "safeName": "WAAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Waad",
+                  "safeName": "Waad"
+                }
+              },
+              "wireValue": "waad"
+            },
+            "shape": {
+              "typeId": "auth-connection-options-azure-ad",
+              "name": {
+                "originalName": "auth-connection-options-azure-ad",
+                "camelCase": {
+                  "unsafeName": "authConnectionOptionsAzureAd",
+                  "safeName": "authConnectionOptionsAzureAd"
+                },
+                "snakeCase": {
+                  "unsafeName": "auth_connection_options_azure_ad",
+                  "safeName": "auth_connection_options_azure_ad"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD",
+                  "safeName": "AUTH_CONNECTION_OPTIONS_AZURE_AD"
+                },
+                "pascalCase": {
+                  "unsafeName": "AuthConnectionOptionsAzureAd",
+                  "safeName": "AuthConnectionOptionsAzureAd"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -11516,7 +12233,59 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "rev_org",
+                "camelCase": {
+                  "unsafeName": "revOrg",
+                  "safeName": "revOrg"
+                },
+                "snakeCase": {
+                  "unsafeName": "rev_org",
+                  "safeName": "rev_org"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REV_ORG",
+                  "safeName": "REV_ORG"
+                },
+                "pascalCase": {
+                  "unsafeName": "RevOrg",
+                  "safeName": "RevOrg"
+                }
+              },
+              "wireValue": "rev_org"
+            },
+            "shape": {
+              "typeId": "rev-org-summary",
+              "name": {
+                "originalName": "rev-org-summary",
+                "camelCase": {
+                  "unsafeName": "revOrgSummary",
+                  "safeName": "revOrgSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "rev_org_summary",
+                  "safeName": "rev_org_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REV_ORG_SUMMARY",
+                  "safeName": "REV_ORG_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "RevOrgSummary",
+                  "safeName": "RevOrgSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -11637,7 +12406,212 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "capability",
+                "camelCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY",
+                  "safeName": "CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Capability",
+                  "safeName": "Capability"
+                }
+              },
+              "wireValue": "capability"
+            },
+            "shape": {
+              "typeId": "capability",
+              "name": {
+                "originalName": "capability",
+                "camelCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY",
+                  "safeName": "CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Capability",
+                  "safeName": "Capability"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "enhancement",
+                "camelCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT",
+                  "safeName": "ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Enhancement",
+                  "safeName": "Enhancement"
+                }
+              },
+              "wireValue": "enhancement"
+            },
+            "shape": {
+              "typeId": "enhancement",
+              "name": {
+                "originalName": "enhancement",
+                "camelCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT",
+                  "safeName": "ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Enhancement",
+                  "safeName": "Enhancement"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "feature",
+                "camelCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE",
+                  "safeName": "FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Feature",
+                  "safeName": "Feature"
+                }
+              },
+              "wireValue": "feature"
+            },
+            "shape": {
+              "typeId": "feature",
+              "name": {
+                "originalName": "feature",
+                "camelCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE",
+                  "safeName": "FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Feature",
+                  "safeName": "Feature"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "product",
+                "camelCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "snakeCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT",
+                  "safeName": "PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Product",
+                  "safeName": "Product"
+                }
+              },
+              "wireValue": "product"
+            },
+            "shape": {
+              "typeId": "product",
+              "name": {
+                "originalName": "product",
+                "camelCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "snakeCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT",
+                  "safeName": "PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Product",
+                  "safeName": "Product"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -12131,7 +13105,212 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "capability",
+                "camelCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY",
+                  "safeName": "CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Capability",
+                  "safeName": "Capability"
+                }
+              },
+              "wireValue": "capability"
+            },
+            "shape": {
+              "typeId": "capability-summary",
+              "name": {
+                "originalName": "capability-summary",
+                "camelCase": {
+                  "unsafeName": "capabilitySummary",
+                  "safeName": "capabilitySummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability_summary",
+                  "safeName": "capability_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY_SUMMARY",
+                  "safeName": "CAPABILITY_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CapabilitySummary",
+                  "safeName": "CapabilitySummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "enhancement",
+                "camelCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT",
+                  "safeName": "ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Enhancement",
+                  "safeName": "Enhancement"
+                }
+              },
+              "wireValue": "enhancement"
+            },
+            "shape": {
+              "typeId": "enhancement-summary",
+              "name": {
+                "originalName": "enhancement-summary",
+                "camelCase": {
+                  "unsafeName": "enhancementSummary",
+                  "safeName": "enhancementSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement_summary",
+                  "safeName": "enhancement_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT_SUMMARY",
+                  "safeName": "ENHANCEMENT_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "EnhancementSummary",
+                  "safeName": "EnhancementSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "feature",
+                "camelCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE",
+                  "safeName": "FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Feature",
+                  "safeName": "Feature"
+                }
+              },
+              "wireValue": "feature"
+            },
+            "shape": {
+              "typeId": "feature-summary",
+              "name": {
+                "originalName": "feature-summary",
+                "camelCase": {
+                  "unsafeName": "featureSummary",
+                  "safeName": "featureSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature_summary",
+                  "safeName": "feature_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE_SUMMARY",
+                  "safeName": "FEATURE_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "FeatureSummary",
+                  "safeName": "FeatureSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "product",
+                "camelCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "snakeCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT",
+                  "safeName": "PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Product",
+                  "safeName": "Product"
+                }
+              },
+              "wireValue": "product"
+            },
+            "shape": {
+              "typeId": "product-summary",
+              "name": {
+                "originalName": "product-summary",
+                "camelCase": {
+                  "unsafeName": "productSummary",
+                  "safeName": "productSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "product_summary",
+                  "safeName": "product_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT_SUMMARY",
+                  "safeName": "PRODUCT_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "ProductSummary",
+                  "safeName": "ProductSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -12324,7 +13503,212 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "capability",
+                "camelCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY",
+                  "safeName": "CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Capability",
+                  "safeName": "Capability"
+                }
+              },
+              "wireValue": "capability"
+            },
+            "shape": {
+              "typeId": "parts-create-request-capability",
+              "name": {
+                "originalName": "parts-create-request-capability",
+                "camelCase": {
+                  "unsafeName": "partsCreateRequestCapability",
+                  "safeName": "partsCreateRequestCapability"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_create_request_capability",
+                  "safeName": "parts_create_request_capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_CREATE_REQUEST_CAPABILITY",
+                  "safeName": "PARTS_CREATE_REQUEST_CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsCreateRequestCapability",
+                  "safeName": "PartsCreateRequestCapability"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "enhancement",
+                "camelCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT",
+                  "safeName": "ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Enhancement",
+                  "safeName": "Enhancement"
+                }
+              },
+              "wireValue": "enhancement"
+            },
+            "shape": {
+              "typeId": "parts-create-request-enhancement",
+              "name": {
+                "originalName": "parts-create-request-enhancement",
+                "camelCase": {
+                  "unsafeName": "partsCreateRequestEnhancement",
+                  "safeName": "partsCreateRequestEnhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_create_request_enhancement",
+                  "safeName": "parts_create_request_enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_CREATE_REQUEST_ENHANCEMENT",
+                  "safeName": "PARTS_CREATE_REQUEST_ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsCreateRequestEnhancement",
+                  "safeName": "PartsCreateRequestEnhancement"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "feature",
+                "camelCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE",
+                  "safeName": "FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Feature",
+                  "safeName": "Feature"
+                }
+              },
+              "wireValue": "feature"
+            },
+            "shape": {
+              "typeId": "parts-create-request-feature",
+              "name": {
+                "originalName": "parts-create-request-feature",
+                "camelCase": {
+                  "unsafeName": "partsCreateRequestFeature",
+                  "safeName": "partsCreateRequestFeature"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_create_request_feature",
+                  "safeName": "parts_create_request_feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_CREATE_REQUEST_FEATURE",
+                  "safeName": "PARTS_CREATE_REQUEST_FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsCreateRequestFeature",
+                  "safeName": "PartsCreateRequestFeature"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "product",
+                "camelCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "snakeCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT",
+                  "safeName": "PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Product",
+                  "safeName": "Product"
+                }
+              },
+              "wireValue": "product"
+            },
+            "shape": {
+              "typeId": "parts-create-request-product",
+              "name": {
+                "originalName": "parts-create-request-product",
+                "camelCase": {
+                  "unsafeName": "partsCreateRequestProduct",
+                  "safeName": "partsCreateRequestProduct"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_create_request_product",
+                  "safeName": "parts_create_request_product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_CREATE_REQUEST_PRODUCT",
+                  "safeName": "PARTS_CREATE_REQUEST_PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsCreateRequestProduct",
+                  "safeName": "PartsCreateRequestProduct"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -13188,7 +14572,263 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "capability",
+                "camelCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "snakeCase": {
+                  "unsafeName": "capability",
+                  "safeName": "capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CAPABILITY",
+                  "safeName": "CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Capability",
+                  "safeName": "Capability"
+                }
+              },
+              "wireValue": "capability"
+            },
+            "shape": {
+              "typeId": "parts-update-request-capability",
+              "name": {
+                "originalName": "parts-update-request-capability",
+                "camelCase": {
+                  "unsafeName": "partsUpdateRequestCapability",
+                  "safeName": "partsUpdateRequestCapability"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_update_request_capability",
+                  "safeName": "parts_update_request_capability"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_UPDATE_REQUEST_CAPABILITY",
+                  "safeName": "PARTS_UPDATE_REQUEST_CAPABILITY"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsUpdateRequestCapability",
+                  "safeName": "PartsUpdateRequestCapability"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "enhancement",
+                "camelCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "enhancement",
+                  "safeName": "enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ENHANCEMENT",
+                  "safeName": "ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Enhancement",
+                  "safeName": "Enhancement"
+                }
+              },
+              "wireValue": "enhancement"
+            },
+            "shape": {
+              "typeId": "parts-update-request-enhancement",
+              "name": {
+                "originalName": "parts-update-request-enhancement",
+                "camelCase": {
+                  "unsafeName": "partsUpdateRequestEnhancement",
+                  "safeName": "partsUpdateRequestEnhancement"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_update_request_enhancement",
+                  "safeName": "parts_update_request_enhancement"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_UPDATE_REQUEST_ENHANCEMENT",
+                  "safeName": "PARTS_UPDATE_REQUEST_ENHANCEMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsUpdateRequestEnhancement",
+                  "safeName": "PartsUpdateRequestEnhancement"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "feature",
+                "camelCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "snakeCase": {
+                  "unsafeName": "feature",
+                  "safeName": "feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FEATURE",
+                  "safeName": "FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Feature",
+                  "safeName": "Feature"
+                }
+              },
+              "wireValue": "feature"
+            },
+            "shape": {
+              "typeId": "parts-update-request-feature",
+              "name": {
+                "originalName": "parts-update-request-feature",
+                "camelCase": {
+                  "unsafeName": "partsUpdateRequestFeature",
+                  "safeName": "partsUpdateRequestFeature"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_update_request_feature",
+                  "safeName": "parts_update_request_feature"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_UPDATE_REQUEST_FEATURE",
+                  "safeName": "PARTS_UPDATE_REQUEST_FEATURE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsUpdateRequestFeature",
+                  "safeName": "PartsUpdateRequestFeature"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "none",
+                "camelCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "snakeCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NONE",
+                  "safeName": "NONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "None",
+                  "safeName": "None"
+                }
+              },
+              "wireValue": "none"
+            },
+            "shape": {
+              "typeId": "empty",
+              "name": {
+                "originalName": "empty",
+                "camelCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "snakeCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMPTY",
+                  "safeName": "EMPTY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Empty",
+                  "safeName": "Empty"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "product",
+                "camelCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "snakeCase": {
+                  "unsafeName": "product",
+                  "safeName": "product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PRODUCT",
+                  "safeName": "PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Product",
+                  "safeName": "Product"
+                }
+              },
+              "wireValue": "product"
+            },
+            "shape": {
+              "typeId": "parts-update-request-product",
+              "name": {
+                "originalName": "parts-update-request-product",
+                "camelCase": {
+                  "unsafeName": "partsUpdateRequestProduct",
+                  "safeName": "partsUpdateRequestProduct"
+                },
+                "snakeCase": {
+                  "unsafeName": "parts_update_request_product",
+                  "safeName": "parts_update_request_product"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTS_UPDATE_REQUEST_PRODUCT",
+                  "safeName": "PARTS_UPDATE_REQUEST_PRODUCT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartsUpdateRequestProduct",
+                  "safeName": "PartsUpdateRequestProduct"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -18030,7 +19670,59 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "timeline_comment",
+                "camelCase": {
+                  "unsafeName": "timelineComment",
+                  "safeName": "timelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_comment",
+                  "safeName": "timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineComment",
+                  "safeName": "TimelineComment"
+                }
+              },
+              "wireValue": "timeline_comment"
+            },
+            "shape": {
+              "typeId": "timeline-entries-create-request-timeline-comment",
+              "name": {
+                "originalName": "timeline-entries-create-request-timeline-comment",
+                "camelCase": {
+                  "unsafeName": "timelineEntriesCreateRequestTimelineComment",
+                  "safeName": "timelineEntriesCreateRequestTimelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_entries_create_request_timeline_comment",
+                  "safeName": "timeline_entries_create_request_timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_ENTRIES_CREATE_REQUEST_TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_ENTRIES_CREATE_REQUEST_TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineEntriesCreateRequestTimelineComment",
+                  "safeName": "TimelineEntriesCreateRequestTimelineComment"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -18799,7 +20491,59 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "timeline_comment",
+                "camelCase": {
+                  "unsafeName": "timelineComment",
+                  "safeName": "timelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_comment",
+                  "safeName": "timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineComment",
+                  "safeName": "TimelineComment"
+                }
+              },
+              "wireValue": "timeline_comment"
+            },
+            "shape": {
+              "typeId": "timeline-entries-update-request-timeline-comment",
+              "name": {
+                "originalName": "timeline-entries-update-request-timeline-comment",
+                "camelCase": {
+                  "unsafeName": "timelineEntriesUpdateRequestTimelineComment",
+                  "safeName": "timelineEntriesUpdateRequestTimelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_entries_update_request_timeline_comment",
+                  "safeName": "timeline_entries_update_request_timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_ENTRIES_UPDATE_REQUEST_TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_ENTRIES_UPDATE_REQUEST_TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineEntriesUpdateRequestTimelineComment",
+                  "safeName": "TimelineEntriesUpdateRequestTimelineComment"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -19479,7 +21223,59 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "timeline_comment",
+                "camelCase": {
+                  "unsafeName": "timelineComment",
+                  "safeName": "timelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_comment",
+                  "safeName": "timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineComment",
+                  "safeName": "TimelineComment"
+                }
+              },
+              "wireValue": "timeline_comment"
+            },
+            "shape": {
+              "typeId": "timeline-comment",
+              "name": {
+                "originalName": "timeline-comment",
+                "camelCase": {
+                  "unsafeName": "timelineComment",
+                  "safeName": "timelineComment"
+                },
+                "snakeCase": {
+                  "unsafeName": "timeline_comment",
+                  "safeName": "timeline_comment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TIMELINE_COMMENT",
+                  "safeName": "TIMELINE_COMMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TimelineComment",
+                  "safeName": "TimelineComment"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -20521,7 +22317,161 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "dev_user",
+                "camelCase": {
+                  "unsafeName": "devUser",
+                  "safeName": "devUser"
+                },
+                "snakeCase": {
+                  "unsafeName": "dev_user",
+                  "safeName": "dev_user"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEV_USER",
+                  "safeName": "DEV_USER"
+                },
+                "pascalCase": {
+                  "unsafeName": "DevUser",
+                  "safeName": "DevUser"
+                }
+              },
+              "wireValue": "dev_user"
+            },
+            "shape": {
+              "typeId": "dev-user-summary",
+              "name": {
+                "originalName": "dev-user-summary",
+                "camelCase": {
+                  "unsafeName": "devUserSummary",
+                  "safeName": "devUserSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "dev_user_summary",
+                  "safeName": "dev_user_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEV_USER_SUMMARY",
+                  "safeName": "DEV_USER_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "DevUserSummary",
+                  "safeName": "DevUserSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "rev_user",
+                "camelCase": {
+                  "unsafeName": "revUser",
+                  "safeName": "revUser"
+                },
+                "snakeCase": {
+                  "unsafeName": "rev_user",
+                  "safeName": "rev_user"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REV_USER",
+                  "safeName": "REV_USER"
+                },
+                "pascalCase": {
+                  "unsafeName": "RevUser",
+                  "safeName": "RevUser"
+                }
+              },
+              "wireValue": "rev_user"
+            },
+            "shape": {
+              "typeId": "rev-user-summary",
+              "name": {
+                "originalName": "rev-user-summary",
+                "camelCase": {
+                  "unsafeName": "revUserSummary",
+                  "safeName": "revUserSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "rev_user_summary",
+                  "safeName": "rev_user_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REV_USER_SUMMARY",
+                  "safeName": "REV_USER_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "RevUserSummary",
+                  "safeName": "RevUserSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "sys_user",
+                "camelCase": {
+                  "unsafeName": "sysUser",
+                  "safeName": "sysUser"
+                },
+                "snakeCase": {
+                  "unsafeName": "sys_user",
+                  "safeName": "sys_user"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SYS_USER",
+                  "safeName": "SYS_USER"
+                },
+                "pascalCase": {
+                  "unsafeName": "SysUser",
+                  "safeName": "SysUser"
+                }
+              },
+              "wireValue": "sys_user"
+            },
+            "shape": {
+              "typeId": "sys-user-summary",
+              "name": {
+                "originalName": "sys-user-summary",
+                "camelCase": {
+                  "unsafeName": "sysUserSummary",
+                  "safeName": "sysUserSummary"
+                },
+                "snakeCase": {
+                  "unsafeName": "sys_user_summary",
+                  "safeName": "sys_user_summary"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SYS_USER_SUMMARY",
+                  "safeName": "SYS_USER_SUMMARY"
+                },
+                "pascalCase": {
+                  "unsafeName": "SysUserSummary",
+                  "safeName": "SysUserSummary"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -24167,7 +26117,110 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "issue",
+                "camelCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "snakeCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ISSUE",
+                  "safeName": "ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Issue",
+                  "safeName": "Issue"
+                }
+              },
+              "wireValue": "issue"
+            },
+            "shape": {
+              "typeId": "issue",
+              "name": {
+                "originalName": "issue",
+                "camelCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "snakeCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ISSUE",
+                  "safeName": "ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Issue",
+                  "safeName": "Issue"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "ticket",
+                "camelCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET",
+                  "safeName": "TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ticket",
+                  "safeName": "Ticket"
+                }
+              },
+              "wireValue": "ticket"
+            },
+            "shape": {
+              "typeId": "ticket",
+              "name": {
+                "originalName": "ticket",
+                "camelCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET",
+                  "safeName": "TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ticket",
+                  "safeName": "Ticket"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -24856,7 +26909,110 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "issue",
+                "camelCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "snakeCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ISSUE",
+                  "safeName": "ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Issue",
+                  "safeName": "Issue"
+                }
+              },
+              "wireValue": "issue"
+            },
+            "shape": {
+              "typeId": "works-create-request-issue",
+              "name": {
+                "originalName": "works-create-request-issue",
+                "camelCase": {
+                  "unsafeName": "worksCreateRequestIssue",
+                  "safeName": "worksCreateRequestIssue"
+                },
+                "snakeCase": {
+                  "unsafeName": "works_create_request_issue",
+                  "safeName": "works_create_request_issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKS_CREATE_REQUEST_ISSUE",
+                  "safeName": "WORKS_CREATE_REQUEST_ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorksCreateRequestIssue",
+                  "safeName": "WorksCreateRequestIssue"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "ticket",
+                "camelCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET",
+                  "safeName": "TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ticket",
+                  "safeName": "Ticket"
+                }
+              },
+              "wireValue": "ticket"
+            },
+            "shape": {
+              "typeId": "works-create-request-ticket",
+              "name": {
+                "originalName": "works-create-request-ticket",
+                "camelCase": {
+                  "unsafeName": "worksCreateRequestTicket",
+                  "safeName": "worksCreateRequestTicket"
+                },
+                "snakeCase": {
+                  "unsafeName": "works_create_request_ticket",
+                  "safeName": "works_create_request_ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKS_CREATE_REQUEST_TICKET",
+                  "safeName": "WORKS_CREATE_REQUEST_TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorksCreateRequestTicket",
+                  "safeName": "WorksCreateRequestTicket"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -25801,7 +27957,161 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "issue",
+                "camelCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "snakeCase": {
+                  "unsafeName": "issue",
+                  "safeName": "issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ISSUE",
+                  "safeName": "ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Issue",
+                  "safeName": "Issue"
+                }
+              },
+              "wireValue": "issue"
+            },
+            "shape": {
+              "typeId": "works-update-request-issue",
+              "name": {
+                "originalName": "works-update-request-issue",
+                "camelCase": {
+                  "unsafeName": "worksUpdateRequestIssue",
+                  "safeName": "worksUpdateRequestIssue"
+                },
+                "snakeCase": {
+                  "unsafeName": "works_update_request_issue",
+                  "safeName": "works_update_request_issue"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKS_UPDATE_REQUEST_ISSUE",
+                  "safeName": "WORKS_UPDATE_REQUEST_ISSUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorksUpdateRequestIssue",
+                  "safeName": "WorksUpdateRequestIssue"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "none",
+                "camelCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "snakeCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NONE",
+                  "safeName": "NONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "None",
+                  "safeName": "None"
+                }
+              },
+              "wireValue": "none"
+            },
+            "shape": {
+              "typeId": "empty",
+              "name": {
+                "originalName": "empty",
+                "camelCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "snakeCase": {
+                  "unsafeName": "empty",
+                  "safeName": "empty"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMPTY",
+                  "safeName": "EMPTY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Empty",
+                  "safeName": "Empty"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "ticket",
+                "camelCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "snakeCase": {
+                  "unsafeName": "ticket",
+                  "safeName": "ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TICKET",
+                  "safeName": "TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ticket",
+                  "safeName": "Ticket"
+                }
+              },
+              "wireValue": "ticket"
+            },
+            "shape": {
+              "typeId": "works-update-request-ticket",
+              "name": {
+                "originalName": "works-update-request-ticket",
+                "camelCase": {
+                  "unsafeName": "worksUpdateRequestTicket",
+                  "safeName": "worksUpdateRequestTicket"
+                },
+                "snakeCase": {
+                  "unsafeName": "works_update_request_ticket",
+                  "safeName": "works_update_request_ticket"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKS_UPDATE_REQUEST_TICKET",
+                  "safeName": "WORKS_UPDATE_REQUEST_TICKET"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorksUpdateRequestTicket",
+                  "safeName": "WorksUpdateRequestTicket"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],

@@ -20585,7 +20585,161 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "STRING",
+                "camelCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "snakeCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STRING",
+                  "safeName": "STRING"
+                },
+                "pascalCase": {
+                  "unsafeName": "String",
+                  "safeName": "String"
+                }
+              },
+              "wireValue": "STRING"
+            },
+            "shape": {
+              "typeId": "TerminalNodeStringResult",
+              "name": {
+                "originalName": "TerminalNodeStringResult",
+                "camelCase": {
+                  "unsafeName": "terminalNodeStringResult",
+                  "safeName": "terminalNodeStringResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminal_node_string_result",
+                  "safeName": "terminal_node_string_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINAL_NODE_STRING_RESULT",
+                  "safeName": "TERMINAL_NODE_STRING_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminalNodeStringResult",
+                  "safeName": "TerminalNodeStringResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "JSON",
+                "camelCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "snakeCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "JSON",
+                  "safeName": "JSON"
+                },
+                "pascalCase": {
+                  "unsafeName": "Json",
+                  "safeName": "Json"
+                }
+              },
+              "wireValue": "JSON"
+            },
+            "shape": {
+              "typeId": "TerminalNodeJsonResult",
+              "name": {
+                "originalName": "TerminalNodeJsonResult",
+                "camelCase": {
+                  "unsafeName": "terminalNodeJsonResult",
+                  "safeName": "terminalNodeJsonResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminal_node_json_result",
+                  "safeName": "terminal_node_json_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINAL_NODE_JSON_RESULT",
+                  "safeName": "TERMINAL_NODE_JSON_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminalNodeJsonResult",
+                  "safeName": "TerminalNodeJsonResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "CHAT_HISTORY",
+                "camelCase": {
+                  "unsafeName": "chatHistory",
+                  "safeName": "chatHistory"
+                },
+                "snakeCase": {
+                  "unsafeName": "chat_history",
+                  "safeName": "chat_history"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHAT_HISTORY",
+                  "safeName": "CHAT_HISTORY"
+                },
+                "pascalCase": {
+                  "unsafeName": "ChatHistory",
+                  "safeName": "ChatHistory"
+                }
+              },
+              "wireValue": "CHAT_HISTORY"
+            },
+            "shape": {
+              "typeId": "TerminalNodeChatHistoryResult",
+              "name": {
+                "originalName": "TerminalNodeChatHistoryResult",
+                "camelCase": {
+                  "unsafeName": "terminalNodeChatHistoryResult",
+                  "safeName": "terminalNodeChatHistoryResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminal_node_chat_history_result",
+                  "safeName": "terminal_node_chat_history_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINAL_NODE_CHAT_HISTORY_RESULT",
+                  "safeName": "TERMINAL_NODE_CHAT_HISTORY_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminalNodeChatHistoryResult",
+                  "safeName": "TerminalNodeChatHistoryResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -22758,7 +22912,314 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "PROMPT",
+                "camelCase": {
+                  "unsafeName": "prompt",
+                  "safeName": "prompt"
+                },
+                "snakeCase": {
+                  "unsafeName": "prompt",
+                  "safeName": "prompt"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROMPT",
+                  "safeName": "PROMPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Prompt",
+                  "safeName": "Prompt"
+                }
+              },
+              "wireValue": "PROMPT"
+            },
+            "shape": {
+              "typeId": "PromptNodeResult",
+              "name": {
+                "originalName": "PromptNodeResult",
+                "camelCase": {
+                  "unsafeName": "promptNodeResult",
+                  "safeName": "promptNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "prompt_node_result",
+                  "safeName": "prompt_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROMPT_NODE_RESULT",
+                  "safeName": "PROMPT_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PromptNodeResult",
+                  "safeName": "PromptNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "SANDBOX",
+                "camelCase": {
+                  "unsafeName": "sandbox",
+                  "safeName": "sandbox"
+                },
+                "snakeCase": {
+                  "unsafeName": "sandbox",
+                  "safeName": "sandbox"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SANDBOX",
+                  "safeName": "SANDBOX"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sandbox",
+                  "safeName": "Sandbox"
+                }
+              },
+              "wireValue": "SANDBOX"
+            },
+            "shape": {
+              "typeId": "SandboxNodeResult",
+              "name": {
+                "originalName": "SandboxNodeResult",
+                "camelCase": {
+                  "unsafeName": "sandboxNodeResult",
+                  "safeName": "sandboxNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "sandbox_node_result",
+                  "safeName": "sandbox_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SANDBOX_NODE_RESULT",
+                  "safeName": "SANDBOX_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "SandboxNodeResult",
+                  "safeName": "SandboxNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "DEPLOYMENT",
+                "camelCase": {
+                  "unsafeName": "deployment",
+                  "safeName": "deployment"
+                },
+                "snakeCase": {
+                  "unsafeName": "deployment",
+                  "safeName": "deployment"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEPLOYMENT",
+                  "safeName": "DEPLOYMENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Deployment",
+                  "safeName": "Deployment"
+                }
+              },
+              "wireValue": "DEPLOYMENT"
+            },
+            "shape": {
+              "typeId": "DeploymentNodeResult",
+              "name": {
+                "originalName": "DeploymentNodeResult",
+                "camelCase": {
+                  "unsafeName": "deploymentNodeResult",
+                  "safeName": "deploymentNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "deployment_node_result",
+                  "safeName": "deployment_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DEPLOYMENT_NODE_RESULT",
+                  "safeName": "DEPLOYMENT_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "DeploymentNodeResult",
+                  "safeName": "DeploymentNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "SEARCH",
+                "camelCase": {
+                  "unsafeName": "search",
+                  "safeName": "search"
+                },
+                "snakeCase": {
+                  "unsafeName": "search",
+                  "safeName": "search"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEARCH",
+                  "safeName": "SEARCH"
+                },
+                "pascalCase": {
+                  "unsafeName": "Search",
+                  "safeName": "Search"
+                }
+              },
+              "wireValue": "SEARCH"
+            },
+            "shape": {
+              "typeId": "SearchNodeResult",
+              "name": {
+                "originalName": "SearchNodeResult",
+                "camelCase": {
+                  "unsafeName": "searchNodeResult",
+                  "safeName": "searchNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "search_node_result",
+                  "safeName": "search_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEARCH_NODE_RESULT",
+                  "safeName": "SEARCH_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "SearchNodeResult",
+                  "safeName": "SearchNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "CONDITIONAL",
+                "camelCase": {
+                  "unsafeName": "conditional",
+                  "safeName": "conditional"
+                },
+                "snakeCase": {
+                  "unsafeName": "conditional",
+                  "safeName": "conditional"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONDITIONAL",
+                  "safeName": "CONDITIONAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Conditional",
+                  "safeName": "Conditional"
+                }
+              },
+              "wireValue": "CONDITIONAL"
+            },
+            "shape": {
+              "typeId": "ConditionalNodeResult",
+              "name": {
+                "originalName": "ConditionalNodeResult",
+                "camelCase": {
+                  "unsafeName": "conditionalNodeResult",
+                  "safeName": "conditionalNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "conditional_node_result",
+                  "safeName": "conditional_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CONDITIONAL_NODE_RESULT",
+                  "safeName": "CONDITIONAL_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "ConditionalNodeResult",
+                  "safeName": "ConditionalNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "TERMINAL",
+                "camelCase": {
+                  "unsafeName": "terminal",
+                  "safeName": "terminal"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminal",
+                  "safeName": "terminal"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINAL",
+                  "safeName": "TERMINAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Terminal",
+                  "safeName": "Terminal"
+                }
+              },
+              "wireValue": "TERMINAL"
+            },
+            "shape": {
+              "typeId": "TerminalNodeResult",
+              "name": {
+                "originalName": "TerminalNodeResult",
+                "camelCase": {
+                  "unsafeName": "terminalNodeResult",
+                  "safeName": "terminalNodeResult"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminal_node_result",
+                  "safeName": "terminal_node_result"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINAL_NODE_RESULT",
+                  "safeName": "TERMINAL_NODE_RESULT"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminalNodeResult",
+                  "safeName": "TerminalNodeResult"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -23583,7 +24044,161 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "STRING",
+                "camelCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "snakeCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STRING",
+                  "safeName": "STRING"
+                },
+                "pascalCase": {
+                  "unsafeName": "String",
+                  "safeName": "String"
+                }
+              },
+              "wireValue": "STRING"
+            },
+            "shape": {
+              "typeId": "WorkflowRequestStringInputRequest",
+              "name": {
+                "originalName": "WorkflowRequestStringInputRequest",
+                "camelCase": {
+                  "unsafeName": "workflowRequestStringInputRequest",
+                  "safeName": "workflowRequestStringInputRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_request_string_input_request",
+                  "safeName": "workflow_request_string_input_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_REQUEST_STRING_INPUT_REQUEST",
+                  "safeName": "WORKFLOW_REQUEST_STRING_INPUT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowRequestStringInputRequest",
+                  "safeName": "WorkflowRequestStringInputRequest"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "JSON",
+                "camelCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "snakeCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "JSON",
+                  "safeName": "JSON"
+                },
+                "pascalCase": {
+                  "unsafeName": "Json",
+                  "safeName": "Json"
+                }
+              },
+              "wireValue": "JSON"
+            },
+            "shape": {
+              "typeId": "WorkflowRequestJSONInputRequest",
+              "name": {
+                "originalName": "WorkflowRequestJSONInputRequest",
+                "camelCase": {
+                  "unsafeName": "workflowRequestJsonInputRequest",
+                  "safeName": "workflowRequestJsonInputRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_request_json_input_request",
+                  "safeName": "workflow_request_json_input_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_REQUEST_JSON_INPUT_REQUEST",
+                  "safeName": "WORKFLOW_REQUEST_JSON_INPUT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowRequestJsonInputRequest",
+                  "safeName": "WorkflowRequestJsonInputRequest"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "CHAT_HISTORY",
+                "camelCase": {
+                  "unsafeName": "chatHistory",
+                  "safeName": "chatHistory"
+                },
+                "snakeCase": {
+                  "unsafeName": "chat_history",
+                  "safeName": "chat_history"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHAT_HISTORY",
+                  "safeName": "CHAT_HISTORY"
+                },
+                "pascalCase": {
+                  "unsafeName": "ChatHistory",
+                  "safeName": "ChatHistory"
+                }
+              },
+              "wireValue": "CHAT_HISTORY"
+            },
+            "shape": {
+              "typeId": "WorkflowRequestChatHistoryInputRequest",
+              "name": {
+                "originalName": "WorkflowRequestChatHistoryInputRequest",
+                "camelCase": {
+                  "unsafeName": "workflowRequestChatHistoryInputRequest",
+                  "safeName": "workflowRequestChatHistoryInputRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_request_chat_history_input_request",
+                  "safeName": "workflow_request_chat_history_input_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_REQUEST_CHAT_HISTORY_INPUT_REQUEST",
+                  "safeName": "WORKFLOW_REQUEST_CHAT_HISTORY_INPUT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowRequestChatHistoryInputRequest",
+                  "safeName": "WorkflowRequestChatHistoryInputRequest"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -24338,7 +24953,161 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "STRING",
+                "camelCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "snakeCase": {
+                  "unsafeName": "string",
+                  "safeName": "string_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STRING",
+                  "safeName": "STRING"
+                },
+                "pascalCase": {
+                  "unsafeName": "String",
+                  "safeName": "String"
+                }
+              },
+              "wireValue": "STRING"
+            },
+            "shape": {
+              "typeId": "WorkflowResultEventOutputDataString",
+              "name": {
+                "originalName": "WorkflowResultEventOutputDataString",
+                "camelCase": {
+                  "unsafeName": "workflowResultEventOutputDataString",
+                  "safeName": "workflowResultEventOutputDataString"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_result_event_output_data_string",
+                  "safeName": "workflow_result_event_output_data_string"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_STRING",
+                  "safeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_STRING"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowResultEventOutputDataString",
+                  "safeName": "WorkflowResultEventOutputDataString"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "JSON",
+                "camelCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "snakeCase": {
+                  "unsafeName": "json",
+                  "safeName": "json"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "JSON",
+                  "safeName": "JSON"
+                },
+                "pascalCase": {
+                  "unsafeName": "Json",
+                  "safeName": "Json"
+                }
+              },
+              "wireValue": "JSON"
+            },
+            "shape": {
+              "typeId": "WorkflowResultEventOutputDataJSON",
+              "name": {
+                "originalName": "WorkflowResultEventOutputDataJSON",
+                "camelCase": {
+                  "unsafeName": "workflowResultEventOutputDataJson",
+                  "safeName": "workflowResultEventOutputDataJson"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_result_event_output_data_json",
+                  "safeName": "workflow_result_event_output_data_json"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_JSON",
+                  "safeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_JSON"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowResultEventOutputDataJson",
+                  "safeName": "WorkflowResultEventOutputDataJson"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "CHAT_HISTORY",
+                "camelCase": {
+                  "unsafeName": "chatHistory",
+                  "safeName": "chatHistory"
+                },
+                "snakeCase": {
+                  "unsafeName": "chat_history",
+                  "safeName": "chat_history"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHAT_HISTORY",
+                  "safeName": "CHAT_HISTORY"
+                },
+                "pascalCase": {
+                  "unsafeName": "ChatHistory",
+                  "safeName": "ChatHistory"
+                }
+              },
+              "wireValue": "CHAT_HISTORY"
+            },
+            "shape": {
+              "typeId": "WorkflowResultEventOutputDataChatHistory",
+              "name": {
+                "originalName": "WorkflowResultEventOutputDataChatHistory",
+                "camelCase": {
+                  "unsafeName": "workflowResultEventOutputDataChatHistory",
+                  "safeName": "workflowResultEventOutputDataChatHistory"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_result_event_output_data_chat_history",
+                  "safeName": "workflow_result_event_output_data_chat_history"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_CHAT_HISTORY",
+                  "safeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA_CHAT_HISTORY"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowResultEventOutputDataChatHistory",
+                  "safeName": "WorkflowResultEventOutputDataChatHistory"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
@@ -25316,7 +26085,110 @@
           "wireValue": "type"
         },
         "extends": [],
-        "types": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "WORKFLOW",
+                "camelCase": {
+                  "unsafeName": "workflow",
+                  "safeName": "workflow"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow",
+                  "safeName": "workflow"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW",
+                  "safeName": "WORKFLOW"
+                },
+                "pascalCase": {
+                  "unsafeName": "Workflow",
+                  "safeName": "Workflow"
+                }
+              },
+              "wireValue": "WORKFLOW"
+            },
+            "shape": {
+              "typeId": "WorkflowExecutionWorkflowResultEvent",
+              "name": {
+                "originalName": "WorkflowExecutionWorkflowResultEvent",
+                "camelCase": {
+                  "unsafeName": "workflowExecutionWorkflowResultEvent",
+                  "safeName": "workflowExecutionWorkflowResultEvent"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_execution_workflow_result_event",
+                  "safeName": "workflow_execution_workflow_result_event"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_EXECUTION_WORKFLOW_RESULT_EVENT",
+                  "safeName": "WORKFLOW_EXECUTION_WORKFLOW_RESULT_EVENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowExecutionWorkflowResultEvent",
+                  "safeName": "WorkflowExecutionWorkflowResultEvent"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "NODE",
+                "camelCase": {
+                  "unsafeName": "node",
+                  "safeName": "node"
+                },
+                "snakeCase": {
+                  "unsafeName": "node",
+                  "safeName": "node"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NODE",
+                  "safeName": "NODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Node",
+                  "safeName": "Node"
+                }
+              },
+              "wireValue": "NODE"
+            },
+            "shape": {
+              "typeId": "WorkflowExecutionNodeResultEvent",
+              "name": {
+                "originalName": "WorkflowExecutionNodeResultEvent",
+                "camelCase": {
+                  "unsafeName": "workflowExecutionNodeResultEvent",
+                  "safeName": "workflowExecutionNodeResultEvent"
+                },
+                "snakeCase": {
+                  "unsafeName": "workflow_execution_node_result_event",
+                  "safeName": "workflow_execution_node_result_event"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WORKFLOW_EXECUTION_NODE_RESULT_EVENT",
+                  "safeName": "WORKFLOW_EXECUTION_NODE_RESULT_EVENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "WorkflowExecutionNodeResultEvent",
+                  "safeName": "WorkflowExecutionNodeResultEvent"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
         "type": "union"
       },
       "autogeneratedExamples": [],
