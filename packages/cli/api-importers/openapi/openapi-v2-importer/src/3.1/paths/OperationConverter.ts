@@ -18,7 +18,7 @@ import { ErrorCollector } from "../../ErrorCollector";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
-import { GroupNameAndLocation } from "../../utils/types";
+import { GroupNameAndLocation } from "../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";
 import { RequestBodyConverter } from "./RequestBodyConverter";
