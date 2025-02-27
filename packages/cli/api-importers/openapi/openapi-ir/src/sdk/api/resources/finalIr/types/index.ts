@@ -19,6 +19,7 @@ export * from "./WebsocketServer";
 export * from "./Pagination";
 export * from "./CursorPagination";
 export * from "./OffsetPagination";
+export * from "./CustomPagination";
 export * from "./CustomCodeSample";
 export * from "./CustomCodeSampleLanguage";
 export * from "./CustomCodeSampleSdk";

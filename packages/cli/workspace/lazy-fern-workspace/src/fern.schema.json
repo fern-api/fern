@@ -2561,6 +2561,22 @@
       ],
       "additionalProperties": false
     },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "custom": {
+          "const": true
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "custom",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -2568,6 +2584,9 @@
         },
         {
           "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
         }
       ]
     },

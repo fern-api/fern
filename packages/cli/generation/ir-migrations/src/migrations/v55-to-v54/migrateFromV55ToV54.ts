@@ -578,6 +578,8 @@ function convertPagination(pagination: IrVersions.V55.http.Pagination): IrVersio
             return IrVersions.V54.http.Pagination.cursor(convertCursorPagination(pagination));
         case "offset":
             return IrVersions.V54.http.Pagination.offset(convertOffsetPagination(pagination));
+        case "custom":
+            throw new Error("Custom pagination is not supported in v54");
     }
 }
 

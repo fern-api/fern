@@ -142,7 +142,7 @@ export class RawClient {
     }
 
     /**
-     * Constructs a request to the RawClient.
+     * Sends an HTTP request to the RawClient.
      */
     public sendRequest({ clientReference, request }: RawClient.SendRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
