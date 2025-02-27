@@ -22,6 +22,8 @@ import { ParameterConverter } from "./ParameterConverter";
 import { RequestBodyConverter } from "./RequestBodyConverter";
 import { ResponseBodyConverter } from "./ResponseBodyConverter";
 
+const PATH_PARAM_REGEX = /{([^}]+)}/g;
+
 export declare namespace OperationConverter {
     export interface Args extends AbstractConverter.Args {
         operation: OpenAPIV3_1.OperationObject;
@@ -252,11 +254,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             }
         }
 
-        // Parse path parameters from URL
-        const PATH_PARAM_REGEX = /{([^}]+)}/g;
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
-
-        // Check if any path parameters are missing and add them
         const missingPathParams = pathParams.filter(
             (param) => !pathParameters.some((p) => p.name.originalName === param)
         );
@@ -287,7 +285,6 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): GroupNameAndLocation | undefined {
-        // Compute from `x-fern-sdk-method-name` and `x-fern-sdk-group-name`
         const methodNameExtension = new SdkMethodNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
@@ -371,21 +368,20 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
  * @returns Array of lowercase string tokens
  */
 function tokenizeString(input: string): string[] {
-    let tokens: string[];
-
-    // Check if the string is in camel case or Pascal case
-    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
-        // Camel case or Pascal case: Split based on capital letters
-        tokens = input.split(/(?=[A-Z])/);
-    } else {
-        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
-        tokens = input.split(/[^a-zA-Z0-9]+/);
-    }
-
+    let tokens = isCamelOrPascalCase(input) ? splitOnCapitalLetters(input) : splitOnNonAlphanumericCharacters(input);
     tokens = tokens.map((token) => token.toLowerCase());
-
-    // Filter out empty tokens
     tokens = compact(tokens);
-
     return tokens;
+}
+
+function isCamelOrPascalCase(input: string): boolean {
+    return /^[a-z]+(?:[A-Z][a-z]+)*$/.test(input);
+}
+
+function splitOnCapitalLetters(input: string): string[] {
+    return input.split(/(?=[A-Z])/);
+}
+
+function splitOnNonAlphanumericCharacters(input: string): string[] {
+    return input.split(/[^a-zA-Z0-9]+/);
 }

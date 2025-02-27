@@ -5,6 +5,7 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../AbstractConverter";
 import { ErrorCollector } from "../ErrorCollector";
+import { FernIgnoreExtension } from "../extensions/x-fern-ignore";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { SchemaConverter } from "./schema/SchemaConverter";
@@ -78,6 +79,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): IntermediateRepresentation {
+        this.pruneIgnoredPaths({ context, errorCollector });
+
         this.convertServers({ context, errorCollector });
 
         this.convertSecuritySchemes({ context, errorCollector });
@@ -96,6 +99,82 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 })
             }
         };
+    }
+
+    private pruneIgnoredPaths({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): void {
+        for (const [path, pathItem] of Object.entries(context.spec.paths ?? {})) {
+            if (pathItem == null) {
+                continue;
+            }
+            const shouldIgnore = new FernIgnoreExtension({
+                breadcrumbs: ["paths", path],
+                operation: pathItem
+            }).convert({ context, errorCollector });
+
+            if (shouldIgnore && context.spec.paths != null) {
+                delete context.spec.paths[path];
+                continue;
+            }
+
+            for (const [method, operation] of Object.entries(pathItem)) {
+                if (operation == null || typeof operation !== "object") {
+                    continue;
+                }
+                const shouldIgnore = new FernIgnoreExtension({
+                    breadcrumbs: ["paths", path, method],
+                    operation
+                }).convert({ context, errorCollector });
+
+                if (shouldIgnore && context.spec.paths != null) {
+                    delete context.spec.paths[path];
+                    continue;
+                }
+
+                const parameters = "parameters" in operation ? operation.parameters : undefined;
+                const parametersToRemove: number[] = [];
+                for (const [index, parameter] of (parameters ?? []).entries()) {
+                    if (parameter == null) {
+                        continue;
+                    }
+                    const shouldIgnore = new FernIgnoreExtension({
+                        breadcrumbs: ["paths", path, method, "parameters"],
+                        operation: parameter
+                    }).convert({ context, errorCollector });
+
+                    if (shouldIgnore) {
+                        parametersToRemove.push(index);
+                    }
+                }
+
+                if (parameters != null) {
+                    for (const index of parametersToRemove.reverse()) {
+                        parameters.splice(index, 1);
+                    }
+                }
+            }
+        }
+
+        for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
+            if (schema == null) {
+                continue;
+            }
+            const shouldIgnore = new FernIgnoreExtension({
+                breadcrumbs: ["components", "schemas", id],
+                operation: schema
+            }).convert({ context, errorCollector });
+
+            if (shouldIgnore && context.spec.components != null) {
+                if (context.spec.components.schemas != null) {
+                    delete context.spec.components.schemas[id];
+                }
+            }
+        }
     }
 
     private convertSecuritySchemes({
