@@ -1,5 +1,5 @@
 import { camelCase, compact, isEqual } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import {
     HttpEndpoint,
@@ -15,6 +15,7 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
+import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
@@ -60,10 +61,6 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): OperationConverter.Output | undefined {
-        const streamingExtensionConverter = new FernStreamingExtension({
-            breadcrumbs: this.breadcrumbs,
-            operation: this.operation
-        });
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -75,10 +72,25 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
 
+        const streamingExtensionConverter = new FernStreamingExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        });
         const streamingExtension = streamingExtensionConverter.convert({ context, errorCollector });
         if (streamingExtension != null) {
             // TODO: Use streaming extension to branch between streaming and non-streaming endpoints
             // Use streamFormat to modify response conversion.
+        }
+
+        const paginationExtensionConverter = new FernPaginationExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            document: context.spec as OpenAPIV3.Document
+        });
+        const paginationExtension = paginationExtensionConverter.convert({ context, errorCollector });
+        if (paginationExtension != null) {
+            // TODO: Use pagination extension to modify endpoint conversion.
+            // Correctly parse out the pagination ResponseProperty objects
         }
 
         let requestBody: HttpRequestBody | undefined;
