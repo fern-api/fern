@@ -119,15 +119,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
-                    rawClient.makeRequest({
-                        baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-                        requestType: endpointSignatureInfo.request?.getRequestType(),
-                        clientReference: rawClientReference,
-                        endpoint,
-                        bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                        pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                        headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
+                    rawClient.sendRequest({
+                        request: rawClient.createHttpRequestWrapper({
+                            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+                            requestType: endpointSignatureInfo.request?.getRequestType(),
+                            endpoint,
+                            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+                            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+                            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
+                        }),
+                        clientReference: rawClientReference
                     })
                 );
                 const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
