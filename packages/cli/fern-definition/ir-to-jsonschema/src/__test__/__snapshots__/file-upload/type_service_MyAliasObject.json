@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/service.MyObject",
+  "definitions": {
+    "service.MyObject": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
