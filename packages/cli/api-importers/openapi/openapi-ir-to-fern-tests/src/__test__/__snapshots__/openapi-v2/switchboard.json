@@ -7663,16 +7663,22 @@
               },
               "docs": "session id",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "uuid"
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "uuid"
+                        },
+                        "type": "string"
+                      }
                     },
-                    "type": "string"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               }
             },
             {
@@ -7700,14 +7706,20 @@
               },
               "docs": "call type, e.g. CHROMEDRIVER_EXTERNAL",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               }
             }
           ],
@@ -7832,14 +7844,20 @@
               },
               "docs": "Name to search for, supports regex, case insensitive",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -8060,14 +8078,20 @@
               },
               "docs": "Name to search for, supports regex, case insensitive",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -8356,14 +8380,20 @@
               },
               "docs": "Name to search for, supports regex, case insensitive",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -8393,17 +8423,23 @@
               "docs": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
               "valueType": {
                 "container": {
-                  "list": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {},
-                        "type": "string"
-                      }
+                  "optional": {
+                    "container": {
+                      "list": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "validation": {},
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "list"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -8626,14 +8662,20 @@
               },
               "docs": "Name to search for, supports regex, case insensitive",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -8663,17 +8705,23 @@
               "docs": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
               "valueType": {
                 "container": {
-                  "list": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {},
-                        "type": "string"
-                      }
+                  "optional": {
+                    "container": {
+                      "list": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "validation": {},
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "list"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -8961,17 +9009,23 @@
               "docs": "a comma separated list of UUIDs of the session to get",
               "valueType": {
                 "container": {
-                  "list": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {},
-                        "type": "string"
-                      }
+                  "optional": {
+                    "container": {
+                      "list": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "validation": {},
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "list"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -9002,32 +9056,38 @@
               },
               "docs": "status of the session to get",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
+                "container": {
+                  "optional": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "SessionsGetParametersSchema",
+                      "camelCase": {
+                        "unsafeName": "sessionsGetParametersSchema",
+                        "safeName": "sessionsGetParametersSchema"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "sessions_get_parameters_schema",
+                        "safeName": "sessions_get_parameters_schema"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "SESSIONS_GET_PARAMETERS_SCHEMA",
+                        "safeName": "SESSIONS_GET_PARAMETERS_SCHEMA"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "SessionsGetParametersSchema",
+                        "safeName": "SessionsGetParametersSchema"
+                      }
+                    },
+                    "typeId": "SessionsGetParametersSchema",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
-                "name": {
-                  "originalName": "SessionsGetParametersSchema",
-                  "camelCase": {
-                    "unsafeName": "sessionsGetParametersSchema",
-                    "safeName": "sessionsGetParametersSchema"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sessions_get_parameters_schema",
-                    "safeName": "sessions_get_parameters_schema"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SESSIONS_GET_PARAMETERS_SCHEMA",
-                    "safeName": "SESSIONS_GET_PARAMETERS_SCHEMA"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SessionsGetParametersSchema",
-                    "safeName": "SessionsGetParametersSchema"
-                  }
-                },
-                "typeId": "SessionsGetParametersSchema",
-                "inline": false,
-                "type": "named"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9056,14 +9116,20 @@
               },
               "docs": "offset for pagination",
               "valueType": {
-                "primitive": {
-                  "v1": "LONG",
-                  "v2": {
-                    "default": -1,
-                    "type": "long"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "LONG",
+                      "v2": {
+                        "default": -1,
+                        "type": "long"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9092,14 +9158,20 @@
               },
               "docs": "limit for pagination",
               "valueType": {
-                "primitive": {
-                  "v1": "LONG",
-                  "v2": {
-                    "default": 0,
-                    "type": "long"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "LONG",
+                      "v2": {
+                        "default": 0,
+                        "type": "long"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -9855,13 +9927,19 @@
               },
               "docs": "Renders a navigation bar as part of the live view session",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9890,13 +9968,19 @@
               },
               "docs": "By default browsers will adapt its resolution to the live view window size. This flag disables that behavior",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9925,14 +10009,20 @@
               },
               "docs": "Ex: Screen resolution of the live view in format wxh, e.g. 1920x1080. When this value is provided the live view won't adapt it's resolution to the live view window size",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }

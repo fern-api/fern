@@ -1,5 +1,18 @@
 - changelogEntry:
   - summary: |
+      Add support for a new option `--from-openapi` to the `fern ir` command. This command
+      will allow you to test early versions of the new OpenAPI parser which goes directly from 
+      OpenAPI to IR. 
+
+      ```bash
+      fern ir ir.json --from-openapi
+      ```
+    type: internal
+  irVersion: 55
+  version: 0.56.0-rc1
+
+- changelogEntry:
+  - summary: |
       Improve the `fern docs broken-links` output to make it easier to
       understand. Logged violations now include clickable links to the
       affected source files (in supported terminals).

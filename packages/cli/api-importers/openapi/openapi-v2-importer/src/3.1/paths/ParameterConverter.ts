@@ -74,7 +74,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: this.parameter.schema
+                schemaOrReference: this.parameter.schema,
+                wrapAsOptional: this.parameter.required == null || !this.parameter.required
             });
             const converted = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (converted != null) {

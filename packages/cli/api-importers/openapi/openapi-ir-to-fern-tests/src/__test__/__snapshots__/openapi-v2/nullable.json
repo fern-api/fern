@@ -1543,14 +1543,20 @@
                 "wireValue": "email"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }

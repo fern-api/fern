@@ -1,11 +1,19 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Type, TypeDeclaration, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeDeclaration,
+    TypeId,
+    UndiscriminatedUnionMember
+} from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaConverter } from "./SchemaConverter";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.Args {
@@ -19,7 +27,10 @@ export declare namespace OneOfSchemaConverter {
     }
 }
 
-export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, OneOfSchemaConverter.Output> {
+export class OneOfSchemaConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    OneOfSchemaConverter.Output | undefined
+> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: OneOfSchemaConverter.Args) {
@@ -28,6 +39,80 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
     }
 
     public convert({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): OneOfSchemaConverter.Output | undefined {
+        if (this.schema.discriminator != null) {
+            return this.convertAsDiscriminatedUnion({ context, errorCollector });
+        }
+        return this.convertAsUndiscriminatedUnion({ context, errorCollector });
+    }
+
+    private convertAsDiscriminatedUnion({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): OneOfSchemaConverter.Output | undefined {
+        const unionTypes: SingleUnionType[] = [];
+        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+
+        if (this.schema.discriminator == null) {
+            return undefined;
+        }
+
+        for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
+            const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
+                schemaOrReference: { $ref: reference },
+                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+            });
+            const typeId = context.getTypeIdFromSchemaReference({ $ref: reference });
+            const convertedSchema = singleUnionTypeSchemaConverter.convert({ context, errorCollector });
+            if (convertedSchema?.schema != null && typeId != null) {
+                unionTypes.push({
+                    docs: undefined,
+                    discriminantValue: context.casingsGenerator.generateNameAndWireValue({
+                        name: discriminant,
+                        wireValue: discriminant
+                    }),
+                    availability: convertedSchema.availability,
+                    displayName: undefined,
+                    shape: SingleUnionTypeProperties.samePropertiesAsObject({
+                        typeId,
+                        name: context.casingsGenerator.generateName(typeId),
+                        fernFilepath: {
+                            allParts: [],
+                            packagePath: [],
+                            file: undefined
+                        }
+                    })
+                });
+                inlinedTypes = {
+                    ...inlinedTypes,
+                    ...convertedSchema.inlinedTypes
+                };
+            }
+        }
+
+        return {
+            union: Type.union({
+                baseProperties: [],
+                discriminant: context.casingsGenerator.generateNameAndWireValue({
+                    name: this.schema.discriminator.propertyName,
+                    wireValue: this.schema.discriminator.propertyName
+                }),
+                extends: [],
+                types: unionTypes
+            }),
+            inlinedTypes
+        };
+    }
+
+    private convertAsUndiscriminatedUnion({
         context,
         errorCollector
     }: {
@@ -75,10 +160,6 @@ export class OneOfSchemaConverter extends AbstractConverter<OpenAPIConverterCont
                     [schemaId]: convertedSchema.typeDeclaration
                 };
             }
-        }
-
-        if (unionTypes.length === 0) {
-            return undefined;
         }
 
         return {

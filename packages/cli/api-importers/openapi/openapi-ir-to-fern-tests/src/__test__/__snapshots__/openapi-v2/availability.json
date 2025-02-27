@@ -619,14 +619,20 @@
               },
               "docs": "language code",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false,
               "availability": {
@@ -658,14 +664,20 @@
               },
               "docs": "language code",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -747,14 +759,20 @@
               },
               "docs": "active beta query param",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -785,14 +803,20 @@
               },
               "docs": "deprecated header",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "availability": {
                 "status": "DEPRECATED"
@@ -823,14 +847,20 @@
               },
               "docs": "active header",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               }
             },
             {
@@ -910,14 +940,20 @@
               },
               "docs": "active beta header",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               }
             }
           ],

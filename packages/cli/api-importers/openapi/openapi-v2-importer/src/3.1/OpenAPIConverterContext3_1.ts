@@ -26,15 +26,21 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         return "$ref" in parameter;
     }
 
+    public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
+        const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
+        if (!schemaMatch || !schemaMatch[1]) {
+            return undefined;
+        }
+        return schemaMatch[1];
+    }
+
     public convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
     ): { ok: true; reference: TypeReference } | { ok: false } {
-        const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
-        if (!schemaMatch || !schemaMatch[1]) {
+        const typeId = this.getTypeIdFromSchemaReference(reference);
+        if (typeId == null) {
             return { ok: false };
         }
-        const typeId = schemaMatch[1];
-
         const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
         if (!resolvedReference.resolved) {
             return { ok: false };

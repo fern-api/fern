@@ -8895,16 +8895,22 @@
               },
               "docs": "Include items created after this date",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date-time"
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "date-time"
+                        },
+                        "type": "string"
+                      }
                     },
-                    "type": "string"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -8933,16 +8939,22 @@
               },
               "docs": "Include items created before this date",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date-time"
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "date-time"
+                        },
+                        "type": "string"
+                      }
                     },
-                    "type": "string"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9184,16 +9196,22 @@
               },
               "docs": "Include items created after this date",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date-time"
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "date-time"
+                        },
+                        "type": "string"
+                      }
                     },
-                    "type": "string"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -9222,16 +9240,22 @@
               },
               "docs": "Include items created before this date",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date-time"
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "date-time"
+                        },
+                        "type": "string"
+                      }
                     },
-                    "type": "string"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -9395,14 +9419,20 @@
               },
               "docs": "If specified, only include blobs that start with this string",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -10389,6 +10419,34 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "docs": "A single statement to run",
+            "name": {
+              "originalName": "sqlite_execute_Request",
+              "camelCase": {
+                "unsafeName": "sqliteExecuteRequest",
+                "safeName": "sqliteExecuteRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "sqlite_execute_request",
+                "safeName": "sqlite_execute_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SQLITE_EXECUTE_REQUEST",
+                "safeName": "SQLITE_EXECUTE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SqliteExecuteRequest",
+                "safeName": "SqliteExecuteRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [],
+            "extraProperties": false,
+            "type": "inlinedRequestBody"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -10976,14 +11034,20 @@
                 "wireValue": "args"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -11174,14 +11238,20 @@
               },
               "docs": "An argument that will be passed to the function as a JavaScript value",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }

@@ -580,32 +580,38 @@
                 "wireValue": "filter"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
+                "container": {
+                  "optional": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "SearchGetParametersSchema",
+                      "camelCase": {
+                        "unsafeName": "searchGetParametersSchema",
+                        "safeName": "searchGetParametersSchema"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "search_get_parameters_schema",
+                        "safeName": "search_get_parameters_schema"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA",
+                        "safeName": "SEARCH_GET_PARAMETERS_SCHEMA"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "SearchGetParametersSchema",
+                        "safeName": "SearchGetParametersSchema"
+                      }
+                    },
+                    "typeId": "SearchGetParametersSchema",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
-                "name": {
-                  "originalName": "SearchGetParametersSchema",
-                  "camelCase": {
-                    "unsafeName": "searchGetParametersSchema",
-                    "safeName": "searchGetParametersSchema"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "search_get_parameters_schema",
-                    "safeName": "search_get_parameters_schema"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA",
-                    "safeName": "SEARCH_GET_PARAMETERS_SCHEMA"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SearchGetParametersSchema",
-                    "safeName": "SearchGetParametersSchema"
-                  }
-                },
-                "typeId": "SearchGetParametersSchema",
-                "inline": false,
-                "type": "named"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -633,32 +639,38 @@
                 "wireValue": "sort"
               },
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
+                "container": {
+                  "optional": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "SearchGetParametersSchema",
+                      "camelCase": {
+                        "unsafeName": "searchGetParametersSchema",
+                        "safeName": "searchGetParametersSchema"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "search_get_parameters_schema",
+                        "safeName": "search_get_parameters_schema"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA",
+                        "safeName": "SEARCH_GET_PARAMETERS_SCHEMA"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "SearchGetParametersSchema",
+                        "safeName": "SearchGetParametersSchema"
+                      }
+                    },
+                    "typeId": "SearchGetParametersSchema",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
-                "name": {
-                  "originalName": "SearchGetParametersSchema",
-                  "camelCase": {
-                    "unsafeName": "searchGetParametersSchema",
-                    "safeName": "searchGetParametersSchema"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "search_get_parameters_schema",
-                    "safeName": "search_get_parameters_schema"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_GET_PARAMETERS_SCHEMA",
-                    "safeName": "SEARCH_GET_PARAMETERS_SCHEMA"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SearchGetParametersSchema",
-                    "safeName": "SearchGetParametersSchema"
-                  }
-                },
-                "typeId": "SearchGetParametersSchema",
-                "inline": false,
-                "type": "named"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -686,17 +698,23 @@
                 "wireValue": "limit"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {
-                      "max": 100,
-                      "min": 1
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {
+                          "max": 100,
+                          "min": 1
+                        },
+                        "type": "double"
+                      }
                     },
-                    "type": "double"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -725,17 +743,23 @@
               },
               "valueType": {
                 "container": {
-                  "list": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {},
-                        "type": "string"
-                      }
+                  "optional": {
+                    "container": {
+                      "list": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "validation": {},
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "list"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "container"
               },

@@ -81,10 +81,6 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
             }
         }
 
-        if (properties.length === 0) {
-            return undefined;
-        }
-
         const extends_: TypeReference[] = [];
 
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {

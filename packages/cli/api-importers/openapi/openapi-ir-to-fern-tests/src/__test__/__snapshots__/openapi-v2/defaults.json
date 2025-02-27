@@ -313,14 +313,20 @@
                 "wireValue": "boolParam1"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "default": true,
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": true,
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -348,14 +354,20 @@
                 "wireValue": "boolParam2"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "default": "true",
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": "true",
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -383,14 +395,20 @@
                 "wireValue": "boolParam3"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "default": false,
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -418,14 +436,20 @@
                 "wireValue": "boolParam4"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "default": "false",
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": "false",
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -453,15 +477,21 @@
                 "wireValue": "stringParam"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "default": "defaultString",
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "defaultString",
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -489,15 +519,21 @@
                 "wireValue": "numberParam"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "default": 42,
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "default": 42,
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -525,15 +561,21 @@
                 "wireValue": "integerParam"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "default": 100,
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "default": 100,
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
