@@ -1,11 +1,11 @@
 - changelogEntry:
   - summary: |
-      Add support for a new option `--direct-from-openapi` to the `fern ir` command. This command
+      Add support for a new option `--from-openapi` to the `fern ir` command. This command
       will allow you to test early versions of the new OpenAPI parser which goes directly from 
       OpenAPI to IR. 
 
       ```bash
-      fern ir ir.json --direct-from-openapi
+      fern ir ir.json --from-openapi
       ```
     type: internal
   irVersion: 55

@@ -535,7 +535,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     boolean: true,
                     description: "Whether to use smart casing"
                 })
-                .option("direct-from-openapi", {
+                .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
@@ -555,7 +555,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
                 readme: undefined,
-                directFromOpenapi: argv.directFromOpenapi
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
