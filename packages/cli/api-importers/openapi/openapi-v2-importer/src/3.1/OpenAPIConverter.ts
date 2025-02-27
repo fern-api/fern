@@ -1,4 +1,6 @@
-import { FernIr, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
+
+import { AuthScheme, FernIr, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../AbstractConverter";
@@ -6,6 +8,7 @@ import { ErrorCollector } from "../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { SchemaConverter } from "./schema/SchemaConverter";
+import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter";
 import { ServersConverter } from "./servers/ServersConverter";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
@@ -77,8 +80,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     }): IntermediateRepresentation {
         this.convertServers({ context, errorCollector });
 
-        // for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
-        // }
+        this.convertSecuritySchemes({ context, errorCollector });
 
         this.convertSchemas({ context, errorCollector });
 
@@ -94,6 +96,46 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 })
             }
         };
+    }
+
+    private convertSecuritySchemes({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): void {
+        const securitySchemes: AuthScheme[] = [];
+
+        for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
+            let resolvedSecurityScheme: OpenAPIV3_1.SecuritySchemeObject;
+            if (context.isReferenceObject(securityScheme)) {
+                const resolvedReference = context.resolveReference<OpenAPIV3_1.SecuritySchemeObject>(securityScheme);
+                if (!resolvedReference.resolved) {
+                    continue;
+                }
+                resolvedSecurityScheme = resolvedReference.value;
+            } else {
+                resolvedSecurityScheme = securityScheme;
+            }
+
+            const securitySchemeConverter = new SecuritySchemeConverter({
+                breadcrumbs: ["components", "securitySchemes", id],
+                securityScheme: resolvedSecurityScheme
+            });
+            const convertedScheme = securitySchemeConverter.convert({ context, errorCollector });
+            if (convertedScheme != null) {
+                securitySchemes.push(convertedScheme);
+            }
+        }
+
+        if (securitySchemes.length > 0) {
+            this.ir.auth = {
+                requirement: "ANY",
+                schemes: securitySchemes,
+                docs: undefined
+            };
+        }
     }
 
     private convertServers({

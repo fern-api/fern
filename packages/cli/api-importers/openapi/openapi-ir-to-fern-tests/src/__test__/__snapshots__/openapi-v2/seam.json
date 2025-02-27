@@ -1,7 +1,304 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "name": {
+          "name": {
+            "originalName": "seam-workspace",
+            "camelCase": {
+              "unsafeName": "seamWorkspace",
+              "safeName": "seamWorkspace"
+            },
+            "snakeCase": {
+              "unsafeName": "seam_workspace",
+              "safeName": "seam_workspace"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SEAM_WORKSPACE",
+              "safeName": "SEAM_WORKSPACE"
+            },
+            "pascalCase": {
+              "unsafeName": "SeamWorkspace",
+              "safeName": "SeamWorkspace"
+            }
+          },
+          "wireValue": "seam-workspace"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      },
+      {
+        "name": {
+          "name": {
+            "originalName": "seam-client-session-token",
+            "camelCase": {
+              "unsafeName": "seamClientSessionToken",
+              "safeName": "seamClientSessionToken"
+            },
+            "snakeCase": {
+              "unsafeName": "seam_client_session_token",
+              "safeName": "seam_client_session_token"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SEAM_CLIENT_SESSION_TOKEN",
+              "safeName": "SEAM_CLIENT_SESSION_TOKEN"
+            },
+            "pascalCase": {
+              "unsafeName": "SeamClientSessionToken",
+              "safeName": "SeamClientSessionToken"
+            }
+          },
+          "wireValue": "seam-client-session-token"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      },
+      {
+        "name": {
+          "name": {
+            "originalName": "client-session-token",
+            "camelCase": {
+              "unsafeName": "clientSessionToken",
+              "safeName": "clientSessionToken"
+            },
+            "snakeCase": {
+              "unsafeName": "client_session_token",
+              "safeName": "client_session_token"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CLIENT_SESSION_TOKEN",
+              "safeName": "CLIENT_SESSION_TOKEN"
+            },
+            "pascalCase": {
+              "unsafeName": "ClientSessionToken",
+              "safeName": "ClientSessionToken"
+            }
+          },
+          "wireValue": "client-session-token"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      }
+    ]
   },
   "types": {
     "AccessCodeType": {
