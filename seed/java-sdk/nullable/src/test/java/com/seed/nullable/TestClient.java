@@ -4,8 +4,8 @@
 package com.seed.nullable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.nullable.core.Nullable;
 import com.seed.nullable.core.ObjectMappers;
-import com.seed.nullable.resources.nullable.types.Metadata;
 import com.seed.nullable.resources.nullable.types.User;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public final class TestClient {
     public void test() {
         User u = User.builder()
                 .name("Bob the Builder")
-                .metadata((Metadata) null)
+                .metadata(Nullable.ofNull())
                 .tags(Optional.empty())
                 .build();
 

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
 import com.seed.nullable.core.NullableValueFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.HashMap;
@@ -103,6 +104,8 @@ public final class User {
         _FinalStage metadata(Optional<Metadata> metadata);
 
         _FinalStage metadata(Metadata metadata);
+
+        _FinalStage metadata(Nullable<Metadata> metadata);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -139,6 +142,16 @@ public final class User {
                 this.metadata = null;
             } else {
                 this.metadata = Optional.of(metadata);
+            }
+            return this;
+        }
+
+        @Override
+        public _FinalStage metadata(Nullable<Metadata> metadata) {
+            if (metadata.isNull()) {
+                this.metadata = null;
+            } else {
+                this.metadata = metadata.get();
             }
             return this;
         }
