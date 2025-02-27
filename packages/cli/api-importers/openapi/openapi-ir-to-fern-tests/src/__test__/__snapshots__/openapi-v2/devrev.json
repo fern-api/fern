@@ -1,7 +1,49 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "name": {
+          "name": {
+            "originalName": "Authorization",
+            "camelCase": {
+              "unsafeName": "authorization",
+              "safeName": "authorization"
+            },
+            "snakeCase": {
+              "unsafeName": "authorization",
+              "safeName": "authorization"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTHORIZATION",
+              "safeName": "AUTHORIZATION"
+            },
+            "pascalCase": {
+              "unsafeName": "Authorization",
+              "safeName": "Authorization"
+            }
+          },
+          "wireValue": "Authorization"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "docs": "All the DevRev APIs require a token to authenticate the user. Provide `Authorization: <token>` as a header to every API request.\n [How do I find my token?](https://devrev.ai/docs/apis/auth)",
+        "type": "header"
+      }
+    ]
   },
   "types": {
     "artifacts-locate-response": {

@@ -1,7 +1,71 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "username": {
+          "originalName": "username",
+          "camelCase": {
+            "unsafeName": "username",
+            "safeName": "username"
+          },
+          "snakeCase": {
+            "unsafeName": "username",
+            "safeName": "username"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USERNAME",
+            "safeName": "USERNAME"
+          },
+          "pascalCase": {
+            "unsafeName": "Username",
+            "safeName": "Username"
+          }
+        },
+        "password": {
+          "originalName": "password",
+          "camelCase": {
+            "unsafeName": "password",
+            "safeName": "password"
+          },
+          "snakeCase": {
+            "unsafeName": "password",
+            "safeName": "password"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PASSWORD",
+            "safeName": "PASSWORD"
+          },
+          "pascalCase": {
+            "unsafeName": "Password",
+            "safeName": "Password"
+          }
+        },
+        "type": "basic"
+      }
+    ]
   },
   "types": {
     "SeekPagination": {

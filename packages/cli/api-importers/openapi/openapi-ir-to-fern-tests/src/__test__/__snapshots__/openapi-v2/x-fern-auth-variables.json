@@ -1,7 +1,49 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "username": {
+          "originalName": "username",
+          "camelCase": {
+            "unsafeName": "username",
+            "safeName": "username"
+          },
+          "snakeCase": {
+            "unsafeName": "username",
+            "safeName": "username"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USERNAME",
+            "safeName": "USERNAME"
+          },
+          "pascalCase": {
+            "unsafeName": "Username",
+            "safeName": "Username"
+          }
+        },
+        "password": {
+          "originalName": "password",
+          "camelCase": {
+            "unsafeName": "password",
+            "safeName": "password"
+          },
+          "snakeCase": {
+            "unsafeName": "password",
+            "safeName": "password"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PASSWORD",
+            "safeName": "PASSWORD"
+          },
+          "pascalCase": {
+            "unsafeName": "Password",
+            "safeName": "Password"
+          }
+        },
+        "type": "basic"
+      }
+    ]
   },
   "types": {
     "getUser_Response_200": {

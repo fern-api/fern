@@ -1,7 +1,48 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "name": {
+          "name": {
+            "originalName": "Authorization",
+            "camelCase": {
+              "unsafeName": "authorization",
+              "safeName": "authorization"
+            },
+            "snakeCase": {
+              "unsafeName": "authorization",
+              "safeName": "authorization"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTHORIZATION",
+              "safeName": "AUTHORIZATION"
+            },
+            "pascalCase": {
+              "unsafeName": "Authorization",
+              "safeName": "Authorization"
+            }
+          },
+          "wireValue": "Authorization"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      }
+    ]
   },
   "types": {
     "RedactedAudioResponse": {

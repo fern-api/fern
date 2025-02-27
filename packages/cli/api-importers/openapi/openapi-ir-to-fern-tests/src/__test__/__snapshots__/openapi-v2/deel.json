@@ -1,7 +1,54 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "docs": "## Authentication\n\nDeel API uses API tokens to authenticate requests. A bearer token is required to authenticate all API requests.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.\n\n```\ncurl -X GET 'api.letsdeel.com/rest/v1/contracts' \\\n-H 'Authorization: Bearer YOUR-TOKEN-HERE'\n```\n\n### Generating Access Tokens\n1. Navigate to **Apps & Perks > Developer Center**.\n2. Click on the “Generate New Token” button.\n3. In the popup, click “Generate Token” button to generate a new token. Your newly generated token is visible on the screen.\n4. Make sure to copy and save your token once is generated. You won't be able to see it again!\n\n![image](developers.png)\n",
+        "type": "bearer"
+      },
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "docs": "Standard OAuth2 security scheme based on https://swagger.io/docs/specification/authentication/",
+        "type": "bearer"
+      }
+    ]
   },
   "types": {
     "PaymentStatementInitiatedWebhook": {

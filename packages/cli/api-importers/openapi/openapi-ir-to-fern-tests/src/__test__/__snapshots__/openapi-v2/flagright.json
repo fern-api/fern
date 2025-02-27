@@ -1,7 +1,49 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "name": {
+          "name": {
+            "originalName": "x-api-key",
+            "camelCase": {
+              "unsafeName": "xApiKey",
+              "safeName": "xApiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "x_api_key",
+              "safeName": "x_api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "X_API_KEY",
+              "safeName": "X_API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "XApiKey",
+              "safeName": "XApiKey"
+            }
+          },
+          "wireValue": "x-api-key"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "docs": "API keys are used to authenticate the requests.",
+        "type": "header"
+      }
+    ]
   },
   "types": {
     "Address": {
