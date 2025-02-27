@@ -27,7 +27,7 @@
         ```
     - type: fix
       summary: |
-        Fix an issue where the `JsonIgnore` annotation was not included for query parameter or header properties.
+        Fix an issue where the `JsonIgnore` attribute was not included for query parameter or header properties.
 
 - version: 1.10.1
   createdAt: "2025-02-27"
