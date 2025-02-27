@@ -72856,14 +72856,20 @@
               },
               "docs": "The end date that you request data for. It must be formatted as a UNIX timestamp.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -74388,14 +74394,20 @@
               },
               "docs": "The phrase within your articles to search for.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -74424,14 +74436,20 @@
               },
               "docs": "The state of the Articles returned. One of `published`, `draft` or `all`.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -74460,14 +74478,20 @@
               },
               "docs": "The ID of the Help Center to search in.",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -74496,13 +74520,19 @@
               },
               "docs": "Return a highlighted version of the matching content within your articles. Refer to the response schema for more details.",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -76082,14 +76112,20 @@
               },
               "docs": "The `name` of the company to filter by.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -76118,14 +76154,20 @@
               },
               "docs": "The `company_id` of the company to filter by.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -76154,14 +76196,20 @@
               },
               "docs": "The `tag_id` of the company to filter by.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -76190,14 +76238,20 @@
               },
               "docs": "The `segment_id` of the company to filter by.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -76226,14 +76280,20 @@
               },
               "docs": "The page of results to fetch. Defaults to first page",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -76262,14 +76322,20 @@
               },
               "docs": "How many results to display per page. Defaults to 15",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -77652,14 +77718,20 @@
               },
               "docs": "The page of results to fetch. Defaults to first page",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -77688,14 +77760,20 @@
               },
               "docs": "How many results to return per page. Defaults to 15",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -77724,14 +77802,20 @@
               },
               "docs": "`asc` or `desc`. Return the companies in ascending or descending order. Defaults to desc",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -77894,14 +77978,20 @@
               },
               "docs": "",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -85517,17 +85607,23 @@
               },
               "docs": "How many results per page",
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "default": 20,
-                    "validation": {
-                      "max": 150
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "default": 20,
+                        "validation": {
+                          "max": 150
+                        },
+                        "type": "double"
+                      }
                     },
-                    "type": "double"
-                  }
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -85556,14 +85652,20 @@
               },
               "docs": "String used to get the next page of conversations.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -85930,14 +86032,20 @@
               },
               "docs": "Set to plaintext to retrieve conversation messages in plain text.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -86178,14 +86286,20 @@
               },
               "docs": "Set to plaintext to retrieve conversation messages in plain text.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -88304,32 +88418,38 @@
               },
               "docs": "Specify the data attribute model to return.",
               "valueType": {
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
+                "container": {
+                  "optional": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "DataAttributesGetParametersSchema",
+                      "camelCase": {
+                        "unsafeName": "dataAttributesGetParametersSchema",
+                        "safeName": "dataAttributesGetParametersSchema"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "data_attributes_get_parameters_schema",
+                        "safeName": "data_attributes_get_parameters_schema"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATA_ATTRIBUTES_GET_PARAMETERS_SCHEMA",
+                        "safeName": "DATA_ATTRIBUTES_GET_PARAMETERS_SCHEMA"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DataAttributesGetParametersSchema",
+                        "safeName": "DataAttributesGetParametersSchema"
+                      }
+                    },
+                    "typeId": "DataAttributesGetParametersSchema",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
-                "name": {
-                  "originalName": "DataAttributesGetParametersSchema",
-                  "camelCase": {
-                    "unsafeName": "dataAttributesGetParametersSchema",
-                    "safeName": "dataAttributesGetParametersSchema"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "data_attributes_get_parameters_schema",
-                    "safeName": "data_attributes_get_parameters_schema"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DATA_ATTRIBUTES_GET_PARAMETERS_SCHEMA",
-                    "safeName": "DATA_ATTRIBUTES_GET_PARAMETERS_SCHEMA"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DataAttributesGetParametersSchema",
-                    "safeName": "DataAttributesGetParametersSchema"
-                  }
-                },
-                "typeId": "DataAttributesGetParametersSchema",
-                "inline": false,
-                "type": "named"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -88358,13 +88478,19 @@
               },
               "docs": "Include archived attributes in the list. By default we return only non archived data attributes.",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -89079,13 +89205,19 @@
               },
               "docs": "summary flag",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -92164,13 +92296,19 @@
               },
               "docs": "It includes the count of contacts that belong to each segment.",
               "valueType": {
-                "primitive": {
-                  "v1": "BOOLEAN",
-                  "v2": {
-                    "type": "boolean"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }

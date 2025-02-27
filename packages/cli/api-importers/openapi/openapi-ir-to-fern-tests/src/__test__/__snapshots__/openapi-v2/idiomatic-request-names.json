@@ -1187,14 +1187,20 @@
                 "wireValue": "page"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -1222,14 +1228,20 @@
                 "wireValue": "pageSize"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }
@@ -1430,14 +1442,20 @@
                 "wireValue": "page"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             },
@@ -1465,14 +1483,20 @@
                 "wireValue": "pageSize"
               },
               "valueType": {
-                "primitive": {
-                  "v1": "DOUBLE",
-                  "v2": {
-                    "validation": {},
-                    "type": "double"
-                  }
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "DOUBLE",
+                      "v2": {
+                        "validation": {},
+                        "type": "double"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "allowMultiple": false
             }

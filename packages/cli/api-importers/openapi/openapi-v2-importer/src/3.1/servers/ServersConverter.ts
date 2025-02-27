@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { isNonNullish } from "@fern-api/core-utils";
-import { EnvironmentUrl, Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
+import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -47,7 +47,7 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
                 {
                     id: "default",
                     name: context.casingsGenerator.generateName("Default"),
-                    url: this.servers[0].url as EnvironmentUrl,
+                    url: this.getServerUrl(this.servers[0]),
                     docs: this.servers[0].description
                 }
             ];
@@ -63,7 +63,7 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
                     return {
                         id: serverName,
                         name: context.casingsGenerator.generateName(serverName),
-                        url: server.url,
+                        url: this.getServerUrl(server),
                         docs: server.description
                     };
                 })
@@ -76,5 +76,19 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
                 environments
             })
         };
+    }
+
+    private getServerUrl(server: OpenAPIV3_1.ServerObject): string {
+        if (server.variables == null) {
+            return server.url;
+        }
+
+        let url = server.url;
+        for (const [variableName, variable] of Object.entries(server.variables)) {
+            if (variable.default != null) {
+                url = url.replace(`{${variableName}}`, variable.default);
+            }
+        }
+        return url;
     }
 }
