@@ -273,8 +273,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^53.18.0
-        version: 53.24.0
+        specifier: ^55.4.0
+        version: 55.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -328,8 +328,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^53.18.0
-        version: 53.24.0
+        specifier: ^55.4.0
+        version: 55.4.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -397,8 +397,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021
       '@fern-fern/ir-sdk':
-        specifier: ^53.18.0
-        version: 53.24.0
+        specifier: ^55.4.0
+        version: 55.4.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -9428,9 +9428,6 @@ packages:
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
 
-  '@fern-fern/ir-sdk@53.24.0':
-    resolution: {integrity: sha512-cR/GIvqLaK8Oeql0WLv8nUsYNfplBHXKHoHv49CJfRP0xMr/RLmiQCZm2RAH+hnMha282oEMXYQeZDoZhatjKw==}
-
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
 
@@ -9442,6 +9439,9 @@ packages:
 
   '@fern-fern/ir-sdk@55.1.0':
     resolution: {integrity: sha512-q9SVTHL4nAHkjBjI0boZKdjIy7x1bh+wBgjLj0q6aGuUdzjJiJZ3oNkYuGf3gLW0tb8R0CqWkHdPrL/VSwKrRQ==}
+
+  '@fern-fern/ir-sdk@55.4.0':
+    resolution: {integrity: sha512-FgzAe7MczU5v2K5E+ljrJdGe0i9aCsjr80iAmWg3QeChT3YsC+d/CCQcgXCWMkj8brRZuqOYUjS+us1OX8HzYg==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -17360,8 +17360,6 @@ snapshots:
 
   '@fern-fern/ir-sdk@39.0.0': {}
 
-  '@fern-fern/ir-sdk@53.24.0': {}
-
   '@fern-fern/ir-sdk@53.7.0': {}
 
   '@fern-fern/ir-sdk@53.9.0': {}
@@ -17369,6 +17367,8 @@ snapshots:
   '@fern-fern/ir-sdk@55.0.0': {}
 
   '@fern-fern/ir-sdk@55.1.0': {}
+
+  '@fern-fern/ir-sdk@55.4.0': {}
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 
