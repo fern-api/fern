@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class HttpEndpointMethodSpecFactory {
+public abstract class AbstractHttpEndpointMethodSpecFactory {
 
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
@@ -51,7 +51,7 @@ public final class HttpEndpointMethodSpecFactory {
 
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
 
-    public HttpEndpointMethodSpecFactory(
+    public AbstractHttpEndpointMethodSpecFactory(
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,

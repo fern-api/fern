@@ -27,7 +27,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
-import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecFactory;
+import com.fern.java.client.generators.endpoint.AbstractHttpEndpointMethodSpecFactory;
 import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -50,16 +50,16 @@ public abstract class AbstractClientGeneratorUtils {
 
     protected final ClientGeneratorContext generatorContext;
     private final TypeSpec.Builder implBuilder;
-    private final FieldSpec clientOptionsField;
+    protected final FieldSpec clientOptionsField;
     private final IPackage fernPackage;
-    private final GeneratedObjectMapper generatedObjectMapper;
-    private final GeneratedClientOptions generatedClientOptions;
-    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    protected final GeneratedObjectMapper generatedObjectMapper;
+    protected final GeneratedClientOptions generatedClientOptions;
+    protected final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final GeneratedJavaFile generatedSuppliersFile;
-    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
+    protected final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
     private final GeneratedJavaFile requestOptionsFile;
-    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
+    protected final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public AbstractClientGeneratorUtils(
             ClassName clientImplName,
@@ -93,6 +93,9 @@ public abstract class AbstractClientGeneratorUtils {
 
     protected abstract ClassName subpackageClientImplName(Subpackage subpackage);
 
+    protected abstract AbstractHttpEndpointMethodSpecFactory endpointMethodSpecFactory(
+            HttpService httpService, HttpEndpoint httpEndpoint);
+
     public Result buildClients() {
         Optional<HttpService> maybeHttpService = fernPackage
                 .getService()
@@ -105,16 +108,8 @@ public abstract class AbstractClientGeneratorUtils {
         if (maybeHttpService.isPresent()) {
             HttpService httpService = maybeHttpService.get();
             for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
-                HttpEndpointMethodSpecFactory httpEndpointMethodSpecFactory = new HttpEndpointMethodSpecFactory(
-                        httpService,
-                        httpEndpoint,
-                        generatedObjectMapper,
-                        generatorContext,
-                        generatedClientOptions,
-                        clientOptionsField,
-                        generatedEnvironmentsClass,
-                        allGeneratedInterfaces,
-                        generatedErrors);
+                AbstractHttpEndpointMethodSpecFactory httpEndpointMethodSpecFactory =
+                        endpointMethodSpecFactory(httpService, httpEndpoint);
                 HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
                 if (httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().isPresent()) {
                     implBuilder.addMethod(
