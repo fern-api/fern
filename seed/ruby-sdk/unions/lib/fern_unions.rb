@@ -2,10 +2,13 @@
 
 require_relative "types_export"
 require_relative "requests"
+require_relative "fern_unions/bigunion/client"
 require_relative "fern_unions/union/client"
 
 module SeedUnionsClient
   class Client
+    # @return [SeedUnionsClient::BigunionClient]
+    attr_reader :bigunion
     # @return [SeedUnionsClient::UnionClient]
     attr_reader :union
 
@@ -19,11 +22,14 @@ module SeedUnionsClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @bigunion = SeedUnionsClient::BigunionClient.new(request_client: @request_client)
       @union = SeedUnionsClient::UnionClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
+    # @return [SeedUnionsClient::AsyncBigunionClient]
+    attr_reader :bigunion
     # @return [SeedUnionsClient::AsyncUnionClient]
     attr_reader :union
 
@@ -37,6 +43,7 @@ module SeedUnionsClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @bigunion = SeedUnionsClient::AsyncBigunionClient.new(request_client: @async_request_client)
       @union = SeedUnionsClient::AsyncUnionClient.new(request_client: @async_request_client)
     end
   end
