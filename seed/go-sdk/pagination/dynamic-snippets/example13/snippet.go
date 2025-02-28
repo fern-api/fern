@@ -16,11 +16,11 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithCursorPagination(
+    client.Users.ListWithGlobalConfig(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            StartingAfter: fern.String(
-                "starting_after",
+        &fern.ListWithGlobalConfigRequest{
+            Offset: fern.Int(
+                1,
             ),
         },
     )

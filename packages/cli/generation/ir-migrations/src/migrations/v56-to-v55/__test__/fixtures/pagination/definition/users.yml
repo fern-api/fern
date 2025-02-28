@@ -1,3 +1,6 @@
+imports:
+  root: __package__.yml
+
 types:
   Order:
     enum:

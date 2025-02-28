@@ -15,6 +15,12 @@ type ListUsernamesRequest struct {
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
 }
 
+type ListUsernamesRequestCustom struct {
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+}
+
 type ListUsersBodyCursorPaginationRequest struct {
 	// The object that contains the cursor used for pagination
 	// in order to fetch the next page of results.

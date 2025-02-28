@@ -18,15 +18,15 @@ export const V56_TO_V55_MIGRATION: IrMigration<
     laterVersion: "v56",
     earlierVersion: "v55",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.47.0",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.47.0",
-        [GeneratorName.TYPESCRIPT]: "0.47.0",
-        [GeneratorName.TYPESCRIPT_SDK]: "0.47.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.7",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: "1.7.0",
-        [GeneratorName.JAVA_SDK]: "2.16.0",
-        [GeneratorName.JAVA_SPRING]: "1.5.0",
+        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -40,11 +40,11 @@ export const V56_TO_V55_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: "1.10.1",
+        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: "0.3.2"
+        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V55.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -69,16 +69,30 @@ function convertHttpService(service: IrVersions.V56.http.HttpService): IrVersion
 function convertEndpoint(endpoint: IrVersions.V56.http.HttpEndpoint): IrVersions.V55.http.HttpEndpoint {
     return {
         ...endpoint,
-        pagination: endpoint.pagination != null ? convertPagination(endpoint.pagination) : undefined
+        pagination: convertPagination(endpoint.pagination)
     };
 }
 
-function convertPagination(pagination: IrVersions.V56.http.Pagination): IrVersions.V55.http.Pagination | undefined {
+function convertPagination(
+    pagination: IrVersions.V56.http.Pagination | null | undefined
+): IrVersions.V55.http.Pagination | undefined {
+    if (pagination == null) {
+        return undefined;
+    }
     switch (pagination.type) {
         case "cursor":
-            return pagination;
+            return IrVersions.V55.http.Pagination.cursor({
+                next: pagination.next,
+                page: pagination.page,
+                results: pagination.results
+            });
         case "offset":
-            return pagination;
+            return IrVersions.V55.http.Pagination.offset({
+                hasNextPage: pagination.hasNextPage,
+                page: pagination.page,
+                results: pagination.results,
+                step: pagination.step
+            });
         case "custom":
             return undefined;
         default:

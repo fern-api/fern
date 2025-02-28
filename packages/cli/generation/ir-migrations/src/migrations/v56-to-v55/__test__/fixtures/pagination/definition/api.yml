@@ -1,5 +1,5 @@
-name: simple-api
+name: pagination
 auth: bearer
 pagination:
-  type: custom
+  offset: $request.offset
   results: $response.results
