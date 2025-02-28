@@ -5,50 +5,48 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Suppliers;
+import com.seed.exhaustive.endpoints.AsyncEndpointsClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedExhaustiveClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<Asynccom.seed.exhaustive.endpoints.EndpointsClient> endpointsClient;
+    protected final Supplier<AsyncEndpointsClient> endpointsClient;
 
-    protected final Supplier<Asynccom.seed.exhaustive.InlinedRequestsClient> inlinedRequestsClient;
+    protected final Supplier<AsyncInlinedRequestsClient> inlinedRequestsClient;
 
-    protected final Supplier<Asynccom.seed.exhaustive.NoAuthClient> noAuthClient;
+    protected final Supplier<AsyncNoAuthClient> noAuthClient;
 
-    protected final Supplier<Asynccom.seed.exhaustive.NoReqBodyClient> noReqBodyClient;
+    protected final Supplier<AsyncNoReqBodyClient> noReqBodyClient;
 
-    protected final Supplier<Asynccom.seed.exhaustive.ReqWithHeadersClient> reqWithHeadersClient;
+    protected final Supplier<AsyncReqWithHeadersClient> reqWithHeadersClient;
 
     public AsyncSeedExhaustiveClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.endpointsClient =
-                Suppliers.memoize(() -> new Asynccom.seed.exhaustive.endpoints.EndpointsClient(clientOptions));
-        this.inlinedRequestsClient =
-                Suppliers.memoize(() -> new Asynccom.seed.exhaustive.InlinedRequestsClient(clientOptions));
-        this.noAuthClient = Suppliers.memoize(() -> new Asynccom.seed.exhaustive.NoAuthClient(clientOptions));
-        this.noReqBodyClient = Suppliers.memoize(() -> new Asynccom.seed.exhaustive.NoReqBodyClient(clientOptions));
-        this.reqWithHeadersClient =
-                Suppliers.memoize(() -> new Asynccom.seed.exhaustive.ReqWithHeadersClient(clientOptions));
+        this.endpointsClient = Suppliers.memoize(() -> new AsyncEndpointsClient(clientOptions));
+        this.inlinedRequestsClient = Suppliers.memoize(() -> new AsyncInlinedRequestsClient(clientOptions));
+        this.noAuthClient = Suppliers.memoize(() -> new AsyncNoAuthClient(clientOptions));
+        this.noReqBodyClient = Suppliers.memoize(() -> new AsyncNoReqBodyClient(clientOptions));
+        this.reqWithHeadersClient = Suppliers.memoize(() -> new AsyncReqWithHeadersClient(clientOptions));
     }
 
-    public Asynccom.seed.exhaustive.endpoints.EndpointsClient endpoints() {
+    public AsyncEndpointsClient endpoints() {
         return this.endpointsClient.get();
     }
 
-    public Asynccom.seed.exhaustive.InlinedRequestsClient inlinedRequests() {
+    public AsyncInlinedRequestsClient inlinedRequests() {
         return this.inlinedRequestsClient.get();
     }
 
-    public Asynccom.seed.exhaustive.NoAuthClient noAuth() {
+    public AsyncNoAuthClient noAuth() {
         return this.noAuthClient.get();
     }
 
-    public Asynccom.seed.exhaustive.NoReqBodyClient noReqBody() {
+    public AsyncNoReqBodyClient noReqBody() {
         return this.noReqBodyClient.get();
     }
 
-    public Asynccom.seed.exhaustive.ReqWithHeadersClient reqWithHeaders() {
+    public AsyncReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
     }
 

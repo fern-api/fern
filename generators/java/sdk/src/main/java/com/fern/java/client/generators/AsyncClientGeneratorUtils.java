@@ -47,6 +47,6 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     @Override
     protected ClassName subpackageClientImplName(Subpackage subpackage) {
         ClassName syncClassName = generatorContext.getPoetClassNameFactory().getClientClassName(subpackage);
-        return ClassName.get(syncClassName.packageName(), "Async" + syncClassName);
+        return ClassName.get(syncClassName.packageName(), "Async" + syncClassName.simpleName());
     }
 }

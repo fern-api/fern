@@ -6,52 +6,52 @@ package com.fern.sdk;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.Suppliers;
-import com.fern.sdk.resources.endpoints.Asynccom.fern.sdk.resources.endpoints.EndpointsClient;
-import com.fern.sdk.resources.inlinedrequests.Asynccom.fern.sdk.resources.inlinedrequests.InlinedRequestsClient;
-import com.fern.sdk.resources.noauth.Asynccom.fern.sdk.resources.noauth.NoAuthClient;
-import com.fern.sdk.resources.noreqbody.Asynccom.fern.sdk.resources.noreqbody.NoReqBodyClient;
-import com.fern.sdk.resources.reqwithheaders.Asynccom.fern.sdk.resources.reqwithheaders.ReqWithHeadersClient;
+import com.fern.sdk.resources.endpoints.AsyncEndpointsClient;
+import com.fern.sdk.resources.inlinedrequests.AsyncInlinedRequestsClient;
+import com.fern.sdk.resources.noauth.AsyncNoAuthClient;
+import com.fern.sdk.resources.noreqbody.AsyncNoReqBodyClient;
+import com.fern.sdk.resources.reqwithheaders.AsyncReqWithHeadersClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedExhaustiveClient {
   protected final ClientOptions clientOptions;
 
-  protected final Supplier<Asynccom.fern.sdk.resources.endpoints.EndpointsClient> endpointsClient;
+  protected final Supplier<AsyncEndpointsClient> endpointsClient;
 
-  protected final Supplier<Asynccom.fern.sdk.resources.inlinedrequests.InlinedRequestsClient> inlinedRequestsClient;
+  protected final Supplier<AsyncInlinedRequestsClient> inlinedRequestsClient;
 
-  protected final Supplier<Asynccom.fern.sdk.resources.noauth.NoAuthClient> noAuthClient;
+  protected final Supplier<AsyncNoAuthClient> noAuthClient;
 
-  protected final Supplier<Asynccom.fern.sdk.resources.noreqbody.NoReqBodyClient> noReqBodyClient;
+  protected final Supplier<AsyncNoReqBodyClient> noReqBodyClient;
 
-  protected final Supplier<Asynccom.fern.sdk.resources.reqwithheaders.ReqWithHeadersClient> reqWithHeadersClient;
+  protected final Supplier<AsyncReqWithHeadersClient> reqWithHeadersClient;
 
   public AsyncSeedExhaustiveClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.endpointsClient = Suppliers.memoize(() -> new Asynccom.fern.sdk.resources.endpoints.EndpointsClient(clientOptions));
-    this.inlinedRequestsClient = Suppliers.memoize(() -> new Asynccom.fern.sdk.resources.inlinedrequests.InlinedRequestsClient(clientOptions));
-    this.noAuthClient = Suppliers.memoize(() -> new Asynccom.fern.sdk.resources.noauth.NoAuthClient(clientOptions));
-    this.noReqBodyClient = Suppliers.memoize(() -> new Asynccom.fern.sdk.resources.noreqbody.NoReqBodyClient(clientOptions));
-    this.reqWithHeadersClient = Suppliers.memoize(() -> new Asynccom.fern.sdk.resources.reqwithheaders.ReqWithHeadersClient(clientOptions));
+    this.endpointsClient = Suppliers.memoize(() -> new AsyncEndpointsClient(clientOptions));
+    this.inlinedRequestsClient = Suppliers.memoize(() -> new AsyncInlinedRequestsClient(clientOptions));
+    this.noAuthClient = Suppliers.memoize(() -> new AsyncNoAuthClient(clientOptions));
+    this.noReqBodyClient = Suppliers.memoize(() -> new AsyncNoReqBodyClient(clientOptions));
+    this.reqWithHeadersClient = Suppliers.memoize(() -> new AsyncReqWithHeadersClient(clientOptions));
   }
 
-  public Asynccom.fern.sdk.resources.endpoints.EndpointsClient endpoints() {
+  public AsyncEndpointsClient endpoints() {
     return this.endpointsClient.get();
   }
 
-  public Asynccom.fern.sdk.resources.inlinedrequests.InlinedRequestsClient inlinedRequests() {
+  public AsyncInlinedRequestsClient inlinedRequests() {
     return this.inlinedRequestsClient.get();
   }
 
-  public Asynccom.fern.sdk.resources.noauth.NoAuthClient noAuth() {
+  public AsyncNoAuthClient noAuth() {
     return this.noAuthClient.get();
   }
 
-  public Asynccom.fern.sdk.resources.noreqbody.NoReqBodyClient noReqBody() {
+  public AsyncNoReqBodyClient noReqBody() {
     return this.noReqBodyClient.get();
   }
 
-  public Asynccom.fern.sdk.resources.reqwithheaders.ReqWithHeadersClient reqWithHeaders() {
+  public AsyncReqWithHeadersClient reqWithHeaders() {
     return this.reqWithHeadersClient.get();
   }
 
