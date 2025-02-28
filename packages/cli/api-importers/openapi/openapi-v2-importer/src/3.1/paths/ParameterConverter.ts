@@ -70,7 +70,6 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        // Check if parameter schema is a reference first
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
