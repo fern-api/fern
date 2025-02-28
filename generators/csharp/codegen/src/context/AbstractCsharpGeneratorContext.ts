@@ -591,7 +591,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public getCustomPagerName(): string {
         return (
             this.customConfig["custom-pager-name"] ??
-            this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")
+            `${this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")}Pager`
         );
     }
 

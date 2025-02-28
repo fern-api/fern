@@ -462,7 +462,7 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public async Task<Core.SeedPagination<string>> ListUsernamesCustomAsync(
+    public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(
         ListUsernamesRequestCustom request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -502,7 +502,7 @@ public partial class UsersClient
                 );
             }
         };
-        return await SeedPaginationFactory
+        return await SeedPaginationPagerFactory
             .CreateAsync<string>(sendRequest, httpRequest, cancellationToken)
             .ConfigureAwait(false);
     }

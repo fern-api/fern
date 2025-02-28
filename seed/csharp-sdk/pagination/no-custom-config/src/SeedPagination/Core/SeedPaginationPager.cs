@@ -3,9 +3,9 @@ using global::System.Net.Http;
 
 namespace SeedPagination.Core;
 
-internal static class SeedPaginationFactory
+internal static class SeedPaginationPagerFactory
 {
-    public static async Task<SeedPagination<TItem>> CreateAsync<TItem>(
+    public static async Task<SeedPaginationPager<TItem>> CreateAsync<TItem>(
         Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
         HttpRequestMessage initialRequest,
         CancellationToken cancellationToken = default
@@ -13,10 +13,10 @@ internal static class SeedPaginationFactory
     {
         var response = await sendRequest(initialRequest, cancellationToken).ConfigureAwait(false);
         var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =
-            await SeedPagination<TItem>
+            await SeedPaginationPager<TItem>
                 .ParseHttpCallAsync(initialRequest, response, cancellationToken)
                 .ConfigureAwait(false);
-        return new SeedPagination<TItem>(
+        return new SeedPaginationPager<TItem>(
             sendRequest,
             nextPageRequest,
             hasNextPage,
@@ -27,7 +27,7 @@ internal static class SeedPaginationFactory
     }
 }
 
-public class SeedPagination<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
+public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
 {
     private HttpRequestMessage? _nextPageRequest;
     private HttpRequestMessage? _previousPageRequest;
@@ -42,7 +42,7 @@ public class SeedPagination<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
     public bool HasPreviousPage { get; private set; }
     public Page<TItem> CurrentPage { get; private set; }
 
-    public SeedPagination(
+    public SeedPaginationPager(
         Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
