@@ -1,8 +1,16 @@
 - changelogEntry:
   - summary: |
+      You can now specify custom pagination on your API and endpoints.
+      This lets you implement your own pagination strategy in the generated SDKs.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc2
+
+- changelogEntry:
+  - summary: |
       Add support for a new option `--from-openapi` to the `fern ir` command. This command
-      will allow you to test early versions of the new OpenAPI parser which goes directly from 
-      OpenAPI to IR. 
+      will allow you to test early versions of the new OpenAPI parser which goes directly from
+      OpenAPI to IR.
 
       ```bash
       fern ir ir.json --from-openapi
