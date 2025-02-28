@@ -16,15 +16,9 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
-import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.*;
-import com.fern.ir.model.http.Pagination.Visitor;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -37,7 +31,6 @@ import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
-import com.fern.java.utils.TypeReferenceUtils.ContainerTypeToUnderlyingType;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -48,11 +41,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,9 +50,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public abstract class AbstractEndpointWriter {
 
@@ -73,8 +59,6 @@ public abstract class AbstractEndpointWriter {
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
     public static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
-    private static final String INTEGER_ONE = "1";
-    private static final String DECIMAL_ONE = "1.0";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
@@ -88,6 +72,7 @@ public abstract class AbstractEndpointWriter {
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
+    AbstractHttpResponseParserGenerator responseParserGenerator;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -97,6 +82,7 @@ public abstract class AbstractEndpointWriter {
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            AbstractHttpResponseParserGenerator responseParserGenerator,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
@@ -105,6 +91,7 @@ public abstract class AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedObjectMapper = generatedObjectMapper;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.responseParserGenerator = responseParserGenerator;
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
@@ -271,7 +258,28 @@ public abstract class AbstractEndpointWriter {
         endpointMethodBuilder.addCode(requestInitializer);
 
         // Step 6: Make http request and handle responses
-        CodeBlock responseParser = getResponseParserCodeBlock();
+        CodeBlock responseParser = responseParserGenerator.getResponseParserCodeBlock(
+                endpointMethodBuilder,
+                clientGeneratorContext,
+                clientOptionsField,
+                generatedClientOptions,
+                httpEndpoint,
+                generatedObjectMapper,
+                getResponseBodyStringName(),
+                getResponseBodyName(),
+                getParsedResponseVariableName(),
+                getResponseName(),
+                getNextRequestVariableName(),
+                getStartingAfterVariableName(),
+                getResultVariableName(),
+                getNewPageNumberVariableName(),
+                getDefaultedClientName(),
+                getOkhttpRequestName(),
+                apiErrorClassName,
+                baseErrorClassName,
+                generatedErrors,
+                requestParameterSpec(),
+                typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
         endpointMethodBuilder.addCode(responseParser);
 
         MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();
@@ -418,119 +426,6 @@ public abstract class AbstractEndpointWriter {
                 .build();
     }
 
-    public final CodeBlock getResponseParserCodeBlock() {
-        CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
-                // Default the request client
-                .addStatement(
-                        "$T $L = $N.$N()",
-                        OkHttpClient.class,
-                        getDefaultedClientName(),
-                        clientOptionsField,
-                        generatedClientOptions.httpClient())
-                .beginControlFlow(
-                        "if ($L != null && $L.getTimeout().isPresent())",
-                        REQUEST_OPTIONS_PARAMETER_NAME,
-                        REQUEST_OPTIONS_PARAMETER_NAME)
-                // Set the client's callTimeout if requestOptions overrides it has one
-                .addStatement(
-                        "$L = $N.$N($L)",
-                        getDefaultedClientName(),
-                        clientOptionsField,
-                        generatedClientOptions.httpClientWithTimeout(),
-                        REQUEST_OPTIONS_PARAMETER_NAME)
-                .endControlFlow();
-        if (httpEndpoint.getResponse().isPresent()
-                && httpEndpoint.getResponse().get().getBody().isPresent()) {
-            httpEndpoint
-                    .getResponse()
-                    .get()
-                    .getBody()
-                    .get()
-                    .visit(new SuccessResponseWriter(
-                            httpResponseBuilder, endpointMethodBuilder, clientGeneratorContext, generatedObjectMapper));
-        } else {
-            addTryWithResourcesVariant(httpResponseBuilder);
-            httpResponseBuilder.addStatement("return");
-        }
-        httpResponseBuilder.endControlFlow();
-        httpResponseBuilder.addStatement(
-                "$T $L = $L != null ? $L.string() : $S",
-                String.class,
-                getResponseBodyStringName(),
-                getResponseBodyName(),
-                getResponseBodyName(),
-                "{}");
-
-        // map to status-specific errors
-        if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
-            List<ErrorDeclaration> errorDeclarations = httpEndpoint.getErrors().get().stream()
-                    .map(responseError -> clientGeneratorContext
-                            .getIr()
-                            .getErrors()
-                            .get(responseError.getError().getErrorId()))
-                    .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
-                    .collect(Collectors.toList());
-            if (!errorDeclarations.isEmpty()) {
-                boolean multipleErrors = errorDeclarations.size() > 1;
-                httpResponseBuilder.beginControlFlow("try");
-                if (multipleErrors) {
-                    httpResponseBuilder.beginControlFlow("switch ($L.code())", getResponseName());
-                }
-                errorDeclarations.forEach(errorDeclaration -> {
-                    GeneratedJavaFile generatedError =
-                            generatedErrors.get(errorDeclaration.getName().getErrorId());
-                    ClassName errorClassName = generatedError.getClassName();
-                    Optional<TypeName> bodyTypeName = errorDeclaration
-                            .getType()
-                            .map(typeReference -> clientGeneratorContext
-                                    .getPoetTypeNameMapper()
-                                    .convertToTypeName(true, typeReference));
-                    if (multipleErrors) {
-                        httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
-                    } else {
-                        httpResponseBuilder.beginControlFlow(
-                                "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
-                    }
-                    httpResponseBuilder.addStatement(
-                            "throw new $T($T.$L.readValue($L, $T.class))",
-                            errorClassName,
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            getResponseBodyStringName(),
-                            bodyTypeName.orElse(TypeName.get(Object.class)));
-                    if (!multipleErrors) {
-                        httpResponseBuilder.endControlFlow();
-                    }
-                });
-                if (multipleErrors) {
-                    httpResponseBuilder.endControlFlow();
-                }
-                httpResponseBuilder
-                        .endControlFlow()
-                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                        .add("// unable to map error response, throwing generic error\n")
-                        .endControlFlow();
-            }
-        }
-        httpResponseBuilder.addStatement(
-                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
-                apiErrorClassName,
-                "Error with status code ",
-                getResponseName(),
-                getResponseName(),
-                generatedObjectMapper.getClassName(),
-                generatedObjectMapper.jsonMapperStaticField().name,
-                getResponseBodyStringName(),
-                Object.class);
-        httpResponseBuilder
-                .endControlFlow()
-                .beginControlFlow("catch ($T e)", IOException.class)
-                .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
-                .endControlFlow()
-                .build();
-        return httpResponseBuilder.build();
-    }
-
     protected final MethodSpec getEnvironmentToUrlMethod() {
         if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
             return ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info()).getUrlMethod();
@@ -543,31 +438,6 @@ public abstract class AbstractEndpointWriter {
         } else {
             throw new RuntimeException("Generated Environments class was unknown : " + generatedEnvironmentsClass);
         }
-    }
-
-    private void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder
-                .beginControlFlow("try")
-                .addStatement(
-                        "$T $L = $N.newCall($L).execute()",
-                        Response.class,
-                        getResponseName(),
-                        getDefaultedClientName(),
-                        getOkhttpRequestName())
-                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
-    }
-
-    private void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder
-                .beginControlFlow(
-                        "try ($T $L = $N.newCall($L).execute())",
-                        Response.class,
-                        getResponseName(),
-                        getDefaultedClientName(),
-                        getOkhttpRequestName())
-                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
     }
 
     public final String getVariableName(String variable) {
@@ -685,825 +555,6 @@ public abstract class AbstractEndpointWriter {
                                 pathParameter.getName().getCamelCase().getSafeName())
                         .build())
                 .build();
-    }
-
-    private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
-
-        private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
-        private final MethodSpec.Builder endpointMethodBuilder;
-        private final GeneratedObjectMapper generatedObjectMapper;
-        private final ClientGeneratorContext clientGeneratorContext;
-
-        SuccessResponseWriter(
-                Builder httpResponseBuilder,
-                MethodSpec.Builder endpointMethodBuilder,
-                ClientGeneratorContext clientGeneratorContext,
-                GeneratedObjectMapper generatedObjectMapper) {
-            this.httpResponseBuilder = httpResponseBuilder;
-            this.endpointMethodBuilder = endpointMethodBuilder;
-            this.clientGeneratorContext = clientGeneratorContext;
-            this.generatedObjectMapper = generatedObjectMapper;
-        }
-
-        @Override
-        public Void visitJson(JsonResponse json) {
-            addTryWithResourcesVariant(httpResponseBuilder);
-            JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
-                @Override
-                public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
-                    return JsonResponseBodyWithProperty.builder()
-                            .responseBodyType(response.getResponseBodyType())
-                            .build();
-                }
-
-                @Override
-                public JsonResponseBodyWithProperty visitNestedPropertyAsResponse(
-                        JsonResponseBodyWithProperty nestedPropertyAsResponse) {
-                    return nestedPropertyAsResponse;
-                }
-
-                @Override
-                public JsonResponseBodyWithProperty _visitUnknown(Object unknownType) {
-                    throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
-                }
-            });
-            boolean pagination = httpEndpoint.getPagination().isPresent()
-                    && clientGeneratorContext
-                            .getGeneratorConfig()
-                            .getGeneratePaginatedClients()
-                            .orElse(false);
-            TypeName responseType =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
-            boolean isProperty = body.getResponseProperty().isPresent();
-            if (isProperty || pagination) {
-                httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
-            } else {
-                httpResponseBuilder.add("return ");
-                endpointMethodBuilder.returns(responseType);
-            }
-            if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), new $T() {})",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
-            } else {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), $T.class)",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        responseType);
-            }
-            if (isProperty) {
-                SnippetAndResultType snippet = getNestedPropertySnippet(
-                        Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
-                httpResponseBuilder.addStatement(CodeBlock.builder()
-                        .add("return $L", getParsedResponseVariableName())
-                        .add(snippet.codeBlock)
-                        .build());
-                endpointMethodBuilder.returns(snippet.typeName);
-            } else if (pagination) {
-                ParameterSpec requestParameterSpec = requestParameterSpec()
-                        .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
-                ClassName pagerClassName =
-                        clientGeneratorContext.getPoetClassNameFactory().getPaginationClassName("SyncPagingIterable");
-                String endpointName =
-                        httpEndpoint.getName().get().getCamelCase().getSafeName();
-                String methodParameters = endpointMethodBuilder.parameters.stream()
-                        .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
-                                ? getNextRequestVariableName()
-                                : parameterSpec.name)
-                        .collect(Collectors.joining(", "));
-                httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
-                    @Override
-                    public Void visitCursor(CursorPagination cursor) {
-                        SnippetAndResultType nextSnippet = getNestedPropertySnippet(
-                                cursor.getNext().getPropertyPath(),
-                                cursor.getNext().getProperty(),
-                                body.getResponseBodyType());
-                        CodeBlock nextBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        nextSnippet.typeName,
-                                        getStartingAfterVariableName(),
-                                        getParsedResponseVariableName())
-                                .add(nextSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(nextBlock);
-                        String builderStartingAfterProperty = cursor.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-
-                        String propertyOverrideOnRequest = builderStartingAfterProperty;
-                        String propertyOverrideValueOnRequest = getStartingAfterVariableName();
-
-                        if (cursor.getPage().getPropertyPath().isPresent()
-                                && !cursor.getPage().getPropertyPath().get().isEmpty()) {
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    cursor.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    propertyOverrideOnRequest,
-                                    propertyOverrideValueOnRequest);
-                            setters.stream()
-                                    .map(EnrichedCursorPathSetter::setter)
-                                    .forEach(httpResponseBuilder::addStatement);
-
-                            if (!setters.isEmpty()) {
-                                EnrichedCursorPathGetter propertyOverrideGetter =
-                                        setters.get(setters.size() - 1).getter();
-                                propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                                propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
-
-                                if (!propertyOverrideGetter.pathItem().optional()
-                                        && propertyOverrideGetter.optional()) {
-                                    propertyOverrideValueOnRequest += ".get()";
-                                }
-                            } else {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "$T $L = $T.builder().from($L).$L($L).build()",
-                                requestParameterSpec.type,
-                                getNextRequestVariableName(),
-                                requestParameterSpec.type,
-                                requestParameterSpec.name,
-                                propertyOverrideOnRequest,
-                                propertyOverrideValueOnRequest);
-                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                cursor.getResults().getPropertyPath(),
-                                cursor.getResults().getProperty(),
-                                body.getResponseBodyType());
-
-                        CodeBlock resultBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        resultSnippet.typeName,
-                                        getResultVariableName(),
-                                        getParsedResponseVariableName())
-                                .add(resultSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(resultBlock);
-
-                        CodeBlock hasNextPageBlock;
-
-                        if (nextSnippet.typeReference.getContainer().isPresent()) {
-                            if (nextSnippet.typeReference.getContainer().get().isOptional()) {
-                                hasNextPageBlock = CodeBlock.of("$L.isPresent()", getStartingAfterVariableName());
-                            } else {
-                                throw new IllegalStateException(
-                                        "Found non-optional container as next page token. This should be impossible "
-                                                + "due to fern check validation.");
-                            }
-                        } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
-                            hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
-                                    getStartingAfterVariableName(),
-                                    nextSnippet.typeReference.getPrimitive().get());
-                        } else {
-                            throw new IllegalStateException(
-                                    "Found non-optional, non-primitive as next page token. This should be impossible "
-                                            + "due to fern check validation.");
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "return new $T<>($L, $L, () -> $L($L))",
-                                pagerClassName,
-                                hasNextPageBlock,
-                                getResultVariableName(),
-                                endpointName,
-                                methodParameters);
-                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
-                                .typeReference
-                                .getContainer()
-                                .orElseThrow(
-                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
-                                resultContainerType.visit(new ContainerTypeToUnderlyingType());
-                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
-                                pagerClassName,
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, resultUnderlyingType)));
-                        return null;
-                    }
-
-                    @Override
-                    public Void visitOffset(OffsetPagination offset) {
-                        com.fern.ir.model.types.TypeReference pageType = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference visitQuery(
-                                            QueryParameter queryParameter) {
-                                        return queryParameter.getValueType();
-                                    }
-
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference visitBody(
-                                            ObjectProperty objectProperty) {
-                                        return objectProperty.getValueType();
-                                    }
-
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-                        Boolean pageIsOptional = pageType.visit(new TypeReferenceIsOptional(true));
-
-                        String newNumberFieldNamePascal = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-
-                        CodeBlock newNumberGetter =
-                                CodeBlock.of("$L.get$L()", requestParameterSpec.name, newNumberFieldNamePascal);
-                        boolean numberGetterOptional = false;
-
-                        if (offset.getPage().getPropertyPath().isPresent()
-                                && !offset.getPage().getPropertyPath().get().isEmpty()) {
-                            // NOTE: We don't care about the build-after property names because we're not going to
-                            // use the setter--just the getter.
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    offset.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    "",
-                                    "");
-
-                            if (setters.isEmpty()) {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-
-                            // The 0th getter is what we want here because it contains the pagination index as a
-                            // property by definition of the path in the IR.
-                            EnrichedCursorPathGetter getter = setters.get(0).getter();
-                            if (getter.optional()) {
-                                if (pageIsOptional) {
-                                    newNumberGetter = CodeBlock.of(
-                                            "$L.flatMap($T::get$L)",
-                                            getter.getter(),
-                                            getter.typeName(),
-                                            newNumberFieldNamePascal);
-                                } else {
-                                    newNumberGetter = CodeBlock.of(
-                                            "$L.map($T::get$L).get()",
-                                            getter.getter(),
-                                            getter.typeName(),
-                                            newNumberFieldNamePascal);
-                                }
-                            } else {
-                                newNumberGetter = CodeBlock.of("$L.get$L", getter.getter(), newNumberFieldNamePascal);
-                            }
-                        }
-
-                        com.fern.ir.model.types.TypeReference numberType = pageType.getContainer()
-                                .map(containerType -> containerType.visit(new ContainerTypeToUnderlyingType()))
-                                .orElse(pageType);
-                        TypeName numberTypeName =
-                                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
-
-                        String one = INTEGER_ONE;
-                        if (numberTypeName.equals(TypeName.FLOAT) || numberTypeName.equals(TypeName.DOUBLE)) {
-                            one = DECIMAL_ONE;
-                        }
-
-                        if (pageIsOptional) {
-                            httpResponseBuilder.addStatement(CodeBlock.of(
-                                    "$T $L = $L.map(page -> page + $L).orElse($L)",
-                                    numberTypeName,
-                                    getNewPageNumberVariableName(),
-                                    newNumberGetter,
-                                    one,
-                                    one));
-                        } else {
-                            httpResponseBuilder.addStatement(CodeBlock.of(
-                                    "$T $L = $L + $L",
-                                    clientGeneratorContext
-                                            .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, pageType),
-                                    getNewPageNumberVariableName(),
-                                    newNumberGetter,
-                                    one));
-                        }
-
-                        String propertyOverrideOnRequest = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-                        String propertyOverrideValueOnRequest = getNewPageNumberVariableName();
-
-                        if (offset.getPage().getPropertyPath().isPresent()
-                                && !offset.getPage().getPropertyPath().get().isEmpty()) {
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    offset.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    propertyOverrideOnRequest,
-                                    propertyOverrideValueOnRequest);
-                            setters.stream()
-                                    .map(EnrichedCursorPathSetter::setter)
-                                    .forEach(httpResponseBuilder::addStatement);
-
-                            if (!setters.isEmpty()) {
-                                EnrichedCursorPathGetter propertyOverrideGetter =
-                                        setters.get(setters.size() - 1).getter();
-                                propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                                propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
-
-                                if (!propertyOverrideGetter.pathItem().optional()
-                                        && propertyOverrideGetter.optional()) {
-                                    propertyOverrideValueOnRequest += ".get()";
-                                }
-                            } else {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "$T $L = $T.builder().from($L).$L($L).build()",
-                                requestParameterSpec.type,
-                                getNextRequestVariableName(),
-                                requestParameterSpec.type,
-                                requestParameterSpec.name,
-                                propertyOverrideOnRequest,
-                                propertyOverrideValueOnRequest);
-
-                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                offset.getResults().getPropertyPath(),
-                                offset.getResults().getProperty(),
-                                body.getResponseBodyType());
-                        CodeBlock resultBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        resultSnippet.typeName,
-                                        getResultVariableName(),
-                                        getParsedResponseVariableName())
-                                .add(resultSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(resultBlock);
-                        httpResponseBuilder.addStatement(
-                                "return new $T<>(true, $L, () -> $L($L))",
-                                pagerClassName,
-                                getResultVariableName(),
-                                endpointName,
-                                methodParameters);
-                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
-                                .typeReference
-                                .getContainer()
-                                .orElseThrow(
-                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
-                                resultContainerType.visit(new ContainerTypeToUnderlyingType());
-                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
-                                pagerClassName,
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, resultUnderlyingType)));
-                        return null;
-                    }
-
-                    @Override
-                    public Void _visitUnknown(Object unknownType) {
-                        throw new RuntimeException("Unknown pagination type " + unknownType);
-                    }
-                });
-            }
-            return null;
-        }
-
-        @Override
-        public Void visitFileDownload(FileDownloadResponse fileDownload) {
-            addNonTryWithResourcesVariant(httpResponseBuilder);
-            endpointMethodBuilder.returns(InputStream.class);
-            httpResponseBuilder.addStatement(
-                    "return new $T($L)",
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
-                    getResponseName());
-            return null;
-        }
-
-        @Override
-        public Void visitText(TextResponse text) {
-            addTryWithResourcesVariant(httpResponseBuilder);
-            endpointMethodBuilder.returns(String.class);
-            httpResponseBuilder.addStatement("return $L.string()", getResponseBodyName());
-            return null;
-        }
-
-        @Override
-        public Void visitBytes(BytesResponse bytesResponse) {
-            throw new RuntimeException("Returning bytes is not supported.");
-        }
-
-        @Override
-        public Void visitStreaming(StreamingResponse streaming) {
-            addNonTryWithResourcesVariant(httpResponseBuilder);
-            com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
-                @Override
-                public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
-                    return json.getPayload();
-                }
-
-                @Override
-                public com.fern.ir.model.types.TypeReference visitText(TextStreamChunk text) {
-                    throw new RuntimeException("Returning streamed text is not supported.");
-                }
-
-                @Override
-                public com.fern.ir.model.types.TypeReference visitSse(SseStreamChunk sse) {
-                    return sse.getPayload();
-                }
-
-                @Override
-                public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
-                    throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
-                }
-            });
-
-            String terminator =
-                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
-            TypeName bodyTypeName =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);
-            endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
-
-            httpResponseBuilder.addStatement(
-                    "return new $T<$T>($T.class, new $T($L), $S)",
-                    clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
-                    bodyTypeName,
-                    bodyTypeName,
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                    getResponseName(),
-                    terminator);
-
-            return null;
-        }
-
-        @Override
-        public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-            // TODO: Implement stream parameters.
-            throw new UnsupportedOperationException("Not implemented.");
-        }
-
-        @Override
-        public Void _visitUnknown(Object unknownType) {
-            return null;
-        }
-
-        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
-            if (responseBodyType.getNamed().isPresent()) {
-                TypeId typeId = responseBodyType.getNamed().get().getTypeId();
-                TypeDeclaration typeDeclaration =
-                        clientGeneratorContext.getIr().getTypes().get(typeId);
-                return typeDeclaration.getShape().getAlias().isPresent()
-                        && typeDeclaration
-                                .getShape()
-                                .getAlias()
-                                .get()
-                                .getResolvedType()
-                                .isContainer();
-            }
-            return false;
-        }
-    }
-
-    private SnippetAndResultType getNestedPropertySnippet(
-            Optional<List<Name>> propertyPath,
-            ObjectProperty objectProperty,
-            com.fern.ir.model.types.TypeReference typeReference) {
-        ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
-        fullPropertyPath.add(objectProperty.getName().getName());
-        GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
-                typeReference, fullPropertyPath, false, false, Optional.empty(), Optional.empty()));
-        Builder codeBlockBuilder = CodeBlock.builder();
-        getSnippetOutput.code.forEach(codeBlockBuilder::add);
-        return new SnippetAndResultType(
-                getSnippetOutput.typeReference,
-                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, getSnippetOutput.typeReference),
-                codeBlockBuilder.build());
-    }
-
-    private class SnippetAndResultType {
-        private final com.fern.ir.model.types.TypeReference typeReference;
-        private final TypeName typeName;
-        private final CodeBlock codeBlock;
-
-        private SnippetAndResultType(
-                com.fern.ir.model.types.TypeReference typeReference, TypeName typeName, CodeBlock codeBlock) {
-            this.typeReference = typeReference;
-            this.typeName = typeName;
-            this.codeBlock = codeBlock;
-        }
-    }
-
-    private class NestedPropertySnippetGenerator
-            implements com.fern.ir.model.types.TypeReference.Visitor<GetSnippetOutput> {
-
-        /** The current type from which we need get a property value. */
-        private final com.fern.ir.model.types.TypeReference typeReference;
-
-        private final List<Name> propertyPath;
-        private final Boolean previousWasOptional;
-        private final Boolean currentOptional;
-        private final Optional<Name> previousProperty;
-        private final Optional<com.fern.ir.model.types.TypeReference> previousTypeReference;
-        private final ArrayList<CodeBlock> codeBlocks = new ArrayList<>();
-
-        private NestedPropertySnippetGenerator(
-                com.fern.ir.model.types.TypeReference typeReference,
-                List<Name> propertyPath,
-                Boolean previousWasOptional,
-                Boolean currentOptional,
-                Optional<Name> previousProperty,
-                Optional<com.fern.ir.model.types.TypeReference> previousTypeReference) {
-            this.typeReference = typeReference;
-            this.propertyPath = propertyPath;
-            this.previousWasOptional = previousWasOptional;
-            this.currentOptional = currentOptional;
-            this.previousProperty = previousProperty;
-            this.previousTypeReference = previousTypeReference;
-        }
-
-        private void addPreviousIfPresent() {
-            previousProperty.ifPresent(previousProperty -> {
-                codeBlocks.add(getterCodeBlock(previousProperty, previousTypeReference.get()));
-            });
-        }
-
-        private Name getCurrentProperty() {
-            return propertyPath.get(0);
-        }
-
-        private CodeBlock getterCodeBlock(Name property, com.fern.ir.model.types.TypeReference overrideTypeReference) {
-            if (previousWasOptional) {
-                String mappingOperation = currentOptional ? "flatMap" : "map";
-                return CodeBlock.of(
-                        ".$L($T::get$L)",
-                        mappingOperation,
-                        clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, overrideTypeReference),
-                        property.getPascalCase().getUnsafeName());
-            }
-            return CodeBlock.of(".get$L()", property.getPascalCase().getUnsafeName());
-        }
-
-        @Override
-        public GetSnippetOutput visitContainer(com.fern.ir.model.types.ContainerType container) {
-            if (propertyPath.isEmpty() && !container.isOptional()) {
-                addPreviousIfPresent();
-                if (currentOptional || previousWasOptional) {
-                    String emptyCollectionString;
-                    if (container.isList()) {
-                        emptyCollectionString = "List";
-                    } else if (container.isSet()) {
-                        emptyCollectionString = "Set";
-                    } else if (container.isMap()) {
-                        emptyCollectionString = "Map";
-                    } else {
-                        throw new RuntimeException("Unexpected container type");
-                    }
-                    codeBlocks.add(CodeBlock.builder()
-                            .add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
-                            .build());
-                }
-                return new GetSnippetOutput(typeReference, codeBlocks);
-            }
-            com.fern.ir.model.types.TypeReference ref = container
-                    .getOptional()
-                    .orElseThrow(
-                            () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
-            return ref.visit(new NestedPropertySnippetGenerator(
-                    ref,
-                    propertyPath,
-                    previousWasOptional || currentOptional,
-                    true,
-                    previousProperty,
-                    previousTypeReference));
-        }
-
-        @Override
-        public GetSnippetOutput visitNamed(NamedType named) {
-            TypeDeclaration typeDeclaration =
-                    clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
-            return typeDeclaration.getShape().visit(new Type.Visitor<>() {
-                @Override
-                public GetSnippetOutput visitAlias(AliasTypeDeclaration alias) {
-                    return alias.getAliasOf()
-                            .visit(new NestedPropertySnippetGenerator(
-                                    alias.getAliasOf(),
-                                    propertyPath,
-                                    previousWasOptional,
-                                    currentOptional,
-                                    previousProperty,
-                                    Optional.of(typeReference)));
-                }
-
-                @Override
-                public GetSnippetOutput visitEnum(EnumTypeDeclaration enum_) {
-                    // todo: figure out how to handle this
-                    return null;
-                }
-
-                @Override
-                public GetSnippetOutput visitObject(ObjectTypeDeclaration object) {
-                    addPreviousIfPresent();
-                    if (propertyPath.isEmpty()) {
-                        if (currentOptional || previousWasOptional) {
-                            return new GetSnippetOutput(
-                                    com.fern.ir.model.types.TypeReference.container(
-                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
-                                    codeBlocks);
-                        }
-                        return new GetSnippetOutput(typeReference, codeBlocks);
-                    }
-                    Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
-                            .filter(property -> property.getName()
-                                    .getName()
-                                    .getCamelCase()
-                                    .getUnsafeName()
-                                    .equals(getCurrentProperty().getCamelCase().getUnsafeName()))
-                            .findFirst();
-                    if (maybeMatchingProperty.isEmpty()) {
-                        for (DeclaredTypeName declaredTypeName : object.getExtends()) {
-                            try {
-                                return visitNamed(NamedType.builder()
-                                        .typeId(declaredTypeName.getTypeId())
-                                        .fernFilepath(declaredTypeName.getFernFilepath())
-                                        .name(declaredTypeName.getName())
-                                        .build());
-                            } catch (Exception e) {
-                            }
-                        }
-                        throw new RuntimeException("No property matches found for property "
-                                + getCurrentProperty().getOriginalName());
-                    }
-                    ObjectProperty matchingProperty = maybeMatchingProperty.get();
-                    List<Name> newPropertyPath = propertyPath.subList(1, propertyPath.size());
-                    GetSnippetOutput output = matchingProperty
-                            .getValueType()
-                            .visit(new NestedPropertySnippetGenerator(
-                                    matchingProperty.getValueType(),
-                                    newPropertyPath,
-                                    currentOptional || previousWasOptional,
-                                    false,
-                                    Optional.of(getCurrentProperty()),
-                                    Optional.of(typeReference)));
-                    codeBlocks.addAll(output.code);
-                    return new GetSnippetOutput(output.typeReference, codeBlocks);
-                }
-
-                @Override
-                public GetSnippetOutput visitUnion(UnionTypeDeclaration union) {
-                    throw new RuntimeException("Cannot create a snippet with a union");
-                }
-
-                @Override
-                public GetSnippetOutput visitUndiscriminatedUnion(
-                        UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-                    throw new RuntimeException("Cannot create a snippet with an undiscriminated union");
-                }
-
-                @Override
-                public GetSnippetOutput _visitUnknown(Object unknownType) {
-                    throw new RuntimeException("Unknown shape " + unknownType);
-                }
-            });
-        }
-
-        @Override
-        public GetSnippetOutput visitPrimitive(PrimitiveType primitive) {
-            if (!propertyPath.isEmpty()) {
-                throw new RuntimeException("Unexpected primitive with property path remaining");
-            }
-            addPreviousIfPresent();
-            if (currentOptional || previousWasOptional) {
-                return new GetSnippetOutput(
-                        com.fern.ir.model.types.TypeReference.container(
-                                com.fern.ir.model.types.ContainerType.optional(typeReference)),
-                        codeBlocks);
-            }
-            return new GetSnippetOutput(typeReference, codeBlocks);
-        }
-
-        @Override
-        public GetSnippetOutput visitUnknown() {
-            throw new RuntimeException("Can't generate snippet for unknown type");
-        }
-
-        @Override
-        public GetSnippetOutput _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Unknown TypeReference type " + unknownType);
-        }
-    }
-
-    private class GetSnippetOutput {
-        private final com.fern.ir.model.types.TypeReference typeReference;
-        private final List<CodeBlock> code;
-
-        private GetSnippetOutput(com.fern.ir.model.types.TypeReference typeReference, List<CodeBlock> code) {
-            this.typeReference = typeReference;
-            this.code = code;
-        }
-    }
-
-    private class GetStreamingResponseTerminator implements StreamingResponse.Visitor<Optional<String>> {
-        @Override
-        public Optional<String> visitJson(JsonStreamChunk json) {
-            return json.getTerminator();
-        }
-
-        @Override
-        public Optional<String> visitText(TextStreamChunk text) {
-            throw new RuntimeException("Returning streamed text is not supported.");
-        }
-
-        @Override
-        public Optional<String> visitSse(SseStreamChunk sse) {
-            return sse.getTerminator();
-        }
-
-        @Override
-        public Optional<String> _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown streaming response type " + unknownType);
-        }
     }
 
     private class SdkRequestIsOptional implements SdkRequestShape.Visitor<Boolean> {

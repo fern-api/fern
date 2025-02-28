@@ -36,4 +36,9 @@ public class SyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMetho
                 allGeneratedInterfaces,
                 generatedErrors);
     }
+
+    @Override
+    public AbstractHttpResponseParserGenerator responseParserGenerator() {
+        return new SyncHttpResponseParserGenerator();
+    }
 }

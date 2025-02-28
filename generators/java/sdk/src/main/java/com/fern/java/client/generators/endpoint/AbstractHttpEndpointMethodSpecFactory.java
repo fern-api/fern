@@ -72,6 +72,8 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
         this.generatedErrors = generatedErrors;
     }
 
+    public abstract AbstractHttpResponseParserGenerator responseParserGenerator();
+
     public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
@@ -87,6 +89,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             generatedEnvironmentsClass,
                             sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
+                            responseParserGenerator(),
                             generatedErrors);
                     return onlyRequestEndpointWriter.generate();
                 }
@@ -119,6 +122,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                                 generatedEnvironmentsClass,
                                 generatedWrappedRequest,
                                 httpEndpoint.getSdkRequest().get(),
+                                responseParserGenerator(),
                                 generatedErrors);
                         return onlyRequestEndpointWriter.generate();
                     }
@@ -132,6 +136,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             httpEndpoint.getSdkRequest().get(),
                             generatedEnvironmentsClass,
                             generatedWrappedRequest,
+                            responseParserGenerator(),
                             generatedErrors);
                     return wrappedRequestEndpointWriter.generate();
                 }
@@ -150,6 +155,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                     clientOptionsField,
                     generatedEnvironmentsClass,
                     generatedClientOptions,
+                    responseParserGenerator(),
                     generatedErrors);
             return noRequestEndpointWriter.generate();
         }

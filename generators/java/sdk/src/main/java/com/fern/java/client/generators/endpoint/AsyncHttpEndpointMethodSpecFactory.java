@@ -36,4 +36,9 @@ public class AsyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMeth
                 allGeneratedInterfaces,
                 generatedErrors);
     }
+
+    @Override
+    public AbstractHttpResponseParserGenerator responseParserGenerator() {
+        return new AsyncHttpResponseParserGenerator();
+    }
 }
