@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 
-import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk";
+import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
@@ -40,12 +40,16 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         const requestParameter =
             request != null
                 ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
                 : undefined;
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
+            serviceId,
+            endpoint,
+            requestParameter
+        });
         return {
             baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
             pathParameters,
@@ -123,28 +127,32 @@ export abstract class AbstractEndpointGenerator {
 
     protected getAllPathParameters({
         serviceId,
-        endpoint
+        endpoint,
+        requestParameter
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
+        requestParameter?: csharp.Parameter;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const pathParameters: csharp.Parameter[] = [];
-        const service = this.context.getHttpServiceOrThrow(serviceId);
         const pathParameterReferences: Record<string, string> = {};
-        for (const pathParam of [
-            ...this.context.ir.pathParameters,
-            ...service.pathParameters,
-            ...endpoint.pathParameters
-        ]) {
-            const parameterName = pathParam.name.camelCase.safeName;
+        const includePathParametersInEndpointSignature = this.includePathParametersInEndpointSignature({ endpoint });
+        for (const pathParam of endpoint.allPathParameters) {
+            const parameterName = this.getPathParameterName({
+                pathParameter: pathParam,
+                includePathParametersInEndpointSignature,
+                requestParameter
+            });
+            if (includePathParametersInEndpointSignature) {
+                pathParameters.push(
+                    csharp.parameter({
+                        docs: pathParam.docs,
+                        name: parameterName,
+                        type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+                    })
+                );
+            }
             pathParameterReferences[pathParam.name.originalName] = parameterName;
-            pathParameters.push(
-                csharp.parameter({
-                    docs: pathParam.docs,
-                    name: parameterName,
-                    type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
-                })
-            );
         }
         return {
             pathParameters,
@@ -192,7 +200,7 @@ export abstract class AbstractEndpointGenerator {
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
             return undefined;
         }
-        const args = this.getNonEndpointArguments(example, parseDatetimes);
+        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
@@ -255,7 +263,18 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    protected getNonEndpointArguments(example: ExampleEndpointCall, parseDatetimes: boolean): csharp.CodeBlock[] {
+    protected getNonEndpointArguments({
+        endpoint,
+        example,
+        parseDatetimes
+    }: {
+        endpoint: HttpEndpoint;
+        example: ExampleEndpointCall;
+        parseDatetimes: boolean;
+    }): csharp.CodeBlock[] {
+        if (!this.includePathParametersInEndpointSignature({ endpoint })) {
+            return [];
+        }
         const pathParameters = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
@@ -267,5 +286,30 @@ export abstract class AbstractEndpointGenerator {
                 parseDatetimes
             })
         );
+    }
+
+    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+        if (endpoint.sdkRequest?.shape.type !== "wrapper") {
+            return true;
+        }
+        return !this.context.includePathParametersInWrappedRequest({
+            endpoint,
+            wrapper: endpoint.sdkRequest.shape
+        });
+    }
+
+    private getPathParameterName({
+        pathParameter,
+        includePathParametersInEndpointSignature,
+        requestParameter
+    }: {
+        pathParameter: PathParameter;
+        includePathParametersInEndpointSignature: boolean;
+        requestParameter?: csharp.Parameter;
+    }): string {
+        if (!includePathParametersInEndpointSignature && requestParameter != null) {
+            return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;
+        }
+        return pathParameter.name.camelCase.safeName;
     }
 }

@@ -367,7 +367,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         throw new Error("Offset pagination should already be handled elsewhere");
                     case "cursor":
                         throw new Error("Cursor pagination should already be handled elsewhere");
-                    case "custom":
+                    case "custom": {
                         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                         if (queryParameterCodeBlock != null) {
                             queryParameterCodeBlock.code.write(writer);
@@ -424,13 +424,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         );
 
                         writer.write("return ");
-                        writer.writeNodeStatement(this.context.invokeCustomPagerFactoryMethod({
-                            itemType,
-                            sendRequestMethod: csharp.codeblock(SEND_REQUEST_LAMBDA_VARIABLE_NAME),
-                            initialRequest: csharp.codeblock(HTTP_REQUEST_VARIABLE_NAME),
-                            cancellationToken: csharp.codeblock(this.context.getCancellationTokenParameterName())
-                        }))
+                        writer.writeNodeStatement(
+                            this.context.invokeCustomPagerFactoryMethod({
+                                itemType,
+                                sendRequestMethod: csharp.codeblock(SEND_REQUEST_LAMBDA_VARIABLE_NAME),
+                                initialRequest: csharp.codeblock(HTTP_REQUEST_VARIABLE_NAME),
+                                cancellationToken: csharp.codeblock(this.context.getCancellationTokenParameterName())
+                            })
+                        );
                         break;
+                    }
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -787,7 +790,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): csharp.MethodInvocation | undefined {
         const service = this.context.getHttpServiceOrThrow(serviceId);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments(example, parseDatetimes);
+        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);

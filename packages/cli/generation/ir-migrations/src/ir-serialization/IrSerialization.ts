@@ -31,4 +31,4 @@ export * as V51 from "@fern-fern/ir-v51-sdk/serialization";
 export * as V52 from "@fern-fern/ir-v52-sdk/serialization";
 export * as V53 from "@fern-fern/ir-v53-sdk/serialization";
 export * as V54 from "@fern-fern/ir-v54-sdk/serialization";
-export { serialization as V55 }  from "@fern-fern/ir-v55-sdk";
+export * as V55 from "@fern-fern/ir-v55-sdk/serialization";

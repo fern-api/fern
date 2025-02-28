@@ -17,6 +17,7 @@ import {
     NameAndWireValue,
     OAuthScheme,
     ProtobufService,
+    SdkRequestWrapper,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -130,6 +131,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getClientVariableName(): string {
         return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
+    }
+
+    public includePathParametersInWrappedRequest({
+        endpoint,
+        wrapper
+    }: {
+        endpoint: HttpEndpoint;
+        wrapper: SdkRequestWrapper;
+    }): boolean {
+        const inlinePathParameters = this.customConfig["inline-path-parameters"];
+        if (inlinePathParameters == null) {
+            return false;
+        }
+        const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
+        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public getRawAsIsFiles(): string[] {

@@ -161,7 +161,10 @@ export class RawClient {
     /**
      * Sends an HTTP request to the RawClient.
      */
-    public sendRequestWithRequestWrapper({ clientReference, request }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
+    public sendRequestWithRequestWrapper({
+        clientReference,
+        request
+    }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "SendRequestAsync",
@@ -173,15 +176,15 @@ export class RawClient {
     /**
      * Sends an HTTP request to the RawClient.
      */
-    public sendRequestWithHttpRequest({ clientReference, options, request }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
+    public sendRequestWithHttpRequest({
+        clientReference,
+        options,
+        request
+    }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [
-                request,
-                options,
-                csharp.codeblock(this.context.getCancellationTokenParameterName())
-            ],
+            arguments_: [request, options, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }

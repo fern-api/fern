@@ -474,7 +474,7 @@ public partial class UsersClient
             _query["starting_after"] = request.StartingAfter;
         }
         var response = await _client
-            .SendRequestAsync(
+            .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -486,9 +486,9 @@ public partial class UsersClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
@@ -499,14 +499,11 @@ public partial class UsersClient
             }
         }
 
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPaginationApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        throw new SeedPaginationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <example>
