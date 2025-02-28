@@ -150,6 +150,18 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListUsernamesCustomAsync(\n    new ListUsernamesRequestCustom { StartingAfter = \"starting_after\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {

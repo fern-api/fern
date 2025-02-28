@@ -1003,6 +1003,80 @@ export class Users {
     }
 
     /**
+     * @param {SeedPagination.ListUsernamesRequestCustom} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listUsernamesCustom({
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    public async listUsernamesCustom(
+        request: SeedPagination.ListUsernamesRequestCustom = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<SeedPagination.UsernameCursor> {
+        const { startingAfter } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (startingAfter != null) {
+            _queryParams["starting_after"] = startingAfter;
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users",
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/pagination",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/pagination/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.UsernameCursor.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+            case "unknown":
+                throw new errors.SeedPaginationError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * @param {SeedPagination.ListWithGlobalConfigRequest} request
      * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
      *

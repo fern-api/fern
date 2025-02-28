@@ -5,5 +5,5 @@
 import * as FernDefinition from "../../../index";
 
 export interface ObjectPropertyWithAccessSchema extends FernDefinition.TypeReferenceDeclarationWithName {
-    "access"?: FernDefinition.ObjectPropertyAccess;
+    access?: FernDefinition.ObjectPropertyAccess;
 }
