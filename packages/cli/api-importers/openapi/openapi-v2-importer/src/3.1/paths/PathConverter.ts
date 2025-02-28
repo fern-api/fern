@@ -56,7 +56,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                     operation
                 });
                 const webhookExtension = webhookExtensionConverter.convert({ context, errorCollector });
-                if (webhookExtension != null) {
+                if (webhookExtension === true) {
                     const webhookConverter = new WebhookConverter({
                         breadcrumbs: operationBreadcrumbs,
                         operation,
@@ -68,6 +68,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                         webhooks.push(convertedWebhook);
                         Object.assign(inlinedTypes, convertedWebhook.inlinedTypes);
                     }
+                    continue;
                 }
 
                 const streamingExtensionConverter = new FernStreamingExtension({
