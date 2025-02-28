@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      The new OpenAPI parser now shares example generation with the Fern Definition -> IR pipeline,
+      ensuring consistent example generation across both input formats. This reuse of example
+      generation logic helps maintain parity between OpenAPI and Fern Definition inputs.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc3
+
+- changelogEntry:
+  - summary: |
       You can now specify custom pagination on your API and endpoints.
       This lets you implement your own pagination strategy in the generated SDKs.
     type: feat
