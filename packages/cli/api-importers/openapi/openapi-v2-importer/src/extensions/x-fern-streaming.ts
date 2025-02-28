@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
+import { z } from "zod";
 
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 import { AbstractConverter } from "../AbstractConverter";
@@ -7,31 +8,29 @@ import { ErrorCollector } from "../ErrorCollector";
 
 const REQUEST_PREFIX = "$request.";
 
-export interface OnlyStreamingEndpoint {
+const StreamingExtensionObjectSchema = z.object({
+    "stream-condition": z.string().optional(),
+    format: z.enum(["sse", "json"]).optional(),
+    "stream-description": z.string().optional(),
+    "response-stream": z.any(),
+    response: z.any()
+});
+
+const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectSchema]);
+
+type OnlyStreamingEndpoint = {
     type: "stream";
     format: "sse" | "json";
-}
+};
 
-export interface StreamConditionEndpoint {
+type StreamConditionEndpoint = {
     type: "streamCondition";
     format: "sse" | "json";
     streamDescription: string | undefined;
     streamConditionProperty: string;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-}
-
-declare namespace Raw {
-    export type StreamingExtensionSchema = boolean | StreamingExtensionObjectSchema;
-
-    export interface StreamingExtensionObjectSchema {
-        ["stream-condition"]: string;
-        ["format"]: "sse" | "json" | undefined;
-        ["stream-description"]: string | undefined;
-        ["response-stream"]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-        response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-    }
-}
+};
 
 export declare namespace FernStreamingExtension {
     export interface Args extends AbstractConverter.Args {
@@ -65,29 +64,38 @@ export class FernStreamingExtension extends AbstractExtension<
             return undefined;
         }
 
-        if (typeof extensionValue === "boolean") {
-            return extensionValue ? { type: "stream", format: "json" } : undefined;
-        }
-
-        if (typeof extensionValue !== "object") {
+        const result = StreamingExtensionSchema.safeParse(extensionValue);
+        if (!result.success) {
             errorCollector.collect({
-                message: "Received unexpected non-object value for x-fern-streaming",
+                message: `Invalid x-fern-streaming extension: ${result.error.message}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
 
-        const extensionObject = extensionValue as Raw.StreamingExtensionObjectSchema;
-        if (extensionObject["stream-condition"] == null && extensionObject.format != null) {
-            return { type: "stream", format: extensionObject.format };
+        if (typeof result.data === "boolean") {
+            return result.data ? { type: "stream", format: "json" } : undefined;
         }
+
+        if (result.data["stream-condition"] == null && result.data.format != null) {
+            return { type: "stream", format: result.data.format };
+        }
+
+        if (result.data["stream-condition"] == null) {
+            errorCollector.collect({
+                message: "Missing required stream-condition property",
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+
         return {
             type: "streamCondition",
-            format: extensionObject.format ?? "json",
-            streamDescription: extensionObject["stream-description"],
-            streamConditionProperty: context.maybeTrimPrefix(extensionObject["stream-condition"], REQUEST_PREFIX),
-            responseStream: extensionObject["response-stream"],
-            response: extensionObject.response
+            format: result.data.format ?? "json",
+            streamDescription: result.data["stream-description"],
+            streamConditionProperty: context.maybeTrimPrefix(result.data["stream-condition"], REQUEST_PREFIX),
+            responseStream: result.data["response-stream"],
+            response: result.data.response
         };
     }
 }

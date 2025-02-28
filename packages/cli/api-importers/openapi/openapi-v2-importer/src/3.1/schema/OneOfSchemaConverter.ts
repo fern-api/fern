@@ -71,14 +71,18 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
             });
             const typeId = context.getTypeIdFromSchemaReference({ $ref: reference });
+
             const convertedSchema = singleUnionTypeSchemaConverter.convert({ context, errorCollector });
-            if (convertedSchema?.schema != null && typeId != null) {
+
+            if (convertedSchema?.type != null && typeId != null) {
+                const nameAndWireValue = context.casingsGenerator.generateNameAndWireValue({
+                    name: discriminant,
+                    wireValue: discriminant
+                });
+
                 unionTypes.push({
                     docs: undefined,
-                    discriminantValue: context.casingsGenerator.generateNameAndWireValue({
-                        name: discriminant,
-                        wireValue: discriminant
-                    }),
+                    discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: undefined,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({

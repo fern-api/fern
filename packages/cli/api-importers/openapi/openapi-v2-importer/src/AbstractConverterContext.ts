@@ -21,7 +21,7 @@ export declare namespace Spec {
  * @template Spec The OpenAPI specification type
  */
 export abstract class AbstractConverterContext<Spec extends object> {
-    public readonly spec: Spec;
+    public spec: Spec;
     public readonly settings?: OpenAPISettings;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;

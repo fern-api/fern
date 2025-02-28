@@ -4,6 +4,7 @@ import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sd
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
+import { FernEnumExtension } from "../../extensions/x-fern-enum";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
@@ -44,9 +45,16 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         errorCollector: ErrorCollector;
     }): SchemaConverter.Output | undefined {
         if (this.schema.enum?.length) {
-            const enumConverter = new EnumSchemaConverter({
+            const fernEnumConverter = new FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
+            });
+            const maybeFernEnum = fernEnumConverter.convert({ context, errorCollector });
+
+            const enumConverter = new EnumSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema,
+                maybeFernEnum
             });
             const enumType = enumConverter.convert({ context, errorCollector });
             if (enumType != null) {

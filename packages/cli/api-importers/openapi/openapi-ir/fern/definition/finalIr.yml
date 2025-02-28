@@ -634,6 +634,7 @@ types:
       key: string
       schema: Schema
       readonly: optional<boolean>
+      writeonly: optional<boolean>
       conflict:
         type: map<commons.SchemaId, ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property

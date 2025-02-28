@@ -4535,7 +4535,8 @@
                 }
               },
               "wireValue": "queued"
-            }
+            },
+            "docs": "The audio file is in the queue to be processed by the API."
           },
           {
             "name": {
@@ -4559,7 +4560,8 @@
                 }
               },
               "wireValue": "processing"
-            }
+            },
+            "docs": "The audio file is being processed by the API."
           },
           {
             "name": {
@@ -4583,7 +4585,8 @@
                 }
               },
               "wireValue": "completed"
-            }
+            },
+            "docs": "The transcription job has been completed successfully."
           },
           {
             "name": {
@@ -4607,7 +4610,8 @@
                 }
               },
               "wireValue": "error"
-            }
+            },
+            "docs": "An error occurred while processing the audio file."
           }
         ],
         "type": "enum"
@@ -6270,7 +6274,8 @@
                 }
               },
               "wireValue": "banking_information"
-            }
+            },
+            "docs": "Banking information, including account and routing numbers"
           },
           {
             "name": {
@@ -6294,7 +6299,8 @@
                 }
               },
               "wireValue": "blood_type"
-            }
+            },
+            "docs": "Blood type (e.g., O-, AB positive)"
           },
           {
             "name": {
@@ -6318,7 +6324,8 @@
                 }
               },
               "wireValue": "credit_card_cvv"
-            }
+            },
+            "docs": "Credit card verification code (e.g., CVV: 080)\n"
           },
           {
             "name": {
@@ -6342,7 +6349,8 @@
                 }
               },
               "wireValue": "credit_card_expiration"
-            }
+            },
+            "docs": "Expiration date of a credit card"
           },
           {
             "name": {
@@ -6366,7 +6374,8 @@
                 }
               },
               "wireValue": "credit_card_number"
-            }
+            },
+            "docs": "Credit card number"
           },
           {
             "name": {
@@ -6390,7 +6399,8 @@
                 }
               },
               "wireValue": "date"
-            }
+            },
+            "docs": "Specific calendar date (e.g., December 18)"
           },
           {
             "name": {
@@ -6414,7 +6424,8 @@
                 }
               },
               "wireValue": "date_of_birth"
-            }
+            },
+            "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)\n"
           },
           {
             "name": {
@@ -6438,7 +6449,8 @@
                 }
               },
               "wireValue": "drivers_license"
-            }
+            },
+            "docs": "Driver's license number (e.g., DL #356933-540)\n"
           },
           {
             "name": {
@@ -6462,7 +6474,8 @@
                 }
               },
               "wireValue": "drug"
-            }
+            },
+            "docs": "Medications, vitamins, or supplements (e.g., Advil, Acetaminophen, Panadol)"
           },
           {
             "name": {
@@ -6486,7 +6499,8 @@
                 }
               },
               "wireValue": "email_address"
-            }
+            },
+            "docs": "Email address (e.g., support@assemblyai.com)"
           },
           {
             "name": {
@@ -6510,7 +6524,8 @@
                 }
               },
               "wireValue": "event"
-            }
+            },
+            "docs": "Name of an event or holiday (e.g., Olympics, Yom Kippur)"
           },
           {
             "name": {
@@ -6534,7 +6549,8 @@
                 }
               },
               "wireValue": "injury"
-            }
+            },
+            "docs": "Bodily injury (e.g., I broke my arm, I have a sprained wrist)"
           },
           {
             "name": {
@@ -6558,7 +6574,8 @@
                 }
               },
               "wireValue": "language"
-            }
+            },
+            "docs": "Name of a natural language (e.g., Spanish, French)"
           },
           {
             "name": {
@@ -6582,7 +6599,8 @@
                 }
               },
               "wireValue": "location"
-            }
+            },
+            "docs": "Any location reference including mailing address, postal code, city, state, province, or country"
           },
           {
             "name": {
@@ -6606,7 +6624,8 @@
                 }
               },
               "wireValue": "medical_condition"
-            }
+            },
+            "docs": "Name of a medical condition, disease, syndrome, deficit, or disorder (e.g., chronic fatigue syndrome, arrhythmia, depression)"
           },
           {
             "name": {
@@ -6630,7 +6649,8 @@
                 }
               },
               "wireValue": "medical_process"
-            }
+            },
+            "docs": "Medical process, including treatments, procedures, and tests (e.g., heart surgery, CT scan)"
           },
           {
             "name": {
@@ -6654,7 +6674,8 @@
                 }
               },
               "wireValue": "money_amount"
-            }
+            },
+            "docs": "Name and/or amount of currency (e.g., 15 pesos, $94.50)"
           },
           {
             "name": {
@@ -6678,7 +6699,8 @@
                 }
               },
               "wireValue": "nationality"
-            }
+            },
+            "docs": "Terms indicating nationality, ethnicity, or race (e.g., American, Asian, Caucasian)"
           },
           {
             "name": {
@@ -6702,7 +6724,8 @@
                 }
               },
               "wireValue": "occupation"
-            }
+            },
+            "docs": "Job title or profession (e.g., professor, actors, engineer, CPA)"
           },
           {
             "name": {
@@ -6726,7 +6749,8 @@
                 }
               },
               "wireValue": "organization"
-            }
+            },
+            "docs": "Name of an organization (e.g., CNN, McDonalds, University of Alaska)"
           },
           {
             "name": {
@@ -6750,7 +6774,8 @@
                 }
               },
               "wireValue": "password"
-            }
+            },
+            "docs": "Account passwords, PINs, access keys, or verification answers (e.g., 27%alfalfa, temp1234, My mother's maiden name is Smith)"
           },
           {
             "name": {
@@ -6774,7 +6799,8 @@
                 }
               },
               "wireValue": "person_age"
-            }
+            },
+            "docs": "Number associated with an age (e.g., 27, 75)"
           },
           {
             "name": {
@@ -6798,7 +6824,8 @@
                 }
               },
               "wireValue": "person_name"
-            }
+            },
+            "docs": "Name of a person (e.g., Bob, Doug Jones)"
           },
           {
             "name": {
@@ -6822,7 +6849,8 @@
                 }
               },
               "wireValue": "phone_number"
-            }
+            },
+            "docs": "Telephone or fax number"
           },
           {
             "name": {
@@ -6846,7 +6874,8 @@
                 }
               },
               "wireValue": "political_affiliation"
-            }
+            },
+            "docs": "Terms referring to a political party, movement, or ideology (e.g., Republican, Liberal)"
           },
           {
             "name": {
@@ -6870,7 +6899,8 @@
                 }
               },
               "wireValue": "religion"
-            }
+            },
+            "docs": "Terms indicating religious affiliation (e.g., Hindu, Catholic)"
           },
           {
             "name": {
@@ -6894,7 +6924,8 @@
                 }
               },
               "wireValue": "time"
-            }
+            },
+            "docs": "Expressions indicating clock times (e.g., 19:37:28, 10pm EST)"
           },
           {
             "name": {
@@ -6918,7 +6949,8 @@
                 }
               },
               "wireValue": "url"
-            }
+            },
+            "docs": "Internet addresses (e.g., www.assemblyai.com)"
           },
           {
             "name": {
@@ -6942,7 +6974,8 @@
                 }
               },
               "wireValue": "us_social_security_number"
-            }
+            },
+            "docs": "Social Security Number or equivalent"
           }
         ],
         "type": "enum"

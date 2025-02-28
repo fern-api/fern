@@ -4,6 +4,13 @@
       This lets you implement your own pagination strategy in the generated SDKs.
     type: feat
   irVersion: 56
+  version: 0.56.0-rc3
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where channel binding parameters with complex schemas were generated with conflicting names.
+    type: fix
+  irVersion: 55
   version: 0.56.0-rc2
 
 - changelogEntry:

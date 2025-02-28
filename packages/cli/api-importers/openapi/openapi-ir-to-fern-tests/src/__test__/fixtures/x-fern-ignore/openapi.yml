@@ -49,6 +49,12 @@ components:
       properties: 
         hasMore: 
           type: boolean
+    IgnoredSchema: 
+      x-fern-ignore: true
+      type: object
+      properties: 
+        hasMore: 
+          type: boolean
     UsersResponse:
       type: object
       properties:

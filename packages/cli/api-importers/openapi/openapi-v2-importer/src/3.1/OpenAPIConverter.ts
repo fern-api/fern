@@ -5,6 +5,7 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../AbstractConverter";
 import { ErrorCollector } from "../ErrorCollector";
+import { FernIgnoreExtension } from "../extensions/x-fern-ignore";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { SchemaConverter } from "./schema/SchemaConverter";
@@ -78,6 +79,12 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): IntermediateRepresentation {
+        context.spec = this.removeXFernIgnores({
+            document: context.spec,
+            context,
+            errorCollector
+        }) as OpenAPIV3_1.Document;
+
         this.convertServers({ context, errorCollector });
 
         this.convertSecuritySchemes({ context, errorCollector });
@@ -96,6 +103,58 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 })
             }
         };
+    }
+
+    private removeXFernIgnores({
+        document,
+        context,
+        errorCollector,
+        breadcrumbs = []
+    }: {
+        document: unknown;
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+        breadcrumbs?: string[];
+    }): unknown {
+        if (Array.isArray(document)) {
+            return document
+                .filter((item, index) => {
+                    const shouldIgnore = new FernIgnoreExtension({
+                        breadcrumbs: [...breadcrumbs, String(index)],
+                        operation: item
+                    }).convert({ context, errorCollector });
+                    return !shouldIgnore;
+                })
+                .map((item, index) =>
+                    this.removeXFernIgnores({
+                        document: item,
+                        context,
+                        errorCollector,
+                        breadcrumbs: [...breadcrumbs, String(index)]
+                    })
+                );
+        } else if (document != null && typeof document === "object") {
+            return Object.fromEntries(
+                Object.entries(document)
+                    .filter(([key, value]) => {
+                        const shouldIgnore = new FernIgnoreExtension({
+                            breadcrumbs: [...breadcrumbs, key],
+                            operation: value
+                        }).convert({ context, errorCollector });
+                        return !shouldIgnore;
+                    })
+                    .map(([key, value]) => [
+                        key,
+                        this.removeXFernIgnores({
+                            document: value,
+                            context,
+                            errorCollector,
+                            breadcrumbs: [...breadcrumbs, key]
+                        })
+                    ])
+            );
+        }
+        return document;
     }
 
     private convertSecuritySchemes({

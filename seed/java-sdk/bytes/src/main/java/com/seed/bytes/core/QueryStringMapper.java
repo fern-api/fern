@@ -20,15 +20,19 @@ public class QueryStringMapper {
     private static final ObjectMapper MAPPER = ObjectMappers.JSON_MAPPER;
 
     public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value, boolean arraysAsRepeats) {
-        JsonNode nested = MAPPER.valueToTree(value);
+        JsonNode valueNode = MAPPER.valueToTree(value);
 
         List<Map.Entry<String, JsonNode>> flat;
-        if (nested.isObject()) {
-            flat = flattenObject((ObjectNode) nested, arraysAsRepeats);
-        } else if (nested.isArray()) {
-            flat = flattenArray((ArrayNode) nested, "", arraysAsRepeats);
+        if (valueNode.isObject()) {
+            flat = flattenObject((ObjectNode) valueNode, arraysAsRepeats);
+        } else if (valueNode.isArray()) {
+            flat = flattenArray((ArrayNode) valueNode, "", arraysAsRepeats);
         } else {
-            httpUrl.addQueryParameter(key, value.toString());
+            if (valueNode.isTextual()) {
+                httpUrl.addQueryParameter(key, valueNode.textValue());
+            } else {
+                httpUrl.addQueryParameter(key, valueNode.toString());
+            }
             return;
         }
 
@@ -43,15 +47,19 @@ public class QueryStringMapper {
 
     public static void addFormDataPart(
             MultipartBody.Builder multipartBody, String key, Object value, boolean arraysAsRepeats) {
-        JsonNode nested = MAPPER.valueToTree(value);
+        JsonNode valueNode = MAPPER.valueToTree(value);
 
         List<Map.Entry<String, JsonNode>> flat;
-        if (nested.isObject()) {
-            flat = flattenObject((ObjectNode) nested, arraysAsRepeats);
-        } else if (nested.isArray()) {
-            flat = flattenArray((ArrayNode) nested, "", arraysAsRepeats);
+        if (valueNode.isObject()) {
+            flat = flattenObject((ObjectNode) valueNode, arraysAsRepeats);
+        } else if (valueNode.isArray()) {
+            flat = flattenArray((ArrayNode) valueNode, "", arraysAsRepeats);
         } else {
-            multipartBody.addFormDataPart(key, value.toString());
+            if (valueNode.isTextual()) {
+                multipartBody.addFormDataPart(key, valueNode.textValue());
+            } else {
+                multipartBody.addFormDataPart(key, valueNode.toString());
+            }
             return;
         }
 

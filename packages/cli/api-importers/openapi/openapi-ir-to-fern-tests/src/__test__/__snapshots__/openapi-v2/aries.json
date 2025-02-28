@@ -22629,22 +22629,22 @@
           {
             "name": {
               "name": {
-                "originalName": "<",
+                "originalName": "LessThan",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lessThan",
+                  "safeName": "lessThan"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "less_than",
+                  "safeName": "less_than"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LESS_THAN",
+                  "safeName": "LESS_THAN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LessThan",
+                  "safeName": "LessThan"
                 }
               },
               "wireValue": "<"
@@ -22653,22 +22653,22 @@
           {
             "name": {
               "name": {
-                "originalName": "<=",
+                "originalName": "LessThanOrEqualTo",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lessThanOrEqualTo",
+                  "safeName": "lessThanOrEqualTo"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "less_than_or_equal_to",
+                  "safeName": "less_than_or_equal_to"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LESS_THAN_OR_EQUAL_TO",
+                  "safeName": "LESS_THAN_OR_EQUAL_TO"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LessThanOrEqualTo",
+                  "safeName": "LessThanOrEqualTo"
                 }
               },
               "wireValue": "<="
@@ -22677,22 +22677,22 @@
           {
             "name": {
               "name": {
-                "originalName": ">=",
+                "originalName": "GreaterThanOrEqualTo",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greaterThanOrEqualTo",
+                  "safeName": "greaterThanOrEqualTo"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greater_than_or_equal_to",
+                  "safeName": "greater_than_or_equal_to"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GREATER_THAN_OR_EQUAL_TO",
+                  "safeName": "GREATER_THAN_OR_EQUAL_TO"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GreaterThanOrEqualTo",
+                  "safeName": "GreaterThanOrEqualTo"
                 }
               },
               "wireValue": ">="
@@ -22701,22 +22701,22 @@
           {
             "name": {
               "name": {
-                "originalName": ">",
+                "originalName": "GreaterThan",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greaterThan",
+                  "safeName": "greaterThan"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greater_than",
+                  "safeName": "greater_than"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GREATER_THAN",
+                  "safeName": "GREATER_THAN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GreaterThan",
+                  "safeName": "GreaterThan"
                 }
               },
               "wireValue": ">"
@@ -24969,22 +24969,22 @@
           {
             "name": {
               "name": {
-                "originalName": "<",
+                "originalName": "LessThan",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lessThan",
+                  "safeName": "lessThan"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "less_than",
+                  "safeName": "less_than"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LESS_THAN",
+                  "safeName": "LESS_THAN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LessThan",
+                  "safeName": "LessThan"
                 }
               },
               "wireValue": "<"
@@ -24993,22 +24993,22 @@
           {
             "name": {
               "name": {
-                "originalName": "<=",
+                "originalName": "LessThanOrEqualTo",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lessThanOrEqualTo",
+                  "safeName": "lessThanOrEqualTo"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "less_than_or_equal_to",
+                  "safeName": "less_than_or_equal_to"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LESS_THAN_OR_EQUAL_TO",
+                  "safeName": "LESS_THAN_OR_EQUAL_TO"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LessThanOrEqualTo",
+                  "safeName": "LessThanOrEqualTo"
                 }
               },
               "wireValue": "<="
@@ -25017,22 +25017,22 @@
           {
             "name": {
               "name": {
-                "originalName": ">=",
+                "originalName": "GreaterThanOrEqualTo",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greaterThanOrEqualTo",
+                  "safeName": "greaterThanOrEqualTo"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greater_than_or_equal_to",
+                  "safeName": "greater_than_or_equal_to"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GREATER_THAN_OR_EQUAL_TO",
+                  "safeName": "GREATER_THAN_OR_EQUAL_TO"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GreaterThanOrEqualTo",
+                  "safeName": "GreaterThanOrEqualTo"
                 }
               },
               "wireValue": ">="
@@ -25041,22 +25041,22 @@
           {
             "name": {
               "name": {
-                "originalName": ">",
+                "originalName": "GreaterThan",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greaterThan",
+                  "safeName": "greaterThan"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "greater_than",
+                  "safeName": "greater_than"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GREATER_THAN",
+                  "safeName": "GREATER_THAN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GreaterThan",
+                  "safeName": "GreaterThan"
                 }
               },
               "wireValue": ">"
