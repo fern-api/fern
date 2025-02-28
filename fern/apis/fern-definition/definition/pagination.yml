@@ -8,9 +8,6 @@ types:
 
   CursorPaginationSchema:
     properties:
-      type:
-        type: optional<literal<"cursor">>
-        docs: The type of pagination.
       cursor:
         type: string
         docs: The path to the request property for the cursor.
@@ -23,9 +20,6 @@ types:
 
   OffsetPaginationSchema:
     properties:
-      type:
-        type: optional<literal<"offset">>
-        docs: The type of pagination.
       offset:
         type: string
         docs: The path to the request property for the page offset.

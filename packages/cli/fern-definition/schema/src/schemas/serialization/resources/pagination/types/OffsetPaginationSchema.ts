@@ -10,7 +10,6 @@ export const OffsetPaginationSchema: core.serialization.ObjectSchema<
     serializers.OffsetPaginationSchema.Raw,
     FernDefinition.OffsetPaginationSchema
 > = core.serialization.object({
-    type: core.serialization.stringLiteral("offset").optional(),
     offset: core.serialization.string(),
     results: core.serialization.string(),
     step: core.serialization.string().optional(),
@@ -19,7 +18,6 @@ export const OffsetPaginationSchema: core.serialization.ObjectSchema<
 
 export declare namespace OffsetPaginationSchema {
     export interface Raw {
-        type?: "offset" | null;
         offset: string;
         results: string;
         step?: string | null;
