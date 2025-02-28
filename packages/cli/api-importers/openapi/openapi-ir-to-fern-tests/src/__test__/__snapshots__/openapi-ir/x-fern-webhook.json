@@ -1,0 +1,90 @@
+{
+  "apiVersion": {
+    "header": "X-API-Version",
+    "default": "2.0.0",
+    "values": [
+      "1.0.0",
+      "2.0.0",
+      "Latest"
+    ]
+  },
+  "title": "Test extension `x-fern-webhook`.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "WebhookRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "webhookRequestStream",
+            "key": "stream",
+            "schema": {
+              "generatedName": "webhookRequestStream",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "WebhookRequestStream",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "webhookRequestMessage",
+            "key": "message",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WebhookRequestMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "WebhookRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "api_key": {
+      "type": "bearer"
+    },
+    "custom_header": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    },
+    "access_token": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

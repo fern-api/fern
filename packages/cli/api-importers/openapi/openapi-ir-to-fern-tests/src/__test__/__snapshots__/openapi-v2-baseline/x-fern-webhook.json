@@ -1,0 +1,525 @@
+{
+  "apiVersion": {
+    "header": {
+      "name": {
+        "name": {
+          "originalName": "X-API-Version",
+          "camelCase": {
+            "unsafeName": "xAPIVersion",
+            "safeName": "xAPIVersion"
+          },
+          "snakeCase": {
+            "unsafeName": "x_api_version",
+            "safeName": "x_api_version"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "X_API_VERSION",
+            "safeName": "X_API_VERSION"
+          },
+          "pascalCase": {
+            "unsafeName": "XAPIVersion",
+            "safeName": "XAPIVersion"
+          }
+        },
+        "wireValue": "X-API-Version"
+      },
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      }
+    },
+    "value": {
+      "default": {
+        "name": {
+          "name": {
+            "originalName": "2.0.0",
+            "camelCase": {
+              "unsafeName": "200",
+              "safeName": "200"
+            },
+            "snakeCase": {
+              "unsafeName": "200",
+              "safeName": "200"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "200",
+              "safeName": "200"
+            },
+            "pascalCase": {
+              "unsafeName": "200",
+              "safeName": "200"
+            }
+          },
+          "wireValue": "2.0.0"
+        }
+      },
+      "values": [
+        {
+          "name": {
+            "name": {
+              "originalName": "1.0.0",
+              "camelCase": {
+                "unsafeName": "100",
+                "safeName": "100"
+              },
+              "snakeCase": {
+                "unsafeName": "100",
+                "safeName": "100"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "100",
+                "safeName": "100"
+              },
+              "pascalCase": {
+                "unsafeName": "100",
+                "safeName": "100"
+              }
+            },
+            "wireValue": "1.0.0"
+          }
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "2.0.0",
+              "camelCase": {
+                "unsafeName": "200",
+                "safeName": "200"
+              },
+              "snakeCase": {
+                "unsafeName": "200",
+                "safeName": "200"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "200",
+                "safeName": "200"
+              },
+              "pascalCase": {
+                "unsafeName": "200",
+                "safeName": "200"
+              }
+            },
+            "wireValue": "2.0.0"
+          }
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "Latest",
+              "camelCase": {
+                "unsafeName": "latest",
+                "safeName": "latest"
+              },
+              "snakeCase": {
+                "unsafeName": "latest",
+                "safeName": "latest"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LATEST",
+                "safeName": "LATEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Latest",
+                "safeName": "Latest"
+              }
+            },
+            "wireValue": "Latest"
+          }
+        }
+      ]
+    },
+    "type": "header"
+  },
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
+  "apiDisplayName": "Test extension `x-fern-webhook`.",
+  "auth": {
+    "requirement": "ALL",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      }
+    ]
+  },
+  "headers": [
+    {
+      "name": {
+        "name": {
+          "originalName": "apiKey",
+          "camelCase": {
+            "unsafeName": "apiKey",
+            "safeName": "apiKey"
+          },
+          "snakeCase": {
+            "unsafeName": "api_key",
+            "safeName": "api_key"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "API_KEY",
+            "safeName": "API_KEY"
+          },
+          "pascalCase": {
+            "unsafeName": "APIKey",
+            "safeName": "APIKey"
+          }
+        },
+        "wireValue": "X-API-Key"
+      },
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      }
+    }
+  ],
+  "idempotencyHeaders": [],
+  "types": {
+    "type_:WebhookRequest": {
+      "name": {
+        "name": {
+          "originalName": "WebhookRequest",
+          "camelCase": {
+            "unsafeName": "webhookRequest",
+            "safeName": "webhookRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "webhook_request",
+            "safeName": "webhook_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "WEBHOOK_REQUEST",
+            "safeName": "WEBHOOK_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "WebhookRequest",
+            "safeName": "WebhookRequest"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "typeId": "type_:WebhookRequest"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "stream",
+                "camelCase": {
+                  "unsafeName": "stream",
+                  "safeName": "stream"
+                },
+                "snakeCase": {
+                  "unsafeName": "stream",
+                  "safeName": "stream"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STREAM",
+                  "safeName": "STREAM"
+                },
+                "pascalCase": {
+                  "unsafeName": "Stream",
+                  "safeName": "Stream"
+                }
+              },
+              "wireValue": "stream"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "message",
+                "camelCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "snakeCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE",
+                  "safeName": "MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                }
+              },
+              "wireValue": "message"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "extraProperties": false,
+        "extendedProperties": [],
+        "type": "object"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    }
+  },
+  "errors": {},
+  "services": {},
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "pathParameters": [],
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "typesReferencedOnlyByService": {},
+    "sharedTypes": [
+      "type_:WebhookRequest"
+    ]
+  },
+  "webhookGroups": {},
+  "websocketChannels": {},
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {
+      "type_:WebhookRequest": {
+        "declaration": {
+          "name": {
+            "originalName": "WebhookRequest",
+            "camelCase": {
+              "unsafeName": "webhookRequest",
+              "safeName": "webhookRequest"
+            },
+            "snakeCase": {
+              "unsafeName": "webhook_request",
+              "safeName": "webhook_request"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBHOOK_REQUEST",
+              "safeName": "WEBHOOK_REQUEST"
+            },
+            "pascalCase": {
+              "unsafeName": "WebhookRequest",
+              "safeName": "WebhookRequest"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "stream",
+                "camelCase": {
+                  "unsafeName": "stream",
+                  "safeName": "stream"
+                },
+                "snakeCase": {
+                  "unsafeName": "stream",
+                  "safeName": "stream"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STREAM",
+                  "safeName": "STREAM"
+                },
+                "pascalCase": {
+                  "unsafeName": "Stream",
+                  "safeName": "Stream"
+                }
+              },
+              "wireValue": "stream"
+            },
+            "typeReference": {
+              "value": {
+                "value": "BOOLEAN",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "message",
+                "camelCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "snakeCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE",
+                  "safeName": "MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                }
+              },
+              "wireValue": "message"
+            },
+            "typeReference": {
+              "value": "STRING",
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "headers": [
+      {
+        "name": {
+          "name": {
+            "originalName": "apiKey",
+            "camelCase": {
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "api_key",
+              "safeName": "api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "APIKey",
+              "safeName": "APIKey"
+            }
+          },
+          "wireValue": "X-API-Key"
+        },
+        "typeReference": {
+          "value": "STRING",
+          "type": "primitive"
+        }
+      }
+    ],
+    "endpoints": {}
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [
+      "type_:WebhookRequest"
+    ],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "sdkConfig": {
+    "isAuthMandatory": true,
+    "hasStreamingEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasFileDownloadEndpoints": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version"
+    }
+  }
+}

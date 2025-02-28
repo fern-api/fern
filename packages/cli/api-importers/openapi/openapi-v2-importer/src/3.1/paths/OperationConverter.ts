@@ -19,6 +19,7 @@ import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
 import { GroupNameAndLocation } from "../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";
@@ -91,6 +92,15 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         if (paginationExtension != null) {
             // TODO: Use pagination extension to modify endpoint conversion.
             // Correctly parse out the pagination ResponseProperty objects
+        }
+
+        const webhookExtensionConverter = new FernWebhookExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        });
+        const webhookExtension = webhookExtensionConverter.convert({ context, errorCollector });
+        if (webhookExtension != null) {
+            // TODO: Use webhook extension to modify endpoint conversion.
         }
 
         let requestBody: HttpRequestBody | undefined;

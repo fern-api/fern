@@ -1,0 +1,85 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "WebhookRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": "string",
+              "stream": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  WebhookRequest:
+    properties:
+      stream: optional<boolean>
+      message: string
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "BearerAuthScheme",
+      "auth-schemes": {
+        "BearerAuthScheme": {
+          "scheme": "bearer",
+        },
+      },
+      "display-name": "Test extension `x-fern-webhook`.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "X-API-Key": {
+          "env": undefined,
+          "name": "apiKey",
+          "type": "string",
+        },
+      },
+      "name": "api",
+      "version": {
+        "default": "2.0.0",
+        "header": "X-API-Version",
+        "values": [
+          "1.0.0",
+          "2.0.0",
+          "Latest",
+        ],
+      },
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test extension `x-fern-webhook`.
+version:
+  header: X-API-Version
+  default: 2.0.0
+  values:
+    - 1.0.0
+    - 2.0.0
+    - Latest
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme
+headers:
+  X-API-Key:
+    type: string
+    name: apiKey
+",
+  },
+}
