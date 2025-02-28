@@ -210,6 +210,9 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             skipOptionalProperties: skipOptionalRequestProperties
                         });
+                        if (extendedExample == null) {
+                            continue;
+                        }
                         if (extendedExample.type === "success") {
                             Object.assign(jsonExample, extendedExample.jsonExample);
                         }

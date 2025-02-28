@@ -33,7 +33,7 @@ export function generateTypeDeclarationExample({
     maxDepth,
     currentDepth,
     skipOptionalProperties
-}: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> {
+}: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
         case "alias": {
             const generatedExample = generateTypeReferenceExample({
@@ -77,9 +77,7 @@ export function generateTypeDeclarationExample({
                 for (const extendedTypeReference of typeDeclaration.shape.extends) {
                     const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
                     if (extendedTypeDeclaration == null) {
-                        throw new Error(
-                            `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
-                        );
+                        continue;
                     }
                     const extendedExample = generateTypeDeclarationExample({
                         fieldName,
@@ -89,6 +87,9 @@ export function generateTypeDeclarationExample({
                         maxDepth,
                         skipOptionalProperties
                     });
+                    if (extendedExample == null) {
+                        continue;
+                    }
                     if (extendedExample.type === "success" && extendedExample.example.type === "object") {
                         Object.assign(baseJsonExample, extendedExample.jsonExample);
                         baseProperties.push(...extendedExample.example.properties);
@@ -185,7 +186,10 @@ export function generateTypeDeclarationExample({
                     samePropertiesAsObject: (samePropertiesAsObject) => {
                         const typeDeclaration = typeDeclarations[samePropertiesAsObject.typeId];
                         if (typeDeclaration == null) {
-                            throw new Error(`Failed to find type declaration with id ${samePropertiesAsObject.typeId}`);
+                            return {
+                                type: "failure",
+                                message: `Failed to find type declaration with id ${samePropertiesAsObject.typeId}`
+                            };
                         }
 
                         const typeDeclarationExample = generateTypeDeclarationExample({
@@ -196,6 +200,9 @@ export function generateTypeDeclarationExample({
                             typeDeclarations,
                             skipOptionalProperties
                         });
+                        if (typeDeclarationExample == null) {
+                            return { type: "failure", message: "Failed to generate example for type reference" };
+                        }
 
                         if (typeDeclarationExample.type === "failure") {
                             return typeDeclarationExample;

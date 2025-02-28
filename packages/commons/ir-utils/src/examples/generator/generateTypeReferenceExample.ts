@@ -40,7 +40,7 @@ export function generateTypeReferenceExample({
         case "named": {
             const typeDeclaration = typeDeclarations[typeReference.typeId];
             if (typeDeclaration == null) {
-                throw new Error(`Failed to find type declaration with id ${typeReference.typeId}`);
+                return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
@@ -50,6 +50,9 @@ export function generateTypeReferenceExample({
                 currentDepth,
                 skipOptionalProperties
             });
+            if (generatedExample == null) {
+                return { type: "failure", message: "Failed to generate example for type declaration" };
+            }
             if (generatedExample.type === "failure") {
                 return generatedExample;
             }
