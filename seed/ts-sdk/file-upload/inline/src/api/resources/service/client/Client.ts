@@ -95,6 +95,24 @@ export class Service {
             );
         }
 
+        _request.append(
+            "alias_object",
+            toJson(serializers.MyAliasObject.jsonOrThrow(request.aliasObject, { unrecognizedObjectKeys: "strip" })),
+        );
+        for (const _item of request.listOfAliasObject) {
+            _request.append(
+                "list_of_alias_object",
+                toJson(serializers.MyAliasObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
+            );
+        }
+
+        for (const _item of request.aliasListOfObject) {
+            _request.append(
+                "alias_list_of_object",
+                toJson(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
+            );
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url:
@@ -519,6 +537,22 @@ export class Service {
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ list_of_objects_with_optionals: request.listOfObjectsWithOptionals }),
+        )) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.aliasObject }))) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_alias_object: request.listOfAliasObject }),
+        )) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ alias_list_of_object: request.aliasListOfObject }),
         )) {
             _request.append(key, value);
         }

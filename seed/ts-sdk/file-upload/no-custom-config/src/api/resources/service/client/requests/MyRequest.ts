@@ -13,4 +13,7 @@ export interface MyRequest {
     optionalMetadata?: unknown;
     optionalObjectType?: SeedFileUpload.ObjectType;
     optionalId?: SeedFileUpload.Id;
+    aliasObject: SeedFileUpload.MyAliasObject;
+    listOfAliasObject: SeedFileUpload.MyAliasObject[];
+    aliasListOfObject: SeedFileUpload.MyCollectionAliasObject;
 }

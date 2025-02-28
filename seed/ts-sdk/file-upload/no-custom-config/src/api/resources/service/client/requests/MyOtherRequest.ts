@@ -14,4 +14,7 @@ export interface MyOtherRequest {
     optionalObjectType?: SeedFileUpload.ObjectType;
     optionalId?: SeedFileUpload.Id;
     listOfObjectsWithOptionals: SeedFileUpload.MyObjectWithOptional[];
+    aliasObject: SeedFileUpload.MyAliasObject;
+    listOfAliasObject: SeedFileUpload.MyAliasObject[];
+    aliasListOfObject: SeedFileUpload.MyCollectionAliasObject;
 }
