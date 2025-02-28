@@ -18,6 +18,7 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQue
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -36,14 +37,14 @@ public class AsyncParamsClient {
     /**
      * GET with path param
      */
-    public String getWithPath(String param) {
+    public CompletableFuture<String> getWithPath(String param) {
         return getWithPath(param, null);
     }
 
     /**
      * GET with path param
      */
-    public String getWithPath(String param, RequestOptions requestOptions) {
+    public CompletableFuture<String> getWithPath(String param, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -79,14 +80,14 @@ public class AsyncParamsClient {
     /**
      * GET with path param
      */
-    public String getWithInlinePath(GetWithInlinePath request) {
+    public CompletableFuture<String> getWithInlinePath(GetWithInlinePath request) {
         return getWithInlinePath(request, null);
     }
 
     /**
      * GET with path param
      */
-    public String getWithInlinePath(GetWithInlinePath request, RequestOptions requestOptions) {
+    public CompletableFuture<String> getWithInlinePath(GetWithInlinePath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -122,14 +123,14 @@ public class AsyncParamsClient {
     /**
      * GET with query param
      */
-    public void getWithQuery(GetWithQuery request) {
+    public CompletableFuture<Void> getWithQuery(GetWithQuery request) {
         getWithQuery(request, null);
     }
 
     /**
      * GET with query param
      */
-    public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
@@ -162,14 +163,15 @@ public class AsyncParamsClient {
     /**
      * GET with multiple of same query param
      */
-    public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
+    public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
         getWithAllowMultipleQuery(request, null);
     }
 
     /**
      * GET with multiple of same query param
      */
-    public void getWithAllowMultipleQuery(GetWithMultipleQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithAllowMultipleQuery(
+            GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
@@ -202,14 +204,15 @@ public class AsyncParamsClient {
     /**
      * GET with path and query params
      */
-    public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
+    public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
         getWithPathAndQuery(param, request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public void getWithPathAndQuery(String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithPathAndQuery(
+            String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -243,14 +246,15 @@ public class AsyncParamsClient {
     /**
      * GET with path and query params
      */
-    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
+    public CompletableFuture<Void> getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
         getWithInlinePathAndQuery(request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithInlinePathAndQuery(
+            GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -284,14 +288,14 @@ public class AsyncParamsClient {
     /**
      * PUT to update with path param
      */
-    public String modifyWithPath(String param, String request) {
+    public CompletableFuture<String> modifyWithPath(String param, String request) {
         return modifyWithPath(param, request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
+    public CompletableFuture<String> modifyWithPath(String param, String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -334,14 +338,15 @@ public class AsyncParamsClient {
     /**
      * PUT to update with path param
      */
-    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
+    public CompletableFuture<String> modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
         return modifyWithInlinePath(request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+    public CompletableFuture<String> modifyWithInlinePath(
+            ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")

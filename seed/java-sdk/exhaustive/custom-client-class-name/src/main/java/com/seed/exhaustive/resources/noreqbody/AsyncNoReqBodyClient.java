@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -25,11 +26,11 @@ public class AsyncNoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public ObjectWithOptionalField getWithNoRequestBody() {
+    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
         return getWithNoRequestBody(null);
     }
 
-    public ObjectWithOptionalField getWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -60,11 +61,11 @@ public class AsyncNoReqBodyClient {
         }
     }
 
-    public String postWithNoRequestBody() {
+    public CompletableFuture<String> postWithNoRequestBody() {
         return postWithNoRequestBody(null);
     }
 
-    public String postWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")

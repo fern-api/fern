@@ -15,6 +15,8 @@ import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
+import java.lang.Void;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -30,15 +32,15 @@ public class AsyncContentTypeClient {
     this.clientOptions = clientOptions;
   }
 
-  public void postJsonPatchContentType() {
+  public CompletableFuture<Void> postJsonPatchContentType() {
     postJsonPatchContentType(ObjectWithOptionalField.builder().build());
   }
 
-  public void postJsonPatchContentType(ObjectWithOptionalField request) {
+  public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
     postJsonPatchContentType(request,null);
   }
 
-  public void postJsonPatchContentType(ObjectWithOptionalField request,
+  public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request,
       RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("foo")
@@ -74,16 +76,17 @@ public class AsyncContentTypeClient {
     }
   }
 
-  public void postJsonPatchContentWithCharsetType() {
+  public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
     postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
   }
 
-  public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
+  public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
+      ObjectWithOptionalField request) {
     postJsonPatchContentWithCharsetType(request,null);
   }
 
-  public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
+      ObjectWithOptionalField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("foo")
       .addPathSegments("baz")

@@ -386,7 +386,7 @@ public abstract class AbstractEndpointWriter {
                     .build();
         }
 
-        return new HttpEndpointMethodSpecs(
+        return httpEndpointMethodSpecsFactory.create(
                 endpointWithRequestOptions,
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,

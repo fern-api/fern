@@ -15,6 +15,7 @@ import com.fern.sdk.resources.types.enum_.types.WeatherReport;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -30,11 +31,12 @@ public class AsyncEnumClient {
     this.clientOptions = clientOptions;
   }
 
-  public WeatherReport getAndReturnEnum(WeatherReport request) {
+  public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request) {
     return getAndReturnEnum(request,null);
   }
 
-  public WeatherReport getAndReturnEnum(WeatherReport request, RequestOptions requestOptions) {
+  public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("enum")
 

@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.core.SeedExhaustiveException;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -25,11 +26,11 @@ public class AsyncReqWithHeadersClient {
         this.clientOptions = clientOptions;
     }
 
-    public void getWithCustomHeader(ReqWithHeaders request) {
+    public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
         getWithCustomHeader(request, null);
     }
 
-    public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test-headers")

@@ -14,6 +14,7 @@ import com.seed.exhaustive.errors.BadRequestBody;
 import com.seed.exhaustive.types.BadObjectRequestInfo;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -32,14 +33,14 @@ public class AsyncInlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
+    public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(PostWithObjectBody request) {
         return postWithObjectBodyandResponse(request, null);
     }
 
     /**
      * POST with custom object in request body, response is an object
      */
-    public ObjectWithOptionalField postWithObjectBodyandResponse(
+    public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

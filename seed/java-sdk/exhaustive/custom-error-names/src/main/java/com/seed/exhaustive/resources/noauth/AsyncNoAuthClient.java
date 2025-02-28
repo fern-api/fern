@@ -13,6 +13,7 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,14 +32,14 @@ public class AsyncNoAuthClient {
     /**
      * POST request with no auth
      */
-    public boolean postWithNoAuth(Object request) {
+    public CompletableFuture<Boolean> postWithNoAuth(Object request) {
         return postWithNoAuth(request, null);
     }
 
     /**
      * POST request with no auth
      */
-    public boolean postWithNoAuth(Object request, RequestOptions requestOptions) {
+    public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-auth")

@@ -12,10 +12,15 @@ import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import java.io.IOException;
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Integer;
+import java.lang.Long;
 import java.lang.Object;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,11 +36,12 @@ public class AsyncPrimitiveClient {
     this.clientOptions = clientOptions;
   }
 
-  public String getAndReturnString(String request) {
+  public CompletableFuture<String> getAndReturnString(String request) {
     return getAndReturnString(request,null);
   }
 
-  public String getAndReturnString(String request, RequestOptions requestOptions) {
+  public CompletableFuture<String> getAndReturnString(String request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("string")
@@ -71,11 +77,11 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public int getAndReturnInt(int request) {
+  public CompletableFuture<Integer> getAndReturnInt(int request) {
     return getAndReturnInt(request,null);
   }
 
-  public int getAndReturnInt(int request, RequestOptions requestOptions) {
+  public CompletableFuture<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("integer")
@@ -111,11 +117,11 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public long getAndReturnLong(long request) {
+  public CompletableFuture<Long> getAndReturnLong(long request) {
     return getAndReturnLong(request,null);
   }
 
-  public long getAndReturnLong(long request, RequestOptions requestOptions) {
+  public CompletableFuture<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("long")
@@ -151,11 +157,12 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public double getAndReturnDouble(double request) {
+  public CompletableFuture<Double> getAndReturnDouble(double request) {
     return getAndReturnDouble(request,null);
   }
 
-  public double getAndReturnDouble(double request, RequestOptions requestOptions) {
+  public CompletableFuture<Double> getAndReturnDouble(double request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("double")
@@ -191,11 +198,12 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public boolean getAndReturnBool(boolean request) {
+  public CompletableFuture<Boolean> getAndReturnBool(boolean request) {
     return getAndReturnBool(request,null);
   }
 
-  public boolean getAndReturnBool(boolean request, RequestOptions requestOptions) {
+  public CompletableFuture<Boolean> getAndReturnBool(boolean request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("boolean")
@@ -231,11 +239,11 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public OffsetDateTime getAndReturnDatetime(OffsetDateTime request) {
+  public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
     return getAndReturnDatetime(request,null);
   }
 
-  public OffsetDateTime getAndReturnDatetime(OffsetDateTime request,
+  public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request,
       RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
@@ -272,11 +280,11 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public String getAndReturnDate(String request) {
+  public CompletableFuture<String> getAndReturnDate(String request) {
     return getAndReturnDate(request,null);
   }
 
-  public String getAndReturnDate(String request, RequestOptions requestOptions) {
+  public CompletableFuture<String> getAndReturnDate(String request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("date")
@@ -312,11 +320,11 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public UUID getAndReturnUuid(UUID request) {
+  public CompletableFuture<UUID> getAndReturnUuid(UUID request) {
     return getAndReturnUuid(request,null);
   }
 
-  public UUID getAndReturnUuid(UUID request, RequestOptions requestOptions) {
+  public CompletableFuture<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("uuid")
@@ -352,11 +360,12 @@ public class AsyncPrimitiveClient {
     }
   }
 
-  public byte[] getAndReturnBase64(byte[] request) {
+  public CompletableFuture<byte[]> getAndReturnBase64(byte[] request) {
     return getAndReturnBase64(request,null);
   }
 
-  public byte[] getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
+  public CompletableFuture<byte[]> getAndReturnBase64(byte[] request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("primitive")
       .addPathSegments("base64")

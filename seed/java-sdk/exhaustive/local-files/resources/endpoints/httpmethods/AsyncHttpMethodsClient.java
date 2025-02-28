@@ -14,8 +14,10 @@ import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
+import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,11 +33,11 @@ public class AsyncHttpMethodsClient {
     this.clientOptions = clientOptions;
   }
 
-  public String testGet(String id) {
+  public CompletableFuture<String> testGet(String id) {
     return testGet(id,null);
   }
 
-  public String testGet(String id, RequestOptions requestOptions) {
+  public CompletableFuture<String> testGet(String id, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("http-methods")
 
@@ -65,11 +67,11 @@ public class AsyncHttpMethodsClient {
     }
   }
 
-  public ObjectWithOptionalField testPost(ObjectWithRequiredField request) {
+  public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
     return testPost(request,null);
   }
 
-  public ObjectWithOptionalField testPost(ObjectWithRequiredField request,
+  public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request,
       RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("http-methods")
@@ -106,12 +108,13 @@ public class AsyncHttpMethodsClient {
     }
   }
 
-  public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request) {
+  public CompletableFuture<ObjectWithOptionalField> testPut(String id,
+      ObjectWithRequiredField request) {
     return testPut(id,request,null);
   }
 
-  public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<ObjectWithOptionalField> testPut(String id,
+      ObjectWithRequiredField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("http-methods")
 
@@ -148,16 +151,17 @@ public class AsyncHttpMethodsClient {
     }
   }
 
-  public ObjectWithOptionalField testPatch(String id) {
+  public CompletableFuture<ObjectWithOptionalField> testPatch(String id) {
     return testPatch(id,ObjectWithOptionalField.builder().build());
   }
 
-  public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
+  public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
+      ObjectWithOptionalField request) {
     return testPatch(id,request,null);
   }
 
-  public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
+      ObjectWithOptionalField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("http-methods")
 
@@ -194,11 +198,11 @@ public class AsyncHttpMethodsClient {
     }
   }
 
-  public boolean testDelete(String id) {
+  public CompletableFuture<Boolean> testDelete(String id) {
     return testDelete(id,null);
   }
 
-  public boolean testDelete(String id, RequestOptions requestOptions) {
+  public CompletableFuture<Boolean> testDelete(String id, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("http-methods")
 

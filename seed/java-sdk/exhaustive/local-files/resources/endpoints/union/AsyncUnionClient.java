@@ -15,6 +15,7 @@ import com.fern.sdk.resources.types.union.types.Animal;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -30,11 +31,12 @@ public class AsyncUnionClient {
     this.clientOptions = clientOptions;
   }
 
-  public Animal getAndReturnUnion(Animal request) {
+  public CompletableFuture<Animal> getAndReturnUnion(Animal request) {
     return getAndReturnUnion(request,null);
   }
 
-  public Animal getAndReturnUnion(Animal request, RequestOptions requestOptions) {
+  public CompletableFuture<Animal> getAndReturnUnion(Animal request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("union")
 
