@@ -93,6 +93,12 @@ fixtures:
     - customConfig:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inline-path-parameters: true
+      outputFolder: inline-path-parameters
   grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config

@@ -1,9 +1,11 @@
+using System.Text.Json.Serialization;
 using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
-public record SearchUsersRequest
+public record SearchOrganizationsRequest
 {
+    [JsonIgnore]
     public int? Limit { get; set; }
 
     public override string ToString()
