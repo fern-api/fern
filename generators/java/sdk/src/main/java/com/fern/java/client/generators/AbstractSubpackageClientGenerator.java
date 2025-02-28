@@ -24,7 +24,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
-import com.fern.java.client.generators.ClientGeneratorUtils.Result;
+import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -32,18 +32,18 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.JavaFile;
 import java.util.Map;
 
-public final class SubpackageClientGenerator extends AbstractFileGenerator {
-    private final GeneratedObjectMapper generatedObjectMapper;
-    private final ClientGeneratorContext clientGeneratorContext;
-    private final GeneratedClientOptions generatedClientOptions;
-    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
-    private final GeneratedJavaFile generatedSuppliersFile;
-    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final Subpackage subpackage;
-    private final GeneratedJavaFile requestOptionsFile;
-    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
+public abstract class AbstractSubpackageClientGenerator extends AbstractFileGenerator {
+    protected final GeneratedObjectMapper generatedObjectMapper;
+    protected final ClientGeneratorContext clientGeneratorContext;
+    protected final GeneratedClientOptions generatedClientOptions;
+    protected final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    protected final GeneratedJavaFile generatedSuppliersFile;
+    protected final GeneratedEnvironmentsClass generatedEnvironmentsClass;
+    protected final Subpackage subpackage;
+    protected final GeneratedJavaFile requestOptionsFile;
+    protected final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
-    public SubpackageClientGenerator(
+    public AbstractSubpackageClientGenerator(
             Subpackage subpackage,
             AbstractGeneratorContext<?, ?> generatorContext,
             GeneratedObjectMapper generatedObjectMapper,
@@ -66,20 +66,12 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
         this.generatedErrors = generatedErrors;
     }
 
+    protected abstract AbstractClientGeneratorUtils clientGeneratorUtils();
+
     @Override
     public GeneratedClient generateFile() {
-        ClientGeneratorUtils clientGeneratorUtils = new ClientGeneratorUtils(
-                className,
-                clientGeneratorContext,
-                generatedClientOptions,
-                generatedObjectMapper,
-                generatedEnvironmentsClass,
-                allGeneratedInterfaces,
-                generatedSuppliersFile,
-                requestOptionsFile,
-                subpackage,
-                generatedErrors);
-        Result result = clientGeneratorUtils.buildClients();
+        AbstractClientGeneratorUtils abstractClientGeneratorUtils = clientGeneratorUtils();
+        Result result = abstractClientGeneratorUtils.buildClients();
         return GeneratedClient.builder()
                 .className(className)
                 .javaFile(JavaFile.builder(

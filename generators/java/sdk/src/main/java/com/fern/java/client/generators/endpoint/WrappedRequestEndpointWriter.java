@@ -83,6 +83,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             SdkRequest sdkRequest,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedWrappedRequest generatedWrappedRequest,
+            AbstractHttpResponseParserGenerator responseParserGenerator,
+            HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -92,6 +94,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 clientOptionsField,
                 generatedClientOptions,
                 generatedEnvironmentsClass,
+                responseParserGenerator,
+                httpEndpointMethodSpecsFactory,
                 generatedErrors);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
