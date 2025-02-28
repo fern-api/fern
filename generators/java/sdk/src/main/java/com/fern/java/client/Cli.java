@@ -17,6 +17,7 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.client.generators.AbstractRootClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
@@ -30,10 +31,10 @@ import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
-import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
+import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
@@ -342,8 +343,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
 
-        // root client
-        RootClientGenerator rootClientGenerator = new RootClientGenerator(
+        // root clients
+        AbstractRootClientGenerator syncRootClientGenerator = new SyncRootClientGenerator(
                 context,
                 objectMapper,
                 context,
@@ -354,7 +355,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
                 generatedErrors);
-        GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
+        GeneratedRootClient generatedRootClient = syncRootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
         this.addGeneratedFile(generatedRootClient.builderClass());
         generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);

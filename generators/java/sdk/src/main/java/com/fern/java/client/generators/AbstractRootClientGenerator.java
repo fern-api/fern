@@ -53,22 +53,22 @@ import java.util.Optional;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
 
-public final class RootClientGenerator extends AbstractFileGenerator {
+public abstract class AbstractRootClientGenerator extends AbstractFileGenerator {
 
     private static final String CLIENT_OPTIONS_BUILDER_NAME = "clientOptionsBuilder";
     private static final String ENVIRONMENT_FIELD_NAME = "environment";
-    private final GeneratedObjectMapper generatedObjectMapper;
-    private final ClientGeneratorContext clientGeneratorContext;
-    private final GeneratedClientOptions generatedClientOptions;
-    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    protected final GeneratedObjectMapper generatedObjectMapper;
+    protected final ClientGeneratorContext clientGeneratorContext;
+    protected final GeneratedClientOptions generatedClientOptions;
+    protected final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final Optional<GeneratedJavaFile> generatedOAuthTokenSupplier;
-    private final GeneratedJavaFile generatedSuppliersFile;
-    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
+    protected final GeneratedJavaFile generatedSuppliersFile;
+    protected final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
-    private final GeneratedJavaFile requestOptionsFile;
-    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
+    protected final GeneratedJavaFile requestOptionsFile;
+    protected final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
-    public RootClientGenerator(
+    public AbstractRootClientGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
             GeneratedObjectMapper generatedObjectMapper,
             ClientGeneratorContext clientGeneratorContext,
@@ -99,20 +99,12 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.requestOptionsFile = requestOptionsFile;
     }
 
+    protected abstract AbstractClientGeneratorUtils clientGeneratorUtils();
+
     @Override
     public GeneratedRootClient generateFile() {
-        AbstractClientGeneratorUtils abstractClientGeneratorUtils = new SyncClientGeneratorUtils(
-                className,
-                clientGeneratorContext,
-                generatedClientOptions,
-                generatedObjectMapper,
-                generatedEnvironmentsClass,
-                allGeneratedInterfaces,
-                generatedSuppliersFile,
-                requestOptionsFile,
-                generatorContext.getIr().getRootPackage(),
-                generatedErrors);
-        Result result = abstractClientGeneratorUtils.buildClients();
+        AbstractClientGeneratorUtils clientGeneratorUtils = clientGeneratorUtils();
+        Result result = clientGeneratorUtils.buildClients();
 
         TypeSpec builderTypeSpec = getClientBuilder();
 

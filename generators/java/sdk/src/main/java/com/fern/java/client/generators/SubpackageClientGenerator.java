@@ -24,7 +24,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
-import com.fern.java.client.generators.ClientGeneratorUtils.Result;
+import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -68,7 +68,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedClient generateFile() {
-        ClientGeneratorUtils clientGeneratorUtils = new ClientGeneratorUtils(
+        AbstractClientGeneratorUtils abstractClientGeneratorUtils = new SyncClientGeneratorUtils(
                 className,
                 clientGeneratorContext,
                 generatedClientOptions,
@@ -79,7 +79,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
                 requestOptionsFile,
                 subpackage,
                 generatedErrors);
-        Result result = clientGeneratorUtils.buildClients();
+        Result result = abstractClientGeneratorUtils.buildClients();
         return GeneratedClient.builder()
                 .className(className)
                 .javaFile(JavaFile.builder(

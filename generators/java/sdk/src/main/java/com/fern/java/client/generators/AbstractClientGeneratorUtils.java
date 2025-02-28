@@ -46,9 +46,9 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
-public final class ClientGeneratorUtils {
+public abstract class AbstractClientGeneratorUtils {
 
-    private final ClientGeneratorContext generatorContext;
+    protected final ClientGeneratorContext generatorContext;
     private final TypeSpec.Builder implBuilder;
     private final FieldSpec clientOptionsField;
     private final IPackage fernPackage;
@@ -61,7 +61,7 @@ public final class ClientGeneratorUtils {
     private final GeneratedJavaFile requestOptionsFile;
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
-    public ClientGeneratorUtils(
+    public AbstractClientGeneratorUtils(
             ClassName clientImplName,
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
@@ -77,7 +77,7 @@ public final class ClientGeneratorUtils {
                 .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                 .build();
         this.fernPackage = fernPackage;
-        this.implBuilder = TypeSpec.classBuilder(clientImplName)
+        this.implBuilder = TypeSpec.classBuilder(clientImplName(clientImplName))
                 .addModifiers(Modifier.PUBLIC)
                 .addField(clientOptionsField);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
@@ -88,6 +88,10 @@ public final class ClientGeneratorUtils {
         this.requestOptionsFile = requestOptionsFile;
         this.generatedErrors = generatedErrors;
     }
+
+    protected abstract ClassName clientImplName(ClassName rawClientImplName);
+
+    protected abstract ClassName subpackageClientImplName(Subpackage subpackage);
 
     public Result buildClients() {
         Optional<HttpService> maybeHttpService = fernPackage
@@ -138,8 +142,7 @@ public final class ClientGeneratorUtils {
             if (!subpackage.getHasEndpointsInTree()) {
                 continue;
             }
-            ClassName subpackageClientImpl =
-                    generatorContext.getPoetClassNameFactory().getClientClassName(subpackage);
+            ClassName subpackageClientImpl = subpackageClientImplName(subpackage);
             FieldSpec clientSupplierField = FieldSpec.builder(
                             ParameterizedTypeName.get(ClassName.get(Supplier.class), subpackageClientImpl),
                             subpackage.getName().getCamelCase().getUnsafeName() + "Client")
