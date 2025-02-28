@@ -72,7 +72,8 @@ public abstract class AbstractEndpointWriter {
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
-    AbstractHttpResponseParserGenerator responseParserGenerator;
+    private final AbstractHttpResponseParserGenerator responseParserGenerator;
+    private final HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -83,6 +84,7 @@ public abstract class AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             AbstractHttpResponseParserGenerator responseParserGenerator,
+            HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
@@ -92,6 +94,7 @@ public abstract class AbstractEndpointWriter {
         this.generatedObjectMapper = generatedObjectMapper;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.responseParserGenerator = responseParserGenerator;
+        this.httpEndpointMethodSpecsFactory = httpEndpointMethodSpecsFactory;
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);

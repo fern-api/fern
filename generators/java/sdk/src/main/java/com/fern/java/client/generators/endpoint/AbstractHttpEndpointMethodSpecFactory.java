@@ -74,6 +74,8 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
 
     public abstract AbstractHttpResponseParserGenerator responseParserGenerator();
 
+    public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
+
     public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
@@ -90,6 +92,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
                             responseParserGenerator(),
+                            httpEndpointMethodSpecsFactory(),
                             generatedErrors);
                     return onlyRequestEndpointWriter.generate();
                 }
@@ -123,6 +126,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                                 generatedWrappedRequest,
                                 httpEndpoint.getSdkRequest().get(),
                                 responseParserGenerator(),
+                                httpEndpointMethodSpecsFactory(),
                                 generatedErrors);
                         return onlyRequestEndpointWriter.generate();
                     }
@@ -137,6 +141,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             generatedEnvironmentsClass,
                             generatedWrappedRequest,
                             responseParserGenerator(),
+                            httpEndpointMethodSpecsFactory(),
                             generatedErrors);
                     return wrappedRequestEndpointWriter.generate();
                 }
@@ -156,6 +161,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                     generatedEnvironmentsClass,
                     generatedClientOptions,
                     responseParserGenerator(),
+                    httpEndpointMethodSpecsFactory(),
                     generatedErrors);
             return noRequestEndpointWriter.generate();
         }

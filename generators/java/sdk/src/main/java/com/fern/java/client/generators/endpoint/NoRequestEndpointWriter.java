@@ -47,6 +47,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedClientOptions generatedClientOptions,
             AbstractHttpResponseParserGenerator responseParserGenerator,
+            HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -57,6 +58,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 generatedClientOptions,
                 generatedEnvironmentsClass,
                 responseParserGenerator,
+                httpEndpointMethodSpecsFactory,
                 generatedErrors);
     }
 

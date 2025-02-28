@@ -41,4 +41,9 @@ public class AsyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMeth
     public AbstractHttpResponseParserGenerator responseParserGenerator() {
         return new AsyncHttpResponseParserGenerator();
     }
+
+    @Override
+    public HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory() {
+        return new AsyncHttpEndpointMethodSpecsFactory();
+    }
 }

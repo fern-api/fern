@@ -41,4 +41,9 @@ public class SyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMetho
     public AbstractHttpResponseParserGenerator responseParserGenerator() {
         return new SyncHttpResponseParserGenerator();
     }
+
+    @Override
+    public HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory() {
+        return new SyncHttpEndpointMethodSpecsFactory();
+    }
 }
