@@ -45,6 +45,12 @@ scripts:
       # - dotnet test src
 
 fixtures:
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-pager-name: MyPager
+      outputFolder: custom-pager
   examples:
     - customConfig: null
       outputFolder: no-custom-config

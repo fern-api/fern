@@ -572,13 +572,15 @@ function convertStreamParameter(
     };
 }
 
-function convertPagination(pagination: IrVersions.V55.http.Pagination): IrVersions.V54.http.Pagination {
+function convertPagination(pagination: IrVersions.V55.http.Pagination): IrVersions.V54.http.Pagination | undefined {
     switch (pagination.type) {
         case "cursor":
             return IrVersions.V54.http.Pagination.cursor(convertCursorPagination(pagination));
         case "offset":
             return IrVersions.V54.http.Pagination.offset(convertOffsetPagination(pagination));
     }
+    // TODO: remove when V55 is published.
+    return undefined;
 }
 
 function convertCursorPagination(

@@ -9,12 +9,29 @@ import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromReques
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes";
 
-    export interface SendRequestArgs {
+    export interface CreateHttpRequestArgs {
+        /** The reference to the client */
+        clientReference: string;
+        /** The instance of the request wrapper */
+        request: csharp.ClassInstantiation;
+    }
+
+    export interface SendRequestArgsWithRequestWrapper {
         /** The reference to the client */
         clientReference: string;
         /** The instance of the request wrapper */
         request: csharp.CodeBlock | csharp.ClassInstantiation;
     }
+
+    export interface SendRequestWithHttpRequestArgs {
+        /** The reference to the client */
+        clientReference: string;
+        /** Request options */
+        options: csharp.CodeBlock;
+        /** The instance of the request wrapper */
+        request: csharp.CodeBlock | csharp.ClassInstantiation;
+    }
+
     export interface CreateHttpRequestWrapperArgs {
         baseUrl: csharp.CodeBlock;
         /** the endpoint for the endpoint */
@@ -133,7 +150,7 @@ export class RawClient {
     /**
      * Creates an HTTP request using the RawClient.
      */
-    public createHttpRequest({ clientReference, request }: RawClient.SendRequestArgs): csharp.MethodInvocation {
+    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "CreateHttpRequest",
@@ -144,11 +161,27 @@ export class RawClient {
     /**
      * Sends an HTTP request to the RawClient.
      */
-    public sendRequest({ clientReference, request }: RawClient.SendRequestArgs): csharp.MethodInvocation {
+    public sendRequestWithRequestWrapper({ clientReference, request }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "SendRequestAsync",
             arguments_: [request, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            async: true
+        });
+    }
+
+    /**
+     * Sends an HTTP request to the RawClient.
+     */
+    public sendRequestWithHttpRequest({ clientReference, options, request }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: csharp.codeblock(clientReference),
+            method: "SendRequestAsync",
+            arguments_: [
+                request,
+                options,
+                csharp.codeblock(this.context.getCancellationTokenParameterName())
+            ],
             async: true
         });
     }
