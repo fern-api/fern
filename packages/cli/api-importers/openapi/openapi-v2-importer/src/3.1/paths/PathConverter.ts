@@ -5,6 +5,7 @@ import { TypeDeclaration } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
 import { HttpMethods } from "../../constants/HttpMethods";
+import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
@@ -56,7 +57,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                     operation
                 });
                 const webhookExtension = webhookExtensionConverter.convert({ context, errorCollector });
-                if (webhookExtension === true) {
+                if (webhookExtension != null && webhookExtension === true) {
                     const webhookConverter = new WebhookConverter({
                         breadcrumbs: operationBreadcrumbs,
                         operation,
@@ -92,11 +93,18 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                     // Correctly parse out the pagination ResponseProperty objects
                 }
 
+                const idempotentExtensionConverter = new FernIdempotentExtension({
+                    breadcrumbs: operationBreadcrumbs,
+                    operation
+                });
+                const idempotentExtension = idempotentExtensionConverter.convert({ context, errorCollector });
+
                 const operationConverter = new OperationConverter({
                     breadcrumbs: operationBreadcrumbs,
                     operation,
                     method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
-                    path: this.path
+                    path: this.path,
+                    idempotent: idempotentExtension
                 });
                 const convertedOperation = operationConverter.convert({ context, errorCollector });
                 if (convertedOperation != null) {
