@@ -64,27 +64,27 @@
         "groupName": [
           "status"
         ],
-        "methodName": "update"
+        "methodName": "updateInlined"
       },
       "method": "POST",
       "operationId": "update-status-inlined",
       "tags": [],
       "headers": [],
-      "generatedPayloadName": "StatusUpdatePayload",
+      "generatedPayloadName": "StatusUpdateInlinedPayload",
       "payload": {
         "allOf": [],
         "properties": [
           {
             "conflict": {},
-            "generatedName": "statusUpdatePayloadStreamInlined",
+            "generatedName": "statusUpdateInlinedPayloadStreamInlined",
             "key": "stream-inlined",
             "schema": {
-              "generatedName": "statusUpdatePayloadStreamInlined",
+              "generatedName": "statusUpdateInlinedPayloadStreamInlined",
               "value": {
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "StatusUpdatePayloadStreamInlined",
+                "generatedName": "StatusUpdateInlinedPayloadStreamInlined",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -95,15 +95,15 @@
           },
           {
             "conflict": {},
-            "generatedName": "statusUpdatePayloadMessageInlined",
+            "generatedName": "statusUpdateInlinedPayloadMessageInlined",
             "key": "message-inlined",
             "schema": {
-              "generatedName": "statusUpdatePayloadMessageInlined",
+              "generatedName": "statusUpdateInlinedPayloadMessageInlined",
               "value": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "StatusUpdatePayloadMessageInlined",
+                "generatedName": "StatusUpdateInlinedPayloadMessageInlined",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -114,7 +114,7 @@
           }
         ],
         "allOfPropertyConflicts": [],
-        "generatedName": "StatusUpdatePayload",
+        "generatedName": "StatusUpdateInlinedPayload",
         "groupName": [],
         "additionalProperties": false,
         "source": {

@@ -38,7 +38,7 @@
           "operationId": "update-status-inlined",
           "x-fern-webhook": true,
           "x-fern-sdk-group-name": "status",
-          "x-fern-sdk-method-name": "update",
+          "x-fern-sdk-method-name": "updateInlined",
           "requestBody": {
             "content": {
               "application/json": {

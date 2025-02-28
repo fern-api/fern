@@ -330,25 +330,25 @@
           "allPathParameters": []
         },
         {
-          "id": "status.update",
+          "id": "status.updateInlined",
           "method": "POST",
           "name": {
-            "originalName": "update",
+            "originalName": "updateInlined",
             "camelCase": {
-              "unsafeName": "update",
-              "safeName": "update"
+              "unsafeName": "updateInlined",
+              "safeName": "updateInlined"
             },
             "snakeCase": {
-              "unsafeName": "update",
-              "safeName": "update"
+              "unsafeName": "update_inlined",
+              "safeName": "update_inlined"
             },
             "screamingSnakeCase": {
-              "unsafeName": "UPDATE",
-              "safeName": "UPDATE"
+              "unsafeName": "UPDATE_INLINED",
+              "safeName": "UPDATE_INLINED"
             },
             "pascalCase": {
-              "unsafeName": "Update",
-              "safeName": "Update"
+              "unsafeName": "UpdateInlined",
+              "safeName": "UpdateInlined"
             }
           },
           "path": {
@@ -361,22 +361,22 @@
           "requestBody": {
             "contentType": "application/json",
             "name": {
-              "originalName": "status_update_Request",
+              "originalName": "status_updateInlined_Request",
               "camelCase": {
-                "unsafeName": "statusUpdateRequest",
-                "safeName": "statusUpdateRequest"
+                "unsafeName": "statusUpdateInlinedRequest",
+                "safeName": "statusUpdateInlinedRequest"
               },
               "snakeCase": {
-                "unsafeName": "status_update_request",
-                "safeName": "status_update_request"
+                "unsafeName": "status_update_inlined_request",
+                "safeName": "status_update_inlined_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "STATUS_UPDATE_REQUEST",
-                "safeName": "STATUS_UPDATE_REQUEST"
+                "unsafeName": "STATUS_UPDATE_INLINED_REQUEST",
+                "safeName": "STATUS_UPDATE_INLINED_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "StatusUpdateRequest",
-                "safeName": "StatusUpdateRequest"
+                "unsafeName": "StatusUpdateInlinedRequest",
+                "safeName": "StatusUpdateInlinedRequest"
               }
             },
             "extendedProperties": [],
@@ -539,24 +539,24 @@
         "examples": []
       },
       {
-        "id": "status.update",
+        "id": "status.updateInlined",
         "name": {
-          "originalName": "update",
+          "originalName": "updateInlined",
           "camelCase": {
-            "unsafeName": "update",
-            "safeName": "update"
+            "unsafeName": "updateInlined",
+            "safeName": "updateInlined"
           },
           "snakeCase": {
-            "unsafeName": "update",
-            "safeName": "update"
+            "unsafeName": "update_inlined",
+            "safeName": "update_inlined"
           },
           "screamingSnakeCase": {
-            "unsafeName": "UPDATE",
-            "safeName": "UPDATE"
+            "unsafeName": "UPDATE_INLINED",
+            "safeName": "UPDATE_INLINED"
           },
           "pascalCase": {
-            "unsafeName": "Update",
-            "safeName": "Update"
+            "unsafeName": "UpdateInlined",
+            "safeName": "UpdateInlined"
           }
         },
         "method": "POST",
