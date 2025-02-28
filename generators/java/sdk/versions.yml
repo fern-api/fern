@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix collection serialization in multipart form body without form encoding
+      type: fix
+  createdAt: '2025-02-27'
+  irVersion: 55
+  version: 2.20.0
+- changelogEntry:
+    - summary: |
         Enable overriding literal headers
       type: feat
   createdAt: '2025-02-26'

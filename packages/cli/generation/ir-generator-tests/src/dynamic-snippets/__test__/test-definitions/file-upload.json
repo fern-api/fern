@@ -200,6 +200,151 @@
                 }
             ]
         },
+        "type_service:MyAliasObject": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "MyAliasObject",
+                    "camelCase": {
+                        "unsafeName": "myAliasObject",
+                        "safeName": "myAliasObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_alias_object",
+                        "safeName": "my_alias_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_ALIAS_OBJECT",
+                        "safeName": "MY_ALIAS_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyAliasObject",
+                        "safeName": "MyAliasObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "named",
+                "value": "type_service:MyObject"
+            }
+        },
+        "type_service:MyCollectionAliasObject": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "MyCollectionAliasObject",
+                    "camelCase": {
+                        "unsafeName": "myCollectionAliasObject",
+                        "safeName": "myCollectionAliasObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_collection_alias_object",
+                        "safeName": "my_collection_alias_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_COLLECTION_ALIAS_OBJECT",
+                        "safeName": "MY_COLLECTION_ALIAS_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyCollectionAliasObject",
+                        "safeName": "MyCollectionAliasObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "list",
+                "value": {
+                    "type": "named",
+                    "value": "type_service:MyObject"
+                }
+            }
+        },
         "type_service:MyObject": {
             "type": "object",
             "declaration": {
@@ -900,6 +1045,96 @@
                                     "type": "named",
                                     "value": "type_service:Id"
                                 }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "alias_object",
+                                    "camelCase": {
+                                        "unsafeName": "aliasObject",
+                                        "safeName": "aliasObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "alias_object",
+                                        "safeName": "alias_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ALIAS_OBJECT",
+                                        "safeName": "ALIAS_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AliasObject",
+                                        "safeName": "AliasObject"
+                                    }
+                                },
+                                "wireValue": "alias_object"
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_service:MyAliasObject"
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "list_of_alias_object",
+                                    "camelCase": {
+                                        "unsafeName": "listOfAliasObject",
+                                        "safeName": "listOfAliasObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "list_of_alias_object",
+                                        "safeName": "list_of_alias_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LIST_OF_ALIAS_OBJECT",
+                                        "safeName": "LIST_OF_ALIAS_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ListOfAliasObject",
+                                        "safeName": "ListOfAliasObject"
+                                    }
+                                },
+                                "wireValue": "list_of_alias_object"
+                            },
+                            "typeReference": {
+                                "type": "list",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_service:MyAliasObject"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "alias_list_of_object",
+                                    "camelCase": {
+                                        "unsafeName": "aliasListOfObject",
+                                        "safeName": "aliasListOfObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "alias_list_of_object",
+                                        "safeName": "alias_list_of_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ALIAS_LIST_OF_OBJECT",
+                                        "safeName": "ALIAS_LIST_OF_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AliasListOfObject",
+                                        "safeName": "AliasListOfObject"
+                                    }
+                                },
+                                "wireValue": "alias_list_of_object"
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_service:MyCollectionAliasObject"
                             }
                         }
                     ]
@@ -2445,6 +2680,96 @@
                                     "type": "named",
                                     "value": "type_service:MyObjectWithOptional"
                                 }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "alias_object",
+                                    "camelCase": {
+                                        "unsafeName": "aliasObject",
+                                        "safeName": "aliasObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "alias_object",
+                                        "safeName": "alias_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ALIAS_OBJECT",
+                                        "safeName": "ALIAS_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AliasObject",
+                                        "safeName": "AliasObject"
+                                    }
+                                },
+                                "wireValue": "alias_object"
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_service:MyAliasObject"
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "list_of_alias_object",
+                                    "camelCase": {
+                                        "unsafeName": "listOfAliasObject",
+                                        "safeName": "listOfAliasObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "list_of_alias_object",
+                                        "safeName": "list_of_alias_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LIST_OF_ALIAS_OBJECT",
+                                        "safeName": "LIST_OF_ALIAS_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ListOfAliasObject",
+                                        "safeName": "ListOfAliasObject"
+                                    }
+                                },
+                                "wireValue": "list_of_alias_object"
+                            },
+                            "typeReference": {
+                                "type": "list",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_service:MyAliasObject"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "alias_list_of_object",
+                                    "camelCase": {
+                                        "unsafeName": "aliasListOfObject",
+                                        "safeName": "aliasListOfObject"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "alias_list_of_object",
+                                        "safeName": "alias_list_of_object"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ALIAS_LIST_OF_OBJECT",
+                                        "safeName": "ALIAS_LIST_OF_OBJECT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AliasListOfObject",
+                                        "safeName": "AliasListOfObject"
+                                    }
+                                },
+                                "wireValue": "alias_list_of_object"
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_service:MyCollectionAliasObject"
                             }
                         }
                     ]

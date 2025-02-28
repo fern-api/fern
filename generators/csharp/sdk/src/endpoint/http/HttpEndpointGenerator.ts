@@ -312,6 +312,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("}");
                     writer.dedent();
                 },
+                bytes: () => this.context.logger.error("Bytes not supported"),
                 _other: () => undefined
             });
         });

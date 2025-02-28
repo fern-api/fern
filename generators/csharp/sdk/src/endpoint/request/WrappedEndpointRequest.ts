@@ -287,6 +287,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (typeReference.container.type === "optional") {
                     return this.isString(typeReference.container.optional);
                 }
+                if (typeReference.container.type === "nullable") {
+                    return this.isString(typeReference.container.nullable);
+                }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -309,6 +312,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             case "container":
                 if (typeReference.container.type === "optional") {
                     return true;
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isOptional({ typeReference: typeReference.container.nullable });
                 }
                 return false;
             case "named": {
@@ -345,6 +351,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         });
                     },
                     optional: (optional) => this.isStruct({ typeReference: optional }),
+                    nullable: (nullable) => this.isStruct({ typeReference: nullable }),
                     _other: () => false
                 });
             },
@@ -478,6 +485,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     optional: (optional) => {
                         return this.shouldJsonSerialize({ typeReference: optional });
                     },
+                    nullable: (nullable) => this.shouldJsonSerialize({ typeReference: nullable }),
                     _other: () => false
                 });
             },

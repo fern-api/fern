@@ -477,6 +477,10 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
+        if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
+            return value;
+        }
         return new this({
             type: "optional",
             value
@@ -522,6 +526,10 @@ export class Type extends AstNode {
         writer.write("ReadOnlyMemory<");
         value.write(writer);
         writer.write(">");
+    }
+
+    private static isAlreadyOptional(value: Type) {
+        return value.internalType.type === "optional";
     }
 }
 

@@ -225,11 +225,34 @@ class ToProtoPropertyMapper {
         const property = csharp.codeblock(propertyName);
         switch (container.type) {
             case "optional":
+                if (wrapperType === WrapperType.Optional) {
+                    return this.getConditions({
+                        propertyName,
+                        typeReference: container.optional,
+                        wrapperType: WrapperType.Optional
+                    });
+                }
                 return [
                     this.isNotNull(property),
                     ...this.getConditions({
                         propertyName,
                         typeReference: container.optional,
+                        wrapperType: WrapperType.Optional
+                    })
+                ];
+            case "nullable":
+                if (wrapperType === WrapperType.Optional) {
+                    return this.getConditions({
+                        propertyName,
+                        typeReference: container.nullable,
+                        wrapperType: WrapperType.Optional
+                    });
+                }
+                return [
+                    this.isNotNull(property),
+                    ...this.getConditions({
+                        propertyName,
+                        typeReference: container.nullable,
                         wrapperType: WrapperType.Optional
                     })
                 ];
@@ -407,6 +430,12 @@ class ToProtoPropertyMapper {
                 return this.getValue({
                     propertyName,
                     typeReference: container.optional,
+                    wrapperType: wrapperType ?? WrapperType.Optional
+                });
+            case "nullable":
+                return this.getValue({
+                    propertyName,
+                    typeReference: container.nullable,
                     wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "list":
@@ -770,6 +799,12 @@ class FromProtoPropertyMapper {
                 return this.getValue({
                     propertyName,
                     typeReference: container.optional,
+                    wrapperType: wrapperType ?? WrapperType.Optional
+                });
+            case "nullable":
+                return this.getValue({
+                    propertyName,
+                    typeReference: container.nullable,
                     wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "list":

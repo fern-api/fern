@@ -4,11 +4,13 @@ import { Type } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
+import { FernEnumConfig } from "../../types/FernEnumConfig";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.Args {
         schema: OpenAPIV3_1.SchemaObject;
+        maybeFernEnum: FernEnumConfig | undefined;
     }
 
     export interface Output {
@@ -18,10 +20,12 @@ export declare namespace EnumSchemaConverter {
 
 export class EnumSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, EnumSchemaConverter.Output> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly maybeFernEnum: FernEnumConfig | undefined;
 
-    constructor({ breadcrumbs, schema }: EnumSchemaConverter.Args) {
+    constructor({ breadcrumbs, schema, maybeFernEnum }: EnumSchemaConverter.Args) {
         super({ breadcrumbs });
         this.schema = schema;
+        this.maybeFernEnum = maybeFernEnum;
     }
 
     public convert({
@@ -38,14 +42,20 @@ export class EnumSchemaConverter extends AbstractConverter<OpenAPIConverterConte
         // Only keep string enum values
         const stringEnumValues = this.schema.enum.filter((value) => typeof value === "string");
 
-        const values = stringEnumValues.map((value) => ({
-            name: context.casingsGenerator.generateNameAndWireValue({
-                name: value.toString(),
-                wireValue: value.toString()
-            }),
-            docs: undefined,
-            availability: undefined
-        }));
+        const values = stringEnumValues.map((value) => {
+            const fernEnumValue = this.maybeFernEnum?.[value];
+            const name = fernEnumValue?.name ?? value.toString();
+
+            return {
+                name: context.casingsGenerator.generateNameAndWireValue({
+                    name,
+                    wireValue: value.toString()
+                }),
+                docs: fernEnumValue?.description,
+                availability: undefined,
+                casing: fernEnumValue?.casing
+            };
+        });
 
         if (values.length === 0) {
             return undefined;
@@ -54,18 +64,7 @@ export class EnumSchemaConverter extends AbstractConverter<OpenAPIConverterConte
         const default_ = context.getAsString(this.schema.default);
         return {
             enum: Type.enum({
-                // TODO: add an error check if the schema.default is a valid enum value
-                default:
-                    default_ != null
-                        ? {
-                              name: context.casingsGenerator.generateNameAndWireValue({
-                                  name: default_,
-                                  wireValue: default_
-                              }),
-                              docs: undefined,
-                              availability: undefined
-                          }
-                        : undefined,
+                default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,
                 values
             })
         };

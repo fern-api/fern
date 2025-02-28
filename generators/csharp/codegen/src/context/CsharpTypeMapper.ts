@@ -86,6 +86,10 @@ export class CsharpTypeMapper {
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
                     : Type.optional(this.convert({ reference: container.optional }));
+            case "nullable":
+                return unboxOptionals
+                    ? this.convert({ reference: container.nullable, unboxOptionals })
+                    : Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

@@ -312,24 +312,28 @@ export abstract class AbstractCsharpGeneratorContext<
     public getAsUndiscriminatedUnionTypeDeclaration(
         reference: TypeReference
     ): { declaration: UndiscriminatedUnionTypeDeclaration; isList: boolean } | undefined {
-        if (reference.type === "container" && reference.container.type === "optional") {
-            return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
-        }
-        if (reference.type === "container" && reference.container.type === "list") {
-            const maybeDeclaration = this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.list);
-            if (maybeDeclaration != null) {
-                return {
-                    ...maybeDeclaration,
-                    isList: true
-                };
+        if (reference.type === "container") {
+            if (reference.container.type === "optional") {
+                return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
+            }
+            if (reference.container.type === "nullable") {
+                return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.nullable);
+            }
+            if (reference.container.type === "list") {
+                const maybeDeclaration = this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.list);
+                if (maybeDeclaration != null) {
+                    return {
+                        ...maybeDeclaration,
+                        isList: true
+                    };
+                }
             }
         }
-
         if (reference.type !== "named") {
             return undefined;
         }
 
-        let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
         if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
@@ -340,16 +344,20 @@ export abstract class AbstractCsharpGeneratorContext<
 
         // handle aliases by visiting resolved types
         if (declaration.shape.type === "alias") {
-            if (declaration.shape.resolvedType.type === "named") {
-                declaration = this.getTypeDeclarationOrThrow(reference.typeId);
-                if (declaration.shape.type === "undiscriminatedUnion") {
-                    return { declaration: declaration.shape, isList: false };
+            const resolvedType = declaration.shape.resolvedType;
+            if (resolvedType.type === "named") {
+                const resolvedTypeDeclaration = this.getTypeDeclarationOrThrow(reference.typeId);
+                if (resolvedTypeDeclaration.shape.type === "undiscriminatedUnion") {
+                    return { declaration: resolvedTypeDeclaration.shape, isList: false };
                 }
-            } else if (
-                declaration.shape.resolvedType.type === "container" &&
-                declaration.shape.resolvedType.container.type === "optional"
-            ) {
-                return this.getAsUndiscriminatedUnionTypeDeclaration(declaration.shape.resolvedType.container.optional);
+            }
+            if (resolvedType.type === "container") {
+                if (resolvedType.container.type === "optional") {
+                    return this.getAsUndiscriminatedUnionTypeDeclaration(resolvedType.container.optional);
+                }
+                if (resolvedType.container.type === "nullable") {
+                    return this.getAsUndiscriminatedUnionTypeDeclaration(resolvedType.container.nullable);
+                }
             }
         }
 
@@ -380,7 +388,13 @@ export abstract class AbstractCsharpGeneratorContext<
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                if (typeReference.container.type === "optional") {
+                    return true;
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isOptional(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -398,7 +412,13 @@ export abstract class AbstractCsharpGeneratorContext<
     public isPrimitive(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                if (typeReference.container.type === "optional") {
+                    return this.isPrimitive(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isPrimitive(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {

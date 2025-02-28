@@ -125,7 +125,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -203,7 +204,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -482,7 +484,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -787,7 +790,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -808,7 +812,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1083,7 +1088,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1104,7 +1110,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1615,7 +1622,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1636,7 +1644,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1886,7 +1895,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -2373,7 +2383,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2718,7 +2729,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2999,7 +3011,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3392,7 +3405,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3561,7 +3575,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

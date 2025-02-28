@@ -23,7 +23,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3.RequestBodyObject
             | OpenAPIV3.SecuritySchemeObject
     ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        return "$ref" in parameter;
+        return parameter != null && "$ref" in parameter;
     }
 
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {

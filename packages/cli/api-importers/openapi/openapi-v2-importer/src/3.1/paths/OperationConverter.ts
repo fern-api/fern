@@ -1,5 +1,5 @@
 import { camelCase, compact, isEqual } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import {
     HttpEndpoint,
@@ -15,12 +15,17 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
+import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { SdkGroupNameExtension } from "../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name";
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+import { GroupNameAndLocation } from "../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";
 import { RequestBodyConverter } from "./RequestBodyConverter";
 import { ResponseBodyConverter } from "./ResponseBodyConverter";
+
+const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractConverter.Args {
@@ -34,11 +39,6 @@ export declare namespace OperationConverter {
         endpoint: HttpEndpoint;
         inlinedTypes: Record<string, TypeDeclaration>;
     }
-}
-
-interface GroupNameAndLocation {
-    group?: string[];
-    method: string;
 }
 
 export class OperationConverter extends AbstractConverter<OpenAPIConverterContext3_1, OperationConverter.Output> {
@@ -72,8 +72,28 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
 
-        let requestBody: HttpRequestBody | undefined;
+        const streamingExtensionConverter = new FernStreamingExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        });
+        const streamingExtension = streamingExtensionConverter.convert({ context, errorCollector });
+        if (streamingExtension != null) {
+            // TODO: Use streaming extension to branch between streaming and non-streaming endpoints
+            // Use streamFormat to modify response conversion.
+        }
 
+        const paginationExtensionConverter = new FernPaginationExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            document: context.spec as OpenAPIV3.Document
+        });
+        const paginationExtension = paginationExtensionConverter.convert({ context, errorCollector });
+        if (paginationExtension != null) {
+            // TODO: Use pagination extension to modify endpoint conversion.
+            // Correctly parse out the pagination ResponseProperty objects
+        }
+
+        let requestBody: HttpRequestBody | undefined;
         if (this.operation.requestBody != null) {
             let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
             if (context.isReferenceObject(this.operation.requestBody)) {
@@ -98,6 +118,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 method
             });
             const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
+
             if (convertedRequestBody != null) {
                 requestBody = convertedRequestBody.requestBody;
                 this.inlinedTypes = {
@@ -110,7 +131,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         let httpResponse: HttpResponse | undefined;
         if (this.operation.responses != null) {
             for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-                // Skip if not a 2xx status code
+                // TODO: Handle non 2xx status codes
                 const statusCodeNum = parseInt(statusCode);
                 if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
                     continue;
@@ -252,11 +273,7 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
             }
         }
 
-        // Parse path parameters from URL
-        const PATH_PARAM_REGEX = /{([^}]+)}/g;
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
-
-        // Check if any path parameters are missing and add them
         const missingPathParams = pathParams.filter(
             (param) => !pathParameters.some((p) => p.name.originalName === param)
         );
@@ -287,7 +304,6 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): GroupNameAndLocation | undefined {
-        // Compute from `x-fern-sdk-method-name` and `x-fern-sdk-group-name`
         const methodNameExtension = new SdkMethodNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
@@ -338,54 +354,57 @@ export class OperationConverter extends AbstractConverter<OpenAPIConverterContex
                 method: tag
             };
         }
+        return this.computeGroupAndMethodFromTokens({
+            tag,
+            tagTokens,
+            operationId,
+            operationIdTokens
+        });
+    }
 
-        // Check if tag and operationId share a common prefix
-        for (let i = 0; i < tagTokens.length; ++i) {
-            const tagToken = tagTokens[i];
-            const operationIdToken = operationIdTokens[i];
+    private computeGroupAndMethodFromTokens({
+        tag,
+        tagTokens,
+        operationId,
+        operationIdTokens
+    }: {
+        tag: string;
+        tagTokens: string[];
+        operationId: string;
+        operationIdTokens: string[];
+    }): GroupNameAndLocation {
+        const tagIsNotPrefixOfOperationId = tagTokens.some((tagToken, index) => tagToken !== operationIdTokens[index]);
 
-            // If tokens don't match, tag and operationId have diverged
-            if (tagToken == null || tagToken !== operationIdToken) {
-                return {
-                    group: [tag],
-                    method: operationId
-                };
-            }
+        if (tagIsNotPrefixOfOperationId) {
+            return {
+                group: [tag],
+                method: operationId
+            };
         }
 
-        // If we get here, tag is a prefix of operationId
-        // Return the remaining tokens of operationId as the method name
+        const methodTokens = operationIdTokens.slice(tagTokens.length);
         return {
             group: [tag],
-            method: camelCase(operationIdTokens.slice(tagTokens.length).join("_"))
+            method: camelCase(methodTokens.join("_"))
         };
     }
 }
 
-/**
- * Splits a string into tokens based on its format (camelCase, PascalCase, snake_case etc)
- * - For camelCase/PascalCase: splits on capital letters
- * - For snake_case or other formats: splits on non-alphanumeric characters
- * All tokens are converted to lowercase and empty tokens are filtered out
- * @param input The string to tokenize
- * @returns Array of lowercase string tokens
- */
 function tokenizeString(input: string): string[] {
-    let tokens: string[];
-
-    // Check if the string is in camel case or Pascal case
-    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
-        // Camel case or Pascal case: Split based on capital letters
-        tokens = input.split(/(?=[A-Z])/);
-    } else {
-        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
-        tokens = input.split(/[^a-zA-Z0-9]+/);
-    }
-
+    let tokens = isCamelOrPascalCase(input) ? splitOnCapitalLetters(input) : splitOnNonAlphanumericCharacters(input);
     tokens = tokens.map((token) => token.toLowerCase());
-
-    // Filter out empty tokens
     tokens = compact(tokens);
-
     return tokens;
+}
+
+function isCamelOrPascalCase(input: string): boolean {
+    return /^[a-z]+(?:[A-Z][a-z]+)*$/.test(input);
+}
+
+function splitOnCapitalLetters(input: string): string[] {
+    return input.split(/(?=[A-Z])/);
+}
+
+function splitOnNonAlphanumericCharacters(input: string): string[] {
+    return input.split(/[^a-zA-Z0-9]+/);
 }

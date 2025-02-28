@@ -115,7 +115,7 @@ export function parseAsyncAPIV2({
                             resolvedHeader,
                             !required.includes(name),
                             context,
-                            breadcrumbs,
+                            [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
@@ -140,7 +140,7 @@ export function parseAsyncAPIV2({
                             resolvedQueryParameter,
                             !required.includes(name),
                             context,
-                            breadcrumbs,
+                            [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),

@@ -1273,7 +1273,8 @@
               },
               "typeId": "type_:FullAccountPermissions",
               "type": "named"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -1399,7 +1400,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -1752,7 +1754,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -2039,7 +2042,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
@@ -2082,7 +2086,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
@@ -2468,7 +2473,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -2630,7 +2636,8 @@
                 "type": "list"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
@@ -2774,7 +2781,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
@@ -3099,7 +3107,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -3454,7 +3463,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -4587,7 +4597,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
@@ -4645,7 +4656,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The time when the balance values were last updated from the banking core.",
@@ -4761,7 +4773,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "If `true`, the response is incomplete and the client may retry the operation after the `Retry-After` time in order to fetch balances for any incomplete accounts in the `items`. The retry operation should only pass in accounts that are `incomplete`.",
@@ -8452,7 +8465,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The transaction type. If the `type` is `debit` or `credit`, the `subtype` conveys further transaction type details.",
@@ -8593,7 +8607,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
@@ -8639,7 +8654,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
@@ -8685,7 +8701,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
@@ -9564,7 +9581,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -9961,7 +9979,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The transaction type. If the `type` is `debit` or `credit`, the `subtype` conveys further transaction type details.",
@@ -10102,7 +10121,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
@@ -10148,7 +10168,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
@@ -10194,7 +10215,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
@@ -10904,7 +10926,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -11338,7 +11361,8 @@
                 }
               },
               "type": "primitive"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -11888,7 +11912,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
@@ -11931,7 +11956,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -13202,7 +13228,8 @@
               },
               "typeId": "type_:TransferState",
               "type": "named"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date/time the transfer was processed.",
@@ -13239,7 +13266,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The full name of the banking customer who last updated the transfer.",
@@ -13282,7 +13310,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -13539,7 +13568,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
@@ -13576,7 +13606,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -13828,7 +13859,8 @@
               },
               "typeId": "type_:TransferState",
               "type": "named"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date/time the transfer was processed.",
@@ -13865,7 +13897,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The full name of the banking customer who last updated the transfer.",
@@ -13908,7 +13941,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The amount of money to transfer between accounts.",
@@ -14162,7 +14196,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
@@ -14199,7 +14234,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -14495,7 +14531,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -16138,7 +16175,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "type": "object"
@@ -17163,7 +17201,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
@@ -17200,7 +17239,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
@@ -18407,7 +18447,8 @@
                 "type": "optional"
               },
               "type": "container"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "extraProperties": false,
