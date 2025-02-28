@@ -80,5 +80,5 @@ function isRawCursorPaginationSchema(
 function isRawCustomPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.CustomPaginationSchema {
-    return (rawPaginationSchema as RawSchemas.CustomPaginationSchema).custom === true;
+    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom";
 }

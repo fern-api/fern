@@ -22,7 +22,7 @@ declare namespace Raw {
     }
 
     export interface CustomPaginationExtensionSchema {
-        custom: true;
+        type: "custom";
         results: string;
     }
 }
@@ -47,7 +47,7 @@ export function convertPaginationExtension(
             hasNextPage: offsetPagination["has-next-page"]
         });
     }
-    if ("custom" in pagination && pagination.custom === true) {
+    if ("type" in pagination && pagination.type === "custom") {
         const customPagination = pagination as Raw.CustomPaginationExtensionSchema;
         return Pagination.custom({
             results: customPagination.results

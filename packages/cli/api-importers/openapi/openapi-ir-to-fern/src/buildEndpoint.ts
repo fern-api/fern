@@ -95,7 +95,7 @@ export function buildEndpoint({
                 break;
             case "custom":
                 pagination = {
-                    custom: true,
+                    type: "custom",
                     results: endpoint.pagination.results
                 };
                 break;

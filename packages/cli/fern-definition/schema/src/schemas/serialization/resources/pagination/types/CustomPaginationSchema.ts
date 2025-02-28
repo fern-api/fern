@@ -10,13 +10,13 @@ export const CustomPaginationSchema: core.serialization.ObjectSchema<
     serializers.CustomPaginationSchema.Raw,
     FernDefinition.CustomPaginationSchema
 > = core.serialization.object({
-    custom: core.serialization.booleanLiteral(true),
+    type: core.serialization.stringLiteral("custom"),
     results: core.serialization.string(),
 });
 
 export declare namespace CustomPaginationSchema {
     export interface Raw {
-        custom: true;
+        type: "custom";
         results: string;
     }
 }
