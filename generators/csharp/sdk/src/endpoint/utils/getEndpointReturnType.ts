@@ -1,6 +1,6 @@
 import { csharp } from "@fern-api/csharp-codegen";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 

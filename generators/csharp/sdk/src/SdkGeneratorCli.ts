@@ -12,7 +12,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";

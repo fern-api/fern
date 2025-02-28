@@ -7,7 +7,7 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";

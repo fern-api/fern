@@ -10,7 +10,7 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";

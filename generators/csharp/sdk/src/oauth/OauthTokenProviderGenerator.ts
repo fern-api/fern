@@ -9,7 +9,7 @@ import {
     OAuthScheme,
     ObjectProperty,
     ResponseProperty
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";

@@ -14,7 +14,7 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {

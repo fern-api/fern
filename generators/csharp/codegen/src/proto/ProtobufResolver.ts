@@ -7,7 +7,7 @@ import {
     ServiceId,
     TypeId,
     WellKnownProtobufType
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { csharp } from "..";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";

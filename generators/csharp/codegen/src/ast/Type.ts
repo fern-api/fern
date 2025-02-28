@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash-es";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk";
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 
 import {
     ClassReference,

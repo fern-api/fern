@@ -9,7 +9,7 @@ import {
     NamedType,
     PrimitiveType,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { csharp } from "../";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
