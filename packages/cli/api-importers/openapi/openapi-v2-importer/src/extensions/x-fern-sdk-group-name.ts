@@ -36,7 +36,6 @@ export class SdkGroupNameExtension extends AbstractExtension<OpenAPIConverterCon
             return undefined;
         }
 
-        // Handle both string and array formats
         const groups = Array.isArray(extensionValue)
             ? extensionValue.filter((name): name is string => typeof name === "string")
             : typeof extensionValue === "string"
