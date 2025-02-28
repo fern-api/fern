@@ -26,6 +26,8 @@ types:
       twentyone: uint64
       twentytwo: float
       twentythree: bigint
+      twentyfour: optional<datetime>
+      twentyfive: optional<date>
     examples:
       - name: One
         value:
@@ -67,6 +69,8 @@ types:
           twentyone: 21
           twentytwo: 22.22
           twentythree: "23"
+          twentyfour: 1994-01-01T01:01:01Z
+          twentyfive: 1994-01-01
 
   Name:
     properties:
