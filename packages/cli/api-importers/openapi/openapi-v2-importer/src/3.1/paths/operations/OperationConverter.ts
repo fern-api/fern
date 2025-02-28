@@ -1,12 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpRequestBody, HttpResponse } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { ErrorCollector } from "../../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
-import { RequestBodyConverter } from "../RequestBodyConverter";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace OperationConverter {
@@ -40,87 +37,13 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
 
-        let requestBody: HttpRequestBody | undefined;
-        if (this.operation.requestBody != null) {
-            let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
-            if (context.isReferenceObject(this.operation.requestBody)) {
-                const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
-                    this.operation.requestBody
-                );
-                if (resolvedReference.resolved) {
-                    resolvedRequestBody = resolvedReference.value;
-                }
-            } else {
-                resolvedRequestBody = this.operation.requestBody;
-            }
-
-            if (resolvedRequestBody == null) {
-                return undefined;
-            }
-
-            const requestBodyConverter = new RequestBodyConverter({
-                breadcrumbs: [...this.breadcrumbs, "requestBody"],
-                requestBody: resolvedRequestBody,
-                group: group ?? [],
-                method
-            });
-            const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
-
-            if (convertedRequestBody != null) {
-                requestBody = convertedRequestBody.requestBody;
-                this.inlinedTypes = {
-                    ...this.inlinedTypes,
-                    ...convertedRequestBody.inlinedTypes
-                };
-            }
+        const requestBody = this.convertRequestBody({ context, errorCollector, group, method });
+        if (requestBody === null) {
+            return undefined;
         }
 
-        let httpResponse: HttpResponse | undefined;
-        if (this.operation.responses != null) {
-            for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-                // TODO: Handle non 2xx status codes
-                const statusCodeNum = parseInt(statusCode);
-                if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
-                    continue;
-                }
+        const response = this.convertResponseBody({ context, errorCollector, group, method });
 
-                let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
-                if (context.isReferenceObject(response)) {
-                    const resolvedReference = context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
-                    if (resolvedReference.resolved) {
-                        resolvedResponse = resolvedReference.value;
-                    }
-                } else {
-                    resolvedResponse = response;
-                }
-
-                if (resolvedResponse == null) {
-                    continue;
-                }
-
-                const responseBodyConverter = new ResponseBodyConverter({
-                    breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
-                    responseBody: resolvedResponse,
-                    group: group ?? [],
-                    method,
-                    statusCode
-                });
-                const convertedResponseBody = responseBodyConverter.convert({ context, errorCollector });
-                if (convertedResponseBody != null) {
-                    httpResponse = {
-                        statusCode: statusCodeNum,
-                        body: convertedResponseBody.responseBody
-                    };
-                    this.inlinedTypes = {
-                        ...this.inlinedTypes,
-                        ...convertedResponseBody.inlinedTypes
-                    };
-                    break;
-                }
-            }
-        }
-
-        // TODO: Convert operation parameters, request body, responses
         return {
             group,
             endpoint: {
@@ -135,7 +58,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 headers,
                 requestBody,
                 sdkRequest: undefined,
-                response: httpResponse,
+                response,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
                 availability: context.getAvailability({

@@ -1,7 +1,16 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpEndpoint, HttpHeader, HttpMethod, PathParameter, QueryParameter, TypeDeclaration } from "@fern-api/ir-sdk";
+import {
+    HttpEndpoint,
+    HttpHeader,
+    HttpMethod,
+    HttpRequestBody,
+    HttpResponse,
+    PathParameter,
+    QueryParameter,
+    TypeDeclaration
+} from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../../AbstractConverter";
 import { ErrorCollector } from "../../../ErrorCollector";
@@ -10,6 +19,8 @@ import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-na
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
+import { RequestBodyConverter } from "../RequestBodyConverter";
+import { ResponseBodyConverter } from "../ResponseBodyConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
@@ -136,6 +147,114 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             queryParameters,
             headers
         };
+    }
+
+    protected convertRequestBody({
+        context,
+        errorCollector,
+        group,
+        method
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+        group: string[] | undefined;
+        method: string;
+    }): HttpRequestBody | undefined | null {
+        if (this.operation.requestBody == null) {
+            return undefined;
+        }
+
+        let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
+        if (context.isReferenceObject(this.operation.requestBody)) {
+            const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
+                this.operation.requestBody
+            );
+            if (resolvedReference.resolved) {
+                resolvedRequestBody = resolvedReference.value;
+            }
+        } else {
+            resolvedRequestBody = this.operation.requestBody;
+        }
+
+        if (resolvedRequestBody == null) {
+            return null;
+        }
+
+        const requestBodyConverter = new RequestBodyConverter({
+            breadcrumbs: [...this.breadcrumbs, "requestBody"],
+            requestBody: resolvedRequestBody,
+            group: group ?? [],
+            method
+        });
+        const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
+
+        if (convertedRequestBody != null) {
+            this.inlinedTypes = {
+                ...this.inlinedTypes,
+                ...convertedRequestBody.inlinedTypes
+            };
+            return convertedRequestBody.requestBody;
+        }
+
+        return undefined;
+    }
+
+    protected convertResponseBody({
+        context,
+        errorCollector,
+        group,
+        method
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+        group: string[] | undefined;
+        method: string;
+    }): HttpResponse | undefined {
+        if (this.operation.responses == null) {
+            return undefined;
+        }
+
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+
+            let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
+            if (context.isReferenceObject(response)) {
+                const resolvedReference = context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
+                if (resolvedReference.resolved) {
+                    resolvedResponse = resolvedReference.value;
+                }
+            } else {
+                resolvedResponse = response;
+            }
+
+            if (resolvedResponse == null) {
+                continue;
+            }
+
+            const responseBodyConverter = new ResponseBodyConverter({
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                responseBody: resolvedResponse,
+                group: group ?? [],
+                method,
+                statusCode
+            });
+            const convertedResponseBody = responseBodyConverter.convert({ context, errorCollector });
+            if (convertedResponseBody != null) {
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...convertedResponseBody.inlinedTypes
+                };
+                return {
+                    statusCode: statusCodeNum,
+                    body: convertedResponseBody.responseBody
+                };
+            }
+        }
+
+        return undefined;
     }
 
     protected computeGroupNameAndLocationFromExtensions({
