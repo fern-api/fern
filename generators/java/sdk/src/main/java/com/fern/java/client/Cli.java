@@ -19,6 +19,7 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
+import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -355,17 +356,33 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
                 generatedErrors);
-        GeneratedRootClient generatedRootClient = syncRootClientGenerator.generateFile();
-        this.addGeneratedFile(generatedRootClient);
-        this.addGeneratedFile(generatedRootClient.builderClass());
-        generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);
+        GeneratedRootClient generatedSyncRootClient = syncRootClientGenerator.generateFile();
+        this.addGeneratedFile(generatedSyncRootClient);
+        this.addGeneratedFile(generatedSyncRootClient.builderClass());
+        generatedSyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
+
+        AbstractRootClientGenerator asyncRootClientGenerator = new AsyncRootClientGenerator(
+                context,
+                objectMapper,
+                context,
+                generatedClientOptions,
+                generatedSuppliersFile,
+                generatedEnvironmentsClass,
+                generatedRequestOptions,
+                generatedTypes.getInterfaces(),
+                generatedOAuthTokenSupplier,
+                generatedErrors);
+        GeneratedRootClient generatedAsyncRootClient = asyncRootClientGenerator.generateFile();
+        this.addGeneratedFile(generatedAsyncRootClient);
+        this.addGeneratedFile(generatedAsyncRootClient.builderClass());
+        generatedAsyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {
                 dependencies.add(GradleDependency.of(dep));
             }
         });
-        return generatedRootClient;
+        return generatedAsyncRootClient;
     }
 
     @Override
