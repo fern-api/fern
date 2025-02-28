@@ -1,4 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+
 import { generateEndpointExample } from "./generator/generateSuccessEndpointExample";
 
 export interface ExampleGenerationArgs {

@@ -200,7 +200,7 @@ export function generateTypeDeclarationExample({
                         if (typeDeclarationExample.type === "failure") {
                             return typeDeclarationExample;
                         }
-                        
+
                         const { example, jsonExample } = typeDeclarationExample;
                         return {
                             type: "success",
@@ -210,7 +210,7 @@ export function generateTypeDeclarationExample({
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
-                                        object: example.type === "object" ? example : { properties: [] },
+                                        object: example.type === "object" ? example : { properties: [] }
                                     })
                                 }
                             }),
