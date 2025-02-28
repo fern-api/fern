@@ -18,8 +18,8 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.variables.VariableId;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.client.JavaSdkCustomConfig;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
@@ -48,6 +48,7 @@ public final class HttpUrlBuilder {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
+    private final ClientGeneratorContext context;
     private final boolean hasOptionalPathParams;
     private final boolean inlinePathParams;
 
@@ -61,7 +62,7 @@ public final class HttpUrlBuilder {
             HttpService httpService,
             Map<String, PathParamInfo> servicePathParameters,
             Map<String, PathParamInfo> endpointPathParameters,
-            JavaSdkCustomConfig config) {
+            ClientGeneratorContext context) {
         this.httpUrlname = httpUrlname;
         this.requestName = requestName;
         this.clientOptionsField = clientOptionsField;
@@ -71,6 +72,7 @@ public final class HttpUrlBuilder {
         this.httpService = httpService;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
+        this.context = context;
         this.hasOptionalPathParams = Stream.concat(
                         servicePathParameters.values().stream(), endpointPathParameters.values().stream())
                 .anyMatch(pathParamInfo ->
@@ -81,7 +83,7 @@ public final class HttpUrlBuilder {
                                         .getContainer()
                                         .get()
                                         .isOptional());
-        this.inlinePathParams = config.inlinePathParameters()
+        this.inlinePathParams = context.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
                 && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
                 && (httpEndpoint
@@ -145,7 +147,8 @@ public final class HttpUrlBuilder {
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
             codeBlock.addStatement(
-                    "$L.addQueryParameter($S, $L)",
+                    "$T.addQueryParameter($L, $S, $L, false)",
+                    context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                     httpUrlname,
                     queryParamProperty.wireKey().get(),
                     PoetTypeNameStringifier.stringify(

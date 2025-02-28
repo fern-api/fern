@@ -1,0 +1,15 @@
+types:
+  TestChannel2PublishEvent:
+    enum: []
+    source:
+      openapi: asyncapi.yml
+channel:
+  auth: false
+  examples:
+    - messages: []
+  messages:
+    publish:
+      body: TestChannel2PublishEvent
+      origin: client
+  path: /test2
+  url: websocket2

@@ -30,14 +30,14 @@ public class ImdbClient {
     }
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      */
     public String createMovie(CreateMovieRequest request) {
         return createMovie(request, null);
     }
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

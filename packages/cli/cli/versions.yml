@@ -1,4 +1,117 @@
 - changelogEntry:
+  - summary: |
+      Fix an issue where channel binding parameters with complex schemas were generated with conflicting names.
+    type: fix
+  irVersion: 55
+  version: 0.56.0-rc2
+
+- changelogEntry:
+  - summary: |
+      Add support for a new option `--from-openapi` to the `fern ir` command. This command
+      will allow you to test early versions of the new OpenAPI parser which goes directly from 
+      OpenAPI to IR. 
+
+      ```bash
+      fern ir ir.json --from-openapi
+      ```
+    type: internal
+  irVersion: 55
+  version: 0.56.0-rc1
+
+- changelogEntry:
+  - summary: |
+      Improve the `fern docs broken-links` output to make it easier to
+      understand. Logged violations now include clickable links to the
+      affected source files (in supported terminals).
+
+      Added a `--broken-links` flag to the `fern check` and `fern docs dev`
+      commands. If set, broken links will be logged.
+    type: feat
+  irVersion: 55
+  version: 0.56.0-rc0
+
+- changelogEntry:
+    - summary: The Conjure Importer now correctly handles the `auth` property in endpoint definitions.
+      type: fix
+  irVersion: 55
+  version: 0.55.1
+
+- changelogEntry:
+  - summary: The Fern definition now supports specifying object properties as `read-only` or `write-only`.
+    type: feat
+  irVersion: 55
+  version: 0.55.0
+
+- changelogEntry:
+    - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
+      type: feat
+  irVersion: 55
+  version: 0.54.1
+
+- changelogEntry:
+    - summary: Add support for specifying C# snippets in the `generators.yml` file.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc12
+
+- changelogEntry:
+    - summary: Improve error logging in AsyncAPI v3 parser when parsing location headers.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc11
+
+- changelogEntry:
+    - summary: Migrate generators.yml without any specs.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc10
+
+- changelogEntry:
+    - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc9
+
+- changelogEntry:
+    - summary: Migration to specs configuration handles yaml/json files and checks for file existence.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc8
+
+- changelogEntry:
+    - summary: Add Java generator versions to migrations file from v55 to v54
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc7
+
+- changelogEntry:
+    - summary: Improve generators.yml migration to `api.specs` syntax.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc6
+
+- changelogEntry:
+    - summary: |
+        Bump `docs-resolvers` to `0.0.64` to fix an issue with endpoint-level server parsing.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc5
+
+- changelogEntry:
+    - summary: |
+        Handle comments that include '*/' literal values. This previously caused any generator that uses c-style comments to fail.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc4
+
+- changelogEntry:
+    - summary: |
+        Modify the `x-fern-examples` extension to support Websocket session examples for AsyncAPI v3 specs.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc3
+
+- changelogEntry:
     - summary: |
         Add the `x-fern-optional` extension to the AsyncAPI v3 parser to allow for optional channel parameters.
       type: feat

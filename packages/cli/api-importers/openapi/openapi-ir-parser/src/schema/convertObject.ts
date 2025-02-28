@@ -182,6 +182,7 @@ export function convertObject({
             const availability = convertAvailability(propertySchema);
 
             const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
+            const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
@@ -220,7 +221,8 @@ export function convertObject({
                 conflict: conflicts,
                 generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
                 availability,
-                readonly
+                readonly,
+                writeonly
             };
         }
     );

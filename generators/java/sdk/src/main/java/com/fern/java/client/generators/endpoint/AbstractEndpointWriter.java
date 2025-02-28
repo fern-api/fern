@@ -222,7 +222,7 @@ public abstract class AbstractEndpointWriter {
                 httpService,
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
-                clientGeneratorContext.getCustomConfig());
+                clientGeneratorContext);
         HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 

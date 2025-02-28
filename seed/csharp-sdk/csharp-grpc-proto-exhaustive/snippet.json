@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_dataservice.foo"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.FooAsync();\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_dataservice.upload"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<Column>()\n        {\n            new Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
             }
         },
@@ -33,7 +33,7 @@
                 "identifier_override": "endpoint_dataservice.delete"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DeleteAsync(new DeleteRequest());\n"
             }
         },
@@ -45,7 +45,7 @@
                 "identifier_override": "endpoint_dataservice.describe"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DescribeAsync(new DescribeRequest());\n"
             }
         },
@@ -57,7 +57,7 @@
                 "identifier_override": "endpoint_dataservice.fetch"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.FetchAsync(new FetchRequest());\n"
             }
         },
@@ -69,7 +69,7 @@
                 "identifier_override": "endpoint_dataservice.list"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.ListAsync(new ListRequest());\n"
             }
         },
@@ -81,7 +81,7 @@
                 "identifier_override": "endpoint_dataservice.query"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });\n"
             }
         },
@@ -93,7 +93,7 @@
                 "identifier_override": "endpoint_dataservice.update"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
             }
         }

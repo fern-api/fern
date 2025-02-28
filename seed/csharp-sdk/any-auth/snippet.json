@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.User.GetAsync();\n"
             }
         }

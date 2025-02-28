@@ -10,16 +10,19 @@ export async function validateWorkspaces({
     project,
     cliContext,
     logWarnings,
+    brokenLinks,
     errorOnBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    brokenLinks: boolean;
     errorOnBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
             await validateDocsWorkspaceAndLogIssues({
                 workspace: docsWorkspace,
                 context,
@@ -30,7 +33,8 @@ export async function validateWorkspaces({
                     })
                 ),
                 ossWorkspaces: await filterOssWorkspaces(project),
-                errorOnBrokenLinks
+                errorOnBrokenLinks,
+                excludeRules
             });
         });
     }

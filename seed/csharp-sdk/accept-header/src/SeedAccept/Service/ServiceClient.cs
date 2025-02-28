@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedAccept.Core;
 
 namespace SeedAccept;
@@ -20,7 +20,7 @@ public partial class ServiceClient
     /// await client.Service.EndpointAsync();
     /// </code>
     /// </example>
-    public async Task EndpointAsync(
+    public async global::System.Threading.Tasks.Task EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

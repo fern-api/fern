@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
@@ -64,7 +64,7 @@ public partial class PaymentClient
     /// await client.Payment.DeleteAsync("paymentId");
     /// </code>
     /// </example>
-    public async Task DeleteAsync(
+    public async global::System.Threading.Tasks.Task DeleteAsync(
         string paymentId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

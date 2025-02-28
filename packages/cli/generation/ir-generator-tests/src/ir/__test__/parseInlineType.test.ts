@@ -1,10 +1,6 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    constructCasingsGenerator,
-    constructFernFileContext,
-    convertToFernFilepath,
-    parseInlineType
-} from "@fern-api/ir-generator";
+import { constructFernFileContext, convertToFernFilepath, parseInlineType } from "@fern-api/ir-generator";
 import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk";
 
 describe("parse inline types", () => {

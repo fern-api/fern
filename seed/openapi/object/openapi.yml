@@ -103,6 +103,14 @@ components:
           type: integer
           format: bigint
           example: '23'
+        twentyfour:
+          type: string
+          format: date-time
+          nullable: true
+        twentyfive:
+          type: string
+          format: date
+          nullable: true
       required:
         - one
         - two

@@ -4461,7 +4461,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "publishedAt": "optional<string>",
+              "publishedAt": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7436,7 +7439,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   Thing:
     properties:
-      publishedAt: optional<string>
+      publishedAt:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
 errors:

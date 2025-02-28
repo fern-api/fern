@@ -173,6 +173,13 @@ export class ExampleGenerator {
                           exampleTypeReference: p.optional,
                           parseDatetimes
                       }),
+            nullable: (p) =>
+                p.nullable == null
+                    ? csharp.InstantiatedPrimitive.null()
+                    : this.getSnippetForTypeReference({
+                          exampleTypeReference: p.nullable,
+                          parseDatetimes
+                      }),
             map: (p) => {
                 const entries = p.map.map((exampleKeyValuePair) => {
                     return {

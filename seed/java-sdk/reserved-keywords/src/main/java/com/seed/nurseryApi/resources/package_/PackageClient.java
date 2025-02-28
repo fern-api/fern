@@ -5,6 +5,7 @@ package com.seed.nurseryApi.resources.package_;
 
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.ObjectMappers;
+import com.seed.nurseryApi.core.QueryStringMapper;
 import com.seed.nurseryApi.core.RequestOptions;
 import com.seed.nurseryApi.core.SeedNurseryApiApiException;
 import com.seed.nurseryApi.core.SeedNurseryApiException;
@@ -33,7 +34,7 @@ public class PackageClient {
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
-        httpUrl.addQueryParameter("for", request.getFor());
+        QueryStringMapper.addQueryParameter(httpUrl, "for", request.getFor(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))

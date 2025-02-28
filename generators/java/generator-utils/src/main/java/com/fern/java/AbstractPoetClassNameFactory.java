@@ -65,6 +65,14 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "Stream");
     }
 
+    public final ClassName getQueryStringMapperClassName() {
+        return ClassName.get(getCorePackage(), "QueryStringMapper");
+    }
+
+    public final ClassName getQueryStringMapperTestClassName() {
+        return ClassName.get(getCorePackage(), "QueryStringMapperTest");
+    }
+
     public final ClassName getPaginationClassName(String simpleName) {
         return ClassName.get(getPaginationPackage(), simpleName);
     }

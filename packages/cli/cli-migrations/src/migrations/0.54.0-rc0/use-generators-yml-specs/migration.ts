@@ -1,10 +1,18 @@
 import chalk from "chalk";
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import YAML from "yaml";
 
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, Directory, File, RelativeFilePath, getDirectoryContents, join } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    Directory,
+    File,
+    RelativeFilePath,
+    doesPathExist,
+    getDirectoryContents,
+    join
+} from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { Migration } from "../../../types/Migration";
@@ -28,7 +36,6 @@ export const migration: Migration = {
                 context,
                 files,
                 directories,
-                absolutePathToFernDirectory,
                 absoluteFilepathToWorkspace: absolutePathToFernDirectory
             });
         } else {
@@ -45,7 +52,6 @@ export const migration: Migration = {
                 await addApiConfigurationToSingleWorkspace({
                     context,
                     ...(await getFilesAndDirectories(join(absoluteFilepathToWorkspace))),
-                    absolutePathToFernDirectory,
                     absoluteFilepathToWorkspace
                 });
             }
@@ -54,13 +60,11 @@ export const migration: Migration = {
 };
 
 async function addApiConfigurationToSingleWorkspace({
-    absolutePathToFernDirectory,
     absoluteFilepathToWorkspace,
     context,
     files,
     directories
 }: {
-    absolutePathToFernDirectory: AbsoluteFilePath;
     absoluteFilepathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     files: File[];
@@ -68,7 +72,6 @@ async function addApiConfigurationToSingleWorkspace({
 }): Promise<void> {
     const specs: generatorsYml.SpecSchema[] = [];
     const generatorsYmlFile = files.find((file) => file.name === "generators.yml" || file.name === "generators.yaml");
-    const openapiDirectory = directories.find((dir) => dir.name === "openapi");
 
     if (generatorsYmlFile == null) {
         context.failAndThrow("generators.yml not found");
@@ -96,8 +99,9 @@ async function addApiConfigurationToSingleWorkspace({
             for (const oldSpec of api) {
                 const spec = await parseApiSpec({
                     oldSpec,
-                    absolutePathToFernDirectory,
+                    absoluteFilepathToWorkspace,
                     files,
+                    directories,
                     context
                 });
                 if (spec) {
@@ -112,8 +116,9 @@ async function addApiConfigurationToSingleWorkspace({
                         for (const oldSpec of namespaceConfig) {
                             const spec = await parseApiSpec({
                                 oldSpec,
-                                absolutePathToFernDirectory,
+                                absoluteFilepathToWorkspace,
                                 files,
+                                directories,
                                 context,
                                 namespace
                             });
@@ -124,8 +129,9 @@ async function addApiConfigurationToSingleWorkspace({
                     } else if (typeof namespaceConfig === "string" || typeof namespaceConfig === "object") {
                         const spec = await parseApiSpec({
                             oldSpec: namespaceConfig,
-                            absolutePathToFernDirectory,
+                            absoluteFilepathToWorkspace,
                             files,
+                            directories,
                             context,
                             namespace
                         });
@@ -140,8 +146,9 @@ async function addApiConfigurationToSingleWorkspace({
             } else {
                 const spec = await parseApiSpec({
                     oldSpec: generatorsYmlContents.api,
-                    absolutePathToFernDirectory,
+                    absoluteFilepathToWorkspace,
                     files,
+                    directories,
                     context
                 });
                 if (spec) {
@@ -202,6 +209,11 @@ async function addApiConfigurationToSingleWorkspace({
         }
     }
 
+    if (specs.length === 0) {
+        context.logger.debug("No API specs found. Leaving generators.yml unchanged.");
+        return;
+    }
+
     const firstLine = generatorsYmlFile.contents.split("\n")[0];
     let schemaComment: string | undefined;
     if (firstLine?.startsWith("# yaml-language-server:")) {
@@ -213,8 +225,7 @@ async function addApiConfigurationToSingleWorkspace({
     parsedDocument.delete("openapi-overrides");
     parsedDocument.delete("async-api");
     parsedDocument.delete("spec-origin");
-    parsedDocument.delete("api");
-    parsedDocument.setIn(["api", "specs"], specs);
+    parsedDocument.set("api", { specs });
     let documentToWrite = parsedDocument.toString();
     if (schemaComment && documentToWrite.indexOf(schemaComment) === -1) {
         documentToWrite = `${schemaComment}${documentToWrite}`;
@@ -225,14 +236,16 @@ async function addApiConfigurationToSingleWorkspace({
 
 async function parseApiSpec({
     oldSpec,
-    absolutePathToFernDirectory,
+    absoluteFilepathToWorkspace,
     files,
+    directories,
     context,
     namespace
 }: {
     oldSpec: unknown;
-    absolutePathToFernDirectory: AbsoluteFilePath;
+    absoluteFilepathToWorkspace: AbsoluteFilePath;
     files: File[];
+    directories: Directory[];
     context: TaskContext;
     namespace?: string;
 }): Promise<generatorsYml.SpecSchema | null> {
@@ -279,22 +292,29 @@ async function parseApiSpec({
 
     const deprecatedApiSettings = getDeprecatedApiSettings(spec);
 
-    const absoluteSpecPath = join(absolutePathToFernDirectory, RelativeFilePath.of(spec.path));
-    const specFile = files.find((file) => file.absolutePath === absoluteSpecPath);
-    if (specFile == null) {
+    const absoluteSpecPath = join(absoluteFilepathToWorkspace, RelativeFilePath.of(spec.path));
+    if (!(await doesPathExist(absoluteSpecPath))) {
         context.logger.warn(`API spec path ${absoluteSpecPath} does not exist. Skipping...`);
         return null;
     }
-    const specYaml = yaml.load(specFile.contents);
-    if (specYaml == null) {
+    let specContent;
+    try {
+        const fileContents = await readFile(absoluteSpecPath, { encoding: "utf-8" });
+        specContent = yaml.load(fileContents);
+    } catch (e) {
+        context.logger.warn(`Failed to read API spec file ${spec.path}. Error: ${e}. Skipping...`);
+        return null;
+    }
+
+    if (specContent == null) {
         context.logger.warn(`API spec file ${spec.path} is null or undefined. Skipping...`);
         return null;
     }
-    if (typeof specYaml !== "object") {
-        context.logger.warn(`API spec file ${spec.path} is not a valid YAML object. Skipping...`);
+    if (typeof specContent !== "object") {
+        context.logger.warn(`API spec file ${spec.path} is not a valid YAML/JSON object. Skipping...`);
         return null;
     }
-    if ("asyncapi" in specYaml) {
+    if ("asyncapi" in specContent) {
         const asyncApi = spec as generatorsYml.ApiDefinitionWithOverridesSchema;
         return {
             asyncapi: asyncApi.path,
@@ -303,7 +323,7 @@ async function parseApiSpec({
             origin: asyncApi.origin,
             settings: convertDeprecatedApiSettingsToAsyncApiSettings(deprecatedApiSettings)
         };
-    } else if ("openapi" in specYaml) {
+    } else if ("openapi" in specContent || "swagger" in specContent) {
         const openApi = spec as generatorsYml.ApiDefinitionWithOverridesSchema;
         return {
             openapi: openApi.path,
@@ -352,8 +372,8 @@ async function getFilesAndDirectories(
 
 function convertDeprecatedApiSettingsToOpenApiSettings(
     deprecatedApiSettings: generatorsYml.ApiDefinitionSettingsSchema
-): generatorsYml.OpenApiSettingsSchema {
-    return {
+): generatorsYml.OpenApiSettingsSchema | undefined {
+    const settings = {
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "inline-path-parameters": deprecatedApiSettings["inline-path-parameters"],
         "only-include-referenced-schemas": deprecatedApiSettings["only-include-referenced-schemas"],
@@ -361,14 +381,38 @@ function convertDeprecatedApiSettingsToOpenApiSettings(
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"]
     };
+
+    if (Object.values(settings).some((setting) => setting != null)) {
+        return settings;
+    } else {
+        return undefined;
+    }
 }
 function convertDeprecatedApiSettingsToAsyncApiSettings(
     deprecatedApiSettings: generatorsYml.ApiDefinitionSettingsSchema
-): generatorsYml.AsyncApiSettingsSchema {
-    return {
+): generatorsYml.AsyncApiSettingsSchema | undefined {
+    const settings = {
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
         "message-naming": deprecatedApiSettings["message-naming"]
     };
+
+    if (Object.values(settings).some((setting) => setting != null)) {
+        return settings;
+    } else {
+        return undefined;
+    }
+}
+
+function getAllFilesInDirectory(directory: Directory): File[] {
+    const files: File[] = [];
+    for (const item of directory.contents) {
+        if (item.type === "file") {
+            files.push(item);
+        } else {
+            files.push(...getAllFilesInDirectory(item));
+        }
+    }
+    return files;
 }

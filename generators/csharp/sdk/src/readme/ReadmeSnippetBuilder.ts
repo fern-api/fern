@@ -201,8 +201,7 @@ try {
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        // TODO: Update this to csharp when available.
-        if (endpoint.snippet.type !== "typescript") {
+        if (endpoint.snippet.type !== "csharp") {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
         }
         return endpoint.snippet.client;

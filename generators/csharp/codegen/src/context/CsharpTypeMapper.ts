@@ -86,6 +86,10 @@ export class CsharpTypeMapper {
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
                     : Type.optional(this.convert({ reference: container.optional }));
+            case "nullable":
+                return unboxOptionals
+                    ? this.convert({ reference: container.nullable, unboxOptionals })
+                    : Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -103,7 +107,7 @@ export class CsharpTypeMapper {
             double: () => csharp.Type.double(),
             boolean: () => csharp.Type.boolean(),
             string: () => csharp.Type.string(),
-            date: () => csharp.Type.date(),
+            date: () => csharp.Type.dateOnly(),
             dateTime: () => csharp.Type.dateTime(),
             uuid: () => csharp.Type.string(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0

@@ -295,6 +295,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -332,6 +333,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -369,6 +371,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": "The rating scale out of ten stars"
                     },
@@ -469,6 +472,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -596,6 +600,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -633,6 +638,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -835,6 +841,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1180,6 +1187,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1274,6 +1282,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1460,6 +1469,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1554,6 +1564,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1739,6 +1750,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1833,6 +1845,7 @@
                             "default": null,
                             "inline": null
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }

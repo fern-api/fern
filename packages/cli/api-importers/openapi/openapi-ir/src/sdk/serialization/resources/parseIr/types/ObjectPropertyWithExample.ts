@@ -17,6 +17,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
         key: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         readonly: core.serialization.boolean().optional(),
+        writeonly: core.serialization.boolean().optional(),
         audiences: core.serialization.list(core.serialization.string()),
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         nameOverride: core.serialization.string().optional(),
@@ -29,6 +30,7 @@ export declare namespace ObjectPropertyWithExample {
         key: string;
         schema: serializers.SchemaWithExample.Raw;
         readonly?: boolean | null;
+        writeonly?: boolean | null;
         audiences: string[];
         conflict: Record<SchemaId.Raw, ObjectPropertyConflictInfo.Raw>;
         nameOverride?: string | null;

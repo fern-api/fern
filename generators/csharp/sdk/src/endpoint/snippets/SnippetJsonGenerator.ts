@@ -18,7 +18,7 @@ export class SnippetJsonGenerator {
 
     public generate(): FernGeneratorExec.Snippets {
         const rootClientSnippet = this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet({})
+            .generateExampleClientInstantiationSnippet({ asSnippet: true })
             .toFormattedSnippet({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),
@@ -64,8 +64,7 @@ export class SnippetJsonGenerator {
                             method: httpEndpoint.method,
                             identifierOverride: httpEndpoint.id
                         },
-                        // TODO: Use csharp type when available
-                        snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                        snippet: FernGeneratorExec.EndpointSnippet.csharp({
                             client: csharpSnippet
                         })
                     };

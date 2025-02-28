@@ -6,6 +6,7 @@ package com.seed.mixedCase.resources.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.ObjectMappers;
+import com.seed.mixedCase.core.QueryStringMapper;
 import com.seed.mixedCase.core.RequestOptions;
 import com.seed.mixedCase.core.SeedMixedCaseApiException;
 import com.seed.mixedCase.core.SeedMixedCaseException;
@@ -71,8 +72,8 @@ public class ServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("resource");
-        httpUrl.addQueryParameter("page_limit", Integer.toString(request.getPageLimit()));
-        httpUrl.addQueryParameter("beforeDate", request.getBeforeDate());
+        QueryStringMapper.addQueryParameter(httpUrl, "page_limit", Integer.toString(request.getPageLimit()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "beforeDate", request.getBeforeDate(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

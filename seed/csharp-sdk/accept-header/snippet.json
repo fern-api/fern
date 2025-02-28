@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_service.endpoint"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAccept;\n\nvar client = new SeedAcceptClient(\"TOKEN\");\nawait client.Service.EndpointAsync();\n"
             }
         }
