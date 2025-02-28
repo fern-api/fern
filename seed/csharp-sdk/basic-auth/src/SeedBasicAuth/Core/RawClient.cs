@@ -1,8 +1,7 @@
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using SystemTask = System.Threading.Tasks.Task;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
+using global::System.Text;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedBasicAuth.Core;
 
@@ -19,7 +18,7 @@ internal class RawClient(ClientOptions clientOptions)
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
-    public async Task<ApiResponse> MakeRequestAsync(
+    public async Task<ApiResponse> SendRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default
     )
@@ -29,8 +28,37 @@ internal class RawClient(ClientOptions clientOptions)
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
+        var httpRequest = CreateHttpRequest(request);
         // Send the request.
-        return await SendWithRetriesAsync(request, cts.Token).ConfigureAwait(false);
+        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
+            .ConfigureAwait(false);
+    }
+
+    public async Task<ApiResponse> SendRequestAsync(
+        HttpRequestMessage request,
+        IRequestOptions? options,
+        CancellationToken cancellationToken = default
+    )
+    {
+        // Apply the request timeout.
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var timeout = options?.Timeout ?? Options.Timeout;
+        cts.CancelAfter(timeout);
+
+        // Send the request.
+        return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
+    }
+
+    private static HttpRequestMessage CloneRequest(HttpRequestMessage request)
+    {
+        var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
+        clonedRequest.Version = request.Version;
+        clonedRequest.Content = request.Content;
+        foreach (var header in request.Headers)
+        {
+            clonedRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        }
+        return clonedRequest;
     }
 
     public record BaseApiRequest
@@ -77,28 +105,41 @@ internal class RawClient(ClientOptions clientOptions)
     }
 
     private async Task<ApiResponse> SendWithRetriesAsync(
-        BaseApiRequest request,
+        HttpRequestMessage request,
+        IRequestOptions? options,
         CancellationToken cancellationToken
     )
     {
-        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient
-            .SendAsync(BuildHttpRequest(request), cancellationToken)
-            .ConfigureAwait(false);
+        var httpClient = options?.HttpClient ?? Options.HttpClient;
+        var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
+        var response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
             {
                 break;
             }
+            AssertRetryableContent(request.Content);
+
             var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            using var retryRequest = CloneRequest(request);
             response = await httpClient
-                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .SendAsync(retryRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+    }
+
+    private static void AssertRetryableContent(HttpContent requestContent)
+    {
+        switch (requestContent)
+        {
+            case StreamContent:
+                throw new Exception("Cannot retry a request with StreamContent");
+            case MultipartContent:
+                throw new Exception("Cannot retry a request with MultipartContent");
+        }
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
@@ -107,7 +148,7 @@ internal class RawClient(ClientOptions clientOptions)
         return statusCode is 408 or 429 or >= 500;
     }
 
-    private HttpRequestMessage BuildHttpRequest(BaseApiRequest request)
+    public HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);

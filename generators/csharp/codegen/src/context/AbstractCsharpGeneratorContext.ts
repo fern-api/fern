@@ -542,10 +542,6 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
-    public hasCustomPager(): boolean {
-        return this.customConfig["custom-pager-name"] != null;
-    }
-
     public getCustomPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
         return csharp.classReference({
             name: this.getCustomPagerName(),
@@ -581,11 +577,22 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getCustomPagerName(): string {
-        if (!this.customConfig["custom-pager-name"]) {
-            throw new Error("Custom pager is not enabled");
+    #doesIrHaveCustomPagination: boolean | null = null;
+
+    public doesIrHaveCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === null) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
         }
-        return this.customConfig["custom-pager-name"];
+        return this.#doesIrHaveCustomPagination;
+    }
+
+    public getCustomPagerName(): string {
+        return (
+            this.customConfig["custom-pager-name"] ??
+            this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")
+        );
     }
 
     public abstract getRawAsIsFiles(): string[];

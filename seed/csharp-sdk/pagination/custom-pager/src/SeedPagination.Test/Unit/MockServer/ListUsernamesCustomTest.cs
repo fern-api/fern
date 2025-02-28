@@ -1,9 +1,6 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -40,13 +37,14 @@ public class ListUsernamesCustomTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListUsernamesCustomAsync(
+        var pager = Client.Users.ListUsernamesCustomAsync(
             new ListUsernamesRequestCustom { StartingAfter = "starting_after" },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        await foreach (var item in pager)
+        {
+            Assert.That(item, Is.Not.Null);
+            break; // Only check the first item
+        }
     }
 }

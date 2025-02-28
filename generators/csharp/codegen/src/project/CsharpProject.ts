@@ -107,7 +107,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
-        if (this.context.hasCustomPager()) {
+        if (this.context.doesIrHaveCustomPagination()) {
             this.coreFiles.push(await this.createCustomPagerAsIsFile());
         }
 

@@ -462,7 +462,7 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public async Task<UsernameCursor> ListUsernamesCustomAsync(
+    public async Task<Core.SeedPagination<string>> ListUsernamesCustomAsync(
         ListUsernamesRequestCustom request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -473,40 +473,38 @@ public partial class UsersClient
         {
             _query["starting_after"] = request.StartingAfter;
         }
-        var response = await _client
-            .SendRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
+        var httpRequest = _client.CreateHttpRequest(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/users",
+                Query = _query,
+                Options = options,
+            }
+        );
+        var sendRequest = async (HttpRequestMessage request, CancellationToken ct) =>
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
+            var response = await _client
+                .SendRequestAsync(httpRequest, options, cancellationToken)
+                .ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+                return response.Raw;
             }
-            catch (JsonException e)
-            {
-                throw new SeedPaginationException("Failed to deserialize response", e);
-            }
-        }
 
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPaginationApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                throw new SeedPaginationApiException(
+                    $"Error with status code {response.StatusCode}",
+                    response.StatusCode,
+                    responseBody
+                );
+            }
+        };
+        return await SeedPaginationFactory
+            .CreateAsync<string>(sendRequest, httpRequest, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <example>

@@ -542,7 +542,7 @@ await client.Users.ListUsernamesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesCustomAsync</a>(ListUsernamesRequestCustom { ... }) -> UsernameCursor</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesCustomAsync</a>(ListUsernamesRequestCustom { ... }) -> Pager<string></code></summary>
 <dl>
 <dd>
 
