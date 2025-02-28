@@ -18,8 +18,10 @@ import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
+import com.fern.java.client.generators.AbstractSubpackageClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.AsyncRootClientGenerator;
+import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -33,9 +35,9 @@ import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
-import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
+import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
@@ -328,7 +330,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             if (!subpackage.getHasEndpointsInTree()) {
                 return;
             }
-            SubpackageClientGenerator httpServiceClientGenerator = new SubpackageClientGenerator(
+            AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(
                     subpackage,
                     context,
                     objectMapper,
@@ -339,9 +341,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     generatedRequestOptions,
                     generatedTypes.getInterfaces(),
                     generatedErrors);
-            GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
-            this.addGeneratedFile(generatedClient);
-            generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
+            GeneratedClient syncGeneratedClient = syncServiceClientGenerator.generateFile();
+            this.addGeneratedFile(syncGeneratedClient);
+            syncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
+
+            AbstractSubpackageClientGenerator asyncServiceClientGenerator = new AsyncSubpackageClientGenerator(
+                    subpackage,
+                    context,
+                    objectMapper,
+                    context,
+                    generatedClientOptions,
+                    generatedSuppliersFile,
+                    generatedEnvironmentsClass,
+                    generatedRequestOptions,
+                    generatedTypes.getInterfaces(),
+                    generatedErrors);
+            GeneratedClient asyncGeneratedClient = asyncServiceClientGenerator.generateFile();
+            this.addGeneratedFile(asyncGeneratedClient);
+            asyncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
 
         // root clients
