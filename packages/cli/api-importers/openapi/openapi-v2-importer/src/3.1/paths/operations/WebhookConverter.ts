@@ -50,11 +50,11 @@ export class WebhookConverter extends AbstractOperationConverter {
             return undefined;
         }
 
-        const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
+        const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
         const { headers, pathParameters, queryParameters } = this.convertParameters({
             context,
             errorCollector,
