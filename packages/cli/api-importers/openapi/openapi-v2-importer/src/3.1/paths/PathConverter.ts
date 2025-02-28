@@ -9,8 +9,8 @@ import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { AbstractOperationConverter } from "./operations/AbstractOperationConverter";
 import { OperationConverter } from "./operations/OperationConverter";
+import { WebhookConverter } from "./operations/WebhookConverter";
 
 export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args {
@@ -19,7 +19,8 @@ export declare namespace PathConverter {
     }
 
     export interface Output {
-        endpoints: AbstractOperationConverter.Output[];
+        endpoints: OperationConverter.Output[];
+        webhooks: WebhookConverter.Output[];
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
@@ -41,8 +42,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): PathConverter.Output | undefined {
-        const endpoints: AbstractOperationConverter.Output[] = [];
-
+        const endpoints: OperationConverter.Output[] = [];
+        const webhooks: WebhookConverter.Output[] = [];
         const inlinedTypes: Record<string, TypeDeclaration> = {};
 
         for (const method of HttpMethods) {
@@ -56,7 +57,17 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 });
                 const webhookExtension = webhookExtensionConverter.convert({ context, errorCollector });
                 if (webhookExtension != null) {
-                    // TODO: Use webhook extension to modify endpoint conversion.
+                    const webhookConverter = new WebhookConverter({
+                        breadcrumbs: operationBreadcrumbs,
+                        operation,
+                        method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
+                        path: this.path
+                    });
+                    const convertedWebhook = webhookConverter.convert({ context, errorCollector });
+                    if (convertedWebhook != null) {
+                        webhooks.push(convertedWebhook);
+                        Object.assign(inlinedTypes, convertedWebhook.inlinedTypes);
+                    }
                 }
 
                 const streamingExtensionConverter = new FernStreamingExtension({
@@ -96,6 +107,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
 
         return {
             endpoints,
+            webhooks,
             inlinedTypes
         };
     }

@@ -2,7 +2,6 @@ import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
-    HttpEndpoint,
     HttpHeader,
     HttpMethod,
     HttpRequestBody,
@@ -33,7 +32,6 @@ export declare namespace AbstractOperationConverter {
 
     export interface Output {
         group?: string[];
-        endpoint: HttpEndpoint;
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
@@ -81,10 +79,12 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
     protected convertParameters({
         context,
-        errorCollector
+        errorCollector,
+        breadcrumbs
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
+        breadcrumbs: string[];
     }): {
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
@@ -104,7 +104,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
 
             const parameterConverter = new ParameterConverter({
-                breadcrumbs: [...this.breadcrumbs, "parameters"],
+                breadcrumbs,
                 parameter
             });
 
@@ -152,11 +152,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected convertRequestBody({
         context,
         errorCollector,
+        breadcrumbs,
         group,
         method
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
+        breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
     }): HttpRequestBody | undefined | null {
@@ -181,7 +183,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         const requestBodyConverter = new RequestBodyConverter({
-            breadcrumbs: [...this.breadcrumbs, "requestBody"],
+            breadcrumbs,
             requestBody: resolvedRequestBody,
             group: group ?? [],
             method
@@ -202,11 +204,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected convertResponseBody({
         context,
         errorCollector,
+        breadcrumbs,
         group,
         method
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
+        breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
     }): HttpResponse | undefined {
@@ -235,7 +239,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
 
             const responseBodyConverter = new ResponseBodyConverter({
-                breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                breadcrumbs: [...breadcrumbs, statusCode],
                 responseBody: resolvedResponse,
                 group: group ?? [],
                 method,

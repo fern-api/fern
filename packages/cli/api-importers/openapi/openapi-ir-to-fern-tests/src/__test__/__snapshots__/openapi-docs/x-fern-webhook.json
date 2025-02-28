@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
-          "WebhookRequest": {
+          "Update": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -20,10 +20,63 @@
         },
       },
       "rawContents": "types:
-  WebhookRequest:
+  Update:
     properties:
       stream: optional<boolean>
       message: string
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "status.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "types": {
+          "StatusUpdatePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message-inlined": "optional<string>",
+              "stream-inlined": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+        "webhooks": {
+          "update": {
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {},
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "StatusUpdatePayload",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+webhooks:
+  update:
+    method: POST
+    headers: {}
+    payload: StatusUpdatePayload
+    examples:
+      - payload: {}
+types:
+  StatusUpdatePayload:
+    properties:
+      stream-inlined: optional<boolean>
+      message-inlined: optional<string>
     source:
       openapi: ../openapi.yml
 ",

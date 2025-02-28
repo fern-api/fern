@@ -1,5 +1,4 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
+import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { ErrorCollector } from "../../../ErrorCollector";
@@ -7,15 +6,13 @@ import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace OperationConverter {
-    export interface Args extends AbstractOperationConverter.Args {
-        operation: OpenAPIV3_1.OperationObject;
-        method: OpenAPIV3_1.HttpMethods;
-        path: string;
+    export interface Output extends AbstractOperationConverter.Output {
+        endpoint: HttpEndpoint;
     }
 }
 
 export class OperationConverter extends AbstractOperationConverter {
-    constructor({ breadcrumbs, operation, method, path }: OperationConverter.Args) {
+    constructor({ breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
         super({ breadcrumbs, operation, method, path });
     }
 
@@ -25,7 +22,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): AbstractOperationConverter.Output | undefined {
+    }): OperationConverter.Output | undefined {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -35,14 +32,30 @@ export class OperationConverter extends AbstractOperationConverter {
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
-        const { headers, pathParameters, queryParameters } = this.convertParameters({ context, errorCollector });
+        const { headers, pathParameters, queryParameters } = this.convertParameters({
+            context,
+            errorCollector,
+            breadcrumbs: [...this.breadcrumbs, "parameters"]
+        });
 
-        const requestBody = this.convertRequestBody({ context, errorCollector, group, method });
+        const requestBody = this.convertRequestBody({
+            context,
+            errorCollector,
+            breadcrumbs: [...this.breadcrumbs, "requestBody"],
+            group,
+            method
+        });
         if (requestBody === null) {
             return undefined;
         }
 
-        const response = this.convertResponseBody({ context, errorCollector, group, method });
+        const response = this.convertResponseBody({
+            context,
+            errorCollector,
+            breadcrumbs: [...this.breadcrumbs, "responses"],
+            group,
+            method
+        });
 
         return {
             group,

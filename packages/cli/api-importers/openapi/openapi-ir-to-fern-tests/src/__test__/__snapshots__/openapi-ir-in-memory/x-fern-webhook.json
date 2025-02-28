@@ -18,6 +18,7 @@
     "paths": {
       "/status": {
         "post": {
+          "operationId": "update-status",
           "x-fern-webhook": true,
           "x-fern-sdk-group-name": "status",
           "x-fern-sdk-method-name": "update",
@@ -25,7 +26,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WebhookRequest"
+                  "$ref": "#/components/schemas/Update"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/status-inlined": {
+        "post": {
+          "operationId": "update-status-inlined",
+          "x-fern-webhook": true,
+          "x-fern-sdk-group-name": "status",
+          "x-fern-sdk-method-name": "update",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stream-inlined": {
+                      "type": "boolean"
+                    },
+                    "message-inlined": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -50,7 +76,7 @@
         }
       },
       "schemas": {
-        "WebhookRequest": {
+        "Update": {
           "type": "object",
           "properties": {
             "stream": {

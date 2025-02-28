@@ -219,32 +219,191 @@
   ],
   "idempotencyHeaders": [],
   "types": {
-    "type_:WebhookRequest": {
+    "type_status:StatusUpdatePayload": {
       "name": {
         "name": {
-          "originalName": "WebhookRequest",
+          "originalName": "StatusUpdatePayload",
           "camelCase": {
-            "unsafeName": "webhookRequest",
-            "safeName": "webhookRequest"
+            "unsafeName": "statusUpdatePayload",
+            "safeName": "statusUpdatePayload"
           },
           "snakeCase": {
-            "unsafeName": "webhook_request",
-            "safeName": "webhook_request"
+            "unsafeName": "status_update_payload",
+            "safeName": "status_update_payload"
           },
           "screamingSnakeCase": {
-            "unsafeName": "WEBHOOK_REQUEST",
-            "safeName": "WEBHOOK_REQUEST"
+            "unsafeName": "STATUS_UPDATE_PAYLOAD",
+            "safeName": "STATUS_UPDATE_PAYLOAD"
           },
           "pascalCase": {
-            "unsafeName": "WebhookRequest",
-            "safeName": "WebhookRequest"
+            "unsafeName": "StatusUpdatePayload",
+            "safeName": "StatusUpdatePayload"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "status",
+              "camelCase": {
+                "unsafeName": "status",
+                "safeName": "status"
+              },
+              "snakeCase": {
+                "unsafeName": "status",
+                "safeName": "status"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "STATUS",
+                "safeName": "STATUS"
+              },
+              "pascalCase": {
+                "unsafeName": "Status",
+                "safeName": "Status"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "status",
+            "camelCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "snakeCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS",
+              "safeName": "STATUS"
+            },
+            "pascalCase": {
+              "unsafeName": "Status",
+              "safeName": "Status"
+            }
+          }
+        },
+        "typeId": "type_status:StatusUpdatePayload"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "stream-inlined",
+                "camelCase": {
+                  "unsafeName": "streamInlined",
+                  "safeName": "streamInlined"
+                },
+                "snakeCase": {
+                  "unsafeName": "stream_inlined",
+                  "safeName": "stream_inlined"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STREAM_INLINED",
+                  "safeName": "STREAM_INLINED"
+                },
+                "pascalCase": {
+                  "unsafeName": "StreamInlined",
+                  "safeName": "StreamInlined"
+                }
+              },
+              "wireValue": "stream-inlined"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "message-inlined",
+                "camelCase": {
+                  "unsafeName": "messageInlined",
+                  "safeName": "messageInlined"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_inlined",
+                  "safeName": "message_inlined"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_INLINED",
+                  "safeName": "MESSAGE_INLINED"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageInlined",
+                  "safeName": "MessageInlined"
+                }
+              },
+              "wireValue": "message-inlined"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          }
+        ],
+        "extraProperties": false,
+        "extendedProperties": [],
+        "type": "object"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
+    "type_:Update": {
+      "name": {
+        "name": {
+          "originalName": "Update",
+          "camelCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "snakeCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE",
+            "safeName": "UPDATE"
+          },
+          "pascalCase": {
+            "unsafeName": "Update",
+            "safeName": "Update"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:WebhookRequest"
+        "typeId": "type_:Update"
       },
       "shape": {
         "extends": [],
@@ -368,33 +527,340 @@
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {},
     "sharedTypes": [
-      "type_:WebhookRequest"
+      "type_status:StatusUpdatePayload",
+      "type_:Update"
     ]
   },
-  "webhookGroups": {},
+  "webhookGroups": {
+    "webhooks_status": [
+      {
+        "id": "webhooks_status.update",
+        "method": "POST",
+        "name": {
+          "originalName": "update",
+          "camelCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "snakeCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE",
+            "safeName": "UPDATE"
+          },
+          "pascalCase": {
+            "unsafeName": "Update",
+            "safeName": "Update"
+          }
+        },
+        "headers": [],
+        "payload": {
+          "payloadType": {
+            "name": {
+              "originalName": "StatusUpdatePayload",
+              "camelCase": {
+                "unsafeName": "statusUpdatePayload",
+                "safeName": "statusUpdatePayload"
+              },
+              "snakeCase": {
+                "unsafeName": "status_update_payload",
+                "safeName": "status_update_payload"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "STATUS_UPDATE_PAYLOAD",
+                "safeName": "STATUS_UPDATE_PAYLOAD"
+              },
+              "pascalCase": {
+                "unsafeName": "StatusUpdatePayload",
+                "safeName": "StatusUpdatePayload"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "status",
+                  "camelCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "status",
+                    "safeName": "status"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STATUS",
+                    "safeName": "STATUS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Status",
+                    "safeName": "Status"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "status",
+                "camelCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "snakeCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STATUS",
+                  "safeName": "STATUS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Status",
+                  "safeName": "Status"
+                }
+              }
+            },
+            "typeId": "type_status:StatusUpdatePayload",
+            "type": "named"
+          },
+          "type": "reference"
+        },
+        "examples": [
+          {
+            "payload": {
+              "shape": {
+                "typeName": {
+                  "typeId": "type_status:StatusUpdatePayload",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "originalName": "status",
+                        "camelCase": {
+                          "unsafeName": "status",
+                          "safeName": "status"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "status",
+                          "safeName": "status"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "STATUS",
+                          "safeName": "STATUS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Status",
+                          "safeName": "Status"
+                        }
+                      }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                      "originalName": "status",
+                      "camelCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "STATUS",
+                        "safeName": "STATUS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Status",
+                        "safeName": "Status"
+                      }
+                    }
+                  },
+                  "name": {
+                    "originalName": "StatusUpdatePayload",
+                    "camelCase": {
+                      "unsafeName": "statusUpdatePayload",
+                      "safeName": "statusUpdatePayload"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "status_update_payload",
+                      "safeName": "status_update_payload"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "STATUS_UPDATE_PAYLOAD",
+                      "safeName": "STATUS_UPDATE_PAYLOAD"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "StatusUpdatePayload",
+                      "safeName": "StatusUpdatePayload"
+                    }
+                  }
+                },
+                "shape": {
+                  "properties": [],
+                  "type": "object"
+                },
+                "type": "named"
+              },
+              "jsonExample": {}
+            }
+          }
+        ]
+      }
+    ]
+  },
   "websocketChannels": {},
   "dynamic": {
     "version": "1.0.0",
     "types": {
-      "type_:WebhookRequest": {
+      "type_status:StatusUpdatePayload": {
         "declaration": {
           "name": {
-            "originalName": "WebhookRequest",
+            "originalName": "StatusUpdatePayload",
             "camelCase": {
-              "unsafeName": "webhookRequest",
-              "safeName": "webhookRequest"
+              "unsafeName": "statusUpdatePayload",
+              "safeName": "statusUpdatePayload"
             },
             "snakeCase": {
-              "unsafeName": "webhook_request",
-              "safeName": "webhook_request"
+              "unsafeName": "status_update_payload",
+              "safeName": "status_update_payload"
             },
             "screamingSnakeCase": {
-              "unsafeName": "WEBHOOK_REQUEST",
-              "safeName": "WEBHOOK_REQUEST"
+              "unsafeName": "STATUS_UPDATE_PAYLOAD",
+              "safeName": "STATUS_UPDATE_PAYLOAD"
             },
             "pascalCase": {
-              "unsafeName": "WebhookRequest",
-              "safeName": "WebhookRequest"
+              "unsafeName": "StatusUpdatePayload",
+              "safeName": "StatusUpdatePayload"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "status",
+                "camelCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "snakeCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STATUS",
+                  "safeName": "STATUS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Status",
+                  "safeName": "Status"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "status",
+              "camelCase": {
+                "unsafeName": "status",
+                "safeName": "status"
+              },
+              "snakeCase": {
+                "unsafeName": "status",
+                "safeName": "status"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "STATUS",
+                "safeName": "STATUS"
+              },
+              "pascalCase": {
+                "unsafeName": "Status",
+                "safeName": "Status"
+              }
+            }
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "stream-inlined",
+                "camelCase": {
+                  "unsafeName": "streamInlined",
+                  "safeName": "streamInlined"
+                },
+                "snakeCase": {
+                  "unsafeName": "stream_inlined",
+                  "safeName": "stream_inlined"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STREAM_INLINED",
+                  "safeName": "STREAM_INLINED"
+                },
+                "pascalCase": {
+                  "unsafeName": "StreamInlined",
+                  "safeName": "StreamInlined"
+                }
+              },
+              "wireValue": "stream-inlined"
+            },
+            "typeReference": {
+              "value": {
+                "value": "BOOLEAN",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "message-inlined",
+                "camelCase": {
+                  "unsafeName": "messageInlined",
+                  "safeName": "messageInlined"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_inlined",
+                  "safeName": "message_inlined"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_INLINED",
+                  "safeName": "MESSAGE_INLINED"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageInlined",
+                  "safeName": "MessageInlined"
+                }
+              },
+              "wireValue": "message-inlined"
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      },
+      "type_:Update": {
+        "declaration": {
+          "name": {
+            "originalName": "Update",
+            "camelCase": {
+              "unsafeName": "update",
+              "safeName": "update"
+            },
+            "snakeCase": {
+              "unsafeName": "update",
+              "safeName": "update"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPDATE",
+              "safeName": "UPDATE"
+            },
+            "pascalCase": {
+              "unsafeName": "Update",
+              "safeName": "Update"
             }
           },
           "fernFilepath": {
@@ -498,17 +964,91 @@
     ],
     "endpoints": {}
   },
-  "subpackages": {},
+  "subpackages": {
+    "subpackage_status": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "status",
+            "camelCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "snakeCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS",
+              "safeName": "STATUS"
+            },
+            "pascalCase": {
+              "unsafeName": "Status",
+              "safeName": "Status"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "status",
+          "camelCase": {
+            "unsafeName": "status",
+            "safeName": "status"
+          },
+          "snakeCase": {
+            "unsafeName": "status",
+            "safeName": "status"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "STATUS",
+            "safeName": "STATUS"
+          },
+          "pascalCase": {
+            "unsafeName": "Status",
+            "safeName": "Status"
+          }
+        }
+      },
+      "name": {
+        "originalName": "status",
+        "camelCase": {
+          "unsafeName": "status",
+          "safeName": "status"
+        },
+        "snakeCase": {
+          "unsafeName": "status",
+          "safeName": "status"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "STATUS",
+          "safeName": "STATUS"
+        },
+        "pascalCase": {
+          "unsafeName": "Status",
+          "safeName": "Status"
+        }
+      },
+      "types": [
+        "type_status:StatusUpdatePayload"
+      ],
+      "errors": [],
+      "subpackages": [],
+      "webhooks": "webhooks_status",
+      "hasEndpointsInTree": false
+    }
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
       "packagePath": []
     },
     "types": [
-      "type_:WebhookRequest"
+      "type_:Update"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "subpackage_status"
+    ],
     "hasEndpointsInTree": false
   },
   "sdkConfig": {
