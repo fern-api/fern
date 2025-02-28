@@ -2236,7 +2236,6 @@ The method name cannot include the following characters:
   - Less Than `<``
   - Equals `=`
   - Period `.`
-
     
 </dd>
 </dl>
