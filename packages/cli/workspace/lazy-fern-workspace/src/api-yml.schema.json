@@ -1341,6 +1341,16 @@
     "pagination.CursorPaginationSchema": {
       "type": "object",
       "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "cursor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "cursor": {
           "type": "string"
         },
@@ -1361,6 +1371,16 @@
     "pagination.OffsetPaginationSchema": {
       "type": "object",
       "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "offset"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "offset": {
           "type": "string"
         },
@@ -1394,6 +1414,22 @@
       ],
       "additionalProperties": false
     },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -1401,6 +1437,9 @@
         },
         {
           "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
         }
       ]
     },

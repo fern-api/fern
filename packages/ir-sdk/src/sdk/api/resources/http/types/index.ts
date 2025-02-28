@@ -46,6 +46,7 @@ export * from "./ResponseError";
 export * from "./Pagination";
 export * from "./CursorPagination";
 export * from "./OffsetPagination";
+export * from "./CustomPagination";
 export * from "./RequestPropertyValue";
 export * from "./RequestProperty";
 export * from "./ResponseProperty";
