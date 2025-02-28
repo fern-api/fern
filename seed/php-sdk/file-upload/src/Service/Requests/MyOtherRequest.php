@@ -8,8 +8,9 @@ use Seed\Utils\File;
 use Seed\Core\Types\ArrayType;
 use Seed\Service\Types\MyObject;
 use Seed\Service\Types\ObjectType;
+use Seed\Service\Types\MyObjectWithOptional;
 
-class MyRequest extends JsonSerializableType
+class MyOtherRequest extends JsonSerializableType
 {
     /**
      * @var ?string $maybeString
@@ -80,6 +81,12 @@ class MyRequest extends JsonSerializableType
     public ?string $optionalId;
 
     /**
+     * @var array<MyObjectWithOptional> $listOfObjectsWithOptionals
+     */
+    #[JsonProperty('list_of_objects_with_optionals'), ArrayType([MyObjectWithOptional::class])]
+    public array $listOfObjectsWithOptionals;
+
+    /**
      * @var MyObject $aliasObject
      */
     #[JsonProperty('alias_object')]
@@ -103,6 +110,7 @@ class MyRequest extends JsonSerializableType
      *   file: File,
      *   fileList: array<File>,
      *   listOfObjects: array<MyObject>,
+     *   listOfObjectsWithOptionals: array<MyObjectWithOptional>,
      *   aliasObject: MyObject,
      *   listOfAliasObject: array<MyObject>,
      *   aliasListOfObject: array<MyObject>,
@@ -131,6 +139,7 @@ class MyRequest extends JsonSerializableType
         $this->optionalMetadata = $values['optionalMetadata'] ?? null;
         $this->optionalObjectType = $values['optionalObjectType'] ?? null;
         $this->optionalId = $values['optionalId'] ?? null;
+        $this->listOfObjectsWithOptionals = $values['listOfObjectsWithOptionals'];
         $this->aliasObject = $values['aliasObject'];
         $this->listOfAliasObject = $values['listOfAliasObject'];
         $this->aliasListOfObject = $values['aliasListOfObject'];
