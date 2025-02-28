@@ -51,6 +51,27 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
         const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
+
+        if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
+            for (const pathParameter of this.endpoint.allPathParameters) {
+                class_.addField(
+                    csharp.field({
+                        name: pathParameter.name.pascalCase.safeName,
+                        type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
+                        access: csharp.Access.Public,
+                        get: true,
+                        set: true,
+                        summary: pathParameter.docs,
+                        useRequired: true,
+                        initializer: this.context.getLiteralInitializerFromTypeReference({
+                            typeReference: pathParameter.valueType
+                        }),
+                        annotations: [this.context.getJsonIgnoreAnnotation()]
+                    })
+                );
+            }
+        }
+
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
@@ -69,10 +90,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     useRequired: true,
                     initializer: this.context.getLiteralInitializerFromTypeReference({
                         typeReference: query.valueType
-                    })
+                    }),
+                    annotations: [this.context.getJsonIgnoreAnnotation()]
                 })
             );
-
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName,
@@ -94,7 +115,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     useRequired: true,
                     initializer: this.context.getLiteralInitializerFromTypeReference({
                         typeReference: header.valueType
-                    })
+                    }),
+                    annotations: [this.context.getJsonIgnoreAnnotation()]
                 })
             );
         }
@@ -186,6 +208,21 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         parseDatetimes: boolean;
     }): csharp.CodeBlock {
         const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
+        if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
+            for (const pathParameter of [
+                ...example.rootPathParameters,
+                ...example.servicePathParameters,
+                ...example.endpointPathParameters
+            ]) {
+                orderedFields.push({
+                    name: pathParameter.name,
+                    value: this.exampleGenerator.getSnippetForTypeReference({
+                        exampleTypeReference: pathParameter.value,
+                        parseDatetimes
+                    })
+                });
+            }
+        }
         for (const exampleQueryParameter of example.queryParameters) {
             const isSingleQueryParameter =
                 exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";

@@ -457,6 +457,57 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
+    /// await client.Users.ListUsernamesCustomAsync(
+    ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<UsernameCursor> ListUsernamesCustomAsync(
+        ListUsernamesRequestCustom request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.StartingAfter != null)
+        {
+            _query["starting_after"] = request.StartingAfter;
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/users",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPaginationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
     /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
     /// </code>
     /// </example>

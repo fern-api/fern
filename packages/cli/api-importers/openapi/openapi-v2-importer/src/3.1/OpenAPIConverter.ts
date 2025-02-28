@@ -273,6 +273,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     }
                     groupToEndpoints[group].push(endpoint.endpoint);
                 }
+                for (const webhook of convertedPath.webhooks) {
+                    const group = webhook.group?.join(".") ?? "";
+                    if (this.ir.webhookGroups[group] == null) {
+                        this.ir.webhookGroups[group] = [];
+                    }
+                    this.ir.webhookGroups[group].push(webhook.webhook);
+                }
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedPath.inlinedTypes

@@ -285,6 +285,14 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonIgnoreAnnotation(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonIgnore",
+                namespace: "System.Text.Json.Serialization"
+            })
+        });
+    }
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }

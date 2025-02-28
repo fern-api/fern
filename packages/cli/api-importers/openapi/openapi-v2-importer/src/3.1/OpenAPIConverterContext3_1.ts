@@ -104,7 +104,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         breadcrumbs: string[];
         errorCollector: ErrorCollector;
     }): Availability | undefined {
-        // Keep resolving references until we get to a schema object
         while (this.isReferenceObject(node)) {
             const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
             if (!resolved.resolved) {
@@ -113,7 +112,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             node = resolved.value;
         }
 
-        // First check for x-fern-availability extension
         const availabilityExtension = new AvailabilityExtension({
             node,
             breadcrumbs
@@ -129,7 +127,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             };
         }
 
-        // If no availability extension, check for deprecated flag
         if (node.deprecated === true) {
             return {
                 status: AvailabilityStatus.Deprecated,

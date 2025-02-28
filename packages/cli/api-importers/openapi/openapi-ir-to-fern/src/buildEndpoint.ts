@@ -77,19 +77,30 @@ export function buildEndpoint({
 
     let pagination: RawSchemas.PaginationSchema | undefined = undefined;
     if (endpoint.pagination != null) {
-        if (endpoint.pagination.type === "cursor") {
-            pagination = {
-                cursor: endpoint.pagination.cursor,
-                next_cursor: endpoint.pagination.nextCursor,
-                results: endpoint.pagination.results
-            };
-        } else {
-            pagination = {
-                offset: endpoint.pagination.offset,
-                step: endpoint.pagination.step,
-                results: endpoint.pagination.results,
-                "has-next-page": endpoint.pagination.hasNextPage
-            };
+        switch (endpoint.pagination.type) {
+            case "cursor":
+                pagination = {
+                    cursor: endpoint.pagination.cursor,
+                    next_cursor: endpoint.pagination.nextCursor,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "offset":
+                pagination = {
+                    offset: endpoint.pagination.offset,
+                    step: endpoint.pagination.step,
+                    results: endpoint.pagination.results,
+                    "has-next-page": endpoint.pagination.hasNextPage
+                };
+                break;
+            case "custom":
+                pagination = {
+                    type: "custom",
+                    results: endpoint.pagination.results
+                };
+                break;
+            default:
+                assertNever(endpoint.pagination);
         }
     }
 
