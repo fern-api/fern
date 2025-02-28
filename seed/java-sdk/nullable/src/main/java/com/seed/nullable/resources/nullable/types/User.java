@@ -9,8 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableValueFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +25,10 @@ import org.jetbrains.annotations.NotNull;
 public final class User {
     private final String name;
 
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableValueFilter.class)
     private final Optional<List<String>> tags;
 
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableValueFilter.class)
     private final Optional<Metadata> metadata;
 
     private final Map<String, Object> additionalProperties;
@@ -101,6 +104,8 @@ public final class User {
         _FinalStage metadata(Optional<Metadata> metadata);
 
         _FinalStage metadata(Metadata metadata);
+
+        _FinalStage metadata(Nullable<Metadata> metadata);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -133,12 +138,26 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage metadata(Metadata metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            if (metadata == null) {
+                this.metadata = null;
+            } else {
+                this.metadata = Optional.of(metadata);
+            }
+            return this;
+        }
+
+        @Override
+        public _FinalStage metadata(Nullable<Metadata> metadata) {
+            if (metadata.isNull()) {
+                this.metadata = null;
+            } else {
+                this.metadata = metadata.get();
+            }
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        @JsonSetter(value = "metadata")
         public _FinalStage metadata(Optional<Metadata> metadata) {
             this.metadata = metadata;
             return this;
@@ -146,12 +165,16 @@ public final class User {
 
         @java.lang.Override
         public _FinalStage tags(List<String> tags) {
-            this.tags = Optional.ofNullable(tags);
+            if (tags == null) {
+                this.tags = null;
+            } else {
+                this.tags = Optional.of(tags);
+            }
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        @JsonSetter(value = "tags")
         public _FinalStage tags(Optional<List<String>> tags) {
             this.tags = tags;
             return this;
