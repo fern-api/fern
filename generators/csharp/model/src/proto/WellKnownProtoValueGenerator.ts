@@ -7,7 +7,7 @@ import {
 } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { TypeDeclaration } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";

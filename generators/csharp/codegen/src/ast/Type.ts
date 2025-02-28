@@ -2,10 +2,8 @@ import { cloneDeep } from "lodash-es";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk";
 
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { Namespace } from "../project/CSharpFile";
 import {
     ClassReference,
     OneOfBaseClassReference,

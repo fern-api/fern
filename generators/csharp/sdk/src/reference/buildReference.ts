@@ -3,7 +3,7 @@ import path from "path";
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";

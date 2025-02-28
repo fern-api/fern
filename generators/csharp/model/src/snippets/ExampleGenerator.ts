@@ -8,7 +8,7 @@ import {
     ExampleTypeReference,
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";

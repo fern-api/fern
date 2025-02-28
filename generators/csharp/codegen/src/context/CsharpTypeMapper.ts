@@ -9,7 +9,7 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";

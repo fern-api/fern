@@ -9,10 +9,9 @@ import {
     NamedType,
     PrimitiveType,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { csharp } from "../";
-import { CodeBlock, MethodType } from "../ast";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
@@ -105,7 +104,7 @@ export class CsharpProtobufTypeMapper {
             name: "FromProto",
             access: csharp.Access.Internal,
             isAsync: false,
-            type: MethodType.STATIC,
+            type: csharp.MethodType.STATIC,
             summary: `Returns a new ${classReference.name} type from its Protobuf-equivalent representation.`,
             parameters: [
                 csharp.parameter({
@@ -158,7 +157,7 @@ class ToProtoPropertyMapper {
     }: {
         propertyName: string;
         typeReference: TypeReference;
-    }): CodeBlock | undefined {
+    }): csharp.CodeBlock | undefined {
         const conditions = this.getConditions({ propertyName, typeReference });
         if (conditions.length === 0) {
             return undefined;
@@ -175,7 +174,7 @@ class ToProtoPropertyMapper {
     }: {
         propertyName: string;
         typeReference: TypeReference;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         const value = this.getValue({ propertyName, typeReference });
         return csharp.codeblock((writer) => {
             if (this.propertyNeedsAssignment({ typeReference })) {
@@ -195,7 +194,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         typeReference: TypeReference;
         wrapperType?: WrapperType;
-    }): CodeBlock[] {
+    }): csharp.CodeBlock[] {
         switch (typeReference.type) {
             case "container":
                 return this.getConditionsForContainer({
@@ -222,7 +221,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         container: ContainerType;
         wrapperType?: WrapperType;
-    }): CodeBlock[] {
+    }): csharp.CodeBlock[] {
         const property = csharp.codeblock(propertyName);
         switch (container.type) {
             case "optional":
@@ -258,7 +257,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         typeReference: TypeReference;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (typeReference.type) {
             case "container":
                 return this.getValueForContainer({
@@ -283,7 +282,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         named: NamedType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
             return this.getValueForAny({ propertyName });
         }
@@ -402,7 +401,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         container: ContainerType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (container.type) {
             case "optional":
                 return this.getValue({
@@ -429,7 +428,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         listType: TypeReference;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         const valuePropertyName =
             this.context.isReadOnlyMemoryType(listType) && wrapperType === WrapperType.Optional
                 ? `${propertyName}.Value`
@@ -451,7 +450,7 @@ class ToProtoPropertyMapper {
         });
     }
 
-    private getValueForMap({ propertyName, map }: { propertyName: string; map: MapType }): CodeBlock {
+    private getValueForMap({ propertyName, map }: { propertyName: string; map: MapType }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             writer.controlFlow("foreach", csharp.codeblock(`var kvp in ${propertyName}`));
             writer.writeNodeStatement(
@@ -480,7 +479,7 @@ class ToProtoPropertyMapper {
         propertyName: string;
         primitive: PrimitiveType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         const primitiveValue = this.getValueMapperForPrimitive({ propertyName, primitive });
         if (primitive.v1 === "DATE_TIME") {
             // The google.protobuf.Timestamp type doesn't need a default value guard.
@@ -513,7 +512,7 @@ class ToProtoPropertyMapper {
     }: {
         propertyName: string;
         primitive: PrimitiveType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (primitive.v1) {
             case "DATE_TIME":
                 return csharp.codeblock((writer) =>
@@ -614,7 +613,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
         typeReference: TypeReference;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (typeReference.type) {
             case "container":
                 return this.getValueForContainer({
@@ -639,7 +638,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
         named: NamedType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         const resolvedType = this.context.getTypeDeclarationOrThrow(named.typeId);
         if (resolvedType.shape.type === "enum") {
             const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(named, {
@@ -765,7 +764,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
         container: ContainerType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (container.type) {
             case "optional":
                 return this.getValue({
@@ -800,7 +799,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
         listType: ContainerType.List["list"] | ContainerType.Set["set"];
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         const on = csharp.codeblock(`${propertyName}?`);
         if (this.context.isPrimitive(listType)) {
             // Lists of primitive types can be directly mapped.
@@ -868,7 +867,7 @@ class FromProtoPropertyMapper {
         propertyName: string;
         map: MapType;
         wrapperType?: WrapperType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             writer.writeNode(
                 csharp.invokeMethod({
@@ -907,7 +906,7 @@ class FromProtoPropertyMapper {
     }: {
         propertyName: string;
         primitive: PrimitiveType;
-    }): CodeBlock {
+    }): csharp.CodeBlock {
         switch (primitive.v1) {
             case "DATE_TIME":
                 return csharp.codeblock(`${propertyName}.ToDateTime()`);
@@ -930,7 +929,7 @@ class FromProtoPropertyMapper {
     }
 }
 
-function getValueForLiteral({ literal }: { literal: Literal }): CodeBlock {
+function getValueForLiteral({ literal }: { literal: Literal }): csharp.CodeBlock {
     return csharp.codeblock((writer) => {
         switch (literal.type) {
             case "string":

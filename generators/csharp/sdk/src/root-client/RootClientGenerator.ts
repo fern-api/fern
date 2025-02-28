@@ -1,5 +1,3 @@
-import { assign } from "lodash-es";
-
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -14,7 +12,7 @@ import {
     ServiceId,
     Subpackage,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";

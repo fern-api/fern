@@ -22,7 +22,7 @@ import {
     SubpackageId,
     TypeId,
     WellKnownProtobufType
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";

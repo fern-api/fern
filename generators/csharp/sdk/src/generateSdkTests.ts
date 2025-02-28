@@ -1,6 +1,6 @@
 import { CSharpFile } from "@fern-api/csharp-codegen";
 
-import { ExampleEndpointCall, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator";

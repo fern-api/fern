@@ -14,7 +14,7 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
@@ -518,10 +518,11 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.customConfig["custom-pager-name"] != null;
     }
 
-    public getCustomPagerClassReference(): csharp.ClassReference {
+    public getCustomPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
         return csharp.classReference({
             name: this.getCustomPagerName(),
-            namespace: this.getCoreNamespace()
+            namespace: this.getCoreNamespace(),
+            generics: [itemType]
         });
     }
 
@@ -529,6 +530,26 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             name: `${this.getCustomPagerName()}Factory`,
             namespace: this.getCoreNamespace()
+        });
+    }
+
+    public invokeCustomPagerFactoryMethod({
+        itemType,
+        sendRequestMethod,
+        initialRequest,
+        cancellationToken
+    }: {
+        itemType: csharp.Type;
+        sendRequestMethod: csharp.CodeBlock;
+        initialRequest: csharp.CodeBlock;
+        cancellationToken: csharp.CodeBlock;
+    }): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: this.getCustomPagerFactoryClassReference(),
+            method: "CreateAsync",
+            async: true,
+            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            generics: [itemType]
         });
     }
 

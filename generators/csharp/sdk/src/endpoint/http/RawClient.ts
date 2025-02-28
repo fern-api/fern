@@ -1,7 +1,7 @@
 import { Arguments } from "@fern-api/base-generator";
 import { csharp } from "@fern-api/csharp-codegen";
 
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";

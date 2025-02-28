@@ -1,4 +1,4 @@
-import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { BytesOnlyEndpointRequest } from "./BytesOnlyEndpointRequest";
