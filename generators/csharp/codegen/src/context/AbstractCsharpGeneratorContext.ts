@@ -542,6 +542,59 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
+    public getCustomPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getCustomPagerName(),
+            namespace: this.getCoreNamespace(),
+            generics: [itemType]
+        });
+    }
+
+    public getCustomPagerFactoryClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Factory`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public invokeCustomPagerFactoryMethod({
+        itemType,
+        sendRequestMethod,
+        initialRequest,
+        cancellationToken
+    }: {
+        itemType: csharp.Type;
+        sendRequestMethod: csharp.CodeBlock;
+        initialRequest: csharp.CodeBlock;
+        cancellationToken: csharp.CodeBlock;
+    }): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: this.getCustomPagerFactoryClassReference(),
+            method: "CreateAsync",
+            async: true,
+            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            generics: [itemType]
+        });
+    }
+
+    #doesIrHaveCustomPagination: boolean | null = null;
+
+    public doesIrHaveCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === null) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
+    }
+
+    public getCustomPagerName(): string {
+        return (
+            this.customConfig["custom-pager-name"] ??
+            `${this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")}Pager`
+        );
+    }
+
     public abstract getRawAsIsFiles(): string[];
 
     public abstract getCoreAsIsFiles(): string[];

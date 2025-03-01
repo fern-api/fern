@@ -83,6 +83,14 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
+    protected getCustomPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
+        const itemType = this.getPaginationItemType(endpoint);
+        const pager = this.context.getCustomPagerClassReference({
+            itemType
+        });
+        return csharp.Type.reference(pager);
+    }
+
     protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
         const itemType = this.getPaginationItemType(endpoint);
         const pager = this.context.getPagerClassReference({
@@ -99,6 +107,8 @@ export abstract class AbstractEndpointGenerator {
                     case "offset":
                         return endpoint.pagination.results.property.valueType;
                     case "cursor":
+                        return endpoint.pagination.results.property.valueType;
+                    case "custom":
                         return endpoint.pagination.results.property.valueType;
                     default:
                         assertNever(endpoint.pagination);

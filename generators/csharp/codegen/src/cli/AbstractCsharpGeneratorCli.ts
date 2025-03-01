@@ -1,5 +1,3 @@
-import { readFile } from "fs/promises";
-
 import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 

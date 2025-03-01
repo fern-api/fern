@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v55
+irVersion: v56
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -45,6 +45,12 @@ scripts:
       # - dotnet test src
 
 fixtures:
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-pager-name: MyPager
+      outputFolder: custom-pager
   examples:
     - customConfig: null
       outputFolder: no-custom-config

@@ -107,6 +107,10 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
+        if (this.context.doesIrHaveCustomPagination()) {
+            this.coreFiles.push(await this.createCustomPagerAsIsFile());
+        }
+
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
                 await this.createAsIsTestFile({
@@ -387,6 +391,22 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                 namespace
             })
+        );
+    }
+
+    private async createCustomPagerAsIsFile(): Promise<File> {
+        const fileName = AsIsFiles.CustomPager;
+        const customPagerName = this.context.getCustomPagerName();
+        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
+        return new File(
+            fileName.replace(".Template", "").replace("CustomPager", customPagerName),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace: this.context.getCoreNamespace()
+            }).replaceAll("CustomPager", customPagerName)
         );
     }
 

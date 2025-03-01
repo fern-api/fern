@@ -33,6 +33,13 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.endpointGenerator = new HttpEndpointGenerator({ context });
     }
 
+    public override shouldGenerate(): boolean {
+        if (this.endpoint.pagination?.type === "custom") {
+            return false;
+        }
+        return true;
+    }
+
     protected doGenerate(): CSharpFile {
         const testClass = csharp.testClass({
             name: this.getTestClassName(),

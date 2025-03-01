@@ -21,7 +21,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
-    "inline-path-parameters": z.boolean().optional()
+    "inline-path-parameters": z.boolean().optional(),
+    "custom-pager-name": z.string().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

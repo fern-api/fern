@@ -43,6 +43,47 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     }
 }
 
+/// <summary>
+/// Interface for implementing pagination in two directions.
+/// </summary>
+/// <typeparam name="TItem">The type of the values.</typeparam>
+// ReSharper disable once InconsistentNaming
+public interface BiPager<TItem>
+{
+    /// <summary>
+    /// Get the current <see cref="Page{TItem}"/>.
+    /// </summary>
+    public Page<TItem> CurrentPage { get; }
+
+    /// <summary>
+    /// Indicates whether there is a next page.
+    /// </summary>
+    public bool HasNextPage { get; }
+
+    /// <summary>
+    /// Indicates whether there is a previous page.
+    /// </summary>
+    public bool HasPreviousPage { get; }
+
+    /// <summary>
+    /// Get the next <see cref="Page{TItem}"/>.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>
+    /// The next <see cref="Page{TItem}"/>.
+    /// </returns>
+    public Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get the previous <see cref="Page{TItem}"/>.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>
+    /// The previous <see cref="Page{TItem}"/>.
+    /// </returns>
+    public Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default);
+}
+
 internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>
     : Pager<TItem>
 {
@@ -97,10 +138,11 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
     )
     {
         var hasStep = false;
-        if(_getStep is not null)
+        if (_getStep is not null)
         {
             hasStep = _getStep(_request) is not null;
         }
+
         var offset = _getOffset(_request);
         var longOffset = Convert.ToInt64(offset);
         bool hasNextPage;
