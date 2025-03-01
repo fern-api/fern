@@ -25,6 +25,15 @@ internal class RawClient(ClientOptions clientOptions)
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
+    [Obsolete("Use SendRequestAsync instead.")]
+    public Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return SendRequestAsync(request, cancellationToken);
+    }
+
     public async Task<ApiResponse> SendRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default

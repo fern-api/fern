@@ -26,6 +26,15 @@ internal class RawClient(ClientOptions clientOptions)
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
+    [Obsolete("Use SendRequestAsync instead.")]
+    public Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return SendRequestAsync(request, cancellationToken);
+    }
+
     public async Task<ApiResponse> SendRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default
@@ -38,7 +47,8 @@ internal class RawClient(ClientOptions clientOptions)
 
         var httpRequest = CreateHttpRequest(request);
         // Send the request.
-        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token).ConfigureAwait(false);
+        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
+            .ConfigureAwait(false);
     }
 
     public async Task<ApiResponse> SendRequestAsync(
@@ -67,7 +77,6 @@ internal class RawClient(ClientOptions clientOptions)
         }
         return clonedRequest;
     }
-
 
     public record BaseApiRequest
     {
@@ -120,9 +129,7 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
         var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient
-            .SendAsync(request, cancellationToken)
-            .ConfigureAwait(false);
+        var response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
