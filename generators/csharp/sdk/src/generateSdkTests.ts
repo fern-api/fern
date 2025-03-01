@@ -36,8 +36,11 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
             if (useableExamples.length === 0) {
                 continue;
             }
-            const file = new MockServerTestGenerator(context, useableExamples, endpoint, serviceId).generate();
-            files.push(file);
+            const testGenerator = new MockServerTestGenerator(context, useableExamples, endpoint, serviceId);
+            if (!testGenerator.shouldGenerate()) {
+                continue;
+            }
+            files.push(testGenerator.generate());
         }
     }
     if (files.length > 0) {

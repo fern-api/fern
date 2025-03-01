@@ -75,6 +75,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             clonedRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
+
         return clonedRequest;
     }
 
@@ -130,13 +131,19 @@ internal class RawClient(ClientOptions clientOptions)
         var httpClient = options?.HttpClient ?? Options.HttpClient;
         var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
         var response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var isRetryableContent = IsRetryableContent(request);
+
+        if (!isRetryableContent)
+        {
+            return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        }
+
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
             {
                 break;
             }
-            AssertRetryableContent(request.Content);
 
             var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
@@ -145,24 +152,23 @@ internal class RawClient(ClientOptions clientOptions)
                 .SendAsync(retryRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
-    }
 
-    private static void AssertRetryableContent(HttpContent requestContent)
-    {
-        switch (requestContent)
-        {
-            case StreamContent:
-                throw new Exception("Cannot retry a request with StreamContent");
-            case MultipartContent:
-                throw new Exception("Cannot retry a request with MultipartContent");
-        }
+        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
     {
         var statusCode = (int)response.StatusCode;
         return statusCode is 408 or 429 or >= 500;
+    }
+
+    private static bool IsRetryableContent(HttpRequestMessage request)
+    {
+        return request.Content switch
+        {
+            StreamContent or MultipartContent => false,
+            _ => true,
+        };
     }
 
     public HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
@@ -182,18 +188,21 @@ internal class RawClient(ClientOptions clientOptions)
                         "application/json"
                     );
                 }
+
                 break;
             }
             case StreamApiRequest { Body: not null } streamRequest:
                 httpRequest.Content = new StreamContent(streamRequest.Body);
                 break;
         }
+
         if (request.ContentType != null)
         {
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
                 request.ContentType
             );
         }
+
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
@@ -222,7 +231,7 @@ internal class RawClient(ClientOptions clientOptions)
                 if (
                     queryItem.Value
                     is global::System.Collections.IEnumerable collection
-                        and not string
+                    and not string
                 )
                 {
                     var items = collection
@@ -238,6 +247,7 @@ internal class RawClient(ClientOptions clientOptions)
                 {
                     current += $"{queryItem.Key}={queryItem.Value}&";
                 }
+
                 return current;
             }
         );

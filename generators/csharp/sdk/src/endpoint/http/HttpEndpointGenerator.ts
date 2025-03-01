@@ -371,9 +371,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 switch (endpoint.pagination.type) {
                     case "offset":
-                        throw new Error("Offset pagination should already be handled elsewhere");
+                        throw new Error("Internal error; Offset pagination should already be handled elsewhere");
                     case "cursor":
-                        throw new Error("Cursor pagination should already be handled elsewhere");
+                        throw new Error("Internal error; Cursor pagination should already be handled elsewhere");
                     case "custom": {
                         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                         if (queryParameterCodeBlock != null) {
@@ -520,7 +520,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         });
                         break;
                     case "custom":
-                        this.context.logger.error("Custom should already be handled elsewhere");
+                        this.context.logger.error("Internal error; Custom should already be handled elsewhere");
                         break;
                     default:
                         assertNever(endpoint.pagination);
