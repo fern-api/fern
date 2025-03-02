@@ -6,6 +6,22 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.13.0-rc0
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pager and BiPager now have consistent properties and methods.
+        As part of this change, pagers are now generated asynchronously which is a breaking change for the endpoint methods.
+
+        ```csharp
+        // Before:
+        var pager = client.GetItemsAsync(...);
+
+        // After:
+        var pager = await client.GetItemsAsync(...);
+        ```
 
 - version: 1.12.0-rc0
   createdAt: "2025-02-28"

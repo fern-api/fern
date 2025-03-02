@@ -1,14 +1,33 @@
 using System.Runtime.CompilerServices;
 
-namespace <%= namespace%>;
+namespace SeedPagination.Core;
 
 /// <summary>
 /// A collection of values that may take multiple service requests to
 /// iterate over.
 /// </summary>
 /// <typeparam name="TItem">The type of the values.</typeparam>
-public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
+public interface Pager<TItem> : IAsyncEnumerable<TItem>
 {
+    /// <summary>
+    /// Get the current <see cref="Page{TItem}"/>.
+    /// </summary>
+    public Page<TItem> CurrentPage { get; }
+
+    /// <summary>
+    /// Indicates whether there is a next page.
+    /// </summary>
+    public bool HasNextPage { get; }
+
+    /// <summary>
+    /// Get the next <see cref="Page{TItem}"/>.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>
+    /// The next <see cref="Page{TItem}"/>.
+    /// </returns>
+    public Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Enumerate the values a <see cref="Page{TItem}"/> at a time.  This may
     /// make multiple service requests.
@@ -19,28 +38,6 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     public abstract IAsyncEnumerable<Page<TItem>> AsPagesAsync(
         CancellationToken cancellationToken = default
     );
-
-    /// <summary>
-    /// Enumerate the values in the collection asynchronously.  This may
-    /// make multiple service requests.
-    /// </summary>
-    /// <param name="cancellationToken">
-    /// The <see cref="CancellationToken"/> used for requests made while
-    /// enumerating asynchronously.
-    /// </param>
-    /// <returns>An async sequence of values.</returns>
-    public virtual async IAsyncEnumerator<TItem> GetAsyncEnumerator(
-        CancellationToken cancellationToken = default
-    )
-    {
-        await foreach (var page in AsPagesAsync(cancellationToken).ConfigureAwait(false))
-        {
-            foreach (var value in page.Items)
-            {
-                yield return value;
-            }
-        }
-    }
 }
 
 /// <summary>
@@ -48,7 +45,7 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
 /// </summary>
 /// <typeparam name="TItem">The type of the values.</typeparam>
 // ReSharper disable once InconsistentNaming
-public interface BiPager<TItem>
+public interface BiPager<TItem> : IAsyncEnumerable<TItem>
 {
     /// <summary>
     /// Get the current <see cref="Page{TItem}"/>.
@@ -84,19 +81,14 @@ public interface BiPager<TItem>
     public Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default);
 }
 
-internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>
-    : Pager<TItem>
+internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem> : Pager<TItem>
 {
-    private TRequest _request;
+    private TRequest? _request;
     private readonly TRequestOptions? _options;
-    private readonly GetNextPage _getNextPage;
-    private readonly GetOffset _getOffset;
-    private readonly SetOffset _setOffset;
-    private readonly GetStep? _getStep;
-    private readonly GetItems _getItems;
-    private readonly HasNextPage? _hasNextPage;
+    private readonly SendRequest _sendRequest;
+    private readonly ParseApiCallDelegate _parseApiCall;
 
-    internal delegate Task<TResponse> GetNextPage(
+    internal delegate Task<TResponse> SendRequest(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken
@@ -110,140 +102,338 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
 
     internal delegate IReadOnlyList<TItem>? GetItems(TResponse response);
 
-    internal delegate bool? HasNextPage(TResponse response);
+    internal delegate bool? GetHasNextPage(TResponse response);
 
-    internal OffsetPager(
+    private delegate (TRequest? nextRequest, bool hasNextPage, Page<TItem> page) ParseApiCallDelegate(
         TRequest request,
+        TResponse response
+    );
+
+    public Page<TItem> CurrentPage { get; private set; }
+    public bool HasNextPage { get; private set; }
+
+    private OffsetPager(
+        TRequest? request,
         TRequestOptions? options,
-        GetNextPage getNextPage,
-        GetOffset getOffset,
-        SetOffset setOffset,
-        GetStep? getStep,
-        GetItems getItems,
-        HasNextPage? hasNextPage
+        SendRequest sendRequest,
+        ParseApiCallDelegate parseApiCall,
+        Page<TItem> page,
+        bool hasNextPage
     )
     {
         _request = request;
         _options = options;
-        _getNextPage = getNextPage;
-        _getOffset = getOffset;
-        _setOffset = setOffset;
-        _getStep = getStep;
-        _getItems = getItems;
-        _hasNextPage = hasNextPage;
+        _sendRequest = sendRequest;
+        _parseApiCall = parseApiCall;
+        CurrentPage = page;
+        HasNextPage = hasNextPage;
     }
 
-    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
+    internal static async Task<OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>>
+        CreateInstanceAsync(
+            TRequest request,
+            TRequestOptions? options,
+            SendRequest sendRequest,
+            GetOffset getOffset,
+            SetOffset setOffset,
+            GetStep? getStep,
+            GetItems getItems,
+            GetHasNextPage? getHasNextPage,
+            CancellationToken cancellationToken = default
+        )
+    {
+        request ??= Activator.CreateInstance<TRequest>();
+        var response = await sendRequest(request, options, cancellationToken).ConfigureAwait(false);
+        var parseApiCall = CreateParseApiCallDelegate(getItems, getOffset, setOffset, getStep, getHasNextPage);
+        var (nextRequest, hasNextPage, page) = parseApiCall(request, response);
+        return new OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>(
+            nextRequest,
+            options,
+            sendRequest,
+            parseApiCall,
+            page,
+            hasNextPage
+        );
+    }
+
+    private static ParseApiCallDelegate CreateParseApiCallDelegate(
+        GetItems getItems,
+        GetOffset getOffset,
+        SetOffset setOffset,
+        GetStep? getStep,
+        GetHasNextPage? getHasNextPage
+    )
+    {
+        return (request, response)
+            => ParseApiCall(request, response, getItems, getOffset, setOffset, getStep, getHasNextPage);
+    }
+
+    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+        TRequest request,
+        TRequestOptions? options,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _sendRequest(request, options, cancellationToken).ConfigureAwait(false);
+        var (nextRequest, hasNextPageFlag, page) = _parseApiCall(request, response);
+        _request = nextRequest;
+        HasNextPage = hasNextPageFlag;
+        CurrentPage = page;
+        return page;
+    }
+
+    private static (TRequest? nextRequest, bool hasNextPage, Page<TItem> page) ParseApiCall(
+        TRequest request,
+        TResponse response,
+        GetItems getItems,
+        GetOffset getOffset,
+        SetOffset setOffset,
+        GetStep? getStep,
+        GetHasNextPage? getHasNextPage
+    )
+    {
+        var items = getItems(response);
+        var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
+        var offset = getOffset(request);
+        var hasNextPage = items?.Count > 0;
+        if (!hasNextPage)
+        {
+            return (default, false, page);
+        }
+
+        var longOffset = Convert.ToInt64(offset);
+        if (getStep is not null)
+        {
+            longOffset += items?.Count ?? 1;
+        }
+        else
+        {
+            longOffset++;
+        }
+
+        setOffset(request, (TOffset)(object)longOffset);
+        return (request, hasNextPage, page);
+    }
+
+    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    {
+        if (_request is null)
+        {
+            return Page<TItem>.Empty;
+        }
+
+        return await SendRequestAndHandleResponse(_request, _options, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        var hasStep = false;
-        if (_getStep is not null)
+        while (HasNextPage)
         {
-            hasStep = _getStep(_request) is not null;
+            yield return await GetNextPageAsync(cancellationToken).ConfigureAwait(false);
         }
+    }
 
-        var offset = _getOffset(_request);
-        var longOffset = Convert.ToInt64(offset);
-        bool hasNextPage;
-        do
+    /// <summary>
+    /// Enumerate the values in the collection asynchronously.  This may
+    /// make multiple service requests.
+    /// </summary>
+    /// <param name="cancellationToken">
+    /// The <see cref="CancellationToken"/> used for requests made while
+    /// enumerating asynchronously.
+    /// </param>
+    /// <returns>An async sequence of values.</returns>
+    public async IAsyncEnumerator<TItem> GetAsyncEnumerator(
+        CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (var page in AsPagesAsync(cancellationToken).ConfigureAwait(false))
         {
-            var response = await _getNextPage(_request, _options, cancellationToken)
-                .ConfigureAwait(false);
-            var items = _getItems(response);
-            var itemCount = items?.Count ?? 0;
-            hasNextPage = _hasNextPage?.Invoke(response) ?? itemCount > 0;
-            if (items is not null)
+            foreach (var value in page.Items)
             {
-                yield return new Page<TItem>(items);
+                yield return value;
             }
-
-            if (hasStep)
-            {
-                longOffset += items?.Count ?? 1;
-            }
-            else
-            {
-                longOffset++;
-            }
-
-            _request ??= Activator.CreateInstance<TRequest>();
-            switch (offset)
-            {
-                case int:
-                    _setOffset(_request, (TOffset)(object)(int)longOffset);
-                    break;
-                case long:
-                    _setOffset(_request, (TOffset)(object)longOffset);
-                    break;
-                default:
-                    throw new InvalidOperationException("Offset must be int or long");
-            }
-        } while (hasNextPage);
+        }
     }
 }
 
 internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor, TItem>
     : Pager<TItem>
 {
-    private TRequest _request;
+    private TRequest? _request;
+    private readonly ParseApiCallDelegate _parseApiCall;
     private readonly TRequestOptions? _options;
-    private readonly GetNextPage _getNextPage;
-    private readonly SetCursor _setCursor;
-    private readonly GetNextCursor _getNextCursor;
-    private readonly GetItems _getItems;
+    private readonly SendRequest _sendRequest;
 
-    internal delegate Task<TResponse> GetNextPage(
+    /// <summary>
+    /// Delegate for sending a request.
+    /// </summary>
+    internal delegate Task<TResponse> SendRequest(
         TRequest request,
         TRequestOptions? options,
         CancellationToken cancellationToken
     );
 
+    /// <summary>
+    /// Delegate for setting the cursor on a request.
+    /// </summary>
     internal delegate void SetCursor(TRequest request, TCursor cursor);
 
+    /// <summary>
+    /// Delegate for getting the next cursor from a response.
+    /// </summary>
     internal delegate TCursor? GetNextCursor(TResponse response);
 
+    /// <summary>
+    /// Delegate for getting the items from a response.
+    /// </summary>
     internal delegate IReadOnlyList<TItem>? GetItems(TResponse response);
 
-    internal CursorPager(
+    private delegate (TRequest? nextRequest, bool hasNextPage, Page<TItem> page) ParseApiCallDelegate(
         TRequest request,
+        TResponse response
+    );
+
+    /// <summary>
+    /// The current <see cref="Page{TItem}"/>.
+    /// </summary>
+    public Page<TItem> CurrentPage { get; private set; }
+
+    /// <summary>
+    /// Indicates whether there is a next page.
+    /// </summary>
+    public bool HasNextPage { get; private set; }
+
+    private CursorPager(
+        TRequest? request,
         TRequestOptions? options,
-        GetNextPage getNextPage,
-        SetCursor setCursor,
-        GetNextCursor getNextCursor,
-        GetItems getItems
+        SendRequest sendRequest,
+        ParseApiCallDelegate parseApiCall,
+        Page<TItem> page,
+        bool hasNextPage
     )
     {
         _request = request;
         _options = options;
-        _getNextPage = getNextPage;
-        _setCursor = setCursor;
-        _getNextCursor = getNextCursor;
-        _getItems = getItems;
+        _sendRequest = sendRequest;
+        _parseApiCall = parseApiCall;
+        CurrentPage = page;
+        HasNextPage = hasNextPage;
     }
 
-    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
+    /// <summary>
+    /// Create a new instance of <see cref="CursorPager{TRequest,TRequestOptions,TResponse,TCursor,TItem}"/>.
+    /// </summary>
+    internal static async Task<CursorPager<TRequest, TRequestOptions, TResponse, TCursor, TItem>> CreateInstanceAsync(
+        TRequest? request,
+        TRequestOptions? options,
+        SendRequest sendRequest,
+        SetCursor setCursor,
+        GetNextCursor getNextCursor,
+        GetItems getItems,
+        CancellationToken cancellationToken = default
+    )
+    {
+        request ??= Activator.CreateInstance<TRequest>();
+        var response = await sendRequest(request, options, cancellationToken)
+            .ConfigureAwait(false);
+        var parseApiCall = CreateParseApiCallDelegate(getItems, getNextCursor, setCursor);
+        var (nextRequest, hasNextPage, page) = parseApiCall(request, response);
+        return new CursorPager<TRequest, TRequestOptions, TResponse, TCursor, TItem>(
+            nextRequest,
+            options,
+            sendRequest,
+            parseApiCall,
+            page,
+            hasNextPage
+        );
+    }
+
+    private static ParseApiCallDelegate CreateParseApiCallDelegate(
+        GetItems getItems,
+        GetNextCursor getNextCursor,
+        SetCursor setCursor
+    )
+    {
+        return (request, response)
+            =>
+        {
+            var items = getItems(response);
+            var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
+            var cursor = getNextCursor(response);
+            var hasNextPage = cursor is not null;
+            if (cursor is null)
+            {
+                return (default, false, page);
+            }
+
+            setCursor(request, cursor);
+            return (request, hasNextPage, page);
+        };
+    }
+
+    private async Task<Page<TItem>> SendRequestAndHandleResponse(
+        TRequest request,
+        TRequestOptions? options,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _sendRequest(request, options, cancellationToken).ConfigureAwait(false);
+        var (nextRequest, hasNextPage, page) = _parseApiCall(request, response);
+        _request = nextRequest;
+        HasNextPage = hasNextPage;
+        CurrentPage = page;
+        return page;
+    }
+
+    public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
+    {
+        if (_request is null)
+        {
+            return Page<TItem>.Empty;
+        }
+
+        return await SendRequestAndHandleResponse(_request, _options, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Enumerate the values a <see cref="Page{TItem}"/> at a time.  This may make multiple HTTP requests.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>
+    /// An async sequence of <see cref="Page{TItem}"/>s.
+    /// </returns>
+    public async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        do
+        while (HasNextPage)
         {
-            var response = await _getNextPage(_request, _options, cancellationToken)
-                .ConfigureAwait(false);
-            var items = _getItems(response);
-            var nextCursor = _getNextCursor(response);
-            if (items != null)
-            {
-                yield return new Page<TItem>(items);
-            }
+            yield return await GetNextPageAsync(cancellationToken).ConfigureAwait(false);
+        }
+    }
 
-            if (nextCursor == null)
+    /// <summary>
+    /// Enumerate the values in the collection asynchronously.  This may
+    /// make multiple service requests.
+    /// </summary>
+    /// <param name="cancellationToken">
+    /// The <see cref="CancellationToken"/> used for requests made while
+    /// enumerating asynchronously.
+    /// </param>
+    /// <returns>An async sequence of <see cref="TItem"/>s.</returns>
+    public async IAsyncEnumerator<TItem> GetAsyncEnumerator(
+        CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (var page in AsPagesAsync(cancellationToken).ConfigureAwait(false))
+        {
+            foreach (var value in page.Items)
             {
-                break;
+                yield return value;
             }
-
-            _request ??= Activator.CreateInstance<TRequest>();
-            _setCursor(_request, nextCursor);
-        } while (true);
+        }
     }
 }

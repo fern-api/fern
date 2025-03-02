@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -10,54 +10,23 @@ public class StepPageOffsetPaginationTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithStep()
     {
-        var pager = CreatePager();
-        await AssertPager(pager);
+        var pager = await CreatePagerAsync();
+        await AssertPagerAsync(pager);
     }
 
     private Pagination _paginationCopy;
-    private Pager<object> CreatePager()
+
+    private async Task<Pager<object>> CreatePagerAsync()
     {
         var responses = new List<Response>
         {
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = []
-                }
-            }
+            new() { Data = new() { Items = ["item1", "item2"] } },
+            new() { Data = new() { Items = ["item1"] } },
+            new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        _paginationCopy = new()
-        {
-            ItemOffset = 0,
-            PageSize = 2
-        };
-        Pager<object> pager = new OffsetPager<
-            Request,
-            object?,
-            Response,
-            int,
-            object?,
-            object
-        >(
-            new()
-            {
-                Pagination = _paginationCopy
-            },
+        _paginationCopy = new() { ItemOffset = 0, PageSize = 2 };
+        Pager<object> pager = await OffsetPager<Request, object?, Response, int, object?, object>.CreateInstanceAsync(
+            new() { Pagination = _paginationCopy },
             null,
             (_, _, _) =>
             {
@@ -78,7 +47,7 @@ public class StepPageOffsetPaginationTest
         return pager;
     }
 
-    private async SystemTask AssertPager(Pager<object> pager)
+    private async SystemTask AssertPagerAsync(Pager<object> pager)
     {
         var pageEnumerator = pager.AsPagesAsync().GetAsyncEnumerator();
 

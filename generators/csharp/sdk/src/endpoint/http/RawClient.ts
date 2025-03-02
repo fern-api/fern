@@ -30,6 +30,8 @@ export declare namespace RawClient {
         options: csharp.CodeBlock;
         /** The instance of the request wrapper */
         request: csharp.CodeBlock | csharp.ClassInstantiation;
+        /** Cancellation token */
+        cancellationToken: csharp.CodeBlock;
     }
 
     export interface CreateHttpRequestWrapperArgs {
@@ -179,7 +181,8 @@ export class RawClient {
     public sendRequestWithHttpRequest({
         clientReference,
         options,
-        request
+        request,
+        cancellationToken
     }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
