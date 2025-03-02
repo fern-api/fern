@@ -46,7 +46,6 @@ export abstract class AbstractEndpointGenerator {
                 ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
                 : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
-            serviceId,
             endpoint,
             requestParameter
         });
@@ -67,7 +66,7 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         const requestParameter =
             request != null
@@ -126,11 +125,9 @@ export abstract class AbstractEndpointGenerator {
     }
 
     protected getAllPathParameters({
-        serviceId,
         endpoint,
         requestParameter
     }: {
-        serviceId: ServiceId;
         endpoint: HttpEndpoint;
         requestParameter?: csharp.Parameter;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
@@ -214,7 +211,6 @@ export abstract class AbstractEndpointGenerator {
         for (const endParameter of additionalEndParameters ?? []) {
             args.push(endParameter);
         }
-
         getEndpointReturnType({ context: this.context, endpoint });
         return csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
@@ -250,16 +246,29 @@ export abstract class AbstractEndpointGenerator {
         return undefined;
     }
 
-    private getJustRequestBodySnippet(
-        exampleRequestBody: ExampleRequestBody,
-        parseDatetimes: boolean
-    ): csharp.CodeBlock {
-        if (exampleRequestBody.type === "inlinedRequestBody") {
-            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
+    protected wrapWithExceptionHandler({
+        body,
+        returnType
+    }: {
+        body: csharp.CodeBlock;
+        returnType: csharp.Type | undefined;
+    }): csharp.CodeBlock {
+        if (!this.context.includeExceptionHandler()) {
+            return body;
         }
-        return this.exampleGenerator.getSnippetForTypeReference({
-            exampleTypeReference: exampleRequestBody,
-            parseDatetimes
+        return csharp.codeblock((writer) => {
+            if (this.context.includeExceptionHandler()) {
+                if (returnType != null) {
+                    writer.write("return ");
+                }
+                writer.writeLine("await _exceptionHandler.TryCatchAsync(async () => {");
+                writer.indent();
+            }
+            body.write(writer);
+            if (this.context.includeExceptionHandler()) {
+                writer.dedent();
+                writer.writeLine("}).ConfigureAwait(false);");
+            }
         });
     }
 
@@ -286,6 +295,19 @@ export abstract class AbstractEndpointGenerator {
                 parseDatetimes
             })
         );
+    }
+
+    private getJustRequestBodySnippet(
+        exampleRequestBody: ExampleRequestBody,
+        parseDatetimes: boolean
+    ): csharp.CodeBlock {
+        if (exampleRequestBody.type === "inlinedRequestBody") {
+            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
+        }
+        return this.exampleGenerator.getSnippetForTypeReference({
+            exampleTypeReference: exampleRequestBody,
+            parseDatetimes
+        });
     }
 
     private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
