@@ -73,19 +73,19 @@ public class NoRequestCursorTest
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         var page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(2));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor1));
+        Assert.That(_cursorCopy, Is.EqualTo(Cursor2));
 
         // second page
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(1));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor2));
+        Assert.That(_cursorCopy, Is.EqualTo(Cursor3));
 
         // third page
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(0));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor3));
+        Assert.That(_cursorCopy, Is.Null);
 
         // no more
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.False);

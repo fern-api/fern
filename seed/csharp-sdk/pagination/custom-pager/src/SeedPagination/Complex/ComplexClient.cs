@@ -53,7 +53,6 @@ public partial class ComplexClient
                 SearchInternalAsync,
                 (request, cursor) =>
                 {
-                    request.Pagination ??= new();
                     request.Pagination.StartingAfter = cursor;
                 },
                 response => response?.Pages?.Next?.StartingAfter,

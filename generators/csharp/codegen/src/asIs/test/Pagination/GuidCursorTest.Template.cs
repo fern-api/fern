@@ -16,7 +16,7 @@ public class GuidCursorTest
 
     private static readonly Guid? Cursor1 = null;
     private static readonly Guid Cursor2 = new("00000000-0000-0000-0000-000000000001");
-    private static readonly Guid Cursor3 = new("00000000-0000-0000-0000-000000000001");
+    private static readonly Guid Cursor3 = new("00000000-0000-0000-0000-000000000002");
     private Guid? _cursorCopy;
 
     private async Task<Pager<object>> CreatePagerAsync()
@@ -40,7 +40,13 @@ public class GuidCursorTest
             },
         }.GetEnumerator();
         _cursorCopy = Cursor1;
-        Pager<object> pager = await CursorPager<Request, object?, Response, Guid?, object>.CreateInstanceAsync(
+        Pager<object> pager = await CursorPager<
+            Request,
+            object?,
+            Response,
+            Guid?,
+            object
+        >.CreateInstanceAsync(
             new() { Cursor = Cursor1 },
             null,
             (_, _, _) =>
@@ -67,19 +73,19 @@ public class GuidCursorTest
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         var page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(2));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor1));
+        Assert.That(_cursorCopy, Is.EqualTo(Cursor2));
 
         // second page
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(1));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor2));
+        Assert.That(_cursorCopy, Is.EqualTo(Cursor3));
 
         // third page
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.True);
         page = pageEnumerator.Current;
         Assert.That(page.Items, Has.Count.EqualTo(0));
-        Assert.That(_cursorCopy, Is.EqualTo(Cursor3));
+        Assert.That(_cursorCopy, Is.Null);
 
         // no more
         Assert.That(await pageEnumerator.MoveNextAsync(), Is.False);

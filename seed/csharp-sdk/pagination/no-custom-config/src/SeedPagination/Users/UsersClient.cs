@@ -1019,7 +1019,7 @@ public partial class UsersClient
         var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
-            _query["cursor"] = request.Cursor.Value.ToString();
+            _query["cursor"] = request.Cursor;
         }
         var response = await _client
             .SendRequestAsync(
@@ -1066,7 +1066,7 @@ public partial class UsersClient
         var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
-            _query["cursor"] = request.Cursor.Value.ToString();
+            _query["cursor"] = request.Cursor;
         }
         var response = await _client
             .SendRequestAsync(

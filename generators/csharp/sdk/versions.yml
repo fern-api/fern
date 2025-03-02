@@ -22,6 +22,11 @@
         // After:
         var pager = await client.GetItemsAsync(...);
         ```
+    - type: fix
+      summary: |
+        Fixed an issue where generated code for setting UUIDs in a query string parameter would generate uncompilable code.
+    - type: feat
+      summary: Extend support for offset pagination to float, double, and decimal types.
 
 - version: 1.12.0-rc1
   createdAt: "2025-03-02"

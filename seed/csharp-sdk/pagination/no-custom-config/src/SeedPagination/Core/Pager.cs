@@ -213,23 +213,86 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         var items = getItems(response);
         var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
         var offset = getOffset(request);
-        var hasNextPage = items?.Count > 0;
+        var hasNextPage = getHasNextPage?.Invoke(response) ?? items?.Count > 0;
         if (!hasNextPage)
         {
             return (default, false, page);
         }
 
-        var longOffset = Convert.ToInt64(offset);
-        if (getStep is not null)
+        switch (offset)
         {
-            longOffset += items?.Count ?? 1;
-        }
-        else
-        {
-            longOffset++;
+            case int offsetInt:
+            {
+                if (getStep is not null)
+                {
+                    offsetInt += items?.Count ?? 1;
+                }
+                else
+                {
+                    offsetInt++;
+                }
+                offset = (TOffset)(object)offsetInt;
+                break;
+            }
+            case long offsetLong:
+            {
+                if (getStep is not null)
+                {
+                    offsetLong += items?.Count ?? 1;
+                }
+                else
+                {
+                    offsetLong++;
+                }
+                offset = (TOffset)(object)offsetLong;
+                break;
+            }
+            case float offsetFloat:
+            {
+                if (getStep is not null)
+                {
+                    offsetFloat += items?.Count ?? 1;
+                }
+                else
+                {
+                    offsetFloat++;
+                }
+                offset = (TOffset)(object)offsetFloat;
+                break;
+            }
+            case double offsetDouble:
+            {
+                if (getStep is not null)
+                {
+                    offsetDouble += items?.Count ?? 1;
+                }
+                else
+                {
+                    offsetDouble++;
+                }
+                offset = (TOffset)(object)offsetDouble;
+                break;
+            }
+            case decimal offsetDecimal:
+            {
+                if (getStep is not null)
+                {
+                    offsetDecimal += items?.Count ?? 1;
+                }
+                else
+                {
+                    offsetDecimal++;
+                }
+                offset = (TOffset)(object)offsetDecimal;
+                break;
+            }
+            default:
+                throw new NotSupportedException(
+                    "Offset must be int, long, float, double, or decimal"
+                );
         }
 
-        setOffset(request, (TOffset)(object)longOffset);
+        setOffset(request, offset);
         return (request, hasNextPage, page);
     }
 
@@ -248,6 +311,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
+        yield return CurrentPage;
         while (HasNextPage)
         {
             yield return await GetNextPageAsync(cancellationToken).ConfigureAwait(false);
@@ -297,7 +361,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
     /// <summary>
     /// Delegate for setting the cursor on a request.
     /// </summary>
-    internal delegate void SetCursor(TRequest request, TCursor cursor);
+    internal delegate void SetCursor(TRequest request, TCursor? cursor);
 
     /// <summary>
     /// Delegate for getting the next cursor from a response.
@@ -383,12 +447,12 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
             var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
             var cursor = getNextCursor(response);
             var hasNextPage = cursor is not null;
+            setCursor(request, cursor);
             if (cursor is null)
             {
                 return (default, false, page);
             }
 
-            setCursor(request, cursor);
             return (request, hasNextPage, page);
         };
     }
@@ -430,6 +494,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
+        yield return CurrentPage;
         while (HasNextPage)
         {
             yield return await GetNextPageAsync(cancellationToken).ConfigureAwait(false);
