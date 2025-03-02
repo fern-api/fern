@@ -22,7 +22,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "inline-path-parameters": z.boolean().optional(),
-    "custom-pager-name": z.string().optional()
+    "custom-pager-name": z.string().optional(),
+    "include-exception-handler": z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

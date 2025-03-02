@@ -10,6 +10,7 @@ export const AsIsFiles = {
     CiYaml: "github-ci.yml",
     Constants: "Constants.Template.cs",
     CustomProps: "Custom.props.Template",
+    ExceptionHandler: "ExceptionHandler.Template.cs",
     Extensions: "Extensions.cs",
     GitIgnore: ".gitignore.Template",
     GrpcRequestOptions: "GrpcRequestOptions.Template.cs",
