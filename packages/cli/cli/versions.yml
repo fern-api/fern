@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+      If experimental.openapi-parser-v3 is enabled in docs.yml, OpenAPI documents will now be 
+      converted directly to IR, bypassing the intermediate Fern Definition step. 
+      
+      This makes sure that the old code path is completely ignored if the flag is enabled.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc4
+
+- changelogEntry:
+  - summary: |
       The new OpenAPI parser now shares example generation with the Fern Definition -> IR pipeline,
       ensuring consistent example generation across both input formats. This reuse of example
       generation logic helps maintain parity between OpenAPI and Fern Definition inputs.

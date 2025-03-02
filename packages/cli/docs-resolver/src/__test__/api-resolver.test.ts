@@ -78,12 +78,12 @@ it.skip("converts to api reference node", async () => {
         apiSection,
         apiDefinition,
         slug,
-        apiWorkspace,
         docsWorkspace,
         context,
         new Map(),
         new Map(),
-        NodeIdGenerator.init()
+        NodeIdGenerator.init(),
+        apiWorkspace
     ).get();
 
     expect(node).toMatchSnapshot();
