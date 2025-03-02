@@ -54,56 +54,58 @@ public partial class InlinedRequestsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/req-bodies/object",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/req-bodies/object",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
-                }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
-
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    switch (response.StatusCode)
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        case 400:
-                            throw new BadRequestBody(
-                                JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
-                            );
+                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
                     }
                 }
-                catch (JsonException)
+
                 {
-                    // unable to map error response, throwing generic error
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestBody(
+                                    JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+            })
+            .ConfigureAwait(false);
     }
 }

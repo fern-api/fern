@@ -264,7 +264,7 @@ export abstract class AbstractEndpointGenerator {
             body.write(writer);
             if (this.context.includeExceptionHandler()) {
                 writer.dedent();
-                writer.writeLine("});");
+                writer.writeLine("}).ConfigureAwait(false);");
             }
         });
     }

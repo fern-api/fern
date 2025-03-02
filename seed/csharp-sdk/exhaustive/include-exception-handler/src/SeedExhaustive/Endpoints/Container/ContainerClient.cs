@@ -32,43 +32,45 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/list-of-primitives",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/list-of-primitives",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                        return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -88,45 +90,47 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/list-of-objects",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/list-of-objects",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(
-                        responseBody
-                    )!;
+                        return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(
+                            responseBody
+                        )!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -142,43 +146,45 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/set-of-primitives",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/set-of-primitives",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
+                        return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -194,43 +200,47 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/set-of-objects",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/set-of-objects",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
+                        return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(
+                            responseBody
+                        )!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -246,43 +256,45 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/map-prim-to-prim",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/map-prim-to-prim",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
+                        return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -306,45 +318,47 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/map-prim-to-object",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/map-prim-to-object",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
-                        responseBody
-                    )!;
+                        return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
+                            responseBody
+                        )!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -360,42 +374,44 @@ public partial class ContainerClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/container/opt-objects",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/container/opt-objects",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
+                        return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 }

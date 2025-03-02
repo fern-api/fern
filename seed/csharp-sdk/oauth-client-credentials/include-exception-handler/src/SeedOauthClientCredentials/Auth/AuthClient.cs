@@ -37,46 +37,48 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/token",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/token",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedOauthClientCredentialsException(
+                            "Failed to deserialize response",
+                            e
+                        );
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedOauthClientCredentialsException(
-                        "Failed to deserialize response",
-                        e
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedOauthClientCredentialsApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
                     );
                 }
-            }
-
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedOauthClientCredentialsApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -100,45 +102,47 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/token",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/token",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedOauthClientCredentialsException(
+                            "Failed to deserialize response",
+                            e
+                        );
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedOauthClientCredentialsException(
-                        "Failed to deserialize response",
-                        e
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedOauthClientCredentialsApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
                     );
                 }
-            }
-
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedOauthClientCredentialsApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+            })
+            .ConfigureAwait(false);
     }
 }

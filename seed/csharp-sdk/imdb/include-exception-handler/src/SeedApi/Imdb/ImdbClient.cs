@@ -31,43 +31,45 @@ public partial class ImdbClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/movies/create-movie",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/movies/create-movie",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedApiException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -81,55 +83,57 @@ public partial class ImdbClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<Movie>(responseBody)!;
-                }
-                catch (JsonException e)
-                {
-                    throw new SeedApiException("Failed to deserialize response", e);
-                }
-            }
-
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    switch (response.StatusCode)
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        case 404:
-                            throw new MovieDoesNotExistError(
-                                JsonUtils.Deserialize<string>(responseBody)
-                            );
+                        return JsonUtils.Deserialize<Movie>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
                     }
                 }
-                catch (JsonException)
+
                 {
-                    // unable to map error response, throwing generic error
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 404:
+                                throw new MovieDoesNotExistError(
+                                    JsonUtils.Deserialize<string>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-                throw new SeedApiApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+            })
+            .ConfigureAwait(false);
     }
 }

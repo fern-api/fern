@@ -35,42 +35,44 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "foo",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "foo",
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<object>(responseBody)!;
+                        return JsonUtils.Deserialize<object>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedApiException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedApiApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -96,32 +98,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.UploadAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return UploadResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.UploadAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return UploadResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -135,32 +139,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return DeleteResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return DeleteResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -174,32 +180,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return DescribeResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return DescribeResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -213,32 +221,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.FetchAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return FetchResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.FetchAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return FetchResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -252,32 +262,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.ListAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return ListResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.ListAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return ListResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -291,32 +303,34 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.QueryAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return QueryResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.QueryAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return QueryResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -330,31 +344,33 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            try
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                var callOptions = _grpc.CreateCallOptions(
-                    options ?? new GrpcRequestOptions(),
-                    cancellationToken
-                );
-                var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
-                var response = await call.ConfigureAwait(false);
-                return UpdateResponse.FromProto(response);
-            }
-            catch (RpcException rpc)
-            {
-                var statusCode = (int)rpc.StatusCode;
-                throw new SeedApiApiException(
-                    $"Error with gRPC status code {statusCode}",
-                    statusCode,
-                    rpc.Message
-                );
-            }
-            catch (Exception e)
-            {
-                throw new SeedApiException("Error", e);
-            }
-        });
+                try
+                {
+                    var callOptions = _grpc.CreateCallOptions(
+                        options ?? new GrpcRequestOptions(),
+                        cancellationToken
+                    );
+                    var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
+                    var response = await call.ConfigureAwait(false);
+                    return UpdateResponse.FromProto(response);
+                }
+                catch (RpcException rpc)
+                {
+                    var statusCode = (int)rpc.StatusCode;
+                    throw new SeedApiApiException(
+                        $"Error with gRPC status code {statusCode}",
+                        statusCode,
+                        rpc.Message
+                    );
+                }
+                catch (Exception e)
+                {
+                    throw new SeedApiException("Error", e);
+                }
+            })
+            .ConfigureAwait(false);
     }
 }

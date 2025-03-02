@@ -33,42 +33,44 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -86,42 +88,44 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -138,37 +142,39 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var _query = new Dictionary<string, object>();
-            _query["query"] = request.Query;
-            _query["number"] = request.Number.ToString();
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = "/params",
-                        Query = _query,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                return;
-            }
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                var _query = new Dictionary<string, object>();
+                _query["query"] = request.Query;
+                _query["number"] = request.Number.ToString();
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = "/params",
+                            Query = _query,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -187,37 +193,39 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var _query = new Dictionary<string, object>();
-            _query["query"] = request.Query;
-            _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = "/params",
-                        Query = _query,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                return;
-            }
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                var _query = new Dictionary<string, object>();
+                _query["query"] = request.Query;
+                _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = "/params",
+                            Query = _query,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -238,36 +246,38 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var _query = new Dictionary<string, object>();
-            _query["query"] = request.Query;
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
-                        Query = _query,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                return;
-            }
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                var _query = new Dictionary<string, object>();
+                _query["query"] = request.Query;
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
+                            Query = _query,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -288,36 +298,38 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var _query = new Dictionary<string, object>();
-            _query["query"] = request.Query;
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
-                        Query = _query,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+        await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                return;
-            }
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                var _query = new Dictionary<string, object>();
+                _query["query"] = request.Query;
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
+                            Query = _query,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -335,43 +347,45 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Put,
+                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Put,
-                        Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
-                        Body = request,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -392,42 +406,44 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Put,
+                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Body = request.Body,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Put,
-                        Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
-                        Body = request.Body,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
 
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
-                );
-            }
-        });
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 }

@@ -35,41 +35,43 @@ public partial class ReqWithHeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler.TryCatchAsync(async () =>
-        {
-            var _headers = new Headers(
-                new Dictionary<string, string>()
-                {
-                    { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
-                    { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-                }
-            );
-            var response = await _client
-                .SendRequestAsync(
-                    new RawClient.JsonApiRequest
+        await _exceptionHandler
+            .TryCatchAsync(async () =>
+            {
+                var _headers = new Headers(
+                    new Dictionary<string, string>()
                     {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Post,
-                        Path = "/test-headers/custom-header",
-                        Body = request.Body,
-                        Headers = _headers,
-                        Options = options,
-                    },
-                    cancellationToken
-                )
-                .ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
-            {
-                return;
-            }
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException(
-                    $"Error with status code {response.StatusCode}",
-                    response.StatusCode,
-                    responseBody
+                        { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
+                        { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+                    }
                 );
-            }
-        });
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/test-headers/custom-header",
+                            Body = request.Body,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 }
