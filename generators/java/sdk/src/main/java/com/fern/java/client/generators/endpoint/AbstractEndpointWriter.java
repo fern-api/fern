@@ -84,6 +84,7 @@ public abstract class AbstractEndpointWriter {
     private final Set<String> endpointParameterNames = new HashSet<>();
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
     private final boolean inlinePathParams;
+    private final ObjectMapperUtils objectMapperUtils;
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
@@ -104,6 +105,7 @@ public abstract class AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedObjectMapper = generatedObjectMapper;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
@@ -485,11 +487,11 @@ public abstract class AbstractEndpointWriter {
                         httpResponseBuilder.beginControlFlow(
                                 "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
                     }
-                    ObjectMapperUtils objectMapperUtils =
-                            new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-                    CodeBlock readValue = objectMapperUtils.readValueCall(
-                            CodeBlock.of("$L", getResponseBodyStringName()), errorDeclaration.getType());
-                    httpResponseBuilder.addStatement("throw new $T($L)", errorClassName, readValue);
+                    httpResponseBuilder.addStatement(
+                            "throw new $T($L)",
+                            errorClassName,
+                            objectMapperUtils.readValueCall(
+                                    CodeBlock.of("$L", getResponseBodyStringName()), errorDeclaration.getType()));
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -505,15 +507,12 @@ public abstract class AbstractEndpointWriter {
             }
         }
         httpResponseBuilder.addStatement(
-                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                "throw new $T($S + $L.code(), $L.code(), $L)",
                 apiErrorClassName,
                 "Error with status code ",
                 getResponseName(),
                 getResponseName(),
-                generatedObjectMapper.getClassName(),
-                generatedObjectMapper.jsonMapperStaticField().name,
-                getResponseBodyStringName(),
-                Object.class);
+                objectMapperUtils.readValueCall(CodeBlock.of("$L", getResponseBodyStringName()), Optional.empty()));
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
@@ -733,10 +732,8 @@ public abstract class AbstractEndpointWriter {
                 httpResponseBuilder.add("return ");
                 endpointMethodBuilder.returns(responseType);
             }
-            ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-            CodeBlock readValue = objectMapperUtils.readValueCall(
-                    CodeBlock.of("$L.string()", getResponseBodyName()), Optional.of(body.getResponseBodyType()));
-            httpResponseBuilder.addStatement(readValue);
+            httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
+                    CodeBlock.of("$L.string()", getResponseBodyName()), Optional.of(body.getResponseBodyType())));
             if (isProperty) {
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
