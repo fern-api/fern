@@ -1,0 +1,13 @@
+## 1.13.0-rc0
+**`(feat):`** Pager and BiPager now have consistent properties and methods.
+As part of this change, pagers are now generated asynchronously which is a breaking change for the endpoint methods.
+
+```csharp
+// Before:
+var pager = client.GetItemsAsync(...);
+
+// After:
+var pager = await client.GetItemsAsync(...);
+```
+
+
