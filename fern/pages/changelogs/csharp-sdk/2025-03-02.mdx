@@ -1,15 +1,3 @@
-## 1.13.0-rc0
-**`(feat):`** Pager and BiPager now have consistent properties and methods.
-As part of this change, pagers are now generated asynchronously which is a breaking change for the endpoint methods.
-
-```csharp
-// Before:
-var pager = client.GetItemsAsync(...);
-
-// After:
-var pager = await client.GetItemsAsync(...);
-```
-
 ## 1.12.0-rc1
 **`(feat):`** Add support for the `include-exception-handler` configuration option, which generates an `ExceptionHandler` interface for the SDK.
 This is useful when you want to act upon all exceptions thrown by the SDK (e.g. report them to a monitoring service).
@@ -26,3 +14,5 @@ You can configure this feature with the following:
 
 
 **`(fix):`** Fixes a regression for mapping `ReadOnlyMemory` values in the generated Protobuf mapper.
+
+
