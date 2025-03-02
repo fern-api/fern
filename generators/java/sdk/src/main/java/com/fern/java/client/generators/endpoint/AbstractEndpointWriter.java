@@ -17,10 +17,8 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.*;
@@ -37,6 +35,7 @@ import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
+import com.fern.java.utils.ObjectMapperUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeToUnderlyingType;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
@@ -480,24 +479,17 @@ public abstract class AbstractEndpointWriter {
                     GeneratedJavaFile generatedError =
                             generatedErrors.get(errorDeclaration.getName().getErrorId());
                     ClassName errorClassName = generatedError.getClassName();
-                    Optional<TypeName> bodyTypeName = errorDeclaration
-                            .getType()
-                            .map(typeReference -> clientGeneratorContext
-                                    .getPoetTypeNameMapper()
-                                    .convertToTypeName(true, typeReference));
                     if (multipleErrors) {
                         httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
                     } else {
                         httpResponseBuilder.beginControlFlow(
                                 "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
                     }
-                    httpResponseBuilder.addStatement(
-                            "throw new $T($T.$L.readValue($L, $T.class))",
-                            errorClassName,
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            getResponseBodyStringName(),
-                            bodyTypeName.orElse(TypeName.get(Object.class)));
+                    ObjectMapperUtils objectMapperUtils =
+                            new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
+                    CodeBlock readValue = objectMapperUtils.readValueCall(
+                            CodeBlock.of("$L", getResponseBodyStringName()), errorDeclaration.getType());
+                    httpResponseBuilder.addStatement("throw new $T($L)", errorClassName, readValue);
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -741,21 +733,10 @@ public abstract class AbstractEndpointWriter {
                 httpResponseBuilder.add("return ");
                 endpointMethodBuilder.returns(responseType);
             }
-            if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), new $T() {})",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
-            } else {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), $T.class)",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        responseType);
-            }
+            ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
+            CodeBlock readValue = objectMapperUtils.readValueCall(
+                    CodeBlock.of("$L.string()", getResponseBodyName()), Optional.of(body.getResponseBodyType()));
+            httpResponseBuilder.addStatement(readValue);
             if (isProperty) {
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
@@ -1227,22 +1208,6 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Void _visitUnknown(Object unknownType) {
             return null;
-        }
-
-        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
-            if (responseBodyType.getNamed().isPresent()) {
-                TypeId typeId = responseBodyType.getNamed().get().getTypeId();
-                TypeDeclaration typeDeclaration =
-                        clientGeneratorContext.getIr().getTypes().get(typeId);
-                return typeDeclaration.getShape().getAlias().isPresent()
-                        && typeDeclaration
-                                .getShape()
-                                .getAlias()
-                                .get()
-                                .getResolvedType()
-                                .isContainer();
-            }
-            return false;
         }
     }
 
