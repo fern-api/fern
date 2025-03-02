@@ -145,7 +145,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             summary: endpoint.docs,
             return_,
-            body: this.context.includeExceptionHandler() ? this.wrapWithExceptionHandler({ body, returnType: return_ }) : body,
+            body: this.context.includeExceptionHandler()
+                ? this.wrapWithExceptionHandler({ body, returnType: return_ })
+                : body,
             codeExample: snippet?.endpointCall
         });
     }
@@ -419,7 +421,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             summary: endpoint.docs,
             return_,
-            body: this.context.includeExceptionHandler() ? this.wrapWithExceptionHandler({ body, returnType: return_ }) : body,
+            body: this.context.includeExceptionHandler()
+                ? this.wrapWithExceptionHandler({ body, returnType: return_ })
+                : body,
             codeExample: snippet?.endpointCall
         });
     }

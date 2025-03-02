@@ -187,7 +187,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             parameters.push(
                 csharp.parameter({
                     name: EXCEPTION_INTERCEPTOR_PARAMETER_NAME,
-                    type: csharp.Type.optional(csharp.Type.reference(this.context.getExceptionInterceptorClassReference())),
+                    type: csharp.Type.optional(
+                        csharp.Type.reference(this.context.getExceptionInterceptorClassReference())
+                    ),
                     initializer: "null"
                 })
             );
@@ -352,7 +354,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_,
+                            arguments_
                         })
                     );
                 }

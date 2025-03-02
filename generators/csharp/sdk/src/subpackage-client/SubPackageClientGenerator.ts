@@ -125,14 +125,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                 name: "client",
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
-        ]
+        ];
         if (this.context.includeExceptionHandler()) {
             parameters.push(
                 csharp.parameter({
                     name: "exceptionHandler",
                     type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
                 })
-            )
+            );
         }
         return {
             access: csharp.Access.Internal,
@@ -164,7 +164,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_,
+                            arguments_
                         })
                     );
                 }

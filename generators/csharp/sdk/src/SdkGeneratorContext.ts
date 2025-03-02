@@ -277,7 +277,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             namespace: this.getCoreNamespace()
         });
     }
-    
+
     public getExceptionInterceptorClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "IExceptionInterceptor",

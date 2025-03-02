@@ -850,7 +850,9 @@ class FromProtoPropertyMapper {
                 if (wrapperType !== WrapperType.Optional) {
                     if (this.context.isReadOnlyMemoryType(listType)) {
                         writer.write(" ?? new ");
-                        writer.writeNode(csharp.Type.listType(this.context.csharpTypeMapper.convert({ reference: listType })));
+                        writer.writeNode(
+                            csharp.Type.listType(this.context.csharpTypeMapper.convert({ reference: listType }))
+                        );
                         writer.write("()");
                         return;
                     }

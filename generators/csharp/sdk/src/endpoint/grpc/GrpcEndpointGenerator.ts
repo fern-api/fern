@@ -61,7 +61,9 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             summary: endpoint.docs,
             return_: endpointSignatureInfo.returnType,
-            body: this.context.includeExceptionHandler() ? this.wrapWithExceptionHandler({ body, returnType: endpointSignatureInfo.returnType }) : body,
+            body: this.context.includeExceptionHandler()
+                ? this.wrapWithExceptionHandler({ body, returnType: endpointSignatureInfo.returnType })
+                : body,
             codeExample: snippet?.endpointCall
         });
     }

@@ -246,7 +246,13 @@ export abstract class AbstractEndpointGenerator {
         return undefined;
     }
 
-    protected wrapWithExceptionHandler({ body, returnType }: { body: csharp.CodeBlock; returnType: csharp.Type | undefined }): csharp.CodeBlock{
+    protected wrapWithExceptionHandler({
+        body,
+        returnType
+    }: {
+        body: csharp.CodeBlock;
+        returnType: csharp.Type | undefined;
+    }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             if (this.context.includeExceptionHandler()) {
                 if (returnType != null) {
@@ -287,7 +293,7 @@ export abstract class AbstractEndpointGenerator {
             })
         );
     }
-    
+
     private getJustRequestBodySnippet(
         exampleRequestBody: ExampleRequestBody,
         parseDatetimes: boolean
