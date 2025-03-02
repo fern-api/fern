@@ -50,59 +50,60 @@ public partial class ComplexClient
             .CreateInstanceAsync(
                 request,
                 options,
-                SearchInternalAsync,
+                async (
+                    SearchRequest request,
+                    RequestOptions? options = null,
+                    CancellationToken cancellationToken = default
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(
+                            new RawClient.JsonApiRequest
+                            {
+                                BaseUrl = _client.Options.BaseUrl,
+                                Method = HttpMethod.Post,
+                                Path = "conversations/search",
+                                Body = request,
+                                ContentType = "application/json",
+                                Options = options,
+                            },
+                            cancellationToken
+                        )
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            return JsonUtils.Deserialize<PaginatedConversationResponse>(
+                                responseBody
+                            )!;
+                        }
+                        catch (JsonException e)
+                        {
+                            throw new SeedPaginationException("Failed to deserialize response", e);
+                        }
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        throw new SeedPaginationApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                },
                 (request, cursor) =>
                 {
                     request.Pagination ??= new();
                     request.Pagination.StartingAfter = cursor;
                 },
                 response => response?.Pages?.Next?.StartingAfter,
-                response => response?.Conversations?.ToList()
-            )
-            .ConfigureAwait(false);
-        return pager;
-    }
-
-    private async Task<PaginatedConversationResponse> SearchInternalAsync(
-        SearchRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "conversations/search",
-                    Body = request,
-                    ContentType = "application/json",
-                    Options = options,
-                },
+                response => response?.Conversations?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<PaginatedConversationResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedPaginationException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedPaginationApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return pager;
     }
 }

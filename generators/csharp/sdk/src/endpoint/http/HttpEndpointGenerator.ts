@@ -14,6 +14,7 @@ import {
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { RawClient } from "./RawClient";
@@ -50,24 +51,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string;
         rawClient: RawClient;
     }): csharp.Method[] {
-        const methods: csharp.Method[] = [];
-        if (this.hasPagination(endpoint)) {
-            methods.push(this.generateHttpPagerMethod({ serviceId, endpoint, rawClientReference, rawClient }));
-        }
-        if (this.shouldGenerateHttpMethod({ endpoint })) {
-            methods.push(this.generateHttpMethod({ serviceId, endpoint, rawClientReference, rawClient }));
-        }
-        return methods;
-    }
-
-    private shouldGenerateHttpMethod({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        if (this.hasPagination(endpoint)) {
-            if (endpoint.pagination.type === "custom") {
-                return false;
-            }
-            return true;
-        }
-        return true;
+        return [this.generateEndpointMethod({ serviceId, endpoint, rawClientReference, rawClient })];
     }
 
     private getHttpMethodSnippet({ endpoint }: { endpoint: HttpEndpoint }): SingleEndpointSnippet | undefined {
@@ -87,7 +71,34 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return snippet;
     }
 
-    public generateHttpMethod({
+    public generateEndpointMethod({
+        serviceId,
+        endpoint,
+        rawClientReference,
+        rawClient
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+        rawClientReference: string;
+        rawClient: RawClient;
+    }): csharp.Method {
+        if (this.hasPagination(endpoint)) {
+            return this.generatePagerMethod({
+                serviceId,
+                endpoint,
+                rawClientReference,
+                rawClient
+            });
+        }
+        return this.generateUnpagedMethod({
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        });
+    }
+
+    private generateUnpagedMethod({
         serviceId,
         endpoint,
         rawClientReference,
@@ -111,56 +122,88 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
         const snippet = this.getHttpMethodSnippet({ endpoint });
         return csharp.method({
-            name: this.getHttpEndpointMethodName(endpoint),
+            name: this.context.getEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? csharp.Access.Private : csharp.Access.Public,
             isAsync: true,
             parameters,
             summary: endpoint.docs,
             return_,
             body: csharp.codeblock((writer) => {
-                const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-                if (queryParameterCodeBlock != null) {
-                    queryParameterCodeBlock.code.write(writer);
-                }
-                const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-                if (headerParameterCodeBlock != null) {
-                    headerParameterCodeBlock.code.write(writer);
-                }
-                const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
-                if (requestBodyCodeBlock?.code != null) {
-                    writer.writeNode(requestBodyCodeBlock.code);
-                }
-                writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
-                writer.writeNodeStatement(
-                    rawClient.sendRequestWithRequestWrapper({
-                        request: rawClient.createHttpRequestWrapper({
-                            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-                            requestType: endpointSignatureInfo.request?.getRequestType(),
-                            endpoint,
-                            bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
-                        }),
-                        clientReference: rawClientReference
-                    })
-                );
-                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
-                if (successResponseStatements != null) {
-                    writer.writeNode(successResponseStatements);
-                }
-                writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+                this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
             }),
             codeExample: snippet?.endpointCall
         });
     }
 
-    private getHttpEndpointMethodName(endpoint: HttpEndpoint): string {
-        const methodName = this.context.getEndpointMethodName(endpoint);
-        if (this.hasPagination(endpoint)) {
-            return methodName.replace("Async", "InternalAsync");
+    private generateUnpagedAnonymousFunction({
+        serviceId,
+        endpoint,
+        rawClientReference,
+        rawClient
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+        rawClientReference: string;
+        rawClient: RawClient;
+    }): csharp.AnonymousFunction {
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            csharp.parameter({
+                type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
+                name: this.context.getCancellationTokenParameterName(),
+                initializer: "default"
+            })
+        );
+        return csharp.anonymousFunction({
+            isAsync: true,
+            parameters,
+            body: csharp.codeblock((writer) => {
+                this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+            })
+        });
+    }
+
+    private writeUnpagedMethodBody(
+        endpointSignatureInfo: EndpointSignatureInfo,
+        writer: csharp.Writer,
+        rawClient: RawClient,
+        endpoint: HttpEndpoint,
+        rawClientReference: string
+    ) {
+        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock != null) {
+            queryParameterCodeBlock.code.write(writer);
         }
-        return methodName;
+        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock != null) {
+            headerParameterCodeBlock.code.write(writer);
+        }
+        const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            writer.writeNode(requestBodyCodeBlock.code);
+        }
+        writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
+        writer.writeNodeStatement(
+            rawClient.sendRequestWithRequestWrapper({
+                request: rawClient.createHttpRequestWrapper({
+                    baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+                    requestType: endpointSignatureInfo.request?.getRequestType(),
+                    endpoint,
+                    bodyReference: requestBodyCodeBlock?.requestBodyReference,
+                    pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+                    headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                    queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
+                }),
+                clientReference: rawClientReference
+            })
+        );
+        const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
+        if (successResponseStatements != null) {
+            writer.writeNode(successResponseStatements);
+        }
+        writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
     }
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
@@ -342,7 +385,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    public generateHttpPagerMethod({
+    public generatePagerMethod({
         serviceId,
         endpoint,
         rawClientReference,
@@ -379,7 +422,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return_,
             body: csharp.codeblock((writer) => {
                 const requestParam = endpointSignatureInfo.requestParameter;
-                const unpagedEndpointMethodName = this.getHttpEndpointMethodName(endpoint);
                 const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
                 if (!unpagedEndpointResponseType) {
                     throw new Error("Internal error; a response type is required for pagination endpoints");
@@ -392,10 +434,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             requestParam,
                             requestOptionsType,
                             unpagedEndpointResponseType,
+                            unpagedAnonymousFunction: this.generateUnpagedAnonymousFunction({
+                                serviceId,
+                                endpoint,
+                                rawClientReference,
+                                rawClient
+                            }),
                             itemType,
                             writer,
-                            optionsParamName,
-                            unpagedEndpointMethodName
+                            optionsParamName
                         });
                         break;
                     case "cursor":
@@ -404,10 +451,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             requestParam,
                             requestOptionsType,
                             unpagedEndpointResponseType,
+                            unpagedAnonymousFunction: this.generateUnpagedAnonymousFunction({
+                                serviceId,
+                                endpoint,
+                                rawClientReference,
+                                rawClient
+                            }),
                             itemType,
                             writer,
-                            optionsParamName,
-                            unpagedEndpointMethodName
+                            optionsParamName
                         });
                         break;
                     case "custom":
@@ -432,19 +484,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         requestParam,
         requestOptionsType,
         unpagedEndpointResponseType,
+        unpagedAnonymousFunction,
         itemType,
         writer,
-        optionsParamName,
-        unpagedEndpointMethodName
+        optionsParamName
     }: {
         pagination: OffsetPagination;
         requestParam?: csharp.Parameter;
         requestOptionsType: csharp.Type;
         unpagedEndpointResponseType: csharp.Type;
+        unpagedAnonymousFunction: csharp.AnonymousFunction;
         itemType: csharp.Type;
         writer: csharp.Writer;
         optionsParamName: string;
-        unpagedEndpointMethodName: string;
     }) {
         if (!requestParam) {
             throw new Error("Request parameter is required for pagination");
@@ -483,7 +535,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 arguments_: [
                     csharp.codeblock(requestParam.name),
                     csharp.codeblock(optionsParamName),
-                    csharp.codeblock(unpagedEndpointMethodName),
+                    unpagedAnonymousFunction,
                     csharp.codeblock(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0`),
                     csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) => {");
@@ -501,7 +553,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         pagination.hasNextPage
                             ? `response => ${this.nullableDotGet("response", pagination.hasNextPage)}`
                             : "null"
-                    )
+                    ),
+                    csharp.codeblock(this.context.getCancellationTokenParameterName())
                 ]
             })
         );
@@ -513,19 +566,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         requestParam,
         requestOptionsType,
         unpagedEndpointResponseType,
+        unpagedAnonymousFunction,
         itemType,
         writer,
-        optionsParamName,
-        unpagedEndpointMethodName
+        optionsParamName
     }: {
         pagination: CursorPagination;
         requestParam?: csharp.Parameter;
         requestOptionsType: csharp.Type;
         unpagedEndpointResponseType: csharp.Type;
+        unpagedAnonymousFunction: csharp.AnonymousFunction;
         itemType: csharp.Type;
         writer: csharp.Writer;
         optionsParamName: string;
-        unpagedEndpointMethodName: string;
     }) {
         if (!requestParam) {
             throw new Error("Request parameter is required for pagination");
@@ -558,7 +611,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 arguments_: [
                     csharp.codeblock(requestParam.name),
                     csharp.codeblock(optionsParamName),
-                    csharp.codeblock(unpagedEndpointMethodName),
+                    unpagedAnonymousFunction,
                     csharp.codeblock((writer) => {
                         writer.writeLine("(request, cursor) => {");
                         writer.indent();
@@ -568,7 +621,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("}");
                     }),
                     csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.next)}`),
-                    csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`)
+                    csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`),
+                    csharp.codeblock(this.context.getCancellationTokenParameterName())
                 ]
             })
         );
