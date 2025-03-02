@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedPagination.Core;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -10,8 +10,8 @@ public class GuidCursorTest
     [Test]
     public async SystemTask CursorPagerShouldWorkWithGuidCursors()
     {
-        var pager = CreatePager();
-        await AssertPager(pager);
+        var pager = await CreatePagerAsync();
+        await AssertPagerAsync(pager);
     }
 
     private static readonly Guid? Cursor1 = null;
@@ -19,7 +19,7 @@ public class GuidCursorTest
     private static readonly Guid Cursor3 = new("00000000-0000-0000-0000-000000000001");
     private Guid? _cursorCopy;
 
-    private Pager<object> CreatePager()
+    private async Task<Pager<object>> CreatePagerAsync()
     {
         var responses = new List<Response>
         {
@@ -40,7 +40,13 @@ public class GuidCursorTest
             },
         }.GetEnumerator();
         _cursorCopy = Cursor1;
-        Pager<object> pager = new CursorPager<Request, object?, Response, Guid?, object>(
+        Pager<object> pager = await CursorPager<
+            Request,
+            object?,
+            Response,
+            Guid?,
+            object
+        >.CreateInstanceAsync(
             new() { Cursor = Cursor1 },
             null,
             (_, _, _) =>
@@ -59,7 +65,7 @@ public class GuidCursorTest
         return pager;
     }
 
-    private async SystemTask AssertPager(Pager<object> pager)
+    private async SystemTask AssertPagerAsync(Pager<object> pager)
     {
         var pageEnumerator = pager.AsPagesAsync().GetAsyncEnumerator();
 

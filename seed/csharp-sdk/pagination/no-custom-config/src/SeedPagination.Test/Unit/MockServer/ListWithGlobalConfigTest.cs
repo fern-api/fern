@@ -34,7 +34,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = Client.Users.ListWithGlobalConfigAsync(
+        var pager = await Client.Users.ListWithGlobalConfigAsync(
             new ListWithGlobalConfigRequest { Offset = 1 },
             RequestOptions
         );

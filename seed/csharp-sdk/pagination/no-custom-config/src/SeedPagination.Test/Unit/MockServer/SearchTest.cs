@@ -65,7 +65,7 @@ public class SearchTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = Client.Complex.SearchAsync(
+        var pager = await Client.Complex.SearchAsync(
             new SearchRequest
             {
                 Pagination = new StartingAfterPaging
