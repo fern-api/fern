@@ -166,6 +166,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Json.CollectionItemSerializer,
             AsIsFiles.Json.DateOnlyConverter,
             AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonAccessAttribute,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer,
             AsIsFiles.RawClient
@@ -200,8 +201,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.RawClientTests
         ];

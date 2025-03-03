@@ -649,7 +649,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
-        this.context.logger.debug(`this.license ${JSON.stringify(this.license)}`);
         if (this.license) {
             result.push(
                 this.license._visit<string>({

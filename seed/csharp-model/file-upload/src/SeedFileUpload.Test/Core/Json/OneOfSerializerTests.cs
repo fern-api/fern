@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedFileUpload.Core;
 
-namespace SeedFileUpload.Test.Core;
+namespace SeedFileUpload.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

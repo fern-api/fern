@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedMultiLineDocs.Core;
 
-namespace SeedMultiLineDocs.Test.Core;
+namespace SeedMultiLineDocs.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

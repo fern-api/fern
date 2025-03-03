@@ -14,6 +14,15 @@
     - type: feat
       summary: Add .editorconfig file to the generated SDK.
 
+- version: 1.12.0-rc3
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for schema properties with write-only and read-only access.
+    - type: feat
+      summary: The JSON serializer will write with indentation during debugging, and without in production.
+
 - version: 1.12.0-rc2
   createdAt: "2025-03-02"
   irVersion: 56
