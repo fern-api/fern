@@ -9,7 +9,7 @@ public partial class ComplexClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ComplexClient(RawClient client, ExceptionHandler exceptionHandler)
     {

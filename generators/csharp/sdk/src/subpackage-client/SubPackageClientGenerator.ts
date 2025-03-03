@@ -76,6 +76,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Private,
+                    readonly: true,
                     name: EXCEPTION_HANDLER_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
                 })

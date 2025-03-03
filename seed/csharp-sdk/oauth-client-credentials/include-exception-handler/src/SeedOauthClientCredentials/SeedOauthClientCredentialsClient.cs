@@ -6,7 +6,7 @@ public partial class SeedOauthClientCredentialsClient
 {
     private readonly RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     public SeedOauthClientCredentialsClient(
         string clientId,

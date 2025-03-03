@@ -8,7 +8,7 @@ public partial class SeedExhaustiveClient
 {
     private readonly RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     public SeedExhaustiveClient(
         string token,

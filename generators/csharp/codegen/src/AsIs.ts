@@ -27,6 +27,7 @@ export const AsIsFiles = {
     StringEnumExtensions: "StringEnumExtensions.Template.cs",
     TemplateCsProj: "Template.csproj",
     UsingCs: "Using.cs",
+    EditorConfig: ".editorconfig.Template",
     Json: {
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
         DateTimeSerializer: "DateTimeSerializer.Template.cs",

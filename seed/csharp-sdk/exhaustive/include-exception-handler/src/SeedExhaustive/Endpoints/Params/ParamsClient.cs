@@ -11,7 +11,7 @@ public partial class ParamsClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ParamsClient(RawClient client, ExceptionHandler exceptionHandler)
     {

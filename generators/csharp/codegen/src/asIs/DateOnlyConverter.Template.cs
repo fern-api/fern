@@ -1,7 +1,8 @@
+// ReSharper disable All
+#pragma warning disable
+
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-// ReSharper disable All
 
 using global::System.Diagnostics;
 using global::System.Diagnostics.CodeAnalysis;
@@ -98,7 +99,7 @@ namespace <%= namespace%>
         )
         {
 #if NET8_0_OR_GREATER
-        Span<byte> buffer = stackalloc byte[FormatLength];
+            Span<byte> buffer = stackalloc byte[FormatLength];
 #else
             Span<char> buffer = stackalloc char[FormatLength];
 #endif
@@ -121,7 +122,7 @@ namespace <%= namespace%>
         )
         {
 #if NET8_0_OR_GREATER
-        Span<byte> buffer = stackalloc byte[FormatLength];
+            Span<byte> buffer = stackalloc byte[FormatLength];
 #else
             Span<char> buffer = stackalloc char[FormatLength];
 #endif
@@ -164,16 +165,16 @@ namespace <%= namespace%>
         public const byte Plus = (byte)'+';
     }
 
-// ReSharper disable SuggestVarOrType_Elsewhere
-// ReSharper disable SuggestVarOrType_SimpleTypes
-// ReSharper disable SuggestVarOrType_BuiltInTypes
+    // ReSharper disable SuggestVarOrType_Elsewhere
+    // ReSharper disable SuggestVarOrType_SimpleTypes
+    // ReSharper disable SuggestVarOrType_BuiltInTypes
 
 
     internal static class JsonHelpers
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsInRangeInclusive(int value, int lowerBound, int upperBound)
-            => (uint)(value - lowerBound) <= (uint)(upperBound - lowerBound);
+        public static bool IsInRangeInclusive(int value, int lowerBound, int upperBound) =>
+            (uint)(value - lowerBound) <= (uint)(upperBound - lowerBound);
 
         public static bool IsDigit(byte value) => (uint)(value - '0') <= '9' - '0';
 
@@ -197,9 +198,11 @@ namespace <%= namespace%>
 
         public static bool TryParseAsIso(ReadOnlySpan<byte> source, out DateOnly value)
         {
-            if (TryParseDateTimeOffset(source, out DateTimeParseData parseData) &&
-                parseData.IsCalendarDateOnly &&
-                TryCreateDateTime(parseData, DateTimeKind.Unspecified, out DateTime dateTime))
+            if (
+                TryParseDateTimeOffset(source, out DateTimeParseData parseData)
+                && parseData.IsCalendarDateOnly
+                && TryCreateDateTime(parseData, DateTimeKind.Unspecified, out DateTime dateTime)
+            )
             {
                 value = DateOnly.FromDateTime(dateTime);
                 return true;
@@ -236,7 +239,10 @@ namespace <%= namespace%>
         /// Spaces are not permitted.
         /// </remarks>
         /// <returns>"true" if successfully parsed.</returns>
-        private static bool TryParseDateTimeOffset(ReadOnlySpan<byte> source, out DateTimeParseData parseData)
+        private static bool TryParseDateTimeOffset(
+            ReadOnlySpan<byte> source,
+            out DateTimeParseData parseData
+        )
         {
             parseData = default;
 
@@ -269,10 +275,12 @@ namespace <%= namespace%>
                 parseData.Year = (int)(digit1 * 1000 + digit2 * 100 + digit3 * 10 + digit4);
             }
 
-            if (source[4] != JsonConstants.Hyphen
+            if (
+                source[4] != JsonConstants.Hyphen
                 || !TryGetNextTwoDigits(source.Slice(start: 5, length: 2), ref parseData.Month)
                 || source[7] != JsonConstants.Hyphen
-                || !TryGetNextTwoDigits(source.Slice(start: 8, length: 2), ref parseData.Day))
+                || !TryGetNextTwoDigits(source.Slice(start: 8, length: 2), ref parseData.Day)
+            )
             {
                 return false;
             }
@@ -328,11 +336,12 @@ namespace <%= namespace%>
             }
 
             // Parse THH:MM (e.g. "T10:32")
-            if (source[10] != JsonConstants.TimePrefix || source[13] != JsonConstants.Colon
-                                                       || !TryGetNextTwoDigits(source.Slice(start: 11, length: 2),
-                                                           ref parseData.Hour)
-                                                       || !TryGetNextTwoDigits(source.Slice(start: 14, length: 2),
-                                                           ref parseData.Minute))
+            if (
+                source[10] != JsonConstants.TimePrefix
+                || source[13] != JsonConstants.Colon
+                || !TryGetNextTwoDigits(source.Slice(start: 11, length: 2), ref parseData.Hour)
+                || !TryGetNextTwoDigits(source.Slice(start: 14, length: 2), ref parseData.Minute)
+            )
             {
                 return false;
             }
@@ -364,8 +373,10 @@ namespace <%= namespace%>
             }
 
             // Try reading the seconds
-            if (source.Length < 19
-                || !TryGetNextTwoDigits(source.Slice(start: 17, length: 2), ref parseData.Second))
+            if (
+                source.Length < 19
+                || !TryGetNextTwoDigits(source.Slice(start: 17, length: 2), ref parseData.Second)
+            )
             {
                 return false;
             }
@@ -405,7 +416,10 @@ namespace <%= namespace%>
 
             // Parse fraction. This value should never be greater than 9_999_999
             int numDigitsRead = 0;
-            int fractionEnd = Math.Min(sourceIndex + JsonConstants.DateTimeParseNumFractionDigits, source.Length);
+            int fractionEnd = Math.Min(
+                sourceIndex + JsonConstants.DateTimeParseNumFractionDigits,
+                source.Length
+            );
 
             while (sourceIndex < fractionEnd && IsDigit(curByte = source[sourceIndex]))
             {
@@ -453,8 +467,10 @@ namespace <%= namespace%>
             static bool ParseOffset(ref DateTimeParseData parseData, ReadOnlySpan<byte> offsetData)
             {
                 // Parse the hours for the offset
-                if (offsetData.Length < 2
-                    || !TryGetNextTwoDigits(offsetData.Slice(0, 2), ref parseData.OffsetHours))
+                if (
+                    offsetData.Length < 2
+                    || !TryGetNextTwoDigits(offsetData.Slice(0, 2), ref parseData.OffsetHours)
+                )
                 {
                     return false;
                 }
@@ -469,8 +485,8 @@ namespace <%= namespace%>
 
                 // Ensure we have enough for ":mm"
                 return offsetData.Length == 5
-                       && offsetData[2] == JsonConstants.Colon
-                       && TryGetNextTwoDigits(offsetData.Slice(3), ref parseData.OffsetMinutes);
+                    && offsetData[2] == JsonConstants.Colon
+                    && TryGetNextTwoDigits(offsetData.Slice(3), ref parseData.OffsetMinutes);
             }
         }
 
@@ -498,7 +514,11 @@ namespace <%= namespace%>
         /// <summary>
         /// Overflow-safe DateTime factory.
         /// </summary>
-        private static bool TryCreateDateTime(DateTimeParseData parseData, DateTimeKind kind, out DateTime value)
+        private static bool TryCreateDateTime(
+            DateTimeParseData parseData,
+            DateTimeKind kind,
+            out DateTime value
+        )
         {
             if (parseData.Year == 0)
             {
@@ -506,8 +526,7 @@ namespace <%= namespace%>
                 return false;
             }
 
-            Debug.Assert(parseData.Year <=
-                         9999); // All of our callers to date parse the year from fixed 4-digit fields so this value is trusted.
+            Debug.Assert(parseData.Year <= 9999); // All of our callers to date parse the year from fixed 4-digit fields so this value is trusted.
 
             if ((uint)parseData.Month - 1 >= 12)
             {
@@ -516,7 +535,10 @@ namespace <%= namespace%>
             }
 
             uint dayMinusOne = (uint)parseData.Day - 1;
-            if (dayMinusOne >= 28 && dayMinusOne >= DateTime.DaysInMonth(parseData.Year, parseData.Month))
+            if (
+                dayMinusOne >= 28
+                && dayMinusOne >= DateTime.DaysInMonth(parseData.Year, parseData.Month)
+            )
             {
                 value = default;
                 return false;
@@ -542,15 +564,20 @@ namespace <%= namespace%>
                 return false;
             }
 
-            Debug.Assert(
-                parseData.Fraction is >= 0
-                    and <= JsonConstants
-                        .MaxDateTimeFraction); // All of our callers to date parse the fraction from fixed 7-digit fields so this value is trusted.
+            Debug.Assert(parseData.Fraction is >= 0 and <= JsonConstants.MaxDateTimeFraction); // All of our callers to date parse the fraction from fixed 7-digit fields so this value is trusted.
 
-            ReadOnlySpan<int> days = DateTime.IsLeapYear(parseData.Year) ? DaysToMonth366 : DaysToMonth365;
+            ReadOnlySpan<int> days = DateTime.IsLeapYear(parseData.Year)
+                ? DaysToMonth366
+                : DaysToMonth365;
             int yearMinusOne = parseData.Year - 1;
-            int totalDays = yearMinusOne * 365 + yearMinusOne / 4 - yearMinusOne / 100 + yearMinusOne / 400 +
-                days[parseData.Month - 1] + parseData.Day - 1;
+            int totalDays =
+                yearMinusOne * 365
+                + yearMinusOne / 4
+                - yearMinusOne / 100
+                + yearMinusOne / 400
+                + days[parseData.Month - 1]
+                + parseData.Day
+                - 1;
             long ticks = totalDays * TimeSpan.TicksPerDay;
             int totalSeconds = parseData.Hour * 3600 + parseData.Minute * 60 + parseData.Second;
             ticks += totalSeconds * TimeSpan.TicksPerSecond;
@@ -559,43 +586,51 @@ namespace <%= namespace%>
             return true;
         }
 
-        private static ReadOnlySpan<int> DaysToMonth365 => [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
-        private static ReadOnlySpan<int> DaysToMonth366 => [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+        private static ReadOnlySpan<int> DaysToMonth365 =>
+            [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
+        private static ReadOnlySpan<int> DaysToMonth366 =>
+            [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
     }
 
     internal static class ThrowHelper
     {
-        private const string ExceptionSourceValueToRethrowAsJsonException = "System.Text.Json.Rethrowable";
+        private const string ExceptionSourceValueToRethrowAsJsonException =
+            "System.Text.Json.Rethrowable";
 
         [DoesNotReturn]
-        public static void ThrowInvalidOperationException_ExpectedString(
-            JsonTokenType tokenType)
+        public static void ThrowInvalidOperationException_ExpectedString(JsonTokenType tokenType)
         {
             throw GetInvalidOperationException("string", tokenType);
         }
 
-        public static void ThrowFormatException(
-            DataType dataType)
+        public static void ThrowFormatException(DataType dataType)
         {
             throw new FormatException(SR.Format(SR.UnsupportedFormat, dataType))
-                { Source = ExceptionSourceValueToRethrowAsJsonException };
+            {
+                Source = ExceptionSourceValueToRethrowAsJsonException,
+            };
         }
 
-        private static Exception GetInvalidOperationException(string message, JsonTokenType tokenType)
+        private static Exception GetInvalidOperationException(
+            string message,
+            JsonTokenType tokenType
+        )
         {
             return GetInvalidOperationException(SR.Format(SR.InvalidCast, tokenType, message));
         }
 
         private static InvalidOperationException GetInvalidOperationException(string message)
         {
-            return new InvalidOperationException(message) { Source = ExceptionSourceValueToRethrowAsJsonException };
+            return new InvalidOperationException(message)
+            {
+                Source = ExceptionSourceValueToRethrowAsJsonException,
+            };
         }
     }
 
     internal static class Utf8JsonReaderExtensions
     {
-        internal static int ValueLength(
-            this Utf8JsonReader reader) =>
+        internal static int ValueLength(this Utf8JsonReader reader) =>
             reader.HasValueSequence
                 ? checked((int)reader.ValueSequence.Length)
                 : reader.ValueSpan.Length;
@@ -604,14 +639,17 @@ namespace <%= namespace%>
     internal enum DataType
     {
         TimeOnly,
-        DateOnly
+        DateOnly,
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal static class SR
     {
         private static readonly bool s_usingResourceKeys =
-            AppContext.TryGetSwitch("System.Resources.UseSystemResourceKeys", out bool usingResourceKeys) && usingResourceKeys;
+            AppContext.TryGetSwitch(
+                "System.Resources.UseSystemResourceKeys",
+                out bool usingResourceKeys
+            ) && usingResourceKeys;
 
         public static string UnsupportedFormat => Strings.UnsupportedFormat;
 
@@ -619,11 +657,15 @@ namespace <%= namespace%>
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string Format(string resourceFormat, object? p1) =>
-            s_usingResourceKeys ? string.Join(", ", resourceFormat, p1) : string.Format(resourceFormat, p1);
+            s_usingResourceKeys
+                ? string.Join(", ", resourceFormat, p1)
+                : string.Format(resourceFormat, p1);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string Format(string resourceFormat, object? p1, object? p2) =>
-            s_usingResourceKeys ? string.Join(", ", resourceFormat, p1, p2) : string.Format(resourceFormat, p1, p2);
+            s_usingResourceKeys
+                ? string.Join(", ", resourceFormat, p1, p2)
+                : string.Format(resourceFormat, p1, p2);
     }
 
     /// <summary>
@@ -633,27 +675,41 @@ namespace <%= namespace%>
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(
+        "System.Resources.Tools.StronglyTypedResourceBuilder",
+        "17.0.0.0"
+    )]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
-
+    internal class Strings
+    {
         private static global::System.Resources.ResourceManager resourceMan;
 
         private static global::System.Globalization.CultureInfo resourceCulture;
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
-        }
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+            "Microsoft.Performance",
+            "CA1811:AvoidUncalledPrivateCode"
+        )]
+        internal Strings() { }
 
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("System.Text.Json.Resources.Strings", typeof(Strings).Assembly);
+        [global::System.ComponentModel.EditorBrowsableAttribute(
+            global::System.ComponentModel.EditorBrowsableState.Advanced
+        )]
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
+                    global::System.Resources.ResourceManager temp =
+                        new global::System.Resources.ResourceManager(
+                            "System.Text.Json.Resources.Strings",
+                            typeof(Strings).Assembly
+                        );
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -664,32 +720,29 @@ namespace <%= namespace%>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
-                return resourceCulture;
-            }
-            set {
-                resourceCulture = value;
-            }
+        [global::System.ComponentModel.EditorBrowsableAttribute(
+            global::System.ComponentModel.EditorBrowsableState.Advanced
+        )]
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get { return resourceCulture; }
+            set { resourceCulture = value; }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to Cannot get the value of a token type &apos;{0}&apos; as a {1}..
         /// </summary>
-        internal static string InvalidCast {
-            get {
-                return ResourceManager.GetString("InvalidCast", resourceCulture);
-            }
+        internal static string InvalidCast
+        {
+            get { return ResourceManager.GetString("InvalidCast", resourceCulture); }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to The JSON value is not in a supported {0} format..
         /// </summary>
-        internal static string UnsupportedFormat {
-            get {
-                return ResourceManager.GetString("UnsupportedFormat", resourceCulture);
-            }
+        internal static string UnsupportedFormat
+        {
+            get { return ResourceManager.GetString("UnsupportedFormat", resourceCulture); }
         }
     }
 }

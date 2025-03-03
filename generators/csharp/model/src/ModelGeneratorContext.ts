@@ -29,7 +29,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {

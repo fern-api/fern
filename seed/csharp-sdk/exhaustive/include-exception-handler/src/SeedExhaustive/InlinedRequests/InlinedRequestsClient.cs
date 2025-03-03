@@ -10,7 +10,7 @@ public partial class InlinedRequestsClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal InlinedRequestsClient(RawClient client, ExceptionHandler exceptionHandler)
     {

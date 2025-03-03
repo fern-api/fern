@@ -11,7 +11,7 @@ public partial class ContentTypeClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ContentTypeClient(RawClient client, ExceptionHandler exceptionHandler)
     {

@@ -6,7 +6,7 @@ public partial class GeneralErrorsClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal GeneralErrorsClient(RawClient client, ExceptionHandler exceptionHandler)
     {

@@ -1,0 +1,26 @@
+root = true
+
+[*.cs]
+resharper_arrange_object_creation_when_type_evident_highlighting = hint
+resharper_auto_property_can_be_made_get_only_global_highlighting = hint
+resharper_check_namespace_highlighting = hint
+resharper_class_never_instantiated_global_highlighting = hint
+resharper_collection_never_updated_global_highlighting = hint
+resharper_member_can_be_private_global_highlighting = hint
+resharper_partial_type_with_single_part_highlighting = hint
+resharper_property_can_be_made_init_only_global_highlighting = hint
+resharper_redundant_name_qualifier_highlighting = none
+resharper_redundant_using_directive_highlighting = hint
+resharper_unused_auto_property_accessor_global_highlighting = hint
+resharper_unused_auto_property_accessor_local_highlighting = hint
+resharper_unused_member_global_highlighting = hint
+resharper_unused_type_global_highlighting = hint
+resharper_private_field_can_be_converted_to_local_variable_highlighting = hint
+resharper_not_accessed_field_local_highlighting = hint
+resharper_inconsistent_naming_highlighting = hint
+
+[src/**/Types/*.cs]
+resharper_check_namespace_highlighting = none
+
+[src/**/Core/Public/*.cs]
+resharper_check_namespace_highlighting = none

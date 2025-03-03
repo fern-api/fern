@@ -9,7 +9,7 @@ public partial class NoAuthClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal NoAuthClient(RawClient client, ExceptionHandler exceptionHandler)
     {

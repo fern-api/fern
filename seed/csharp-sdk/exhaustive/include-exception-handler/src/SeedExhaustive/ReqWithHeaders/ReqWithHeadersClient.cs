@@ -9,7 +9,7 @@ public partial class ReqWithHeadersClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ReqWithHeadersClient(RawClient client, ExceptionHandler exceptionHandler)
     {

@@ -9,7 +9,7 @@ public partial class ImdbClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ImdbClient(RawClient client, ExceptionHandler exceptionHandler)
     {

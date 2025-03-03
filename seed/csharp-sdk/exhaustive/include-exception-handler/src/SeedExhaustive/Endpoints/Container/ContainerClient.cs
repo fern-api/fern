@@ -11,7 +11,7 @@ public partial class ContainerClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ContainerClient(RawClient client, ExceptionHandler exceptionHandler)
     {

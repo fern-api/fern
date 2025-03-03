@@ -153,7 +153,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {

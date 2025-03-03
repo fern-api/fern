@@ -6,7 +6,7 @@ public partial class TypesClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal TypesClient(RawClient client, ExceptionHandler exceptionHandler)
     {
