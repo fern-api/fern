@@ -6,20 +6,17 @@ public partial class EndpointsClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal EndpointsClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal EndpointsClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
-        Container = new ContainerClient(_client, _exceptionHandler);
-        ContentType = new ContentTypeClient(_client, _exceptionHandler);
-        Enum = new EnumClient(_client, _exceptionHandler);
-        HttpMethods = new HttpMethodsClient(_client, _exceptionHandler);
-        Object = new ObjectClient(_client, _exceptionHandler);
-        Params = new ParamsClient(_client, _exceptionHandler);
-        Primitive = new PrimitiveClient(_client, _exceptionHandler);
-        Union = new UnionClient(_client, _exceptionHandler);
+        Container = new ContainerClient(_client);
+        ContentType = new ContentTypeClient(_client);
+        Enum = new EnumClient(_client);
+        HttpMethods = new HttpMethodsClient(_client);
+        Object = new ObjectClient(_client);
+        Params = new ParamsClient(_client);
+        Primitive = new PrimitiveClient(_client);
+        Union = new UnionClient(_client);
     }
 
     public ContainerClient Container { get; }
