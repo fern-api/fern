@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedNoEnvironment;\n\nvar client = new SeedNoEnvironmentClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
             }
         }

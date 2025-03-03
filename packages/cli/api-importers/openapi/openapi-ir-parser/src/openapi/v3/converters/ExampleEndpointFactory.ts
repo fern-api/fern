@@ -607,6 +607,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     nameOverride: undefined,
                     availability: undefined,
                     readonly: undefined,
+                    writeonly: undefined,
                     inline: undefined
                 };
             })

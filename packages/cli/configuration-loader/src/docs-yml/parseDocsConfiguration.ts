@@ -866,7 +866,8 @@ function convertSnippetsConfiguration({
         typescript: rawConfig.typescript,
         go: rawConfig.go,
         java: rawConfig.java,
-        ruby: rawConfig.ruby
+        ruby: rawConfig.ruby,
+        csharp: rawConfig.csharp
     };
 }
 

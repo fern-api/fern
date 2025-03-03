@@ -135,6 +135,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }

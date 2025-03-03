@@ -36,7 +36,7 @@
           {
             "name": {
               "name": {
-                "originalName": "nano",
+                "originalName": "Nano",
                 "camelCase": {
                   "unsafeName": "nano",
                   "safeName": "nano"
@@ -55,7 +55,8 @@
                 }
               },
               "wireValue": "nano"
-            }
+            },
+            "docs": "The Nano tier is a lightweight model that is optimized for speed and cost."
           }
         ],
         "type": "enum"

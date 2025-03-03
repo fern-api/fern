@@ -70,11 +70,11 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        // Check if parameter schema is a reference first
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: this.parameter.schema
+                schemaOrReference: this.parameter.schema,
+                wrapAsOptional: this.parameter.required == null || !this.parameter.required
             });
             const converted = schemaOrReferenceConverter.convert({ context, errorCollector });
             if (converted != null) {
@@ -82,6 +82,12 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                 inlinedTypes = converted.inlinedTypes ?? {};
             }
         }
+
+        const availability = context.getAvailability({
+            node: this.parameter,
+            breadcrumbs: this.breadcrumbs,
+            errorCollector
+        });
 
         switch (this.parameter.in) {
             case "query":
@@ -95,7 +101,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
-                        availability: undefined
+                        availability
                     },
                     inlinedTypes
                 };
@@ -110,7 +116,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         env: undefined,
-                        availability: undefined
+                        availability
                     },
                     inlinedTypes
                 };

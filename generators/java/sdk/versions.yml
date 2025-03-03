@@ -1,5 +1,47 @@
 - changelogEntry:
     - summary: |
+        Fix type reference syntax in readValue calls
+      type: fix
+  createdAt: '2025-03-02'
+  irVersion: 55
+  version: 2.20.1
+- changelogEntry:
+    - summary: |
+        Fix collection serialization in multipart form body without form encoding
+      type: fix
+  createdAt: '2025-02-27'
+  irVersion: 55
+  version: 2.20.0
+- changelogEntry:
+    - summary: |
+        Enable overriding literal headers
+      type: feat
+  createdAt: '2025-02-26'
+  irVersion: 55
+  version: 2.19.0
+- changelogEntry:
+    - summary: |
+        Fix form body serialization
+      type: fix
+  createdAt: '2025-02-25'
+  irVersion: 55
+  version: 2.18.1
+- changelogEntry:
+    - summary: |
+        Support form-data with deep object query params
+      type: feat
+  createdAt: '2025-02-24'
+  irVersion: 55
+  version: 2.18.0
+- changelogEntry:
+    - summary: |
+        Support deep object query parameters
+      type: feat
+  createdAt: '2025-02-24'
+  irVersion: 55
+  version: 2.17.0
+- changelogEntry:
+    - summary: |
         Upgrade IR version dependency to v55
       type: chore
   createdAt: '2025-02-20'

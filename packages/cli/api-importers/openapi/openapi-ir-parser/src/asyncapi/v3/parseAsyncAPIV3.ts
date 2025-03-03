@@ -15,6 +15,7 @@ import {
 
 import { FernOpenAPIExtension } from "../..";
 import { getExtension } from "../../getExtension";
+import { FernEnumConfig } from "../../openapi/v3/extensions/getFernEnum";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertEnum } from "../../schema/convertEnum";
 import { convertSchema } from "../../schema/convertSchemas";
@@ -201,10 +202,12 @@ export function parseAsyncAPIV3({
                 const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
                 const isOptional = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL);
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
+                const fernEnum = getExtension<FernEnumConfig>(parameter, FernAsyncAPIExtension.FERN_ENUM);
                 let parameterSchema: SchemaWithExample =
                     parameter.enum != null && Array.isArray(parameter.enum)
                         ? buildEnumSchema({
                               parameterName,
+                              fernEnum,
                               parameterDescription: parameter.description,
                               enumValues: parameter.enum,
                               defaultValue: parameter.default,
@@ -359,18 +362,25 @@ function convertChannelParameterLocation(location: string): {
     type: "header" | "path" | "payload";
     parameterKey: string;
 } {
-    const [messageType, parameterKey] = location.split("#/");
-    if (messageType == null || parameterKey == null) {
-        throw new Error(`Invalid location format: ${location}`);
+    try {
+        const [messageType, parameterKey] = location.split("#/");
+        if (messageType == null || parameterKey == null) {
+            throw new Error(`Invalid location format: ${location}; unable to parse message type and parameter key`);
+        }
+        if (!messageType.startsWith(LOCATION_PREFIX)) {
+            throw new Error(`Invalid location format: ${location}; expected ${LOCATION_PREFIX} prefix`);
+        }
+        const type = messageType.substring(LOCATION_PREFIX.length);
+        if (type !== "header" && type !== "path" && type !== "payload") {
+            throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
+        }
+        return { type, parameterKey };
+    } catch (error) {
+        throw new Error(
+            `Invalid location format: ${location}; see here for more details: ` +
+                "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression"
+        );
     }
-    if (!messageType.startsWith(LOCATION_PREFIX)) {
-        throw new Error(`Invalid location format: ${location}`);
-    }
-    const type = messageType.substring(LOCATION_PREFIX.length);
-    if (type !== "header" && type !== "path" && type !== "payload") {
-        throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
-    }
-    return { type, parameterKey };
 }
 
 function getServerNameFromServerRef(
@@ -390,6 +400,7 @@ function getServerNameFromServerRef(
 
 function buildEnumSchema({
     parameterName,
+    fernEnum,
     parameterDescription,
     enumValues,
     defaultValue,
@@ -397,6 +408,7 @@ function buildEnumSchema({
     source
 }: {
     parameterName: string;
+    fernEnum: FernEnumConfig | undefined;
     parameterDescription: string | undefined;
     enumValues: string[];
     defaultValue: string | undefined;
@@ -410,7 +422,7 @@ function buildEnumSchema({
         wrapAsNullable: false,
         description: parameterDescription ?? undefined,
         availability: undefined,
-        fernEnum: {},
+        fernEnum: fernEnum ?? {},
         enumVarNames: undefined,
         enumValues,
         _default: defaultValue,

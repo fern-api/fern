@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../ir-sdk" }
+    { "path": "../../ir-sdk" },
+    { "path": "../core-utils" }
   ]
 }

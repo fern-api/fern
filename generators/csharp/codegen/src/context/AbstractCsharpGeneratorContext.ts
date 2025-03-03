@@ -1,6 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -8,6 +9,7 @@ import {
     HttpHeader,
     IntermediateRepresentation,
     Name,
+    ObjectPropertyAccess,
     PrimitiveType,
     PrimitiveTypeV1,
     TypeDeclaration,
@@ -22,6 +24,7 @@ import {
     CONSTANTS_CLASS_NAME,
     DATETIME_SERIALIZER_CLASS_NAME,
     ENUM_SERIALIZER_CLASS_NAME,
+    JSON_ACCESS_ATTRIBUTE_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
@@ -204,6 +207,27 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
+        let argument: string;
+        switch (propertyAccess) {
+            case "READ_ONLY":
+                argument = "JsonAccessType.ReadOnly";
+                break;
+            case "WRITE_ONLY":
+                argument = "JsonAccessType.WriteOnly";
+                break;
+            default:
+                assertNever(propertyAccess);
+        }
+        return csharp.annotation({
+            reference: csharp.classReference({
+                namespace: this.getCoreNamespace(),
+                name: JSON_ACCESS_ATTRIBUTE_NAME
+            }),
+            argument
+        });
+    }
+
     public getJsonExceptionClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: "System.Text.Json",
@@ -285,6 +309,14 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonIgnoreAnnotation(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonIgnore",
+                namespace: "System.Text.Json.Serialization"
+            })
+        });
+    }
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }
@@ -312,24 +344,28 @@ export abstract class AbstractCsharpGeneratorContext<
     public getAsUndiscriminatedUnionTypeDeclaration(
         reference: TypeReference
     ): { declaration: UndiscriminatedUnionTypeDeclaration; isList: boolean } | undefined {
-        if (reference.type === "container" && reference.container.type === "optional") {
-            return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
-        }
-        if (reference.type === "container" && reference.container.type === "list") {
-            const maybeDeclaration = this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.list);
-            if (maybeDeclaration != null) {
-                return {
-                    ...maybeDeclaration,
-                    isList: true
-                };
+        if (reference.type === "container") {
+            if (reference.container.type === "optional") {
+                return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
+            }
+            if (reference.container.type === "nullable") {
+                return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.nullable);
+            }
+            if (reference.container.type === "list") {
+                const maybeDeclaration = this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.list);
+                if (maybeDeclaration != null) {
+                    return {
+                        ...maybeDeclaration,
+                        isList: true
+                    };
+                }
             }
         }
-
         if (reference.type !== "named") {
             return undefined;
         }
 
-        let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
         if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
@@ -340,16 +376,20 @@ export abstract class AbstractCsharpGeneratorContext<
 
         // handle aliases by visiting resolved types
         if (declaration.shape.type === "alias") {
-            if (declaration.shape.resolvedType.type === "named") {
-                declaration = this.getTypeDeclarationOrThrow(reference.typeId);
-                if (declaration.shape.type === "undiscriminatedUnion") {
-                    return { declaration: declaration.shape, isList: false };
+            const resolvedType = declaration.shape.resolvedType;
+            if (resolvedType.type === "named") {
+                const resolvedTypeDeclaration = this.getTypeDeclarationOrThrow(reference.typeId);
+                if (resolvedTypeDeclaration.shape.type === "undiscriminatedUnion") {
+                    return { declaration: resolvedTypeDeclaration.shape, isList: false };
                 }
-            } else if (
-                declaration.shape.resolvedType.type === "container" &&
-                declaration.shape.resolvedType.container.type === "optional"
-            ) {
-                return this.getAsUndiscriminatedUnionTypeDeclaration(declaration.shape.resolvedType.container.optional);
+            }
+            if (resolvedType.type === "container") {
+                if (resolvedType.container.type === "optional") {
+                    return this.getAsUndiscriminatedUnionTypeDeclaration(resolvedType.container.optional);
+                }
+                if (resolvedType.container.type === "nullable") {
+                    return this.getAsUndiscriminatedUnionTypeDeclaration(resolvedType.container.nullable);
+                }
             }
         }
 
@@ -380,7 +420,13 @@ export abstract class AbstractCsharpGeneratorContext<
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                if (typeReference.container.type === "optional") {
+                    return true;
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isOptional(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -398,7 +444,13 @@ export abstract class AbstractCsharpGeneratorContext<
     public isPrimitive(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                if (typeReference.container.type === "optional") {
+                    return this.isPrimitive(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isPrimitive(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -512,6 +564,59 @@ export abstract class AbstractCsharpGeneratorContext<
             }
         }
         return undefined;
+    }
+
+    public getCustomPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getCustomPagerName(),
+            namespace: this.getCoreNamespace(),
+            generics: [itemType]
+        });
+    }
+
+    public getCustomPagerFactoryClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Factory`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public invokeCustomPagerFactoryMethod({
+        itemType,
+        sendRequestMethod,
+        initialRequest,
+        cancellationToken
+    }: {
+        itemType: csharp.Type;
+        sendRequestMethod: csharp.CodeBlock;
+        initialRequest: csharp.CodeBlock;
+        cancellationToken: csharp.CodeBlock;
+    }): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: this.getCustomPagerFactoryClassReference(),
+            method: "CreateAsync",
+            async: true,
+            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            generics: [itemType]
+        });
+    }
+
+    #doesIrHaveCustomPagination: boolean | null = null;
+
+    public doesIrHaveCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === null) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
+    }
+
+    public getCustomPagerName(): string {
+        return (
+            this.customConfig["custom-pager-name"] ??
+            `${this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")}Pager`
+        );
     }
 
     public abstract getRawAsIsFiles(): string[];

@@ -3,6 +3,8 @@
  */
 
 export interface OffsetPaginationSchema {
+    /** The type of pagination. */
+    type?: "offset";
     /** The path to the request property for the page offset. */
     offset: string;
     /** The path to the response property for the page elements. */

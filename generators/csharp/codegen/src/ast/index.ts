@@ -16,6 +16,7 @@ export { PrimitiveInstantiation as InstantiatedPrimitive } from "./InstantiatedP
 export { Interface } from "./Interface";
 export { List } from "./List";
 export { Method, MethodType } from "./Method";
+export { AnonymousFunction } from "./AnonymousFunction";
 export { MethodInvocation } from "./MethodInvocation";
 export { Or } from "./Or";
 export { Parameter } from "./Parameter";

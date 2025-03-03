@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_dummy.generate"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });\n"
             }
         }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Threading;
+using global::System.Threading.Tasks;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
@@ -18,13 +19,13 @@ public partial class TasktestClient
     /// await client.Tasktest.HelloAsync();
     /// </code>
     /// </example>
-    public async System.Threading.Tasks.Task HelloAsync(
+    public async global::System.Threading.Tasks.Task HelloAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -39,11 +40,13 @@ public partial class TasktestClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedCsharpNamespaceConflictApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedCsharpNamespaceConflictApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

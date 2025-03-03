@@ -1072,6 +1072,16 @@
               "type": "null"
             }
           ]
+        },
+        "csharp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

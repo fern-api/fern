@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -22,7 +22,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task UpdateTestSubmissionStatusAsync(
+    public async global::System.Threading.Tasks.Task UpdateTestSubmissionStatusAsync(
         string submissionId,
         object request,
         RequestOptions? options = null,
@@ -30,7 +30,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -47,12 +47,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -67,7 +69,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task SendTestSubmissionUpdateAsync(
+    public async global::System.Threading.Tasks.Task SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
         RequestOptions? options = null,
@@ -75,7 +77,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -92,12 +94,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -108,7 +112,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task UpdateWorkspaceSubmissionStatusAsync(
+    public async global::System.Threading.Tasks.Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         object request,
         RequestOptions? options = null,
@@ -116,7 +120,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -133,12 +137,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -153,7 +159,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task SendWorkspaceSubmissionUpdateAsync(
+    public async global::System.Threading.Tasks.Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
         RequestOptions? options = null,
@@ -161,7 +167,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -178,12 +184,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -266,7 +274,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task StoreTracedTestCaseAsync(
+    public async global::System.Threading.Tasks.Task StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
@@ -275,7 +283,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -292,12 +300,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -369,7 +379,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task StoreTracedTestCaseV2Async(
+    public async global::System.Threading.Tasks.Task StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
@@ -378,7 +388,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -395,12 +405,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -488,7 +500,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task StoreTracedWorkspaceAsync(
+    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
         RequestOptions? options = null,
@@ -496,7 +508,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -513,12 +525,14 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -589,7 +603,7 @@ public partial class AdminClient
     /// );
     /// </code>
     /// </example>
-    public async Task StoreTracedWorkspaceV2Async(
+    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
         RequestOptions? options = null,
@@ -597,7 +611,7 @@ public partial class AdminClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -614,11 +628,13 @@ public partial class AdminClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

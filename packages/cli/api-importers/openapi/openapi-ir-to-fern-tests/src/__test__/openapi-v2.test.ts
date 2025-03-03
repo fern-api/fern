@@ -6,11 +6,12 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-v2", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (!fixture.isDirectory() || (filterFixture && fixture.name !== filterFixture)) {
             continue;
         }
 
@@ -32,11 +33,11 @@ describe("openapi-v2", async () => {
                 }
 
                 if (workspace.workspace instanceof OSSWorkspace) {
-                    const intermediateRepresentation = await (
-                        workspace.workspace as OSSWorkspace
-                    ).getIntermediateRepresentation({ context });
+                    const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+                        context
+                    });
                     // eslint-disable-next-line jest/no-standalone-expect
-                    expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
+                    await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                         `./__snapshots__/openapi-v2/${fixture.name}.json`
                     );
                 }

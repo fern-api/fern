@@ -1,6 +1,7 @@
 import {
     And,
     Annotation,
+    AnonymousFunction,
     Class,
     ClassInstantiation,
     ClassReference,
@@ -63,6 +64,10 @@ export function method(args: Method.Args): Method {
     return new Method(args);
 }
 
+export function anonymousFunction(args: AnonymousFunction.Args): AnonymousFunction {
+    return new AnonymousFunction(args);
+}
+
 export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
 }
@@ -123,6 +128,7 @@ export {
     Field,
     InstantiatedPrimitive,
     Method,
+    AnonymousFunction,
     MethodInvocation,
     MethodType,
     Parameter,

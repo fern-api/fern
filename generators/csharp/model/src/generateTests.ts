@@ -29,6 +29,9 @@ export function generateModelTests({ context }: { context: ModelGeneratorContext
             };
         });
         const testGenerator = new ObjectSerializationTestGenerator(context, typeDeclaration, testInputs);
+        if (!testGenerator.shouldGenerate()) {
+            continue;
+        }
         files.push(testGenerator.generate());
     }
     return files;

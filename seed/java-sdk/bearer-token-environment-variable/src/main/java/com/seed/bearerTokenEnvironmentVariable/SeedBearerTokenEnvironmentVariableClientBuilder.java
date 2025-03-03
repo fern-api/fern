@@ -25,6 +25,14 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
         return this;
     }
 
+    /**
+     * Sets version
+     */
+    public SeedBearerTokenEnvironmentVariableClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
     public SeedBearerTokenEnvironmentVariableClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;

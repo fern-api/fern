@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../AbstractConverter";
 import { ErrorCollector } from "../../ErrorCollector";
@@ -11,12 +11,15 @@ export declare namespace SchemaOrReferenceConverter {
     export interface Args extends AbstractConverter.Args {
         schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         schemaIdOverride?: string;
+        wrapAsOptional?: boolean;
+        wrapAsNullable?: boolean;
     }
 
     export interface Output {
         type: TypeReference;
         schema?: TypeDeclaration;
         inlinedTypes: Record<string, TypeDeclaration>;
+        availability?: Availability;
     }
 }
 
@@ -26,11 +29,21 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 > {
     private readonly schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly schemaIdOverride: string | undefined;
+    private readonly wrapAsOptional: boolean;
+    private readonly wrapAsNullable: boolean;
 
-    constructor({ breadcrumbs, schemaOrReference, schemaIdOverride }: SchemaOrReferenceConverter.Args) {
+    constructor({
+        breadcrumbs,
+        schemaOrReference,
+        schemaIdOverride,
+        wrapAsOptional = false,
+        wrapAsNullable = false
+    }: SchemaOrReferenceConverter.Args) {
         super({ breadcrumbs });
         this.schemaOrReference = schemaOrReference;
         this.schemaIdOverride = schemaIdOverride;
+        this.wrapAsOptional = wrapAsOptional;
+        this.wrapAsNullable = wrapAsNullable;
     }
 
     public convert({
@@ -54,24 +67,55 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             schema: this.schemaOrReference,
             id: schemaId
         });
+        const availability = context.getAvailability({
+            node: this.schemaOrReference,
+            breadcrumbs: this.breadcrumbs,
+            errorCollector
+        });
         const convertedSchema = schemaConverter.convert({ context, errorCollector });
+
         if (convertedSchema != null) {
             if (convertedSchema.typeDeclaration.shape.type === "alias") {
+                const type = convertedSchema.typeDeclaration.shape.aliasOf;
                 return {
-                    type: convertedSchema.typeDeclaration.shape.aliasOf,
-                    inlinedTypes: convertedSchema.inlinedTypes
+                    type: this.wrapTypeReference(type),
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    availability
                 };
             }
+            const type = context.createNamedTypeReference(schemaId);
             return {
-                type: context.createNamedTypeReference(schemaId),
+                type: this.wrapTypeReference(type),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
                     [schemaId]: convertedSchema.typeDeclaration
-                }
+                },
+                availability
             };
         }
 
         return undefined;
+    }
+
+    private wrapTypeReference(type: TypeReference): TypeReference {
+        if (this.wrapAsOptional && this.wrapAsNullable) {
+            return this.wrapInOptional(this.wrapInNullable(type));
+        }
+        if (this.wrapAsOptional) {
+            return this.wrapInOptional(type);
+        }
+        if (this.wrapAsNullable) {
+            return this.wrapInNullable(type);
+        }
+        return type;
+    }
+
+    private wrapInOptional(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.optional(type));
+    }
+
+    private wrapInNullable(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.nullable(type));
     }
 }

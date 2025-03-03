@@ -127,10 +127,12 @@
             "inline": undefined,
             "properties": {
               "created_at": {
+                "access": "read-only",
                 "docs": "The date and time the end user was created",
                 "type": "optional<string>",
               },
               "end_user_id": {
+                "access": "read-only",
                 "docs": "The unique Ada-generated ID for the end user",
                 "type": "optional<string>",
               },
@@ -139,6 +141,7 @@
                 "type": "optional<EndUserProfile>",
               },
               "updated_at": {
+                "access": "read-only",
                 "docs": "The date and time the end user was updated",
                 "type": "optional<string>",
               },
@@ -231,50 +234,62 @@
             "inline": true,
             "properties": {
               "browser": {
+                "access": "read-only",
                 "docs": "The end user's browser information captured by Ada",
                 "type": "optional<string>",
               },
               "browser_version": {
+                "access": "read-only",
                 "docs": "The end user's browser version captured by Ada",
                 "type": "optional<string>",
               },
               "device": {
+                "access": "read-only",
                 "docs": "The end user's device information captured by Ada",
                 "type": "optional<string>",
               },
               "introshown": {
+                "access": "read-only",
                 "docs": "Whether the introductory message of a campaign has been displayed to the end user",
                 "type": "optional<boolean>",
               },
               "last_answer_id": {
+                "access": "read-only",
                 "docs": "The ID for the last answer displayed to the end user during a conversation",
                 "type": "optional<string>",
               },
               "last_question_asked": {
+                "access": "read-only",
                 "docs": "The last question asked by the end user",
                 "type": "optional<string>",
               },
               "sunshine_conversation_id": {
+                "access": "read-only",
                 "docs": "The ID for the Sunshine Conversation for this end user",
                 "type": "optional<string>",
               },
               "sunshine_end_user_channel": {
+                "access": "read-only",
                 "docs": "The channel used to communicate with the end user via Sunshine Conversations",
                 "type": "optional<string>",
               },
               "sunshine_first_message_id": {
+                "access": "read-only",
                 "docs": "The ID for the first message sent to the end user via Sunshine Conversations",
                 "type": "optional<string>",
               },
               "sunshine_signed_up_at": {
+                "access": "read-only",
                 "docs": "The date the end user signed up for Sunshine Conversations",
                 "type": "optional<string>",
               },
               "sunshine_user_id": {
+                "access": "read-only",
                 "docs": "The Sunshine Conversations user ID for the end user",
                 "type": "optional<string>",
               },
               "user_agent": {
+                "access": "read-only",
                 "docs": "The end user's browser user-agent information captured by Ada",
                 "type": "optional<string>",
               },
@@ -463,47 +478,59 @@ types:
       user_agent:
         type: optional<string>
         docs: The end user's browser user-agent information captured by Ada
+        access: read-only
       device:
         type: optional<string>
         docs: The end user's device information captured by Ada
+        access: read-only
       browser:
         type: optional<string>
         docs: The end user's browser information captured by Ada
+        access: read-only
       browser_version:
         type: optional<string>
         docs: The end user's browser version captured by Ada
+        access: read-only
       introshown:
         type: optional<boolean>
         docs: >-
           Whether the introductory message of a campaign has been displayed to
           the end user
+        access: read-only
       last_answer_id:
         type: optional<string>
         docs: >-
           The ID for the last answer displayed to the end user during a
           conversation
+        access: read-only
       last_question_asked:
         type: optional<string>
         docs: The last question asked by the end user
+        access: read-only
       sunshine_first_message_id:
         type: optional<string>
         docs: >-
           The ID for the first message sent to the end user via Sunshine
           Conversations
+        access: read-only
       sunshine_conversation_id:
         type: optional<string>
         docs: The ID for the Sunshine Conversation for this end user
+        access: read-only
       sunshine_end_user_channel:
         type: optional<string>
         docs: >-
           The channel used to communicate with the end user via Sunshine
           Conversations
+        access: read-only
       sunshine_signed_up_at:
         type: optional<string>
         docs: The date the end user signed up for Sunshine Conversations
+        access: read-only
       sunshine_user_id:
         type: optional<string>
         docs: The Sunshine Conversations user ID for the end user
+        access: read-only
     source:
       openapi: ../openapi.json
     inline: true
@@ -540,15 +567,18 @@ types:
       end_user_id:
         type: optional<string>
         docs: The unique Ada-generated ID for the end user
+        access: read-only
       profile:
         type: optional<EndUserProfile>
         docs: The end user's profile information
       created_at:
         type: optional<string>
         docs: The date and time the end user was created
+        access: read-only
       updated_at:
         type: optional<string>
         docs: The date and time the end user was updated
+        access: read-only
     source:
       openapi: ../openapi.json
   Error:

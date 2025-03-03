@@ -17,10 +17,8 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.*;
@@ -37,6 +35,7 @@ import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
+import com.fern.java.utils.ObjectMapperUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeToUnderlyingType;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
@@ -85,6 +84,7 @@ public abstract class AbstractEndpointWriter {
     private final Set<String> endpointParameterNames = new HashSet<>();
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
     private final boolean inlinePathParams;
+    private final ObjectMapperUtils objectMapperUtils;
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
@@ -105,6 +105,7 @@ public abstract class AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedObjectMapper = generatedObjectMapper;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
@@ -222,7 +223,7 @@ public abstract class AbstractEndpointWriter {
                 httpService,
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
-                clientGeneratorContext.getCustomConfig());
+                clientGeneratorContext);
         HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
@@ -480,11 +481,6 @@ public abstract class AbstractEndpointWriter {
                     GeneratedJavaFile generatedError =
                             generatedErrors.get(errorDeclaration.getName().getErrorId());
                     ClassName errorClassName = generatedError.getClassName();
-                    Optional<TypeName> bodyTypeName = errorDeclaration
-                            .getType()
-                            .map(typeReference -> clientGeneratorContext
-                                    .getPoetTypeNameMapper()
-                                    .convertToTypeName(true, typeReference));
                     if (multipleErrors) {
                         httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
                     } else {
@@ -492,12 +488,10 @@ public abstract class AbstractEndpointWriter {
                                 "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
                     }
                     httpResponseBuilder.addStatement(
-                            "throw new $T($T.$L.readValue($L, $T.class))",
+                            "throw new $T($L)",
                             errorClassName,
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            getResponseBodyStringName(),
-                            bodyTypeName.orElse(TypeName.get(Object.class)));
+                            objectMapperUtils.readValueCall(
+                                    CodeBlock.of("$L", getResponseBodyStringName()), errorDeclaration.getType()));
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -513,15 +507,12 @@ public abstract class AbstractEndpointWriter {
             }
         }
         httpResponseBuilder.addStatement(
-                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                "throw new $T($S + $L.code(), $L.code(), $L)",
                 apiErrorClassName,
                 "Error with status code ",
                 getResponseName(),
                 getResponseName(),
-                generatedObjectMapper.getClassName(),
-                generatedObjectMapper.jsonMapperStaticField().name,
-                getResponseBodyStringName(),
-                Object.class);
+                objectMapperUtils.readValueCall(CodeBlock.of("$L", getResponseBodyStringName()), Optional.empty()));
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
@@ -741,21 +732,8 @@ public abstract class AbstractEndpointWriter {
                 httpResponseBuilder.add("return ");
                 endpointMethodBuilder.returns(responseType);
             }
-            if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), new $T() {})",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
-            } else {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), $T.class)",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyName(),
-                        responseType);
-            }
+            httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
+                    CodeBlock.of("$L.string()", getResponseBodyName()), Optional.of(body.getResponseBodyType())));
             if (isProperty) {
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
@@ -1227,22 +1205,6 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Void _visitUnknown(Object unknownType) {
             return null;
-        }
-
-        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
-            if (responseBodyType.getNamed().isPresent()) {
-                TypeId typeId = responseBodyType.getNamed().get().getTypeId();
-                TypeDeclaration typeDeclaration =
-                        clientGeneratorContext.getIr().getTypes().get(typeId);
-                return typeDeclaration.getShape().getAlias().isPresent()
-                        && typeDeclaration
-                                .getShape()
-                                .getAlias()
-                                .get()
-                                .getResolvedType()
-                                .isContainer();
-            }
-            return false;
         }
     }
 
