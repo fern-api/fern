@@ -17,6 +17,7 @@ import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+import { getGeneratorConfig } from "./getGeneratorConfig";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -135,7 +136,14 @@ export async function runRemoteGenerationForGenerator({
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
-            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
+            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions }),
+
+            // TODO: This generator config needs to be mapped into the dynamic IR.
+            generatorConfig: getGeneratorConfig({
+                apiName: ir.apiName.originalName,
+                organization,
+                generatorInvocation: generatorInvocationWithEnvVarSubstitutions
+            })
         },
         shouldLogS3Url,
         token,
