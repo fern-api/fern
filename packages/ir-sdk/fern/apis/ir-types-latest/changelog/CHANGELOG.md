@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v56.1.0] - 2024-03-03
+## [v57.0.0] - 2024-03-03
 
-- Feature: The Dynamic IR now supports OAuth, additional properties, and root path parameters.
+- Feature: The IR now supports the full generator-exec config.
+- Feature: The Dynamic IR now supports the generator config, OAuth, additional properties, and root path parameters.
 
 ## [v56.0.0] - 2024-02-28
 
