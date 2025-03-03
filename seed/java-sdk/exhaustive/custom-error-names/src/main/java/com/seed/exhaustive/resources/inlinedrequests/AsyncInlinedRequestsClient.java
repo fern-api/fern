@@ -34,15 +34,14 @@ public class AsyncInlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> postWithObjectBodyandResponse(
-            PostWithObjectBody request) {
+    public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(PostWithObjectBody request) {
         return postWithObjectBodyandResponse(request, null);
     }
 
     /**
      * POST with custom object in request body, response is an object
      */
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> postWithObjectBodyandResponse(
+    public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -67,6 +66,7 @@ public class AsyncInlinedRequestsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

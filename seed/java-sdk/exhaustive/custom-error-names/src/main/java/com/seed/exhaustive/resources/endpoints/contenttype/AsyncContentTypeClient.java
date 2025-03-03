@@ -28,15 +28,15 @@ public class AsyncContentTypeClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType() {
+    public CompletableFuture<Void> postJsonPatchContentType() {
         postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType(ObjectWithOptionalField request) {
+    public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
         postJsonPatchContentType(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType(
+    public CompletableFuture<Void> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -77,16 +77,15 @@ public class AsyncContentTypeClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType() {
+    public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
         postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType(
-            ObjectWithOptionalField request) {
+    public CompletableFuture<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
         postJsonPatchContentWithCharsetType(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType(
+    public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

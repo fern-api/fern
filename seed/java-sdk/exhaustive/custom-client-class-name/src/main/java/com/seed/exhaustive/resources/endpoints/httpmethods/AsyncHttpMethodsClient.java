@@ -29,11 +29,11 @@ public class AsyncHttpMethodsClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<String>> testGet(String id) {
+    public CompletableFuture<String> testGet(String id) {
         return testGet(id, null);
     }
 
-    public CompletableFuture<CompletableFuture<String>> testGet(String id, RequestOptions requestOptions) {
+    public CompletableFuture<String> testGet(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
@@ -50,6 +50,7 @@ public class AsyncHttpMethodsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<String> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -65,11 +66,11 @@ public class AsyncHttpMethodsClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPost(ObjectWithRequiredField request) {
+    public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
         return testPost(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPost(
+    public CompletableFuture<ObjectWithOptionalField> testPost(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -93,6 +94,7 @@ public class AsyncHttpMethodsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -109,12 +111,11 @@ public class AsyncHttpMethodsClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPut(
-            String id, ObjectWithRequiredField request) {
+    public CompletableFuture<ObjectWithOptionalField> testPut(String id, ObjectWithRequiredField request) {
         return testPut(id, request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPut(
+    public CompletableFuture<ObjectWithOptionalField> testPut(
             String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -139,6 +140,7 @@ public class AsyncHttpMethodsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -155,16 +157,15 @@ public class AsyncHttpMethodsClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPatch(String id) {
+    public CompletableFuture<ObjectWithOptionalField> testPatch(String id) {
         return testPatch(id, ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPatch(
-            String id, ObjectWithOptionalField request) {
+    public CompletableFuture<ObjectWithOptionalField> testPatch(String id, ObjectWithOptionalField request) {
         return testPatch(id, request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> testPatch(
+    public CompletableFuture<ObjectWithOptionalField> testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -189,6 +190,7 @@ public class AsyncHttpMethodsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -205,11 +207,11 @@ public class AsyncHttpMethodsClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Boolean>> testDelete(String id) {
+    public CompletableFuture<Boolean> testDelete(String id) {
         return testDelete(id, null);
     }
 
-    public CompletableFuture<CompletableFuture<Boolean>> testDelete(String id, RequestOptions requestOptions) {
+    public CompletableFuture<Boolean> testDelete(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
@@ -226,6 +228,7 @@ public class AsyncHttpMethodsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

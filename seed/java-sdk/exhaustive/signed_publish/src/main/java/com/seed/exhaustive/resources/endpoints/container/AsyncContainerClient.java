@@ -33,11 +33,11 @@ public class AsyncContainerClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<List<String>>> getAndReturnListOfPrimitives(List<String> request) {
+    public CompletableFuture<List<String>> getAndReturnListOfPrimitives(List<String> request) {
         return getAndReturnListOfPrimitives(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<List<String>>> getAndReturnListOfPrimitives(
+    public CompletableFuture<List<String>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -62,6 +62,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<List<String>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -78,12 +79,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
+    public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request) {
         return getAndReturnListOfObjects(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
+    public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -108,6 +109,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<List<ObjectWithRequiredField>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -124,11 +126,11 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Set<String>>> getAndReturnSetOfPrimitives(Set<String> request) {
+    public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
         return getAndReturnSetOfPrimitives(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Set<String>>> getAndReturnSetOfPrimitives(
+    public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -153,6 +155,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Set<String>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -169,12 +172,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
+    public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request) {
         return getAndReturnSetOfObjects(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
+    public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -199,6 +202,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Set<ObjectWithRequiredField>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -215,12 +219,11 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Map<String, String>>> getAndReturnMapPrimToPrim(
-            Map<String, String> request) {
+    public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(Map<String, String> request) {
         return getAndReturnMapPrimToPrim(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Map<String, String>>> getAndReturnMapPrimToPrim(
+    public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -245,6 +248,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Map<String, String>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -261,12 +265,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
+    public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request) {
         return getAndReturnMapOfPrimToObject(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
+    public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -291,6 +295,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Map<String, ObjectWithRequiredField>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -307,16 +312,16 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional() {
+    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
     }
 
-    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
+    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
+    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -344,6 +349,7 @@ public class AsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Optional<ObjectWithRequiredField>> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

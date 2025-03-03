@@ -28,12 +28,11 @@ public class AsyncUnionClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<Animal>> getAndReturnUnion(Animal request) {
+    public CompletableFuture<Animal> getAndReturnUnion(Animal request) {
         return getAndReturnUnion(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Animal>> getAndReturnUnion(
-            Animal request, RequestOptions requestOptions) {
+    public CompletableFuture<Animal> getAndReturnUnion(Animal request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("union")
@@ -56,6 +55,7 @@ public class AsyncUnionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Animal> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

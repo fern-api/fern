@@ -27,12 +27,11 @@ public class AsyncReqWithHeadersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<Void>> getWithCustomHeader(ReqWithHeaders request) {
+    public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
         getWithCustomHeader(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Void>> getWithCustomHeader(
-            ReqWithHeaders request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test-headers")

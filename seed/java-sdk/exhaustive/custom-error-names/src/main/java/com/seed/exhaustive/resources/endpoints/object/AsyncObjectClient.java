@@ -33,16 +33,15 @@ public class AsyncObjectClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField() {
+    public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField() {
         return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField(
-            ObjectWithOptionalField request) {
+    public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField(
+    public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -67,6 +66,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -83,12 +83,11 @@ public class AsyncObjectClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithRequiredField>> getAndReturnWithRequiredField(
-            ObjectWithRequiredField request) {
+    public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(ObjectWithRequiredField request) {
         return getAndReturnWithRequiredField(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithRequiredField>> getAndReturnWithRequiredField(
+    public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -113,6 +112,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithRequiredField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -129,12 +129,11 @@ public class AsyncObjectClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
-            ObjectWithMapOfMap request) {
+    public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
         return getAndReturnWithMapOfMap(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
+    public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -159,6 +158,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithMapOfMap> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -174,17 +174,17 @@ public class AsyncObjectClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField() {
+    public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
         return getAndReturnNestedWithOptionalField(
                 NestedObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
+    public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request) {
         return getAndReturnNestedWithOptionalField(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
+    public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -209,6 +209,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<NestedObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -225,12 +226,12 @@ public class AsyncObjectClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
+    public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request) {
         return getAndReturnNestedWithRequiredField(string, request, null);
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
+    public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -256,6 +257,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<NestedObjectWithRequiredField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -272,14 +274,13 @@ public class AsyncObjectClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>>
-            getAndReturnNestedWithRequiredFieldAsList(List<NestedObjectWithRequiredField> request) {
+    public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+            List<NestedObjectWithRequiredField> request) {
         return getAndReturnNestedWithRequiredFieldAsList(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>>
-            getAndReturnNestedWithRequiredFieldAsList(
-                    List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
+    public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+            List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
@@ -303,6 +304,7 @@ public class AsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<NestedObjectWithRequiredField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

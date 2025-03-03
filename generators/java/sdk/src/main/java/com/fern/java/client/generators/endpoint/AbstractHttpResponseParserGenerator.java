@@ -315,6 +315,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                             .getGeneratorConfig()
                             .getGeneratePaginatedClients()
                             .orElse(false);
+
+            maybeInitializeFuture(httpResponseBuilder, responseType);
+
             addTryWithResourcesVariant(
                     httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             boolean isProperty = body.getResponseProperty().isPresent();

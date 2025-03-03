@@ -36,15 +36,14 @@ public class AsyncNoAuthClient {
   /**
    * POST request with no auth
    */
-  public CompletableFuture<CompletableFuture<Boolean>> postWithNoAuth(Object request) {
+  public CompletableFuture<Boolean> postWithNoAuth(Object request) {
     return postWithNoAuth(request,null);
   }
 
   /**
    * POST request with no auth
    */
-  public CompletableFuture<CompletableFuture<Boolean>> postWithNoAuth(Object request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("no-auth")
 
@@ -67,6 +66,7 @@ public class AsyncNoAuthClient {
     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
+    CompletableFuture<Boolean> future = new CompletableFuture<>();
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {

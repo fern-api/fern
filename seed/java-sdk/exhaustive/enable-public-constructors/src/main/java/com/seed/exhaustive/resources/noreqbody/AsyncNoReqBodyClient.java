@@ -26,12 +26,11 @@ public class AsyncNoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getWithNoRequestBody() {
+    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
         return getWithNoRequestBody(null);
     }
 
-    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getWithNoRequestBody(
-            RequestOptions requestOptions) {
+    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -47,6 +46,7 @@ public class AsyncNoReqBodyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -63,11 +63,11 @@ public class AsyncNoReqBodyClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<String>> postWithNoRequestBody() {
+    public CompletableFuture<String> postWithNoRequestBody() {
         return postWithNoRequestBody(null);
     }
 
-    public CompletableFuture<CompletableFuture<String>> postWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -83,6 +83,7 @@ public class AsyncNoReqBodyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<String> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {

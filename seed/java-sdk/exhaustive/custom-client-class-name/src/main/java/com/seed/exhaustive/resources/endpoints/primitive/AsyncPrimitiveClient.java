@@ -29,12 +29,11 @@ public class AsyncPrimitiveClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CompletableFuture<String>> getAndReturnString(String request) {
+    public CompletableFuture<String> getAndReturnString(String request) {
         return getAndReturnString(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<String>> getAndReturnString(
-            String request, RequestOptions requestOptions) {
+    public CompletableFuture<String> getAndReturnString(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -58,6 +57,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<String> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -73,11 +73,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Integer>> getAndReturnInt(int request) {
+    public CompletableFuture<Integer> getAndReturnInt(int request) {
         return getAndReturnInt(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Integer>> getAndReturnInt(int request, RequestOptions requestOptions) {
+    public CompletableFuture<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -101,6 +101,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Integer> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -116,11 +117,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Long>> getAndReturnLong(long request) {
+    public CompletableFuture<Long> getAndReturnLong(long request) {
         return getAndReturnLong(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Long>> getAndReturnLong(long request, RequestOptions requestOptions) {
+    public CompletableFuture<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -144,6 +145,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Long> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -159,12 +161,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Double>> getAndReturnDouble(double request) {
+    public CompletableFuture<Double> getAndReturnDouble(double request) {
         return getAndReturnDouble(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Double>> getAndReturnDouble(
-            double request, RequestOptions requestOptions) {
+    public CompletableFuture<Double> getAndReturnDouble(double request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -188,6 +189,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Double> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -203,12 +205,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<Boolean>> getAndReturnBool(boolean request) {
+    public CompletableFuture<Boolean> getAndReturnBool(boolean request) {
         return getAndReturnBool(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<Boolean>> getAndReturnBool(
-            boolean request, RequestOptions requestOptions) {
+    public CompletableFuture<Boolean> getAndReturnBool(boolean request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -232,6 +233,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -247,11 +249,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<OffsetDateTime>> getAndReturnDatetime(OffsetDateTime request) {
+    public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
         return getAndReturnDatetime(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<OffsetDateTime>> getAndReturnDatetime(
+    public CompletableFuture<OffsetDateTime> getAndReturnDatetime(
             OffsetDateTime request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -276,6 +278,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<OffsetDateTime> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -291,12 +294,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<String>> getAndReturnDate(String request) {
+    public CompletableFuture<String> getAndReturnDate(String request) {
         return getAndReturnDate(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<String>> getAndReturnDate(
-            String request, RequestOptions requestOptions) {
+    public CompletableFuture<String> getAndReturnDate(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -320,6 +322,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<String> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -335,11 +338,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<UUID>> getAndReturnUuid(UUID request) {
+    public CompletableFuture<UUID> getAndReturnUuid(UUID request) {
         return getAndReturnUuid(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<UUID>> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
+    public CompletableFuture<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -363,6 +366,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<UUID> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -378,12 +382,11 @@ public class AsyncPrimitiveClient {
         }
     }
 
-    public CompletableFuture<CompletableFuture<byte[]>> getAndReturnBase64(byte[] request) {
+    public CompletableFuture<byte[]> getAndReturnBase64(byte[] request) {
         return getAndReturnBase64(request, null);
     }
 
-    public CompletableFuture<CompletableFuture<byte[]>> getAndReturnBase64(
-            byte[] request, RequestOptions requestOptions) {
+    public CompletableFuture<byte[]> getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -407,6 +410,7 @@ public class AsyncPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<byte[]> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
