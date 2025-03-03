@@ -37,7 +37,7 @@ public class AsyncInlinedRequestsClient {
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
+  public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> postWithObjectBodyandResponse(
       PostWithObjectBody request) {
     return postWithObjectBodyandResponse(request,null);
   }
@@ -45,7 +45,7 @@ public class AsyncInlinedRequestsClient {
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
+  public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> postWithObjectBodyandResponse(
       PostWithObjectBody request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("req-bodies")

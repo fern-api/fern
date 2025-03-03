@@ -3,6 +3,7 @@ package com.fern.java.client.generators.endpoint;
 import com.fern.ir.model.http.JsonResponseBodyWithProperty;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.CompletableFutureUtils;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
@@ -15,14 +16,18 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     private static final String FUTURE = "future";
 
     @Override
-    public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder.addStatement("$T $L = new $T<>()");
+    public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
+        httpResponseBuilder.addStatement(
+                "$T $L = new $T<>()",
+                CompletableFutureUtils.wrapInCompletableFuture(responseType),
+                FUTURE,
+                CompletableFuture.class);
     }
 
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder.addStatement("$L.complete(null)", FUTURE);
-        httpResponseBuilder.addStatement("return");
+        httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
     @Override

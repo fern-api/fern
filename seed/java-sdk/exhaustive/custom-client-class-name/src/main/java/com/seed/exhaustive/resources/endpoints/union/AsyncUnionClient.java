@@ -28,11 +28,12 @@ public class AsyncUnionClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<Animal> getAndReturnUnion(Animal request) {
+    public CompletableFuture<CompletableFuture<Animal>> getAndReturnUnion(Animal request) {
         return getAndReturnUnion(request, null);
     }
 
-    public CompletableFuture<Animal> getAndReturnUnion(Animal request, RequestOptions requestOptions) {
+    public CompletableFuture<CompletableFuture<Animal>> getAndReturnUnion(
+            Animal request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("union")

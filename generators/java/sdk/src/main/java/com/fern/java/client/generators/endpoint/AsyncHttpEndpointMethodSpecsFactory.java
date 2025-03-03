@@ -1,9 +1,9 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.java.utils.CompletableFutureUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpecsFactory {
@@ -27,14 +27,10 @@ public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSp
             return null;
         }
 
-        TypeName returnType = rawSpec.returnType;
-
-        if (returnType.equals(TypeName.VOID) || returnType.isPrimitive()) {
-            returnType = returnType.box();
-        }
-
         return rawSpec.toBuilder()
-                .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), returnType))
+                .returns(ParameterizedTypeName.get(
+                        ClassName.get(CompletableFuture.class),
+                        CompletableFutureUtils.wrapInCompletableFuture(rawSpec.returnType)))
                 .build();
     }
 }

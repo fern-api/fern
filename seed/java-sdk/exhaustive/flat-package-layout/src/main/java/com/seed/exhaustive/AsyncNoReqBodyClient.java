@@ -26,11 +26,12 @@ public class AsyncNoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
+    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getWithNoRequestBody() {
         return getWithNoRequestBody(null);
     }
 
-    public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getWithNoRequestBody(
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -62,11 +63,11 @@ public class AsyncNoReqBodyClient {
         }
     }
 
-    public CompletableFuture<String> postWithNoRequestBody() {
+    public CompletableFuture<CompletableFuture<String>> postWithNoRequestBody() {
         return postWithNoRequestBody(null);
     }
 
-    public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<CompletableFuture<String>> postWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")

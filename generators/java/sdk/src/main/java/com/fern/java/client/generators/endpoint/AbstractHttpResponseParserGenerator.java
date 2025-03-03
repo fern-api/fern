@@ -66,7 +66,7 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
 
-    public abstract void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder);
+    public abstract void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType);
 
     public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
 
@@ -147,6 +147,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             maybeRequestParameterSpec,
                             typeReferenceIsOptional));
         } else {
+            maybeInitializeFuture(httpResponseBuilder, TypeName.VOID);
             addTryWithResourcesVariant(
                     httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             addNoBodySuccessResponse(httpResponseBuilder);
@@ -276,8 +277,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitJson(JsonResponse json) {
-            addTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
                 @Override
                 public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
@@ -297,13 +296,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
+            TypeName responseType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             boolean pagination = httpEndpoint.getPagination().isPresent()
                     && clientGeneratorContext
                             .getGeneratorConfig()
                             .getGeneratePaginatedClients()
                             .orElse(false);
-            TypeName responseType =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
+            addTryWithResourcesVariant(
+                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             boolean isProperty = body.getResponseProperty().isPresent();
             if (isProperty || pagination) {
                 ObjectMapperUtils objectMapperUtils =

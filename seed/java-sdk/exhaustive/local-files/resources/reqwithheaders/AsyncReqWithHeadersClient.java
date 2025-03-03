@@ -33,11 +33,11 @@ public class AsyncReqWithHeadersClient {
     this.clientOptions = clientOptions;
   }
 
-  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
+  public CompletableFuture<CompletableFuture<Void>> getWithCustomHeader(ReqWithHeaders request) {
     getWithCustomHeader(request,null);
   }
 
-  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request,
+  public CompletableFuture<CompletableFuture<Void>> getWithCustomHeader(ReqWithHeaders request,
       RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("test-headers")
@@ -62,11 +62,12 @@ public class AsyncReqWithHeadersClient {
     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
+    CompletableFuture<Void> future = new CompletableFuture<>();
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         future.complete(null);
-        return;
+        return future;
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

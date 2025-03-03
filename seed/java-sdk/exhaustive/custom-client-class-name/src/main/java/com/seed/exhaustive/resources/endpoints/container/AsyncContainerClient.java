@@ -33,11 +33,11 @@ public class AsyncContainerClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<List<String>> getAndReturnListOfPrimitives(List<String> request) {
+    public CompletableFuture<CompletableFuture<List<String>>> getAndReturnListOfPrimitives(List<String> request) {
         return getAndReturnListOfPrimitives(request, null);
     }
 
-    public CompletableFuture<List<String>> getAndReturnListOfPrimitives(
+    public CompletableFuture<CompletableFuture<List<String>>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -78,12 +78,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
+    public CompletableFuture<CompletableFuture<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request) {
         return getAndReturnListOfObjects(request, null);
     }
 
-    public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
+    public CompletableFuture<CompletableFuture<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -124,11 +124,11 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
+    public CompletableFuture<CompletableFuture<Set<String>>> getAndReturnSetOfPrimitives(Set<String> request) {
         return getAndReturnSetOfPrimitives(request, null);
     }
 
-    public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(
+    public CompletableFuture<CompletableFuture<Set<String>>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -169,12 +169,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
+    public CompletableFuture<CompletableFuture<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request) {
         return getAndReturnSetOfObjects(request, null);
     }
 
-    public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
+    public CompletableFuture<CompletableFuture<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -215,11 +215,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(Map<String, String> request) {
+    public CompletableFuture<CompletableFuture<Map<String, String>>> getAndReturnMapPrimToPrim(
+            Map<String, String> request) {
         return getAndReturnMapPrimToPrim(request, null);
     }
 
-    public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(
+    public CompletableFuture<CompletableFuture<Map<String, String>>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -260,12 +261,12 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+    public CompletableFuture<CompletableFuture<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request) {
         return getAndReturnMapOfPrimToObject(request, null);
     }
 
-    public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+    public CompletableFuture<CompletableFuture<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -306,16 +307,16 @@ public class AsyncContainerClient {
         }
     }
 
-    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
+    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
     }
 
-    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);
     }
 
-    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+    public CompletableFuture<CompletableFuture<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

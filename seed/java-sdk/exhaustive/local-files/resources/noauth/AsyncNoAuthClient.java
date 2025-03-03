@@ -36,14 +36,15 @@ public class AsyncNoAuthClient {
   /**
    * POST request with no auth
    */
-  public CompletableFuture<Boolean> postWithNoAuth(Object request) {
+  public CompletableFuture<CompletableFuture<Boolean>> postWithNoAuth(Object request) {
     return postWithNoAuth(request,null);
   }
 
   /**
    * POST request with no auth
    */
-  public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
+  public CompletableFuture<CompletableFuture<Boolean>> postWithNoAuth(Object request,
+      RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("no-auth")
 

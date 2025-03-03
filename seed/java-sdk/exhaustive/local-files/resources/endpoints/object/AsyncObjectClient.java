@@ -36,16 +36,17 @@ public class AsyncObjectClient {
     this.clientOptions = clientOptions;
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField() {
+  public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField(
+      ) {
     return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
+  public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField(
       ObjectWithOptionalField request) {
     return getAndReturnWithOptionalField(request,null);
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
+  public CompletableFuture<CompletableFuture<ObjectWithOptionalField>> getAndReturnWithOptionalField(
       ObjectWithOptionalField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
@@ -82,12 +83,12 @@ public class AsyncObjectClient {
     }
   }
 
-  public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
+  public CompletableFuture<CompletableFuture<ObjectWithRequiredField>> getAndReturnWithRequiredField(
       ObjectWithRequiredField request) {
     return getAndReturnWithRequiredField(request,null);
   }
 
-  public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
+  public CompletableFuture<CompletableFuture<ObjectWithRequiredField>> getAndReturnWithRequiredField(
       ObjectWithRequiredField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
@@ -124,13 +125,13 @@ public class AsyncObjectClient {
     }
   }
 
-  public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
+  public CompletableFuture<CompletableFuture<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
       ObjectWithMapOfMap request) {
     return getAndReturnWithMapOfMap(request,null);
   }
 
-  public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<CompletableFuture<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
+      ObjectWithMapOfMap request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
       .addPathSegments("get-and-return-with-map-of-map")
@@ -166,16 +167,17 @@ public class AsyncObjectClient {
     }
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
+  public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
+      ) {
     return getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField.builder().build());
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+  public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
       NestedObjectWithOptionalField request) {
     return getAndReturnNestedWithOptionalField(request,null);
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+  public CompletableFuture<CompletableFuture<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
       NestedObjectWithOptionalField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
@@ -212,12 +214,12 @@ public class AsyncObjectClient {
     }
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+  public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
       String string, NestedObjectWithRequiredField request) {
     return getAndReturnNestedWithRequiredField(string,request,null);
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+  public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
       String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
@@ -255,12 +257,12 @@ public class AsyncObjectClient {
     }
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+  public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request) {
     return getAndReturnNestedWithRequiredFieldAsList(request,null);
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+  public CompletableFuture<CompletableFuture<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")

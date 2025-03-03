@@ -12,6 +12,11 @@ import java.util.Optional;
 public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
     @Override
+    public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
+        // Do nothing
+    }
+
+    @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder.addStatement("return");
     }

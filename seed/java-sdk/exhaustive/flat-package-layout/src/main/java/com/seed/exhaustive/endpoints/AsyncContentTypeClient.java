@@ -28,15 +28,15 @@ public class AsyncContentTypeClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<Void> postJsonPatchContentType() {
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType() {
         postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType(ObjectWithOptionalField request) {
         postJsonPatchContentType(request, null);
     }
 
-    public CompletableFuture<Void> postJsonPatchContentType(
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -60,11 +60,12 @@ public class AsyncContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Void> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return;
+                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -76,15 +77,16 @@ public class AsyncContentTypeClient {
         }
     }
 
-    public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType() {
         postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType(
+            ObjectWithOptionalField request) {
         postJsonPatchContentWithCharsetType(request, null);
     }
 
-    public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
+    public CompletableFuture<CompletableFuture<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -108,11 +110,12 @@ public class AsyncContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        CompletableFuture<Void> future = new CompletableFuture<>();
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return;
+                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(

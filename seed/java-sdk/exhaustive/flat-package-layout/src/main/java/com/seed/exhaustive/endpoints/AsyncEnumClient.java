@@ -28,11 +28,12 @@ public class AsyncEnumClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request) {
+    public CompletableFuture<CompletableFuture<WeatherReport>> getAndReturnEnum(WeatherReport request) {
         return getAndReturnEnum(request, null);
     }
 
-    public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request, RequestOptions requestOptions) {
+    public CompletableFuture<CompletableFuture<WeatherReport>> getAndReturnEnum(
+            WeatherReport request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("enum")
