@@ -71,6 +71,9 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
 
+    public abstract void addPropertySuccessResponse(
+            CodeBlock.Builder httpResponseBuilder, String parsedResponseVariableName, CodeBlock snippetCodeBlock);
+
     public abstract void addNonPropertyNonPaginationSuccessResponse(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
@@ -319,10 +322,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         body.getResponseProperty().get(),
                         body.getResponseBodyType(),
                         clientGeneratorContext);
-                httpResponseBuilder.addStatement(CodeBlock.builder()
-                        .add("return $L", parsedResponseVariableName)
-                        .add(snippet.codeBlock)
-                        .build());
+                addPropertySuccessResponse(httpResponseBuilder, parsedResponseVariableName, snippet.codeBlock);
                 endpointMethodBuilder.returns(snippet.typeName);
                 return null;
             }
