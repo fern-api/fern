@@ -11,7 +11,7 @@ public partial class HttpMethodsClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal HttpMethodsClient(RawClient client, ExceptionHandler exceptionHandler)
     {

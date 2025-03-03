@@ -9,7 +9,7 @@ public partial class UsersClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal UsersClient(RawClient client, ExceptionHandler exceptionHandler)
     {

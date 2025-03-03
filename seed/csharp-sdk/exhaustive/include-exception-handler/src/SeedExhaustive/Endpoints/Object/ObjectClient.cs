@@ -11,7 +11,7 @@ public partial class ObjectClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal ObjectClient(RawClient client, ExceptionHandler exceptionHandler)
     {

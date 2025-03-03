@@ -10,7 +10,7 @@ public partial class NoReqBodyClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal NoReqBodyClient(RawClient client, ExceptionHandler exceptionHandler)
     {

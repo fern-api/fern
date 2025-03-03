@@ -10,7 +10,7 @@ public partial class PrimitiveClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal PrimitiveClient(RawClient client, ExceptionHandler exceptionHandler)
     {

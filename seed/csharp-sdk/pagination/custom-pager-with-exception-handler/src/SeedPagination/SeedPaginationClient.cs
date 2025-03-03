@@ -6,7 +6,7 @@ public partial class SeedPaginationClient
 {
     private readonly RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     public SeedPaginationClient(
         string token,

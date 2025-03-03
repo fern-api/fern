@@ -24,10 +24,10 @@ internal class RawClient(ClientOptions clientOptions)
     /// <summary>
     /// The client options applied on every request.
     /// </summary>
-    public readonly ClientOptions Options = clientOptions;
+    internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    public Task<ApiResponse> MakeRequestAsync(
+    internal Task<ApiResponse> MakeRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default
     )
@@ -35,7 +35,7 @@ internal class RawClient(ClientOptions clientOptions)
         return SendRequestAsync(request, cancellationToken);
     }
 
-    public async Task<ApiResponse> SendRequestAsync(
+    internal async Task<ApiResponse> SendRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default
     )
@@ -51,7 +51,7 @@ internal class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    public async Task<ApiResponse> SendRequestAsync(
+    internal async Task<ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -79,47 +79,47 @@ internal class RawClient(ClientOptions clientOptions)
         return clonedRequest;
     }
 
-    public record BaseApiRequest
+    internal record BaseApiRequest
     {
-        public required string BaseUrl { get; init; }
+        internal required string BaseUrl { get; init; }
 
-        public required HttpMethod Method { get; init; }
+        internal required HttpMethod Method { get; init; }
 
-        public required string Path { get; init; }
+        internal required string Path { get; init; }
 
-        public string? ContentType { get; init; }
+        internal string? ContentType { get; init; }
 
-        public Dictionary<string, object> Query { get; init; } = new();
+        internal Dictionary<string, object> Query { get; init; } = new();
 
-        public Headers Headers { get; init; } = new();
+        internal Headers Headers { get; init; } = new();
 
-        public IRequestOptions? Options { get; init; }
+        internal IRequestOptions? Options { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for streaming uploads.
     /// </summary>
-    public record StreamApiRequest : BaseApiRequest
+    internal record StreamApiRequest : BaseApiRequest
     {
-        public Stream? Body { get; init; }
+        internal Stream? Body { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for JSON APIs.
     /// </summary>
-    public record JsonApiRequest : BaseApiRequest
+    internal record JsonApiRequest : BaseApiRequest
     {
-        public object? Body { get; init; }
+        internal object? Body { get; init; }
     }
 
     /// <summary>
     /// The response object returned from the API.
     /// </summary>
-    public record ApiResponse
+    internal record ApiResponse
     {
-        public required int StatusCode { get; init; }
+        internal required int StatusCode { get; init; }
 
-        public required HttpResponseMessage Raw { get; init; }
+        internal required HttpResponseMessage Raw { get; init; }
     }
 
     private async Task<ApiResponse> SendWithRetriesAsync(
@@ -171,7 +171,7 @@ internal class RawClient(ClientOptions clientOptions)
         };
     }
 
-    public HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
+    internal HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);

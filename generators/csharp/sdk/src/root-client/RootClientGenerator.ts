@@ -108,6 +108,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Private,
+                    readonly: true,
                     name: EXCEPTION_HANDLER_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
                 })

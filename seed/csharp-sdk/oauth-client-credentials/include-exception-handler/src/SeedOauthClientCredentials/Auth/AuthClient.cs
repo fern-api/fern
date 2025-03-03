@@ -9,7 +9,7 @@ public partial class AuthClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal AuthClient(RawClient client, ExceptionHandler exceptionHandler)
     {

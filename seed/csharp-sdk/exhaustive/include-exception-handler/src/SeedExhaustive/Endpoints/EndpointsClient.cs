@@ -6,7 +6,7 @@ public partial class EndpointsClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal EndpointsClient(RawClient client, ExceptionHandler exceptionHandler)
     {

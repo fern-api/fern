@@ -15,7 +15,7 @@ public partial class DataserviceClient
 
     private DataService.DataServiceClient _dataService;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal DataserviceClient(RawClient client, ExceptionHandler exceptionHandler)
     {

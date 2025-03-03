@@ -6,7 +6,7 @@ public partial class EnumClient
 {
     private RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     internal EnumClient(RawClient client, ExceptionHandler exceptionHandler)
     {

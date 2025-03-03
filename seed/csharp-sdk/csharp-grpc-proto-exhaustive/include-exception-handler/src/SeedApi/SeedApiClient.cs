@@ -6,7 +6,7 @@ public partial class SeedApiClient
 {
     private readonly RawClient _client;
 
-    private ExceptionHandler _exceptionHandler;
+    private readonly ExceptionHandler _exceptionHandler;
 
     public SeedApiClient(
         IExceptionInterceptor? exceptionInterceptor = null,
