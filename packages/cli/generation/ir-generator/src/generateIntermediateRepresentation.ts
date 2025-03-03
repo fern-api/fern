@@ -540,7 +540,12 @@ export function generateIntermediateRepresentation({
 
     return {
         ...finalIR,
-        dynamic: convertIrToDynamicSnippetsIr({ ir: finalIR, includeExamples: includeDynamicExamples })
+        dynamic: convertIrToDynamicSnippetsIr({
+            ir: finalIR,
+            includeExamples: includeDynamicExamples,
+            generationLanguage,
+            smartCasing,
+        })
     };
 }
 
