@@ -7,12 +7,12 @@ description: Learn how to use the Model Context Protocol (MCP) to integrate AI c
 The MCP generator is in development. The Agent Experience toolkit is changing fast, and we'll adapt per the needs of developers and agents.
 </Note>
 
-Model Context Protocol (MCP) is an open protocol developed by Anthropic that allows you to provide tools to AI agents. MCP is in the early days of adoption with tools like Cursor and Claude Desktop. Our MCP generator allows you to augment your TypeScript SDK with an MCP server that's included in the generated SDK.
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open protocol developed by Anthropic that allows you to provide tools to AI agents. MCP is in the early days of adoption with clients like Cursor, Claude Desktop App, and Windsurf. Our MCP generator allows you to augment your TypeScript SDK with an MCP server that's included in the generated SDK.
 
 ## Features
 
 - **Built into Existing SDK**: The MCP server is automatically included in your TypeScript SDK
-- **Official MCP Submission**: Your MCP server will be listed on [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- **Official MCP Submission**: Your MCP server will be listed on the [official integrations](https://modelcontextprotocol.io/examples#official-integrations) list
 - **Comprehensive Documentation**: Full getting-started guide and API reference
 - **Developer Resources**: Ready-to-use announcement assets for social media and email
 
@@ -27,8 +27,7 @@ generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.48.7
         config:
-          enableMcp: true
-          path: ./src/mcp-server
+          enableMcpServer: true
 ```
 
 The MCP server will be included in your generated TypeScript SDK under the `src/mcp-server` directory.
@@ -43,7 +42,6 @@ The MCP server will be included in your generated TypeScript SDK under the `src/
 4. Configure the Server:
    - Name: Give your server a nickname
    - Type: Select the transport type (stdio)
-   - URL:The URL of the SSE endpoint
 
 ### 2. Start the MCP Server
 
