@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.1
+
+- changelogEntry:
+  - summary: |
       Fixed several issues with broken link detection in docs:
       - Fixed handling of redirects to ensure broken links aren't reported when valid redirects exist
       - Added proper handling of relative paths from different slugs
