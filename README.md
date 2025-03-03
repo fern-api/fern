@@ -21,7 +21,9 @@
 
 # Instant Docs and SDKs for your API
 
-Fern helps API providers deliver exceptional developer experiences by generating language-native SDKs and beautiful, interactive API documentation from your API specification.
+Fern helps API providers deliver exceptional developer experiences by generating language-native SDKs and beautiful API documentation from your API specification.
+
+**Used by 150+ companies** | **3k+ GitHub stars** | **Trusted by Square, Webflow, Intercom**
 
 <div align="center">
     <a href="/fern/images/overview-dark.png" target="_blank">
@@ -35,6 +37,8 @@ Fern helps API providers deliver exceptional developer experiences by generating
 
 ## Why Fern?
 
+For companies with public APIs, a great developer experience hinges on two things: SDKs and documentation. While companies like Stripe invest in dedicated developer experience teams, most can't. Fern levels the playing field by making world-class SDKs and API docs accessible to every company.
+
 Fern helps you:
 
 - **Generate language-native SDKs** that respect idioms of each language, with strong types, inlined docs, and intuitive error handling
@@ -42,7 +46,11 @@ Fern helps you:
 - **Maintain consistency** between your API implementation, documentation, and client libraries
 - **Focus on your core product** while Fern handles the developer experience
 
-Trusted by companies like Square, Webflow, Intercom, Pinecone, Cohere, LaunchDarkly, and many more.
+Trusted by companies like Square, Webflow, Intercom, Pinecone, Cohere, LaunchDarkly, ElevenLabs, and many more.
+
+> "Fern makes it easy to ship high-quality SDKs and Docs. The team is constantly shipping." 
+> 
+> — **Luke Harries**, Growth at ElevenLabs
 
 ## 🚀 Quick Start
 
@@ -69,7 +77,7 @@ Fern builds and hosts documentation websites with auto-generated API references.
 
 Check out docs built with Fern:
 - [docs.cohere.com](https://docs.cohere.com)
-- [launchdarkly.com/docs/home](https://launchdarkly.com/docs/home)
+- [launchdarkly.com/docs](https://launchdarkly.com/docs/home)
 - [docs.cartesia.ai](https://docs.cartesia.ai/get-started/overview)
 - [docs.letta.com](https://docs.letta.com/)
 
@@ -121,6 +129,8 @@ Fern generates SDKs for:
 | Ruby       | ✅ Available |
 | Swift      | 🔜 Coming soon |
 | Rust       | 🔜 Coming soon |
+| C++        | 🔜 Coming soon |
+| Terraform  | 🔜 Coming soon |
 
 ## 🌿 CLI Commands
 
@@ -225,6 +235,10 @@ For enterprise needs, Fern offers:
 - **SDK Team**: We partner with you to perfect your OpenAPI spec and launch SDKs that scale to millions of downloads
 - **Docs Team**: Our team creates a custom theme, migrates all your content, and launches your site
 
+> "We used to dedicate engineers to maintain our docs infrastructure. Fern migrated 700+ pages of content and freed up our team to focus on building our core product." 
+> 
+> — **Matt Makai**, VP of Developer Experience at LaunchDarkly
+
 [Book a demo](https://buildwithfern.com/book-a-demo) to learn more.
 
 ## 🌿 Community
@@ -247,9 +261,9 @@ We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.m
 - **Examples**: Share how you're using Fern in your projects
 - **Code**: Submit pull requests for bug fixes or new features
 
-## 💬 What Developers Say
+## 🌿 Join Our Team
 
-> "Since adopting Fern, customers have migrated rapidly to our new SDKs and have been blown away by the quality. We used an alternative SDK generator for years, and customers constantly complained."
-> 
-> — **Gil Feig**, CTO at Merge.dev
+If you're passionate about open source, developer tools, and the future of API integrations, [join us](https://buildwithfern.com/careers). We're hiring engineers and technical account executives to help shape the future of API integrations.
+
+There's a lot to build, and we're just getting started.
 
