@@ -54,7 +54,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = Client.Users.ListWithCursorPaginationAsync(
+        var pager = await Client.Users.ListWithCursorPaginationAsync(
             new ListUsersCursorPaginationRequest
             {
                 Page = 1,

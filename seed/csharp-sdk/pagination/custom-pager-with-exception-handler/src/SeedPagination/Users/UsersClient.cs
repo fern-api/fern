@@ -30,33 +30,42 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithCursorPaginationAsync(
+    public async Task<Pager<User>> ListWithCursorPaginationAsync(
         ListUsersCursorPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsersCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithCursorPaginationAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.StartingAfter = cursor;
-            },
-            response => response?.Page?.Next?.StartingAfter,
-            response => response?.Data?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersCursorPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    string,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithCursorPaginationInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.StartingAfter = cursor;
+                        },
+                        response => response?.Page?.Next?.StartingAfter,
+                        response => response?.Data?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -66,33 +75,42 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithMixedTypeCursorPaginationAsync(
+    public async Task<Pager<User>> ListWithMixedTypeCursorPaginationAsync(
         ListUsersMixedTypeCursorPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsersMixedTypeCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersMixedTypePaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithMixedTypeCursorPaginationAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersMixedTypeCursorPaginationRequest,
+                    RequestOptions?,
+                    ListUsersMixedTypePaginationResponse,
+                    string,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithMixedTypeCursorPaginationInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Cursor = cursor;
+                        },
+                        response => response?.Next,
+                        response => response?.Data?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -102,34 +120,43 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithBodyCursorPaginationAsync(
+    public async Task<Pager<User>> ListWithBodyCursorPaginationAsync(
         ListUsersBodyCursorPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsersBodyCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithBodyCursorPaginationAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Pagination ??= new();
-                request.Pagination.Cursor = cursor;
-            },
-            response => response?.Page?.Next?.StartingAfter,
-            response => response?.Data?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersBodyCursorPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    string,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithBodyCursorPaginationInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Pagination ??= new();
+                            request.Pagination.Cursor = cursor;
+                        },
+                        response => response?.Page?.Next?.StartingAfter,
+                        response => response?.Data?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -145,36 +172,45 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetPaginationAsync(
+    public async Task<Pager<User>> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListUsersOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListUsersOffsetPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    int?,
+                    object,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithOffsetPaginationInternalAsync,
+                        request => request?.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Page = offset;
+                        },
+                        null,
+                        response => response?.Data?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -190,36 +226,45 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithDoubleOffsetPaginationAsync(
+    public async Task<Pager<User>> ListWithDoubleOffsetPaginationAsync(
         ListUsersDoubleOffsetPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListUsersDoubleOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            double?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithDoubleOffsetPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListUsersDoubleOffsetPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    double?,
+                    object,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithDoubleOffsetPaginationInternalAsync,
+                        request => request?.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Page = offset;
+                        },
+                        null,
+                        response => response?.Data?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -229,37 +274,46 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithBodyOffsetPaginationAsync(
+    public async Task<Pager<User>> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListUsersBodyOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithBodyOffsetPaginationAsync,
-            request => request?.Pagination?.Page ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Pagination ??= new();
-                request.Pagination.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListUsersBodyOffsetPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    int?,
+                    object,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithBodyOffsetPaginationInternalAsync,
+                        request => request?.Pagination?.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Pagination ??= new();
+                            request.Pagination.Page = offset;
+                        },
+                        null,
+                        response => response?.Data?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -274,36 +328,45 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetStepPaginationAsync(
+    public async Task<Pager<User>> ListWithOffsetStepPaginationAsync(
         ListUsersOffsetStepPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListUsersOffsetStepPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            int?,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetStepPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Page = offset;
-            },
-            request => request?.Limit ?? 0,
-            response => response?.Data?.ToList(),
-            null
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListUsersOffsetStepPaginationRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    int?,
+                    int?,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithOffsetStepPaginationInternalAsync,
+                        request => request?.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Page = offset;
+                        },
+                        request => request?.Limit ?? 0,
+                        response => response?.Data?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -318,36 +381,45 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetPaginationHasNextPageAsync(
+    public async Task<Pager<User>> ListWithOffsetPaginationHasNextPageAsync(
         ListWithOffsetPaginationHasNextPageRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListWithOffsetPaginationHasNextPageRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            int?,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetPaginationHasNextPageAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Page = offset;
-            },
-            request => request?.Limit ?? 0,
-            response => response?.Data?.ToList(),
-            response => response?.HasNextPage
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListWithOffsetPaginationHasNextPageRequest,
+                    RequestOptions?,
+                    ListUsersPaginationResponse,
+                    int?,
+                    int?,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithOffsetPaginationHasNextPageInternalAsync,
+                        request => request?.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Page = offset;
+                        },
+                        request => request?.Limit ?? 0,
+                        response => response?.Data?.ToList(),
+                        response => response?.HasNextPage,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -357,33 +429,42 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithExtendedResultsAsync(
+    public async Task<Pager<User>> ListWithExtendedResultsAsync(
         ListUsersExtendedRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsersExtendedRequest,
-            RequestOptions?,
-            ListUsersExtendedResponse,
-            string?,
-            User
-        >(
-            request,
-            options,
-            ListWithExtendedResultsAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.Users?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersExtendedRequest,
+                    RequestOptions?,
+                    ListUsersExtendedResponse,
+                    string?,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithExtendedResultsInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Cursor = cursor;
+                        },
+                        response => response?.Next,
+                        response => response?.Data?.Users?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -393,33 +474,42 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithExtendedResultsAndOptionalDataAsync(
+    public async Task<Pager<User>> ListWithExtendedResultsAndOptionalDataAsync(
         ListUsersExtendedRequestForOptionalData request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsersExtendedRequestForOptionalData,
-            RequestOptions?,
-            ListUsersExtendedOptionalListResponse,
-            string?,
-            User
-        >(
-            request,
-            options,
-            ListWithExtendedResultsAndOptionalDataAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.Users?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsersExtendedRequestForOptionalData,
+                    RequestOptions?,
+                    ListUsersExtendedOptionalListResponse,
+                    string?,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithExtendedResultsAndOptionalDataInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Cursor = cursor;
+                        },
+                        response => response?.Next,
+                        response => response?.Data?.Users?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -429,33 +519,42 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<string> ListUsernamesAsync(
+    public async Task<Pager<string>> ListUsernamesAsync(
         ListUsernamesRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            ListUsernamesRequest,
-            RequestOptions?,
-            UsernameCursor,
-            string?,
-            string
-        >(
-            request,
-            options,
-            ListUsernamesAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.StartingAfter = cursor;
-            },
-            response => response?.Cursor?.After,
-            response => response?.Cursor?.Data?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    ListUsernamesRequest,
+                    RequestOptions?,
+                    UsernameCursor,
+                    string?,
+                    string
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListUsernamesInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.StartingAfter = cursor;
+                        },
+                        response => response?.Cursor?.After,
+                        response => response?.Cursor?.Data?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example>
@@ -489,7 +588,10 @@ public partial class UsersClient
                         Options = options,
                     }
                 );
-                var sendRequest = async (HttpRequestMessage request, CancellationToken ct) =>
+                var sendRequest = async (
+                    HttpRequestMessage request,
+                    CancellationToken cancellationToken
+                ) =>
                 {
                     var response = await _client
                         .SendRequestAsync(httpRequest, options, cancellationToken)
@@ -520,39 +622,48 @@ public partial class UsersClient
     /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
     /// </code>
     /// </example>
-    public Pager<string> ListWithGlobalConfigAsync(
+    public async Task<Pager<string>> ListWithGlobalConfigAsync(
         ListWithGlobalConfigRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new OffsetPager<
-            ListWithGlobalConfigRequest,
-            RequestOptions?,
-            UsernameContainer,
-            int?,
-            object,
-            string
-        >(
-            request,
-            options,
-            ListWithGlobalConfigAsync,
-            request => request?.Offset ?? 0,
-            (request, offset) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Offset = offset;
-            },
-            null,
-            response => response?.Results?.ToList(),
-            null
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await OffsetPager<
+                    ListWithGlobalConfigRequest,
+                    RequestOptions?,
+                    UsernameContainer,
+                    int?,
+                    object,
+                    string
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithGlobalConfigInternalAsync,
+                        request => request?.Offset ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Offset = offset;
+                        },
+                        null,
+                        response => response?.Results?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(
         ListUsersCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -616,7 +727,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationAsync(
+    private async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationInternalAsync(
         ListUsersMixedTypeCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -670,7 +781,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationInternalAsync(
         ListUsersBodyCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -717,7 +828,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationInternalAsync(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -781,7 +892,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationInternalAsync(
         ListUsersDoubleOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -845,7 +956,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationInternalAsync(
         ListUsersBodyOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -892,7 +1003,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationInternalAsync(
         ListUsersOffsetStepPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -952,7 +1063,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageInternalAsync(
         ListWithOffsetPaginationHasNextPageRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -1012,7 +1123,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
+    private async Task<ListUsersExtendedResponse> ListWithExtendedResultsInternalAsync(
         ListUsersExtendedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -1024,7 +1135,7 @@ public partial class UsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Cursor != null)
                 {
-                    _query["cursor"] = request.Cursor.Value.ToString();
+                    _query["cursor"] = request.Cursor;
                 }
                 var response = await _client
                     .SendRequestAsync(
@@ -1064,7 +1175,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
+    private async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataInternalAsync(
         ListUsersExtendedRequestForOptionalData request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -1076,7 +1187,7 @@ public partial class UsersClient
                 var _query = new Dictionary<string, object>();
                 if (request.Cursor != null)
                 {
-                    _query["cursor"] = request.Cursor.Value.ToString();
+                    _query["cursor"] = request.Cursor;
                 }
                 var response = await _client
                     .SendRequestAsync(
@@ -1118,7 +1229,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<UsernameCursor> ListUsernamesAsync(
+    private async Task<UsernameCursor> ListUsernamesInternalAsync(
         ListUsernamesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -1170,7 +1281,7 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
-    private async Task<UsernameContainer> ListWithGlobalConfigAsync(
+    private async Task<UsernameContainer> ListWithGlobalConfigInternalAsync(
         ListWithGlobalConfigRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

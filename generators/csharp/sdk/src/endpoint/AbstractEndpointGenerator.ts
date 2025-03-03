@@ -82,20 +82,20 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    protected getCustomPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
-        const itemType = this.getPaginationItemType(endpoint);
-        const pager = this.context.getCustomPagerClassReference({
-            itemType
-        });
-        return csharp.Type.reference(pager);
-    }
-
     protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
         const itemType = this.getPaginationItemType(endpoint);
-        const pager = this.context.getPagerClassReference({
-            itemType
-        });
-        return csharp.Type.reference(pager);
+        if (endpoint.pagination?.type === "custom") {
+            return csharp.Type.reference(
+                this.context.getCustomPagerClassReference({
+                    itemType
+                })
+            );
+        }
+        return csharp.Type.reference(
+            this.context.getPagerClassReference({
+                itemType
+            })
+        );
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): csharp.Type {
@@ -253,6 +253,9 @@ export abstract class AbstractEndpointGenerator {
         body: csharp.CodeBlock;
         returnType: csharp.Type | undefined;
     }): csharp.CodeBlock {
+        if (!this.context.includeExceptionHandler()) {
+            return body;
+        }
         return csharp.codeblock((writer) => {
             if (this.context.includeExceptionHandler()) {
                 if (returnType != null) {

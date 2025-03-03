@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -10,44 +10,19 @@ public class NoRequestOffsetTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithoutRequest()
     {
-        var pager = CreatePager();
-        await AssertPager(pager);
+        var pager = await CreatePagerAsync();
+        await AssertPagerAsync(pager);
     }
 
-    public Pager<object> CreatePager()
+    private async Task<Pager<object>> CreatePagerAsync()
     {
         var responses = new List<Response>
         {
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = []
-                }
-            }
+            new() { Data = new() { Items = ["item1", "item2"] } },
+            new() { Data = new() { Items = ["item1"] } },
+            new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<
-            Request?,
-            object?,
-            Response,
-            int,
-            object?,
-            object
-        >(
+        Pager<object> pager = await OffsetPager<Request?, object?, Response, int, object?, object>.CreateInstanceAsync(
             null,
             null,
             (_, _, _) =>
@@ -68,7 +43,7 @@ public class NoRequestOffsetTest
         return pager;
     }
 
-    public async SystemTask AssertPager(Pager<object> pager)
+    public async SystemTask AssertPagerAsync(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;
