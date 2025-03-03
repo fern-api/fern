@@ -1,10 +1,8 @@
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.BytesResponse;
 import com.fern.ir.model.http.CursorPagination;
 import com.fern.ir.model.http.FileDownloadResponse;
@@ -51,7 +49,6 @@ import com.squareup.javapoet.TypeName;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -132,6 +129,17 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void addGenericFailureCodeBlock(
             CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName);
+
+    public abstract void addMappedFailuresCodeBlock(
+            CodeBlock.Builder httpResponseBuilder,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            GeneratedObjectMapper generatedObjectMapper,
+            String responseName,
+            String responseBodyName,
+            String responseBodyStringName,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors);
 
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
@@ -244,78 +252,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         } else {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
-    }
-
-    public void addMappedFailuresCodeBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            HttpEndpoint httpEndpoint,
-            ClassName apiErrorClassName,
-            GeneratedObjectMapper generatedObjectMapper,
-            String responseName,
-            String responseBodyName,
-            String responseBodyStringName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
-        ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-        httpResponseBuilder.addStatement(
-                "$T $L = $L != null ? $L.string() : $S",
-                String.class,
-                responseBodyStringName,
-                responseBodyName,
-                responseBodyName,
-                "{}");
-
-        // map to status-specific errors
-        if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
-            List<ErrorDeclaration> errorDeclarations = httpEndpoint.getErrors().get().stream()
-                    .map(responseError -> clientGeneratorContext
-                            .getIr()
-                            .getErrors()
-                            .get(responseError.getError().getErrorId()))
-                    .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
-                    .collect(Collectors.toList());
-            if (!errorDeclarations.isEmpty()) {
-                boolean multipleErrors = errorDeclarations.size() > 1;
-                httpResponseBuilder.beginControlFlow("try");
-                if (multipleErrors) {
-                    httpResponseBuilder.beginControlFlow("switch ($L.code())", responseName);
-                }
-                errorDeclarations.forEach(errorDeclaration -> {
-                    GeneratedJavaFile generatedError =
-                            generatedErrors.get(errorDeclaration.getName().getErrorId());
-                    ClassName errorClassName = generatedError.getClassName();
-                    if (multipleErrors) {
-                        httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
-                    } else {
-                        httpResponseBuilder.beginControlFlow(
-                                "if ($L.code() == $L)", responseName, errorDeclaration.getStatusCode());
-                    }
-                    httpResponseBuilder.addStatement(
-                            "throw new $T($L)",
-                            errorClassName,
-                            objectMapperUtils.readValueCall(
-                                    CodeBlock.of("$L", responseBodyStringName), errorDeclaration.getType()));
-                    if (!multipleErrors) {
-                        httpResponseBuilder.endControlFlow();
-                    }
-                });
-                if (multipleErrors) {
-                    httpResponseBuilder.endControlFlow();
-                }
-                httpResponseBuilder
-                        .endControlFlow()
-                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                        .add("// unable to map error response, throwing generic error\n")
-                        .endControlFlow();
-            }
-        }
-        httpResponseBuilder.addStatement(
-                "throw new $T($S + $L.code(), $L.code(), $L)",
-                apiErrorClassName,
-                "Error with status code ",
-                responseName,
-                responseName,
-                objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
     }
 
     public TypeName getResponseType(HttpEndpoint httpEndpoint, ClientGeneratorContext clientGeneratorContext) {

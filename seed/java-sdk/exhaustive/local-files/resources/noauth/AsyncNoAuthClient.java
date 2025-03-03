@@ -82,13 +82,14 @@ public class AsyncNoAuthClient {
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           try {
             if (response.code() == 400) {
-              throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class));
+              future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class)));
+              return;
             }
           }
           catch (JsonProcessingException ignored) {
             // unable to map error response, throwing generic error
           }
-          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
         }
       }
 

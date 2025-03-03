@@ -68,10 +68,10 @@ public class AsyncUnionClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    throw new BestApiException(
+                    future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
                 }
             }
 
