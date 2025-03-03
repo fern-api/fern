@@ -51,7 +51,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder.addStatement("$L.complete(null)", FUTURE);
-        httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
     @Override
@@ -61,7 +60,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .add("$L.complete($L)", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
-        httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
     @Override
@@ -80,7 +78,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 resultVariableName,
                 endpointName,
                 methodParameters);
-        httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
     @Override

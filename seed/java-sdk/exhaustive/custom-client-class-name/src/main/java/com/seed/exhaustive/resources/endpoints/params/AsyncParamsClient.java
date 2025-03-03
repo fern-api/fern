@@ -152,7 +152,6 @@ public class AsyncParamsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new BestApiException(
@@ -195,7 +194,6 @@ public class AsyncParamsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new BestApiException(
@@ -239,7 +237,6 @@ public class AsyncParamsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new BestApiException(
@@ -283,7 +280,6 @@ public class AsyncParamsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 future.complete(null);
-                return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new BestApiException(

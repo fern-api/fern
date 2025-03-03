@@ -102,11 +102,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec);
 
-    public static boolean typeNameIsOptional(TypeName typeName) {
-        return typeName instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
-    }
-
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,

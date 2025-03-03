@@ -158,7 +158,6 @@ public class AsyncParamsClient {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
           future.complete(null);
-          return future;
         }
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -198,7 +197,6 @@ public class AsyncParamsClient {
           ResponseBody responseBody = response.body();
           if (response.isSuccessful()) {
             future.complete(null);
-            return future;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -239,7 +237,6 @@ public class AsyncParamsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
               future.complete(null);
-              return future;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -280,7 +277,6 @@ public class AsyncParamsClient {
               ResponseBody responseBody = response.body();
               if (response.isSuccessful()) {
                 future.complete(null);
-                return future;
               }
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
