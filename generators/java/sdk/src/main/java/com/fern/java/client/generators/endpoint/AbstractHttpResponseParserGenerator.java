@@ -67,6 +67,8 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
 
+    public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
+
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,
@@ -137,7 +139,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         } else {
             addTryWithResourcesVariant(
                     httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
-            httpResponseBuilder.addStatement("return");
+            addNoBodySuccessResponse(httpResponseBuilder);
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(

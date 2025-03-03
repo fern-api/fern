@@ -150,6 +150,7 @@ public class AsyncParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
+                CompletableFuture.complete(null);
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -191,6 +192,7 @@ public class AsyncParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
+                CompletableFuture.complete(null);
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -233,6 +235,7 @@ public class AsyncParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
+                CompletableFuture.complete(null);
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -275,6 +278,7 @@ public class AsyncParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
+                CompletableFuture.complete(null);
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
