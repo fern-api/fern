@@ -1,0 +1,81 @@
+imports:
+  commons: commons.yml
+  types: types.yml
+  http: http.yml
+  environment: environment.yml
+
+types:
+  WebSocketMessageId: string
+
+  WebSocketChannel:
+    extends: commons.Declaration
+    properties:
+      name: WebSocketName
+      displayName: optional<string>
+      baseUrl: optional<environment.EnvironmentBaseUrlId>
+      path: http.HttpPath
+      auth: boolean
+      headers: list<http.HttpHeader>
+      queryParameters: list<http.QueryParameter>
+      pathParameters: list<http.PathParameter>
+      messages:
+        docs: "The messages that can be sent and received on this channel"
+        type: list<WebSocketMessage>
+      examples: list<ExampleWebSocketSession>
+
+  WebSocketName: commons.Name
+
+  WebSocketMessage:
+    extends: commons.Declaration
+    properties:
+      type: WebSocketMessageId
+      displayName: optional<string>
+      origin: WebSocketMessageOrigin
+      body: WebSocketMessageBody
+
+  WebSocketMessageOrigin:
+    enum:
+      - client
+      - server
+
+  WebSocketMessageBody:
+    union:
+      inlinedBody: InlinedWebSocketMessageBody
+      reference: WebSocketMessageBodyReference
+
+  InlinedWebSocketMessageBody:
+    properties:
+      name: commons.Name
+      extends: list<types.DeclaredTypeName>
+      properties: list<InlinedWebSocketMessageBodyProperty>
+
+  InlinedWebSocketMessageBodyProperty:
+    extends: commons.WithDocsAndAvailability
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+
+  WebSocketMessageBodyReference:
+    extends: commons.WithDocs
+    properties:
+      bodyType: types.TypeReference
+
+  ExampleWebSocketSession:
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      url: string
+      pathParameters: list<http.ExamplePathParameter>
+      headers: list<http.ExampleHeader>
+      queryParameters: list<http.ExampleQueryParameter>
+      messages: list<ExampleWebSocketMessage>
+
+  ExampleWebSocketMessage:
+    properties:
+      type: WebSocketMessageId
+      body: ExampleWebSocketMessageBody
+
+  ExampleWebSocketMessageBody:
+    union:
+      inlinedBody: http.ExampleInlinedRequestBody
+      reference: types.ExampleTypeReference
