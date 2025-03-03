@@ -67,6 +67,13 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
+        beginResponseProcessingTryBlock(
+                httpResponseBuilder,
+                httpEndpoint,
+                responseName,
+                defaultedClientName,
+                okhttpRequestName,
+                responseBodyName);
         addSuccessResponseCodeBlock(
                 httpResponseBuilder,
                 endpointMethodBuilder,

@@ -166,6 +166,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         generatedClientOptions.httpClientWithTimeout(),
                         AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
+        maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
         addResponseHandlerCodeBlock(
                 httpResponseBuilder,
                 endpointMethodBuilder,
@@ -232,9 +233,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                             maybeRequestParameterSpec,
                             typeReferenceIsOptional));
         } else {
-            maybeInitializeFuture(httpResponseBuilder, TypeName.VOID);
-            addTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             addNoBodySuccessResponse(httpResponseBuilder);
         }
         httpResponseBuilder.endControlFlow();
@@ -321,6 +319,207 @@ public abstract class AbstractHttpResponseParserGenerator {
                 .build();
     }
 
+    public TypeName getResponseType(HttpEndpoint httpEndpoint, ClientGeneratorContext clientGeneratorContext) {
+        if (httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()) {
+            return httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<TypeName>() {
+                @Override
+                public TypeName visitJson(JsonResponse json) {
+                    JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
+                        @Override
+                        public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
+                            return JsonResponseBodyWithProperty.builder()
+                                    .responseBodyType(response.getResponseBodyType())
+                                    .build();
+                        }
+
+                        @Override
+                        public JsonResponseBodyWithProperty visitNestedPropertyAsResponse(
+                                JsonResponseBodyWithProperty nestedPropertyAsResponse) {
+                            return nestedPropertyAsResponse;
+                        }
+
+                        @Override
+                        public JsonResponseBodyWithProperty _visitUnknown(Object unknownType) {
+                            throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                        }
+                    });
+                    return clientGeneratorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, body.getResponseBodyType());
+                }
+
+                @Override
+                public TypeName visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                    return ClassName.get(InputStream.class);
+                }
+
+                @Override
+                public TypeName visitText(TextResponse textResponse) {
+                    return ClassName.get(String.class);
+                }
+
+                @Override
+                public TypeName visitBytes(BytesResponse bytesResponse) {
+                    throw new RuntimeException("Returning bytes is not supported.");
+                }
+
+                @Override
+                public TypeName visitStreaming(StreamingResponse streaming) {
+                    com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
+                            return json.getPayload();
+                        }
+
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitText(TextStreamChunk text) {
+                            throw new RuntimeException("Returning streamed text is not supported.");
+                        }
+
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitSse(SseStreamChunk sse) {
+                            return sse.getPayload();
+                        }
+
+                        @Override
+                        public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
+                            throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                        }
+                    });
+
+                    TypeName bodyTypeName =
+                            clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);
+                    return ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName);
+                }
+
+                @Override
+                public TypeName visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                    // TODO: Implement stream parameters.
+                    throw new UnsupportedOperationException("Not implemented.");
+                }
+
+                @Override
+                public TypeName _visitUnknown(Object o) {
+                    return TypeName.VOID;
+                }
+            });
+        } else {
+            return TypeName.VOID;
+        }
+    }
+
+    public void beginResponseProcessingTryBlock(
+            CodeBlock.Builder httpResponseBuilder,
+            HttpEndpoint httpEndpoint,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        if (httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()) {
+            httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Void>() {
+                @Override
+                public Void visitJson(JsonResponse jsonResponse) {
+                    addTryWithResourcesVariant(
+                            httpResponseBuilder,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    return null;
+                }
+
+                @Override
+                public Void visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                    addNonTryWithResourcesVariant(
+                            httpResponseBuilder,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    return null;
+                }
+
+                @Override
+                public Void visitText(TextResponse textResponse) {
+                    addTryWithResourcesVariant(
+                            httpResponseBuilder,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    return null;
+                }
+
+                @Override
+                public Void visitBytes(BytesResponse bytesResponse) {
+                    throw new RuntimeException("Returning bytes is not supported.");
+                }
+
+                @Override
+                public Void visitStreaming(StreamingResponse streamingResponse) {
+                    addNonTryWithResourcesVariant(
+                            httpResponseBuilder,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    return null;
+                }
+
+                @Override
+                public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                    // TODO: Implement stream parameters.
+                    throw new UnsupportedOperationException("Not implemented.");
+                }
+
+                @Override
+                public Void _visitUnknown(Object o) {
+                    return null;
+                }
+            });
+        } else {
+            addTryWithResourcesVariant(
+                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
+        }
+    }
+
+    private void addNonTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow("try")
+                .addStatement(
+                        "$T $L = $N.newCall($L).execute()",
+                        Response.class,
+                        responseName,
+                        defaultedClientName,
+                        okhttpRequestName)
+                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
+    private void addTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow(
+                        "try ($T $L = $N.newCall($L).execute())",
+                        Response.class,
+                        responseName,
+                        defaultedClientName,
+                        okhttpRequestName)
+                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
     private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
@@ -404,10 +603,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                             .getGeneratePaginatedClients()
                             .orElse(false);
 
-            maybeInitializeFuture(httpResponseBuilder, responseType);
-
-            addTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             boolean isProperty = body.getResponseProperty().isPresent();
 
             if (isProperty) {
@@ -479,8 +674,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitFileDownload(FileDownloadResponse fileDownload) {
-            addNonTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             endpointMethodBuilder.returns(InputStream.class);
             httpResponseBuilder.addStatement(
                     "return new $T($L)",
@@ -491,8 +684,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitText(TextResponse text) {
-            addTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             endpointMethodBuilder.returns(String.class);
             httpResponseBuilder.addStatement("return $L.string()", responseBodyName);
             return null;
@@ -505,8 +696,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
-            addNonTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
                 @Override
                 public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
@@ -529,11 +718,12 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
             });
 
-            String terminator =
-                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
             TypeName bodyTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
+
+            String terminator =
+                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
 
             httpResponseBuilder.addStatement(
                     "return new $T<$T>($T.class, new $T($L), $S)",
@@ -573,41 +763,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
             return false;
         }
-    }
-
-    private void addNonTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
-        httpResponseBuilder
-                .beginControlFlow("try")
-                .addStatement(
-                        "$T $L = $N.newCall($L).execute()",
-                        Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
-    }
-
-    private void addTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
-        httpResponseBuilder
-                .beginControlFlow(
-                        "try ($T $L = $N.newCall($L).execute())",
-                        Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
     }
 
     private SnippetAndResultType getNestedPropertySnippet(
