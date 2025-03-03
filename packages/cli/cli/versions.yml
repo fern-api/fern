@@ -30,7 +30,14 @@
     type: fix
   irVersion: 56
   version: 0.56.0
-
+  
+- changelogEntry:
+  - summary: |
+      Hidden sections are now removed from the docs sitemap. 
+    type: fix
+  irVersion: 56
+  version: 0.56.0-rc6
+  
 - changelogEntry:
   - summary: |
       Fixed duplicate validation messages in docs validation by deduplicating violations
