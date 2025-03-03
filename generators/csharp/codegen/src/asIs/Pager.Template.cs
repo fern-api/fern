@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace SeedPagination.Core;
+namespace <%= namespace%>;
 
 /// <summary>
 /// A collection of values that may take multiple service requests to
