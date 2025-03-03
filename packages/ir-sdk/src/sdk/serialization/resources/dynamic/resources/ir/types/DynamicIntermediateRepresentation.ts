@@ -9,8 +9,8 @@ import { TypeId } from "../../../../commons/types/TypeId";
 import { NamedType } from "../../types/types/NamedType";
 import { EndpointId } from "../../../../commons/types/EndpointId";
 import { Endpoint } from "../../endpoints/types/Endpoint";
-import { NamedParameter } from "../../types/types/NamedParameter";
 import { EnvironmentsConfig } from "../../../../environment/types/EnvironmentsConfig";
+import { NamedParameter } from "../../types/types/NamedParameter";
 
 export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     serializers.dynamic.DynamicIntermediateRepresentation.Raw,
@@ -19,8 +19,9 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     version: core.serialization.stringLiteral("1.0.0"),
     types: core.serialization.record(TypeId, NamedType),
     endpoints: core.serialization.record(EndpointId, Endpoint),
-    headers: core.serialization.list(NamedParameter).optional(),
     environments: EnvironmentsConfig.optional(),
+    headers: core.serialization.list(NamedParameter).optional(),
+    pathParameters: core.serialization.list(NamedParameter).optional(),
 });
 
 export declare namespace DynamicIntermediateRepresentation {
@@ -28,7 +29,8 @@ export declare namespace DynamicIntermediateRepresentation {
         version: "1.0.0";
         types: Record<TypeId.Raw, NamedType.Raw>;
         endpoints: Record<EndpointId.Raw, Endpoint.Raw>;
-        headers?: NamedParameter.Raw[] | null;
         environments?: EnvironmentsConfig.Raw | null;
+        headers?: NamedParameter.Raw[] | null;
+        pathParameters?: NamedParameter.Raw[] | null;
     }
 }
