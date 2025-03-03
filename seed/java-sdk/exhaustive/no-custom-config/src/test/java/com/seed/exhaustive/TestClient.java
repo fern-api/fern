@@ -3,9 +3,45 @@
  */
 package com.seed.exhaustive;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
+
 public final class TestClient {
+
+    @Test
     public void test() {
-        // Add tests here and mark this file in .fernignore
-        assert true;
+        SeedExhaustiveClient client =
+                SeedExhaustiveClient.builder().url("http://proxyman.debug:3000").build();
+
+        List<String> response = client.endpoints()
+                .container()
+                .getAndReturnListOfPrimitives(
+                        Arrays.stream(new String[] {"Hello", "World"}).collect(Collectors.toList()));
+
+        System.out.println("Synchronous response: ");
+        System.out.println(response);
+
+        Future<List<String>> asyncResponse = client.endpoints()
+                .container()
+                .getAndReturnListOfPrimitivesAsync(
+                        Arrays.stream(new String[] {"Hello", "World"}).collect(Collectors.toList()));
+
+        System.out.println("Asynchronous response: ");
+
+        try {
+            System.out.println(asyncResponse.get(10, TimeUnit.SECONDS));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
