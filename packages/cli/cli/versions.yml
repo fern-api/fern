@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.4
+
+- changelogEntry:
+  - summary: |
       Make the latest C# SDK generator consume IR v56.
     type: internal
   irVersion: 56

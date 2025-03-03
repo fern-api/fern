@@ -11,12 +11,9 @@ public partial class ContentTypeClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal ContentTypeClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal ContentTypeClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <example>
@@ -47,8 +44,8 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -108,8 +105,8 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
