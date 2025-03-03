@@ -185,7 +185,8 @@ export function generateIntermediateRepresentation({
         readmeConfig: undefined,
         sourceConfig: undefined,
         publishConfig: undefined,
-        dynamic: undefined
+        dynamic: undefined,
+        generatorConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
