@@ -7,5 +7,6 @@
 !generators/typescript/utils/core-utilities/zurg/src/
 !generators/typescript/utils/core-utilities/base/src/
 !generators/typescript/utils/core-utilities/utils/src/
+!generators/typescript/utils/core-utilities/websocket/src/
 !generators/typescript/utils/scripts/
 !generators/typescript/sdk/cli/browser-docker/dist/browserCli.cjs
