@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedEnum.Core;
 
-namespace SeedEnum.Test.Core;
+namespace SeedEnum.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

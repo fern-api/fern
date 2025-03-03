@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedWebsocket.Core;
 
-namespace SeedWebsocket.Test.Core;
+namespace SeedWebsocket.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

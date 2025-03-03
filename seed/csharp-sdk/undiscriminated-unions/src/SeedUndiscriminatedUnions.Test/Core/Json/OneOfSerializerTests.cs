@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
-namespace SeedUndiscriminatedUnions.Test.Core;
+namespace SeedUndiscriminatedUnions.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

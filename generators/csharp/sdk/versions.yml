@@ -6,6 +6,16 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.12.0-rc3
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for schema properties with write-only and read-only access.
+    - type: feat
+      summary: The JSON serializer will write with indentation during debugging, and without in production.
+
 - version: 1.12.0-rc2
   createdAt: "2025-03-02"
   irVersion: 56

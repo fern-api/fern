@@ -1,6 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -8,6 +9,7 @@ import {
     HttpHeader,
     IntermediateRepresentation,
     Name,
+    ObjectPropertyAccess,
     PrimitiveType,
     PrimitiveTypeV1,
     TypeDeclaration,
@@ -22,6 +24,7 @@ import {
     CONSTANTS_CLASS_NAME,
     DATETIME_SERIALIZER_CLASS_NAME,
     ENUM_SERIALIZER_CLASS_NAME,
+    JSON_ACCESS_ATTRIBUTE_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
@@ -201,6 +204,27 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: JSON_UTILS_CLASS_NAME
+        });
+    }
+
+    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
+        let argument: string;
+        switch (propertyAccess) {
+            case "READ_ONLY":
+                argument = "JsonAccessType.ReadOnly";
+                break;
+            case "WRITE_ONLY":
+                argument = "JsonAccessType.WriteOnly";
+                break;
+            default:
+                assertNever(propertyAccess);
+        }
+        return csharp.annotation({
+            reference: csharp.classReference({
+                namespace: this.getCoreNamespace(),
+                name: JSON_ACCESS_ATTRIBUTE_NAME
+            }),
+            argument
         });
     }
 

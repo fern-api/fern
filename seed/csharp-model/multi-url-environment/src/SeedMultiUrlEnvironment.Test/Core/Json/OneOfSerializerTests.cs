@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedMultiUrlEnvironment.Core;
 
-namespace SeedMultiUrlEnvironment.Test.Core;
+namespace SeedMultiUrlEnvironment.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

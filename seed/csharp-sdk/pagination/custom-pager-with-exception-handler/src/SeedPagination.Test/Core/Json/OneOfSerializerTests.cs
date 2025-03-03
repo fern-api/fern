@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedPagination.Core;
 
-namespace SeedPagination.Test.Core;
+namespace SeedPagination.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

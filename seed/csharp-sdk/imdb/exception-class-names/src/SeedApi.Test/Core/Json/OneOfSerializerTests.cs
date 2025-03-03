@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedApi.Core;
 
-namespace SeedApi.Test.Core;
+namespace SeedApi.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

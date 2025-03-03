@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedCsharpNamespaceConflict.Core;
 
-namespace SeedCsharpNamespaceConflict.Test.Core;
+namespace SeedCsharpNamespaceConflict.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
