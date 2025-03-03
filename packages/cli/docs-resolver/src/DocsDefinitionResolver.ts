@@ -722,21 +722,30 @@ export class DocsDefinitionResolver {
             return node.get();
         }
 
-        const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = generateIntermediateRepresentation({
-            workspace,
-            audiences: item.audiences,
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false,
-            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
-            readme: undefined,
-            version: undefined,
-            packageName: undefined,
-            context: this.taskContext,
-            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-        });
+
+        let ir: IntermediateRepresentation;
+        let workspace: FernWorkspace | undefined = undefined;
+        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+        } else {
+            workspace = this.getFernWorkspaceForApiSection(item);
+            ir = generateIntermediateRepresentation({
+                workspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+            });
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -749,12 +758,12 @@ export class DocsDefinitionResolver {
             item,
             api,
             parentSlug,
-            workspace,
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
-            this.#idgen
+            this.#idgen,
+            workspace
         );
         return node.get();
     }

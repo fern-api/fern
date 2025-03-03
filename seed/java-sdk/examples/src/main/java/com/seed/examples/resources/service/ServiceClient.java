@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.QueryStringMapper;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.SeedExamplesApiException;
 import com.seed.examples.core.SeedExamplesException;
@@ -117,10 +118,11 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("metadata");
         if (request.getShallow().isPresent()) {
-            httpUrl.addQueryParameter("shallow", request.getShallow().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "shallow", request.getShallow().get().toString(), false);
         }
         if (request.getTag().isPresent()) {
-            httpUrl.addQueryParameter("tag", request.getTag().get());
+            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

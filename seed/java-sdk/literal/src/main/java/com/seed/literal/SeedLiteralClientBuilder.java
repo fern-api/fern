@@ -16,6 +16,22 @@ public final class SeedLiteralClientBuilder {
 
     private Environment environment;
 
+    /**
+     * Sets version
+     */
+    public SeedLiteralClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
+    /**
+     * Sets auditLogging
+     */
+    public SeedLiteralClientBuilder auditLogging(String auditLogging) {
+        this.auditLogging = auditLogging;
+        return this;
+    }
+
     public SeedLiteralClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;

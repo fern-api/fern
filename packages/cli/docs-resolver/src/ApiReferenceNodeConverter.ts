@@ -38,12 +38,12 @@ export class ApiReferenceNodeConverter {
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        private workspace: FernWorkspace,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
-        idgen: NodeIdGenerator
+        idgen: NodeIdGenerator,
+        private workspace?: FernWorkspace
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
@@ -90,7 +90,7 @@ export class ApiReferenceNodeConverter {
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
-            this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
+            this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();

@@ -534,6 +534,11 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("smart-casing", {
                     boolean: true,
                     description: "Whether to use smart casing"
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -549,7 +554,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                readme: undefined
+                readme: undefined,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
@@ -771,6 +777,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Log warnings in addition to errors.",
                     default: false
                 })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
                 .option("strict-broken-links", {
                     boolean: true,
                     description:
@@ -785,6 +796,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 logWarnings: argv.warnings,
+                brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks
             });
         }
@@ -1062,6 +1074,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     string: true,
                     hidden: true,
                     description: "Path of the local docs bundle to use"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    default: false,
+                    description: "Check for broken links in your docs"
                 }),
         async (argv) => {
             let port: number;
@@ -1079,7 +1096,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     }),
                 cliContext,
                 port,
-                bundlePath
+                bundlePath,
+                brokenLinks: argv.brokenLinks
             });
         }
     );

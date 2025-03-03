@@ -9,10 +9,33 @@ import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromReques
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes";
 
-    export interface MakeRequestArgs {
-        baseUrl: csharp.CodeBlock;
-        /** the reference to the client */
+    export interface CreateHttpRequestArgs {
+        /** The reference to the client */
         clientReference: string;
+        /** The instance of the request wrapper */
+        request: csharp.ClassInstantiation;
+    }
+
+    export interface SendRequestArgsWithRequestWrapper {
+        /** The reference to the client */
+        clientReference: string;
+        /** The instance of the request wrapper */
+        request: csharp.CodeBlock | csharp.ClassInstantiation;
+    }
+
+    export interface SendRequestWithHttpRequestArgs {
+        /** The reference to the client */
+        clientReference: string;
+        /** Request options */
+        options: csharp.CodeBlock;
+        /** The instance of the request wrapper */
+        request: csharp.CodeBlock | csharp.ClassInstantiation;
+        /** Cancellation token */
+        cancellationToken: csharp.CodeBlock;
+    }
+
+    export interface CreateHttpRequestWrapperArgs {
+        baseUrl: csharp.CodeBlock;
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
@@ -39,19 +62,18 @@ export class RawClient {
     }
 
     /**
-     * Constructs a request to the RawClient.
+     * Create an HTTP request wrapper.
      */
-    public makeRequest({
+    public createHttpRequestWrapper({
         baseUrl,
         endpoint,
         bodyReference,
-        clientReference,
         pathParameterReferences,
         headerBagReference,
         queryBagReference,
         requestType
-    }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
-        const arguments_: Arguments = [
+    }: RawClient.CreateHttpRequestWrapperArgs): csharp.ClassInstantiation {
+        const args: Arguments = [
             {
                 name: "BaseUrl",
                 assignment: baseUrl
@@ -73,61 +95,99 @@ export class RawClient {
             }
         ];
         if (bodyReference != null) {
-            arguments_.push({
+            args.push({
                 name: "Body",
                 assignment: csharp.codeblock(bodyReference)
             });
         }
         if (queryBagReference != null) {
-            arguments_.push({
+            args.push({
                 name: "Query",
                 assignment: csharp.codeblock(queryBagReference)
             });
         }
         if (headerBagReference != null) {
-            arguments_.push({
+            args.push({
                 name: "Headers",
                 assignment: csharp.codeblock(headerBagReference)
             });
         }
         const requestContentType = getContentTypeFromRequestBody(endpoint);
         if (requestContentType) {
-            arguments_.push({
+            args.push({
                 name: "ContentType",
                 assignment: csharp.codeblock(`"${requestContentType}"`)
             });
         }
         if (endpoint.idempotent) {
-            arguments_.push({
+            args.push({
                 name: "Options",
                 assignment: csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
             });
         } else {
-            arguments_.push({
+            args.push({
                 name: "Options",
                 assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
             });
         }
-        let apiRequest = csharp.instantiateClass({
-            arguments_,
-            classReference: csharp.classReference({
-                name: "RawClient.JsonApiRequest",
-                namespace: this.context.getCoreNamespace()
-            })
-        });
         if (requestType === "bytes") {
-            apiRequest = csharp.instantiateClass({
-                arguments_,
+            return csharp.instantiateClass({
+                arguments_: args,
                 classReference: csharp.classReference({
                     name: "RawClient.StreamApiRequest",
                     namespace: this.context.getCoreNamespace()
                 })
             });
+        } else {
+            return csharp.instantiateClass({
+                arguments_: args,
+                classReference: csharp.classReference({
+                    name: "RawClient.JsonApiRequest",
+                    namespace: this.context.getCoreNamespace()
+                })
+            });
         }
+    }
+
+    /**
+     * Creates an HTTP request using the RawClient.
+     */
+    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
-            method: "MakeRequestAsync",
-            arguments_: [apiRequest, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            method: "CreateHttpRequest",
+            arguments_: [request]
+        });
+    }
+
+    /**
+     * Sends an HTTP request to the RawClient.
+     */
+    public sendRequestWithRequestWrapper({
+        clientReference,
+        request
+    }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: csharp.codeblock(clientReference),
+            method: "SendRequestAsync",
+            arguments_: [request, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            async: true
+        });
+    }
+
+    /**
+     * Sends an HTTP request to the RawClient.
+     */
+    public sendRequestWithHttpRequest({
+        clientReference,
+        options,
+        request,
+        cancellationToken
+    }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: csharp.codeblock(clientReference),
+            method: "SendRequestAsync",
+            arguments_: [request, options, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }

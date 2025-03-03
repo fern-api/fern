@@ -189,15 +189,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): csharp.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
+        if (this.isString(reference)) {
+            return csharp.codeblock(`${parameter}`);
+        }
         const maybeDotValue =
-            this.isOptional({ typeReference: reference }) &&
+            (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
             this.isStruct({ typeReference: reference }) &&
             (allowOptionals ?? true)
                 ? ".Value"
                 : "";
-        if (this.isString(reference)) {
-            return csharp.codeblock(`${parameter}`);
-        } else if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
+
+        if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
@@ -287,6 +289,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (typeReference.container.type === "optional") {
                     return this.isString(typeReference.container.optional);
                 }
+                if (typeReference.container.type === "nullable") {
+                    return this.isString(typeReference.container.nullable);
+                }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -296,7 +301,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
             case "primitive": {
-                return typeReference.primitive.v1 === "STRING";
+                const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
+                return csharpType.internalType.type === "string";
             }
             case "unknown": {
                 return false;
@@ -310,11 +316,40 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (typeReference.container.type === "optional") {
                     return true;
                 }
+                if (typeReference.container.type === "nullable") {
+                    return this.isOptional({ typeReference: typeReference.container.nullable });
+                }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
                     return this.isOptional({ typeReference: declaration.shape.aliasOf });
+                }
+                return false;
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    private isNullable({ typeReference }: { typeReference: TypeReference }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isNullable({ typeReference: typeReference.container.optional });
+                }
+                if (typeReference.container.type === "nullable") {
+                    return true;
+                }
+                return false;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isNullable({ typeReference: declaration.shape.aliasOf });
                 }
                 return false;
             }
@@ -345,6 +380,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         });
                     },
                     optional: (optional) => this.isStruct({ typeReference: optional }),
+                    nullable: (nullable) => this.isStruct({ typeReference: nullable }),
                     _other: () => false
                 });
             },
@@ -478,6 +514,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     optional: (optional) => {
                         return this.shouldJsonSerialize({ typeReference: optional });
                     },
+                    nullable: (nullable) => this.shouldJsonSerialize({ typeReference: nullable }),
                     _other: () => false
                 });
             },

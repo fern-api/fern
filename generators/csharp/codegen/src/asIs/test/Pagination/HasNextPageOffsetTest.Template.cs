@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -10,54 +10,32 @@ public class HasNextPageOffsetTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithHasNextPage()
     {
-        var pager = CreatePager();
-        await AssertPager(pager);
+        var pager = await CreatePagerAsync();
+        await AssertPagerAsync(pager);
     }
 
-    private static Pager<object> CreatePager()
+    private static async Task<Pager<object>> CreatePagerAsync()
     {
         var responses = new List<Response>
         {
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                },
-                HasNext = true
+                Data = new() { Items = ["item1", "item2"] },
+                HasNext = true,
             },
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                },
-                HasNext = true
+                Data = new() { Items = ["item1", "item2"] },
+                HasNext = true,
             },
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1",]
-                },
-                HasNext = false
-            }
+                Data = new() { Items = ["item1"] },
+                HasNext = false,
+            },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<
-            Request,
-            object?,
-            Response,
-            int,
-            object?,
-            object
-        >(
-            new()
-            {
-                Pagination = new()
-                {
-                    Page = 1
-                }
-            },
+        Pager<object> pager = await OffsetPager<Request, object?, Response, int, object?, object>.CreateInstanceAsync(
+            new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
             {
@@ -77,7 +55,7 @@ public class HasNextPageOffsetTest
         return pager;
     }
 
-    private static async SystemTask AssertPager(Pager<object> pager)
+    private static async SystemTask AssertPagerAsync(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;

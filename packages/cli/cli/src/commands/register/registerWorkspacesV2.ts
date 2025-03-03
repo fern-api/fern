@@ -29,7 +29,8 @@ export async function registerWorkspacesV2({
                         pythonSdk: undefined,
                         javaSdk: undefined,
                         rubySdk: undefined,
-                        goSdk: undefined
+                        goSdk: undefined,
+                        csharpSdk: undefined
                     }
                 });
                 context.logger.info(chalk.green("Registered API"));

@@ -1,3 +1,4 @@
+import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -9,8 +10,10 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
+import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
 
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
@@ -73,6 +76,45 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration
             }
         });
+    }
+
+    /**
+     * @beta This method is in beta and not ready for production use.
+     * @internal
+     * @owner dsinghvi
+     */
+    public async getIntermediateRepresentation({
+        context
+    }: {
+        context: TaskContext;
+    }): Promise<IntermediateRepresentation> {
+        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        const documents = await this.loader.loadDocuments({
+            context,
+            specs: openApiSpecs
+        });
+        for (const document of documents) {
+            if (document.type === "openapi") {
+                const converterContext = new OpenAPIConverterContext3_1({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value as OpenAPIV3_1.Document
+                });
+                const converter = new OpenAPI3_1Converter({ context: converterContext });
+                const errorCollector = new ErrorCollector({ logger: context.logger });
+                const result = converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+                if (errorCollector.hasErrors()) {
+                    context.logger.info("OpenAPI 3.1 Converter encountered errors:");
+                    errorCollector.logErrors();
+                }
+                return result;
+            }
+        }
+        throw new Error("No OpenAPI document found");
     }
 
     public async toFernWorkspace(

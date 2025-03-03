@@ -107,6 +107,10 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
+        if (this.context.doesIrHaveCustomPagination()) {
+            this.coreFiles.push(await this.createCustomPagerAsIsFile());
+        }
+
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
                 await this.createAsIsTestFile({
@@ -156,13 +160,17 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToSrcDirectory,
-            env: {
-                DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-            }
-        });
+        try {
+            await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
+                doNotPipeOutput: true,
+                cwd: absolutePathToSrcDirectory,
+                env: {
+                    DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+                }
+            });
+        } catch (error) {
+            this.context.logger.warn("csharpier command failed, continuing without formatting.");
+        }
     }
 
     private async createProject({
@@ -386,6 +394,22 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
     }
 
+    private async createCustomPagerAsIsFile(): Promise<File> {
+        const fileName = AsIsFiles.CustomPager;
+        const customPagerName = this.context.getCustomPagerName();
+        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
+        return new File(
+            fileName.replace(".Template", "").replace("CustomPager", customPagerName),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace: this.context.getCoreNamespace()
+            }).replaceAll("CustomPager", customPagerName)
+        );
+    }
+
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -503,11 +527,20 @@ class CsProj {
         const dependencies = this.getDependencies();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
-
 ${projectGroup.join("\n")}
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <PropertyGroup>
+        <UsePortableDateOnly>false</UsePortableDateOnly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
+        <UsePortableDateOnly>true</UsePortableDateOnly>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
+        <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -616,7 +649,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
-        this.context.logger.debug(`this.license ${JSON.stringify(this.license)}`);
         if (this.license) {
             result.push(
                 this.license._visit<string>({

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.MediaTypes;
 import com.seed.validation.core.ObjectMappers;
+import com.seed.validation.core.QueryStringMapper;
 import com.seed.validation.core.RequestOptions;
 import com.seed.validation.core.SeedValidationApiException;
 import com.seed.validation.core.SeedValidationException;
@@ -79,9 +80,9 @@ public class SeedValidationClient {
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
-        httpUrl.addQueryParameter("decimal", Double.toString(request.getDecimal()));
-        httpUrl.addQueryParameter("even", Integer.toString(request.getEven()));
-        httpUrl.addQueryParameter("name", request.getName());
+        QueryStringMapper.addQueryParameter(httpUrl, "decimal", Double.toString(request.getDecimal()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "even", Integer.toString(request.getEven()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "name", request.getName(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

@@ -652,6 +652,49 @@ func (c *Client) ListUsernames(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+func (c *Client) ListUsernamesCustom(
+	ctx context.Context,
+	request *fern.ListUsernamesRequestCustom,
+	opts ...option.RequestOption,
+) (*fern.UsernameCursor, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response *fern.UsernameCursor
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
 func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *fern.ListWithGlobalConfigRequest,

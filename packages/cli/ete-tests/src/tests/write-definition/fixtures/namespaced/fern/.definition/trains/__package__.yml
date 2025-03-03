@@ -8,6 +8,7 @@ types:
         docs: Indicates whether the passenger has a dog.
         type: optional<boolean>
       id:
+        access: read-only
         docs: Unique identifier for the booking
         type: optional<string>
         validation:
@@ -35,6 +36,7 @@ types:
           code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
         type: optional<BookingPaymentCurrency>
       id:
+        access: read-only
         docs: >-
           Unique identifier for the payment. This will be a unique identifier
           for the payment, and is used to reference the payment in other
@@ -49,6 +51,7 @@ types:
           protect PII leaking.
         type: optional<BookingPaymentSource>
       status:
+        access: read-only
         docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
         type: optional<BookingPaymentStatus>
     source:
@@ -144,12 +147,15 @@ types:
         type: optional<string>
       address_country: string
       address_line1:
+        access: write-only
         type: optional<string>
       address_line2:
+        access: write-only
         type: optional<string>
       address_post_code:
         type: optional<string>
       cvc:
+        access: write-only
         docs: >-
           Card security code, 3 or 4 digits usually found on the back of the
           card.
@@ -302,6 +308,7 @@ types:
         docs: The wrapper for a collection is an array of objects.
         type: optional<list<map<string, unknown>>>
       links:
+        access: read-only
         docs: A set of hypermedia links which serve as controls for the client.
         type: optional<map<string, unknown>>
     source:

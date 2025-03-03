@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedExtends.Core;
 
 namespace SeedExtends;
@@ -36,14 +36,14 @@ public partial class SeedExtendsClient
     /// await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
     /// </code>
     /// </example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         Inlined request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -59,11 +59,13 @@ public partial class SeedExtendsClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

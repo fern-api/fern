@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
@@ -19,14 +19,14 @@ public partial class Ec2Client
     /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
     /// </code>
     /// </example>
-    public async Task BootInstanceAsync(
+    public async global::System.Threading.Tasks.Task BootInstanceAsync(
         BootInstanceRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.Environment.Ec2,
@@ -42,11 +42,13 @@ public partial class Ec2Client
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedMultiUrlEnvironmentApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMultiUrlEnvironmentApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

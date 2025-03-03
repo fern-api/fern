@@ -356,9 +356,19 @@
         }
       ]
     },
-    "types.TypeReferenceDeclarationWithName": {
+    "types.ObjectPropertyAccess": {
+      "type": "string",
+      "enum": [
+        "read-only",
+        "write-only"
+      ]
+    },
+    "types.ObjectPropertyWithAccessSchema": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string"
+        },
         "default": {
           "oneOf": [
             {
@@ -439,8 +449,15 @@
             }
           ]
         },
-        "type": {
-          "type": "string"
+        "access": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectPropertyAccess"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -448,18 +465,15 @@
       ],
       "additionalProperties": false
     },
-    "types.TypeReferenceDeclarationWithNameSchema": {
+    "types.ObjectPropertySchema": {
       "anyOf": [
         {
           "type": "string"
         },
         {
-          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+          "$ref": "#/definitions/types.ObjectPropertyWithAccessSchema"
         }
       ]
-    },
-    "types.ObjectPropertySchema": {
-      "$ref": "#/definitions/types.TypeReferenceDeclarationWithNameSchema"
     },
     "types.ObjectSchema": {
       "type": "object",
@@ -2547,6 +2561,22 @@
       ],
       "additionalProperties": false
     },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -2554,6 +2584,9 @@
         },
         {
           "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
         }
       ]
     },

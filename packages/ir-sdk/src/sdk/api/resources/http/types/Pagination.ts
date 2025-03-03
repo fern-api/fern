@@ -7,7 +7,7 @@ import * as FernIr from "../../../index";
 /**
  * If set, the endpoint will be generated with auto-pagination features.
  */
-export type Pagination = FernIr.Pagination.Cursor | FernIr.Pagination.Offset;
+export type Pagination = FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Custom;
 
 export namespace Pagination {
     export interface Cursor extends FernIr.CursorPagination, _Utils {
@@ -18,6 +18,10 @@ export namespace Pagination {
         type: "offset";
     }
 
+    export interface Custom extends FernIr.CustomPagination, _Utils {
+        type: "custom";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Pagination._Visitor<_Result>) => _Result;
     }
@@ -25,6 +29,7 @@ export namespace Pagination {
     export interface _Visitor<_Result> {
         cursor: (value: FernIr.CursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
+        custom: (value: FernIr.CustomPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -34,7 +39,7 @@ export const Pagination = {
         return {
             ...value,
             type: "cursor",
-            _visit: function <_Result>(this: FernIr.Pagination.Cursor, visitor: FernIr.Pagination._Visitor<_Result>) {
+            _visit <_Result>(this: FernIr.Pagination.Cursor, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -44,7 +49,17 @@ export const Pagination = {
         return {
             ...value,
             type: "offset",
-            _visit: function <_Result>(this: FernIr.Pagination.Offset, visitor: FernIr.Pagination._Visitor<_Result>) {
+            _visit <_Result>(this: FernIr.Pagination.Offset, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    custom: (value: FernIr.CustomPagination): FernIr.Pagination.Custom => {
+        return {
+            ...value,
+            type: "custom",
+            _visit <_Result>(this: FernIr.Pagination.Custom, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -56,6 +71,8 @@ export const Pagination = {
                 return visitor.cursor(value);
             case "offset":
                 return visitor.offset(value);
+            case "custom":
+                return visitor.custom(value);
             default:
                 return visitor._other(value as any);
         }

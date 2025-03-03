@@ -1,5 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+using global::System.Text.Json.Serialization.Metadata;
 
 namespace SeedWebsocket.Core;
 
@@ -11,9 +12,54 @@ internal static partial class JsonOptions
     {
         var options = new JsonSerializerOptions
         {
-            Converters = { new DateTimeSerializer(), new OneOfSerializer() },
+            Converters = { new DateTimeSerializer(),
+#if USE_PORTABLE_DATE_ONLY
+                new DateOnlyConverter(),
+#endif
+                new OneOfSerializer() },
+#if DEBUG
             WriteIndented = true,
+#endif
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver
+            {
+                Modifiers =
+                {
+                    static typeInfo =>
+                    {
+                        if (typeInfo.Kind != JsonTypeInfoKind.Object)
+                            return;
+
+                        foreach (var propertyInfo in typeInfo.Properties)
+                        {
+                            var jsonAccessAttribute = propertyInfo
+                                .AttributeProvider?.GetCustomAttributes(
+                                    typeof(JsonAccessAttribute),
+                                    true
+                                )
+                                .OfType<JsonAccessAttribute>()
+                                .FirstOrDefault();
+
+                            if (jsonAccessAttribute != null)
+                            {
+                                propertyInfo.IsRequired = false;
+                                switch (jsonAccessAttribute.AccessType)
+                                {
+                                    case JsonAccessType.ReadOnly:
+                                        propertyInfo.Get = null;
+                                        propertyInfo.ShouldSerialize = (_, _) => false;
+                                        break;
+                                    case JsonAccessType.WriteOnly:
+                                        propertyInfo.Set = null;
+                                        break;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
+                            }
+                        }
+                    },
+                },
+            },
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;

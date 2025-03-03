@@ -10,12 +10,14 @@ export async function previewDocsWorkspace({
     loadProject,
     cliContext,
     port,
-    bundlePath
+    bundlePath,
+    brokenLinks
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
     bundlePath?: string;
+    brokenLinks: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -44,13 +46,15 @@ export async function previewDocsWorkspace({
                         return workspace.toFernWorkspace({ context });
                     })
                 );
+                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                 await validateDocsWorkspaceWithoutExiting({
                     workspace: docsWorkspace,
                     context,
                     logWarnings: true,
                     logSummary: false,
                     fernWorkspaces,
-                    ossWorkspaces: await filterOssWorkspaces(project)
+                    ossWorkspaces: await filterOssWorkspaces(project),
+                    excludeRules
                 });
                 for (const fernWorkspace of fernWorkspaces) {
                     await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {

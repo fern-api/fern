@@ -526,21 +526,19 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             }
             clientBuilder.addField(field.build());
 
-            if (!literal.isPresent()) {
-                MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(String.class, fieldName)
-                        .returns(builderName)
-                        .addJavadoc("Sets $L", fieldName)
-                        .addStatement("this.$L = $L", fieldName, fieldName)
-                        .addStatement("return this");
-                if (environmentVariable.isPresent()) {
-                    setter.addJavadoc(
-                            ".\nDefaults to the $L environment variable.",
-                            environmentVariable.get().get());
-                }
-                clientBuilder.addMethod(setter.build());
+            MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(String.class, fieldName)
+                    .returns(builderName)
+                    .addJavadoc("Sets $L", fieldName)
+                    .addStatement("this.$L = $L", fieldName, fieldName)
+                    .addStatement("return this");
+            if (environmentVariable.isPresent()) {
+                setter.addJavadoc(
+                        ".\nDefaults to the $L environment variable.",
+                        environmentVariable.get().get());
             }
+            clientBuilder.addMethod(setter.build());
         }
 
         private String getErrorMessage(String fieldName) {

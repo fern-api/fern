@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
@@ -19,7 +19,7 @@ public partial class ServiceClient
     /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
     /// </code>
     /// </example>
-    public async Task PostAsync(
+    public async global::System.Threading.Tasks.Task PostAsync(
         string pathParam,
         string serviceParam,
         string resourceParam,
@@ -29,7 +29,7 @@ public partial class ServiceClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -45,11 +45,13 @@ public partial class ServiceClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedApiWideBasePathApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiWideBasePathApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -147,7 +147,7 @@ function getServiceFilepath({
     const subpackage = context.getSubpackageForServiceId(serviceId);
     const clientClassReference = subpackage
         ? context.getSubpackageClassReference(subpackage)
-        : context.getRootClientClassReference();
+        : context.getRootClientClassReferenceForSnippets();
 
     return (
         "/" +

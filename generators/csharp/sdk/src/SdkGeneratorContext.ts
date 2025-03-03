@@ -17,6 +17,7 @@ import {
     NameAndWireValue,
     OAuthScheme,
     ProtobufService,
+    SdkRequestWrapper,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -132,23 +133,47 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
     }
 
+    public includePathParametersInWrappedRequest({
+        endpoint,
+        wrapper
+    }: {
+        endpoint: HttpEndpoint;
+        wrapper: SdkRequestWrapper;
+    }): boolean {
+        const inlinePathParameters = this.customConfig["inline-path-parameters"];
+        if (inlinePathParameters == null) {
+            return false;
+        }
+        const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
+        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    public includeExceptionHandler(): boolean {
+        return this.customConfig["include-exception-handler"] ?? false;
+    }
+
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.CollectionItemSerializer,
             AsIsFiles.Constants,
-            AsIsFiles.DateTimeSerializer,
             AsIsFiles.Extensions,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
-            AsIsFiles.JsonConfiguration,
-            AsIsFiles.OneOfSerializer,
+            AsIsFiles.Json.CollectionItemSerializer,
+            AsIsFiles.Json.DateOnlyConverter,
+            AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonAccessAttribute,
+            AsIsFiles.Json.JsonConfiguration,
+            AsIsFiles.Json.OneOfSerializer,
             AsIsFiles.RawClient
         ];
+        if (this.includeExceptionHandler()) {
+            files.push(AsIsFiles.ExceptionHandler);
+        }
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
@@ -159,9 +184,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.StringEnumSerializer);
+            files.push(AsIsFiles.Json.StringEnumSerializer);
         } else {
-            files.push(AsIsFiles.EnumSerializer);
+            files.push(AsIsFiles.Json.EnumSerializer);
         }
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
@@ -175,15 +200,22 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.Test.RawClientTests, AsIsFiles.Test.OneOfSerializerTests];
+        const files = [
+            AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
+            AsIsFiles.Test.Json.OneOfSerializerTests,
+            AsIsFiles.Test.RawClientTests
+        ];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.Test.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.Test.EnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
         }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
+
         return files;
     }
 
@@ -241,6 +273,20 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getExceptionHandlerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ExceptionHandler",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionInterceptorClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IExceptionInterceptor",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
@@ -276,9 +322,23 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${this.getComputedClientName()}Client`;
     }
 
+    public getRootClientClassNameForSnippets(): string {
+        if (this.customConfig["exported-client-class-name"] != null) {
+            return this.customConfig["exported-client-class-name"];
+        }
+        return this.getRootClientClassName();
+    }
+
     public getRootClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getRootClientClassReferenceForSnippets(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassNameForSnippets(),
             namespace: this.getNamespace()
         });
     }

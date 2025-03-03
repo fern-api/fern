@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.core.SeedExhaustiveException;
@@ -139,8 +140,8 @@ public class ParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -179,8 +180,8 @@ public class ParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -221,7 +222,7 @@ public class ParamsClient {
                 .addPathSegments("params")
                 .addPathSegments("path-query")
                 .addPathSegment(param);
-        httpUrl.addQueryParameter("query", request.getQuery());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -263,7 +264,7 @@ public class ParamsClient {
                 .addPathSegments("params")
                 .addPathSegments("path-query")
                 .addPathSegment(param);
-        httpUrl.addQueryParameter("query", request.getQuery());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

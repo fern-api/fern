@@ -44,6 +44,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
                 typeReference: property.valueType
             });
+            const fieldAttributes = [];
+            if (property.propertyAccess) {
+                fieldAttributes.push(this.context.createJsonAccessAttribute(property.propertyAccess));
+            }
 
             class_.addField(
                 csharp.field({
@@ -55,7 +59,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
                     useRequired: true,
-                    initializer: maybeLiteralInitializer
+                    initializer: maybeLiteralInitializer,
+                    annotations: fieldAttributes
                 })
             );
         });

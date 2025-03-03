@@ -1072,6 +1072,16 @@
               "type": "null"
             }
           ]
+        },
+        "csharp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2435,6 +2445,16 @@
           ]
         },
         "openapi-parser-v2": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "openapi-parser-v3": {
           "oneOf": [
             {
               "type": "boolean"
