@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class HttpEndpointMethodSpecFactory {
+public abstract class AbstractHttpEndpointMethodSpecFactory {
 
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
@@ -51,7 +51,7 @@ public final class HttpEndpointMethodSpecFactory {
 
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
 
-    public HttpEndpointMethodSpecFactory(
+    public AbstractHttpEndpointMethodSpecFactory(
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
@@ -72,6 +72,10 @@ public final class HttpEndpointMethodSpecFactory {
         this.generatedErrors = generatedErrors;
     }
 
+    public abstract AbstractHttpResponseParserGenerator responseParserGenerator();
+
+    public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
+
     public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
@@ -87,6 +91,8 @@ public final class HttpEndpointMethodSpecFactory {
                             generatedEnvironmentsClass,
                             sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
+                            responseParserGenerator(),
+                            httpEndpointMethodSpecsFactory(),
                             generatedErrors);
                     return onlyRequestEndpointWriter.generate();
                 }
@@ -119,6 +125,8 @@ public final class HttpEndpointMethodSpecFactory {
                                 generatedEnvironmentsClass,
                                 generatedWrappedRequest,
                                 httpEndpoint.getSdkRequest().get(),
+                                responseParserGenerator(),
+                                httpEndpointMethodSpecsFactory(),
                                 generatedErrors);
                         return onlyRequestEndpointWriter.generate();
                     }
@@ -132,6 +140,8 @@ public final class HttpEndpointMethodSpecFactory {
                             httpEndpoint.getSdkRequest().get(),
                             generatedEnvironmentsClass,
                             generatedWrappedRequest,
+                            responseParserGenerator(),
+                            httpEndpointMethodSpecsFactory(),
                             generatedErrors);
                     return wrappedRequestEndpointWriter.generate();
                 }
@@ -150,6 +160,8 @@ public final class HttpEndpointMethodSpecFactory {
                     clientOptionsField,
                     generatedEnvironmentsClass,
                     generatedClientOptions,
+                    responseParserGenerator(),
+                    httpEndpointMethodSpecsFactory(),
                     generatedErrors);
             return noRequestEndpointWriter.generate();
         }
