@@ -73,11 +73,9 @@ class UserClient:
             The name of the user to create.
             This name is unique to each user.
 
-
         age : typing.Optional[int]
             The age of the user.
             This property is not required.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,11 +188,9 @@ class AsyncUserClient:
             The name of the user to create.
             This name is unique to each user.
 
-
         age : typing.Optional[int]
             The age of the user.
             This property is not required.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
