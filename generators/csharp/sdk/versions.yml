@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc6
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: fix
+      summary: Fix bug where a lambda for sending HTTP requests would use the HTTP request from the outer scope instead of the local scope.
+
 - version: 1.12.0-rc5
   createdAt: "2025-03-03"
   irVersion: 56

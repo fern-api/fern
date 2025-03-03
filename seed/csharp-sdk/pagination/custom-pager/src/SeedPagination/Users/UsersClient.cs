@@ -527,7 +527,10 @@ public partial class UsersClient
                 Options = options,
             }
         );
-        var sendRequest = async (HttpRequestMessage request, CancellationToken cancellationToken) =>
+        var sendRequest = async (
+            HttpRequestMessage httpRequest,
+            CancellationToken cancellationToken
+        ) =>
         {
             var response = await _client
                 .SendRequestAsync(httpRequest, options, cancellationToken)
