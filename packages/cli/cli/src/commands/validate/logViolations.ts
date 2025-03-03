@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { eq } from "lodash-es";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
@@ -28,20 +29,21 @@ export function logViolations({
 }): LogViolationsResponse {
     // dedupe violations before processing
     const deduplicatedViolations: ValidationViolation[] = [];
-    const map = new Map<NodePath, ValidationViolation[]>();
+    const record: Record<string, ValidationViolation[]> = {};
     for (const violation of violations) {
-        const existingViolations = map.get(violation.nodePath) ?? [];
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
         const isDuplicate = existingViolations.some(
             (existingViolation) =>
                 existingViolation.message === violation.message &&
                 existingViolation.nodePath.length === violation.nodePath.length &&
-                existingViolation.nodePath.every((item, index) => item === violation.nodePath[index]) &&
+                existingViolation.nodePath.every((item, index) => eq(item, violation.nodePath[index])) &&
                 existingViolation.relativeFilepath === violation.relativeFilepath &&
                 existingViolation.severity === violation.severity
         );
         if (!isDuplicate) {
             deduplicatedViolations.push(violation);
-            map.set(violation.nodePath, [...existingViolations, violation]);
+            record[key] = [...existingViolations, violation];
         }
     }
     violations = deduplicatedViolations;
@@ -70,12 +72,13 @@ export function logViolations({
 }
 
 function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
-    const map = new Map<NodePath, ValidationViolation[]>();
+    const record: Record<string, ValidationViolation[]> = {};
     for (const violation of violations) {
-        const existingViolations = map.get(violation.nodePath) ?? [];
-        map.set(violation.nodePath, [...existingViolations, violation]);
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
+        record[key] = [...existingViolations, violation];
     }
-    return map;
+    return new Map(Object.entries(record).map(([key, violations]) => [JSON.parse(key), violations]));
 }
 
 function logViolationsGroup({
