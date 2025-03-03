@@ -90,7 +90,6 @@ export function generateIntermediateRepresentation({
     readme,
     packageName,
     version,
-    context,
     fdrApiDefinitionId,
     sourceResolver,
     includeDynamicExamples,

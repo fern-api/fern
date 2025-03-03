@@ -7,6 +7,8 @@ const IR_FILEPATH = "/fern/ir/ir.json";
 const OUTPUT_SNIPPET_PATH = "/fern/snippet/snippet.json";
 const OUTPUT_SNIPPET_TEMPLATE_PATH = "/fern/snippet/snippet-templates.json";
 const OUTPUT_PATH = "/fern/output";
+const PLACEHOLDER = "placeholder";
+const PLACEHOLDER_URL = "https://placeholder.org";
 
 export function getGeneratorConfig({
     apiName,
@@ -24,9 +26,9 @@ export function getGeneratorConfig({
         customConfig: generatorInvocation.config,
         irFilepath: IR_FILEPATH,
         environment: generatorExec.GeneratorEnvironment.remote({
-            coordinatorUrl: "https://placeholder.org",
-            coordinatorUrlV2: "https://placeholder.org",
-            id: "placeholder",
+            coordinatorUrl: PLACEHOLDER_URL,
+            coordinatorUrlV2: PLACEHOLDER_URL,
+            id: PLACEHOLDER,
         }),
         dryRun: false,
         publish: undefined,
@@ -85,37 +87,37 @@ function convertPublishTarget(publishTarget: FernFiddle.remoteGen.PublishOutputM
     switch (publishTarget.type) {
         case "npmOverride":
             return generatorExec.GeneratorPublishTarget.npm({
-                registryUrl: publishTarget.npmOverride?.registryUrl ?? "https://placeholder.org",
-                packageName: publishTarget.npmOverride?.packageName ?? "placeholder",
-                token: publishTarget.npmOverride?.token ?? "placeholder",
+                registryUrl: publishTarget.npmOverride?.registryUrl ?? PLACEHOLDER_URL,
+                packageName: publishTarget.npmOverride?.packageName ?? PLACEHOLDER,
+                token: publishTarget.npmOverride?.token ?? PLACEHOLDER,
             });
         case "mavenOverride":
             return generatorExec.GeneratorPublishTarget.maven({
-                registryUrl: publishTarget.mavenOverride?.registryUrl ?? "https://placeholder.org",
-                username: publishTarget.mavenOverride?.username ?? "placeholder",
-                password: publishTarget.mavenOverride?.password ?? "placeholder",
-                coordinate: publishTarget.mavenOverride?.coordinate ?? "placeholder",
+                registryUrl: publishTarget.mavenOverride?.registryUrl ?? PLACEHOLDER_URL,
+                username: publishTarget.mavenOverride?.username ?? PLACEHOLDER,
+                password: publishTarget.mavenOverride?.password ?? PLACEHOLDER,
+                coordinate: publishTarget.mavenOverride?.coordinate ?? PLACEHOLDER,
                 signature: publishTarget.mavenOverride?.signature ?? undefined,
             });
         case "pypiOverride":
             return generatorExec.GeneratorPublishTarget.pypi({
-                registryUrl: publishTarget.pypiOverride?.registryUrl ?? "https://placeholder.org",
-                packageName: publishTarget.pypiOverride?.coordinate ?? "placeholder",
-                username: publishTarget.pypiOverride?.username ?? "placeholder",
-                password: publishTarget.pypiOverride?.password ?? "placeholder",
+                registryUrl: publishTarget.pypiOverride?.registryUrl ?? PLACEHOLDER_URL,
+                packageName: publishTarget.pypiOverride?.coordinate ?? PLACEHOLDER,
+                username: publishTarget.pypiOverride?.username ?? PLACEHOLDER,
+                password: publishTarget.pypiOverride?.password ?? PLACEHOLDER,
                 pypiMetadata: publishTarget.pypiOverride?.pypiMetadata != null ? convertPypiMetadata(publishTarget.pypiOverride.pypiMetadata) : undefined,
             });
         case "rubyGemsOverride":
             return generatorExec.GeneratorPublishTarget.rubygems({
-                registryUrl: publishTarget.rubyGemsOverride?.registryUrl ?? "https://placeholder.org",
-                packageName: publishTarget.rubyGemsOverride?.packageName ?? "placeholder",
-                apiKey: publishTarget.rubyGemsOverride?.apiKey ?? "placeholder",
+                registryUrl: publishTarget.rubyGemsOverride?.registryUrl ?? PLACEHOLDER_URL,
+                packageName: publishTarget.rubyGemsOverride?.packageName ?? PLACEHOLDER,
+                apiKey: publishTarget.rubyGemsOverride?.apiKey ?? PLACEHOLDER,
             });
         case "nugetOverride":
             return generatorExec.GeneratorPublishTarget.nuget({
-                registryUrl: publishTarget.nugetOverride?.registryUrl ?? "https://placeholder.org",
-                packageName: publishTarget.nugetOverride?.packageName ?? "placeholder",
-                apiKey: publishTarget.nugetOverride?.apiKey ?? "placeholder",
+                registryUrl: publishTarget.nugetOverride?.registryUrl ?? PLACEHOLDER_URL,
+                packageName: publishTarget.nugetOverride?.packageName ?? PLACEHOLDER,
+                apiKey: publishTarget.nugetOverride?.apiKey ?? PLACEHOLDER,
             });
         case "postman":
             return generatorExec.GeneratorPublishTarget.postman({
