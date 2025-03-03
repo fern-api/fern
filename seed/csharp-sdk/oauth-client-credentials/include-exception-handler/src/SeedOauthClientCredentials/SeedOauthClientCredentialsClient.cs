@@ -6,12 +6,9 @@ public partial class SeedOauthClientCredentialsClient
 {
     private readonly RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
     public SeedOauthClientCredentialsClient(
         string clientId,
         string clientSecret,
-        IExceptionInterceptor? exceptionInterceptor = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -32,17 +29,16 @@ public partial class SeedOauthClientCredentialsClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _exceptionHandler = new ExceptionHandler(exceptionInterceptor);
         var tokenProvider = new OAuthTokenProvider(
             clientId,
             clientSecret,
-            new AuthClient(new RawClient(clientOptions.Clone()), _exceptionHandler)
+            new AuthClient(new RawClient(clientOptions.Clone()))
         );
         clientOptions.Headers["Authorization"] = new Func<string>(
             () => tokenProvider.GetAccessTokenAsync().Result
         );
         _client = new RawClient(clientOptions);
-        Auth = new AuthClient(_client, _exceptionHandler);
+        Auth = new AuthClient(_client);
     }
 
     public AuthClient Auth { get; init; }

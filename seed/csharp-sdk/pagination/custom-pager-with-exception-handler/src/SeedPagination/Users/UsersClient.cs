@@ -9,12 +9,9 @@ public partial class UsersClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal UsersClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal UsersClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <example>
@@ -36,8 +33,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -81,8 +78,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -126,8 +123,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -178,8 +175,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -232,8 +229,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -280,8 +277,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -334,8 +331,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -387,8 +384,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -435,8 +432,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -480,8 +477,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -525,8 +522,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -570,8 +567,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.StartingAfter != null)
@@ -628,8 +625,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 if (request is not null)
                 {
@@ -669,8 +666,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
@@ -733,8 +730,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Cursor != null)
@@ -787,8 +784,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -834,8 +831,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
@@ -898,8 +895,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
@@ -962,8 +959,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -1009,8 +1006,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
@@ -1069,8 +1066,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Page != null)
@@ -1129,8 +1126,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Cursor != null)
@@ -1181,8 +1178,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Cursor != null)
@@ -1235,8 +1232,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.StartingAfter != null)
@@ -1287,8 +1284,8 @@ public partial class UsersClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 if (request.Offset != null)
