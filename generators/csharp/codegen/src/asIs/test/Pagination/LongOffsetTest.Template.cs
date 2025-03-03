@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -10,51 +10,20 @@ public class LongOffsetTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithLongPage()
     {
-        var pager = CreatePager();
-        await AssertPager(pager);
+        var pager = await CreatePagerAsync();
+        await AssertPagerAsync(pager);
     }
 
-    private static Pager<object> CreatePager()
+    private static async Task<Pager<object>> CreatePagerAsync()
     {
         var responses = new List<Response>
         {
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = []
-                }
-            }
+            new() { Data = new() { Items = ["item1", "item2"] } },
+            new() { Data = new() { Items = ["item1"] } },
+            new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<
-            Request,
-            object?,
-            Response,
-            long,
-            object?,
-            object
-        >(
-            new()
-            {
-                Pagination = new()
-                {
-                    Page = 1
-                }
-            },
+        Pager<object> pager = await OffsetPager<Request, object?, Response, long, object?, object>.CreateInstanceAsync(
+            new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
             {
@@ -74,7 +43,7 @@ public class LongOffsetTest
         return pager;
     }
 
-    private static async SystemTask AssertPager(Pager<object> pager)
+    private static async SystemTask AssertPagerAsync(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;

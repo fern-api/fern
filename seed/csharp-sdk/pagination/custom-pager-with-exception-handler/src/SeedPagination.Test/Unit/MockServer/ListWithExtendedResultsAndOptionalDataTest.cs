@@ -44,7 +44,7 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = Client.Users.ListWithExtendedResultsAndOptionalDataAsync(
+        var pager = await Client.Users.ListWithExtendedResultsAndOptionalDataAsync(
             new ListUsersExtendedRequestForOptionalData
             {
                 Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

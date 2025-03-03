@@ -33,34 +33,46 @@ public partial class ComplexClient
     /// );
     /// </code>
     /// </example>
-    public Pager<Conversation> SearchAsync(SearchRequest request, RequestOptions? options = null)
+    public async Task<Pager<Conversation>> SearchAsync(
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = new CursorPager<
-            SearchRequest,
-            RequestOptions?,
-            PaginatedConversationResponse,
-            string?,
-            Conversation
-        >(
-            request,
-            options,
-            SearchAsync,
-            (request, cursor) =>
+        return await _exceptionHandler
+            .TryCatchAsync(async () =>
             {
-                request.Pagination ??= new();
-                request.Pagination.StartingAfter = cursor;
-            },
-            response => response?.Pages?.Next?.StartingAfter,
-            response => response?.Conversations?.ToList()
-        );
-        return pager;
+                if (request is not null)
+                {
+                    request = request with { };
+                }
+                var pager = await CursorPager<
+                    SearchRequest,
+                    RequestOptions?,
+                    PaginatedConversationResponse,
+                    string?,
+                    Conversation
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        SearchInternalAsync,
+                        (request, cursor) =>
+                        {
+                            request.Pagination ??= new();
+                            request.Pagination.StartingAfter = cursor;
+                        },
+                        response => response?.Pages?.Next?.StartingAfter,
+                        response => response?.Conversations?.ToList(),
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
     }
 
-    private async Task<PaginatedConversationResponse> SearchAsync(
+    private async Task<PaginatedConversationResponse> SearchInternalAsync(
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

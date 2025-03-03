@@ -80,10 +80,10 @@ public partial class UserClient
     {
         var _query = new Dictionary<string, object>();
         _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id.ToString();
+        _query["id"] = request.Id;
         _query["date"] = request.Date.ToString(Constants.DateFormat);
         _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes.ToString();
+        _query["bytes"] = request.Bytes;
         _query["user"] = JsonUtils.Serialize(request.User);
         _query["userList"] = JsonUtils.Serialize(request.UserList);
         _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);

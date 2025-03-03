@@ -41,7 +41,7 @@ public class ListWithMixedTypeCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = Client.Users.ListWithMixedTypeCursorPaginationAsync(
+        var pager = await Client.Users.ListWithMixedTypeCursorPaginationAsync(
             new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" },
             RequestOptions
         );
