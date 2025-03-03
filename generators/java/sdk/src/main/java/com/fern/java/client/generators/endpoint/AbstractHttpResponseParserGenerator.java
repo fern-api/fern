@@ -74,6 +74,14 @@ public abstract class AbstractHttpResponseParserGenerator {
     public abstract void addPropertySuccessResponse(
             CodeBlock.Builder httpResponseBuilder, String parsedResponseVariableName, CodeBlock snippetCodeBlock);
 
+    public abstract void addCursorPaginationResponse(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName pagerClassName,
+            CodeBlock hasNextPageBlock,
+            String resultVariableName,
+            String endpointName,
+            String methodParameters);
+
     public abstract void addNonPropertyNonPaginationSuccessResponse(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
@@ -942,8 +950,8 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 + "due to fern check validation.");
             }
 
-            httpResponseBuilder.addStatement(
-                    "return new $T<>($L, $L, () -> $L($L))",
+            addCursorPaginationResponse(
+                    httpResponseBuilder,
                     pagerClassName,
                     hasNextPageBlock,
                     resultVariableName,

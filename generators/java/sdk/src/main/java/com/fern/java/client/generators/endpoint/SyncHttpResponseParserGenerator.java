@@ -4,6 +4,7 @@ import com.fern.ir.model.http.JsonResponseBodyWithProperty;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.ObjectMapperUtils;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -28,6 +29,23 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 .add("return $L", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
+    }
+
+    @Override
+    public void addCursorPaginationResponse(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName pagerClassName,
+            CodeBlock hasNextPageBlock,
+            String resultVariableName,
+            String endpointName,
+            String methodParameters) {
+        httpResponseBuilder.addStatement(
+                "return new $T<>($L, $L, () -> $L($L))",
+                pagerClassName,
+                hasNextPageBlock,
+                resultVariableName,
+                endpointName,
+                methodParameters);
     }
 
     @Override

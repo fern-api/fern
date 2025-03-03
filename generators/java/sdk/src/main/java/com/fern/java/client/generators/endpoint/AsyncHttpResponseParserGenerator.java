@@ -5,6 +5,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.CompletableFutureUtils;
 import com.fern.java.utils.ObjectMapperUtils;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -37,6 +38,25 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .add("$L.complete($L)", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
+        httpResponseBuilder.addStatement("return $L", FUTURE);
+    }
+
+    @Override
+    public void addCursorPaginationResponse(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName pagerClassName,
+            CodeBlock hasNextPageBlock,
+            String resultVariableName,
+            String endpointName,
+            String methodParameters) {
+        httpResponseBuilder.addStatement(
+                "$L.complete(new $T<>($L, $L, () -> $L($L)))",
+                FUTURE,
+                pagerClassName,
+                hasNextPageBlock,
+                resultVariableName,
+                endpointName,
+                methodParameters);
         httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
