@@ -5,6 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
+import { GeneratorConfig } from "./GeneratorConfig";
 import { TypeId } from "../../../../commons/types/TypeId";
 import { NamedType } from "../../types/types/NamedType";
 import { EndpointId } from "../../../../commons/types/EndpointId";
@@ -17,6 +18,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     FernIr.dynamic.DynamicIntermediateRepresentation
 > = core.serialization.objectWithoutOptionalProperties({
     version: core.serialization.stringLiteral("1.0.0"),
+    generatorConfig: GeneratorConfig,
     types: core.serialization.record(TypeId, NamedType),
     endpoints: core.serialization.record(EndpointId, Endpoint),
     environments: EnvironmentsConfig.optional(),
@@ -27,6 +29,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
 export declare namespace DynamicIntermediateRepresentation {
     export interface Raw {
         version: "1.0.0";
+        generatorConfig: GeneratorConfig.Raw;
         types: Record<TypeId.Raw, NamedType.Raw>;
         endpoints: Record<EndpointId.Raw, Endpoint.Raw>;
         environments?: EnvironmentsConfig.Raw | null;

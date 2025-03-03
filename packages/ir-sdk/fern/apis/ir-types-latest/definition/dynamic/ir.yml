@@ -40,8 +40,8 @@ types:
       The configuration for the generator. This is a simplified version of the generator-exec
       GeneratorConfig configuration.
     properties:
-      organization: string
       workspace: string
+      organization: string
       customConfig: unknown
       outputConfig: GeneratorOutputConfig
 
@@ -69,6 +69,14 @@ types:
         type: string
         docs: A full repo url (i.e. https://github.com/fern-api/fern)
 
+  MavenPublishInfo:
+    properties:
+      version: string
+      coordinate: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
   NpmPublishInfo:
     properties:
       version: string
@@ -77,10 +85,10 @@ types:
         type: optional<string>
         docs: A full repo url (i.e. https://github.com/fern-api/fern)
 
-  MavenPublishInfo:
+  NugetPublishInfo:
     properties:
       version: string
-      coordinate: string
+      packageName: string
       repoUrl:
         type: optional<string>
         docs: A full repo url (i.e. https://github.com/fern-api/fern)
@@ -94,14 +102,6 @@ types:
         docs: A full repo url (i.e. https://github.com/fern-api/fern)
 
   RubyGemsPublishInfo:
-    properties:
-      version: string
-      packageName: string
-      repoUrl:
-        type: optional<string>
-        docs: A full repo url (i.e. https://github.com/fern-api/fern)
-
-  NugetPublishInfo:
     properties:
       version: string
       packageName: string
