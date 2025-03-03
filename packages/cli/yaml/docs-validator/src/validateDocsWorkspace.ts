@@ -7,7 +7,6 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules";
-import { APIWorkspaceLoader } from "./docsAst/APIWorkspaceLoader";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst";
 import { getAllRules } from "./getAllRules";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";

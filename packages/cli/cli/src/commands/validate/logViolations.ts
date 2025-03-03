@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { V } from "vitest/dist/chunks/reporters.nr4dxCkA";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
@@ -27,6 +26,26 @@ export function logViolations({
     logBreadcrumbs?: boolean;
     elapsedMillis?: number;
 }): LogViolationsResponse {
+    // dedupe violations before processing
+    const deduplicatedViolations: ValidationViolation[] = [];
+    const map = new Map<NodePath, ValidationViolation[]>();
+    for (const violation of violations) {
+        const existingViolations = map.get(violation.nodePath) ?? [];
+        const isDuplicate = existingViolations.some(
+            (existingViolation) =>
+                existingViolation.message === violation.message &&
+                existingViolation.nodePath.length === violation.nodePath.length &&
+                existingViolation.nodePath.every((item, index) => item === violation.nodePath[index]) &&
+                existingViolation.relativeFilepath === violation.relativeFilepath &&
+                existingViolation.severity === violation.severity
+        );
+        if (!isDuplicate) {
+            deduplicatedViolations.push(violation);
+            map.set(violation.nodePath, [...existingViolations, violation]);
+        }
+    }
+    violations = deduplicatedViolations;
+
     const stats = getViolationStats(violations);
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
@@ -53,7 +72,8 @@ export function logViolations({
 function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
     const map = new Map<NodePath, ValidationViolation[]>();
     for (const violation of violations) {
-        map.set(violation.nodePath, [...(map.get(violation.nodePath) ?? []), violation]);
+        const existingViolations = map.get(violation.nodePath) ?? [];
+        map.set(violation.nodePath, [...existingViolations, violation]);
     }
     return map;
 }
