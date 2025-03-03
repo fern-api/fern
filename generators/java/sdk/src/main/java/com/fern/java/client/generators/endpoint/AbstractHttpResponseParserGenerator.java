@@ -307,24 +307,13 @@ public abstract class AbstractHttpResponseParserGenerator {
             addTryWithResourcesVariant(
                     httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
             boolean isProperty = body.getResponseProperty().isPresent();
-            if (isProperty || pagination) {
+
+            if (isProperty) {
                 ObjectMapperUtils objectMapperUtils =
                         new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
                 httpResponseBuilder.add("$T $L = ", responseType, parsedResponseVariableName);
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
-            } else {
-                endpointMethodBuilder.returns(responseType);
-                addNonPropertyNonPaginationSuccessResponse(
-                        httpResponseBuilder,
-                        endpointMethodBuilder,
-                        responseType,
-                        clientGeneratorContext,
-                        generatedObjectMapper,
-                        responseBodyName,
-                        body);
-            }
-            if (isProperty) {
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(),
                         body.getResponseProperty().get(),
@@ -335,7 +324,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                         .add(snippet.codeBlock)
                         .build());
                 endpointMethodBuilder.returns(snippet.typeName);
-            } else if (pagination) {
+                return null;
+            }
+
+            if (pagination) {
+                ObjectMapperUtils objectMapperUtils =
+                        new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
+                httpResponseBuilder.add("$T $L = ", responseType, parsedResponseVariableName);
+                httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
+                        CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
                 ParameterSpec requestParameterSpec = maybeRequestParameterSpec.orElseThrow(
                         () -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                 ClassName pagerClassName =
@@ -366,7 +363,18 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 newPageNumberVariableName,
                                 methodParameters,
                                 typeReferenceIsOptional));
+                return null;
             }
+
+            endpointMethodBuilder.returns(responseType);
+            addNonPropertyNonPaginationSuccessResponse(
+                    httpResponseBuilder,
+                    endpointMethodBuilder,
+                    responseType,
+                    clientGeneratorContext,
+                    generatedObjectMapper,
+                    responseBodyName,
+                    body);
             return null;
         }
 
