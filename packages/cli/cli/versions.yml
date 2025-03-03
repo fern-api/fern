@@ -3,6 +3,13 @@
       Re-releasing the Fern CLI to fix an issue with the published package.
     type: fix
   irVersion: 56
+  version: 0.56.2
+
+- changelogEntry:
+  - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
   version: 0.56.1
 
 - changelogEntry:
