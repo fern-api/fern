@@ -58,7 +58,7 @@ public class AsyncReqWithHeadersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                CompletableFuture.complete(null);
+                future.complete(null);
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

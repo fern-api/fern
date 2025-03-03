@@ -1,7 +1,6 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.TypeId;
@@ -67,7 +66,18 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
 
+    public abstract void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder);
+
     public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
+
+    public abstract void addNonPropertyNonPaginationSuccessResponse(
+            CodeBlock.Builder httpResponseBuilder,
+            MethodSpec.Builder endpointMethodBuilder,
+            TypeName responseType,
+            ClientGeneratorContext clientGeneratorContext,
+            GeneratedObjectMapper generatedObjectMapper,
+            String responseBodyName,
+            JsonResponseBodyWithProperty body);
 
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
@@ -296,25 +306,21 @@ public abstract class AbstractHttpResponseParserGenerator {
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             boolean isProperty = body.getResponseProperty().isPresent();
             if (isProperty || pagination) {
+                ObjectMapperUtils objectMapperUtils =
+                        new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
                 httpResponseBuilder.add("$T $L = ", responseType, parsedResponseVariableName);
+                httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
+                        CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
             } else {
-                httpResponseBuilder.add("return ");
                 endpointMethodBuilder.returns(responseType);
-            }
-            if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), new $T() {})",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
+                addNonPropertyNonPaginationSuccessResponse(
+                        httpResponseBuilder,
+                        endpointMethodBuilder,
+                        responseType,
+                        clientGeneratorContext,
+                        generatedObjectMapper,
                         responseBodyName,
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
-            } else {
-                httpResponseBuilder.addStatement(
-                        "$T.$L.readValue($L.string(), $T.class)",
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        responseBodyName,
-                        responseType);
+                        body);
             }
             if (isProperty) {
                 SnippetAndResultType snippet = getNestedPropertySnippet(

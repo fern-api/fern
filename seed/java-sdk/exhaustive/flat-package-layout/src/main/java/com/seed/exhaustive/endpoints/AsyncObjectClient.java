@@ -69,7 +69,8 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
+                future.complete(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -113,7 +114,8 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class);
+                future.complete(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -157,7 +159,7 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class);
+                future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -207,7 +209,8 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class);
+                future.complete(ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), NestedObjectWithOptionalField.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -253,7 +256,8 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class);
+                future.complete(ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), NestedObjectWithRequiredField.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(
@@ -298,7 +302,8 @@ public class AsyncObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class);
+                future.complete(ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), NestedObjectWithRequiredField.class));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiException(

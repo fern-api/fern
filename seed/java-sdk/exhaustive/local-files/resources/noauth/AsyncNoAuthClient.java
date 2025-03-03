@@ -69,7 +69,7 @@ public class AsyncNoAuthClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
+        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       try {
