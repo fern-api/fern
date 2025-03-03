@@ -7,6 +7,7 @@ import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
     ExampleType,
+    generatorExec,
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
@@ -75,6 +76,7 @@ export declare namespace generateIntermediateRepresentation {
         sourceResolver: SourceResolver;
         fdrApiDefinitionId?: string;
         includeDynamicExamples?: boolean;
+        generatorConfig?: generatorExec.GeneratorConfig;
     }
 }
 
@@ -91,7 +93,8 @@ export function generateIntermediateRepresentation({
     context,
     fdrApiDefinitionId,
     sourceResolver,
-    includeDynamicExamples
+    includeDynamicExamples,
+    generatorConfig
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -180,13 +183,13 @@ export function generateIntermediateRepresentation({
             typesReferencedOnlyByService: {},
             sharedTypes: []
         },
+        generatorConfig,
         webhookGroups: {},
         websocketChannels: {},
         readmeConfig: undefined,
         sourceConfig: undefined,
         publishConfig: undefined,
         dynamic: undefined,
-        generatorConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

@@ -52,6 +52,21 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
+
+    const generatorConfig = getGeneratorConfig({
+        apiName: workspace.definition.rootApiFile.contents.name,
+        organization,
+        generatorInvocation: generatorInvocationWithEnvVarSubstitutions
+    });
+
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -66,7 +81,8 @@ export async function runRemoteGenerationForGenerator({
         packageName,
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
         context: interactiveTaskContext,
-        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace)
+        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
+        generatorConfig
     });
 
     const sources = workspace.getSources();
@@ -117,14 +133,6 @@ export async function runRemoteGenerationForGenerator({
 
     /** Sugar to substitute templated env vars in a standard way */
     const isPreview = absolutePathToPreview != null;
-    const substituteEnvVars = <T>(stringOrObject: T) =>
-        replaceEnvVariables(
-            stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-            { substituteAsEmpty: isPreview }
-        );
-
-    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
 
     const job = await createAndStartJob({
         projectConfig,
@@ -137,13 +145,6 @@ export async function runRemoteGenerationForGenerator({
             ...ir,
             fdrApiDefinitionId,
             publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions }),
-
-            // TODO: This generator config needs to be mapped into the dynamic IR.
-            generatorConfig: getGeneratorConfig({
-                apiName: ir.apiName.originalName,
-                organization,
-                generatorInvocation: generatorInvocationWithEnvVarSubstitutions
-            })
         },
         shouldLogS3Url,
         token,
