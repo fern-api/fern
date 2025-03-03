@@ -7,6 +7,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     "base-exception-class-name": z.string().optional(),
     "client-class-name": z.string().optional(),
     "exported-client-class-name": z.string().optional(),
+    "environment-class-name": z.string().optional(),
     "package-id": z.string().optional(),
     "explicit-namespaces": z.boolean().optional(),
     "root-namespace-for-core-classes": z.boolean().optional(),
