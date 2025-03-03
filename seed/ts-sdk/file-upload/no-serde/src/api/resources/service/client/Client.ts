@@ -98,6 +98,15 @@ export class Service {
             _request.append("optional_id", request.optional_id);
         }
 
+        _request.append("alias_object", toJson(request.alias_object));
+        for (const _item of request.list_of_alias_object) {
+            _request.append("list_of_alias_object", toJson(_item));
+        }
+
+        for (const _item of request.alias_list_of_object) {
+            _request.append("alias_list_of_object", toJson(_item));
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url:
@@ -527,6 +536,22 @@ export class Service {
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ list_of_objects_with_optionals: request.list_of_objects_with_optionals }),
+        )) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.alias_object }))) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_alias_object: request.list_of_alias_object }),
+        )) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ alias_list_of_object: request.alias_list_of_object }),
         )) {
             _request.append(key, value);
         }
