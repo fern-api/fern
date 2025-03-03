@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedPlainText.Core;
 
-namespace SeedPlainText.Test.Core;
+namespace SeedPlainText.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

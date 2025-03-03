@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedIdempotencyHeaders.Core;
 
-namespace SeedIdempotencyHeaders.Test.Core;
+namespace SeedIdempotencyHeaders.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

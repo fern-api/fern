@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedAuthEnvironmentVariables.Core;
 
-namespace SeedAuthEnvironmentVariables.Test.Core;
+namespace SeedAuthEnvironmentVariables.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

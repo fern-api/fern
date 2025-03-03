@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedCustomAuth.Core;
 
-namespace SeedCustomAuth.Test.Core;
+namespace SeedCustomAuth.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

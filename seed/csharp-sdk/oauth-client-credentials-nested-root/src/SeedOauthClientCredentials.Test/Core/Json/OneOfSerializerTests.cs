@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedOauthClientCredentials.Core;
 
-namespace SeedOauthClientCredentials.Test.Core;
+namespace SeedOauthClientCredentials.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
