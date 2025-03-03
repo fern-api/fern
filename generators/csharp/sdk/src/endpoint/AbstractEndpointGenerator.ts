@@ -261,7 +261,7 @@ export abstract class AbstractEndpointGenerator {
                 if (returnType != null) {
                     writer.write("return ");
                 }
-                writer.writeLine("await _exceptionHandler.TryCatchAsync(async () => {");
+                writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () => {");
                 writer.indent();
             }
             body.write(writer);
