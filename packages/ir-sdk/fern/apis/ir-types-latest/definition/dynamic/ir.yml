@@ -2,6 +2,7 @@ imports:
   commons: ../commons.yml
   endpoints: ./endpoints.yml
   environment: ../environment.yml
+  generator: ../generator-exec/config.yml
   types: ./types.yml
 types:
   DynamicIntermediateRepresentation:
@@ -18,6 +19,7 @@ types:
           The version of the dynamic IR. This is independent from the version
           of the primary IR.
         type: literal<"1.0.0">
+      generatorConfig: GeneratorConfig
       types: map<commons.TypeId, types.NamedType>
       endpoints: map<commons.EndpointId, endpoints.Endpoint>
       environments: optional<environment.EnvironmentsConfig>
@@ -32,3 +34,77 @@ types:
           path parameters are typically included in the SDK's client
           constructor.
         type: optional<list<types.NamedParameter>>
+  
+  GeneratorConfig:
+    docs: |
+      The configuration for the generator. This is a simplified version of the generator-exec
+      GeneratorConfig configuration.
+    properties:
+      organization: string
+      workspace: string
+      customConfig: unknown
+      outputConfig: GeneratorOutputConfig
+
+  GeneratorOutputConfig:
+    docs: |
+      The configuration for the output of the generator. This is a simplified version of the generator-exec
+      output.mode configuration.
+    union:
+      publish: PublishInfo
+      local: {}
+
+  PublishInfo:
+    union:
+      go: GoPublishInfo
+      maven: MavenPublishInfo
+      npm: NpmPublishInfo
+      nuget: NugetPublishInfo
+      pypi: PypiPublishInfo
+      rubygems: RubyGemsPublishInfo
+
+  GoPublishInfo:
+    properties:
+      version: string
+      repoUrl:
+        type: string
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  NpmPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  MavenPublishInfo:
+    properties:
+      version: string
+      coordinate: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  PypiPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  RubyGemsPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  NugetPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl:
+        type: optional<string>
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
