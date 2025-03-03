@@ -22,7 +22,7 @@ When troubleshooting:
 
 The following sections describe each global option in detail.
 
-## help
+## `--help`
 
 Use the `--help` option with any Fern CLI command to see an explanation and available options. 
 
@@ -56,7 +56,7 @@ Options:
 ```
 </CodeBlocks>
 
-## log-level
+## `--log-level`
 
 Use the `--log-level` option to set the verbosity of Fern's logging output. The default level is `info`.
 
@@ -70,7 +70,7 @@ Available levels (from most to least verbose):
 fern generate --log-level debug
 ```
 
-## api
+## `--api`
 
 Use the `--api` option to target a specific API. This is particularly useful when your project contains multiple API definitions. The API name should match the directory name in your `fern/apis/` folder.
 
@@ -79,7 +79,7 @@ Use the `--api` option to target a specific API. This is particularly useful whe
 fern generate --api payments-api
 ```
 
-## group
+## `--group`
 
 Use the `--group` option to target a specific generator group.
 
@@ -88,7 +88,7 @@ Use the `--group` option to target a specific generator group.
 fern generate --group ruby-sdk
 ```
 
-## version
+## `–-version`
 
 Use the `--version` option to specify the SDK version number, typically following semantic versioning (semver) format (`MAJOR.MINOR.PATCH`). This is particularly useful in CI/CD pipelines when publishing SDK releases.
 
