@@ -17,10 +17,13 @@ import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -28,6 +31,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 public class AsyncPrimitiveClient {
   protected final ClientOptions clientOptions;
@@ -65,17 +69,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<String> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Integer> getAndReturnInt(int request) {
@@ -106,17 +117,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<Integer> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), int.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), int.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Long> getAndReturnLong(long request) {
@@ -147,17 +165,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<Long> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), long.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), long.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Double> getAndReturnDouble(double request) {
@@ -189,17 +214,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<Double> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), double.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), double.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Boolean> getAndReturnBool(boolean request) {
@@ -231,17 +263,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<Boolean> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
@@ -273,17 +312,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<OffsetDateTime> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), OffsetDateTime.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), OffsetDateTime.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> getAndReturnDate(String request) {
@@ -314,17 +360,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<String> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<UUID> getAndReturnUuid(UUID request) {
@@ -355,17 +408,24 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<UUID> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<byte[]> getAndReturnBase64(byte[] request) {
@@ -397,16 +457,23 @@ public class AsyncPrimitiveClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<byte[]> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), byte[].class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), byte[].class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 }

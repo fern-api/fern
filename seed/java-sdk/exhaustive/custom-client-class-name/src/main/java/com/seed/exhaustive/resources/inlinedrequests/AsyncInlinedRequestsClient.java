@@ -16,6 +16,8 @@ import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -23,6 +25,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 public class AsyncInlinedRequestsClient {
     protected final ClientOptions clientOptions;
@@ -67,27 +70,35 @@ public class AsyncInlinedRequestsClient {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                future.complete(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 400) {
-                    throw new BadRequestBody(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class));
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), ObjectWithOptionalField.class));
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    try {
+                        if (response.code() == 400) {
+                            throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(
+                                    responseBodyString, BadObjectRequestInfo.class));
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new BestApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
                 }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
             }
-            throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new BestException("Network error executing HTTP request", e);
-        }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
     }
 }

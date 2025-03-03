@@ -13,10 +13,13 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
@@ -155,5 +158,32 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
         httpResponseBuilder.add("return ");
         httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                 CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
+    }
+
+    @Override
+    public void addTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow(
+                        "try ($T $L = $N.newCall($L).execute())",
+                        Response.class,
+                        responseName,
+                        defaultedClientName,
+                        okhttpRequestName)
+                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
+    @Override
+    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
+        httpResponseBuilder
+                .beginControlFlow("catch ($T e)", IOException.class)
+                .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
+                .endControlFlow()
+                .build();
     }
 }

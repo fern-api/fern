@@ -14,11 +14,18 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
@@ -67,43 +74,53 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
-        beginResponseProcessingTryBlock(
+        writeOkhttpCallback(
                 httpResponseBuilder,
-                httpEndpoint,
-                responseName,
                 defaultedClientName,
                 okhttpRequestName,
-                responseBodyName);
-        addSuccessResponseCodeBlock(
-                httpResponseBuilder,
-                endpointMethodBuilder,
-                clientGeneratorContext,
-                generatedObjectMapper,
-                httpEndpoint,
-                maybeRequestParameterSpec,
                 responseName,
-                defaultedClientName,
-                okhttpRequestName,
-                responseBodyName,
-                parsedResponseVariableName,
-                nextRequestVariableName,
-                startingAfterVariableName,
-                resultVariableName,
-                newPageNumberVariableName,
-                typeReferenceIsOptional);
-        httpResponseBuilder.endControlFlow();
-        addMappedFailuresCodeBlock(
-                httpResponseBuilder,
-                clientGeneratorContext,
-                httpEndpoint,
-                apiErrorClassName,
-                generatedObjectMapper,
-                responseName,
-                responseBodyName,
-                responseBodyStringName,
-                generatedErrors);
-        httpResponseBuilder.endControlFlow();
-        addGenericFailureCodeBlock(httpResponseBuilder, baseErrorClassName);
+                builder -> {
+                    beginResponseProcessingTryBlock(
+                            builder,
+                            httpEndpoint,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    addSuccessResponseCodeBlock(
+                            builder,
+                            endpointMethodBuilder,
+                            clientGeneratorContext,
+                            generatedObjectMapper,
+                            httpEndpoint,
+                            maybeRequestParameterSpec,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName,
+                            parsedResponseVariableName,
+                            nextRequestVariableName,
+                            startingAfterVariableName,
+                            resultVariableName,
+                            newPageNumberVariableName,
+                            typeReferenceIsOptional);
+                    httpResponseBuilder.endControlFlow();
+                    addMappedFailuresCodeBlock(
+                            builder,
+                            clientGeneratorContext,
+                            httpEndpoint,
+                            apiErrorClassName,
+                            generatedObjectMapper,
+                            responseName,
+                            responseBodyName,
+                            responseBodyStringName,
+                            generatedErrors);
+                    httpResponseBuilder.endControlFlow();
+                },
+                builder -> {
+                    addGenericFailureCodeBlock(builder, baseErrorClassName);
+                });
+        httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
     @Override
@@ -118,6 +135,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder.addStatement("$L.complete(null)", FUTURE);
+        httpResponseBuilder.addStatement("return");
     }
 
     @Override
@@ -127,6 +145,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .add("$L.complete($L)", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
+        httpResponseBuilder.addStatement("return");
     }
 
     @Override
@@ -145,6 +164,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 resultVariableName,
                 endpointName,
                 methodParameters);
+        httpResponseBuilder.addStatement("return");
     }
 
     @Override
@@ -161,5 +181,73 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.add(objectMapperUtils.readValueCall(
                 CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
         httpResponseBuilder.addStatement(")");
+    }
+
+    @Override
+    public void addTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow("try ($T $L = $N.body())", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
+    @Override
+    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
+        httpResponseBuilder
+                .addStatement(
+                        "$L.completeExceptionally(new $T($S, e))",
+                        FUTURE,
+                        baseErrorClassName,
+                        "Network error executing HTTP request")
+                .build();
+    }
+
+    private void writeOkhttpCallback(
+            CodeBlock.Builder httpResponseBuilder,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseName,
+            Consumer<CodeBlock.Builder> onResponseWriter,
+            Consumer<CodeBlock.Builder> onFailureWriter) {
+        httpResponseBuilder.add(
+                "$N.newCall($L).enqueue(new $T() {\n", defaultedClientName, okhttpRequestName, Callback.class);
+        httpResponseBuilder.indent();
+
+        httpResponseBuilder.add("@$T\n", Override.class);
+        httpResponseBuilder.add(
+                "public void onResponse(@$T $T $N, @$T $T $N) throws $T {\n",
+                NotNull.class,
+                Call.class,
+                "call",
+                NotNull.class,
+                Response.class,
+                responseName,
+                IOException.class);
+        httpResponseBuilder.indent();
+        onResponseWriter.accept(httpResponseBuilder);
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.add("}\n");
+        httpResponseBuilder.add("\n");
+
+        httpResponseBuilder.add("@$T\n", Override.class);
+        httpResponseBuilder.add(
+                "public void onFailure(@$T $T $N, @$T $T $N) {\n",
+                NotNull.class,
+                Call.class,
+                "call",
+                NotNull.class,
+                IOException.class,
+                "e");
+        httpResponseBuilder.indent();
+        onFailureWriter.accept(httpResponseBuilder);
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.add("}\n");
+
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.addStatement("})");
     }
 }

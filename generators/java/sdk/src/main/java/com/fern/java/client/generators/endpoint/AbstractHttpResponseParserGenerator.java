@@ -48,7 +48,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,6 +122,16 @@ public abstract class AbstractHttpResponseParserGenerator {
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional);
+
+    public abstract void addTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName);
+
+    public abstract void addGenericFailureCodeBlock(
+            CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName);
 
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
@@ -309,14 +318,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                 objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
     }
 
-    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
-        httpResponseBuilder
-                .beginControlFlow("catch ($T e)", IOException.class)
-                .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
-                .endControlFlow()
-                .build();
-    }
-
     public TypeName getResponseType(HttpEndpoint httpEndpoint, ClientGeneratorContext clientGeneratorContext) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
@@ -493,23 +494,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                 .beginControlFlow("try")
                 .addStatement(
                         "$T $L = $N.newCall($L).execute()",
-                        Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
-    }
-
-    private void addTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
-        httpResponseBuilder
-                .beginControlFlow(
-                        "try ($T $L = $N.newCall($L).execute())",
                         Response.class,
                         responseName,
                         defaultedClientName,

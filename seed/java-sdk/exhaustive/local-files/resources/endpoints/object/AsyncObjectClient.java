@@ -18,9 +18,12 @@ import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -28,6 +31,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 public class AsyncObjectClient {
   protected final ClientOptions clientOptions;
@@ -70,17 +74,24 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
@@ -113,17 +124,24 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<ObjectWithRequiredField> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
@@ -156,17 +174,24 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<ObjectWithMapOfMap> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
@@ -203,17 +228,24 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<NestedObjectWithOptionalField> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
@@ -247,17 +279,24 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<NestedObjectWithRequiredField> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
@@ -290,16 +329,23 @@ public class AsyncObjectClient {
       client = clientOptions.httpClientWithTimeout(requestOptions);
     }
     CompletableFuture<NestedObjectWithRequiredField> future = new CompletableFuture<>();
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+    client.newCall(okhttpRequest).enqueue(new Callback() {
+      @Override
+      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (response.isSuccessful()) {
+            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+          }
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        }
       }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+
+      @Override
+      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+      }
+    });
+    return future;
   }
 }
