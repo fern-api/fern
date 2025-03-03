@@ -6209,6 +6209,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/core-utils
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils
