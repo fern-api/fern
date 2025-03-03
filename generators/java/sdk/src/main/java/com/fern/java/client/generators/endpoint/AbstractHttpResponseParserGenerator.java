@@ -235,7 +235,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         } else {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
-        httpResponseBuilder.endControlFlow();
     }
 
     public void addMappedFailuresCodeBlock(
@@ -312,7 +311,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
         httpResponseBuilder
-                .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()

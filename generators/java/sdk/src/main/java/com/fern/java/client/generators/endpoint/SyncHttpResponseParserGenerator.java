@@ -91,6 +91,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 resultVariableName,
                 newPageNumberVariableName,
                 typeReferenceIsOptional);
+        httpResponseBuilder.endControlFlow();
         addMappedFailuresCodeBlock(
                 httpResponseBuilder,
                 clientGeneratorContext,
@@ -101,6 +102,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 responseBodyName,
                 responseBodyStringName,
                 generatedErrors);
+        httpResponseBuilder.endControlFlow();
         addGenericFailureCodeBlock(httpResponseBuilder, baseErrorClassName);
     }
 
