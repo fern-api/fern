@@ -261,6 +261,22 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         })
     };
 
+    public Websocket = {
+        _getReferenceToType: this.withExportedName("Websocket", (Websocket) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType]);
+        }),
+
+        get: this.withExportedName("Websocket", (Websocket) => (websocket: ts.Expression) => {
+            return ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(Websocket.getExpression(), "get"),
+                    undefined,
+                    [websocket]
+                )
+            );
+        })
+    };
+
     public FetchFunction = {
         _getReferenceToType: this.withExportedName(
             "FetchFunction",

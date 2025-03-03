@@ -32,7 +32,18 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, Project, SourceFile, ts } from "ts-morph";
+import {
+    Directory,
+    InterfaceDeclarationStructure,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    Project,
+    PropertySignatureStructure,
+    Scope,
+    SourceFile,
+    StructureKind,
+    ts
+} from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
@@ -48,7 +59,9 @@ import {
     IntermediateRepresentation,
     OAuthScheme,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    WebSocketChannel,
+    WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 
@@ -66,6 +79,7 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
+import { WebsocketDeclarationReferencer } from "./declaration-referencers/WebsocketDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
@@ -197,6 +211,7 @@ export class SdkGenerator {
     private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
     private readonly asIsManager: AsIsManager;
+    private websocketDeclarationReferencer: WebsocketDeclarationReferencer;
 
     constructor({
         namespaceExport,
@@ -414,6 +429,11 @@ export class SdkGenerator {
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt
         });
+
+        this.websocketDeclarationReferencer = new WebsocketDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport
+        });
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -463,6 +483,11 @@ export class SdkGenerator {
             if (oauthScheme != null && oauthScheme.type === "oauth") {
                 this.generateOAuthTokenProvider(oauthScheme);
             }
+        }
+
+        if (Object.entries(this.intermediateRepresentation.websocketChannels ?? {}).length > 0) {
+            this.generateWebsocketClients();
+            this.context.logger.debug("Generated websocket clients");
         }
 
         if (this.npmPackage?.version != null) {
@@ -592,6 +617,17 @@ export class SdkGenerator {
         return this.intermediateRepresentation.types;
     }
 
+    private getWebsocketClientsToGenerate(): Record<WebSocketChannelId, WebSocketChannel> {
+        if (this.config.enableInlineTypes) {
+            return Object.fromEntries(
+                Object.entries(this.intermediateRepresentation.websocketChannels || {}).filter(
+                    ([_, websocketChannel]) => websocketChannel.displayName !== undefined
+                )
+            );
+        }
+        return this.intermediateRepresentation.websocketChannels || {};
+    }
+
     public async copyCoreUtilities({
         pathToSrc,
         pathToRoot
@@ -629,6 +665,209 @@ export class SdkGenerator {
             });
         }
         return { generated };
+    }
+
+    private generateWebsocketClients() {
+        for (const websocketClient of Object.values(this.getWebsocketClientsToGenerate())) {
+            this.withSourceFile({
+                filepath: this.websocketDeclarationReferencer.getExportedFilepath(websocketClient.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+
+                    sourceFile.addStatements([
+                        'import qs from "qs";',
+                        'import { ChatSocket } from "./Socket";',
+                        'import { SDK_VERSION } from "../../../../../../version";'
+                    ]);
+
+                    const serviceModule: ModuleDeclarationStructure = {
+                        kind: StructureKind.Module,
+                        name: "Chat",
+                        isExported: true,
+                        hasDeclareKeyword: true
+                    };
+
+                    const optionsInterfaceProperties: OptionalKind<PropertySignatureStructure>[] = [];
+
+                    const generatedEnvironments = context.environments.getGeneratedEnvironments();
+                    optionsInterfaceProperties.push({
+                        name: "environment",
+                        type: getTextOfTsNode(
+                            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                                generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
+                            )
+                        ),
+                        hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
+                    });
+
+                    optionsInterfaceProperties.push({
+                        name: "apiKey",
+                        type: "core.Supplier<string | undefined>",
+                        hasQuestionToken: true
+                    });
+
+                    optionsInterfaceProperties.push({
+                        name: "accessToken",
+                        type: "core.Supplier<string | undefined>",
+                        hasQuestionToken: true
+                    });
+
+                    const optionsInterface: InterfaceDeclarationStructure = {
+                        kind: StructureKind.Interface,
+                        name: "Options",
+                        properties: optionsInterfaceProperties,
+                        isExported: true
+                    };
+
+                    const connectArgsInterfaceProperties: OptionalKind<PropertySignatureStructure>[] = [];
+
+                    connectArgsInterfaceProperties.push(
+                        {
+                            name: "debug",
+                            type: "boolean",
+                            hasQuestionToken: true,
+                            docs: ["Enable debug mode on the websocket. Defaults to false."]
+                        },
+                        {
+                            name: "reconnectAttempts",
+                            type: "number",
+                            hasQuestionToken: true,
+                            docs: ["Number of reconnect attempts. Defaults to 30."]
+                        },
+                        {
+                            name: "configId",
+                            type: "string",
+                            hasQuestionToken: true,
+                            docs: ["The ID of the configuration."]
+                        },
+                        {
+                            name: "configVersion",
+                            type: "string",
+                            hasQuestionToken: true,
+                            docs: ["The version of the configuration."]
+                        },
+                        {
+                            name: "resumedChatGroupId",
+                            type: "string",
+                            hasQuestionToken: true,
+                            docs: ["The ID of a chat group, used to resume a previous chat."]
+                        },
+                        {
+                            name: "verboseTranscription",
+                            type: "boolean",
+                            hasQuestionToken: true,
+                            docs: [
+                                "A flag to enable verbose transcription. Set this query parameter to `true` to have unfinalized user transcripts " +
+                                    "be sent to the client as interim UserMessage messages. The [interim](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.interim) " +
+                                    'field on a [UserMessage](/reference/empathic-voice-interface-evi/chat/chat#receive.User%20Message.type) denotes whether the message is "interim" or "final."'
+                            ]
+                        },
+                        {
+                            name: "queryParams",
+                            type: "Record<string, string | string[] | object | object[]>",
+                            hasQuestionToken: true,
+                            docs: ["Extra query parameters sent at WebSocket connection"]
+                        }
+                    );
+
+                    const connectArgsInterface: InterfaceDeclarationStructure = {
+                        kind: StructureKind.Interface,
+                        name: "ConnectArgs",
+                        properties: connectArgsInterfaceProperties,
+                        isExported: true
+                    };
+
+                    serviceModule.statements = [optionsInterface, connectArgsInterface];
+
+                    sourceFile.addModule(serviceModule);
+
+                    sourceFile.addClass({
+                        name: "Chat",
+                        isExported: true,
+                        ctors: [
+                            {
+                                parameters: [
+                                    {
+                                        name: "_options",
+                                        type: "Chat.Options",
+                                        isReadonly: true,
+                                        scope: Scope.Protected
+                                    }
+                                ]
+                            }
+                        ],
+                        methods: [
+                            {
+                                name: "connect",
+                                parameters: [
+                                    {
+                                        name: "args",
+                                        type: "Chat.ConnectArgs",
+                                        hasQuestionToken: true,
+                                        initializer: "{}"
+                                    }
+                                ],
+                                returnType: "ChatSocket",
+                                statements: [
+                                    "const queryParams: Record<string, string | string[] | object | object[]> = {};",
+                                    "",
+                                    'queryParams["fernSdkLanguage"] = "JavaScript";',
+                                    'queryParams["fernSdkVersion"] = SDK_VERSION;',
+                                    "",
+                                    "if (this._options.accessToken != null) {",
+                                    '    queryParams["accessToken"] = this._options.accessToken;',
+                                    "} else if (this._options.apiKey != null) {",
+                                    '    queryParams["apiKey"] = this._options.apiKey;',
+                                    "}",
+                                    "",
+                                    'if (args.configId !== null && args.configId !== undefined && args.configId !== "") {',
+                                    '    queryParams["config_id"] = args.configId;',
+                                    "}",
+                                    "",
+                                    'if (args.configVersion !== null && args.configVersion !== undefined && args.configVersion !== "") {',
+                                    '    queryParams["config_version"] = args.configVersion;',
+                                    "}",
+                                    "",
+                                    "if (",
+                                    "    args.resumedChatGroupId !== null &&",
+                                    "    args.resumedChatGroupId !== undefined &&",
+                                    '    args.resumedChatGroupId !== ""',
+                                    ") {",
+                                    '    queryParams["resumed_chat_group_id"] = args.resumedChatGroupId;',
+                                    "}",
+                                    "",
+                                    "if (args.verboseTranscription !== null) {",
+                                    '    queryParams["verbose_transcription"] = args.verboseTranscription ? "true" : "false";',
+                                    "}",
+                                    "",
+                                    "if (args.queryParams !== null && args.queryParams !== undefined) {",
+                                    "    for (const [name, value] of Object.entries(args.queryParams)) {",
+                                    "        queryParams[name] = value;",
+                                    "    }",
+                                    "}",
+                                    "",
+                                    "const socket = new core.ReconnectingWebSocket(",
+                                    "    `wss://${(core.Supplier.get(this._options.environment) ?? environments.HumeEnvironment.Production).replace(",
+                                    '        "https://",',
+                                    '        ""',
+                                    "    )}/v0/evi/chat?${qs.stringify(queryParams)}`,",
+                                    "    [],",
+                                    "    {",
+                                    "        debug: args.debug ?? false,",
+                                    "        maxRetries: args.reconnectAttempts ?? 30,",
+                                    "    }",
+                                    ");",
+                                    "",
+                                    "return new ChatSocket({",
+                                    "    socket,",
+                                    "});"
+                                ]
+                            }
+                        ]
+                    });
+                }
+            });
+        }
     }
 
     private generateErrorDeclarations() {
