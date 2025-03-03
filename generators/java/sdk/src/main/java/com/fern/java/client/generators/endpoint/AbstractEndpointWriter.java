@@ -291,17 +291,17 @@ public abstract class AbstractEndpointWriter {
                 .map(parameterSpec -> parameterSpec.name)
                 .collect(Collectors.toList());
         paramNames.add("null");
-        MethodSpec endpointWithoutRequestOptions = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+        MethodSpec.Builder endpointWithoutRequestOptionsBuilder = MethodSpec.methodBuilder(
+                        endpointWithRequestOptions.name)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameters(pathParameters)
                 .addParameters(additionalParameters)
-                .addJavadoc(endpointWithRequestOptions.javadoc)
-                .addStatement(
-                        endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                                ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
-                                : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames)
-                                        + ")",
-                        endpointWithRequestOptions.name)
+                .addJavadoc(endpointWithRequestOptions.javadoc);
+
+        responseParserGenerator.addEndpointWithoutRequestOptionsReturnStatement(
+                endpointWithoutRequestOptionsBuilder, endpointWithRequestOptions, paramNames);
+
+        MethodSpec endpointWithoutRequestOptions = endpointWithoutRequestOptionsBuilder
                 .returns(endpointWithRequestOptions.returnType)
                 .build();
 
@@ -336,14 +336,9 @@ public abstract class AbstractEndpointWriter {
             } else {
                 paramNamesWoBody.add("$T.builder().build()");
             }
-            endpointWithoutRequest = endpointWithoutRequestBuilder
-                    .addStatement(
-                            endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                                    ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
-                                    : "return " + endpointWithRequestOptions.name + "("
-                                            + String.join(",", paramNamesWoBody) + ")",
-                            bodyParameterSpec.type)
-                    .build();
+            responseParserGenerator.addEndpointWithoutRequestReturnStatement(
+                    endpointWithoutRequestBuilder, endpointWithRequestOptions, paramNamesWoBody, bodyParameterSpec);
+            endpointWithoutRequest = endpointWithoutRequestBuilder.build();
         }
         Optional<BytesRequest> maybeBytes = httpEndpoint
                 .getSdkRequest()

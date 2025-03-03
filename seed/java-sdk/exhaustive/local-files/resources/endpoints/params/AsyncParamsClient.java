@@ -133,7 +133,7 @@ public class AsyncParamsClient {
    * GET with query param
    */
   public CompletableFuture<Void> getWithQuery(GetWithQuery request) {
-    getWithQuery(request,null);
+    return getWithQuery(request,null);
   }
 
   /**
@@ -172,7 +172,7 @@ public class AsyncParamsClient {
      * GET with multiple of same query param
      */
     public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-      getWithAllowMultipleQuery(request,null);
+      return getWithAllowMultipleQuery(request,null);
     }
 
     /**
@@ -213,7 +213,7 @@ public class AsyncParamsClient {
        */
       public CompletableFuture<Void> getWithPathAndQuery(String param,
           GetWithPathAndQuery request) {
-        getWithPathAndQuery(param,request,null);
+        return getWithPathAndQuery(param,request,null);
       }
 
       /**
@@ -254,7 +254,7 @@ public class AsyncParamsClient {
          */
         public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
             GetWithInlinePathAndQuery request) {
-          getWithInlinePathAndQuery(param,request,null);
+          return getWithInlinePathAndQuery(param,request,null);
         }
 
         /**

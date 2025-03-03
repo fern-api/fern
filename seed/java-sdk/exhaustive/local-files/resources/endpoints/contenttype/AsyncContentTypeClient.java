@@ -33,11 +33,11 @@ public class AsyncContentTypeClient {
   }
 
   public CompletableFuture<Void> postJsonPatchContentType() {
-    postJsonPatchContentType(ObjectWithOptionalField.builder().build());
+    return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
   }
 
   public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
-    postJsonPatchContentType(request,null);
+    return postJsonPatchContentType(request,null);
   }
 
   public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request,
@@ -79,12 +79,12 @@ public class AsyncContentTypeClient {
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
-    postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+    return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
       ObjectWithOptionalField request) {
-    postJsonPatchContentWithCharsetType(request,null);
+    return postJsonPatchContentWithCharsetType(request,null);
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(

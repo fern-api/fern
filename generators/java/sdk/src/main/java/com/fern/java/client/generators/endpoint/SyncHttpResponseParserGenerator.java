@@ -7,10 +7,37 @@ import com.fern.java.utils.ObjectMapperUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import java.util.List;
 import java.util.Optional;
 
 public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
+
+    @Override
+    public void addEndpointWithoutRequestOptionsReturnStatement(
+            MethodSpec.Builder endpointWithoutRequestOptionsBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> paramNames) {
+        endpointWithoutRequestOptionsBuilder.addStatement(
+                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
+                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
+                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")",
+                endpointWithRequestOptions.name);
+    }
+
+    @Override
+    public void addEndpointWithoutRequestReturnStatement(
+            MethodSpec.Builder endpointWithoutRequestBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> paramNamesWoBody,
+            ParameterSpec bodyParameterSpec) {
+        endpointWithoutRequestBuilder.addStatement(
+                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
+                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
+                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                bodyParameterSpec.type);
+    }
 
     @Override
     public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
