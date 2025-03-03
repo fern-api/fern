@@ -68,7 +68,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     sourceConfig: SourceConfig.optional(),
     publishConfig: PublishingConfig.optional(),
     dynamic: DynamicIntermediateRepresentation.optional(),
-    generatorConfig: GeneratorConfig,
+    generatorConfig: GeneratorConfig.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -100,6 +100,6 @@ export declare namespace IntermediateRepresentation {
         sourceConfig?: SourceConfig.Raw | null;
         publishConfig?: PublishingConfig.Raw | null;
         dynamic?: DynamicIntermediateRepresentation.Raw | null;
-        generatorConfig: GeneratorConfig.Raw;
+        generatorConfig?: GeneratorConfig.Raw | null;
     }
 }

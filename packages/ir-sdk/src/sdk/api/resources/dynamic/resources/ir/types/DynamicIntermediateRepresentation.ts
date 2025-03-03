@@ -16,7 +16,6 @@ export interface DynamicIntermediateRepresentation {
      * of the primary IR.
      */
     version: "1.0.0";
-    generatorConfig: FernIr.dynamic.GeneratorConfig;
     types: Record<FernIr.TypeId, FernIr.dynamic.NamedType>;
     endpoints: Record<FernIr.EndpointId, FernIr.dynamic.Endpoint>;
     environments: FernIr.EnvironmentsConfig | undefined;
@@ -31,4 +30,5 @@ export interface DynamicIntermediateRepresentation {
      * constructor.
      */
     pathParameters: FernIr.dynamic.NamedParameter[] | undefined;
+    generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
 }

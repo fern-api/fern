@@ -2,7 +2,6 @@ imports:
   commons: ../commons.yml
   endpoints: ./endpoints.yml
   environment: ../environment.yml
-  generator: ../generator-exec/config.yml
   types: ./types.yml
 types:
   DynamicIntermediateRepresentation:
@@ -19,7 +18,6 @@ types:
           The version of the dynamic IR. This is independent from the version
           of the primary IR.
         type: literal<"1.0.0">
-      generatorConfig: GeneratorConfig
       types: map<commons.TypeId, types.NamedType>
       endpoints: map<commons.EndpointId, endpoints.Endpoint>
       environments: optional<environment.EnvironmentsConfig>
@@ -34,6 +32,7 @@ types:
           path parameters are typically included in the SDK's client
           constructor.
         type: optional<list<types.NamedParameter>>
+      generatorConfig: optional<GeneratorConfig>
   
   GeneratorConfig:
     docs: |

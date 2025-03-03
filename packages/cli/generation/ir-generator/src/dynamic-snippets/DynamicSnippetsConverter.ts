@@ -83,7 +83,8 @@ export class DynamicSnippetsConverter {
             headers: this.convertHeaders(),
             endpoints: this.convertEndpoints({ includeExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
-            environments: this.ir.environments
+            environments: this.ir.environments,
+            generatorConfig: this.ir.generatorConfig
         };
     }
 
