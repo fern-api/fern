@@ -32,6 +32,7 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
@@ -346,381 +347,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 ? nextRequestVariableName
                                 : parameterSpec.name)
                         .collect(Collectors.joining(", "));
-                httpEndpoint.getPagination().get().visit(new Pagination.Visitor<Void>() {
-                    @Override
-                    public Void visitCursor(CursorPagination cursor) {
-                        SnippetAndResultType nextSnippet = getNestedPropertySnippet(
-                                cursor.getNext().getPropertyPath(),
-                                cursor.getNext().getProperty(),
-                                body.getResponseBodyType(),
-                                clientGeneratorContext);
-                        CodeBlock nextBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        nextSnippet.typeName,
-                                        startingAfterVariableName,
-                                        parsedResponseVariableName)
-                                .add(nextSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(nextBlock);
-                        String builderStartingAfterProperty = cursor.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-
-                        String propertyOverrideOnRequest = builderStartingAfterProperty;
-                        String propertyOverrideValueOnRequest = startingAfterVariableName;
-
-                        if (cursor.getPage().getPropertyPath().isPresent()
-                                && !cursor.getPage().getPropertyPath().get().isEmpty()) {
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    cursor.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    propertyOverrideOnRequest,
-                                    propertyOverrideValueOnRequest);
-                            setters.stream()
-                                    .map(EnrichedCursorPathSetter::setter)
-                                    .forEach(httpResponseBuilder::addStatement);
-
-                            if (!setters.isEmpty()) {
-                                EnrichedCursorPathGetter propertyOverrideGetter =
-                                        setters.get(setters.size() - 1).getter();
-                                propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                                propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
-
-                                if (!propertyOverrideGetter.pathItem().optional()
-                                        && propertyOverrideGetter.optional()) {
-                                    propertyOverrideValueOnRequest += ".get()";
-                                }
-                            } else {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "$T $L = $T.builder().from($L).$L($L).build()",
-                                requestParameterSpec.type,
-                                nextRequestVariableName,
-                                requestParameterSpec.type,
-                                requestParameterSpec.name,
-                                propertyOverrideOnRequest,
-                                propertyOverrideValueOnRequest);
-                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                cursor.getResults().getPropertyPath(),
-                                cursor.getResults().getProperty(),
-                                body.getResponseBodyType(),
-                                clientGeneratorContext);
-
-                        CodeBlock resultBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        resultSnippet.typeName,
-                                        resultVariableName,
-                                        parsedResponseVariableName)
-                                .add(resultSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(resultBlock);
-
-                        CodeBlock hasNextPageBlock;
-
-                        if (nextSnippet.typeReference.getContainer().isPresent()) {
-                            if (nextSnippet.typeReference.getContainer().get().isOptional()) {
-                                hasNextPageBlock = CodeBlock.of("$L.isPresent()", startingAfterVariableName);
-                            } else {
-                                throw new IllegalStateException(
-                                        "Found non-optional container as next page token. This should be impossible "
-                                                + "due to fern check validation.");
-                            }
-                        } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
-                            hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
-                                    startingAfterVariableName,
-                                    nextSnippet.typeReference.getPrimitive().get());
-                        } else {
-                            throw new IllegalStateException(
-                                    "Found non-optional, non-primitive as next page token. This should be impossible "
-                                            + "due to fern check validation.");
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "return new $T<>($L, $L, () -> $L($L))",
+                httpEndpoint
+                        .getPagination()
+                        .get()
+                        .visit(new JsonResponsePaginationVisitor(
+                                httpResponseBuilder,
+                                endpointMethodBuilder,
+                                httpEndpoint,
+                                requestParameterSpec,
+                                body,
+                                clientGeneratorContext,
                                 pagerClassName,
-                                hasNextPageBlock,
+                                startingAfterVariableName,
+                                parsedResponseVariableName,
+                                nextRequestVariableName,
                                 resultVariableName,
                                 endpointName,
-                                methodParameters);
-                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
-                                .typeReference
-                                .getContainer()
-                                .orElseThrow(
-                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
-                                resultContainerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType());
-                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
-                                pagerClassName,
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, resultUnderlyingType)));
-                        return null;
-                    }
-
-                    @Override
-                    public Void visitOffset(OffsetPagination offset) {
-                        com.fern.ir.model.types.TypeReference pageType = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference visitQuery(
-                                            QueryParameter queryParameter) {
-                                        return queryParameter.getValueType();
-                                    }
-
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference visitBody(
-                                            ObjectProperty objectProperty) {
-                                        return objectProperty.getValueType();
-                                    }
-
-                                    @Override
-                                    public com.fern.ir.model.types.TypeReference _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-                        Boolean pageIsOptional = typeReferenceIsOptional.apply(pageType);
-
-                        String newNumberFieldNamePascal = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-
-                        CodeBlock newNumberGetter =
-                                CodeBlock.of("$L.get$L()", requestParameterSpec.name, newNumberFieldNamePascal);
-                        boolean numberGetterOptional = false;
-
-                        if (offset.getPage().getPropertyPath().isPresent()
-                                && !offset.getPage().getPropertyPath().get().isEmpty()) {
-                            // NOTE: We don't care about the build-after property names because we're not going to
-                            // use the setter--just the getter.
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    offset.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    "",
-                                    "");
-
-                            if (setters.isEmpty()) {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-
-                            // The 0th getter is what we want here because it contains the pagination index as a
-                            // property by definition of the path in the IR.
-                            EnrichedCursorPathGetter getter = setters.get(0).getter();
-                            if (getter.optional()) {
-                                if (pageIsOptional) {
-                                    newNumberGetter = CodeBlock.of(
-                                            "$L.flatMap($T::get$L)",
-                                            getter.getter(),
-                                            getter.typeName(),
-                                            newNumberFieldNamePascal);
-                                } else {
-                                    newNumberGetter = CodeBlock.of(
-                                            "$L.map($T::get$L).get()",
-                                            getter.getter(),
-                                            getter.typeName(),
-                                            newNumberFieldNamePascal);
-                                }
-                            } else {
-                                newNumberGetter = CodeBlock.of("$L.get$L", getter.getter(), newNumberFieldNamePascal);
-                            }
-                        }
-
-                        com.fern.ir.model.types.TypeReference numberType = pageType.getContainer()
-                                .map(containerType ->
-                                        containerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType()))
-                                .orElse(pageType);
-                        TypeName numberTypeName =
-                                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
-
-                        String one = INTEGER_ONE;
-                        if (numberTypeName.equals(TypeName.FLOAT) || numberTypeName.equals(TypeName.DOUBLE)) {
-                            one = DECIMAL_ONE;
-                        }
-
-                        if (pageIsOptional) {
-                            httpResponseBuilder.addStatement(CodeBlock.of(
-                                    "$T $L = $L.map(page -> page + $L).orElse($L)",
-                                    numberTypeName,
-                                    newPageNumberVariableName,
-                                    newNumberGetter,
-                                    one,
-                                    one));
-                        } else {
-                            httpResponseBuilder.addStatement(CodeBlock.of(
-                                    "$T $L = $L + $L",
-                                    clientGeneratorContext
-                                            .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, pageType),
-                                    newPageNumberVariableName,
-                                    newNumberGetter,
-                                    one));
-                        }
-
-                        String propertyOverrideOnRequest = offset.getPage()
-                                .getProperty()
-                                .visit(new RequestPropertyValue.Visitor<String>() {
-
-                                    @Override
-                                    public String visitQuery(QueryParameter queryParameter) {
-                                        return queryParameter
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String visitBody(ObjectProperty objectProperty) {
-                                        return objectProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase()
-                                                .getUnsafeName();
-                                    }
-
-                                    @Override
-                                    public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unknown request property value type.");
-                                    }
-                                });
-                        String propertyOverrideValueOnRequest = newPageNumberVariableName;
-
-                        if (offset.getPage().getPropertyPath().isPresent()
-                                && !offset.getPage().getPropertyPath().get().isEmpty()) {
-                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                                    offset.getPage().getPropertyPath().get(),
-                                    httpEndpoint,
-                                    clientGeneratorContext,
-                                    requestParameterSpec.name,
-                                    propertyOverrideOnRequest,
-                                    propertyOverrideValueOnRequest);
-                            setters.stream()
-                                    .map(EnrichedCursorPathSetter::setter)
-                                    .forEach(httpResponseBuilder::addStatement);
-
-                            if (!setters.isEmpty()) {
-                                EnrichedCursorPathGetter propertyOverrideGetter =
-                                        setters.get(setters.size() - 1).getter();
-                                propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                                propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
-
-                                if (!propertyOverrideGetter.pathItem().optional()
-                                        && propertyOverrideGetter.optional()) {
-                                    propertyOverrideValueOnRequest += ".get()";
-                                }
-                            } else {
-                                throw new IllegalStateException(
-                                        "There should be at least one setter if the path is nonempty");
-                            }
-                        }
-
-                        httpResponseBuilder.addStatement(
-                                "$T $L = $T.builder().from($L).$L($L).build()",
-                                requestParameterSpec.type,
-                                nextRequestVariableName,
-                                requestParameterSpec.type,
-                                requestParameterSpec.name,
-                                propertyOverrideOnRequest,
-                                propertyOverrideValueOnRequest);
-
-                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                offset.getResults().getPropertyPath(),
-                                offset.getResults().getProperty(),
-                                body.getResponseBodyType(),
-                                clientGeneratorContext);
-                        CodeBlock resultBlock = CodeBlock.builder()
-                                .add(
-                                        "$T $L = $L",
-                                        resultSnippet.typeName,
-                                        resultVariableName,
-                                        parsedResponseVariableName)
-                                .add(resultSnippet.codeBlock)
-                                .build();
-                        httpResponseBuilder.addStatement(resultBlock);
-                        httpResponseBuilder.addStatement(
-                                "return new $T<>(true, $L, () -> $L($L))",
-                                pagerClassName,
-                                resultVariableName,
-                                endpointName,
-                                methodParameters);
-                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
-                                .typeReference
-                                .getContainer()
-                                .orElseThrow(
-                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
-                                resultContainerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType());
-                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
-                                pagerClassName,
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, resultUnderlyingType)));
-                        return null;
-                    }
-
-                    @Override
-                    public Void _visitUnknown(Object unknownType) {
-                        throw new RuntimeException("Unknown pagination type " + unknownType);
-                    }
-                });
+                                newPageNumberVariableName,
+                                methodParameters,
+                                typeReferenceIsOptional));
             }
             return null;
         }
@@ -1128,6 +773,396 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Optional<String> _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown streaming response type " + unknownType);
+        }
+    }
+
+    private final class JsonResponsePaginationVisitor implements Pagination.Visitor<Void> {
+
+        private final CodeBlock.Builder httpResponseBuilder;
+        private final MethodSpec.Builder endpointMethodBuilder;
+        private final HttpEndpoint httpEndpoint;
+        private final ParameterSpec requestParameterSpec;
+        private final JsonResponseBodyWithProperty body;
+        private final ClientGeneratorContext clientGeneratorContext;
+        private final ClassName pagerClassName;
+        private final String startingAfterVariableName;
+        private final String parsedResponseVariableName;
+        private final String nextRequestVariableName;
+        private final String resultVariableName;
+        private final String endpointName;
+        private final String newPageNumberVariableName;
+        private final String methodParameters;
+        private final Function<TypeReference, Boolean> typeReferenceIsOptional;
+
+        private JsonResponsePaginationVisitor(
+                CodeBlock.Builder httpResponseBuilder,
+                MethodSpec.Builder endpointMethodBuilder,
+                HttpEndpoint httpEndpoint,
+                ParameterSpec requestParameterSpec,
+                JsonResponseBodyWithProperty body,
+                ClientGeneratorContext clientGeneratorContext,
+                ClassName pagerClassName,
+                String startingAfterVariableName,
+                String parsedResponseVariableName,
+                String nextRequestVariableName,
+                String resultVariableName,
+                String endpointName,
+                String newPageNumberVariableName,
+                String methodParameters,
+                Function<TypeReference, Boolean> typeReferenceIsOptional) {
+            this.httpResponseBuilder = httpResponseBuilder;
+            this.endpointMethodBuilder = endpointMethodBuilder;
+            this.httpEndpoint = httpEndpoint;
+            this.requestParameterSpec = requestParameterSpec;
+            this.body = body;
+            this.clientGeneratorContext = clientGeneratorContext;
+            this.pagerClassName = pagerClassName;
+            this.startingAfterVariableName = startingAfterVariableName;
+            this.parsedResponseVariableName = parsedResponseVariableName;
+            this.nextRequestVariableName = nextRequestVariableName;
+            this.resultVariableName = resultVariableName;
+            this.endpointName = endpointName;
+            this.newPageNumberVariableName = newPageNumberVariableName;
+            this.methodParameters = methodParameters;
+            this.typeReferenceIsOptional = typeReferenceIsOptional;
+        }
+
+        @Override
+        public Void visitCursor(CursorPagination cursor) {
+            SnippetAndResultType nextSnippet = getNestedPropertySnippet(
+                    cursor.getNext().getPropertyPath(),
+                    cursor.getNext().getProperty(),
+                    body.getResponseBodyType(),
+                    clientGeneratorContext);
+            CodeBlock nextBlock = CodeBlock.builder()
+                    .add("$T $L = $L", nextSnippet.typeName, startingAfterVariableName, parsedResponseVariableName)
+                    .add(nextSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(nextBlock);
+            String builderStartingAfterProperty = cursor.getPage()
+                    .getProperty()
+                    .visit(new RequestPropertyValue.Visitor<String>() {
+                        @Override
+                        public String visitQuery(QueryParameter queryParameter) {
+                            return queryParameter
+                                    .getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String visitBody(ObjectProperty objectProperty) {
+                            return objectProperty
+                                    .getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String _visitUnknown(Object o) {
+                            throw new IllegalArgumentException("Unknown request property value type.");
+                        }
+                    });
+
+            String propertyOverrideOnRequest = builderStartingAfterProperty;
+            String propertyOverrideValueOnRequest = startingAfterVariableName;
+
+            if (cursor.getPage().getPropertyPath().isPresent()
+                    && !cursor.getPage().getPropertyPath().get().isEmpty()) {
+                List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
+                        cursor.getPage().getPropertyPath().get(),
+                        httpEndpoint,
+                        clientGeneratorContext,
+                        requestParameterSpec.name,
+                        propertyOverrideOnRequest,
+                        propertyOverrideValueOnRequest);
+                setters.stream().map(EnrichedCursorPathSetter::setter).forEach(httpResponseBuilder::addStatement);
+
+                if (!setters.isEmpty()) {
+                    EnrichedCursorPathGetter propertyOverrideGetter =
+                            setters.get(setters.size() - 1).getter();
+                    propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+
+                    if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
+                        propertyOverrideValueOnRequest += ".get()";
+                    }
+                } else {
+                    throw new IllegalStateException("There should be at least one setter if the path is nonempty");
+                }
+            }
+
+            httpResponseBuilder.addStatement(
+                    "$T $L = $T.builder().from($L).$L($L).build()",
+                    requestParameterSpec.type,
+                    nextRequestVariableName,
+                    requestParameterSpec.type,
+                    requestParameterSpec.name,
+                    propertyOverrideOnRequest,
+                    propertyOverrideValueOnRequest);
+            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                    cursor.getResults().getPropertyPath(),
+                    cursor.getResults().getProperty(),
+                    body.getResponseBodyType(),
+                    clientGeneratorContext);
+
+            CodeBlock resultBlock = CodeBlock.builder()
+                    .add("$T $L = $L", resultSnippet.typeName, resultVariableName, parsedResponseVariableName)
+                    .add(resultSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(resultBlock);
+
+            CodeBlock hasNextPageBlock;
+
+            if (nextSnippet.typeReference.getContainer().isPresent()) {
+                if (nextSnippet.typeReference.getContainer().get().isOptional()) {
+                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", startingAfterVariableName);
+                } else {
+                    throw new IllegalStateException(
+                            "Found non-optional container as next page token. This should be impossible "
+                                    + "due to fern check validation.");
+                }
+            } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
+                hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
+                        startingAfterVariableName,
+                        nextSnippet.typeReference.getPrimitive().get());
+            } else {
+                throw new IllegalStateException(
+                        "Found non-optional, non-primitive as next page token. This should be impossible "
+                                + "due to fern check validation.");
+            }
+
+            httpResponseBuilder.addStatement(
+                    "return new $T<>($L, $L, () -> $L($L))",
+                    pagerClassName,
+                    hasNextPageBlock,
+                    resultVariableName,
+                    endpointName,
+                    methodParameters);
+            com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                    .typeReference
+                    .getContainer()
+                    .orElseThrow(() -> new RuntimeException("Unexpected non-container pagination result type"));
+            com.fern.ir.model.types.TypeReference resultUnderlyingType =
+                    resultContainerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+            endpointMethodBuilder.returns(ParameterizedTypeName.get(
+                    pagerClassName,
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, resultUnderlyingType)));
+            return null;
+        }
+
+        @Override
+        public Void visitOffset(OffsetPagination offset) {
+            com.fern.ir.model.types.TypeReference pageType = offset.getPage()
+                    .getProperty()
+                    .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitQuery(QueryParameter queryParameter) {
+                            return queryParameter.getValueType();
+                        }
+
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitBody(ObjectProperty objectProperty) {
+                            return objectProperty.getValueType();
+                        }
+
+                        @Override
+                        public com.fern.ir.model.types.TypeReference _visitUnknown(Object o) {
+                            throw new IllegalArgumentException("Unknown request property value type.");
+                        }
+                    });
+            Boolean pageIsOptional = typeReferenceIsOptional.apply(pageType);
+
+            String newNumberFieldNamePascal = offset.getPage()
+                    .getProperty()
+                    .visit(new RequestPropertyValue.Visitor<String>() {
+
+                        @Override
+                        public String visitQuery(QueryParameter queryParameter) {
+                            return queryParameter
+                                    .getName()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String visitBody(ObjectProperty objectProperty) {
+                            return objectProperty
+                                    .getName()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String _visitUnknown(Object o) {
+                            throw new IllegalArgumentException("Unknown request property value type.");
+                        }
+                    });
+
+            CodeBlock newNumberGetter = CodeBlock.of("$L.get$L()", requestParameterSpec.name, newNumberFieldNamePascal);
+            boolean numberGetterOptional = false;
+
+            if (offset.getPage().getPropertyPath().isPresent()
+                    && !offset.getPage().getPropertyPath().get().isEmpty()) {
+                // NOTE: We don't care about the build-after property names because we're not going to
+                // use the setter--just the getter.
+                List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
+                        offset.getPage().getPropertyPath().get(),
+                        httpEndpoint,
+                        clientGeneratorContext,
+                        requestParameterSpec.name,
+                        "",
+                        "");
+
+                if (setters.isEmpty()) {
+                    throw new IllegalStateException("There should be at least one setter if the path is nonempty");
+                }
+
+                // The 0th getter is what we want here because it contains the pagination index as a
+                // property by definition of the path in the IR.
+                EnrichedCursorPathGetter getter = setters.get(0).getter();
+                if (getter.optional()) {
+                    if (pageIsOptional) {
+                        newNumberGetter = CodeBlock.of(
+                                "$L.flatMap($T::get$L)", getter.getter(), getter.typeName(), newNumberFieldNamePascal);
+                    } else {
+                        newNumberGetter = CodeBlock.of(
+                                "$L.map($T::get$L).get()",
+                                getter.getter(),
+                                getter.typeName(),
+                                newNumberFieldNamePascal);
+                    }
+                } else {
+                    newNumberGetter = CodeBlock.of("$L.get$L", getter.getter(), newNumberFieldNamePascal);
+                }
+            }
+
+            com.fern.ir.model.types.TypeReference numberType = pageType.getContainer()
+                    .map(containerType -> containerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType()))
+                    .orElse(pageType);
+            TypeName numberTypeName =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
+
+            String one = INTEGER_ONE;
+            if (numberTypeName.equals(TypeName.FLOAT) || numberTypeName.equals(TypeName.DOUBLE)) {
+                one = DECIMAL_ONE;
+            }
+
+            if (pageIsOptional) {
+                httpResponseBuilder.addStatement(CodeBlock.of(
+                        "$T $L = $L.map(page -> page + $L).orElse($L)",
+                        numberTypeName,
+                        newPageNumberVariableName,
+                        newNumberGetter,
+                        one,
+                        one));
+            } else {
+                httpResponseBuilder.addStatement(CodeBlock.of(
+                        "$T $L = $L + $L",
+                        clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pageType),
+                        newPageNumberVariableName,
+                        newNumberGetter,
+                        one));
+            }
+
+            String propertyOverrideOnRequest = offset.getPage()
+                    .getProperty()
+                    .visit(new RequestPropertyValue.Visitor<String>() {
+
+                        @Override
+                        public String visitQuery(QueryParameter queryParameter) {
+                            return queryParameter
+                                    .getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String visitBody(ObjectProperty objectProperty) {
+                            return objectProperty
+                                    .getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getUnsafeName();
+                        }
+
+                        @Override
+                        public String _visitUnknown(Object o) {
+                            throw new IllegalArgumentException("Unknown request property value type.");
+                        }
+                    });
+            String propertyOverrideValueOnRequest = newPageNumberVariableName;
+
+            if (offset.getPage().getPropertyPath().isPresent()
+                    && !offset.getPage().getPropertyPath().get().isEmpty()) {
+                List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
+                        offset.getPage().getPropertyPath().get(),
+                        httpEndpoint,
+                        clientGeneratorContext,
+                        requestParameterSpec.name,
+                        propertyOverrideOnRequest,
+                        propertyOverrideValueOnRequest);
+                setters.stream().map(EnrichedCursorPathSetter::setter).forEach(httpResponseBuilder::addStatement);
+
+                if (!setters.isEmpty()) {
+                    EnrichedCursorPathGetter propertyOverrideGetter =
+                            setters.get(setters.size() - 1).getter();
+                    propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+
+                    if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
+                        propertyOverrideValueOnRequest += ".get()";
+                    }
+                } else {
+                    throw new IllegalStateException("There should be at least one setter if the path is nonempty");
+                }
+            }
+
+            httpResponseBuilder.addStatement(
+                    "$T $L = $T.builder().from($L).$L($L).build()",
+                    requestParameterSpec.type,
+                    nextRequestVariableName,
+                    requestParameterSpec.type,
+                    requestParameterSpec.name,
+                    propertyOverrideOnRequest,
+                    propertyOverrideValueOnRequest);
+
+            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                    offset.getResults().getPropertyPath(),
+                    offset.getResults().getProperty(),
+                    body.getResponseBodyType(),
+                    clientGeneratorContext);
+            CodeBlock resultBlock = CodeBlock.builder()
+                    .add("$T $L = $L", resultSnippet.typeName, resultVariableName, parsedResponseVariableName)
+                    .add(resultSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(resultBlock);
+            httpResponseBuilder.addStatement(
+                    "return new $T<>(true, $L, () -> $L($L))",
+                    pagerClassName,
+                    resultVariableName,
+                    endpointName,
+                    methodParameters);
+            com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                    .typeReference
+                    .getContainer()
+                    .orElseThrow(() -> new RuntimeException("Unexpected non-container pagination result type"));
+            com.fern.ir.model.types.TypeReference resultUnderlyingType =
+                    resultContainerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+            endpointMethodBuilder.returns(ParameterizedTypeName.get(
+                    pagerClassName,
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, resultUnderlyingType)));
+            return null;
+        }
+
+        @Override
+        public Void _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Unknown pagination type " + unknownType);
         }
     }
 }
