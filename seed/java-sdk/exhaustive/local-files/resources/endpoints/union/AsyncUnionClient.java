@@ -70,6 +70,7 @@ public class AsyncUnionClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Animal.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

@@ -60,6 +60,7 @@ public class AsyncHttpMethodsClient {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new SeedExhaustiveApiException(
@@ -113,6 +114,7 @@ public class AsyncHttpMethodsClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new SeedExhaustiveApiException(
@@ -167,6 +169,7 @@ public class AsyncHttpMethodsClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new SeedExhaustiveApiException(
@@ -225,6 +228,7 @@ public class AsyncHttpMethodsClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new SeedExhaustiveApiException(
@@ -270,6 +274,7 @@ public class AsyncHttpMethodsClient {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new SeedExhaustiveApiException(

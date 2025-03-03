@@ -73,6 +73,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<List<String>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -128,6 +129,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -182,6 +184,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Set<String>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -237,6 +240,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -291,6 +295,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Map<String, String>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -346,6 +351,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -408,6 +414,7 @@ public class AsyncContainerClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {}));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(

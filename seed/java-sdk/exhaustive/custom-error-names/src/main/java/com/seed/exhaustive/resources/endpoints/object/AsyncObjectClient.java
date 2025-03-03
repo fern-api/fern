@@ -77,6 +77,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -131,6 +132,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithRequiredField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -185,6 +187,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -245,6 +248,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), NestedObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -301,6 +305,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), NestedObjectWithRequiredField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(
@@ -356,6 +361,7 @@ public class AsyncObjectClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), NestedObjectWithRequiredField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new CustomApiException(

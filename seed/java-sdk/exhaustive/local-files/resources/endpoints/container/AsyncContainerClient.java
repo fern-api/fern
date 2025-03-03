@@ -75,6 +75,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -125,6 +126,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -174,6 +176,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -224,6 +227,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -274,6 +278,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, String>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -324,6 +329,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -381,6 +387,7 @@ public class AsyncContainerClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {}));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

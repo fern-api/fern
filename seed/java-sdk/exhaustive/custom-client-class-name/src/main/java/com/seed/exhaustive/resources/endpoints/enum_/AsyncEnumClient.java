@@ -66,6 +66,7 @@ public class AsyncEnumClient {
                     if (response.isSuccessful()) {
                         future.complete(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     throw new BestApiException(

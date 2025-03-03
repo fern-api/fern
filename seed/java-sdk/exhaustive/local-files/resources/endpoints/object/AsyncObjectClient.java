@@ -80,6 +80,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -130,6 +131,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -180,6 +182,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -234,6 +237,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -285,6 +289,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -335,6 +340,7 @@ public class AsyncObjectClient {
         try (ResponseBody responseBody = response.body()) {
           if (response.isSuccessful()) {
             future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class));
+            return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

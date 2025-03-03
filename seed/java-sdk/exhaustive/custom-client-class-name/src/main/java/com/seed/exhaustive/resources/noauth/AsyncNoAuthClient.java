@@ -72,6 +72,7 @@ public class AsyncNoAuthClient {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {

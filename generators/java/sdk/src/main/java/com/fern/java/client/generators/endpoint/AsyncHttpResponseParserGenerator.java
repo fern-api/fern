@@ -181,6 +181,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.add(objectMapperUtils.readValueCall(
                 CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
         httpResponseBuilder.addStatement(")");
+        httpResponseBuilder.addStatement("return");
     }
 
     @Override

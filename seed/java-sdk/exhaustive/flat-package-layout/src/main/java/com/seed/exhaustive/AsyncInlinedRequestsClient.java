@@ -76,6 +76,7 @@ public class AsyncInlinedRequestsClient {
                     if (response.isSuccessful()) {
                         future.complete(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ObjectWithOptionalField.class));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
