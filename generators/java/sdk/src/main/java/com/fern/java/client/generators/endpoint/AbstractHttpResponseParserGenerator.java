@@ -102,6 +102,28 @@ public abstract class AbstractHttpResponseParserGenerator {
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec);
 
+    public abstract void addResponseHandlerCodeBlock(
+            CodeBlock.Builder httpResponseBuilder,
+            MethodSpec.Builder endpointMethodBuilder,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            GeneratedObjectMapper generatedObjectMapper,
+            String responseBodyStringName,
+            String responseBodyName,
+            String parsedResponseVariableName,
+            String responseName,
+            String nextRequestVariableName,
+            String startingAfterVariableName,
+            String resultVariableName,
+            String newPageNumberVariableName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors,
+            Optional<ParameterSpec> maybeRequestParameterSpec,
+            Function<TypeReference, Boolean> typeReferenceIsOptional);
+
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,
@@ -124,7 +146,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
-        ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -145,6 +166,47 @@ public abstract class AbstractHttpResponseParserGenerator {
                         generatedClientOptions.httpClientWithTimeout(),
                         AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
+        addResponseHandlerCodeBlock(
+                httpResponseBuilder,
+                endpointMethodBuilder,
+                clientGeneratorContext,
+                httpEndpoint,
+                generatedObjectMapper,
+                responseBodyStringName,
+                responseBodyName,
+                parsedResponseVariableName,
+                responseName,
+                nextRequestVariableName,
+                startingAfterVariableName,
+                resultVariableName,
+                newPageNumberVariableName,
+                defaultedClientName,
+                okhttpRequestName,
+                apiErrorClassName,
+                baseErrorClassName,
+                generatedErrors,
+                maybeRequestParameterSpec,
+                typeReferenceIsOptional);
+        return httpResponseBuilder.build();
+    }
+
+    public void addSuccessResponseCodeBlock(
+            CodeBlock.Builder httpResponseBuilder,
+            MethodSpec.Builder endpointMethodBuilder,
+            ClientGeneratorContext clientGeneratorContext,
+            GeneratedObjectMapper generatedObjectMapper,
+            HttpEndpoint httpEndpoint,
+            Optional<ParameterSpec> maybeRequestParameterSpec,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName,
+            String parsedResponseVariableName,
+            String nextRequestVariableName,
+            String startingAfterVariableName,
+            String resultVariableName,
+            String newPageNumberVariableName,
+            Function<TypeReference, Boolean> typeReferenceIsOptional) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint
@@ -176,6 +238,19 @@ public abstract class AbstractHttpResponseParserGenerator {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
         httpResponseBuilder.endControlFlow();
+    }
+
+    public void addMappedFailuresCodeBlock(
+            CodeBlock.Builder httpResponseBuilder,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            GeneratedObjectMapper generatedObjectMapper,
+            String responseName,
+            String responseBodyName,
+            String responseBodyStringName,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+        ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         httpResponseBuilder.addStatement(
                 "$T $L = $L != null ? $L.string() : $S",
                 String.class,
@@ -235,13 +310,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                 responseName,
                 responseName,
                 objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
+    }
+
+    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()
                 .build();
-        return httpResponseBuilder.build();
     }
 
     private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
