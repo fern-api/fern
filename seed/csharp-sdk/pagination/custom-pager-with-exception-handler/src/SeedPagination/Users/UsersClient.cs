@@ -589,7 +589,7 @@ public partial class UsersClient
                     }
                 );
                 var sendRequest = async (
-                    HttpRequestMessage request,
+                    HttpRequestMessage httpRequest,
                     CancellationToken cancellationToken
                 ) =>
                 {
