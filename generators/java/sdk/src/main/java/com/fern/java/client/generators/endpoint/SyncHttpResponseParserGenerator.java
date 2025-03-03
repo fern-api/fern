@@ -15,6 +15,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -50,6 +51,24 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                         ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
                         : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
                 bodyParameterSpec.type);
+    }
+
+    @Override
+    public CodeBlock getByteArrayEndpointBaseMethodBody(
+            CodeBlock.Builder methodBodyBuilder,
+            MethodSpec byteArrayBaseMethodSpec,
+            ParameterSpec requestParameterSpec,
+            MethodSpec endpointWithRequestOptions) {
+        if (!byteArrayBaseMethodSpec.returnType.equals(TypeName.VOID)) {
+            methodBodyBuilder.add("return ");
+        }
+        return methodBodyBuilder
+                .add(
+                        "$L(new $T($L)",
+                        endpointWithRequestOptions.name,
+                        ByteArrayInputStream.class,
+                        requestParameterSpec.name)
+                .build();
     }
 
     @Override

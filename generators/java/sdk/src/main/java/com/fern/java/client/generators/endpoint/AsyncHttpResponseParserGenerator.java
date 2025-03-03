@@ -16,6 +16,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -54,6 +55,21 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         endpointWithoutRequestBuilder.addStatement(
                 "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
                 bodyParameterSpec.type);
+    }
+
+    @Override
+    public CodeBlock getByteArrayEndpointBaseMethodBody(
+            CodeBlock.Builder methodBodyBuilder,
+            MethodSpec byteArrayBaseMethodSpec,
+            ParameterSpec requestParameterSpec,
+            MethodSpec endpointWithRequestOptions) {
+        return methodBodyBuilder
+                .add(
+                        "return $L(new $T($L)",
+                        endpointWithRequestOptions.name,
+                        ByteArrayInputStream.class,
+                        requestParameterSpec.name)
+                .build();
     }
 
     @Override

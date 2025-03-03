@@ -77,10 +77,10 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> upload(byte[] request) {
-        upload(new ByteArrayInputStream(request));
+        return upload(new ByteArrayInputStream(request));
     }
 
     public CompletableFuture<Void> upload(byte[] request, RequestOptions requestOptions) {
-        upload(new ByteArrayInputStream(request), requestOptions);
+        return upload(new ByteArrayInputStream(request), requestOptions);
     }
 }

@@ -98,6 +98,12 @@ public abstract class AbstractHttpResponseParserGenerator {
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec);
 
+    public abstract CodeBlock getByteArrayEndpointBaseMethodBody(
+            CodeBlock.Builder methodBodyBuilder,
+            MethodSpec byteArrayBaseMethodSpec,
+            ParameterSpec requestParameterSpec,
+            MethodSpec endpointWithRequestOptions);
+
     public abstract void addResponseHandlerCodeBlock(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,

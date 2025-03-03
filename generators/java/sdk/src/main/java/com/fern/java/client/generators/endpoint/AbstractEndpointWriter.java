@@ -40,7 +40,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -360,16 +359,8 @@ public abstract class AbstractEndpointWriter {
                     .returns(endpointWithRequestOptions.returnType)
                     .build();
             Builder methodBodyBuilder = CodeBlock.builder();
-            if (!byteArrayBaseMethodSpec.returnType.equals(TypeName.VOID)) {
-                methodBodyBuilder.add("return ");
-            }
-            CodeBlock baseMethodBody = methodBodyBuilder
-                    .add(
-                            "$L(new $T($L)",
-                            endpointWithRequestOptions.name,
-                            ByteArrayInputStream.class,
-                            requestParameterSpec.name)
-                    .build();
+            CodeBlock baseMethodBody = responseParserGenerator.getByteArrayEndpointBaseMethodBody(
+                    methodBodyBuilder, byteArrayBaseMethodSpec, requestParameterSpec, endpointWithRequestOptions);
             nonRequestOptionsByteArrayMethodSpec = byteArrayBaseMethodSpec.toBuilder()
                     .addStatement(baseMethodBody.toBuilder().add(")").build())
                     .build();
