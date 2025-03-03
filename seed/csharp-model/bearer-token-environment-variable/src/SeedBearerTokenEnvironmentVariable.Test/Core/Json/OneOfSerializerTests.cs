@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedBearerTokenEnvironmentVariable.Core;
 
-namespace SeedBearerTokenEnvironmentVariable.Test.Core;
+namespace SeedBearerTokenEnvironmentVariable.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

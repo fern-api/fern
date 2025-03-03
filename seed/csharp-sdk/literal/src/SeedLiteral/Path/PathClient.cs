@@ -26,7 +26,7 @@ public partial class PathClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -37,9 +37,9 @@ public partial class PathClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -50,10 +50,13 @@ public partial class PathClient
             }
         }
 
-        throw new SeedLiteralApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedLiteralApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

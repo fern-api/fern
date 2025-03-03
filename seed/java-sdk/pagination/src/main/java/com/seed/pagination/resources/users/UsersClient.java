@@ -13,6 +13,7 @@ import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -708,6 +709,48 @@ public class UsersClient {
                 List<String> result = parsedResponse.getCursor().getData();
                 return new SyncPagingIterable<>(
                         startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions));
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public UsernameCursor listUsernamesCustom() {
+        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
+    }
+
+    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request) {
+        return listUsernamesCustom(request, null);
+    }
+
+    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getStartingAfter().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(

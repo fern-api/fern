@@ -43,7 +43,7 @@ public partial class SeedExtendsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -59,11 +59,13 @@ public partial class SeedExtendsClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

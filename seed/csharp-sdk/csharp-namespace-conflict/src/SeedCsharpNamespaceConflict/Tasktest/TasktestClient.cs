@@ -25,7 +25,7 @@ public partial class TasktestClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -40,11 +40,13 @@ public partial class TasktestClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedCsharpNamespaceConflictApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedCsharpNamespaceConflictApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -147,6 +147,17 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames_custom(starting_after: \"starting_after\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifierOverride": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {
@@ -272,6 +283,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames(starting_after: \"starting_after\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames_custom(starting_after: \"starting_after\")",
                 "type": "ruby"
             }
         },

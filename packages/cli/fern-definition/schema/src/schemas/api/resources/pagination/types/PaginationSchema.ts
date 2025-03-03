@@ -4,4 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export type PaginationSchema = FernDefinition.CursorPaginationSchema | FernDefinition.OffsetPaginationSchema;
+export type PaginationSchema =
+    | FernDefinition.CursorPaginationSchema
+    | FernDefinition.OffsetPaginationSchema
+    | FernDefinition.CustomPaginationSchema;

@@ -1,6 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -8,6 +9,7 @@ import {
     HttpHeader,
     IntermediateRepresentation,
     Name,
+    ObjectPropertyAccess,
     PrimitiveType,
     PrimitiveTypeV1,
     TypeDeclaration,
@@ -22,6 +24,7 @@ import {
     CONSTANTS_CLASS_NAME,
     DATETIME_SERIALIZER_CLASS_NAME,
     ENUM_SERIALIZER_CLASS_NAME,
+    JSON_ACCESS_ATTRIBUTE_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
@@ -201,6 +204,27 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: JSON_UTILS_CLASS_NAME
+        });
+    }
+
+    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
+        let argument: string;
+        switch (propertyAccess) {
+            case "READ_ONLY":
+                argument = "JsonAccessType.ReadOnly";
+                break;
+            case "WRITE_ONLY":
+                argument = "JsonAccessType.WriteOnly";
+                break;
+            default:
+                assertNever(propertyAccess);
+        }
+        return csharp.annotation({
+            reference: csharp.classReference({
+                namespace: this.getCoreNamespace(),
+                name: JSON_ACCESS_ATTRIBUTE_NAME
+            }),
+            argument
         });
     }
 
@@ -540,6 +564,59 @@ export abstract class AbstractCsharpGeneratorContext<
             }
         }
         return undefined;
+    }
+
+    public getCustomPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getCustomPagerName(),
+            namespace: this.getCoreNamespace(),
+            generics: [itemType]
+        });
+    }
+
+    public getCustomPagerFactoryClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Factory`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public invokeCustomPagerFactoryMethod({
+        itemType,
+        sendRequestMethod,
+        initialRequest,
+        cancellationToken
+    }: {
+        itemType: csharp.Type;
+        sendRequestMethod: csharp.CodeBlock;
+        initialRequest: csharp.CodeBlock;
+        cancellationToken: csharp.CodeBlock;
+    }): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: this.getCustomPagerFactoryClassReference(),
+            method: "CreateAsync",
+            async: true,
+            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            generics: [itemType]
+        });
+    }
+
+    #doesIrHaveCustomPagination: boolean | null = null;
+
+    public doesIrHaveCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === null) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
+    }
+
+    public getCustomPagerName(): string {
+        return (
+            this.customConfig["custom-pager-name"] ??
+            `${this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")}Pager`
+        );
     }
 
     public abstract getRawAsIsFiles(): string[];

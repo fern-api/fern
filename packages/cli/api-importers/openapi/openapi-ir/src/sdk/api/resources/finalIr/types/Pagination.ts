@@ -4,7 +4,10 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export type Pagination = FernOpenapiIr.Pagination.Cursor | FernOpenapiIr.Pagination.Offset;
+export type Pagination =
+    | FernOpenapiIr.Pagination.Cursor
+    | FernOpenapiIr.Pagination.Offset
+    | FernOpenapiIr.Pagination.Custom;
 
 export namespace Pagination {
     export interface Cursor extends FernOpenapiIr.CursorPagination, _Utils {
@@ -15,6 +18,10 @@ export namespace Pagination {
         type: "offset";
     }
 
+    export interface Custom extends FernOpenapiIr.CustomPagination, _Utils {
+        type: "custom";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Pagination._Visitor<_Result>) => _Result;
     }
@@ -22,6 +29,7 @@ export namespace Pagination {
     export interface _Visitor<_Result> {
         cursor: (value: FernOpenapiIr.CursorPagination) => _Result;
         offset: (value: FernOpenapiIr.OffsetPagination) => _Result;
+        custom: (value: FernOpenapiIr.CustomPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -31,7 +39,7 @@ export const Pagination = {
         return {
             ...value,
             type: "cursor",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.Pagination.Cursor,
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
@@ -44,8 +52,21 @@ export const Pagination = {
         return {
             ...value,
             type: "offset",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernOpenapiIr.Pagination.Offset,
+                visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    custom: (value: FernOpenapiIr.CustomPagination): FernOpenapiIr.Pagination.Custom => {
+        return {
+            ...value,
+            type: "custom",
+            _visit <_Result>(
+                this: FernOpenapiIr.Pagination.Custom,
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Pagination._visit(this, visitor);
@@ -62,6 +83,8 @@ export const Pagination = {
                 return visitor.cursor(value);
             case "offset":
                 return visitor.offset(value);
+            case "custom":
+                return visitor.custom(value);
             default:
                 return visitor._other(value as any);
         }

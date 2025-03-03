@@ -138,7 +138,7 @@ export const FernOpenAPIExtension = {
 
     /**
      * Used to specify if an endpoint should be generated
-     * as a paginated endpoint. Both cursor and offset pagination
+     * as a paginated endpoint. Both cursor, offset pagination
      * examples are shown below.
      *
      * Example usage:

@@ -39,7 +39,7 @@ public partial class QueryParamClient
             _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
         }
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -55,12 +55,14 @@ public partial class QueryParamClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedEnumApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedEnumApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example>
@@ -92,7 +94,7 @@ public partial class QueryParamClient
             .MaybeOperandOrColor.Select(_value => JsonUtils.Serialize(_value))
             .ToList();
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -108,11 +110,13 @@ public partial class QueryParamClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedEnumApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedEnumApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

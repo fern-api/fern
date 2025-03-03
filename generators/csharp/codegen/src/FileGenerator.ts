@@ -12,8 +12,18 @@ export abstract class FileGenerator<
     constructor(protected readonly context: Context) {}
 
     public generate(): GeneratedFile {
-        this.context.logger.debug(`Generating ${this.getFilepath()}`);
+        if (this.shouldGenerate()) {
+            this.context.logger.debug(`Generating ${this.getFilepath()}`);
+        } else {
+            this.context.logger.warn(
+                `Internal warning: Generating ${this.getFilepath()} even though the file generator should not have been called.`
+            );
+        }
         return this.doGenerate();
+    }
+
+    public shouldGenerate(): boolean {
+        return true;
     }
 
     protected abstract doGenerate(): GeneratedFile;

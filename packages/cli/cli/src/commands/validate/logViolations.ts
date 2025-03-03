@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { V } from "vitest/dist/chunks/reporters.nr4dxCkA";
+import { eq } from "lodash-es";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
@@ -27,6 +27,27 @@ export function logViolations({
     logBreadcrumbs?: boolean;
     elapsedMillis?: number;
 }): LogViolationsResponse {
+    // dedupe violations before processing
+    const deduplicatedViolations: ValidationViolation[] = [];
+    const record: Record<string, ValidationViolation[]> = {};
+    for (const violation of violations) {
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
+        const isDuplicate = existingViolations.some(
+            (existingViolation) =>
+                existingViolation.message === violation.message &&
+                existingViolation.nodePath.length === violation.nodePath.length &&
+                existingViolation.nodePath.every((item, index) => eq(item, violation.nodePath[index])) &&
+                existingViolation.relativeFilepath === violation.relativeFilepath &&
+                existingViolation.severity === violation.severity
+        );
+        if (!isDuplicate) {
+            deduplicatedViolations.push(violation);
+            record[key] = [...existingViolations, violation];
+        }
+    }
+    violations = deduplicatedViolations;
+
     const stats = getViolationStats(violations);
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
@@ -51,11 +72,13 @@ export function logViolations({
 }
 
 function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
-    const map = new Map<NodePath, ValidationViolation[]>();
+    const record: Record<string, ValidationViolation[]> = {};
     for (const violation of violations) {
-        map.set(violation.nodePath, [...(map.get(violation.nodePath) ?? []), violation]);
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
+        record[key] = [...existingViolations, violation];
     }
-    return map;
+    return new Map(Object.entries(record).map(([key, violations]) => [JSON.parse(key), violations]));
 }
 
 function logViolationsGroup({

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedQueryParameters.Core;
 
-namespace SeedQueryParameters.Test.Core;
+namespace SeedQueryParameters.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

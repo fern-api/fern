@@ -148,8 +148,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
+    public includeExceptionHandler(): boolean {
+        return this.customConfig["include-exception-handler"] ?? false;
+    }
+
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
@@ -162,10 +166,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Json.CollectionItemSerializer,
             AsIsFiles.Json.DateOnlyConverter,
             AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonAccessAttribute,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer,
             AsIsFiles.RawClient
         ];
+        if (this.includeExceptionHandler()) {
+            files.push(AsIsFiles.ExceptionHandler);
+        }
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
@@ -180,7 +188,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         } else {
             files.push(AsIsFiles.Json.EnumSerializer);
         }
-
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
@@ -194,8 +201,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.RawClientTests
         ];
@@ -262,6 +270,20 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return csharp.classReference({
             namespace: "System.Text.Json",
             name: "JsonException"
+        });
+    }
+
+    public getExceptionHandlerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ExceptionHandler",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionInterceptorClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IExceptionInterceptor",
+            namespace: this.getCoreNamespace()
         });
     }
 

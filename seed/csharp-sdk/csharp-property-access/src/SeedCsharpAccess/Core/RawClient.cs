@@ -1,8 +1,7 @@
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using SystemTask = System.Threading.Tasks.Task;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
+using global::System.Text;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedCsharpAccess.Core;
 
@@ -17,9 +16,18 @@ internal class RawClient(ClientOptions clientOptions)
     /// <summary>
     /// The client options applied on every request.
     /// </summary>
-    public readonly ClientOptions Options = clientOptions;
+    internal readonly ClientOptions Options = clientOptions;
 
-    public async Task<ApiResponse> MakeRequestAsync(
+    [Obsolete("Use SendRequestAsync instead.")]
+    internal Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return SendRequestAsync(request, cancellationToken);
+    }
+
+    internal async Task<ApiResponse> SendRequestAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken = default
     )
@@ -29,75 +37,114 @@ internal class RawClient(ClientOptions clientOptions)
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
+        var httpRequest = CreateHttpRequest(request);
         // Send the request.
-        return await SendWithRetriesAsync(request, cts.Token).ConfigureAwait(false);
+        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
+            .ConfigureAwait(false);
     }
 
-    public record BaseApiRequest
+    internal async Task<ApiResponse> SendRequestAsync(
+        HttpRequestMessage request,
+        IRequestOptions? options,
+        CancellationToken cancellationToken = default
+    )
     {
-        public required string BaseUrl { get; init; }
+        // Apply the request timeout.
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var timeout = options?.Timeout ?? Options.Timeout;
+        cts.CancelAfter(timeout);
 
-        public required HttpMethod Method { get; init; }
+        // Send the request.
+        return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
+    }
 
-        public required string Path { get; init; }
+    private static HttpRequestMessage CloneRequest(HttpRequestMessage request)
+    {
+        var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
+        clonedRequest.Version = request.Version;
+        clonedRequest.Content = request.Content;
+        foreach (var header in request.Headers)
+        {
+            clonedRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        }
 
-        public string? ContentType { get; init; }
+        return clonedRequest;
+    }
 
-        public Dictionary<string, object> Query { get; init; } = new();
+    internal record BaseApiRequest
+    {
+        internal required string BaseUrl { get; init; }
 
-        public Headers Headers { get; init; } = new();
+        internal required HttpMethod Method { get; init; }
 
-        public IRequestOptions? Options { get; init; }
+        internal required string Path { get; init; }
+
+        internal string? ContentType { get; init; }
+
+        internal Dictionary<string, object> Query { get; init; } = new();
+
+        internal Headers Headers { get; init; } = new();
+
+        internal IRequestOptions? Options { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for streaming uploads.
     /// </summary>
-    public record StreamApiRequest : BaseApiRequest
+    internal record StreamApiRequest : BaseApiRequest
     {
-        public Stream? Body { get; init; }
+        internal Stream? Body { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for JSON APIs.
     /// </summary>
-    public record JsonApiRequest : BaseApiRequest
+    internal record JsonApiRequest : BaseApiRequest
     {
-        public object? Body { get; init; }
+        internal object? Body { get; init; }
     }
 
     /// <summary>
     /// The response object returned from the API.
     /// </summary>
-    public record ApiResponse
+    internal record ApiResponse
     {
-        public required int StatusCode { get; init; }
+        internal required int StatusCode { get; init; }
 
-        public required HttpResponseMessage Raw { get; init; }
+        internal required HttpResponseMessage Raw { get; init; }
     }
 
     private async Task<ApiResponse> SendWithRetriesAsync(
-        BaseApiRequest request,
+        HttpRequestMessage request,
+        IRequestOptions? options,
         CancellationToken cancellationToken
     )
     {
-        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient
-            .SendAsync(BuildHttpRequest(request), cancellationToken)
-            .ConfigureAwait(false);
+        var httpClient = options?.HttpClient ?? Options.HttpClient;
+        var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
+        var response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var isRetryableContent = IsRetryableContent(request);
+
+        if (!isRetryableContent)
+        {
+            return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        }
+
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
             {
                 break;
             }
+
             var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            using var retryRequest = CloneRequest(request);
             response = await httpClient
-                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .SendAsync(retryRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
+
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
@@ -107,7 +154,16 @@ internal class RawClient(ClientOptions clientOptions)
         return statusCode is 408 or 429 or >= 500;
     }
 
-    private HttpRequestMessage BuildHttpRequest(BaseApiRequest request)
+    private static bool IsRetryableContent(HttpRequestMessage request)
+    {
+        return request.Content switch
+        {
+            StreamContent or MultipartContent => false,
+            _ => true,
+        };
+    }
+
+    internal HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -124,18 +180,21 @@ internal class RawClient(ClientOptions clientOptions)
                         "application/json"
                     );
                 }
+
                 break;
             }
             case StreamApiRequest { Body: not null } streamRequest:
                 httpRequest.Content = new StreamContent(streamRequest.Body);
                 break;
         }
+
         if (request.ContentType != null)
         {
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
                 request.ContentType
             );
         }
+
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
@@ -175,6 +234,7 @@ internal class RawClient(ClientOptions clientOptions)
                 {
                     current += $"{queryItem.Key}={queryItem.Value}&";
                 }
+
                 return current;
             }
         );

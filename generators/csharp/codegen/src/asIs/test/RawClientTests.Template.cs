@@ -27,7 +27,7 @@ public class RawClientTests
             new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
         )
         {
-            BaseRetryDelay = 0
+            BaseRetryDelay = 0,
         };
     }
 
@@ -36,7 +36,7 @@ public class RawClientTests
     [TestCase(429)]
     [TestCase(500)]
     [TestCase(504)]
-    public async SystemTask MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
+    public async SystemTask SendRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
@@ -61,10 +61,10 @@ public class RawClientTests
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
-            Path = "/test"
+            Path = "/test",
         };
 
-        var response = await _rawClient.MakeRequestAsync(request);
+        var response = await _rawClient.SendRequestAsync(request);
         Assert.That(response.StatusCode, Is.EqualTo(200));
 
         var content = await response.Raw.Content.ReadAsStringAsync();
@@ -76,26 +76,22 @@ public class RawClientTests
     [Test]
     [TestCase(400)]
     [TestCase(409)]
-    public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(
-        int statusCode
-    )
+    public async SystemTask SendRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
             .InScenario("Retry")
             .WillSetStateTo("Server Error")
-            .RespondWith(
-                WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure")
-            );
+            .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
         var request = new RawClient.BaseApiRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
-            Path = "/test"
+            Path = "/test",
         };
 
-        var response = await _rawClient.MakeRequestAsync(request);
+        var response = await _rawClient.SendRequestAsync(request);
         Assert.That(response.StatusCode, Is.EqualTo(statusCode));
 
         var content = await response.Raw.Content.ReadAsStringAsync();

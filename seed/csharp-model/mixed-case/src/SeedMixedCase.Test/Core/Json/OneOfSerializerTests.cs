@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedMixedCase.Core;
 
-namespace SeedMixedCase.Test.Core;
+namespace SeedMixedCase.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

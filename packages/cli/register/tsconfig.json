@@ -42,5 +42,8 @@
     {
       "path": "../../commons/fs-utils"
     },
+    {
+      "path": "../../commons/ir-utils"
+    },
   ]
 }

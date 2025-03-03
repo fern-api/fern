@@ -7,6 +7,73 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc4
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add .editorconfig file to the generated SDK.
+
+- version: 1.12.0-rc3
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for schema properties with write-only and read-only access.
+    - type: feat
+      summary: The JSON serializer will write with indentation during debugging, and without in production.
+
+- version: 1.12.0-rc2
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pager and BiPager now have consistent properties and methods.
+        As part of this change, pagers are now generated asynchronously which is a breaking change for the endpoint methods.
+
+        ```csharp
+        // Before:
+        var pager = client.GetItemsAsync(...);
+
+        // After:
+        var pager = await client.GetItemsAsync(...);
+        ```
+    - type: fix
+      summary: |
+        Fixed an issue where generated code for setting UUIDs in a query string parameter would generate uncompilable code.
+    - type: feat
+      summary: Extend support for offset pagination to float, double, and decimal types.
+
+- version: 1.12.0-rc1
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for the `include-exception-handler` configuration option, which generates an `ExceptionHandler` interface for the SDK.
+        This is useful when you want to act upon all exceptions thrown by the SDK (e.g. report them to a monitoring service).
+
+        You can configure this feature with the following:
+
+        ```yaml
+        # generators.yml
+        - name: fern-api/fern-csharp-sdk
+          version: 1.12.0-rc1
+          config:
+            include-exception-handler: true
+        ```
+    - type: fix
+      summary: |
+        Fixes a regression for mapping `ReadOnlyMemory` values in the generated Protobuf mapper.
+
+- version: 1.12.0-rc0
+  createdAt: "2025-02-28"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for custom pagination.
+
 - version: 1.11.0
   createdAt: "2025-02-27"
   irVersion: 55

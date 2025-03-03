@@ -25,7 +25,7 @@ public partial class DummyClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -36,9 +36,9 @@ public partial class DummyClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -52,10 +52,13 @@ public partial class DummyClient
             }
         }
 
-        throw new SeedSingleUrlEnvironmentDefaultApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedSingleUrlEnvironmentDefaultApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

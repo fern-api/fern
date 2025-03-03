@@ -1,0 +1,105 @@
+imports:
+  commons: ../commons.yml
+  declaration: ./declaration.yml
+  root: ../types.yml
+types:
+  NamedParameter:
+    properties:
+      name: commons.NameAndWireValue
+      typeReference: TypeReference
+
+  NamedType:
+    docs: |
+      Represents the type of a parameter that can be used to generate a dynamic type.
+    union:
+      alias: AliasType
+      enum: EnumType
+      object: ObjectType
+      discriminatedUnion: DiscriminatedUnionType
+      undiscriminatedUnion: UndiscriminatedUnionType
+
+  TypeReference:
+    union:
+      list: TypeReference
+      literal: LiteralType
+      map: MapType
+      named: commons.TypeId
+      nullable: TypeReference
+      optional: TypeReference
+      primitive: root.PrimitiveTypeV1
+      set: TypeReference
+      unknown: {}
+  
+  AliasType:
+    properties:
+      declaration: declaration.Declaration
+      typeReference: TypeReference
+
+  EnumType:
+    properties:
+      declaration: declaration.Declaration
+      values: list<commons.NameAndWireValue>
+
+  MapType:
+    properties:
+      key: TypeReference
+      value: TypeReference
+
+  ObjectType:
+    properties:
+      declaration: declaration.Declaration
+      properties: list<NamedParameter>
+
+  DiscriminatedUnionType:
+    properties:
+      declaration: declaration.Declaration
+      discriminant: commons.NameAndWireValue
+      types:
+        docs: |
+          Map from the discriminant value (e.g. "user") to the type (e.g. User).
+        type: map<string, SingleDiscriminatedUnionType>
+
+  SingleDiscriminatedUnionType:
+    union:
+      samePropertiesAsObject: SingleDiscriminatedUnionTypeObject
+      singleProperty: SingleDiscriminatedUnionTypeSingleProperty
+      noProperties: SingleDiscriminatedUnionTypeNoProperties
+
+  SingleDiscriminatedUnionTypeObject:
+    properties:
+      typeId: commons.TypeId
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+          Any properties included here are the base and/or extended properties from the union.
+        type: list<NamedParameter>
+
+  SingleDiscriminatedUnionTypeSingleProperty:
+    properties:
+      typeReference: TypeReference
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+          Any properties included here are the base and/or extended properties from the union.
+        type: optional<list<NamedParameter>>
+
+  SingleDiscriminatedUnionTypeNoProperties:
+    properties:
+      discriminantValue: commons.NameAndWireValue
+      properties:
+        docs: |
+          Any properties included here are the base and/or extended properties from the union.
+        type: optional<list<NamedParameter>>
+
+  UndiscriminatedUnionType:
+    properties:
+      declaration: declaration.Declaration
+      types:
+        docs: |
+          The dynamic type will be rendered with the first type that matches.
+        type: list<TypeReference>
+
+  LiteralType:
+    union:
+      boolean: boolean
+      string: string

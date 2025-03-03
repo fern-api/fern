@@ -26,7 +26,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

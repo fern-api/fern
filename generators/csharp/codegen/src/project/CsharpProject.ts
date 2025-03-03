@@ -107,6 +107,10 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
+        if (this.context.doesIrHaveCustomPagination()) {
+            this.coreFiles.push(await this.createCustomPagerAsIsFile());
+        }
+
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
                 await this.createAsIsTestFile({
@@ -390,6 +394,22 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
     }
 
+    private async createCustomPagerAsIsFile(): Promise<File> {
+        const fileName = AsIsFiles.CustomPager;
+        const customPagerName = this.context.getCustomPagerName();
+        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
+        return new File(
+            fileName.replace(".Template", "").replace("CustomPager", customPagerName),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace: this.context.getCoreNamespace()
+            }).replaceAll("CustomPager", customPagerName)
+        );
+    }
+
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -629,7 +649,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
-        this.context.logger.debug(`this.license ${JSON.stringify(this.license)}`);
         if (this.license) {
             result.push(
                 this.license._visit<string>({

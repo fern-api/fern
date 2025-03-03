@@ -37,7 +37,7 @@ public partial class ServiceClient
             new Dictionary<string, string>() { { "X-File-API-Version", request.XFileApiVersion } }
         );
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -49,9 +49,9 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<File>(responseBody)!;
@@ -62,22 +62,25 @@ public partial class ServiceClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 404:
-                    throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 404:
+                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedExamplesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

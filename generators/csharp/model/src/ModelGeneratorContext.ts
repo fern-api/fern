@@ -29,7 +29,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
@@ -38,6 +38,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             AsIsFiles.Json.CollectionItemSerializer,
             AsIsFiles.Json.DateOnlyConverter,
             AsIsFiles.Json.DateTimeSerializer,
+            AsIsFiles.Json.JsonAccessAttribute,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer
         ];
@@ -58,8 +59,9 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {

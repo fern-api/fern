@@ -5,11 +5,13 @@ export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
 export const DATETIME_SERIALIZER_CLASS_NAME = "DateTimeSerializer";
 export const CONSTANTS_CLASS_NAME = "Constants";
 export const JSON_UTILS_CLASS_NAME = "JsonUtils";
+export const JSON_ACCESS_ATTRIBUTE_NAME = "JsonAccess";
 
 export const AsIsFiles = {
     CiYaml: "github-ci.yml",
     Constants: "Constants.Template.cs",
     CustomProps: "Custom.props.Template",
+    ExceptionHandler: "ExceptionHandler.Template.cs",
     Extensions: "Extensions.cs",
     GitIgnore: ".gitignore.Template",
     GrpcRequestOptions: "GrpcRequestOptions.Template.cs",
@@ -18,6 +20,7 @@ export const AsIsFiles = {
     HttpMethodExtensions: "HttpMethodExtensions.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",
+    CustomPager: "CustomPager.Template.cs",
     ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
     RawClient: "RawClient.Template.cs",
     RawGrpcClient: "RawGrpcClient.Template.cs",
@@ -25,12 +28,14 @@ export const AsIsFiles = {
     StringEnumExtensions: "StringEnumExtensions.Template.cs",
     TemplateCsProj: "Template.csproj",
     UsingCs: "Using.cs",
+    EditorConfig: ".editorconfig.Template",
     Json: {
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
-        DateTimeSerializer: "DateTimeSerializer.Template.cs",
         DateOnlyConverter: "DateOnlyConverter.Template.cs",
+        DateTimeSerializer: "DateTimeSerializer.Template.cs",
         EnumConverter: "EnumConverter.Template.cs",
         EnumSerializer: "EnumSerializer.Template.cs",
+        JsonAccessAttribute: "JsonAccessAttribute.Template.cs",
         JsonConfiguration: "JsonConfiguration.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
@@ -51,11 +56,12 @@ export const AsIsFiles = {
             "test/Pagination/StringCursorTest.Template.cs"
         ],
         Json: {
-            OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
-            EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
-            StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",
-            DateTimeJsonTests: "test/Json/DateTimeJsonTests.Template.cs"
+            DateTimeJsonTests: "test/Json/DateTimeJsonTests.Template.cs",
+            EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
+            OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
+            StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs",
+            JsonAccessAttributeTests: "test/Json/JsonAccessAttributeTests.Template.cs"
         }
     }
 };

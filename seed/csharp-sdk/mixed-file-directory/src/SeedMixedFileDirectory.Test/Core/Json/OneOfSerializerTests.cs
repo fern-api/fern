@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory.Test.Core;
+namespace SeedMixedFileDirectory.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
