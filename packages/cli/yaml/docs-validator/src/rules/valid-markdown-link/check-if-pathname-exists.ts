@@ -51,7 +51,14 @@ export async function checkIfPathnameExists({
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
-        const redirectedPath = withRedirects(pathname, baseUrl, redirects);
+        let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects));
+        for (let redirectCount = 0; redirectCount < 5; ++redirectCount) {
+            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, baseUrl, redirects));
+            if (redirectedPath === nextRedirectPath) {
+                break;
+            }
+            redirectedPath = nextRedirectPath;
+        }
 
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
@@ -87,6 +94,7 @@ export async function checkIfPathnameExists({
 
     // if this file isn't expected to be a markdown file, we don't have to check the slugs
     if (!markdown) {
+        console.log("Skipping slug check for non-markdown file", slugs);
         return slugs.map((slug) => addLeadingSlash(slug));
     }
 
@@ -113,4 +121,12 @@ function withRedirects(
         return pathname;
     }
     return result.redirect.destination;
+}
+
+function withoutAnchors(slug: string): string {
+    const hashIndex = slug.indexOf("#");
+    if (hashIndex === -1) {
+        return slug;
+    }
+    return slug.substring(0, hashIndex);
 }

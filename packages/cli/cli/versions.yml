@@ -1,5 +1,17 @@
 - changelogEntry:
   - summary: |
+      Fixed several issues with broken link detection in docs:
+      - Fixed handling of redirects to ensure broken links aren't reported when valid redirects exist
+      - Added proper handling of relative paths from different slugs
+      - Improved URL validation and error messages
+      
+      Running `fern docs broken-links` will now scan your docs site and log any broken internal links.
+    type: fix
+  irVersion: 56
+  version: 0.56.0
+
+- changelogEntry:
+  - summary: |
       Fixed duplicate validation messages in docs validation by deduplicating violations 
       that have the same message, node path, file path, and severity. 
       

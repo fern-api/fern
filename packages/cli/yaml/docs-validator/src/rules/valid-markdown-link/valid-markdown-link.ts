@@ -83,14 +83,6 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
-                let violationSeverity: "fatal" | "error" | "warning" = "error";
-
-                // If this file cannot be indexed (noindex=true, or hidden=true), then we report violations as less serious warnings
-                // since the broken links will not hurt SEO.
-                if (slugs.every((slug) => !collector.indexablePageSlugs.includes(slug))) {
-                    violationSeverity = "warning";
-                }
-
                 // Find all matches in the Markdown text
                 const { pathnamesToCheck, violations } = collectPathnamesToCheck(content, {
                     absoluteFilepath,
@@ -122,7 +114,7 @@ export const ValidMarkdownLinks: Rule = {
                             });
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: violationSeverity,
+                                severity: "error" as const,
                                 message,
                                 relativeFilepath: relFilePath
                             };
