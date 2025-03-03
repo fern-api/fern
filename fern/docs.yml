@@ -569,6 +569,10 @@ navigation:
           - page: Cursor
             icon: fa-regular fa-mouse-pointer
             path: ./pages/docs/developer-tools/cursor.mdx
+          - page: Model Context Protocol
+            icon: fa-regular fa-brain
+            path: ./pages/docs/developer-tools/mcp.mdx
+            slug: mcp
           - page: GitLab
             slug: gitlab
             icon: fa-brands fa-gitlab
