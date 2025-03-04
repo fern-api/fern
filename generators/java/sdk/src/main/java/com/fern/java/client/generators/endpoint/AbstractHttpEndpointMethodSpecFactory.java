@@ -135,8 +135,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             httpEndpointMethodSpecsFactory(),
                             variables,
                             apiErrorClassName,
-                            baseErrorClassName,
-                            generatedErrors);
+                            baseErrorClassName);
                     return onlyRequestEndpointWriter.generate();
                 }
 
@@ -188,8 +187,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                                 httpEndpointMethodSpecsFactory(),
                                 variables,
                                 apiErrorClassName,
-                                baseErrorClassName,
-                                generatedErrors);
+                                baseErrorClassName);
                         return onlyRequestEndpointWriter.generate();
                     }
                     WrappedRequestEndpointWriterVariableNameContext variables =
@@ -222,8 +220,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             httpEndpointMethodSpecsFactory(),
                             variables,
                             apiErrorClassName,
-                            baseErrorClassName,
-                            generatedErrors);
+                            baseErrorClassName);
                     return wrappedRequestEndpointWriter.generate();
                 }
 
@@ -256,8 +253,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                     httpEndpointMethodSpecsFactory(),
                     variables,
                     apiErrorClassName,
-                    baseErrorClassName,
-                    generatedErrors);
+                    baseErrorClassName);
             return noRequestEndpointWriter.generate();
         }
     }

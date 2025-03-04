@@ -17,7 +17,6 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
@@ -43,7 +42,6 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -82,8 +80,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
             ClassName apiErrorClassName,
-            ClassName baseErrorClassName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+            ClassName baseErrorClassName) {
         super(
                 httpService,
                 httpEndpoint,
@@ -96,8 +93,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 httpEndpointMethodSpecsFactory,
                 variables,
                 apiErrorClassName,
-                baseErrorClassName,
-                generatedErrors);
+                baseErrorClassName);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;

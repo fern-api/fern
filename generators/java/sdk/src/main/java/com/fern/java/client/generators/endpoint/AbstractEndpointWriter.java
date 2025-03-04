@@ -16,7 +16,6 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.*;
@@ -27,7 +26,6 @@ import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.TypeReferenceUtils;
@@ -63,7 +61,6 @@ public abstract class AbstractEndpointWriter {
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
     private final boolean inlinePathParams;
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final ClassName baseErrorClassName;
@@ -84,8 +81,7 @@ public abstract class AbstractEndpointWriter {
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
             ClassName apiErrorClassName,
-            ClassName baseErrorClassName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+            ClassName baseErrorClassName) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
@@ -100,7 +96,6 @@ public abstract class AbstractEndpointWriter {
                 .addModifiers(Modifier.PUBLIC);
         this.apiErrorClassName = apiErrorClassName;
         this.baseErrorClassName = baseErrorClassName;
-        this.generatedErrors = generatedErrors;
         this.inlinePathParams = clientGeneratorContext.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
                 && httpEndpoint.getSdkRequest().get().getShape().isWrapper()

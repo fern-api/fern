@@ -16,18 +16,15 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.generators.ClientOptionsGenerator;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -46,8 +43,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
             ClassName apiErrorClassName,
-            ClassName baseErrorClassName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+            ClassName baseErrorClassName) {
         super(
                 httpService,
                 httpEndpoint,
@@ -60,8 +56,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 httpEndpointMethodSpecsFactory,
                 variables,
                 apiErrorClassName,
-                baseErrorClassName,
-                generatedErrors);
+                baseErrorClassName);
     }
 
     @Override
