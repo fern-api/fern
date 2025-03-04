@@ -209,7 +209,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-b/common:Foo": {
             "type": "object",
@@ -348,7 +349,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-c/common:FolderCFoo": {
             "type": "object",
@@ -484,7 +486,8 @@
                         "value": "UUID"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-d/service:Response": {
             "type": "object",
@@ -620,7 +623,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_foo:ImportingType": {
             "type": "object",
@@ -717,7 +721,8 @@
                         "value": "type_commons:Imported"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_foo:OptionalString": {
             "type": "alias",
@@ -919,7 +924,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -1408,6 +1414,7 @@
             "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": null,
         "environments": {
@@ -1463,5 +1470,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

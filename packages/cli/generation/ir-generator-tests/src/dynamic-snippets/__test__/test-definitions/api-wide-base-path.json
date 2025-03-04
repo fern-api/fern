@@ -79,34 +79,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "pathParam",
-                                "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
-                                }
-                            },
-                            "wireValue": "pathParam"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "serviceParam",
                                 "camelCase": {
                                     "unsafeName": "serviceParam",
@@ -197,5 +169,36 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "pathParam",
+                    "camelCase": {
+                        "unsafeName": "pathParam",
+                        "safeName": "pathParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "path_param",
+                        "safeName": "path_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PATH_PARAM",
+                        "safeName": "PATH_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PathParam",
+                        "safeName": "PathParam"
+                    }
+                },
+                "wireValue": "pathParam"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
+    "environments": null,
+    "generatorConfig": null
 }
