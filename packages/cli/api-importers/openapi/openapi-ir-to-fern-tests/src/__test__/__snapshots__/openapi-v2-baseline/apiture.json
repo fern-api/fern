@@ -49102,6 +49102,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FullAccountPermissions": {
@@ -49384,6 +49385,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Account": {
@@ -49641,6 +49643,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OverdraftAccountFields": {
@@ -49764,6 +49767,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EligibleOverdraftAccountItem": {
@@ -49971,6 +49975,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OverdraftAccountItem": {
@@ -50063,6 +50068,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OverdraftProtection": {
@@ -50151,6 +50157,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Accounts": {
@@ -50364,6 +50371,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountLocation": {
@@ -50661,6 +50669,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountItem": {
@@ -50905,6 +50914,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExternalAccountVerificationMethod": {
@@ -51190,6 +51200,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IncompleteAccountBalances": {
@@ -51307,6 +51318,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountBalance": {
@@ -51517,6 +51529,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountJointOwner": {
@@ -51603,6 +51616,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountJointOwners": {
@@ -51664,6 +51678,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:JointOwnerInvitationFields": {
@@ -51868,6 +51883,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:JointOwnerInvitation": {
@@ -52100,6 +52116,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:InstitutionLocatorType": {
@@ -52338,6 +52355,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WireTransferInstitution": {
@@ -52511,6 +52529,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:InstitutionLookupResult": {
@@ -52634,6 +52653,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CutoffTimes": {
@@ -52723,6 +52743,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TimeZoneId": {
@@ -52841,6 +52862,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CutoffTimeType": {
@@ -53182,6 +53204,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferScheduleItem": {
@@ -53268,6 +53291,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferDateRestrictionType": {
@@ -53687,6 +53711,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferDateRestriction": {
@@ -53835,6 +53860,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CheckNumberRange": {
@@ -54316,6 +54342,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionMerchant": {
@@ -54439,6 +54466,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCheck": {
@@ -54559,6 +54587,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCategorization": {
@@ -54645,6 +54674,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCategoryLabel": {
@@ -55296,6 +55326,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transactions": {
@@ -55481,6 +55512,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IncompleteTransactions": {
@@ -55539,6 +55571,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCategoryType": {
@@ -55727,6 +55760,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCategories": {
@@ -55788,6 +55822,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferSchedule": {
@@ -56001,6 +56036,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferItemSchedule": {
@@ -56276,6 +56312,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferAccountReference": {
@@ -56427,6 +56464,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferFields": {
@@ -56581,6 +56619,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferState": {
@@ -57127,6 +57166,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transfer": {
@@ -57489,6 +57529,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transfers": {
@@ -57671,6 +57712,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProductType": {
@@ -58151,6 +58193,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransferFrequency": {
@@ -58710,6 +58753,7 @@
           }
         },
         "properties": [],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AbstractPagedBody": {
@@ -58830,6 +58874,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ReadOnlyResourceId": {
@@ -59004,6 +59049,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreditOrDebitValue": {
@@ -59303,6 +59349,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PositiveIntegerRange": {
@@ -59533,6 +59580,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ApiProblem": {
@@ -59851,6 +59899,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AchSecCode": {
@@ -60282,6 +60331,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AbstractPagedBodyFields": {
@@ -60371,6 +60421,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AddressFields": {
@@ -60516,6 +60567,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChallengeFactor": {
@@ -60639,6 +60691,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChallengeFactorType": {
@@ -60840,6 +60893,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChallengeSecurityQuestion": {
@@ -60926,6 +60980,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChallengePromptId": {
@@ -66649,6 +66704,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

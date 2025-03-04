@@ -7,4 +7,6 @@ import * as FernIr from "../../../../../index";
 export interface ObjectType {
     declaration: FernIr.dynamic.Declaration;
     properties: FernIr.dynamic.NamedParameter[];
+    /** Whether the type allows additional properties. */
+    additionalProperties: boolean | undefined;
 }

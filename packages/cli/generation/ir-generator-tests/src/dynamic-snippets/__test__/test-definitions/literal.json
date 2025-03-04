@@ -117,7 +117,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_inlined:SomeAliasedLiteral": {
             "type": "alias",
@@ -288,7 +289,8 @@
                         "value": "type_inlined:ANestedLiteral"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_inlined:ANestedLiteral": {
             "type": "object",
@@ -388,7 +390,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_inlined:UndiscriminatedLiteral": {
             "type": "undiscriminatedUnion",
@@ -893,7 +896,8 @@
                         "value": "type_reference:ContainerObject"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:ContainerObject": {
             "type": "object",
@@ -993,7 +997,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:NestedObjectWithLiterals": {
             "type": "object",
@@ -1152,7 +1157,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:SomeLiteral": {
             "type": "alias",
@@ -2561,5 +2567,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -2178,7 +2178,8 @@
                             }
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_imdb:CreateMovieRequest": {
                 "type": "object",
@@ -2303,7 +2304,8 @@
                             "value": "DOUBLE"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_imdb:Cast": {
                 "type": "discriminatedUnion",
@@ -2700,7 +2702,8 @@
                             "value": "type_imdb:Movie"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_imdb:Sample": {
                 "type": "object",
@@ -2825,7 +2828,8 @@
                             "value": "type_imdb:Movie"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_imdb:VanillaAlias": {
                 "type": "object",
@@ -2950,12 +2954,15 @@
                             "value": "type_imdb:Movie"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             }
         },
         "headers": [],
         "endpoints": {},
-        "environments": null
+        "pathParameters": [],
+        "environments": null,
+        "generatorConfig": null
     },
     "subpackages": {
         "subpackage_imdb": {

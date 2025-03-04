@@ -40,23 +40,11 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
-        const requestParameter =
-            request != null
-                ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
-                : undefined;
-        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
+        return this.getEndpointSignatureInfoFor({
+            serviceId,
             endpoint,
-            requestParameter
+            endpointType: "unpaged"
         });
-        return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
-            pathParameters,
-            pathParameterReferences,
-            request,
-            requestParameter,
-            returnType: getEndpointReturnType({ context: this.context, endpoint })
-        };
     }
 
     protected getPagerEndpointSignatureInfo({
@@ -66,19 +54,49 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ endpoint });
+        return this.getEndpointSignatureInfoFor({
+            serviceId,
+            endpoint,
+            endpointType: "paged"
+        });
+    }
+
+    protected getEndpointSignatureInfoFor({
+        serviceId,
+        endpoint,
+        endpointType
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+        endpointType: "unpaged" | "paged";
+    }): EndpointSignatureInfo {
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         const requestParameter =
             request != null
                 ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
                 : undefined;
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
+            endpoint,
+            requestParameter
+        });
+        let returnType: csharp.Type | undefined;
+        switch (endpointType) {
+            case "unpaged":
+                returnType = getEndpointReturnType({ context: this.context, endpoint });
+                break;
+            case "paged":
+                returnType = this.getPagerReturnType(endpoint);
+                break;
+            default:
+                assertNever(endpointType);
+        }
         return {
             baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
-            returnType: this.getPagerReturnType(endpoint)
+            returnType
         };
     }
 
@@ -129,7 +147,7 @@ export abstract class AbstractEndpointGenerator {
         requestParameter
     }: {
         endpoint: HttpEndpoint;
-        requestParameter?: csharp.Parameter;
+        requestParameter: csharp.Parameter | undefined;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const pathParameters: csharp.Parameter[] = [];
         const pathParameterReferences: Record<string, string> = {};

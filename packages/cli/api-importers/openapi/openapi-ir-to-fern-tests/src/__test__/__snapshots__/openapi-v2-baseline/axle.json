@@ -7858,6 +7858,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_ignition:StartIgnitionResponse": {
@@ -7983,6 +7984,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_tokens:ExchangeTokenResponseData": {
@@ -8138,6 +8140,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_tokens:ExchangeTokenResponse": {
@@ -8263,6 +8266,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_accounts:GetAccountResponse": {
@@ -8394,6 +8398,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_accounts:Account": {
@@ -8752,6 +8757,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_accounts:PolicyType": {
@@ -9394,6 +9400,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_policies:GetPolicyResponse": {
@@ -9525,6 +9532,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_carriers:GetCarrierResponse": {
@@ -9656,6 +9664,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_carriers:GetCarriersResponse": {
@@ -9790,6 +9799,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Address": {
@@ -10006,6 +10016,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Carrier": {
@@ -10235,6 +10246,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CoverageCode": {
@@ -10651,6 +10663,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Property": {
@@ -10768,6 +10781,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Vehicle": {
@@ -10941,6 +10955,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Insured": {
@@ -11244,6 +11259,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ThirdPartyType": {
@@ -11488,6 +11504,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User": {
@@ -11670,6 +11687,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Success": {
@@ -11794,6 +11812,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -13104,6 +13123,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Production",
       "environments": {

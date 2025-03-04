@@ -3522,7 +3522,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:ThankfulFactor": {
             "type": "object",
@@ -3619,7 +3620,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:JumboEnd": {
             "type": "object",
@@ -3716,7 +3718,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:HastyPain": {
             "type": "object",
@@ -3813,7 +3816,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:MistySnow": {
             "type": "object",
@@ -3910,7 +3914,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:DistinctFailure": {
             "type": "object",
@@ -4007,7 +4012,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:PracticalPrinciple": {
             "type": "object",
@@ -4104,7 +4110,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:LimpingStep": {
             "type": "object",
@@ -4201,7 +4208,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:VibrantExcitement": {
             "type": "object",
@@ -4298,7 +4306,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:ActiveDiamond": {
             "type": "object",
@@ -4395,7 +4404,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:PopularLimit": {
             "type": "object",
@@ -4492,7 +4502,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:FalseMirror": {
             "type": "object",
@@ -4589,7 +4600,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:PrimaryBlock": {
             "type": "object",
@@ -4686,7 +4698,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:RotatingRatio": {
             "type": "object",
@@ -4783,7 +4796,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:ColorfulCover": {
             "type": "object",
@@ -4880,7 +4894,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:DisloyalValue": {
             "type": "object",
@@ -4977,7 +4992,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:GruesomeCoach": {
             "type": "object",
@@ -5074,7 +5090,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:TotalWork": {
             "type": "object",
@@ -5171,7 +5188,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:HarmoniousPlay": {
             "type": "object",
@@ -5268,7 +5286,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:UniqueStress": {
             "type": "object",
@@ -5365,7 +5384,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:UnwillingSmoke": {
             "type": "object",
@@ -5462,7 +5482,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:FrozenSleep": {
             "type": "object",
@@ -5559,7 +5580,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:DiligentDeal": {
             "type": "object",
@@ -5656,7 +5678,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:AttractiveScript": {
             "type": "object",
@@ -5753,7 +5776,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:HoarseMouse": {
             "type": "object",
@@ -5850,7 +5874,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:CircularCard": {
             "type": "object",
@@ -5947,7 +5972,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:PotableBad": {
             "type": "object",
@@ -6044,7 +6070,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:TriangularRepair": {
             "type": "object",
@@ -6141,7 +6168,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_bigunion:GaseousRoad": {
             "type": "object",
@@ -6238,7 +6266,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Union": {
             "type": "discriminatedUnion",
@@ -7954,7 +7983,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Bar": {
             "type": "object",
@@ -8051,7 +8081,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_union:GetShapeRequest": {
             "type": "object",
@@ -8148,7 +8179,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_union:Shape": {
             "type": "discriminatedUnion",
@@ -8448,7 +8480,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_union:Square": {
             "type": "object",
@@ -8545,7 +8578,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -9030,5 +9064,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -15,12 +15,9 @@ public partial class DataserviceClient
 
     private DataService.DataServiceClient _dataService;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal DataserviceClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal DataserviceClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
         _grpc = _client.Grpc;
         _dataService = new DataService.DataServiceClient(_grpc.Channel);
     }
@@ -35,8 +32,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -98,8 +95,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -139,8 +136,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -180,8 +177,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -221,8 +218,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -262,8 +259,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -303,8 +300,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {
@@ -344,8 +341,8 @@ public partial class DataserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 try
                 {

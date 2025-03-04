@@ -212,11 +212,13 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

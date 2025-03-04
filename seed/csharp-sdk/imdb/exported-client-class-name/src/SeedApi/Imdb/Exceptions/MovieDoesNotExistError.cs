@@ -4,7 +4,7 @@ namespace SeedApi;
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
 public class MovieDoesNotExistError(string body)
-    : BaseClientApiException("MovieDoesNotExistError", 404, body)
+    : CustomClientApiException("MovieDoesNotExistError", 404, body)
 {
     /// <summary>
     /// The body of the response that triggered the exception.

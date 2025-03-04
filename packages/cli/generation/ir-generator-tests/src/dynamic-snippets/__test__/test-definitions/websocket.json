@@ -3,5 +3,7 @@
     "types": {},
     "headers": [],
     "endpoints": {},
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

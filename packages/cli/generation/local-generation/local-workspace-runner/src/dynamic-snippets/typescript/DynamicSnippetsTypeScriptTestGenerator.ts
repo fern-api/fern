@@ -8,7 +8,8 @@ import { DynamicSnippetsGenerator } from "@fern-api/typescript-dynamic-snippets"
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertIr } from "../utils/convertIr";
 
 export class DynamicSnippetsTypeScriptTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
@@ -19,7 +20,7 @@ export class DynamicSnippetsTypeScriptTestGenerator {
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: this.ir,
+            ir: convertIr(this.ir),
             config: this.buildGeneratorConfig(this.generatorConfig)
         });
     }

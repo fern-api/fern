@@ -1,0 +1,15 @@
+name: simple-api
+
+auth: OAuthScheme
+
+imports: 
+  auth: auth.yml
+
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getToken
+      response-properties:
+        access-token: $response.access_token
