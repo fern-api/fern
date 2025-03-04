@@ -10773,6 +10773,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccessTokenScope": {
@@ -11114,6 +11115,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreateVoiceLanguage": {
@@ -11206,6 +11208,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreateVoiceModelName": {
@@ -11419,6 +11422,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreatedVoiceType": {
@@ -11650,6 +11654,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExperimentalStreamResponse": {
@@ -11742,6 +11747,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetSpeechOptionsRequest": {
@@ -11803,6 +11809,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetSpeechResponseAudioFormat": {
@@ -12078,6 +12085,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetStreamOptionsRequest": {
@@ -12139,6 +12147,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetVoiceGender": {
@@ -12593,6 +12602,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetVoiceLanguage": {
@@ -12685,6 +12695,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetVoicesModelName": {
@@ -12898,6 +12909,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NestedChunk": {
@@ -13114,6 +13126,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OAuthErrorError": {
@@ -13346,6 +13359,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SpeechMarks": {
@@ -13596,6 +13610,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -15907,6 +15922,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

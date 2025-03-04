@@ -92,6 +92,9 @@ fixtures:
     - customConfig:
         pascal-case-environments: false
       outputFolder: no-pascal-case-environments
+    - customConfig:
+        environment-class-name: CustomEnvironment
+      outputFolder: environment-class-name
   exhaustive:
     - customConfig:
         explicit-namespaces: true

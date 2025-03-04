@@ -50,13 +50,13 @@ public partial class ImdbClient
             }
             catch (JsonException e)
             {
-                throw new BaseClientException("Failed to deserialize response", e);
+                throw new CustomClientException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new BaseClientApiException(
+            throw new CustomClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -96,7 +96,7 @@ public partial class ImdbClient
             }
             catch (JsonException e)
             {
-                throw new BaseClientException("Failed to deserialize response", e);
+                throw new CustomClientException("Failed to deserialize response", e);
             }
         }
 
@@ -116,7 +116,7 @@ public partial class ImdbClient
             {
                 // unable to map error response, throwing generic error
             }
-            throw new BaseClientApiException(
+            throw new CustomClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

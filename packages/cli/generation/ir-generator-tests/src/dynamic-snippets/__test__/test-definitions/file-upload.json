@@ -198,7 +198,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:MyAliasObject": {
             "type": "alias",
@@ -440,7 +441,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:ObjectType": {
             "type": "enum",
@@ -2785,5 +2787,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

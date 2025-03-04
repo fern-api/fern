@@ -6,13 +6,7 @@ public partial class SeedApiClient
 {
     private readonly RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    public SeedApiClient(
-        string token,
-        IExceptionInterceptor? exceptionInterceptor = null,
-        ClientOptions? clientOptions = null
-    )
+    public SeedApiClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -32,9 +26,8 @@ public partial class SeedApiClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _exceptionHandler = new ExceptionHandler(exceptionInterceptor);
         _client = new RawClient(clientOptions);
-        Imdb = new ImdbClient(_client, _exceptionHandler);
+        Imdb = new ImdbClient(_client);
     }
 
     public ImdbClient Imdb { get; init; }

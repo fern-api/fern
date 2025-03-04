@@ -9,12 +9,9 @@ public partial class AuthClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal AuthClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal AuthClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <example>
@@ -37,8 +34,8 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -102,8 +99,8 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(

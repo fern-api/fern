@@ -28929,6 +28929,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RedactedAudioStatus": {
@@ -29155,6 +29156,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WordSearchMatch": {
@@ -29303,6 +29305,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WordSearchTimestamp": {
@@ -29424,6 +29427,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreateTranscriptOptionalParameters": {
@@ -30520,6 +30524,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SummaryModel": {
@@ -30941,6 +30946,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptUtterance": {
@@ -31142,6 +31148,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SubstitutionPolicy": {
@@ -32517,6 +32524,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptIabCategoriesResult": {
@@ -32641,6 +32649,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transcript": {
@@ -34376,6 +34385,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Chapter": {
@@ -34546,6 +34556,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Entity": {
@@ -34688,6 +34699,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EntityType": {
@@ -35557,6 +35569,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Sentiment": {
@@ -35739,6 +35752,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TopicDetectionResult": {
@@ -35862,6 +35876,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentSafetyLabel": {
@@ -35976,6 +35991,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentSafetyLabelResult": {
@@ -36219,6 +36235,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SeverityScoreSummary": {
@@ -36333,6 +36350,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AutoHighlightsResult": {
@@ -36394,6 +36412,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AutoHighlightResult": {
@@ -36539,6 +36558,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptWord": {
@@ -36712,6 +36732,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptSentence": {
@@ -36885,6 +36906,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SentencesResponse": {
@@ -37030,6 +37052,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptParagraph": {
@@ -37203,6 +37226,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ParagraphsResponse": {
@@ -37348,6 +37372,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PageDetails": {
@@ -37521,6 +37546,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptListParameters": {
@@ -37737,6 +37763,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptListItem": {
@@ -37938,6 +37965,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptList": {
@@ -38027,6 +38055,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UploadedFile": {
@@ -38085,6 +38114,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RealtimeTemporaryTokenResponse": {
@@ -38143,6 +38173,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AudioIntelligenceModelStatus": {
@@ -38331,6 +38362,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurBaseResponse": {
@@ -38389,6 +38421,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurSummaryResponse": {
@@ -38475,6 +38508,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurQuestionAnswerResponse": {
@@ -38564,6 +38598,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurQuestionAnswer": {
@@ -38650,6 +38685,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurActionItemsResponse": {
@@ -38736,6 +38772,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurTaskResponse": {
@@ -38822,6 +38859,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurBaseParametersContext": {
@@ -39051,6 +39089,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurQuestionContext": {
@@ -39249,6 +39288,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LemurActionItemsParameters": {
@@ -39447,6 +39487,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RealtimeBaseMessage": {
@@ -39505,6 +39546,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RealtimeMessage": {
@@ -39613,6 +39655,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MessageType": {
@@ -39960,6 +40003,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionTerminated": {
@@ -40021,6 +40065,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RealtimeBaseTranscript": {
@@ -40222,6 +40267,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PartialTranscript": {
@@ -40454,6 +40500,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FinalTranscript": {
@@ -40742,6 +40789,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Word": {
@@ -40884,6 +40932,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AudioData": {
@@ -40942,6 +40991,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminateSession": {
@@ -41028,6 +41078,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -45548,6 +45599,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

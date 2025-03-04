@@ -13339,6 +13339,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_sessions:SessionsEventsResponseError": {
@@ -13498,6 +13499,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_sessions:SessionsEventsResponse": {
@@ -13735,6 +13737,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DefaultMetaWrapper": {
@@ -13796,6 +13799,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ErrorEnvelope": {
@@ -14004,6 +14008,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ErrorMessage": {
@@ -14118,6 +14123,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExtensionV1": {
@@ -14263,6 +14269,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExtensionV1EnvelopeDefaultMetaWrapper": {
@@ -14417,6 +14424,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExternalSessionAiResponseMetadataStatus": {
@@ -14661,6 +14669,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExternalSessionAiResponseMetadataUsage": {
@@ -14747,6 +14756,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Issue": {
@@ -14873,6 +14883,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListExtensionV1EnvelopeDefaultMetaWrapper": {
@@ -15033,6 +15044,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListProfileV1EnvelopeDefaultMetaWrapper": {
@@ -15193,6 +15205,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LiveViewConnectionInfo": {
@@ -15282,6 +15295,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelResponse": {
@@ -15340,6 +15354,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelResponseExternalSessionAiResponseMetadataWrapper": {
@@ -15494,6 +15509,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Pagination": {
@@ -15748,6 +15764,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProfileV1": {
@@ -15902,6 +15919,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProfileV1EnvelopeDefaultMetaWrapper": {
@@ -16056,6 +16074,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScrapeModelResponse": {
@@ -16114,6 +16133,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScrapeModelResponseExternalSessionAiResponseMetadataWrapper": {
@@ -16268,6 +16288,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScrapeResponseContent": {
@@ -16354,6 +16375,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScrapeResponseOutput": {
@@ -16471,6 +16493,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionConfig": {
@@ -16659,6 +16682,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionConfigV1": {
@@ -16847,6 +16871,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionWithConnectionInfo": {
@@ -17209,6 +17234,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionWithConnectionInfoEnvelopeDefaultMetaWrapper": {
@@ -17363,6 +17389,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionsWithPagination": {
@@ -17455,6 +17482,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionsWithPaginationEnvelopeDefaultMetaWrapper": {
@@ -17609,6 +17637,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StatusMessageStatus": {
@@ -17869,6 +17898,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Window": {
@@ -17983,6 +18013,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WindowEnvelopeDefaultMetaWrapper": {
@@ -18137,6 +18168,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -22041,6 +22073,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

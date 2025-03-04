@@ -745,6 +745,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OtherField": {
@@ -806,6 +807,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Other": {
@@ -898,6 +900,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CounterPartyAccount": {
@@ -1021,11 +1024,13 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {
