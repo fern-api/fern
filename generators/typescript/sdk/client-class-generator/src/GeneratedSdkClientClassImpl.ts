@@ -37,6 +37,7 @@ import {
     OAuthScheme,
     Package,
     PathParameter,
+    SubpackageId,
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
@@ -168,7 +169,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (service == null) {
             this.generatedEndpointImplementations = [];
         } else {
-            this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
+            this.generatedEndpointImplementations = service.endpoints.map((endpoint: HttpEndpoint) => {
                 const requestBody = endpoint.requestBody ?? undefined;
 
                 const getGeneratedEndpointRequest = () => {
@@ -335,7 +336,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
-            (acc, wrappedSubpackageId) => {
+            (acc: GeneratedWrappedService[], wrappedSubpackageId: SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
                 if (subpackage.hasEndpointsInTree) {
                     acc.push(

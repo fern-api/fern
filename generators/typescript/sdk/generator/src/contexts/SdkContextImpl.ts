@@ -22,7 +22,7 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkClientClassGenerator, WebsocketClientGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -49,6 +49,8 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-refer
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
+import { WebsocketClientDeclarationReferencer } from "../declaration-referencers/WebsocketClientDeclarationReferencer";
+import { WebsocketSocketDeclarationReferencer } from "../declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
@@ -64,6 +66,7 @@ import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorC
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
+import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 
@@ -103,6 +106,9 @@ export declare namespace SdkContextImpl {
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         sdkClientClassGenerator: SdkClientClassGenerator;
+        websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
+        websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
+        websocketGenerator: WebsocketClientGenerator;
         packageResolver: PackageResolver;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
@@ -153,6 +159,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
     public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextImpl;
     public readonly sdkClientClass: SdkClientClassContext;
+    public readonly websocket: WebsocketContextImpl;
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
@@ -194,6 +201,9 @@ export class SdkContextImpl implements SdkContext {
         requestWrapperGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         sdkInlinedRequestBodySchemaGenerator,
+        websocketClientDeclarationReferencer,
+        websocketSocketDeclarationReferencer,
+        websocketGenerator,
         packageResolver,
         sdkClientClassDeclarationReferencer,
         sdkClientClassGenerator,
@@ -348,6 +358,14 @@ export class SdkContextImpl implements SdkContext {
             importsManager,
             sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator,
+            packageResolver
+        });
+        this.websocket = new WebsocketContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager,
+            websocketClientDeclarationReferencer,
+            websocketSocketDeclarationReferencer,
+            websocketGenerator,
             packageResolver
         });
         this.environments = new EnvironmentsContextImpl({

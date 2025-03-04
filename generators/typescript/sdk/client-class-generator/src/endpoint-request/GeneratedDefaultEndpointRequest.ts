@@ -312,8 +312,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                 result.push({
                     propertyValue: resolvedType.container.literal._visit<boolean | string>({
-                        string: (val) => val,
-                        boolean: (val) => val,
+                        string: (val: string) => val,
+                        boolean: (val: boolean) => val,
                         _other: () => {
                             throw new Error("Encountered non-boolean, non-string literal");
                         }

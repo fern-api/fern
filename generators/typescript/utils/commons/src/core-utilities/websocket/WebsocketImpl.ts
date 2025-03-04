@@ -20,15 +20,23 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
         }
     };
 
-    public readonly ReconnectingWebsocket = {
-        _instantiate: this.withExportedName(
+    public ReconnectingWebSocket = {
+        _getReferenceToType: this.withExportedName(
+            "ReconnectingWebSocket",
+            (APIResponse) => (response: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
+        ),
+        _connect: this.withExportedName(
             "ReconnectingWebSocket",
             (ReconnectingWebSocket) =>
-                (args: Websocket.Args): ts.Expression => {
-                    return ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
-                        ts.factory.createStringLiteral(args.url)
-                    ]);
-                }
+                (args: { url: ts.Expression; protocols: ts.Expression; options: ts.ObjectLiteralExpression }) =>
+                    ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression([
+                            ts.factory.createPropertyAssignment("url", args.url),
+                            ts.factory.createPropertyAssignment("protocols", args.protocols),
+                            ts.factory.createPropertyAssignment("options", args.options)
+                        ])
+                    ])
         )
     };
 }
