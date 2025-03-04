@@ -54,6 +54,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
@@ -106,6 +107,15 @@ public abstract class AbstractHttpResponseParserGenerator {
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional);
+
+    public abstract void addResponseHandlingCode(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName baseErrorClassName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseName,
+            Consumer<CodeBlock.Builder> onResponseWriter,
+            Consumer<CodeBlock.Builder> onFailureWriter);
 
     public abstract void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression);
 

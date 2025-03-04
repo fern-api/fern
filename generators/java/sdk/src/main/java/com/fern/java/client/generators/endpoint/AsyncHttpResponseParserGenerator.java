@@ -91,8 +91,9 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
-        writeOkhttpCallback(
+        addResponseHandlingCode(
                 httpResponseBuilder,
+                baseErrorClassName,
                 defaultedClientName,
                 okhttpRequestName,
                 responseName,
@@ -132,19 +133,66 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                             responseBodyStringName,
                             generatedErrors);
                     httpResponseBuilder.endControlFlow();
-                    httpResponseBuilder
-                            .beginControlFlow("catch ($T e)", IOException.class)
-                            .addStatement(
-                                    "$L.completeExceptionally(new $T($S, e))",
-                                    FUTURE,
-                                    baseErrorClassName,
-                                    "Network error executing HTTP request")
-                            .endControlFlow()
-                            .build();
                 },
                 builder -> {
                     addGenericFailureCodeBlock(builder, baseErrorClassName);
                 });
+    }
+
+    @Override
+    public void addResponseHandlingCode(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName baseErrorClassName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseName,
+            Consumer<CodeBlock.Builder> onResponseWriter,
+            Consumer<CodeBlock.Builder> onFailureWriter) {
+        httpResponseBuilder.add(
+                "$N.newCall($L).enqueue(new $T() {\n", defaultedClientName, okhttpRequestName, Callback.class);
+        httpResponseBuilder.indent();
+
+        httpResponseBuilder.add("@$T\n", Override.class);
+        httpResponseBuilder.add(
+                "public void onResponse(@$T $T $N, @$T $T $N) throws $T {\n",
+                NotNull.class,
+                Call.class,
+                "call",
+                NotNull.class,
+                Response.class,
+                responseName,
+                IOException.class);
+        httpResponseBuilder.indent();
+        onResponseWriter.accept(httpResponseBuilder);
+        httpResponseBuilder
+                .beginControlFlow("catch ($T e)", IOException.class)
+                .addStatement(
+                        "$L.completeExceptionally(new $T($S, e))",
+                        FUTURE,
+                        baseErrorClassName,
+                        "Network error executing HTTP request")
+                .endControlFlow()
+                .build();
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.add("}\n");
+        httpResponseBuilder.add("\n");
+
+        httpResponseBuilder.add("@$T\n", Override.class);
+        httpResponseBuilder.add(
+                "public void onFailure(@$T $T $N, @$T $T $N) {\n",
+                NotNull.class,
+                Call.class,
+                "call",
+                NotNull.class,
+                IOException.class,
+                "e");
+        httpResponseBuilder.indent();
+        onFailureWriter.accept(httpResponseBuilder);
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.add("}\n");
+
+        httpResponseBuilder.unindent();
+        httpResponseBuilder.addStatement("})");
         httpResponseBuilder.addStatement("return $L", FUTURE);
     }
 
@@ -225,50 +273,5 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .unindent()
                 .add("}\n")
                 .build();
-    }
-
-    private void writeOkhttpCallback(
-            CodeBlock.Builder httpResponseBuilder,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseName,
-            Consumer<CodeBlock.Builder> onResponseWriter,
-            Consumer<CodeBlock.Builder> onFailureWriter) {
-        httpResponseBuilder.add(
-                "$N.newCall($L).enqueue(new $T() {\n", defaultedClientName, okhttpRequestName, Callback.class);
-        httpResponseBuilder.indent();
-
-        httpResponseBuilder.add("@$T\n", Override.class);
-        httpResponseBuilder.add(
-                "public void onResponse(@$T $T $N, @$T $T $N) throws $T {\n",
-                NotNull.class,
-                Call.class,
-                "call",
-                NotNull.class,
-                Response.class,
-                responseName,
-                IOException.class);
-        httpResponseBuilder.indent();
-        onResponseWriter.accept(httpResponseBuilder);
-        httpResponseBuilder.unindent();
-        httpResponseBuilder.add("}\n");
-        httpResponseBuilder.add("\n");
-
-        httpResponseBuilder.add("@$T\n", Override.class);
-        httpResponseBuilder.add(
-                "public void onFailure(@$T $T $N, @$T $T $N) {\n",
-                NotNull.class,
-                Call.class,
-                "call",
-                NotNull.class,
-                IOException.class,
-                "e");
-        httpResponseBuilder.indent();
-        onFailureWriter.accept(httpResponseBuilder);
-        httpResponseBuilder.unindent();
-        httpResponseBuilder.add("}\n");
-
-        httpResponseBuilder.unindent();
-        httpResponseBuilder.addStatement("})");
     }
 }

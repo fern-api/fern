@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -89,42 +90,65 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
-        beginResponseProcessingTryBlock(
+        addResponseHandlingCode(
                 httpResponseBuilder,
-                httpEndpoint,
-                responseName,
+                baseErrorClassName,
                 defaultedClientName,
                 okhttpRequestName,
-                responseBodyName);
-        addSuccessResponseCodeBlock(
-                httpResponseBuilder,
-                endpointMethodBuilder,
-                clientGeneratorContext,
-                clientOptionsField,
-                generatedObjectMapper,
-                httpEndpoint,
-                maybeRequestParameterSpec,
                 responseName,
-                responseBodyName,
-                parsedResponseVariableName,
-                nextRequestVariableName,
-                startingAfterVariableName,
-                resultVariableName,
-                newPageNumberVariableName,
-                typeReferenceIsOptional);
-        httpResponseBuilder.endControlFlow();
-        addMappedFailuresCodeBlock(
-                httpResponseBuilder,
-                clientGeneratorContext,
-                httpEndpoint,
-                apiErrorClassName,
-                generatedObjectMapper,
-                responseName,
-                responseBodyName,
-                responseBodyStringName,
-                generatedErrors);
-        httpResponseBuilder.endControlFlow();
-        addGenericFailureCodeBlock(httpResponseBuilder, baseErrorClassName);
+                builder -> {
+                    beginResponseProcessingTryBlock(
+                            builder,
+                            httpEndpoint,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    addSuccessResponseCodeBlock(
+                            builder,
+                            endpointMethodBuilder,
+                            clientGeneratorContext,
+                            clientOptionsField,
+                            generatedObjectMapper,
+                            httpEndpoint,
+                            maybeRequestParameterSpec,
+                            responseName,
+                            responseBodyName,
+                            parsedResponseVariableName,
+                            nextRequestVariableName,
+                            startingAfterVariableName,
+                            resultVariableName,
+                            newPageNumberVariableName,
+                            typeReferenceIsOptional);
+                    httpResponseBuilder.endControlFlow();
+                    addMappedFailuresCodeBlock(
+                            builder,
+                            clientGeneratorContext,
+                            httpEndpoint,
+                            apiErrorClassName,
+                            generatedObjectMapper,
+                            responseName,
+                            responseBodyName,
+                            responseBodyStringName,
+                            generatedErrors);
+                    httpResponseBuilder.endControlFlow();
+                },
+                builder -> {
+                    addGenericFailureCodeBlock(builder, baseErrorClassName);
+                });
+    }
+
+    @Override
+    public void addResponseHandlingCode(
+            CodeBlock.Builder httpResponseBuilder,
+            ClassName baseErrorClassName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseName,
+            Consumer<CodeBlock.Builder> onResponseWriter,
+            Consumer<CodeBlock.Builder> onFailureWriter) {
+        onResponseWriter.accept(httpResponseBuilder);
+        onFailureWriter.accept(httpResponseBuilder);
     }
 
     @Override
