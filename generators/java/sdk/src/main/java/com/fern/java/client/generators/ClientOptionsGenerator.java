@@ -176,6 +176,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         addApiVersionField(clientOptionsBuilder);
 
+        MethodSpec timeoutGetter = MethodSpec.methodBuilder(TIMEOUT_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(
+                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .returns(TIMEOUT_FIELD.type)
+                .addStatement(
+                        "return $N.getTimeout().orElse(this.$N)", REQUEST_OPTIONS_PARAMETER_NAME, TIMEOUT_FIELD.name)
+                .build();
+
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
 
@@ -226,6 +236,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
 
         TypeSpec clientOptions = clientOptionsBuilder
+                .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
                 .addMethods(variableGetters.values())

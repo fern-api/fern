@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -102,7 +103,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -117,10 +118,16 @@ public class AsyncUsersClient {
                                 .startingAfter(startingAfter)
                                 .build();
                         List<User> result = parsedResponse.getData();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithCursorPagination(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return listWithCursorPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -128,6 +135,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -169,7 +179,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersMixedTypePaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -184,10 +194,16 @@ public class AsyncUsersClient {
                                         .cursor(startingAfter)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        future.complete(new SyncPagingIterable<>(
-                                !startingAfter.isEmpty(),
-                                result,
-                                () -> listWithMixedTypeCursorPagination(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<User>(!startingAfter.isEmpty(), result, () -> {
+                            try {
+                                return listWithMixedTypeCursorPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -195,6 +211,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -240,7 +259,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -261,10 +280,16 @@ public class AsyncUsersClient {
                                         .pagination(pagination)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithBodyCursorPagination(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return listWithBodyCursorPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -272,6 +297,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -325,7 +353,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -340,14 +368,26 @@ public class AsyncUsersClient {
                                 .page(newPageNumber)
                                 .build();
                         List<User> result = parsedResponse.getData();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithOffsetPagination(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<User>(true, result, () -> {
+                            try {
+                                return listWithOffsetPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -401,7 +441,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -417,14 +457,26 @@ public class AsyncUsersClient {
                                         .page(newPageNumber)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithDoubleOffsetPagination(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<User>(true, result, () -> {
+                            try {
+                                return listWithDoubleOffsetPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -470,7 +522,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -492,14 +544,26 @@ public class AsyncUsersClient {
                                         .pagination(pagination)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithBodyOffsetPagination(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<User>(true, result, () -> {
+                            try {
+                                return listWithBodyOffsetPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -549,7 +613,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -565,14 +629,26 @@ public class AsyncUsersClient {
                                         .page(newPageNumber)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithOffsetStepPagination(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<User>(true, result, () -> {
+                            try {
+                                return listWithOffsetStepPagination(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -622,7 +698,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersPaginationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -638,14 +714,26 @@ public class AsyncUsersClient {
                                         .page(newPageNumber)
                                         .build();
                         List<User> result = parsedResponse.getData();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithOffsetPaginationHasNextPage(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<User>(true, result, () -> {
+                            try {
+                                return listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -685,7 +773,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersExtendedResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -699,10 +787,16 @@ public class AsyncUsersClient {
                                 .cursor(startingAfter)
                                 .build();
                         List<User> result = parsedResponse.getData().getUsers();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithExtendedResults(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return listWithExtendedResults(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -710,6 +804,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -751,7 +848,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<ListUsersExtendedOptionalListResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -766,10 +863,16 @@ public class AsyncUsersClient {
                                         .cursor(startingAfter)
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers().orElse(Collections.emptyList());
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -777,6 +880,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -816,7 +922,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<UsernameCursor> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -831,8 +937,16 @@ public class AsyncUsersClient {
                                 .startingAfter(startingAfter)
                                 .build();
                         List<String> result = parsedResponse.getCursor().getData();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return listUsernames(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -840,6 +954,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -894,6 +1011,9 @@ public class AsyncUsersClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 
@@ -933,7 +1053,7 @@ public class AsyncUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<UsernameContainer> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -948,14 +1068,26 @@ public class AsyncUsersClient {
                                 .offset(newPageNumber)
                                 .build();
                         List<String> result = parsedResponse.getResults();
-                        return new SyncPagingIterable<>(
-                                true, result, () -> listWithGlobalConfig(nextRequest, requestOptions));
+                        future.complete(new SyncPagingIterable<String>(true, result, () -> {
+                            try {
+                                return listWithGlobalConfig(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 

@@ -12,6 +12,7 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -76,6 +77,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,
+            FieldSpec clientOptionsField,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
             String responseBodyStringName,
@@ -104,12 +106,11 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 httpResponseBuilder,
                 endpointMethodBuilder,
                 clientGeneratorContext,
+                clientOptionsField,
                 generatedObjectMapper,
                 httpEndpoint,
                 maybeRequestParameterSpec,
                 responseName,
-                defaultedClientName,
-                okhttpRequestName,
                 responseBodyName,
                 parsedResponseVariableName,
                 nextRequestVariableName,
@@ -154,23 +155,6 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 .add("return $L", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
-    }
-
-    @Override
-    public void addCursorPaginationResponse(
-            CodeBlock.Builder httpResponseBuilder,
-            ClassName pagerClassName,
-            CodeBlock hasNextPageBlock,
-            String resultVariableName,
-            String endpointName,
-            String methodParameters) {
-        httpResponseBuilder.addStatement(
-                "return new $T<>($L, $L, () -> $L($L))",
-                pagerClassName,
-                hasNextPageBlock,
-                resultVariableName,
-                endpointName,
-                methodParameters);
     }
 
     @Override
@@ -305,5 +289,10 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 responseName,
                 responseName,
                 objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
+    }
+
+    @Override
+    public CodeBlock getNextPageGetter(String endpointName, String methodParameters) {
+        return CodeBlock.of("() -> $L($L)", endpointName, methodParameters);
     }
 }

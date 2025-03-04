@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -66,7 +67,7 @@ public class AsyncComplexClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<PaginatedConversationResponse> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<Conversation>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -88,8 +89,15 @@ public class AsyncComplexClient {
                                 .pagination(pagination)
                                 .build();
                         List<Conversation> result = parsedResponse.getConversations();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<Conversation>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return search(nextRequest, requestOptions).get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                RuntimeException r = new RuntimeException(e);
+                                future.completeExceptionally(r);
+                                throw r;
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -97,6 +105,9 @@ public class AsyncComplexClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
                 }
             }
 

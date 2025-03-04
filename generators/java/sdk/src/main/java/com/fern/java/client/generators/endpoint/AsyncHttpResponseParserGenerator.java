@@ -13,6 +13,7 @@ import com.fern.java.utils.CompletableFutureUtils;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -77,6 +79,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,
+            FieldSpec clientOptionsField,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
             String responseBodyStringName,
@@ -111,12 +114,11 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                             builder,
                             endpointMethodBuilder,
                             clientGeneratorContext,
+                            clientOptionsField,
                             generatedObjectMapper,
                             httpEndpoint,
                             maybeRequestParameterSpec,
                             responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
                             responseBodyName,
                             parsedResponseVariableName,
                             nextRequestVariableName,
@@ -180,25 +182,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .add("$L.complete($L)", parsedResponseVariableName)
                 .add(snippetCodeBlock)
                 .build());
-        httpResponseBuilder.addStatement("return");
-    }
-
-    @Override
-    public void addCursorPaginationResponse(
-            CodeBlock.Builder httpResponseBuilder,
-            ClassName pagerClassName,
-            CodeBlock hasNextPageBlock,
-            String resultVariableName,
-            String endpointName,
-            String methodParameters) {
-        httpResponseBuilder.addStatement(
-                "$L.complete(new $T<>($L, $L, () -> $L($L)))",
-                FUTURE,
-                pagerClassName,
-                hasNextPageBlock,
-                resultVariableName,
-                endpointName,
-                methodParameters);
         httpResponseBuilder.addStatement("return");
     }
 
@@ -329,6 +312,24 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 responseName,
                 responseName,
                 objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
+    }
+
+    @Override
+    public CodeBlock getNextPageGetter(String endpointName, String methodParameters) {
+        return CodeBlock.builder()
+                .add("() -> {\n")
+                .indent()
+                .beginControlFlow("try")
+                .add("return $L($L).get();\n", endpointName, methodParameters)
+                .endControlFlow()
+                .beginControlFlow("catch ($T | $T e)", InterruptedException.class, ExecutionException.class)
+                .add("$T r = new $T(e);\n", RuntimeException.class, RuntimeException.class)
+                .add("$N.completeExceptionally(r);\n", FUTURE)
+                .add("throw r;\n")
+                .endControlFlow()
+                .unindent()
+                .add("}\n")
+                .build();
     }
 
     private void writeOkhttpCallback(
