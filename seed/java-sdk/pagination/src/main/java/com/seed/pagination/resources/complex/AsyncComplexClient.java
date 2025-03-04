@@ -93,9 +93,7 @@ public class AsyncComplexClient {
                             try {
                                 return search(nextRequest, requestOptions).get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;

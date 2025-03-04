@@ -123,9 +123,7 @@ public class AsyncUsersClient {
                                 return listWithCursorPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -199,9 +197,7 @@ public class AsyncUsersClient {
                                 return listWithMixedTypeCursorPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -285,9 +281,7 @@ public class AsyncUsersClient {
                                 return listWithBodyCursorPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -373,9 +367,7 @@ public class AsyncUsersClient {
                                 return listWithOffsetPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -462,9 +454,7 @@ public class AsyncUsersClient {
                                 return listWithDoubleOffsetPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -549,9 +539,7 @@ public class AsyncUsersClient {
                                 return listWithBodyOffsetPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -634,9 +622,7 @@ public class AsyncUsersClient {
                                 return listWithOffsetStepPagination(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -719,9 +705,7 @@ public class AsyncUsersClient {
                                 return listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -792,9 +776,7 @@ public class AsyncUsersClient {
                                 return listWithExtendedResults(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -868,9 +850,7 @@ public class AsyncUsersClient {
                                 return listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -942,9 +922,7 @@ public class AsyncUsersClient {
                                 return listUsernames(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
@@ -1073,9 +1051,7 @@ public class AsyncUsersClient {
                                 return listWithGlobalConfig(nextRequest, requestOptions)
                                         .get();
                             } catch (InterruptedException | ExecutionException e) {
-                                RuntimeException r = new RuntimeException(e);
-                                future.completeExceptionally(r);
-                                throw r;
+                                throw new RuntimeException(e);
                             }
                         }));
                         return;
