@@ -2,7 +2,6 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.BytesResponse;
 import com.fern.ir.model.http.CursorPagination;
 import com.fern.ir.model.http.FileDownloadResponse;
@@ -55,8 +54,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public abstract class AbstractHttpResponseParserGenerator {
 
@@ -126,7 +123,16 @@ public abstract class AbstractHttpResponseParserGenerator {
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional);
 
+    public abstract void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression);
+
     public abstract void addTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName);
+
+    public abstract void addNonTryWithResourcesVariant(
             CodeBlock.Builder httpResponseBuilder,
             String responseName,
             String defaultedClientName,
@@ -426,24 +432,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
     }
 
-    private void addNonTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
-        httpResponseBuilder
-                .beginControlFlow("try")
-                .addStatement(
-                        "$T $L = $N.newCall($L).execute()",
-                        Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
-    }
-
     private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
@@ -599,17 +587,19 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Void visitFileDownload(FileDownloadResponse fileDownload) {
             endpointMethodBuilder.returns(InputStream.class);
-            httpResponseBuilder.addStatement(
-                    "return new $T($L)",
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
-                    responseName);
+            handleSuccessfulResult(
+                    httpResponseBuilder,
+                    CodeBlock.of(
+                            "new $T($L)",
+                            clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
+                            responseName));
             return null;
         }
 
         @Override
         public Void visitText(TextResponse text) {
             endpointMethodBuilder.returns(String.class);
-            httpResponseBuilder.addStatement("return $L.string()", responseBodyName);
+            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L.string()", responseBodyName));
             return null;
         }
 
@@ -649,14 +639,16 @@ public abstract class AbstractHttpResponseParserGenerator {
             String terminator =
                     streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
 
-            httpResponseBuilder.addStatement(
-                    "return new $T<$T>($T.class, new $T($L), $S)",
-                    clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
-                    bodyTypeName,
-                    bodyTypeName,
-                    clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                    responseName,
-                    terminator);
+            handleSuccessfulResult(
+                    httpResponseBuilder,
+                    CodeBlock.of(
+                            "new $T<$T>($T.class, new $T($L), $S)",
+                            clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                            bodyTypeName,
+                            bodyTypeName,
+                            clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                            responseName,
+                            terminator));
 
             return null;
         }
@@ -670,22 +662,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Void _visitUnknown(Object unknownType) {
             return null;
-        }
-
-        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
-            if (responseBodyType.getNamed().isPresent()) {
-                TypeId typeId = responseBodyType.getNamed().get().getTypeId();
-                TypeDeclaration typeDeclaration =
-                        clientGeneratorContext.getIr().getTypes().get(typeId);
-                return typeDeclaration.getShape().getAlias().isPresent()
-                        && typeDeclaration
-                                .getShape()
-                                .getAlias()
-                                .get()
-                                .getResolvedType()
-                                .isContainer();
-            }
-            return false;
         }
     }
 

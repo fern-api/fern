@@ -133,6 +133,11 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     }
 
     @Override
+    public void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
+        httpResponseBuilder.addStatement("return $L", resultExpression);
+    }
+
+    @Override
     public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
         // Do nothing
     }
@@ -193,6 +198,25 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
         httpResponseBuilder
                 .beginControlFlow(
                         "try ($T $L = $N.newCall($L).execute())",
+                        Response.class,
+                        responseName,
+                        defaultedClientName,
+                        okhttpRequestName)
+                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
+    @Override
+    public void addNonTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow("try")
+                .addStatement(
+                        "$T $L = $N.newCall($L).execute()",
                         Response.class,
                         responseName,
                         defaultedClientName,

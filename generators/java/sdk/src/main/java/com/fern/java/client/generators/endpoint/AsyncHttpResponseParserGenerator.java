@@ -136,11 +136,26 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                             responseBodyStringName,
                             generatedErrors);
                     httpResponseBuilder.endControlFlow();
+                    httpResponseBuilder
+                            .beginControlFlow("catch ($T e)", IOException.class)
+                            .addStatement(
+                                    "$L.completeExceptionally(new $T($S, e))",
+                                    FUTURE,
+                                    baseErrorClassName,
+                                    "Network error executing HTTP request")
+                            .endControlFlow()
+                            .build();
                 },
                 builder -> {
                     addGenericFailureCodeBlock(builder, baseErrorClassName);
                 });
         httpResponseBuilder.addStatement("return $L", FUTURE);
+    }
+
+    @Override
+    public void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
+        httpResponseBuilder.addStatement("$L.complete($L)", FUTURE, resultExpression);
+        httpResponseBuilder.addStatement("return");
     }
 
     @Override
@@ -213,6 +228,19 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             String responseBodyName) {
         httpResponseBuilder
                 .beginControlFlow("try ($T $L = $N.body())", ResponseBody.class, responseBodyName, responseName)
+                .beginControlFlow("if ($L.isSuccessful())", responseName);
+    }
+
+    @Override
+    public void addNonTryWithResourcesVariant(
+            CodeBlock.Builder httpResponseBuilder,
+            String responseName,
+            String defaultedClientName,
+            String okhttpRequestName,
+            String responseBodyName) {
+        httpResponseBuilder
+                .beginControlFlow("try")
+                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
                 .beginControlFlow("if ($L.isSuccessful())", responseName);
     }
 
