@@ -444,6 +444,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -556,6 +557,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

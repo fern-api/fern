@@ -73182,6 +73182,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectsResponse": {
@@ -73285,6 +73286,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectResponse": {
@@ -73416,6 +73418,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteProjectResponse": {
@@ -73516,6 +73519,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:UpdateProjectResponse": {
@@ -73616,6 +73620,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectBalancesResponseBalancesItem": {
@@ -73809,6 +73814,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectBalancesResponse": {
@@ -73912,6 +73918,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectBalanceResponse": {
@@ -74105,6 +74112,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectModelsResponse": {
@@ -74242,6 +74250,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectModelResponse": {
@@ -74422,6 +74431,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectKeyResponse": {
@@ -74522,6 +74532,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteProjectKeyResponse": {
@@ -74622,6 +74633,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectMembersResponseMembersItem": {
@@ -74722,6 +74734,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectMembersResponse": {
@@ -74825,6 +74838,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteProjectMemberResponse": {
@@ -74925,6 +74939,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectMemberScopesResponse": {
@@ -75028,6 +75043,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:UpdateProjectMemberScopesResponse": {
@@ -75128,6 +75144,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectInvitesResponseInvitesItem": {
@@ -75259,6 +75276,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectInvitesResponse": {
@@ -75362,6 +75380,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:CreateProjectInviteResponse": {
@@ -75462,6 +75481,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteProjectInviteResponse": {
@@ -75562,6 +75582,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteProjectLeaveResponse": {
@@ -75662,6 +75683,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectRequestsResponse": {
@@ -75827,6 +75849,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectRequestResponse": {
@@ -75927,6 +75950,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageRequestProjectFilters": {
@@ -76985,6 +77009,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageResponse": {
@@ -77147,6 +77172,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectUsageFieldsResponseModelsItem": {
@@ -77340,6 +77366,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectUsageFieldsResponse": {
@@ -77545,6 +77572,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageBreakdownRequestProjectFilters": {
@@ -78597,6 +78625,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageBreakdownResponseResultsItemGrouping": {
@@ -78945,6 +78974,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageBreakdownResponseResultsItem": {
@@ -79238,6 +79268,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetProjectUsageBreakdownResponse": {
@@ -79422,6 +79453,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectPurchasesResponseOrdersItem": {
@@ -79677,6 +79709,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListProjectPurchasesResponse": {
@@ -79780,6 +79813,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListModelsResponseSttItem": {
@@ -80131,6 +80165,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListModelsResponseTtsItemMetadata": {
@@ -80358,6 +80393,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListModelsResponseTtsItem": {
@@ -80647,6 +80683,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListModelsResponse": {
@@ -80784,6 +80821,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetModelResponseBatch": {
@@ -81135,6 +81173,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetModelResponseMetadataMetadata": {
@@ -81362,6 +81401,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetModelResponseMetadata": {
@@ -81651,6 +81691,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetModelResponse": {
@@ -81853,6 +81894,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListSelfHostedDistCredsResponseDistributionCredentialsItemDistributionCredentials": {
@@ -82068,6 +82110,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListSelfHostedDistCredsResponseDistributionCredentialsItem": {
@@ -82193,6 +82236,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:ListSelfHostedDistCredsResponse": {
@@ -82296,6 +82340,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:CreateSelfHostedDistCredsRequestScopesItem": {
@@ -82666,6 +82711,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetSelfHostedCredentialsResponseDistributionCredentials": {
@@ -82881,6 +82927,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:GetSelfHostedCredentialsResponse": {
@@ -83006,6 +83053,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteSelfHostedDistCredsResponseMember": {
@@ -83131,6 +83179,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteSelfHostedDistCredsResponseDistributionCredentials": {
@@ -83346,6 +83395,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_managementApi:DeleteSelfHostedDistCredsResponse": {
@@ -83471,6 +83521,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_speak:SpeakEncoding": {
@@ -84469,6 +84520,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_speak:SpeakSubscribeEvent": {
@@ -84674,6 +84726,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_speak:SpeakControlMessagesRequest": {
@@ -88763,6 +88816,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:TranscriptionResponseChannelAlternativesItem": {
@@ -88928,6 +88982,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:TranscriptionResponseChannel": {
@@ -89031,6 +89086,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:TranscriptionResponseMetadataModelInfo": {
@@ -89193,6 +89249,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:TranscriptionResponseMetadata": {
@@ -89355,6 +89412,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:TranscriptionResponse": {
@@ -89706,6 +89764,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ControlMessageResponseZero": {
@@ -89840,6 +89899,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ControlMessageResponseOne": {
@@ -90129,6 +90189,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ControlMessageResponseTwo": {
@@ -90418,6 +90479,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ControlMessageResponse": {
@@ -90644,6 +90706,7 @@
           }
         },
         "properties": [],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ListenControlMessagesRequestCloseStream": {
@@ -90712,6 +90775,7 @@
           }
         },
         "properties": [],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ListenControlMessagesRequestKeepAlive": {
@@ -90780,6 +90844,7 @@
           }
         },
         "properties": [],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_listen:ListenControlMessagesRequest": {
@@ -91129,6 +91194,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:WelcomeMessage": {
@@ -91257,6 +91323,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsApplied": {
@@ -91357,6 +91424,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:ConversationTextRole": {
@@ -91626,6 +91694,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:UserStartedSpeaking": {
@@ -91726,6 +91795,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentThinking": {
@@ -91854,6 +91924,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:FunctionCallRequest": {
@@ -92044,6 +92115,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:FunctionCalling": {
@@ -92144,6 +92216,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentStartedSpeaking": {
@@ -92328,6 +92401,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentAudioDone": {
@@ -92428,6 +92502,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentErrorResponse": {
@@ -92556,6 +92631,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentSubscribeEvent": {
@@ -92800,6 +92876,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAudioOutput": {
@@ -92993,6 +93070,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAudio": {
@@ -93124,6 +93202,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentListen": {
@@ -93224,6 +93303,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThinkProvider": {
@@ -93324,6 +93404,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThinkFunctionsItemHeadersItem": {
@@ -93455,6 +93536,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue": {
@@ -93586,6 +93668,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThinkFunctionsItemParameters": {
@@ -93758,6 +93841,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThinkFunctionsItem": {
@@ -94016,6 +94100,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentThink": {
@@ -94212,6 +94297,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgentSpeakProvider": {
@@ -94487,6 +94573,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationAgent": {
@@ -94649,6 +94736,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfigurationContext": {
@@ -94789,6 +94877,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:SettingsConfiguration": {
@@ -94979,6 +95068,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:UpdateInstructions": {
@@ -95107,6 +95197,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:UpdateSpeak": {
@@ -95235,6 +95326,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:InjectAgentMessage": {
@@ -95363,6 +95455,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:FunctionCallResponse": {
@@ -95519,6 +95612,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentKeepAlive": {
@@ -95619,6 +95713,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_agent:AgentPublishEvent": {
@@ -95866,6 +95961,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ForbiddenErrorBody": {
@@ -96020,6 +96116,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentTooLargeErrorBody": {
@@ -96143,6 +96240,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UnsupportedMediaTypeErrorBody": {
@@ -96266,6 +96364,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NotFoundErrorBody": {
@@ -96420,6 +96519,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListenRequestFile": {
@@ -96575,6 +96675,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MetadataSentimentInfo": {
@@ -96698,6 +96799,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MetadataTopicsInfo": {
@@ -96821,6 +96923,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MetadataIntentsInfo": {
@@ -96944,6 +97047,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Metadata": {
@@ -97368,6 +97472,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemSearchItemHitsItem": {
@@ -97522,6 +97627,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemSearchItem": {
@@ -97617,6 +97723,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemWordsItem": {
@@ -97771,6 +97878,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItem": {
@@ -97894,6 +98002,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemParagraphsParagraphsItem": {
@@ -98082,6 +98191,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemParagraphs": {
@@ -98177,6 +98287,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemSummariesItem": {
@@ -98300,6 +98411,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItemTopicsItem": {
@@ -98457,6 +98569,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItemAlternativesItem": {
@@ -98682,6 +98795,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChannelsItem": {
@@ -98811,6 +98925,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Channels": {
@@ -99093,6 +99208,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UtterancesItem": {
@@ -99374,6 +99490,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Utterances": {
@@ -99501,6 +99618,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TopicsResultsTopicsSegmentsItemTopicsItem": {
@@ -99593,6 +99711,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TopicsResultsTopicsSegmentsItem": {
@@ -99750,6 +99869,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TopicsResultsTopics": {
@@ -99814,6 +99934,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TopicsResults": {
@@ -99875,6 +99996,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Topics": {
@@ -99936,6 +100058,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IntentsResultsIntentsSegmentsItemIntentsItem": {
@@ -100028,6 +100151,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IntentsResultsIntentsSegmentsItem": {
@@ -100185,6 +100309,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IntentsResultsIntents": {
@@ -100249,6 +100374,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IntentsResults": {
@@ -100310,6 +100436,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Intents": {
@@ -100371,6 +100498,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SentimentsSegmentsItem": {
@@ -100556,6 +100684,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SentimentsAverage": {
@@ -100648,6 +100777,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Sentiments": {
@@ -100743,6 +100873,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Results": {
@@ -100956,6 +101087,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Response": {
@@ -101042,6 +101174,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextRequestUrl": {
@@ -101131,6 +101264,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextRequestText": {
@@ -101220,6 +101354,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextRequest": {
@@ -101381,6 +101516,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextMetadataMetadataSentimentInfo": {
@@ -101504,6 +101640,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextMetadataMetadataTopicsInfo": {
@@ -101627,6 +101764,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextMetadataMetadataIntentsInfo": {
@@ -101750,6 +101888,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextMetadataMetadata": {
@@ -101997,6 +102136,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextMetadata": {
@@ -102058,6 +102198,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextSummaryResultsSummary": {
@@ -102119,6 +102260,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextSummaryResults": {
@@ -102180,6 +102322,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextSummary": {
@@ -102241,6 +102384,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextResults": {
@@ -102395,6 +102539,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TextResponse": {
@@ -102481,6 +102626,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SpeakResponse": {
@@ -102542,6 +102688,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SttModelsItem": {
@@ -102854,6 +103001,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SttModels": {
@@ -103077,6 +103225,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TtsModelsItem": {
@@ -103327,6 +103476,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TtsModels": {
@@ -103454,6 +103604,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:KeysItemApiKey": {
@@ -103611,6 +103762,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:KeysItem": {
@@ -103703,6 +103855,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Keys": {
@@ -103929,6 +104082,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:KeyMemberApiKey": {
@@ -104086,6 +104240,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:KeyMember": {
@@ -104271,6 +104426,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Key": {
@@ -104332,6 +104488,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Request": {
@@ -104647,6 +104804,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -113256,6 +113414,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

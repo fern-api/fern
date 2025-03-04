@@ -25885,6 +25885,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChatMessageRequest": {
@@ -25971,6 +25972,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChatMessageRole": {
@@ -26147,6 +26149,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ConditionalNodeResultData": {
@@ -26208,6 +26211,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentType": {
@@ -26340,6 +26344,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DeploymentNodeResultData": {
@@ -26460,6 +26465,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DeploymentRead": {
@@ -26751,6 +26757,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DeploymentReadStatusEnum": {
@@ -26964,6 +26971,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DocumentDocumentToDocumentIndex": {
@@ -27081,6 +27089,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DocumentIndexRead": {
@@ -27319,6 +27328,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DocumentIndexStatus": {
@@ -27631,6 +27641,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EnvironmentEnum": {
@@ -27788,6 +27799,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EvaluationParamsRequest": {
@@ -27849,6 +27861,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FinishReasonEnum": {
@@ -28003,6 +28016,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateOptionsRequest": {
@@ -28064,6 +28078,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateRequest": {
@@ -28196,6 +28211,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateResponse": {
@@ -28257,6 +28273,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateResult": {
@@ -28349,6 +28366,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateResultData": {
@@ -28410,6 +28428,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateResultError": {
@@ -28468,6 +28487,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateStreamResponse": {
@@ -28526,6 +28546,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateStreamResult": {
@@ -28646,6 +28667,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenerateStreamResultData": {
@@ -28732,6 +28754,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IndexingStateEnum": {
@@ -29109,6 +29132,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionCompilePromptResponse": {
@@ -29167,6 +29191,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionCompiledPrompt": {
@@ -29253,6 +29278,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionExecConfig": {
@@ -29435,6 +29461,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionExecConfigParameters": {
@@ -29711,6 +29738,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionRead": {
@@ -29996,6 +30024,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelVersionReadStatusEnum": {
@@ -30265,6 +30294,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NormalizedLogProbs": {
@@ -30357,6 +30387,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NormalizedTokenLogProbs": {
@@ -30515,6 +30546,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PaginatedSlimDocumentList": {
@@ -30672,6 +30704,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProcessingFailureReasonEnum": {
@@ -30883,6 +30916,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptNodeResultData": {
@@ -31003,6 +31037,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlock": {
@@ -31117,6 +31152,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlockData": {
@@ -31206,6 +31242,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlockDataRequest": {
@@ -31295,6 +31332,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlockProperties": {
@@ -31582,6 +31620,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlockPropertiesRequest": {
@@ -31869,6 +31908,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateBlockRequest": {
@@ -31983,6 +32023,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateInputVariable": {
@@ -32041,6 +32082,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PromptTemplateInputVariableRequest": {
@@ -32099,6 +32141,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProviderEnum": {
@@ -32363,6 +32406,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisterPromptModelParametersRequest": {
@@ -32639,6 +32683,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisterPromptPrompt": {
@@ -32725,6 +32770,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisterPromptPromptInfoRequest": {
@@ -32845,6 +32891,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisterPromptResponse": {
@@ -33015,6 +33062,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisteredPromptDeployment": {
@@ -33129,6 +33177,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisteredPromptModelVersion": {
@@ -33215,6 +33264,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisteredPromptSandbox": {
@@ -33301,6 +33351,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RegisteredPromptSandboxSnapshot": {
@@ -33359,6 +33410,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SandboxMetricInputParams": {
@@ -33420,6 +33472,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SandboxMetricInputParamsRequest": {
@@ -33481,6 +33534,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SandboxNodeResult": {
@@ -33539,6 +33593,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SandboxNodeResultData": {
@@ -33659,6 +33714,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SandboxScenario": {
@@ -33807,6 +33863,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScenarioInput": {
@@ -33961,6 +34018,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScenarioInputRequest": {
@@ -34115,6 +34173,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ScenarioInputTypeEnum": {
@@ -34247,6 +34306,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchFiltersRequest": {
@@ -34311,6 +34371,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchNodeResult": {
@@ -34369,6 +34430,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchNodeResultData": {
@@ -34526,6 +34588,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchRequestOptionsRequest": {
@@ -34680,6 +34743,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchResponse": {
@@ -34741,6 +34805,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchResult": {
@@ -34886,6 +34951,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchResultMergingRequest": {
@@ -34944,6 +35010,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchWeightsRequest": {
@@ -35030,6 +35097,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SlimDocument": {
@@ -35333,6 +35401,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SlimDocumentStatusEnum": {
@@ -35553,6 +35622,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SubmitCompletionActualsErrorResponse": {
@@ -35611,6 +35681,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminalNodeChatHistoryResult": {
@@ -35700,6 +35771,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminalNodeJsonResult": {
@@ -35792,6 +35864,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminalNodeResult": {
@@ -35850,6 +35923,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminalNodeResultData": {
@@ -35908,6 +35982,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TerminalNodeResultOutput": {
@@ -36127,6 +36202,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TestSuiteTestCase": {
@@ -36281,6 +36357,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UploadDocumentErrorResponse": {
@@ -36339,6 +36416,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UploadDocumentResponse": {
@@ -36397,6 +36475,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowEventError": {
@@ -36483,6 +36562,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowExecutionEventErrorCode": {
@@ -36674,6 +36754,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowExecutionWorkflowResultEvent": {
@@ -36791,6 +36872,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowNodeResultData": {
@@ -37240,6 +37322,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowNodeResultEventState": {
@@ -37447,6 +37530,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowRequestInputRequest": {
@@ -37672,6 +37756,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowRequestStringInputRequest": {
@@ -37758,6 +37843,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowResultEvent": {
@@ -37934,6 +38020,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowResultEventOutputData": {
@@ -38246,6 +38333,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowResultEventOutputDataJson": {
@@ -38428,6 +38516,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowResultEventOutputDataString": {
@@ -38604,6 +38693,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WorkflowStreamEvent": {
@@ -42774,6 +42864,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

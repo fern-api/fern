@@ -25824,6 +25824,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_authV1:LoginNicknameResponse": {
@@ -25921,6 +25922,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_authV1:LoginGoogleResponse": {
@@ -26018,6 +26020,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_lobbyV2:CreateLobbyRequestVisibility": {
@@ -26182,6 +26185,7 @@
           }
         },
         "properties": [],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OrgId": {
@@ -26272,6 +26276,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ApplicationAuthConfiguration": {
@@ -26395,6 +26400,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Application": {
@@ -26683,6 +26689,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransportType": {
@@ -26983,6 +26990,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DeploymentConfig": {
@@ -27156,6 +27164,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AppId": {
@@ -27621,6 +27630,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ApplicationWithDeployment": {
@@ -27937,6 +27947,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AppConfigAuthConfigurationGoogle": {
@@ -27995,6 +28006,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AppConfigAuthConfiguration": {
@@ -28118,6 +28130,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AppConfig": {
@@ -28204,6 +28217,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Region": {
@@ -28540,6 +28554,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BuildStatus": {
@@ -28980,6 +28995,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DiscoveryResponseItem": {
@@ -29094,6 +29110,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DiscoveryResponse": {
@@ -29554,6 +29571,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TailLines": {
@@ -29704,6 +29722,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RecordPartialMetricNameMetricValueArray": {
@@ -29870,6 +29889,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MetricsResponse": {
@@ -30510,6 +30530,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RoomStatus": {
@@ -30805,6 +30826,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PickRoomExcludeKeyofRoomAllocations": {
@@ -30950,6 +30972,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:OmitRoomAllocations": {
@@ -31563,6 +31586,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Room": {
@@ -31739,6 +31763,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StartingConnectionInfo": {
@@ -31797,6 +31822,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ActiveConnectionInfo": {
@@ -31939,6 +31965,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ConnectionInfo": {
@@ -40465,6 +40492,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

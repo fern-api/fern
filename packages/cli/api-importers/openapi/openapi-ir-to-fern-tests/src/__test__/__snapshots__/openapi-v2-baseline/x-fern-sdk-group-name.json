@@ -962,6 +962,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_ids/user:UserId": {
@@ -1243,6 +1244,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -1364,7 +1366,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_user": {

@@ -39,7 +39,7 @@ export const Pagination = {
         return {
             ...value,
             type: "cursor",
-            _visit <_Result>(this: FernIr.Pagination.Cursor, visitor: FernIr.Pagination._Visitor<_Result>) {
+            _visit: function <_Result>(this: FernIr.Pagination.Cursor, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -49,7 +49,7 @@ export const Pagination = {
         return {
             ...value,
             type: "offset",
-            _visit <_Result>(this: FernIr.Pagination.Offset, visitor: FernIr.Pagination._Visitor<_Result>) {
+            _visit: function <_Result>(this: FernIr.Pagination.Offset, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -59,7 +59,7 @@ export const Pagination = {
         return {
             ...value,
             type: "custom",
-            _visit <_Result>(this: FernIr.Pagination.Custom, visitor: FernIr.Pagination._Visitor<_Result>) {
+            _visit: function <_Result>(this: FernIr.Pagination.Custom, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };

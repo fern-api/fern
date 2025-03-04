@@ -99,7 +99,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_union:MyUnion": {
             "type": "undiscriminatedUnion",
@@ -650,5 +651,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

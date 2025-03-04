@@ -1176,6 +1176,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchRequestFilterLocation": {
@@ -1299,6 +1300,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchRequestFilter": {
@@ -1422,6 +1424,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SearchRequestSort": {
@@ -1560,6 +1563,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -1762,7 +1766,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

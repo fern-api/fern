@@ -4676,6 +4676,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_companies:CompanyTags": {
@@ -4812,6 +4813,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_companies:CompanySegments": {
@@ -4949,6 +4951,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_companies:Company": {
@@ -5617,6 +5620,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_segments:SegmentPersonType": {
@@ -6019,6 +6023,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CreateOrUpdateCompanyRequest": {
@@ -6335,6 +6340,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ErrorErrorsItem": {
@@ -6455,6 +6461,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Error": {
@@ -6575,6 +6582,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -6722,6 +6730,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

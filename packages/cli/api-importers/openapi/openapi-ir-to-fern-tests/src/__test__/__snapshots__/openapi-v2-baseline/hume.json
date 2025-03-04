@@ -22909,6 +22909,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BurstPrediction": {
@@ -23029,6 +23030,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Completed": {
@@ -23199,6 +23201,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DescriptionsScore": {
@@ -23285,6 +23288,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Direction": {
@@ -23445,6 +23449,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Empty": {
@@ -23659,6 +23664,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Face": {
@@ -23906,6 +23912,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FacePrediction": {
@@ -24147,6 +24154,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FacemeshPrediction": {
@@ -24208,6 +24216,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FacsScore": {
@@ -24294,6 +24303,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Failed": {
@@ -24436,6 +24446,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:File": {
@@ -24556,6 +24567,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Granularity": {
@@ -24763,6 +24775,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupedPredictionsFacePrediction": {
@@ -24852,6 +24865,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupedPredictionsFacemeshPrediction": {
@@ -24941,6 +24955,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupedPredictionsLanguagePrediction": {
@@ -25030,6 +25045,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupedPredictionsNerPrediction": {
@@ -25119,6 +25135,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupedPredictionsProsodyPrediction": {
@@ -25208,6 +25225,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:InProgress": {
@@ -25294,6 +25312,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:JobRequest": {
@@ -25436,6 +25455,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:JobId": {
@@ -25494,6 +25514,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Language": {
@@ -25648,6 +25669,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LanguagePrediction": {
@@ -25926,6 +25948,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Models": {
@@ -26142,6 +26165,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModelsPredictions": {
@@ -26358,6 +26382,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Ner": {
@@ -26419,6 +26444,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NerPrediction": {
@@ -26741,6 +26767,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Null": {
@@ -26865,6 +26892,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Prediction": {
@@ -26951,6 +26979,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalNullBurstPrediction": {
@@ -27043,6 +27072,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalNullFacePrediction": {
@@ -27135,6 +27165,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalNullFacemeshPrediction": {
@@ -27227,6 +27258,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalTranscriptionMetadataLanguagePrediction": {
@@ -27319,6 +27351,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalTranscriptionMetadataNerPrediction": {
@@ -27411,6 +27444,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PredictionsOptionalTranscriptionMetadataProsodyPrediction": {
@@ -27503,6 +27537,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Prosody": {
@@ -27626,6 +27661,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProsodyPrediction": {
@@ -27808,6 +27844,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Queued": {
@@ -27866,6 +27903,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Request": {
@@ -28085,6 +28123,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Results": {
@@ -28177,6 +28216,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SentimentScore": {
@@ -28263,6 +28303,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SortBy": {
@@ -28585,6 +28626,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SourceFile": {
@@ -28705,6 +28747,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SourceUrl": {
@@ -28763,6 +28806,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Url": {
@@ -28821,6 +28865,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:State": {
@@ -29151,6 +29196,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StateFailed": {
@@ -29293,6 +29339,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StateInProgress": {
@@ -29379,6 +29426,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StateQueued": {
@@ -29437,6 +29485,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Status": {
@@ -29641,6 +29690,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ToxicityScore": {
@@ -29727,6 +29777,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transcription": {
@@ -29788,6 +29839,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TranscriptionMetadata": {
@@ -29877,6 +29929,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:When": {
@@ -30043,6 +30096,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AssistantInput": {
@@ -30163,6 +30217,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AudioConfiguration": {
@@ -30277,6 +30332,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AudioInput": {
@@ -30397,6 +30453,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BuiltInTool": {
@@ -30560,6 +30617,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Context": {
@@ -30649,6 +30707,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContextType": {
@@ -30910,6 +30969,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ResumeAssistantMessage": {
@@ -31005,6 +31065,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SessionSettings": {
@@ -31367,6 +31428,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Tool": {
@@ -31543,6 +31605,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ToolErrorMessage": {
@@ -31818,6 +31881,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ToolResponseMessage": {
@@ -32031,6 +32095,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ToolType": {
@@ -32225,6 +32290,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AssistantEnd": {
@@ -32317,6 +32383,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AssistantMessage": {
@@ -32524,6 +32591,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AudioOutput": {
@@ -32728,6 +32796,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChatMessageToolResult": {
@@ -32917,6 +32986,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ChatMetadata": {
@@ -33096,6 +33166,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EmotionScores": {
@@ -34470,6 +34541,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Inference": {
@@ -34531,6 +34603,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MillisecondInterval": {
@@ -34617,6 +34690,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ProsodyInference": {
@@ -34675,6 +34749,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Role": {
@@ -35050,6 +35125,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserInterruption": {
@@ -35170,6 +35246,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserMessage": {
@@ -35402,6 +35479,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -36333,6 +36411,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

@@ -49,6 +49,9 @@ types:
     properties:
       declaration: declaration.Declaration
       properties: list<NamedParameter>
+      additionalProperties:
+        docs: Whether the type allows additional properties.
+        type: optional<boolean>
 
   DiscriminatedUnionType:
     properties:
