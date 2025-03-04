@@ -38,6 +38,11 @@ public partial class ClientOptions
     internal Headers Headers { get; init; } = new();
 
     /// <summary>
+    /// A handler that will handle exceptions thrown by the client.
+    /// </summary>
+    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
+
+    /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
     internal ClientOptions Clone()
@@ -49,6 +54,7 @@ public partial class ClientOptions
             MaxRetries = MaxRetries,
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            ExceptionHandler = ExceptionHandler.Clone(),
         };
     }
 }

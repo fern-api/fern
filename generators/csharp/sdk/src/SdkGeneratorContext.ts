@@ -316,10 +316,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getRootClientClassName(): string {
-        if (this.customConfig["client-class-name"] != null) {
-            return this.customConfig["client-class-name"];
-        }
-        return `${this.getComputedClientName()}Client`;
+        return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
     }
 
     public getRootClientClassNameForSnippets(): string {
@@ -344,17 +341,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
-        const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
-            name: maybeOverrideName ?? this.getExceptionPrefix() + "Exception",
+            name: this.customConfig["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
     public getBaseApiExceptionClassReference(): csharp.ClassReference {
-        const maybeOverrideName = this.customConfig["base-api-exception-class-name"];
         return csharp.classReference({
-            name: maybeOverrideName ?? this.getExceptionPrefix() + "ApiException",
+            name: this.customConfig["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
@@ -364,10 +359,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             name: this.getPascalCaseSafeName(declaredErrorName.name),
             namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
         });
-    }
-
-    private getExceptionPrefix() {
-        return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
     public getHeadersClassReference(): csharp.ClassReference {
@@ -463,15 +454,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         };
     }
 
+    private getClientPrefix(): string {
+        return (
+            this.customConfig["exported-client-class-name"] ??
+            this.customConfig["client-class-name"] ??
+            this.getComputedClientName()
+        );
+    }
+
+    private getEnvironmentClassName(): string {
+        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
+    }
+
     public getEnvironmentsClassReference(): csharp.ClassReference {
-        let environmentsClassName: string;
-        if (this.customConfig["client-class-name"] != null) {
-            environmentsClassName = `${this.customConfig["client-class-name"]}Environment`;
-        } else {
-            environmentsClassName = `${this.getComputedClientName()}Environment`;
-        }
         return csharp.classReference({
-            name: environmentsClassName,
+            name: this.getEnvironmentClassName(),
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }

@@ -14,11 +14,13 @@ export const ObjectType: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     declaration: Declaration,
     properties: core.serialization.list(NamedParameter),
+    additionalProperties: core.serialization.boolean().optional(),
 });
 
 export declare namespace ObjectType {
     export interface Raw {
         declaration: Declaration.Raw;
         properties: NamedParameter.Raw[];
+        additionalProperties?: boolean | null;
     }
 }

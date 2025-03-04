@@ -23125,6 +23125,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_alias:AliasValResponsePrivacy": {
@@ -23636,6 +23637,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_alias:AliasValResponseAuthor": {
@@ -23764,6 +23766,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_alias:AliasValResponse": {
@@ -24234,6 +24237,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeGetResponseLinks": {
@@ -24331,6 +24335,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeGetResponseTier": {
@@ -24749,6 +24754,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeLikesResponse": {
@@ -24877,6 +24883,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeCommentsRequestRelationship": {
@@ -25140,6 +25147,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeCommentsResponseDataItemValPrivacy": {
@@ -25403,6 +25411,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeCommentsResponseDataItemVal": {
@@ -25615,6 +25624,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeCommentsResponseDataItem": {
@@ -25824,6 +25834,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeCommentsResponse": {
@@ -25952,6 +25963,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeReferencesResponseDataItemReference": {
@@ -26139,6 +26151,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeReferencesResponseDataItemDependsOn": {
@@ -26326,6 +26339,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeReferencesResponseDataItem": {
@@ -26479,6 +26493,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_me:MeReferencesResponse": {
@@ -26607,6 +26622,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_blobs:BlobListingItem": {
@@ -26766,6 +26782,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_users:UsersValsResponse": {
@@ -26894,6 +26911,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_sqlite:TursoValue": {
@@ -27193,6 +27211,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_sqlite:SqliteExecuteRequestStatement": {
@@ -28369,6 +28388,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_vals:ValsListResponse": {
@@ -28497,6 +28517,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_vals:ValsCreateVersionRequestPrivacy": {
@@ -28864,6 +28885,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_emails:EmailNameAndAddress": {
@@ -28992,6 +29014,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_emails:EmailData": {
@@ -29367,6 +29390,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_emails:ReplyToList": {
@@ -29544,6 +29568,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BadRequestErrorBody": {
@@ -29633,6 +29658,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:InternalServerErrorBody": {
@@ -29691,6 +29717,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserLinks": {
@@ -29749,6 +29776,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User": {
@@ -29956,6 +29984,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ResultSetLastInsertRowid": {
@@ -30178,6 +30207,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExtendedValPrivacy": {
@@ -30572,6 +30602,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExtendedValAuthor": {
@@ -30661,6 +30692,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExtendedVal": {
@@ -31092,6 +31124,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BasicValPrivacy": {
@@ -31486,6 +31519,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BasicValAuthor": {
@@ -31575,6 +31609,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BasicVal": {
@@ -31919,6 +31954,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PaginationLinks": {
@@ -32039,6 +32075,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -38656,6 +38693,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Production",
       "environments": {

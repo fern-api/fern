@@ -999,6 +999,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Update": {
@@ -1088,6 +1089,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -1121,7 +1123,8 @@
         }
       }
     ],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_status": {

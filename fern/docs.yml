@@ -77,7 +77,7 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/openapi/endpoints/multipart.mdx
                 slug: multipart
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
                 icon: fa-regular fa-signal-stream
                 slug: sse
@@ -145,7 +145,7 @@ navigation:
                 path: ./pages/api-definition/fern-definition/endpoints/bytes.mdx
                 icon: fa-regular fa-server
                 slug: bytes                
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 icon: fa-regular fa-signal-stream
                 path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
                 slug: sse
@@ -286,7 +286,7 @@ navigation:
             icon: fa-regular fa-pro
             slug: websockets
           - page: Model Context Protocol
-            icon: fa-regular fa-brain
+            icon: fa-regular fa-pro
             path: ./pages/sdks/capabilities/mcp.mdx
             slug: mcp
       - section: Reference

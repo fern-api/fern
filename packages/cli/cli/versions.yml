@@ -1,5 +1,21 @@
 - changelogEntry:
   - summary: |
+      Updated the CLI to gracefully handle unsupported security schemes (e.g. cookie-based auth) by skipping them 
+      instead of throwing an error. This allows the CLI to continue processing the rest of the API definition even when 
+      it encounters security schemes it cannot convert.
+    type: fix
+  irVersion: 56
+  version: 0.56.5
+
+- changelogEntry:
+  - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.4
+
+- changelogEntry:
+  - summary: |
       Make the latest C# SDK generator consume IR v56.
     type: internal
   irVersion: 56

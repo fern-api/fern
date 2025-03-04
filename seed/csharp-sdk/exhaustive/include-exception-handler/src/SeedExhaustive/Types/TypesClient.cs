@@ -6,15 +6,12 @@ public partial class TypesClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal TypesClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal TypesClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
-        Enum = new EnumClient(_client, _exceptionHandler);
-        Object = new ObjectClient(_client, _exceptionHandler);
-        Union = new UnionClient(_client, _exceptionHandler);
+        Enum = new EnumClient(_client);
+        Object = new ObjectClient(_client);
+        Union = new UnionClient(_client);
     }
 
     public EnumClient Enum { get; }

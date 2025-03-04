@@ -6,12 +6,7 @@ public partial class SeedApiClient
 {
     private readonly RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    public SeedApiClient(
-        IExceptionInterceptor? exceptionInterceptor = null,
-        ClientOptions? clientOptions = null
-    )
+    public SeedApiClient(ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -30,9 +25,8 @@ public partial class SeedApiClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _exceptionHandler = new ExceptionHandler(exceptionInterceptor);
         _client = new RawClient(clientOptions);
-        Dataservice = new DataserviceClient(_client, _exceptionHandler);
+        Dataservice = new DataserviceClient(_client);
     }
 
     public DataserviceClient Dataservice { get; init; }

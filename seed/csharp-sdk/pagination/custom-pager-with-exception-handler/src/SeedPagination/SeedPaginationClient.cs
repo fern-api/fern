@@ -6,13 +6,7 @@ public partial class SeedPaginationClient
 {
     private readonly RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    public SeedPaginationClient(
-        string token,
-        IExceptionInterceptor? exceptionInterceptor = null,
-        ClientOptions? clientOptions = null
-    )
+    public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -32,10 +26,9 @@ public partial class SeedPaginationClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _exceptionHandler = new ExceptionHandler(exceptionInterceptor);
         _client = new RawClient(clientOptions);
-        Complex = new ComplexClient(_client, _exceptionHandler);
-        Users = new UsersClient(_client, _exceptionHandler);
+        Complex = new ComplexClient(_client);
+        Users = new UsersClient(_client);
     }
 
     public ComplexClient Complex { get; init; }
