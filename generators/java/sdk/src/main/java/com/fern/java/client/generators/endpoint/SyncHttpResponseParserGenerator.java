@@ -14,6 +14,10 @@ import okhttp3.ResponseBody;
 
 public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
+    public SyncHttpResponseParserGenerator(AbstractEndpointWriterVariableNameContext variables) {
+        super(variables);
+    }
+
     @Override
     public void addEndpointWithoutRequestOptionsReturnStatement(
             MethodSpec.Builder endpointWithoutRequestOptionsBuilder,
@@ -61,9 +65,6 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     public void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
             ClassName baseErrorClassName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseName,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
         onResponseWriter.accept(httpResponseBuilder);
@@ -91,40 +92,38 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     }
 
     @Override
-    public void addTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
+    public void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
                 .beginControlFlow(
                         "try ($T $L = $N.newCall($L).execute())",
                         Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
+                        variables.getResponseName(),
+                        variables.getDefaultedClientName(),
+                        variables.getOkhttpRequestName())
+                .addStatement(
+                        "$T $L = $N.body()",
+                        ResponseBody.class,
+                        variables.getResponseBodyName(),
+                        variables.getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
-    public void addNonTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
+    public void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
                 .beginControlFlow("try")
                 .addStatement(
                         "$T $L = $N.newCall($L).execute()",
                         Response.class,
-                        responseName,
-                        defaultedClientName,
-                        okhttpRequestName)
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
+                        variables.getResponseName(),
+                        variables.getDefaultedClientName(),
+                        variables.getOkhttpRequestName())
+                .addStatement(
+                        "$T $L = $N.body()",
+                        ResponseBody.class,
+                        variables.getResponseBodyName(),
+                        variables.getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override

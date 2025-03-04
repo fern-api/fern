@@ -27,7 +27,6 @@ import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
-import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
@@ -40,7 +39,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +55,6 @@ public abstract class AbstractEndpointWriter {
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
-    public static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
@@ -65,7 +62,6 @@ public abstract class AbstractEndpointWriter {
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final Set<String> endpointParameterNames = new HashSet<>();
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
     private final boolean inlinePathParams;
     protected final ClientGeneratorContext clientGeneratorContext;
@@ -73,6 +69,7 @@ public abstract class AbstractEndpointWriter {
     protected final ClassName apiErrorClassName;
     private final AbstractHttpResponseParserGenerator responseParserGenerator;
     private final HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory;
+    protected final AbstractEndpointWriterVariableNameContext variables;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -84,6 +81,7 @@ public abstract class AbstractEndpointWriter {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
+            AbstractEndpointWriterVariableNameContext variables,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
@@ -129,6 +127,7 @@ public abstract class AbstractEndpointWriter {
                                 .get()
                                 .getOnlyPathParameters()
                                 .orElse(false));
+        this.variables = variables;
     }
 
     public static CodeBlock stringify(String reference, TypeName typeName) {
@@ -158,34 +157,16 @@ public abstract class AbstractEndpointWriter {
                     JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
         }
 
-        // Step 1: Add Path Params as parameters
-        List<PathParamInfo> pathParamInfos = getPathParamInfos();
-        if (inlinePathParams) {
-            pathParamInfos = pathParamInfos.stream()
-                    .filter(param -> !param.irParam().getLocation().equals(PathParameterLocation.ENDPOINT))
-                    .collect(Collectors.toList());
-        }
-        List<ParameterSpec> pathParameters =
-                pathParamInfos.stream().map(PathParamInfo::poetParam).collect(Collectors.toList());
-
-        // populate all param names
-        this.endpointParameterNames.addAll(
-                pathParameters.stream().map(parameterSpec -> parameterSpec.name).collect(Collectors.toList()));
-        this.endpointParameterNames.addAll(additionalParameters().stream()
-                .map(parameterSpec -> parameterSpec.name)
-                .collect(Collectors.toList()));
-        this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
-
         // Step 2: Add additional parameters
-        List<ParameterSpec> additionalParameters = additionalParameters();
+        List<ParameterSpec> additionalParameters = variables.additionalParameters();
 
         // Step 3: Add parameters
-        endpointMethodBuilder.addParameters(pathParameters);
+        endpointMethodBuilder.addParameters(variables.pathParameters);
         endpointMethodBuilder.addParameters(additionalParameters);
         if (httpEndpoint.getIdempotent()) {
             endpointMethodBuilder.addParameter(ParameterSpec.builder(
                             clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
-                            REQUEST_OPTIONS_PARAMETER_NAME)
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                     .build());
         } else {
             endpointMethodBuilder.addParameter(requestOptionsParameterSpec());
@@ -193,8 +174,9 @@ public abstract class AbstractEndpointWriter {
 
         // Step 4: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
-                getHttpUrlName(),
-                sdkRequest()
+                variables.getHttpUrlName(),
+                variables
+                        .sdkRequest()
                         .map(sdkRequest -> sdkRequest
                                 .getRequestParameterName()
                                 .getCamelCase()
@@ -212,7 +194,7 @@ public abstract class AbstractEndpointWriter {
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
                 clientGeneratorContext);
-        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(variables.getQueryParams());
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
         // Step 5: Get request initializer
@@ -267,33 +249,23 @@ public abstract class AbstractEndpointWriter {
                 generatedClientOptions,
                 httpEndpoint,
                 generatedObjectMapper,
-                getResponseBodyStringName(),
-                getResponseBodyName(),
-                getParsedResponseVariableName(),
-                getResponseName(),
-                getNextRequestVariableName(),
-                getStartingAfterVariableName(),
-                getResultVariableName(),
-                getNewPageNumberVariableName(),
-                getDefaultedClientName(),
-                getOkhttpRequestName(),
                 apiErrorClassName,
                 baseErrorClassName,
                 generatedErrors,
-                requestParameterSpec(),
+                variables.requestParameterSpec(),
                 typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
         endpointMethodBuilder.addCode(responseParser);
 
         MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();
 
-        List<String> paramNames = Stream.concat(pathParameters.stream(), additionalParameters.stream())
+        List<String> paramNames = Stream.concat(variables.pathParameters.stream(), additionalParameters.stream())
                 .map(parameterSpec -> parameterSpec.name)
                 .collect(Collectors.toList());
         paramNames.add("null");
         MethodSpec.Builder endpointWithoutRequestOptionsBuilder = MethodSpec.methodBuilder(
                         endpointWithRequestOptions.name)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameters(pathParameters)
+                .addParameters(variables.pathParameters)
                 .addParameters(additionalParameters)
                 .addJavadoc(endpointWithRequestOptions.javadoc);
 
@@ -305,25 +277,29 @@ public abstract class AbstractEndpointWriter {
                 .build();
 
         MethodSpec endpointWithoutRequest = null;
-        if (sdkRequest().isPresent() && sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
+        if (variables.sdkRequest().isPresent()
+                && variables.sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
             MethodSpec.Builder endpointWithoutRequestBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                     .addJavadoc(endpointWithRequestOptions.javadoc)
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameters(pathParameters)
+                    .addParameters(variables.pathParameters)
                     .returns(endpointWithoutRequestOptions.returnType);
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                    .filter(parameterSpec -> !parameterSpec.name.equals(sdkRequest()
+                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
+                            .sdkRequest()
                             .get()
                             .getRequestParameterName()
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList());
             endpointWithoutRequestBuilder.addParameters(additionalParamsWithoutBody);
-            List<String> paramNamesWoBody = Stream.concat(pathParameters.stream(), additionalParamsWithoutBody.stream())
+            List<String> paramNamesWoBody = Stream.concat(
+                            variables.pathParameters.stream(), additionalParamsWithoutBody.stream())
                     .map(parameterSpec -> parameterSpec.name)
                     .collect(Collectors.toList());
             ParameterSpec bodyParameterSpec = additionalParameters.stream()
-                    .filter(parameterSpec -> parameterSpec.name.equals(sdkRequest()
+                    .filter(parameterSpec -> parameterSpec.name.equals(variables
+                            .sdkRequest()
                             .get()
                             .getRequestParameterName()
                             .getCamelCase()
@@ -349,11 +325,11 @@ public abstract class AbstractEndpointWriter {
         // add direct byte array endpoints for backwards compatibility
         if (maybeBytes.isPresent()) {
             BytesRequest bytes = maybeBytes.get();
-            ParameterSpec requestParameterSpec =
-                    getBytesRequestParameterSpec(bytes, sdkRequest().get(), ArrayTypeName.of(byte.class));
+            ParameterSpec requestParameterSpec = variables.getBytesRequestParameterSpec(
+                    bytes, variables.sdkRequest().get(), ArrayTypeName.of(byte.class));
             MethodSpec byteArrayBaseMethodSpec = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameters(pathParameters)
+                    .addParameters(variables.pathParameters)
                     .addParameters(List.of(requestParameterSpec))
                     .addJavadoc(endpointWithRequestOptions.javadoc)
                     .returns(endpointWithRequestOptions.returnType)
@@ -367,7 +343,7 @@ public abstract class AbstractEndpointWriter {
             byteArrayMethodSpec = byteArrayBaseMethodSpec.toBuilder()
                     .addParameter(requestOptionsParameterSpec())
                     .addStatement(baseMethodBody.toBuilder()
-                            .add(", $L)", REQUEST_OPTIONS_PARAMETER_NAME)
+                            .add(", $L)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                             .build())
                     .build();
         }
@@ -379,14 +355,6 @@ public abstract class AbstractEndpointWriter {
                 byteArrayMethodSpec,
                 nonRequestOptionsByteArrayMethodSpec);
     }
-
-    public abstract Optional<SdkRequest> sdkRequest();
-
-    public abstract List<EnrichedObjectProperty> getQueryParams();
-
-    public abstract List<ParameterSpec> additionalParameters();
-
-    public abstract Optional<ParameterSpec> requestParameterSpec();
 
     public abstract CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
@@ -400,18 +368,7 @@ public abstract class AbstractEndpointWriter {
     public final ParameterSpec requestOptionsParameterSpec() {
         return ParameterSpec.builder(
                         clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
-                        REQUEST_OPTIONS_PARAMETER_NAME)
-                .build();
-    }
-
-    protected final ParameterSpec getBytesRequestParameterSpec(
-            BytesRequest bytes, SdkRequest sdkRequest, TypeName typeName) {
-        if (bytes.getIsOptional()) {
-            typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
-        }
-        return ParameterSpec.builder(
-                        typeName,
-                        sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .build();
     }
 
@@ -427,105 +384,6 @@ public abstract class AbstractEndpointWriter {
         } else {
             throw new RuntimeException("Generated Environments class was unknown : " + generatedEnvironmentsClass);
         }
-    }
-
-    public final String getVariableName(String variable) {
-        if (this.endpointParameterNames.contains(variable)) {
-            return "_" + variable;
-        }
-        return variable;
-    }
-
-    private String getDefaultedClientName() {
-        return "client";
-    }
-
-    private String getHttpUrlName() {
-        if (this.endpointParameterNames.contains("httpUrl")) {
-            return "_httpUrl";
-        }
-        return "httpUrl";
-    }
-
-    private String getResponseName() {
-        if (this.endpointParameterNames.contains("response")) {
-            return "_response";
-        }
-        return "response";
-    }
-
-    private String getResponseBodyName() {
-        return getVariableName("responseBody");
-    }
-
-    private String getParsedResponseVariableName() {
-        return getVariableName("parsedResponse");
-    }
-
-    private String getResponseBodyStringName() {
-        return getVariableName("responseBodyString");
-    }
-
-    protected final String getOkhttpRequestName() {
-        if (this.endpointParameterNames.contains("okhttpRequest")) {
-            return "_okhttpRequest";
-        }
-        return "okhttpRequest";
-    }
-
-    protected final String getRequestBodyPropertiesName() {
-        if (this.endpointParameterNames.contains("properties")) {
-            return "_properties";
-        }
-        return "properties";
-    }
-
-    protected final String getOkhttpRequestBodyName() {
-        if (this.endpointParameterNames.contains("body")) {
-            return "_body";
-        }
-        return "body";
-    }
-
-    protected final String getMultipartBodyPropertiesName() {
-        return getVariableName("body");
-    }
-
-    protected final String getStartingAfterVariableName() {
-        return getVariableName("startingAfter");
-    }
-
-    protected final String getNextRequestVariableName() {
-        return getVariableName("nextRequest");
-    }
-
-    protected final String getResultVariableName() {
-        return getVariableName("result");
-    }
-
-    protected final String getNewPageNumberVariableName() {
-        return getVariableName("newPageNumber");
-    }
-
-    private List<PathParamInfo> getPathParamInfos() {
-        List<PathParamInfo> pathParamInfos = new ArrayList<>();
-        httpService.getPathParameters().forEach(pathParameter -> {
-            if (pathParameter.getVariable().isPresent()) {
-                return;
-            }
-            pathParamInfos.add(convertPathParameter(pathParameter));
-        });
-        httpEndpoint.getPathParameters().forEach(pathParameter -> {
-            if (pathParameter.getVariable().isPresent()) {
-                return;
-            }
-            pathParamInfos.add(convertPathParameter(pathParameter));
-        });
-        return pathParamInfos;
-    }
-
-    private List<ParameterSpec> getPathParameters() {
-        return getPathParamInfos().stream().map(PathParamInfo::poetParam).collect(Collectors.toList());
     }
 
     private Map<String, PathParamInfo> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {

@@ -22,16 +22,11 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.generators.ClientOptionsGenerator;
-import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.ParameterSpec;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -48,6 +43,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
+            AbstractEndpointWriterVariableNameContext variables,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -59,27 +55,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 generatedEnvironmentsClass,
                 responseParserGenerator,
                 httpEndpointMethodSpecsFactory,
+                variables,
                 generatedErrors);
-    }
-
-    @Override
-    public Optional<SdkRequest> sdkRequest() {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<EnrichedObjectProperty> getQueryParams() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ParameterSpec> additionalParameters() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Optional<ParameterSpec> requestParameterSpec() {
-        return Optional.empty();
     }
 
     @Override
@@ -92,7 +69,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
         CodeBlock.Builder builder = CodeBlock.builder()
-                .add("$T $L = new $T.Builder()\n", Request.class, getOkhttpRequestName(), Request.class)
+                .add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)
@@ -111,7 +88,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 Headers.class,
                 clientOptionsMember.name,
                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                REQUEST_OPTIONS_PARAMETER_NAME);
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }

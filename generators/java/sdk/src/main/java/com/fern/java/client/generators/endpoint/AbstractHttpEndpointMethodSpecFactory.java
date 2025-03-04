@@ -72,7 +72,8 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
         this.generatedErrors = generatedErrors;
     }
 
-    public abstract AbstractHttpResponseParserGenerator responseParserGenerator();
+    public abstract AbstractHttpResponseParserGenerator responseParserGenerator(
+            AbstractEndpointWriterVariableNameContext variables);
 
     public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
 
@@ -81,6 +82,13 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
                 @Override
                 public HttpEndpointMethodSpecs visitJustRequestBody(SdkRequestBodyType sdkRequestBodyType) {
+                    OnlyRequestEndpointWriterVariableNameContext variables =
+                            new OnlyRequestEndpointWriterVariableNameContext(
+                                    clientGeneratorContext,
+                                    httpService,
+                                    httpEndpoint,
+                                    sdkRequestBodyType,
+                                    httpEndpoint.getSdkRequest().get());
                     OnlyRequestEndpointWriter onlyRequestEndpointWriter = new OnlyRequestEndpointWriter(
                             httpService,
                             httpEndpoint,
@@ -91,8 +99,9 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             generatedEnvironmentsClass,
                             sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
-                            responseParserGenerator(),
+                            responseParserGenerator(variables),
                             httpEndpointMethodSpecsFactory(),
+                            variables,
                             generatedErrors);
                     return onlyRequestEndpointWriter.generate();
                 }
@@ -115,6 +124,13 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             && generatedWrappedRequest.requestBodyGetter().isPresent()
                             && !(generatedWrappedRequest.requestBodyGetter().get()
                                     instanceof FileUploadRequestBodyGetters)) {
+                        OnlyRequestEndpointWriterVariableNameContext variables =
+                                new OnlyRequestEndpointWriterVariableNameContext(
+                                        clientGeneratorContext,
+                                        httpService,
+                                        httpEndpoint,
+                                        generatedWrappedRequest,
+                                        httpEndpoint.getSdkRequest().get());
                         OnlyRequestEndpointWriter onlyRequestEndpointWriter = new OnlyRequestEndpointWriter(
                                 httpService,
                                 httpEndpoint,
@@ -125,11 +141,19 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                                 generatedEnvironmentsClass,
                                 generatedWrappedRequest,
                                 httpEndpoint.getSdkRequest().get(),
-                                responseParserGenerator(),
+                                responseParserGenerator(variables),
                                 httpEndpointMethodSpecsFactory(),
+                                variables,
                                 generatedErrors);
                         return onlyRequestEndpointWriter.generate();
                     }
+                    WrappedRequestEndpointWriterVariableNameContext variables =
+                            new WrappedRequestEndpointWriterVariableNameContext(
+                                    clientGeneratorContext,
+                                    httpService,
+                                    httpEndpoint,
+                                    httpEndpoint.getSdkRequest().get(),
+                                    generatedWrappedRequest);
                     WrappedRequestEndpointWriter wrappedRequestEndpointWriter = new WrappedRequestEndpointWriter(
                             httpService,
                             httpEndpoint,
@@ -140,8 +164,9 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             httpEndpoint.getSdkRequest().get(),
                             generatedEnvironmentsClass,
                             generatedWrappedRequest,
-                            responseParserGenerator(),
+                            responseParserGenerator(variables),
                             httpEndpointMethodSpecsFactory(),
+                            variables,
                             generatedErrors);
                     return wrappedRequestEndpointWriter.generate();
                 }
@@ -152,6 +177,8 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                 }
             });
         } else {
+            NoRequestEndpointWriterVariableNameContext variables =
+                    new NoRequestEndpointWriterVariableNameContext(clientGeneratorContext, httpService, httpEndpoint);
             NoRequestEndpointWriter noRequestEndpointWriter = new NoRequestEndpointWriter(
                     httpService,
                     httpEndpoint,
@@ -160,8 +187,9 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                     clientOptionsField,
                     generatedEnvironmentsClass,
                     generatedClientOptions,
-                    responseParserGenerator(),
+                    responseParserGenerator(variables),
                     httpEndpointMethodSpecsFactory(),
+                    variables,
                     generatedErrors);
             return noRequestEndpointWriter.generate();
         }

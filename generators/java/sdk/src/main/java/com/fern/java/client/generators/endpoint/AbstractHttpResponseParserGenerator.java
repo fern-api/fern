@@ -64,6 +64,12 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
 
+    protected final AbstractEndpointWriterVariableNameContext variables;
+
+    public AbstractHttpResponseParserGenerator(AbstractEndpointWriterVariableNameContext variables) {
+        this.variables = variables;
+    }
+
     public abstract void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType);
 
     public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
@@ -88,9 +94,6 @@ public abstract class AbstractHttpResponseParserGenerator {
     public abstract void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
             ClassName baseErrorClassName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseName,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter);
 
@@ -98,19 +101,9 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void handleExceptionalResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression);
 
-    public abstract void addTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName);
+    public abstract void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder);
 
-    public abstract void addNonTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName);
+    public abstract void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder);
 
     public abstract void addGenericFailureCodeBlock(
             CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName);
@@ -124,16 +117,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             GeneratedClientOptions generatedClientOptions,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
-            String responseBodyStringName,
-            String responseBodyName,
-            String parsedResponseVariableName,
-            String responseName,
-            String nextRequestVariableName,
-            String startingAfterVariableName,
-            String resultVariableName,
-            String newPageNumberVariableName,
-            String defaultedClientName,
-            String okhttpRequestName,
             ClassName apiErrorClassName,
             ClassName baseErrorClassName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors,
@@ -144,52 +127,35 @@ public abstract class AbstractHttpResponseParserGenerator {
                 .addStatement(
                         "$T $L = $N.$N()",
                         OkHttpClient.class,
-                        defaultedClientName,
+                        variables.getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClient())
                 .beginControlFlow(
                         "if ($L != null && $L.getTimeout().isPresent())",
-                        AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME,
-                        AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
                         "$L = $N.$N($L)",
-                        defaultedClientName,
+                        variables.getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClientWithTimeout(),
-                        AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
         maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
 
         addResponseHandlingCode(
                 httpResponseBuilder,
                 baseErrorClassName,
-                defaultedClientName,
-                okhttpRequestName,
-                responseName,
                 builder -> {
-                    beginResponseProcessingTryBlock(
-                            builder,
-                            httpEndpoint,
-                            responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
-                            responseBodyName);
+                    beginResponseProcessingTryBlock(builder, httpEndpoint);
                     addSuccessResponseCodeBlock(
                             builder,
                             endpointMethodBuilder,
                             clientGeneratorContext,
-                            clientOptionsField,
                             generatedObjectMapper,
                             httpEndpoint,
                             maybeRequestParameterSpec,
-                            responseName,
-                            responseBodyName,
-                            parsedResponseVariableName,
-                            nextRequestVariableName,
-                            startingAfterVariableName,
-                            resultVariableName,
-                            newPageNumberVariableName,
                             typeReferenceIsOptional);
                     httpResponseBuilder.endControlFlow();
                     addMappedFailuresCodeBlock(
@@ -198,9 +164,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                             httpEndpoint,
                             apiErrorClassName,
                             generatedObjectMapper,
-                            responseName,
-                            responseBodyName,
-                            responseBodyStringName,
                             generatedErrors);
                     httpResponseBuilder.endControlFlow();
                 },
@@ -215,17 +178,9 @@ public abstract class AbstractHttpResponseParserGenerator {
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
             ClientGeneratorContext clientGeneratorContext,
-            FieldSpec clientOptionsField,
             GeneratedObjectMapper generatedObjectMapper,
             HttpEndpoint httpEndpoint,
             Optional<ParameterSpec> maybeRequestParameterSpec,
-            String responseName,
-            String responseBodyName,
-            String parsedResponseVariableName,
-            String nextRequestVariableName,
-            String startingAfterVariableName,
-            String resultVariableName,
-            String newPageNumberVariableName,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
@@ -240,13 +195,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                             clientGeneratorContext,
                             generatedObjectMapper,
                             httpEndpoint,
-                            responseBodyName,
-                            parsedResponseVariableName,
-                            responseName,
-                            nextRequestVariableName,
-                            startingAfterVariableName,
-                            resultVariableName,
-                            newPageNumberVariableName,
                             maybeRequestParameterSpec,
                             typeReferenceIsOptional));
         } else {
@@ -417,46 +365,25 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
     }
 
-    public void beginResponseProcessingTryBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            HttpEndpoint httpEndpoint,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
+    public void beginResponseProcessingTryBlock(CodeBlock.Builder httpResponseBuilder, HttpEndpoint httpEndpoint) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Void>() {
                 @Override
                 public Void visitJson(JsonResponse jsonResponse) {
-                    addTryWithResourcesVariant(
-                            httpResponseBuilder,
-                            responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
-                            responseBodyName);
+                    addTryWithResourcesVariant(httpResponseBuilder);
                     return null;
                 }
 
                 @Override
                 public Void visitFileDownload(FileDownloadResponse fileDownloadResponse) {
-                    addNonTryWithResourcesVariant(
-                            httpResponseBuilder,
-                            responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
-                            responseBodyName);
+                    addNonTryWithResourcesVariant(httpResponseBuilder);
                     return null;
                 }
 
                 @Override
                 public Void visitText(TextResponse textResponse) {
-                    addTryWithResourcesVariant(
-                            httpResponseBuilder,
-                            responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
-                            responseBodyName);
+                    addTryWithResourcesVariant(httpResponseBuilder);
                     return null;
                 }
 
@@ -467,12 +394,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public Void visitStreaming(StreamingResponse streamingResponse) {
-                    addNonTryWithResourcesVariant(
-                            httpResponseBuilder,
-                            responseName,
-                            defaultedClientName,
-                            okhttpRequestName,
-                            responseBodyName);
+                    addNonTryWithResourcesVariant(httpResponseBuilder);
                     return null;
                 }
 
@@ -488,8 +410,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
             });
         } else {
-            addTryWithResourcesVariant(
-                    httpResponseBuilder, responseName, defaultedClientName, okhttpRequestName, responseBodyName);
+            addTryWithResourcesVariant(httpResponseBuilder);
         }
     }
 
@@ -499,17 +420,14 @@ public abstract class AbstractHttpResponseParserGenerator {
             HttpEndpoint httpEndpoint,
             ClassName apiErrorClassName,
             GeneratedObjectMapper generatedObjectMapper,
-            String responseName,
-            String responseBodyName,
-            String responseBodyStringName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         httpResponseBuilder.addStatement(
                 "$T $L = $L != null ? $L.string() : $S",
                 String.class,
-                responseBodyStringName,
-                responseBodyName,
-                responseBodyName,
+                variables.getResponseBodyStringName(),
+                variables.getResponseBodyName(),
+                variables.getResponseBodyName(),
                 "{}");
 
         // map to status-specific errors
@@ -525,7 +443,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 boolean multipleErrors = errorDeclarations.size() > 1;
                 httpResponseBuilder.beginControlFlow("try");
                 if (multipleErrors) {
-                    httpResponseBuilder.beginControlFlow("switch ($L.code())", responseName);
+                    httpResponseBuilder.beginControlFlow("switch ($L.code())", variables.getResponseName());
                 }
                 errorDeclarations.forEach(errorDeclaration -> {
                     GeneratedJavaFile generatedError =
@@ -535,7 +453,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
                     } else {
                         httpResponseBuilder.beginControlFlow(
-                                "if ($L.code() == $L)", responseName, errorDeclaration.getStatusCode());
+                                "if ($L.code() == $L)", variables.getResponseName(), errorDeclaration.getStatusCode());
                     }
                     handleExceptionalResult(
                             httpResponseBuilder,
@@ -543,7 +461,8 @@ public abstract class AbstractHttpResponseParserGenerator {
                                     "new $T($L)",
                                     errorClassName,
                                     objectMapperUtils.readValueCall(
-                                            CodeBlock.of("$L", responseBodyStringName), errorDeclaration.getType())));
+                                            CodeBlock.of("$L", variables.getResponseBodyStringName()),
+                                            errorDeclaration.getType())));
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -564,9 +483,10 @@ public abstract class AbstractHttpResponseParserGenerator {
                         "new $T($S + $L.code(), $L.code(), $L)",
                         apiErrorClassName,
                         "Error with status code ",
-                        responseName,
-                        responseName,
-                        objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty())));
+                        variables.getResponseName(),
+                        variables.getResponseName(),
+                        objectMapperUtils.readValueCall(
+                                CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty())));
     }
 
     private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
@@ -576,13 +496,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         private final GeneratedObjectMapper generatedObjectMapper;
         private final ClientGeneratorContext clientGeneratorContext;
         private final HttpEndpoint httpEndpoint;
-        private final String responseBodyName;
-        private final String parsedResponseVariableName;
-        private final String responseName;
-        private final String nextRequestVariableName;
-        private final String startingAfterVariableName;
-        private final String resultVariableName;
-        private final String newPageNumberVariableName;
         private final Optional<ParameterSpec> maybeRequestParameterSpec;
         private final Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional;
 
@@ -592,13 +505,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                 ClientGeneratorContext clientGeneratorContext,
                 GeneratedObjectMapper generatedObjectMapper,
                 HttpEndpoint httpEndpoint,
-                String responseBodyName,
-                String parsedResponseVariableName,
-                String responseName,
-                String nextRequestVariableName,
-                String startingAfterVariableName,
-                String resultVariableName,
-                String newPageNumberVariableName,
                 Optional<ParameterSpec> maybeRequestParameterSpec,
                 Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
             this.httpResponseBuilder = httpResponseBuilder;
@@ -606,13 +512,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             this.clientGeneratorContext = clientGeneratorContext;
             this.generatedObjectMapper = generatedObjectMapper;
             this.httpEndpoint = httpEndpoint;
-            this.responseBodyName = responseBodyName;
-            this.parsedResponseVariableName = parsedResponseVariableName;
-            this.responseName = responseName;
-            this.nextRequestVariableName = nextRequestVariableName;
-            this.startingAfterVariableName = startingAfterVariableName;
-            this.resultVariableName = resultVariableName;
-            this.newPageNumberVariableName = newPageNumberVariableName;
             this.maybeRequestParameterSpec = maybeRequestParameterSpec;
             this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
@@ -651,9 +550,10 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (isProperty) {
                 ObjectMapperUtils objectMapperUtils =
                         new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-                httpResponseBuilder.add("$T $L = ", responseType, parsedResponseVariableName);
+                httpResponseBuilder.add("$T $L = ", responseType, variables.getParsedResponseVariableName());
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
+                        CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                        Optional.of(body.getResponseBodyType())));
                 SnippetAndResultType snippet = getNestedPropertySnippet(
                         Optional.empty(),
                         body.getResponseProperty().get(),
@@ -662,7 +562,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 handleSuccessfulResult(
                         httpResponseBuilder,
                         CodeBlock.builder()
-                                .add("$L", parsedResponseVariableName)
+                                .add("$L", variables.getParsedResponseVariableName())
                                 .add(snippet.codeBlock)
                                 .build());
                 endpointMethodBuilder.returns(snippet.typeName);
@@ -672,9 +572,10 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (pagination) {
                 ObjectMapperUtils objectMapperUtils =
                         new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-                httpResponseBuilder.add("$T $L = ", responseType, parsedResponseVariableName);
+                httpResponseBuilder.add("$T $L = ", responseType, variables.getParsedResponseVariableName());
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
+                        CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                        Optional.of(body.getResponseBodyType())));
                 ParameterSpec requestParameterSpec = maybeRequestParameterSpec.orElseThrow(
                         () -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                 ClassName pagerClassName =
@@ -683,7 +584,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         httpEndpoint.getName().get().getCamelCase().getSafeName();
                 String methodParameters = endpointMethodBuilder.parameters.stream()
                         .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
-                                ? nextRequestVariableName
+                                ? variables.getNextRequestVariableName()
                                 : parameterSpec.name)
                         .collect(Collectors.joining(", "));
                 httpEndpoint
@@ -696,12 +597,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 requestParameterSpec,
                                 body,
                                 clientGeneratorContext,
-                                startingAfterVariableName,
-                                parsedResponseVariableName,
-                                nextRequestVariableName,
-                                resultVariableName,
                                 endpointName,
-                                newPageNumberVariableName,
                                 methodParameters,
                                 typeReferenceIsOptional));
                 return null;
@@ -712,7 +608,8 @@ public abstract class AbstractHttpResponseParserGenerator {
             handleSuccessfulResult(
                     httpResponseBuilder,
                     objectMapperUtils.readValueCall(
-                            CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
+                            CodeBlock.of("$L.string()", variables.getResponseBodyName()),
+                            Optional.of(body.getResponseBodyType())));
             return null;
         }
 
@@ -724,14 +621,14 @@ public abstract class AbstractHttpResponseParserGenerator {
                     CodeBlock.of(
                             "new $T($L)",
                             clientGeneratorContext.getPoetClassNameFactory().getResponseBodyInputStreamClassName(),
-                            responseName));
+                            variables.getResponseName()));
             return null;
         }
 
         @Override
         public Void visitText(TextResponse text) {
             endpointMethodBuilder.returns(String.class);
-            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L.string()", responseBodyName));
+            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L.string()", variables.getResponseBodyName()));
             return null;
         }
 
@@ -779,7 +676,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             bodyTypeName,
                             bodyTypeName,
                             clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
-                            responseName,
+                            variables.getResponseName(),
                             terminator));
 
             return null;
@@ -1078,12 +975,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         private final ParameterSpec requestParameterSpec;
         private final JsonResponseBodyWithProperty body;
         private final ClientGeneratorContext clientGeneratorContext;
-        private final String startingAfterVariableName;
-        private final String parsedResponseVariableName;
-        private final String nextRequestVariableName;
-        private final String resultVariableName;
         private final String endpointName;
-        private final String newPageNumberVariableName;
         private final String methodParameters;
         private final Function<TypeReference, Boolean> typeReferenceIsOptional;
 
@@ -1094,12 +986,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 ParameterSpec requestParameterSpec,
                 JsonResponseBodyWithProperty body,
                 ClientGeneratorContext clientGeneratorContext,
-                String startingAfterVariableName,
-                String parsedResponseVariableName,
-                String nextRequestVariableName,
-                String resultVariableName,
                 String endpointName,
-                String newPageNumberVariableName,
                 String methodParameters,
                 Function<TypeReference, Boolean> typeReferenceIsOptional) {
             this.httpResponseBuilder = httpResponseBuilder;
@@ -1108,12 +995,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             this.requestParameterSpec = requestParameterSpec;
             this.body = body;
             this.clientGeneratorContext = clientGeneratorContext;
-            this.startingAfterVariableName = startingAfterVariableName;
-            this.parsedResponseVariableName = parsedResponseVariableName;
-            this.nextRequestVariableName = nextRequestVariableName;
-            this.resultVariableName = resultVariableName;
             this.endpointName = endpointName;
-            this.newPageNumberVariableName = newPageNumberVariableName;
             this.methodParameters = methodParameters;
             this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
@@ -1126,7 +1008,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                     body.getResponseBodyType(),
                     clientGeneratorContext);
             CodeBlock nextBlock = CodeBlock.builder()
-                    .add("$T $L = $L", nextSnippet.typeName, startingAfterVariableName, parsedResponseVariableName)
+                    .add(
+                            "$T $L = $L",
+                            nextSnippet.typeName,
+                            variables.getStartingAfterVariableName(),
+                            variables.getParsedResponseVariableName())
                     .add(nextSnippet.codeBlock)
                     .build();
             httpResponseBuilder.addStatement(nextBlock);
@@ -1158,7 +1044,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     });
 
             String propertyOverrideOnRequest = builderStartingAfterProperty;
-            String propertyOverrideValueOnRequest = startingAfterVariableName;
+            String propertyOverrideValueOnRequest = variables.getStartingAfterVariableName();
 
             if (cursor.getPage().getPropertyPath().isPresent()
                     && !cursor.getPage().getPropertyPath().get().isEmpty()) {
@@ -1188,7 +1074,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             httpResponseBuilder.addStatement(
                     "$T $L = $T.builder().from($L).$L($L).build()",
                     requestParameterSpec.type,
-                    nextRequestVariableName,
+                    variables.getNextRequestVariableName(),
                     requestParameterSpec.type,
                     requestParameterSpec.name,
                     propertyOverrideOnRequest,
@@ -1200,7 +1086,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                     clientGeneratorContext);
 
             CodeBlock resultBlock = CodeBlock.builder()
-                    .add("$T $L = $L", resultSnippet.typeName, resultVariableName, parsedResponseVariableName)
+                    .add(
+                            "$T $L = $L",
+                            resultSnippet.typeName,
+                            variables.getResultVariableName(),
+                            variables.getParsedResponseVariableName())
                     .add(resultSnippet.codeBlock)
                     .build();
             httpResponseBuilder.addStatement(resultBlock);
@@ -1209,7 +1099,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             if (nextSnippet.typeReference.getContainer().isPresent()) {
                 if (nextSnippet.typeReference.getContainer().get().isOptional()) {
-                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", startingAfterVariableName);
+                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
                 } else {
                     throw new IllegalStateException(
                             "Found non-optional container as next page token. This should be impossible "
@@ -1217,7 +1107,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
             } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
                 hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
-                        startingAfterVariableName,
+                        variables.getStartingAfterVariableName(),
                         nextSnippet.typeReference.getPrimitive().get());
             } else {
                 throw new IllegalStateException(
@@ -1232,7 +1122,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             "new $T($L, $L, $L)",
                             responseType,
                             hasNextPageBlock,
-                            resultVariableName,
+                            variables.getResultVariableName(),
                             getNextPageGetter(endpointName, methodParameters)));
             endpointMethodBuilder.returns(responseType);
             return null;
@@ -1341,7 +1231,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(CodeBlock.of(
                         "$T $L = $L.map(page -> page + $L).orElse($L)",
                         numberTypeName,
-                        newPageNumberVariableName,
+                        variables.getNewPageNumberVariableName(),
                         newNumberGetter,
                         one,
                         one));
@@ -1349,7 +1239,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(CodeBlock.of(
                         "$T $L = $L + $L",
                         clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pageType),
-                        newPageNumberVariableName,
+                        variables.getNewPageNumberVariableName(),
                         newNumberGetter,
                         one));
             }
@@ -1381,7 +1271,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             throw new IllegalArgumentException("Unknown request property value type.");
                         }
                     });
-            String propertyOverrideValueOnRequest = newPageNumberVariableName;
+            String propertyOverrideValueOnRequest = variables.getNewPageNumberVariableName();
 
             if (offset.getPage().getPropertyPath().isPresent()
                     && !offset.getPage().getPropertyPath().get().isEmpty()) {
@@ -1411,7 +1301,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             httpResponseBuilder.addStatement(
                     "$T $L = $T.builder().from($L).$L($L).build()",
                     requestParameterSpec.type,
-                    nextRequestVariableName,
+                    variables.getNextRequestVariableName(),
                     requestParameterSpec.type,
                     requestParameterSpec.name,
                     propertyOverrideOnRequest,
@@ -1423,7 +1313,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                     body.getResponseBodyType(),
                     clientGeneratorContext);
             CodeBlock resultBlock = CodeBlock.builder()
-                    .add("$T $L = $L", resultSnippet.typeName, resultVariableName, parsedResponseVariableName)
+                    .add(
+                            "$T $L = $L",
+                            resultSnippet.typeName,
+                            variables.getResultVariableName(),
+                            variables.getParsedResponseVariableName())
                     .add(resultSnippet.codeBlock)
                     .build();
             httpResponseBuilder.addStatement(resultBlock);
@@ -1433,7 +1327,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     CodeBlock.of(
                             "new $T(true, $L, $L)",
                             responseType,
-                            resultVariableName,
+                            variables.getResultVariableName(),
                             getNextPageGetter(endpointName, methodParameters)));
             endpointMethodBuilder.returns(responseType);
             return null;

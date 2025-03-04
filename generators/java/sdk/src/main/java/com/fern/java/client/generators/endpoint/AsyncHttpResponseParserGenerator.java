@@ -22,6 +22,10 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
 
     private static final String FUTURE = "future";
 
+    public AsyncHttpResponseParserGenerator(AbstractEndpointWriterVariableNameContext variables) {
+        super(variables);
+    }
+
     @Override
     public void addEndpointWithoutRequestOptionsReturnStatement(
             MethodSpec.Builder endpointWithoutRequestOptionsBuilder,
@@ -62,13 +66,13 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     public void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
             ClassName baseErrorClassName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseName,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
         httpResponseBuilder.add(
-                "$N.newCall($L).enqueue(new $T() {\n", defaultedClientName, okhttpRequestName, Callback.class);
+                "$N.newCall($L).enqueue(new $T() {\n",
+                variables.getDefaultedClientName(),
+                variables.getOkhttpRequestName(),
+                Callback.class);
         httpResponseBuilder.indent();
 
         httpResponseBuilder.add("@$T\n", Override.class);
@@ -79,7 +83,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 "call",
                 NotNull.class,
                 Response.class,
-                responseName,
+                variables.getResponseName(),
                 IOException.class);
         httpResponseBuilder.indent();
         onResponseWriter.accept(httpResponseBuilder);
@@ -143,28 +147,26 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     }
 
     @Override
-    public void addTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
+    public void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
-                .beginControlFlow("try ($T $L = $N.body())", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
+                .beginControlFlow(
+                        "try ($T $L = $N.body())",
+                        ResponseBody.class,
+                        variables.getResponseBodyName(),
+                        variables.getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
-    public void addNonTryWithResourcesVariant(
-            CodeBlock.Builder httpResponseBuilder,
-            String responseName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            String responseBodyName) {
+    public void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
                 .beginControlFlow("try")
-                .addStatement("$T $L = $N.body()", ResponseBody.class, responseBodyName, responseName)
-                .beginControlFlow("if ($L.isSuccessful())", responseName);
+                .addStatement(
+                        "$T $L = $N.body()",
+                        ResponseBody.class,
+                        variables.getResponseBodyName(),
+                        variables.getResponseName())
+                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
