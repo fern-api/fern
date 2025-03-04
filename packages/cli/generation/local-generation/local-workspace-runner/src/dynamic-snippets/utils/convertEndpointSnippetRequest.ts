@@ -1,9 +1,6 @@
 import { dynamic } from "@fern-api/ir-sdk";
 
-import { AuthValues, convertAuthValues } from "./convertAuthValues";
-
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "auth" | "baseUrl"> & {
-    auth: AuthValues | undefined;
+export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
 };
 
@@ -14,7 +11,6 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "auth"
 export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSnippetRequest): EndpointSnippetRequest {
     return {
         ...request,
-        auth: request.auth != null ? convertAuthValues(request.auth) : undefined,
         baseURL: request.baseUrl
     };
 }
