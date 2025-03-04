@@ -328,7 +328,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         return type;
                     }
                 }
-                throw new Error("Internal error; Could not convert example response to C# type");
+                throw new Error("Internal error; could not convert example response to C# type");
             case "error":
                 if (exampleResponse.body) {
                     const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
@@ -337,7 +337,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     });
                     return type;
                 }
-                throw new Error("Internal error; Could not convert example response to C# type");
+                throw new Error("Internal error; could not convert example response to C# type");
             default:
                 assertNever(exampleResponse);
         }

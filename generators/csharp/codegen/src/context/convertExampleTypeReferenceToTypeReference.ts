@@ -80,7 +80,7 @@ function convertExampleLiteralToLiteral(literalContainer: FernIr.ExampleLiteralC
         case "uuid":
         case "base64":
         case "bigInteger":
-            throw new Error("Not implemented");
+            throw new Error("Internal error; only boolean and string literals are permitted");
         default:
             assertNever(literalContainer.literal);
     }
