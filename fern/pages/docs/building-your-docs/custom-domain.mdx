@@ -117,11 +117,29 @@ instances:
 
 ### Configure your DNS settings
 
-You'll need a CNAME record for your root domain. Reach out to Fern Support to get the record to add.
+You'll need two DNS records configured for your root domain.
+
+<CodeBlock title="WWW DNS Record">
+```
+Type    Name    Value
+CNAME   www     cname.vercel-dns.com.
+```
+</CodeBlock>
+
+<CodeBlock title="Apex Domain DNS Record">
+```
+Type    Name    Value
+A       @       76.76.21.21
+```
+</CodeBlock>
+
+This redirects `mydomain.com` to `www.mydomain.com`.
+
+Contact Fern Support after adding these records and we will provision a SSL certificate.
 
 ### Verify the setup
 
-Once we've completed the setup on our end, you should be able to access your documentation at `mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
+Once we've completed the setup re-generate your docs by running `fern generate --docs`. Within two minutes, you should be able to access your documentation at `mydomain.com`.
 
 </Steps>
 </Accordion>
