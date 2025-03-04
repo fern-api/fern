@@ -79,6 +79,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -130,6 +134,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -180,6 +188,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -231,6 +243,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -282,6 +298,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -333,6 +353,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 
@@ -391,6 +415,10 @@ public class AsyncContainerClient {
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          return;
+        }
+        catch (IOException e) {
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       }
 

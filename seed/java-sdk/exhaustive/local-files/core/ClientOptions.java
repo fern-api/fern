@@ -48,6 +48,10 @@ public final class ClientOptions {
     return values;
   }
 
+  public int timeout(RequestOptions requestOptions) {
+    return requestOptions.getTimeout().orElse(this.timeout);
+  }
+
   public OkHttpClient httpClient() {
     return this.httpClient;
   }

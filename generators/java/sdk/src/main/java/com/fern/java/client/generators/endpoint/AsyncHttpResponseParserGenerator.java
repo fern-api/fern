@@ -1,16 +1,12 @@
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.JsonResponseBodyWithProperty;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.CompletableFutureUtils;
-import com.fern.java.utils.ObjectMapperUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -19,7 +15,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +22,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -161,6 +155,12 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     }
 
     @Override
+    public void handleExceptionalResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
+        httpResponseBuilder.addStatement("$L.completeExceptionally($L)", FUTURE, resultExpression);
+        httpResponseBuilder.addStatement("return");
+    }
+
+    @Override
     public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
         httpResponseBuilder.addStatement(
                 "$T $L = new $T<>()",
@@ -172,23 +172,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder.addStatement("$L.complete(null)", FUTURE);
-        httpResponseBuilder.addStatement("return");
-    }
-
-    @Override
-    public void addNonPropertyNonPaginationSuccessResponse(
-            CodeBlock.Builder httpResponseBuilder,
-            MethodSpec.Builder endpointMethodBuilder,
-            TypeName responseType,
-            ClientGeneratorContext clientGeneratorContext,
-            GeneratedObjectMapper generatedObjectMapper,
-            String responseBodyName,
-            JsonResponseBodyWithProperty body) {
-        ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-        httpResponseBuilder.add("$L.complete(", FUTURE);
-        httpResponseBuilder.add(objectMapperUtils.readValueCall(
-                CodeBlock.of("$L.string()", responseBodyName), Optional.of(body.getResponseBodyType())));
-        httpResponseBuilder.addStatement(")");
         httpResponseBuilder.addStatement("return");
     }
 
@@ -226,82 +209,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                         baseErrorClassName,
                         "Network error executing HTTP request")
                 .build();
-    }
-
-    @Override
-    public void addMappedFailuresCodeBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            HttpEndpoint httpEndpoint,
-            ClassName apiErrorClassName,
-            GeneratedObjectMapper generatedObjectMapper,
-            String responseName,
-            String responseBodyName,
-            String responseBodyStringName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
-        ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-        httpResponseBuilder.addStatement(
-                "$T $L = $L != null ? $L.string() : $S",
-                String.class,
-                responseBodyStringName,
-                responseBodyName,
-                responseBodyName,
-                "{}");
-
-        // map to status-specific errors
-        if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
-            List<ErrorDeclaration> errorDeclarations = httpEndpoint.getErrors().get().stream()
-                    .map(responseError -> clientGeneratorContext
-                            .getIr()
-                            .getErrors()
-                            .get(responseError.getError().getErrorId()))
-                    .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
-                    .collect(Collectors.toList());
-            if (!errorDeclarations.isEmpty()) {
-                boolean multipleErrors = errorDeclarations.size() > 1;
-                httpResponseBuilder.beginControlFlow("try");
-                if (multipleErrors) {
-                    httpResponseBuilder.beginControlFlow("switch ($L.code())", responseName);
-                }
-                errorDeclarations.forEach(errorDeclaration -> {
-                    GeneratedJavaFile generatedError =
-                            generatedErrors.get(errorDeclaration.getName().getErrorId());
-                    ClassName errorClassName = generatedError.getClassName();
-                    if (multipleErrors) {
-                        httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
-                    } else {
-                        httpResponseBuilder.beginControlFlow(
-                                "if ($L.code() == $L)", responseName, errorDeclaration.getStatusCode());
-                    }
-                    httpResponseBuilder.addStatement(
-                            "$N.completeExceptionally(new $T($L))",
-                            FUTURE,
-                            errorClassName,
-                            objectMapperUtils.readValueCall(
-                                    CodeBlock.of("$L", responseBodyStringName), errorDeclaration.getType()));
-                    httpResponseBuilder.addStatement("return");
-                    if (!multipleErrors) {
-                        httpResponseBuilder.endControlFlow();
-                    }
-                });
-                if (multipleErrors) {
-                    httpResponseBuilder.endControlFlow();
-                }
-                httpResponseBuilder
-                        .endControlFlow()
-                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                        .add("// unable to map error response, throwing generic error\n")
-                        .endControlFlow();
-            }
-        }
-        httpResponseBuilder.addStatement(
-                "$N.completeExceptionally(new $T($S + $L.code(), $L.code(), $L))",
-                FUTURE,
-                apiErrorClassName,
-                "Error with status code ",
-                responseName,
-                responseName,
-                objectMapperUtils.readValueCall(CodeBlock.of("$L", responseBodyStringName), Optional.empty()));
     }
 
     @Override
