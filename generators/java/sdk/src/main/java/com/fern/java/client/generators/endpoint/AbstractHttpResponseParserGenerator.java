@@ -64,9 +64,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder);
 
-    public abstract void addPropertySuccessResponse(
-            CodeBlock.Builder httpResponseBuilder, String parsedResponseVariableName, CodeBlock snippetCodeBlock);
-
     public abstract void addNonPropertyNonPaginationSuccessResponse(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
@@ -296,6 +293,15 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                     boolean isProperty = body.getResponseProperty().isPresent();
 
+                    if (isProperty) {
+                        SnippetAndResultType snippet = getNestedPropertySnippet(
+                                Optional.empty(),
+                                body.getResponseProperty().get(),
+                                body.getResponseBodyType(),
+                                clientGeneratorContext);
+                        return snippet.typeName;
+                    }
+
                     if (pagination) {
                         ClassName pagerClassName = clientGeneratorContext
                                 .getPoetClassNameFactory()
@@ -348,15 +354,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 throw new RuntimeException("Unknown pagination type " + o);
                             }
                         });
-                    }
-
-                    if (isProperty) {
-                        SnippetAndResultType snippet = getNestedPropertySnippet(
-                                Optional.empty(),
-                                body.getResponseProperty().get(),
-                                body.getResponseBodyType(),
-                                clientGeneratorContext);
-                        return snippet.typeName;
                     }
 
                     return responseType;
@@ -588,7 +585,12 @@ public abstract class AbstractHttpResponseParserGenerator {
                         body.getResponseProperty().get(),
                         body.getResponseBodyType(),
                         clientGeneratorContext);
-                addPropertySuccessResponse(httpResponseBuilder, parsedResponseVariableName, snippet.codeBlock);
+                handleSuccessfulResult(
+                        httpResponseBuilder,
+                        CodeBlock.builder()
+                                .add("$L", parsedResponseVariableName)
+                                .add(snippet.codeBlock)
+                                .build());
                 endpointMethodBuilder.returns(snippet.typeName);
                 return null;
             }

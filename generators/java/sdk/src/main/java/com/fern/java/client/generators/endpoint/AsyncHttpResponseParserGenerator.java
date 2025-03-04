@@ -176,16 +176,6 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     }
 
     @Override
-    public void addPropertySuccessResponse(
-            CodeBlock.Builder httpResponseBuilder, String parsedResponseVariableName, CodeBlock snippetCodeBlock) {
-        httpResponseBuilder.addStatement(CodeBlock.builder()
-                .add("$L.complete($L)", parsedResponseVariableName)
-                .add(snippetCodeBlock)
-                .build());
-        httpResponseBuilder.addStatement("return");
-    }
-
-    @Override
     public void addNonPropertyNonPaginationSuccessResponse(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
