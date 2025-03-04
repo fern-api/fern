@@ -235,7 +235,8 @@ public abstract class AbstractEndpointWriter {
 
         // Step 6: Make http request and handle responses
         CodeBlock responseParser = responseParserGenerator.getResponseParserCodeBlock(
-                endpointMethodBuilder, typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
+                endpointMethodBuilder,
+                typeReference -> typeReference.visit(new TypeReferenceIsOptional(true, clientGeneratorContext)));
         endpointMethodBuilder.addCode(responseParser);
 
         MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();
@@ -393,7 +394,9 @@ public abstract class AbstractEndpointWriter {
             return justRequestBody.visit(new SdkRequestBodyType.Visitor<Boolean>() {
                 @Override
                 public Boolean visitTypeReference(HttpRequestBodyReference typeReference) {
-                    return typeReference.getRequestBodyType().visit(new TypeReferenceIsOptional(true));
+                    return typeReference
+                            .getRequestBodyType()
+                            .visit(new TypeReferenceIsOptional(true, clientGeneratorContext));
                 }
 
                 @Override
@@ -415,18 +418,19 @@ public abstract class AbstractEndpointWriter {
                 isOptional = httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
             }
             if (!httpEndpoint.getHeaders().isEmpty() && isOptional) {
-                isOptional = httpEndpoint.getHeaders().stream()
-                        .allMatch(httpHeader -> httpHeader.getValueType().visit(new TypeReferenceIsOptional(false)));
+                isOptional = httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+                        .getValueType()
+                        .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
             if (!httpEndpoint.getQueryParameters().isEmpty() && isOptional) {
-                isOptional = httpEndpoint.getQueryParameters().stream()
-                        .allMatch(queryParameter ->
-                                queryParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
+                isOptional = httpEndpoint.getQueryParameters().stream().allMatch(queryParameter -> queryParameter
+                        .getValueType()
+                        .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
             if (!httpEndpoint.getPathParameters().isEmpty() && inlinePathParams && isOptional) {
-                isOptional = httpEndpoint.getPathParameters().stream()
-                        .allMatch(pathParameter ->
-                                pathParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
+                isOptional = httpEndpoint.getPathParameters().stream().allMatch(pathParameter -> pathParameter
+                        .getValueType()
+                        .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
             return isOptional;
         }
@@ -437,12 +441,14 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
+    private static class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
         private final boolean visitNamedType;
+        private final ClientGeneratorContext clientGeneratorContext;
 
-        TypeReferenceIsOptional(boolean visitNamedType) {
+        TypeReferenceIsOptional(boolean visitNamedType, ClientGeneratorContext clientGeneratorContext) {
             this.visitNamedType = visitNamedType;
+            this.clientGeneratorContext = clientGeneratorContext;
         }
 
         @Override
@@ -455,7 +461,7 @@ public abstract class AbstractEndpointWriter {
             if (visitNamedType) {
                 TypeDeclaration typeDeclaration =
                         clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
-                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
             }
             return false;
         }
@@ -476,11 +482,17 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private class TypeDeclarationIsOptional implements Type.Visitor<Boolean> {
+    private static class TypeDeclarationIsOptional implements Type.Visitor<Boolean> {
+
+        private final ClientGeneratorContext clientGeneratorContext;
+
+        public TypeDeclarationIsOptional(ClientGeneratorContext clientGeneratorContext) {
+            this.clientGeneratorContext = clientGeneratorContext;
+        }
 
         @Override
         public Boolean visitAlias(AliasTypeDeclaration alias) {
-            return alias.getAliasOf().visit(new TypeReferenceIsOptional(true));
+            return alias.getAliasOf().visit(new TypeReferenceIsOptional(true, clientGeneratorContext));
         }
 
         @Override
@@ -490,13 +502,13 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitObject(ObjectTypeDeclaration object) {
-            boolean allPropertiesOptional = object.getProperties().stream()
-                    .allMatch(
-                            objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional(false)));
+            boolean allPropertiesOptional = object.getProperties().stream().allMatch(objectProperty -> objectProperty
+                    .getValueType()
+                    .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean allExtendsAreOptional = object.getExtends().stream().allMatch(declaredTypeName -> {
                 TypeDeclaration typeDeclaration =
                         clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
-                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
             });
             return allPropertiesOptional && allExtendsAreOptional;
         }
@@ -522,20 +534,21 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
             boolean allPropertiesOptional = inlinedRequestBody.getProperties().stream()
-                    .allMatch(
-                            objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional(false)));
+                    .allMatch(objectProperty -> objectProperty
+                            .getValueType()
+                            .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean allExtendsAreOptional = inlinedRequestBody.getExtends().stream()
                     .allMatch(declaredTypeName -> {
                         TypeDeclaration typeDeclaration =
                                 clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
-                        return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+                        return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
                     });
             return allPropertiesOptional && allExtendsAreOptional;
         }
 
         @Override
         public Boolean visitReference(HttpRequestBodyReference reference) {
-            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional(false));
+            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional(false, clientGeneratorContext));
         }
 
         @Override
@@ -565,7 +578,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitBodyProperty(FileUploadBodyProperty bodyProperty) {
-            return bodyProperty.getValueType().visit(new TypeReferenceIsOptional(false));
+            return bodyProperty.getValueType().visit(new TypeReferenceIsOptional(false, clientGeneratorContext));
         }
 
         @Override
