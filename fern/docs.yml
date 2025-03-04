@@ -286,7 +286,7 @@ navigation:
             icon: fa-regular fa-pro
             slug: websockets
           - page: Model Context Protocol
-            icon: fa-regular fa-brain
+            icon: fa-regular fa-pro
             path: ./pages/sdks/capabilities/mcp.mdx
             slug: mcp
       - section: Reference
