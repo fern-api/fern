@@ -31,7 +31,6 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
-import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
@@ -55,7 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
 
@@ -133,9 +131,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
-    public CodeBlock getResponseParserCodeBlock(
-            MethodSpec.Builder endpointMethodBuilder,
-            Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
+    public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -162,7 +158,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder,
                 builder -> {
                     beginResponseProcessingTryBlock(builder);
-                    addSuccessResponseCodeBlock(builder, endpointMethodBuilder, typeReferenceIsOptional);
+                    addSuccessResponseCodeBlock(builder, endpointMethodBuilder);
                     httpResponseBuilder.endControlFlow();
                     addMappedFailuresCodeBlock(builder);
                     httpResponseBuilder.endControlFlow();
@@ -173,9 +169,7 @@ public abstract class AbstractHttpResponseParserGenerator {
     }
 
     public void addSuccessResponseCodeBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            MethodSpec.Builder endpointMethodBuilder,
-            Function<TypeReference, Boolean> typeReferenceIsOptional) {
+            CodeBlock.Builder httpResponseBuilder, MethodSpec.Builder endpointMethodBuilder) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint
@@ -183,8 +177,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .get()
                     .getBody()
                     .get()
-                    .visit(new SuccessResponseWriter(
-                            httpResponseBuilder, endpointMethodBuilder, typeReferenceIsOptional));
+                    .visit(new SuccessResponseWriter(httpResponseBuilder, endpointMethodBuilder));
         } else {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
@@ -470,15 +463,10 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
-        private final Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional;
 
-        SuccessResponseWriter(
-                CodeBlock.Builder httpResponseBuilder,
-                MethodSpec.Builder endpointMethodBuilder,
-                Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
+        SuccessResponseWriter(CodeBlock.Builder httpResponseBuilder, MethodSpec.Builder endpointMethodBuilder) {
             this.httpResponseBuilder = httpResponseBuilder;
             this.endpointMethodBuilder = endpointMethodBuilder;
-            this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
 
         @Override
@@ -557,8 +545,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 requestParameterSpec,
                                 body,
                                 endpointName,
-                                methodParameters,
-                                typeReferenceIsOptional));
+                                methodParameters));
                 return null;
             }
 
@@ -933,7 +920,6 @@ public abstract class AbstractHttpResponseParserGenerator {
         private final JsonResponseBodyWithProperty body;
         private final String endpointName;
         private final String methodParameters;
-        private final Function<TypeReference, Boolean> typeReferenceIsOptional;
 
         private JsonResponsePaginationVisitor(
                 CodeBlock.Builder httpResponseBuilder,
@@ -941,15 +927,13 @@ public abstract class AbstractHttpResponseParserGenerator {
                 ParameterSpec requestParameterSpec,
                 JsonResponseBodyWithProperty body,
                 String endpointName,
-                String methodParameters,
-                Function<TypeReference, Boolean> typeReferenceIsOptional) {
+                String methodParameters) {
             this.httpResponseBuilder = httpResponseBuilder;
             this.endpointMethodBuilder = endpointMethodBuilder;
             this.requestParameterSpec = requestParameterSpec;
             this.body = body;
             this.endpointName = endpointName;
             this.methodParameters = methodParameters;
-            this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
 
         @Override
@@ -1096,7 +1080,8 @@ public abstract class AbstractHttpResponseParserGenerator {
                             throw new IllegalArgumentException("Unknown request property value type.");
                         }
                     });
-            Boolean pageIsOptional = typeReferenceIsOptional.apply(pageType);
+            Boolean pageIsOptional =
+                    pageType.visit(new TypeReferenceUtils.TypeReferenceIsOptional(true, clientGeneratorContext));
 
             String newNumberFieldNamePascal = offset.getPage()
                     .getProperty()
