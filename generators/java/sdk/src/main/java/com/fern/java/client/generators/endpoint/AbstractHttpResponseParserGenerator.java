@@ -85,29 +85,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             ParameterSpec requestParameterSpec,
             MethodSpec endpointWithRequestOptions);
 
-    public abstract void addResponseHandlerCodeBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            MethodSpec.Builder endpointMethodBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            FieldSpec clientOptionsField,
-            HttpEndpoint httpEndpoint,
-            GeneratedObjectMapper generatedObjectMapper,
-            String responseBodyStringName,
-            String responseBodyName,
-            String parsedResponseVariableName,
-            String responseName,
-            String nextRequestVariableName,
-            String startingAfterVariableName,
-            String resultVariableName,
-            String newPageNumberVariableName,
-            String defaultedClientName,
-            String okhttpRequestName,
-            ClassName apiErrorClassName,
-            ClassName baseErrorClassName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors,
-            Optional<ParameterSpec> maybeRequestParameterSpec,
-            Function<TypeReference, Boolean> typeReferenceIsOptional);
-
     public abstract void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
             ClassName baseErrorClassName,
@@ -183,28 +160,54 @@ public abstract class AbstractHttpResponseParserGenerator {
                         AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
         maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
-        addResponseHandlerCodeBlock(
+
+        addResponseHandlingCode(
                 httpResponseBuilder,
-                endpointMethodBuilder,
-                clientGeneratorContext,
-                clientOptionsField,
-                httpEndpoint,
-                generatedObjectMapper,
-                responseBodyStringName,
-                responseBodyName,
-                parsedResponseVariableName,
-                responseName,
-                nextRequestVariableName,
-                startingAfterVariableName,
-                resultVariableName,
-                newPageNumberVariableName,
+                baseErrorClassName,
                 defaultedClientName,
                 okhttpRequestName,
-                apiErrorClassName,
-                baseErrorClassName,
-                generatedErrors,
-                maybeRequestParameterSpec,
-                typeReferenceIsOptional);
+                responseName,
+                builder -> {
+                    beginResponseProcessingTryBlock(
+                            builder,
+                            httpEndpoint,
+                            responseName,
+                            defaultedClientName,
+                            okhttpRequestName,
+                            responseBodyName);
+                    addSuccessResponseCodeBlock(
+                            builder,
+                            endpointMethodBuilder,
+                            clientGeneratorContext,
+                            clientOptionsField,
+                            generatedObjectMapper,
+                            httpEndpoint,
+                            maybeRequestParameterSpec,
+                            responseName,
+                            responseBodyName,
+                            parsedResponseVariableName,
+                            nextRequestVariableName,
+                            startingAfterVariableName,
+                            resultVariableName,
+                            newPageNumberVariableName,
+                            typeReferenceIsOptional);
+                    httpResponseBuilder.endControlFlow();
+                    addMappedFailuresCodeBlock(
+                            builder,
+                            clientGeneratorContext,
+                            httpEndpoint,
+                            apiErrorClassName,
+                            generatedObjectMapper,
+                            responseName,
+                            responseBodyName,
+                            responseBodyStringName,
+                            generatedErrors);
+                    httpResponseBuilder.endControlFlow();
+                },
+                builder -> {
+                    addGenericFailureCodeBlock(builder, baseErrorClassName);
+                });
+
         return httpResponseBuilder.build();
     }
 
