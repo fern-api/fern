@@ -223,7 +223,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_imdb:CreateMovieRequest": {
             "type": "object",
@@ -348,7 +349,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -591,5 +593,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

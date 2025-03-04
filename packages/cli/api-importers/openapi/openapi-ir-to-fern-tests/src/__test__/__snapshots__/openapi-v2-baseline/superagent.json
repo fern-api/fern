@@ -6277,6 +6277,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ValidationErrorLocItem": {
@@ -6432,6 +6433,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -11159,7 +11161,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_agent": {

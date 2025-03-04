@@ -2008,6 +2008,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserSettings": {
@@ -2134,6 +2135,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserStatsAccountStatus": {
@@ -2362,6 +2364,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -2865,7 +2868,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

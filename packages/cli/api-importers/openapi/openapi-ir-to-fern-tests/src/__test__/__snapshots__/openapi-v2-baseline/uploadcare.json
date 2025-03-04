@@ -17992,6 +17992,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_upload:MultipartFileUploadStartResponse": {
@@ -18120,6 +18121,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_upload:FromUrlUploadRequestCheckUrlDuplicates": {
@@ -19273,6 +19275,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoWaitingStatus": {
@@ -19337,6 +19340,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoProgressStatus": {
@@ -19463,6 +19467,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoSuccessStatus": {
@@ -19990,6 +19995,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoErrorStatus": {
@@ -20116,6 +20122,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoUnknownStatus": {
@@ -20180,6 +20187,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FileUploadInfoFromUrl": {
@@ -20707,6 +20715,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FromUrlUploadResponseSchema": {
@@ -20802,6 +20811,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GroupInfo": {
@@ -21051,6 +21061,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MetadataValue": {
@@ -23393,6 +23404,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ImageInfo": {
@@ -23690,6 +23702,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LegacyVideoInfoAudio": {
@@ -23844,6 +23857,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LegacyVideoInfoVideo": {
@@ -24029,6 +24043,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LegacyVideoInfo": {
@@ -24214,6 +24229,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SchemasImageInfoColorMode": {
@@ -24572,6 +24588,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SchemasImageInfo": {
@@ -24869,6 +24886,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:VideoInfoAudioItem": {
@@ -25023,6 +25041,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:VideoInfoVideoItem": {
@@ -25199,6 +25218,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:VideoInfo": {
@@ -25381,6 +25401,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentInfoMime": {
@@ -25495,6 +25516,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContentInfo": {
@@ -25618,6 +25640,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Metadata": {
@@ -28010,6 +28033,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

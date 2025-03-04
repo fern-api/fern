@@ -86,7 +86,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -125,36 +126,7 @@
             },
             "request": {
                 "type": "body",
-                "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    }
-                ],
+                "pathParameters": [],
                 "body": {
                     "type": "typeReference",
                     "value": {
@@ -244,34 +216,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "nestedId",
                                 "camelCase": {
                                     "unsafeName": "nestedID",
@@ -306,5 +250,36 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "id",
+                    "camelCase": {
+                        "unsafeName": "id",
+                        "safeName": "id"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "id",
+                        "safeName": "id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ID",
+                        "safeName": "ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ID",
+                        "safeName": "ID"
+                    }
+                },
+                "wireValue": "id"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
+    "environments": null,
+    "generatorConfig": null
 }

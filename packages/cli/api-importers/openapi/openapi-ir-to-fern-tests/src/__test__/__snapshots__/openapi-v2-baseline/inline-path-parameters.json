@@ -1658,6 +1658,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GetOrganizationUserResponse": {
@@ -1722,6 +1723,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -2220,7 +2222,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_organizations": {

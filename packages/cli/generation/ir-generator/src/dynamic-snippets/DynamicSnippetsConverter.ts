@@ -67,13 +67,13 @@ export class DynamicSnippetsConverter {
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
         this.generatorConfig = args.generatorConfig;
-        this.auth = this.convertAuth(this.ir.auth);
-        this.authValues = this.getAuthValues(this.ir.auth);
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? false,
             keywords: undefined
         });
+        this.auth = this.convertAuth(this.ir.auth);
+        this.authValues = this.getAuthValues(this.ir.auth);
     }
 
     public convert({

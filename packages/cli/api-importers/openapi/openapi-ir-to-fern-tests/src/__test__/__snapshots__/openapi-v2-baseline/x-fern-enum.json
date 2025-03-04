@@ -266,7 +266,8 @@
       }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_transcripts": {

@@ -760,6 +760,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_user:UserGetAllResponseItem": {
@@ -860,6 +861,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -1105,7 +1107,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {
     "subpackage_user": {

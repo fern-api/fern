@@ -6636,6 +6636,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserProfileSystemProperties": {
@@ -7038,6 +7039,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserProfile": {
@@ -7260,6 +7262,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUser": {
@@ -7414,6 +7417,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Error": {
@@ -7500,6 +7504,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Errors": {
@@ -7561,6 +7566,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUsersMeta": {
@@ -7622,6 +7628,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUsers": {
@@ -7717,6 +7724,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserCreatedWebhookPayloadData": {
@@ -7871,6 +7879,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserCreatedWebhookPayload": {
@@ -7994,6 +8003,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserUpdatedWebhookPayloadData": {
@@ -8148,6 +8158,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EndUserUpdatedWebhookPayload": {
@@ -8271,6 +8282,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -8868,6 +8880,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

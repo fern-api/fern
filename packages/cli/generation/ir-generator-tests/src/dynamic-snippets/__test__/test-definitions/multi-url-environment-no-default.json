@@ -410,6 +410,7 @@
             "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": null,
         "environments": {
@@ -517,5 +518,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

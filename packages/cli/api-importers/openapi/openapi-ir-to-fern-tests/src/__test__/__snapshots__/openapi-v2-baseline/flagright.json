@@ -47241,6 +47241,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PostConsumerUserResponse": {
@@ -47392,6 +47393,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PostBusinessUserResponse": {
@@ -47543,6 +47545,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Address": {
@@ -47752,6 +47755,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserBase": {
@@ -47869,6 +47873,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserOptionalUserSegment": {
@@ -48326,6 +48331,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User": {
@@ -48796,6 +48802,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Person": {
@@ -48987,6 +48994,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LegalDocument": {
@@ -49228,6 +49236,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Tag": {
@@ -49314,6 +49323,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transaction": {
@@ -49840,6 +49850,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionUpdatableOriginPaymentDetails": {
@@ -50807,6 +50818,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionBase": {
@@ -50986,6 +50998,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionWithRulesResult": {
@@ -51574,6 +51587,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DeviceData": {
@@ -51945,6 +51959,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionMonitoringResult": {
@@ -52065,6 +52080,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionEventMonitoringResult": {
@@ -52213,6 +52229,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserMonitoringResult": {
@@ -52333,6 +52350,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RulesResults": {
@@ -52425,6 +52443,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ExecutedRulesResult": {
@@ -52719,6 +52738,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:HitRulesDetails": {
@@ -52985,6 +53005,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FailedRulesResult": {
@@ -53127,6 +53148,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RuleFailureException": {
@@ -53213,6 +53235,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RiskScoringResult": {
@@ -53330,6 +53353,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ConsumerName": {
@@ -53450,6 +53474,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionAmountDetails": {
@@ -53567,6 +53592,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Amount": {
@@ -53653,6 +53679,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LegalEntity": {
@@ -53838,6 +53865,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ContactDetails": {
@@ -54038,6 +54066,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CompanyFinancialDetails": {
@@ -54164,6 +54193,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserDetailsGender": {
@@ -54442,6 +54472,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserRegistrationStatus": {
@@ -54900,6 +54931,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CompanyRegistrationDetails": {
@@ -55113,6 +55145,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Business": {
@@ -55617,6 +55650,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BusinessBase": {
@@ -55703,6 +55737,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BusinessOptionalSavedPaymentDetailsItem": {
@@ -56446,6 +56481,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BusinessUsersResponse": {
@@ -56504,6 +56540,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ConsumerUsersResponse": {
@@ -56562,6 +56599,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CardDetailsCardBrand": {
@@ -57349,6 +57387,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IBANDetails": {
@@ -57658,6 +57697,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WalletDetails": {
@@ -57871,6 +57911,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ACHDetails": {
@@ -58087,6 +58128,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SWIFTDetails": {
@@ -58334,6 +58376,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:MpesaDetailsTransactionType": {
@@ -58588,6 +58631,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:GenericBankAccountDetails": {
@@ -58866,6 +58910,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UPIDetails": {
@@ -59017,6 +59062,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionLimitsPaymentMethodLimits": {
@@ -59326,6 +59372,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionLimits": {
@@ -59573,6 +59620,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RuleAction": {
@@ -59820,6 +59868,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RuleHitDirection": {
@@ -60736,6 +60785,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Date": {
@@ -60850,6 +60900,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionState": {
@@ -62012,6 +62063,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:KYCStatusDetails": {
@@ -62104,6 +62156,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserStateDetails": {
@@ -62224,6 +62277,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CaseClosedDetails": {
@@ -62480,6 +62534,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AlertClosedDetails": {
@@ -62860,6 +62915,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RiskLevel": {
@@ -63092,6 +63148,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionType": {
@@ -63396,6 +63453,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WebhookEventType": {
@@ -63993,6 +64051,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListItem": {
@@ -64082,6 +64141,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListMetadata": {
@@ -64236,6 +64296,7 @@
             }
           }
         ],
+        "additionalProperties": true,
         "type": "object"
       },
       "type_:ListExisted": {
@@ -64353,6 +64414,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ListHeader": {
@@ -64554,6 +64616,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PaymentMethod": {
@@ -65029,6 +65092,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CheckDetailsDeliveryStatus": {
@@ -65407,6 +65471,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CountryCode": {
@@ -76996,6 +77061,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionCountLimit": {
@@ -77150,6 +77216,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionAmountLimit": {
@@ -77304,6 +77371,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionLimit": {
@@ -77427,6 +77495,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FalsePositiveDetails": {
@@ -77513,6 +77582,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SanctionsDetails": {
@@ -77630,6 +77700,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SanctionsDetailsEntityType": {
@@ -77931,6 +78002,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserWithRulesResult": {
@@ -78469,6 +78541,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BusinessWithRulesResult": {
@@ -79041,6 +79114,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Thing": {
@@ -79102,6 +79176,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -80660,6 +80735,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {

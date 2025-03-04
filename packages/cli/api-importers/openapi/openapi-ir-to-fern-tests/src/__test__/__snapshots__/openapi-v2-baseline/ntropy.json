@@ -37879,6 +37879,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountHolder": {
@@ -38002,6 +38003,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountHolderExternal": {
@@ -38147,6 +38149,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:AccountHolderType": {
@@ -38652,6 +38655,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatement": {
@@ -38856,6 +38860,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatementAccount": {
@@ -39165,6 +39170,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatementError": {
@@ -39251,6 +39257,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatementErrorCode": {
@@ -39414,6 +39421,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatementResults": {
@@ -39475,6 +39483,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BankStatementStatus": {
@@ -39800,6 +39809,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Batch": {
@@ -39998,6 +40008,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BatchResult": {
@@ -40140,6 +40151,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:BatchStatus": {
@@ -40328,6 +40340,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CategoryConfidence": {
@@ -40538,6 +40551,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Counterparty": {
@@ -40754,6 +40768,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:CounterpartyType": {
@@ -49648,6 +49663,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:DocumentStatus": {
@@ -49976,6 +49992,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EnrichmentResult": {
@@ -50037,6 +50054,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Entities": {
@@ -50132,6 +50150,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Entity": {
@@ -50320,6 +50339,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:EntryType": {
@@ -50490,6 +50510,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Intermediary": {
@@ -50706,6 +50727,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:IntermediaryType": {
@@ -50872,6 +50894,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LocationInput": {
@@ -50961,6 +50984,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:LocationStructured": {
@@ -51332,6 +51356,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseAccountHolderExternal": {
@@ -51421,6 +51446,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseBankStatement": {
@@ -51510,6 +51536,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseBatch": {
@@ -51599,6 +51626,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseReport": {
@@ -51691,6 +51719,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseTransaction": {
@@ -51780,6 +51809,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:PagedResponseWebhook": {
@@ -51869,6 +51899,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Recurrence": {
@@ -51927,6 +51958,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RecurrenceGroup": {
@@ -52240,6 +52272,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:RecurrencePeriodicity": {
@@ -52796,6 +52829,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ReportStatus": {
@@ -53102,6 +53136,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:SyncEnrichmentOutput": {
@@ -53163,6 +53198,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Transaction": {
@@ -53575,6 +53611,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionError": {
@@ -53661,6 +53698,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:TransactionErrorCode": {
@@ -53992,6 +54030,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ValidationErrorLocItem": {
@@ -54147,6 +54186,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:WebhookEventsItem": {
@@ -54535,6 +54575,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:expression": {
@@ -54958,6 +54999,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall||": {
@@ -55019,6 +55061,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall==": {
@@ -55080,6 +55123,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall+": {
@@ -55141,6 +55185,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall-": {
@@ -55202,6 +55247,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall*": {
@@ -55263,6 +55309,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall/": {
@@ -55324,6 +55371,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall//": {
@@ -55385,6 +55433,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall<": {
@@ -55446,6 +55495,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall<=": {
@@ -55507,6 +55557,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall>": {
@@ -55568,6 +55619,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall>=": {
@@ -55629,6 +55681,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall!": {
@@ -55687,6 +55740,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallIsSubstring": {
@@ -55748,6 +55802,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallStartsWith": {
@@ -55809,6 +55864,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallEndsWith": {
@@ -55870,6 +55926,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallToLower": {
@@ -55928,6 +55985,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallToUpper": {
@@ -55986,6 +56044,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallHasLabel": {
@@ -56044,6 +56103,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallHasMcc": {
@@ -56102,6 +56162,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCallGet": {
@@ -56160,6 +56221,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:FnCall": {
@@ -56442,6 +56504,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsAddLabel": {
@@ -56500,6 +56563,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsRemoveLabel": {
@@ -56558,6 +56622,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsSetLabels": {
@@ -56619,6 +56684,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsAddMcc": {
@@ -56677,6 +56743,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsRemoveMcc": {
@@ -56735,6 +56802,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabelsSetMcc": {
@@ -56796,6 +56864,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:ModifyLabels": {
@@ -57120,6 +57189,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Filter": {
@@ -64435,6 +64505,7 @@
         }
       }
     },
+    "pathParameters": [],
     "environments": {
       "defaultEnvironment": "Default",
       "environments": {
