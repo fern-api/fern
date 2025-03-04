@@ -235,9 +235,7 @@ public abstract class AbstractEndpointWriter {
 
         // Step 6: Make http request and handle responses
         CodeBlock responseParser = responseParserGenerator.getResponseParserCodeBlock(
-                endpointMethodBuilder,
-                variables.requestParameterSpec(),
-                typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
+                endpointMethodBuilder, typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
         endpointMethodBuilder.addCode(responseParser);
 
         MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();

@@ -135,7 +135,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
-            Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
@@ -163,13 +162,12 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder,
                 builder -> {
                     beginResponseProcessingTryBlock(builder);
-                    addSuccessResponseCodeBlock(
-                            builder, endpointMethodBuilder, maybeRequestParameterSpec, typeReferenceIsOptional);
+                    addSuccessResponseCodeBlock(builder, endpointMethodBuilder, typeReferenceIsOptional);
                     httpResponseBuilder.endControlFlow();
                     addMappedFailuresCodeBlock(builder);
                     httpResponseBuilder.endControlFlow();
                 },
-                builder -> addGenericFailureCodeBlock(builder));
+                this::addGenericFailureCodeBlock);
 
         return httpResponseBuilder.build();
     }
@@ -177,7 +175,6 @@ public abstract class AbstractHttpResponseParserGenerator {
     public void addSuccessResponseCodeBlock(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
-            Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
@@ -187,10 +184,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .getBody()
                     .get()
                     .visit(new SuccessResponseWriter(
-                            httpResponseBuilder,
-                            endpointMethodBuilder,
-                            maybeRequestParameterSpec,
-                            typeReferenceIsOptional));
+                            httpResponseBuilder, endpointMethodBuilder, typeReferenceIsOptional));
         } else {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
@@ -476,17 +470,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
-        private final Optional<ParameterSpec> maybeRequestParameterSpec;
         private final Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional;
 
         SuccessResponseWriter(
                 CodeBlock.Builder httpResponseBuilder,
                 MethodSpec.Builder endpointMethodBuilder,
-                Optional<ParameterSpec> maybeRequestParameterSpec,
                 Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
             this.httpResponseBuilder = httpResponseBuilder;
             this.endpointMethodBuilder = endpointMethodBuilder;
-            this.maybeRequestParameterSpec = maybeRequestParameterSpec;
             this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
 
@@ -547,8 +538,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L.string()", variables.getResponseBodyName()),
                         Optional.of(body.getResponseBodyType())));
-                ParameterSpec requestParameterSpec = maybeRequestParameterSpec.orElseThrow(
-                        () -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
+                ParameterSpec requestParameterSpec = variables
+                        .requestParameterSpec()
+                        .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                 String endpointName =
                         httpEndpoint.getName().get().getCamelCase().getSafeName();
                 String methodParameters = endpointMethodBuilder.parameters.stream()
