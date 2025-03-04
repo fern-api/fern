@@ -1,7 +1,6 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedTrace;
 using SeedTrace.Core;
 
 namespace SeedTrace.Test.Unit.MockServer;
@@ -33,9 +32,10 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
             );
 
         var response = await Client.Sysprop.GetNumWarmInstancesAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Language, int>>(mockResponse))
+                .UsingPropertiesComparer()
+        );
     }
 }

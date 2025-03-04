@@ -1,7 +1,6 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -36,9 +35,23 @@ public class GetTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response.Value,
+            Is.EqualTo(
+                    JsonUtils
+                        .Deserialize<
+                            OneOf<
+                                string,
+                                IEnumerable<string>,
+                                int,
+                                IEnumerable<int>,
+                                IEnumerable<IEnumerable<int>>,
+                                HashSet<string>
+                            >
+                        >(mockResponse)
+                        .Value
+                )
+                .UsingPropertiesComparer()
+        );
     }
 }
