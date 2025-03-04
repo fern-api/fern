@@ -28,6 +28,9 @@
       "path": "../../cli/workspace/commons"
     },
     {
+      "path": "../../commons/core-utils"
+    },
+    {
       "path": "../../ir-sdk"
     }
   ]
