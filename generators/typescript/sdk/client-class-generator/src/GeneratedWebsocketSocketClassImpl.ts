@@ -415,11 +415,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             returnType: "void",
             statements: [
                 `if (!this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}) {`,
-                "    throw new Error(\"Socket is not connected.\");",
+                '    throw new Error("Socket is not connected.");',
                 "}",
                 "",
                 `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
-                "    throw new Error(\"Socket is not open.\");",
+                '    throw new Error("Socket is not open.");',
                 "}"
             ]
         };
@@ -554,7 +554,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         responseMessage: WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference,
         context: SdkContext
     ): ts.Expression {
-        const referenceToRequestBody = ts.factory.createIdentifier("payload");
+        const referenceToRequestBody = ts.factory.createIdentifier("data");
         // TODO (Eden): We need to instantiate a new WebsocketSchemaContext to get the correct serializer
         switch (responseMessage.type) {
             case "inlinedBody": {

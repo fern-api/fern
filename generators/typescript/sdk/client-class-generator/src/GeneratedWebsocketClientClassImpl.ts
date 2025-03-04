@@ -317,10 +317,12 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
             );
         }
 
-        return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
-            referenceToEnvironmentValue,
-            baseUrlId: channel.baseUrl ?? undefined
-        });
+        // TODO: What exactly is going on here?
+        // return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
+        //     referenceToEnvironmentValue,
+        //     baseUrlId: channel.baseUrl ?? undefined
+        // });
+        return referenceToEnvironmentValue;
     }
 
     private getReferenceToOption(option: string): ts.Expression {

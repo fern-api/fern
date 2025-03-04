@@ -137,11 +137,11 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         baseUrlId: EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
         if (baseUrlId == null) {
-            throw new Error("Cannot get reference to environment URL because baseUrlId is not defined");
+            throw new Error("Cannot get reference to multiple environment URL because baseUrlId is not defined");
         }
         const baseUrl = this.environments.baseUrls.find((otherBaseUrl) => otherBaseUrl.id === baseUrlId);
         if (baseUrl == null) {
-            throw new Error(`Cannot get reference to environment URL because ${baseUrlId} is not defined`);
+            throw new Error(`Cannot get reference to multiple environment URL because ${baseUrlId} is not defined`);
         }
         return ts.factory.createPropertyAccessExpression(referenceToEnvironmentValue, this.getNameOfBaseUrl(baseUrl));
     }
