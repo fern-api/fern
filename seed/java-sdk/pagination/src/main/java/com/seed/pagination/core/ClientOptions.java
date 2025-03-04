@@ -56,6 +56,9 @@ public final class ClientOptions {
     }
 
     public int timeout(RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return this.timeout;
+        }
         return requestOptions.getTimeout().orElse(this.timeout);
     }
 

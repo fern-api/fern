@@ -20,11 +20,11 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
-import com.seed.deepCursorPath.resources.deepcursorpath.types.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -32,6 +32,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,14 +73,16 @@ public class AsyncDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<Response> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
-            public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Response.class);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBody.string(),
+                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         Optional<D> d = request.getB()
                                 .map(B::getC)
@@ -95,8 +98,13 @@ public class AsyncDeepCursorPathClient {
                                 .map(b_ -> B.builder().from(b_).c(c_).build()));
                         A nextRequest = A.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(), result, () -> doThing(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return doThing(nextRequest, requestOptions).get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -104,6 +112,10 @@ public class AsyncDeepCursorPathClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Network error executing HTTP request", e));
                 }
             }
 
@@ -143,14 +155,16 @@ public class AsyncDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<Response> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
-            public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Response.class);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBody.string(),
+                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         IndirectionRequired indirection = IndirectionRequired.builder()
                                 .from(com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired)
@@ -161,8 +175,14 @@ public class AsyncDeepCursorPathClient {
                                 .indirection(indirection)
                                 .build();
                         List<String> result = parsedResponse.getResults();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(), result, () -> doThingRequired(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return doThingRequired(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -170,6 +190,10 @@ public class AsyncDeepCursorPathClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Network error executing HTTP request", e));
                 }
             }
 
@@ -212,14 +236,16 @@ public class AsyncDeepCursorPathClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<Response> future = new CompletableFuture<>();
+        CompletableFuture<SyncPagingIterable<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
-            public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Response.class);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBody.string(),
+                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         Optional<InlineD> b = request.getB()
                                 .map(B::getC)
@@ -236,8 +262,14 @@ public class AsyncDeepCursorPathClient {
                         InlineA nextRequest =
                                 InlineA.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
-                        future.complete(new SyncPagingIterable<>(
-                                startingAfter.isPresent(), result, () -> doThingInline(nextRequest, requestOptions)));
+                        future.complete(new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
+                            try {
+                                return doThingInline(nextRequest, requestOptions)
+                                        .get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -245,6 +277,10 @@ public class AsyncDeepCursorPathClient {
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedDeepCursorPathException("Network error executing HTTP request", e));
                 }
             }
 
