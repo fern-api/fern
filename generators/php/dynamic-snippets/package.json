@@ -32,7 +32,7 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^55.0.0",
+    "@fern-api/dynamic-ir-sdk": "^57.0.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/php-codegen": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

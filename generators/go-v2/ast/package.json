@@ -29,14 +29,14 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^55.0.0",
+    "@fern-fern/ir-sdk": "^57.0.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^55.0.0",
+    "@fern-fern/ir-sdk": "^57.0.0",
     "@types/jest": "^29.5.14",
     "zod": "^3.22.3",
     "@fern-api/configs": "workspace:*",

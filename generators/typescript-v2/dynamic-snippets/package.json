@@ -31,7 +31,7 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^55.0.0",
+    "@fern-api/dynamic-ir-sdk": "^57.0.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/typescript-browser-compatible-base": "workspace:*",

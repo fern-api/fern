@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      The CLI now recognizes that the latest PHP SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.6
+
+- changelogEntry:
+  - summary: |
       Updated the CLI to gracefully handle unsupported security schemes (e.g. cookie-based auth) by skipping them 
       instead of throwing an error. This allows the CLI to continue processing the rest of the API definition even when 
       it encounters security schemes it cannot convert.
