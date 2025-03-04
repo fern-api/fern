@@ -19,10 +19,7 @@ export function convertAuth(auth: dynamic.Auth): Auth | undefined {
     }
 }
 
-export type Auth =
-    | dynamic.Auth.Basic
-    | dynamic.Auth.Bearer
-    | dynamic.Auth.Header;
+export type Auth = dynamic.Auth.Basic | dynamic.Auth.Bearer | dynamic.Auth.Header;
 
 export namespace Auth {
     export interface Basic extends dynamic.BasicAuth, _Utils {
@@ -54,12 +51,9 @@ export const Auth = {
         return {
             ...value,
             type: "basic",
-            _visit: function <_Result>(
-                this: dynamic.Auth.Basic,
-                visitor: dynamic.Auth._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.Auth.Basic, visitor: dynamic.Auth._Visitor<_Result>) {
                 return dynamic.Auth._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -67,12 +61,9 @@ export const Auth = {
         return {
             ...value,
             type: "bearer",
-            _visit: function <_Result>(
-                this: dynamic.Auth.Bearer,
-                visitor: dynamic.Auth._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.Auth.Bearer, visitor: dynamic.Auth._Visitor<_Result>) {
                 return dynamic.Auth._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -80,12 +71,9 @@ export const Auth = {
         return {
             ...value,
             type: "header",
-            _visit: function <_Result>(
-                this: dynamic.Auth.Header,
-                visitor: dynamic.Auth._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.Auth.Header, visitor: dynamic.Auth._Visitor<_Result>) {
                 return dynamic.Auth._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -100,5 +88,5 @@ export const Auth = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

@@ -22,10 +22,7 @@ export function convertAuthValues(auth: dynamic.AuthValues): AuthValues | undefi
 /**
  * Temporary type until the dynamic snippet generators are updated to accept the latest IR.
  */
-export type AuthValues =
-    | dynamic.AuthValues.Basic
-    | dynamic.AuthValues.Bearer
-    | dynamic.AuthValues.Header;
+export type AuthValues = dynamic.AuthValues.Basic | dynamic.AuthValues.Bearer | dynamic.AuthValues.Header;
 
 namespace AuthValues {
     export interface Basic extends dynamic.BasicAuthValues, _Utils {
@@ -57,12 +54,9 @@ const AuthValues = {
         return {
             ...value,
             type: "basic",
-            _visit: function <_Result>(
-                this: dynamic.AuthValues.Basic,
-                visitor: dynamic.AuthValues._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.AuthValues.Basic, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -70,12 +64,9 @@ const AuthValues = {
         return {
             ...value,
             type: "bearer",
-            _visit: function <_Result>(
-                this: dynamic.AuthValues.Bearer,
-                visitor: dynamic.AuthValues._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.AuthValues.Bearer, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -83,19 +74,13 @@ const AuthValues = {
         return {
             ...value,
             type: "header",
-            _visit: function <_Result>(
-                this: dynamic.AuthValues.Header,
-                visitor: dynamic.AuthValues._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: dynamic.AuthValues.Header, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
-            },
+            }
         };
     },
 
-    _visit: <_Result>(
-        value: dynamic.AuthValues,
-        visitor: dynamic.AuthValues._Visitor<_Result>,
-    ): _Result => {
+    _visit: <_Result>(value: dynamic.AuthValues, visitor: dynamic.AuthValues._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "basic":
                 return visitor.basic(value);
@@ -106,5 +91,5 @@ const AuthValues = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

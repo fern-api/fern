@@ -1,7 +1,7 @@
-import { dynamic, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { generatorsYml } from "@fern-api/configuration";
+import { IntermediateRepresentation, dynamic } from "@fern-api/ir-sdk";
 
 import { DynamicSnippetsConverter } from "./DynamicSnippetsConverter";
-import { generatorsYml } from "@fern-api/configuration";
 
 export function convertIrToDynamicSnippetsIr({
     ir,

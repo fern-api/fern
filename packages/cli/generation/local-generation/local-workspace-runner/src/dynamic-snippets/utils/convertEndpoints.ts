@@ -1,7 +1,8 @@
 import { mapValues } from "@fern-api/core-utils";
 import { dynamic } from "@fern-api/ir-sdk";
-import { convertAuthValues } from "./convertAuthValues";
+
 import { Auth, convertAuth } from "./convertAuth";
+import { convertAuthValues } from "./convertAuthValues";
 
 export type Endpoint = Omit<dynamic.Endpoint, "auth"> & {
     auth: Auth | undefined;
@@ -15,7 +16,7 @@ function convertEndpoint(endpoint: dynamic.Endpoint): Endpoint {
     return {
         ...endpoint,
         auth: endpoint.auth != null ? convertAuth(endpoint.auth) : undefined,
-        examples: endpoint.examples != null ? convertExamples(endpoint.examples) : undefined,
+        examples: endpoint.examples != null ? convertExamples(endpoint.examples) : undefined
     };
 }
 
@@ -26,6 +27,6 @@ function convertExamples(examples: dynamic.EndpointExample[]): dynamic.EndpointE
 function convertExample(example: dynamic.EndpointExample): dynamic.EndpointExample {
     return {
         ...example,
-        auth: example.auth != null ? convertAuthValues(example.auth) : undefined,
+        auth: example.auth != null ? convertAuthValues(example.auth) : undefined
     };
 }

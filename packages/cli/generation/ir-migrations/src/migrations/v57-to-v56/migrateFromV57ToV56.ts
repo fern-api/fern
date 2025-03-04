@@ -54,19 +54,23 @@ export const V57_TO_V56_MIGRATION: IrMigration<
     migrateBackwards: (v57): IrVersions.V56.ir.IntermediateRepresentation => {
         return {
             ...v57,
-            dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined,
+            dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined
         };
     }
 };
 
-function convertDynamicIr(ir: IrVersions.V57.dynamic.DynamicIntermediateRepresentation): IrVersions.V56.dynamic.DynamicIntermediateRepresentation {
+function convertDynamicIr(
+    ir: IrVersions.V57.dynamic.DynamicIntermediateRepresentation
+): IrVersions.V56.dynamic.DynamicIntermediateRepresentation {
     return {
         ...ir,
-        endpoints: convertDynamicEndpoints(ir.endpoints),
+        endpoints: convertDynamicEndpoints(ir.endpoints)
     };
 }
 
-function convertDynamicEndpoints(endpoints: Record<string, IrVersions.V57.dynamic.Endpoint>): Record<string, IrVersions.V56.dynamic.Endpoint> {
+function convertDynamicEndpoints(
+    endpoints: Record<string, IrVersions.V57.dynamic.Endpoint>
+): Record<string, IrVersions.V56.dynamic.Endpoint> {
     return mapValues(endpoints, (endpoint) => convertDynamicEndpoint(endpoint));
 }
 
@@ -74,18 +78,22 @@ function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVe
     return {
         ...endpoint,
         auth: endpoint.auth != null ? convertDynamicAuth(endpoint.auth) : undefined,
-        examples: endpoint.examples != null ? convertDynamicExamples(endpoint.examples) : undefined,
+        examples: endpoint.examples != null ? convertDynamicExamples(endpoint.examples) : undefined
     };
 }
 
-function convertDynamicExamples(examples: IrVersions.V57.dynamic.EndpointExample[]): IrVersions.V56.dynamic.EndpointExample[] {
+function convertDynamicExamples(
+    examples: IrVersions.V57.dynamic.EndpointExample[]
+): IrVersions.V56.dynamic.EndpointExample[] {
     return examples.map((example) => convertDynamicExample(example));
 }
 
-function convertDynamicExample(example: IrVersions.V57.dynamic.EndpointExample): IrVersions.V56.dynamic.EndpointExample {
+function convertDynamicExample(
+    example: IrVersions.V57.dynamic.EndpointExample
+): IrVersions.V56.dynamic.EndpointExample {
     return {
         ...example,
-        auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined,
+        auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined
     };
 }
 
@@ -104,7 +112,9 @@ function convertDynamicAuth(auth: IrVersions.V57.dynamic.Auth): IrVersions.V56.d
     }
 }
 
-function convertDynamicAuthValues(auth: IrVersions.V57.dynamic.AuthValues): IrVersions.V56.dynamic.AuthValues | undefined {
+function convertDynamicAuthValues(
+    auth: IrVersions.V57.dynamic.AuthValues
+): IrVersions.V56.dynamic.AuthValues | undefined {
     switch (auth.type) {
         case "basic":
             return IrVersions.V56.dynamic.AuthValues.basic(auth);

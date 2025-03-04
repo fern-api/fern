@@ -16,8 +16,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
-import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -144,7 +144,7 @@ export async function runRemoteGenerationForGenerator({
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
-            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions }),
+            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,
         token,

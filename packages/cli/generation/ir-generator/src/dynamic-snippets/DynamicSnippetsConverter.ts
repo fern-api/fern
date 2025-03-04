@@ -1,13 +1,14 @@
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
     ContainerType,
     DeclaredTypeName,
-    dynamic,
     dynamic as DynamicSnippets,
     EndpointId,
     EnumTypeDeclaration,
@@ -36,11 +37,10 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
+    dynamic
 } from "@fern-api/ir-sdk";
 
 import { Version } from "./version";
-import { generatorsYml } from "@fern-api/configuration";
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 
 interface EndpointWithFilepath extends HttpEndpoint {
     servicePathParameters: PathParameter[];
@@ -88,7 +88,7 @@ export class DynamicSnippetsConverter {
             endpoints: this.convertEndpoints({ includeExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments,
-            generatorConfig: this.generatorConfig,
+            generatorConfig: this.generatorConfig
         };
     }
 
@@ -459,7 +459,7 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertWireValueParameters({ wireValueParameters: properties }),
-            additionalProperties,
+            additionalProperties
         });
     }
 
@@ -622,7 +622,7 @@ export class DynamicSnippetsConverter {
             case "oauth":
                 return DynamicSnippets.Auth.oauth({
                     clientId: this.casingsGenerator.generateName("clientId"),
-                    clientSecret: this.casingsGenerator.generateName("clientSecret"),
+                    clientSecret: this.casingsGenerator.generateName("clientSecret")
                 });
             default:
                 assertNever(scheme);
