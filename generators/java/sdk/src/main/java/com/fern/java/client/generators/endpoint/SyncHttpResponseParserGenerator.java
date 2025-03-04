@@ -1,21 +1,47 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseParserGenerator {
 
-    public SyncHttpResponseParserGenerator(AbstractEndpointWriterVariableNameContext variables) {
-        super(variables);
+    public SyncHttpResponseParserGenerator(
+            AbstractEndpointWriterVariableNameContext variables,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedObjectMapper generatedObjectMapper,
+            FieldSpec clientOptionsField,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+        super(
+                variables,
+                clientGeneratorContext,
+                httpEndpoint,
+                apiErrorClassName,
+                baseErrorClassName,
+                generatedClientOptions,
+                generatedObjectMapper,
+                clientOptionsField,
+                generatedErrors);
     }
 
     @Override
@@ -64,7 +90,6 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     @Override
     public void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
-            ClassName baseErrorClassName,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
         onResponseWriter.accept(httpResponseBuilder);
@@ -127,7 +152,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     }
 
     @Override
-    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName) {
+    public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")

@@ -33,6 +33,7 @@ import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import java.util.Map;
@@ -61,6 +62,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -73,6 +76,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 responseParserGenerator,
                 httpEndpointMethodSpecsFactory,
                 variables,
+                apiErrorClassName,
+                baseErrorClassName,
                 generatedErrors);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
@@ -94,6 +99,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -106,6 +113,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 responseParserGenerator,
                 httpEndpointMethodSpecsFactory,
                 variables,
+                apiErrorClassName,
+                baseErrorClassName,
                 generatedErrors);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;

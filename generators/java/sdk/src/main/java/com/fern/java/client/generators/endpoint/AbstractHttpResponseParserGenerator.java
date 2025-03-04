@@ -65,9 +65,34 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String DECIMAL_ONE = "1.0";
 
     protected final AbstractEndpointWriterVariableNameContext variables;
+    protected final ClientGeneratorContext clientGeneratorContext;
+    protected final HttpEndpoint httpEndpoint;
+    protected final ClassName apiErrorClassName;
+    protected final ClassName baseErrorClassName;
+    protected final GeneratedClientOptions generatedClientOptions;
+    protected final GeneratedObjectMapper generatedObjectMapper;
+    protected final FieldSpec clientOptionsField;
+    protected final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
-    public AbstractHttpResponseParserGenerator(AbstractEndpointWriterVariableNameContext variables) {
+    public AbstractHttpResponseParserGenerator(
+            AbstractEndpointWriterVariableNameContext variables,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedObjectMapper generatedObjectMapper,
+            FieldSpec clientOptionsField,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.variables = variables;
+        this.clientGeneratorContext = clientGeneratorContext;
+        this.httpEndpoint = httpEndpoint;
+        this.apiErrorClassName = apiErrorClassName;
+        this.baseErrorClassName = baseErrorClassName;
+        this.generatedClientOptions = generatedClientOptions;
+        this.generatedObjectMapper = generatedObjectMapper;
+        this.clientOptionsField = clientOptionsField;
+        this.generatedErrors = generatedErrors;
     }
 
     public abstract void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType);
@@ -93,7 +118,6 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void addResponseHandlingCode(
             CodeBlock.Builder httpResponseBuilder,
-            ClassName baseErrorClassName,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter);
 
@@ -105,21 +129,12 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     public abstract void addNonTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder);
 
-    public abstract void addGenericFailureCodeBlock(
-            CodeBlock.Builder httpResponseBuilder, ClassName baseErrorClassName);
+    public abstract void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder);
 
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
     public CodeBlock getResponseParserCodeBlock(
             MethodSpec.Builder endpointMethodBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            FieldSpec clientOptionsField,
-            GeneratedClientOptions generatedClientOptions,
-            HttpEndpoint httpEndpoint,
-            GeneratedObjectMapper generatedObjectMapper,
-            ClassName apiErrorClassName,
-            ClassName baseErrorClassName,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
@@ -146,30 +161,15 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         addResponseHandlingCode(
                 httpResponseBuilder,
-                baseErrorClassName,
                 builder -> {
-                    beginResponseProcessingTryBlock(builder, httpEndpoint);
+                    beginResponseProcessingTryBlock(builder);
                     addSuccessResponseCodeBlock(
-                            builder,
-                            endpointMethodBuilder,
-                            clientGeneratorContext,
-                            generatedObjectMapper,
-                            httpEndpoint,
-                            maybeRequestParameterSpec,
-                            typeReferenceIsOptional);
+                            builder, endpointMethodBuilder, maybeRequestParameterSpec, typeReferenceIsOptional);
                     httpResponseBuilder.endControlFlow();
-                    addMappedFailuresCodeBlock(
-                            builder,
-                            clientGeneratorContext,
-                            httpEndpoint,
-                            apiErrorClassName,
-                            generatedObjectMapper,
-                            generatedErrors);
+                    addMappedFailuresCodeBlock(builder);
                     httpResponseBuilder.endControlFlow();
                 },
-                builder -> {
-                    addGenericFailureCodeBlock(builder, baseErrorClassName);
-                });
+                builder -> addGenericFailureCodeBlock(builder));
 
         return httpResponseBuilder.build();
     }
@@ -177,9 +177,6 @@ public abstract class AbstractHttpResponseParserGenerator {
     public void addSuccessResponseCodeBlock(
             CodeBlock.Builder httpResponseBuilder,
             MethodSpec.Builder endpointMethodBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            GeneratedObjectMapper generatedObjectMapper,
-            HttpEndpoint httpEndpoint,
             Optional<ParameterSpec> maybeRequestParameterSpec,
             Function<TypeReference, Boolean> typeReferenceIsOptional) {
         if (httpEndpoint.getResponse().isPresent()
@@ -192,9 +189,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .visit(new SuccessResponseWriter(
                             httpResponseBuilder,
                             endpointMethodBuilder,
-                            clientGeneratorContext,
-                            generatedObjectMapper,
-                            httpEndpoint,
                             maybeRequestParameterSpec,
                             typeReferenceIsOptional));
         } else {
@@ -241,10 +235,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                     if (isProperty) {
                         SnippetAndResultType snippet = getNestedPropertySnippet(
-                                Optional.empty(),
-                                body.getResponseProperty().get(),
-                                body.getResponseBodyType(),
-                                clientGeneratorContext);
+                                Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
                         return snippet.typeName;
                     }
 
@@ -258,8 +249,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         cursor.getResults().getPropertyPath(),
                                         cursor.getResults().getProperty(),
-                                        body.getResponseBodyType(),
-                                        clientGeneratorContext);
+                                        body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                         .typeReference
                                         .getContainer()
@@ -279,8 +269,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         offset.getResults().getPropertyPath(),
                                         offset.getResults().getProperty(),
-                                        body.getResponseBodyType(),
-                                        clientGeneratorContext);
+                                        body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                         .typeReference
                                         .getContainer()
@@ -365,7 +354,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
     }
 
-    public void beginResponseProcessingTryBlock(CodeBlock.Builder httpResponseBuilder, HttpEndpoint httpEndpoint) {
+    public void beginResponseProcessingTryBlock(CodeBlock.Builder httpResponseBuilder) {
         if (httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Void>() {
@@ -414,13 +403,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         }
     }
 
-    public void addMappedFailuresCodeBlock(
-            CodeBlock.Builder httpResponseBuilder,
-            ClientGeneratorContext clientGeneratorContext,
-            HttpEndpoint httpEndpoint,
-            ClassName apiErrorClassName,
-            GeneratedObjectMapper generatedObjectMapper,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+    public void addMappedFailuresCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         ObjectMapperUtils objectMapperUtils = new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
         httpResponseBuilder.addStatement(
                 "$T $L = $L != null ? $L.string() : $S",
@@ -493,25 +476,16 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
-        private final GeneratedObjectMapper generatedObjectMapper;
-        private final ClientGeneratorContext clientGeneratorContext;
-        private final HttpEndpoint httpEndpoint;
         private final Optional<ParameterSpec> maybeRequestParameterSpec;
         private final Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional;
 
         SuccessResponseWriter(
                 CodeBlock.Builder httpResponseBuilder,
                 MethodSpec.Builder endpointMethodBuilder,
-                ClientGeneratorContext clientGeneratorContext,
-                GeneratedObjectMapper generatedObjectMapper,
-                HttpEndpoint httpEndpoint,
                 Optional<ParameterSpec> maybeRequestParameterSpec,
                 Function<com.fern.ir.model.types.TypeReference, Boolean> typeReferenceIsOptional) {
             this.httpResponseBuilder = httpResponseBuilder;
             this.endpointMethodBuilder = endpointMethodBuilder;
-            this.clientGeneratorContext = clientGeneratorContext;
-            this.generatedObjectMapper = generatedObjectMapper;
-            this.httpEndpoint = httpEndpoint;
             this.maybeRequestParameterSpec = maybeRequestParameterSpec;
             this.typeReferenceIsOptional = typeReferenceIsOptional;
         }
@@ -555,10 +529,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         CodeBlock.of("$L.string()", variables.getResponseBodyName()),
                         Optional.of(body.getResponseBodyType())));
                 SnippetAndResultType snippet = getNestedPropertySnippet(
-                        Optional.empty(),
-                        body.getResponseProperty().get(),
-                        body.getResponseBodyType(),
-                        clientGeneratorContext);
+                        Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
                 handleSuccessfulResult(
                         httpResponseBuilder,
                         CodeBlock.builder()
@@ -578,8 +549,6 @@ public abstract class AbstractHttpResponseParserGenerator {
                         Optional.of(body.getResponseBodyType())));
                 ParameterSpec requestParameterSpec = maybeRequestParameterSpec.orElseThrow(
                         () -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
-                ClassName pagerClassName =
-                        clientGeneratorContext.getPoetClassNameFactory().getPaginationClassName("SyncPagingIterable");
                 String endpointName =
                         httpEndpoint.getName().get().getCamelCase().getSafeName();
                 String methodParameters = endpointMethodBuilder.parameters.stream()
@@ -593,10 +562,8 @@ public abstract class AbstractHttpResponseParserGenerator {
                         .visit(new JsonResponsePaginationVisitor(
                                 httpResponseBuilder,
                                 endpointMethodBuilder,
-                                httpEndpoint,
                                 requestParameterSpec,
                                 body,
-                                clientGeneratorContext,
                                 endpointName,
                                 methodParameters,
                                 typeReferenceIsOptional));
@@ -697,8 +664,7 @@ public abstract class AbstractHttpResponseParserGenerator {
     private SnippetAndResultType getNestedPropertySnippet(
             Optional<List<Name>> propertyPath,
             ObjectProperty objectProperty,
-            com.fern.ir.model.types.TypeReference typeReference,
-            ClientGeneratorContext clientGeneratorContext) {
+            com.fern.ir.model.types.TypeReference typeReference) {
         ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
         fullPropertyPath.add(objectProperty.getName().getName());
         GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
@@ -971,10 +937,8 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
-        private final HttpEndpoint httpEndpoint;
         private final ParameterSpec requestParameterSpec;
         private final JsonResponseBodyWithProperty body;
-        private final ClientGeneratorContext clientGeneratorContext;
         private final String endpointName;
         private final String methodParameters;
         private final Function<TypeReference, Boolean> typeReferenceIsOptional;
@@ -982,19 +946,15 @@ public abstract class AbstractHttpResponseParserGenerator {
         private JsonResponsePaginationVisitor(
                 CodeBlock.Builder httpResponseBuilder,
                 MethodSpec.Builder endpointMethodBuilder,
-                HttpEndpoint httpEndpoint,
                 ParameterSpec requestParameterSpec,
                 JsonResponseBodyWithProperty body,
-                ClientGeneratorContext clientGeneratorContext,
                 String endpointName,
                 String methodParameters,
                 Function<TypeReference, Boolean> typeReferenceIsOptional) {
             this.httpResponseBuilder = httpResponseBuilder;
             this.endpointMethodBuilder = endpointMethodBuilder;
-            this.httpEndpoint = httpEndpoint;
             this.requestParameterSpec = requestParameterSpec;
             this.body = body;
-            this.clientGeneratorContext = clientGeneratorContext;
             this.endpointName = endpointName;
             this.methodParameters = methodParameters;
             this.typeReferenceIsOptional = typeReferenceIsOptional;
@@ -1003,10 +963,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Void visitCursor(CursorPagination cursor) {
             SnippetAndResultType nextSnippet = getNestedPropertySnippet(
-                    cursor.getNext().getPropertyPath(),
-                    cursor.getNext().getProperty(),
-                    body.getResponseBodyType(),
-                    clientGeneratorContext);
+                    cursor.getNext().getPropertyPath(), cursor.getNext().getProperty(), body.getResponseBodyType());
             CodeBlock nextBlock = CodeBlock.builder()
                     .add(
                             "$T $L = $L",
@@ -1082,8 +1039,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     cursor.getResults().getPropertyPath(),
                     cursor.getResults().getProperty(),
-                    body.getResponseBodyType(),
-                    clientGeneratorContext);
+                    body.getResponseBodyType());
 
             CodeBlock resultBlock = CodeBlock.builder()
                     .add(
@@ -1310,8 +1266,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     offset.getResults().getPropertyPath(),
                     offset.getResults().getProperty(),
-                    body.getResponseBodyType(),
-                    clientGeneratorContext);
+                    body.getResponseBodyType());
             CodeBlock resultBlock = CodeBlock.builder()
                     .add(
                             "$T $L = $L",

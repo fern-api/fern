@@ -10,6 +10,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import java.util.Map;
 
@@ -39,8 +40,25 @@ public class SyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMetho
 
     @Override
     public AbstractHttpResponseParserGenerator responseParserGenerator(
-            AbstractEndpointWriterVariableNameContext variables) {
-        return new SyncHttpResponseParserGenerator(variables);
+            AbstractEndpointWriterVariableNameContext variables,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedObjectMapper generatedObjectMapper,
+            FieldSpec clientOptionsField,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+        return new SyncHttpResponseParserGenerator(
+                variables,
+                clientGeneratorContext,
+                httpEndpoint,
+                apiErrorClassName,
+                baseErrorClassName,
+                generatedClientOptions,
+                generatedObjectMapper,
+                clientOptionsField,
+                generatedErrors);
     }
 
     @Override

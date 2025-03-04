@@ -82,6 +82,8 @@ public abstract class AbstractEndpointWriter {
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
@@ -95,18 +97,8 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
-        this.baseErrorClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getBaseExceptionClassName(
-                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
-                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
-                        clientGeneratorContext.getCustomConfig());
-        this.apiErrorClassName = clientGeneratorContext
-                .getPoetClassNameFactory()
-                .getApiErrorClassName(
-                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
-                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
-                        clientGeneratorContext.getCustomConfig());
+        this.apiErrorClassName = apiErrorClassName;
+        this.baseErrorClassName = baseErrorClassName;
         this.generatedErrors = generatedErrors;
         this.inlinePathParams = clientGeneratorContext.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
@@ -244,14 +236,6 @@ public abstract class AbstractEndpointWriter {
         // Step 6: Make http request and handle responses
         CodeBlock responseParser = responseParserGenerator.getResponseParserCodeBlock(
                 endpointMethodBuilder,
-                clientGeneratorContext,
-                clientOptionsField,
-                generatedClientOptions,
-                httpEndpoint,
-                generatedObjectMapper,
-                apiErrorClassName,
-                baseErrorClassName,
-                generatedErrors,
                 variables.requestParameterSpec(),
                 typeReference -> typeReference.visit(new TypeReferenceIsOptional(true)));
         endpointMethodBuilder.addCode(responseParser);

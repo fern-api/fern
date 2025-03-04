@@ -81,6 +81,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             AbstractHttpResponseParserGenerator responseParserGenerator,
             HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
             AbstractEndpointWriterVariableNameContext variables,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
@@ -93,6 +95,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 responseParserGenerator,
                 httpEndpointMethodSpecsFactory,
                 variables,
+                apiErrorClassName,
+                baseErrorClassName,
                 generatedErrors);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;

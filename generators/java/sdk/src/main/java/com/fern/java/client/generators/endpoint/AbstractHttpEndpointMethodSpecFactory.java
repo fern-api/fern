@@ -32,6 +32,7 @@ import com.fern.java.client.generators.WrappedRequestGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
     private final FieldSpec clientOptionsField;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    protected final ClassName baseErrorClassName;
+    protected final ClassName apiErrorClassName;
     private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
@@ -69,11 +72,31 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
         this.clientOptionsField = clientOptionsField;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.baseErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getBaseExceptionClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
+                        clientGeneratorContext.getCustomConfig());
+        this.apiErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
+                        clientGeneratorContext.getCustomConfig());
         this.generatedErrors = generatedErrors;
     }
 
     public abstract AbstractHttpResponseParserGenerator responseParserGenerator(
-            AbstractEndpointWriterVariableNameContext variables);
+            AbstractEndpointWriterVariableNameContext variables,
+            ClientGeneratorContext clientGeneratorContext,
+            HttpEndpoint httpEndpoint,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedObjectMapper generatedObjectMapper,
+            FieldSpec clientOptionsField,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors);
 
     public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
 
@@ -99,9 +122,20 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             generatedEnvironmentsClass,
                             sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
-                            responseParserGenerator(variables),
+                            responseParserGenerator(
+                                    variables,
+                                    clientGeneratorContext,
+                                    httpEndpoint,
+                                    apiErrorClassName,
+                                    baseErrorClassName,
+                                    generatedClientOptions,
+                                    generatedObjectMapper,
+                                    clientOptionsField,
+                                    generatedErrors),
                             httpEndpointMethodSpecsFactory(),
                             variables,
+                            apiErrorClassName,
+                            baseErrorClassName,
                             generatedErrors);
                     return onlyRequestEndpointWriter.generate();
                 }
@@ -141,9 +175,20 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                                 generatedEnvironmentsClass,
                                 generatedWrappedRequest,
                                 httpEndpoint.getSdkRequest().get(),
-                                responseParserGenerator(variables),
+                                responseParserGenerator(
+                                        variables,
+                                        clientGeneratorContext,
+                                        httpEndpoint,
+                                        apiErrorClassName,
+                                        baseErrorClassName,
+                                        generatedClientOptions,
+                                        generatedObjectMapper,
+                                        clientOptionsField,
+                                        generatedErrors),
                                 httpEndpointMethodSpecsFactory(),
                                 variables,
+                                apiErrorClassName,
+                                baseErrorClassName,
                                 generatedErrors);
                         return onlyRequestEndpointWriter.generate();
                     }
@@ -164,9 +209,20 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             httpEndpoint.getSdkRequest().get(),
                             generatedEnvironmentsClass,
                             generatedWrappedRequest,
-                            responseParserGenerator(variables),
+                            responseParserGenerator(
+                                    variables,
+                                    clientGeneratorContext,
+                                    httpEndpoint,
+                                    apiErrorClassName,
+                                    baseErrorClassName,
+                                    generatedClientOptions,
+                                    generatedObjectMapper,
+                                    clientOptionsField,
+                                    generatedErrors),
                             httpEndpointMethodSpecsFactory(),
                             variables,
+                            apiErrorClassName,
+                            baseErrorClassName,
                             generatedErrors);
                     return wrappedRequestEndpointWriter.generate();
                 }
@@ -187,9 +243,20 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                     clientOptionsField,
                     generatedEnvironmentsClass,
                     generatedClientOptions,
-                    responseParserGenerator(variables),
+                    responseParserGenerator(
+                            variables,
+                            clientGeneratorContext,
+                            httpEndpoint,
+                            apiErrorClassName,
+                            baseErrorClassName,
+                            generatedClientOptions,
+                            generatedObjectMapper,
+                            clientOptionsField,
+                            generatedErrors),
                     httpEndpointMethodSpecsFactory(),
                     variables,
+                    apiErrorClassName,
+                    baseErrorClassName,
                     generatedErrors);
             return noRequestEndpointWriter.generate();
         }
