@@ -54,6 +54,7 @@ const AuthValues = {
         return {
             ...value,
             type: "basic",
+            // eslint-disable-next-line object-shorthand
             _visit: function <_Result>(this: dynamic.AuthValues.Basic, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
             }
@@ -64,6 +65,7 @@ const AuthValues = {
         return {
             ...value,
             type: "bearer",
+            // eslint-disable-next-line object-shorthand
             _visit: function <_Result>(this: dynamic.AuthValues.Bearer, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
             }
@@ -74,6 +76,7 @@ const AuthValues = {
         return {
             ...value,
             type: "header",
+            // eslint-disable-next-line object-shorthand
             _visit: function <_Result>(this: dynamic.AuthValues.Header, visitor: dynamic.AuthValues._Visitor<_Result>) {
                 return dynamic.AuthValues._visit(this, visitor);
             }
@@ -89,6 +92,7 @@ const AuthValues = {
             case "header":
                 return visitor.header(value);
             default:
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 return visitor._other(value as any);
         }
     }

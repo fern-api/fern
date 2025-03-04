@@ -52,6 +52,9 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
+    /** Sugar to substitute templated env vars in a standard way */
+    const isPreview = absolutePathToPreview != null;
+
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
@@ -130,9 +133,6 @@ export async function runRemoteGenerationForGenerator({
         interactiveTaskContext.logger.debug("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
     }
-
-    /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
 
     const job = await createAndStartJob({
         projectConfig,
