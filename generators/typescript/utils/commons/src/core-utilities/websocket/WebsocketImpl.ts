@@ -23,20 +23,25 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
     public ReconnectingWebSocket = {
         _getReferenceToType: this.withExportedName(
             "ReconnectingWebSocket",
-            (APIResponse) => (response: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
+            (ReconnectingWebSocket) => () => ReconnectingWebSocket.getTypeNode()
         ),
         _connect: this.withExportedName(
             "ReconnectingWebSocket",
             (ReconnectingWebSocket) =>
                 (args: { url: ts.Expression; protocols: ts.Expression; options: ts.ObjectLiteralExpression }) =>
                     ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
-                        ts.factory.createObjectLiteralExpression([
-                            ts.factory.createPropertyAssignment("url", args.url),
-                            ts.factory.createPropertyAssignment("protocols", args.protocols),
-                            ts.factory.createPropertyAssignment("options", args.options)
-                        ])
+                        args.url,
+                        args.protocols,
+                        args.options
                     ])
         )
+    };
+
+    public CloseEvent = {
+        _getReferenceToType: this.withExportedName("CloseEvent", (CloseEvent) => () => CloseEvent.getTypeNode())
+    };
+
+    public ErrorEvent = {
+        _getReferenceToType: this.withExportedName("ErrorEvent", (ErrorEvent) => () => ErrorEvent.getTypeNode())
     };
 }

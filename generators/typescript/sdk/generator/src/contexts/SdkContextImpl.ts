@@ -22,7 +22,7 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator, WebsocketClientGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -108,7 +108,7 @@ export declare namespace SdkContextImpl {
         sdkClientClassGenerator: SdkClientClassGenerator;
         websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
-        websocketGenerator: WebsocketClientGenerator;
+        websocketGenerator: WebsocketClassGenerator;
         packageResolver: PackageResolver;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;

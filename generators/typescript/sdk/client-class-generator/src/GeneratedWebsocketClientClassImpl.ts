@@ -1,5 +1,5 @@
 import { ImportsManager, NpmPackage, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedWebsocketClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
     ClassDeclarationStructure,
@@ -19,6 +19,7 @@ export declare namespace GeneratedWebsocketClientClassImpl {
         importsManager: ImportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         channelId: WebSocketChannelId;
+        channel: WebSocketChannel;
         packageResolver: PackageResolver;
         serviceClassName: string;
         errorResolver: ErrorResolver;
@@ -26,25 +27,31 @@ export declare namespace GeneratedWebsocketClientClassImpl {
     }
 }
 
-export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClass {
+export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClientClass {
     private static readonly OPTIONS_INTERFACE_NAME = "Options";
     private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs";
     private static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args";
     private static readonly DEBUG_PROPERTY_NAME = "debug";
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
+    private static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
+
     private readonly importsManager: ImportsManager;
     private readonly intermediateRepresentation: IntermediateRepresentation;
     private readonly channelId: WebSocketChannelId;
+    private readonly channel: WebSocketChannel;
     private readonly packageResolver: PackageResolver;
     private readonly serviceClassName: string;
     private readonly errorResolver: ErrorResolver;
     private readonly requireDefaultEnvironment: boolean;
+
     constructor({
         importsManager,
         intermediateRepresentation,
         channelId,
+        channel,
         packageResolver,
         serviceClassName,
         errorResolver,
@@ -53,6 +60,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
         this.importsManager = importsManager;
         this.intermediateRepresentation = intermediateRepresentation;
         this.channelId = channelId;
+        this.channel = channel;
         this.packageResolver = packageResolver;
         this.serviceClassName = serviceClassName;
         this.errorResolver = errorResolver;
@@ -93,6 +101,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
         serviceClass.methods?.push({
             name: "connect",
             scope: Scope.Public,
+            isAsync: true,
             parameters: [
                 {
                     name: "args",
@@ -100,7 +109,11 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
                     initializer: "{}"
                 }
             ],
-            returnType: "ChatSocket",
+            returnType: getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                    this.getSocketTypeNode(context)
+                ])
+            ),
             statements: statements.map(getTextOfTsNode)
         });
 
@@ -121,17 +134,19 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
                             generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
                         )
                     ),
-                    hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
-                }
-            ]
-        };
-    }
-
-    private generateConnectArgsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
-            kind: StructureKind.Interface,
-            name: GeneratedWebsocketClientClassImpl.CONNECT_ARGS_INTERFACE_NAME,
-            properties: [
+                    hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
+                    docs: ["The environment to use for the websocket. Defaults to the default environment."]
+                },
+                {
+                    name: GeneratedWebsocketClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                        )
+                    ),
+                    hasQuestionToken: this.channel.baseUrl != null,
+                    docs: ["Override the base URL of the websocket."]
+                },
                 {
                     name: GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
@@ -143,16 +158,23 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
                     docs: ["Number of reconnect attempts. Defaults to 30."]
-                },
-                ...(this.intermediateRepresentation.websocketChannels?.[this.channelId]?.queryParameters ?? []).map(
-                    (queryParameter) => {
-                        return {
-                            name: queryParameter.name.wireValue,
-                            type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
-                            hasQuestionToken: true
-                        };
-                    }
-                )
+                }
+            ]
+        };
+    }
+
+    private generateConnectArgsInterface(context: SdkContext): InterfaceDeclarationStructure {
+        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
+            kind: StructureKind.Interface,
+            name: GeneratedWebsocketClientClassImpl.CONNECT_ARGS_INTERFACE_NAME,
+            properties: [
+                ...(this.channel.queryParameters ?? []).map((queryParameter) => {
+                    return {
+                        name: queryParameter.name.wireValue,
+                        type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
+                        hasQuestionToken: true
+                    };
+                })
             ],
             isExported: true
         };
@@ -177,6 +199,56 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier("queryParams"),
+                            undefined,
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                ts.factory.createUnionTypeNode([
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                    ts.factory.createArrayTypeNode(
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                    ),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
+                                    ts.factory.createArrayTypeNode(
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
+                                    )
+                                ])
+                            ]),
+                            ts.factory.createObjectLiteralExpression()
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ...(this.channel.queryParameters ?? []).map((queryParameter) =>
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        this.getReferenceToArg(queryParameter.name.wireValue),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createBinaryExpression(
+                                    ts.factory.createElementAccessExpression(
+                                        ts.factory.createIdentifier("queryParams"),
+                                        ts.factory.createStringLiteral(queryParameter.name.wireValue)
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                    this.getReferenceToArg(queryParameter.name.wireValue)
+                                )
+                            )
+                        ],
+                        true
+                    )
+                )
+            ),
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
@@ -187,19 +259,43 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
                 )
             ),
             ts.factory.createReturnStatement(
-                ts.factory.createNewExpression(ts.factory.createIdentifier("ChatSocket"), undefined, [
+                ts.factory.createNewExpression(this.getReferenceToSocket(context), undefined, [
                     ts.factory.createObjectLiteralExpression([
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("socket"),
-                            ts.factory.createIdentifier("socket")
-                        )
+                        ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier("socket"))
                     ])
                 ])
             )
         ];
     }
 
-    public getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {
+    private getReferenceToWebsocket(context: SdkContext): ts.Expression {
+        return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
+            url: this.appendQueryParameters(this.getBaseUrl(this.channel, context), context),
+            protocols: ts.factory.createArrayLiteralExpression([]),
+            options: ts.factory.createObjectLiteralExpression([
+                ts.factory.createPropertyAssignment(
+                    "debug",
+                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME)
+                ),
+                ts.factory.createPropertyAssignment(
+                    "maxRetries",
+                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME)
+                )
+            ])
+        });
+    }
+
+    private appendQueryParameters(url: ts.Expression, context: SdkContext): ts.Expression {
+        return ts.factory.createTemplateExpression(ts.factory.createTemplateHead("", ""), [
+            ts.factory.createTemplateSpan(url, ts.factory.createTemplateMiddle("?", "?")),
+            ts.factory.createTemplateSpan(
+                context.externalDependencies.qs.stringify(ts.factory.createIdentifier("queryParams")),
+                ts.factory.createTemplateTail("", "")
+            )
+        ]);
+    }
+
+    private getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -227,6 +323,61 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
         });
     }
 
+    private getReferenceToOption(option: string): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
+    }
+
+    private getReferenceToArg(arg: string): ts.Expression {
+        return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg));
+    }
+
+    public getSocketTypeNode(context: SdkContext): ts.TypeNode {
+        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.channelId);
+        return reference.getTypeNode({
+            isForComment: true
+        });
+    }
+
+    public getReferenceToSocket(context: SdkContext): ts.Expression {
+        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.channelId);
+        return reference.getExpression();
+    }
+
+    public getReferenceToOptions(): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            GeneratedWebsocketClientClassImpl.OPTIONS_PRIVATE_MEMBER
+        );
+    }
+
+    public getReferenceToArgs(): ts.Expression {
+        return ts.factory.createIdentifier(GeneratedWebsocketClientClassImpl.CONNECT_ARGS_PRIVATE_MEMBER);
+    }
+
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedWebsocketClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    public getBaseUrl(channel: WebSocketChannel, context: SdkContext): ts.Expression {
+        const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
+
+        const environment = this.getEnvironment(channel, context);
+
+        return ts.factory.createBinaryExpression(
+            referenceToBaseUrl,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            environment
+        );
+    }
+
     public instantiate(args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(this.serviceClassName), undefined, [
             args.referenceToOptions
@@ -239,51 +390,5 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedSdkClientClas
 
     public instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage }): ts.Expression {
         throw new Error("Not implemented");
-    }
-
-    public invokeEndpoint(): any {
-        throw new Error("Not implemented");
-    }
-
-    public getEndpoint(): any {
-        throw new Error("Not implemented");
-    }
-
-    public maybeLeverageInvocation(): any {
-        throw new Error("Not implemented");
-    }
-
-    public getReferenceToOptions(): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createThis(),
-            GeneratedWebsocketClientClassImpl.OPTIONS_PRIVATE_MEMBER
-        );
-    }
-
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        return context.coreUtilities.fetcher.Supplier.get(
-            this.getReferenceToOption(GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
-        );
-    }
-
-    private getReferenceToWebsocket(context: SdkContext): ts.Expression {
-        return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
-            url: this.getReferenceToOption(GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME),
-            protocols: ts.factory.createArrayLiteralExpression([]),
-            options: ts.factory.createObjectLiteralExpression([
-                ts.factory.createPropertyAssignment(
-                    "debug",
-                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME)
-                ),
-                ts.factory.createPropertyAssignment(
-                    "maxRetries",
-                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME)
-                )
-            ])
-        });
-    }
-
-    private getReferenceToOption(option: string): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 }

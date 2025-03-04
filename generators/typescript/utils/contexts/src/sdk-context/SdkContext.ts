@@ -19,6 +19,7 @@ import { SdkErrorSchemaContext } from "./sdk-error-schema";
 import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema";
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
+import { WebsocketClassContext } from "./websocket-class";
 
 export interface SdkContext extends BaseContext {
     logger: Logger;
@@ -39,6 +40,7 @@ export interface SdkContext extends BaseContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    websocket: WebsocketClassContext;
     versionContext: VersionContext;
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;

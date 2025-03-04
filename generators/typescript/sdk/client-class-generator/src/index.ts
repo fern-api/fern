@@ -1,2 +1,2 @@
 export { SdkClientClassGenerator } from "./SdkClientClassGenerator";
-export { WebsocketClientGenerator } from "./WebsocketClientGenerator";
+export { WebsocketClassGenerator } from "./WebsocketClassGenerator";

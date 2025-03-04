@@ -2,12 +2,18 @@ import { ts } from "ts-morph";
 
 export interface Websocket {
     readonly ReconnectingWebSocket: {
-        _getReferenceToType: (itemType: ts.TypeNode) => ts.TypeNode;
+        _getReferenceToType: () => ts.TypeNode;
         _connect: (args: {
             url: ts.Expression;
             protocols: ts.Expression;
             options: ts.ObjectLiteralExpression;
         }) => ts.Expression;
+    };
+    readonly CloseEvent: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
+    readonly ErrorEvent: {
+        _getReferenceToType: () => ts.TypeNode;
     };
 }
 

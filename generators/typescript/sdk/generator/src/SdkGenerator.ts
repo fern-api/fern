@@ -22,7 +22,7 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator, WebsocketClientGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -196,7 +196,7 @@ export class SdkGenerator {
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
-    private websocketGenerator: WebsocketClientGenerator;
+    private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
     private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
@@ -384,7 +384,7 @@ export class SdkGenerator {
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields
         });
-        this.websocketGenerator = new WebsocketClientGenerator({
+        this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
             packageResolver: this.packageResolver,
@@ -667,14 +667,16 @@ export class SdkGenerator {
                     filepath: this.websocketClientDeclarationReferencer.getExportedFilepath(subpackageId),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.websocket.getGeneratedWebsocketClientClass(subpackageId)?.writeToFile(context);
+                        context.websocket.getGeneratedWebsocketClientClass(subpackageId, channel)?.writeToFile(context);
                     }
                 });
                 this.withSourceFile({
                     filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.websocket.getGeneratedWebsocketSocketClass(subpackageId)?.writeToFile(context);
+                        context.websocket
+                            .getGeneratedWebsocketSocketClass(subpackageId, channel, packageId)
+                            ?.writeToFile(context);
                     }
                 });
             }

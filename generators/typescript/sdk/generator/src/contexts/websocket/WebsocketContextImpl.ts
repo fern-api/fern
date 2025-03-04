@@ -1,14 +1,14 @@
-import { ImportsManager, NpmPackage, Reference } from "@fern-typescript/commons";
+import { ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import {
     GeneratedWebsocketClientClass,
     GeneratedWebsocketSocketClass,
-    WebsocketClientClassContext
+    WebsocketClassContext
 } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
-import { WebsocketClientGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
 
-import { WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
 
 import { WebsocketClientDeclarationReferencer } from "../../declaration-referencers/WebsocketClientDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer";
@@ -19,17 +19,17 @@ export declare namespace WebsocketContextImpl {
         importsManager: ImportsManager;
         websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
-        websocketGenerator: WebsocketClientGenerator;
+        websocketGenerator: WebsocketClassGenerator;
         packageResolver: PackageResolver;
     }
 }
 
-export class WebsocketContextImpl implements WebsocketClientClassContext {
+export class WebsocketContextImpl implements WebsocketClassContext {
     public sourceFile: SourceFile;
     public importsManager: ImportsManager;
     public websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
     public websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
-    public websocketGenerator: WebsocketClientGenerator;
+    public websocketGenerator: WebsocketClassGenerator;
 
     constructor({
         sourceFile,
@@ -45,17 +45,27 @@ export class WebsocketContextImpl implements WebsocketClientClassContext {
         this.websocketGenerator = websocketGenerator;
     }
 
-    public getGeneratedWebsocketClientClass(channelId: WebSocketChannelId): GeneratedWebsocketClientClass {
+    public getGeneratedWebsocketClientClass(
+        channelId: WebSocketChannelId,
+        channel: WebSocketChannel
+    ): GeneratedWebsocketClientClass {
         return this.websocketGenerator.generateWebsocketClient({
             channelId,
+            channel,
             importsManager: this.importsManager,
             serviceClassName: this.websocketClientDeclarationReferencer.getExportedName(channelId)
         });
     }
 
-    public getGeneratedWebsocketSocketClass(channelId: WebSocketChannelId): GeneratedWebsocketSocketClass {
+    public getGeneratedWebsocketSocketClass(
+        channelId: WebSocketChannelId,
+        channel: WebSocketChannel,
+        packageId: PackageId
+    ): GeneratedWebsocketSocketClass {
         return this.websocketGenerator.generateWebsocketSocket({
             channelId,
+            channel,
+            packageId,
             importsManager: this.importsManager,
             serviceClassName: this.websocketSocketDeclarationReferencer.getExportedName(channelId)
         });
