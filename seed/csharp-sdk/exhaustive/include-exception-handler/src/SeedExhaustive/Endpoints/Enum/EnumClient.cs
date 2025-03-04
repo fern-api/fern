@@ -11,12 +11,9 @@ public partial class EnumClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal EnumClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal EnumClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <example>
@@ -30,8 +27,8 @@ public partial class EnumClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(

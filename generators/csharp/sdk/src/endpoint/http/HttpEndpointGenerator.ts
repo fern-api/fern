@@ -626,7 +626,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeNodeStatement(
             csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${SEND_REQUEST_LAMBDA_VARIABLE_NAME} = async (HttpRequestMessage request, CancellationToken ${cancellationTokenName}) => {`
+                    `var ${SEND_REQUEST_LAMBDA_VARIABLE_NAME} = async (HttpRequestMessage ${HTTP_REQUEST_VARIABLE_NAME}, CancellationToken ${cancellationTokenName}) => {`
                 );
                 writer.indent();
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);

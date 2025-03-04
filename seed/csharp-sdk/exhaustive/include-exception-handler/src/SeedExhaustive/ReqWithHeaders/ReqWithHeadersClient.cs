@@ -9,12 +9,9 @@ public partial class ReqWithHeadersClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal ReqWithHeadersClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal ReqWithHeadersClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <example>
@@ -35,8 +32,8 @@ public partial class ReqWithHeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = new Headers(
                     new Dictionary<string, string>()

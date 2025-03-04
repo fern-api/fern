@@ -91,7 +91,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Child": {
             "type": "object",
@@ -178,7 +179,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -318,5 +320,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

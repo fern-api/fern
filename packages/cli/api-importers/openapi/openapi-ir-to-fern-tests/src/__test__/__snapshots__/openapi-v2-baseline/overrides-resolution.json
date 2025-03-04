@@ -1642,6 +1642,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserStatsAccountStatus": {
@@ -1883,6 +1884,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User": {
@@ -2099,6 +2101,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -2469,7 +2472,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

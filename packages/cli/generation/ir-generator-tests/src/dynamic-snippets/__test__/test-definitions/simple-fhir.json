@@ -89,7 +89,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:BaseResource": {
             "type": "object",
@@ -207,7 +208,8 @@
                         "value": "type_:Memo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ResourceList": {
             "type": "undiscriminatedUnion",
@@ -493,7 +495,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Patient": {
             "type": "object",
@@ -701,7 +704,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Practitioner": {
             "type": "object",
@@ -878,7 +882,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Script": {
             "type": "object",
@@ -1055,7 +1060,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -1132,5 +1138,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

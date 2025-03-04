@@ -572,6 +572,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:Square": {
@@ -661,11 +662,13 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

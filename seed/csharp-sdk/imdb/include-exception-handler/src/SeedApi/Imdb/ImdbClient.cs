@@ -9,12 +9,9 @@ public partial class ImdbClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal ImdbClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal ImdbClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <summary>
@@ -31,8 +28,8 @@ public partial class ImdbClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -83,8 +80,8 @@ public partial class ImdbClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(

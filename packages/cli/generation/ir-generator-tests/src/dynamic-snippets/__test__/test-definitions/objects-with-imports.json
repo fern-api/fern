@@ -120,7 +120,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Tree": {
             "type": "object",
@@ -185,7 +186,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons/metadata:Metadata": {
             "type": "object",
@@ -359,7 +361,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_file:File": {
             "type": "object",
@@ -512,7 +515,8 @@
                         "value": "type_file:FileInfo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_file:FileInfo": {
             "type": "enum",
@@ -829,10 +833,13 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
     "endpoints": {},
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

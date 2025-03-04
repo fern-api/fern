@@ -96,7 +96,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/enum:WeatherReport": {
             "type": "enum",
@@ -816,7 +817,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:ObjectWithRequiredField": {
             "type": "object",
@@ -952,7 +954,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:ObjectWithMapOfMap": {
             "type": "object",
@@ -1102,7 +1105,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:NestedObjectWithOptionalField": {
             "type": "object",
@@ -1272,7 +1276,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:NestedObjectWithRequiredField": {
             "type": "object",
@@ -1436,7 +1441,8 @@
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:DoubleOptional": {
             "type": "object",
@@ -1575,7 +1581,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/object:OptionalAlias": {
             "type": "alias",
@@ -2036,7 +2043,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types/union:Cat": {
             "type": "object",
@@ -2200,7 +2208,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -9880,5 +9889,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

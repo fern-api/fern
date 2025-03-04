@@ -3962,7 +3962,8 @@
                             "value": "DOUBLE"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_imdb:CreateMovieRequest": {
                 "type": "object",
@@ -4087,7 +4088,8 @@
                             "value": "DOUBLE"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_webhooks:User": {
                 "type": "object",
@@ -4184,7 +4186,8 @@
                             "value": "STRING"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             }
         },
         "headers": [],
@@ -4385,6 +4388,7 @@
                 "examples": null
             }
         },
+        "pathParameters": [],
         "environments": {
             "defaultEnvironment": null,
             "environments": {
@@ -4440,7 +4444,8 @@
                     }
                 ]
             }
-        }
+        },
+        "generatorConfig": null
     },
     "subpackages": {
         "subpackage_imdb": {

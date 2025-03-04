@@ -650,20 +650,22 @@ export class DocsDefinitionResolver {
     private async toNavigationChild(
         prefix: string,
         item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.NavigationChild> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
-            page: async (value) => this.toPageNode(value, parentSlug),
-            apiSection: async (value) => this.toApiSectionNode(value, parentSlug),
-            section: async (value) => this.toSectionNode(prefix, value, parentSlug),
+            page: async (value) => this.toPageNode(value, parentSlug, hideChildren),
+            apiSection: async (value) => this.toApiSectionNode(value, parentSlug, hideChildren),
+            section: async (value) => this.toSectionNode(prefix, value, parentSlug, hideChildren),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
         });
     }
 
     private async toApiSectionNode(
         item: docsYml.DocsNavigationItem.ApiSection,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
         if (item.openrpc != null) {
             const absoluteFilepathToOpenrpc = resolve(
@@ -691,7 +693,8 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
-                this.#idgen
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
@@ -717,7 +720,8 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
-                this.#idgen
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
@@ -763,14 +767,16 @@ export class DocsDefinitionResolver {
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
             this.#idgen,
-            workspace
+            workspace,
+            hideChildren
         );
         return node.get();
     }
 
     private async toChangelogNode(
         item: docsYml.DocsNavigationItem.Changelog,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
@@ -785,7 +791,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             viewers: item.viewers,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             slug: item.slug
         });
     }
@@ -802,7 +808,8 @@ export class DocsDefinitionResolver {
 
     private async toPageNode(
         item: docsYml.DocsNavigationItem.Page,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
@@ -816,7 +823,7 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             title: item.title,
             icon: item.icon,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
             pageId,
@@ -829,7 +836,8 @@ export class DocsDefinitionResolver {
     private async toSectionNode(
         prefix: string,
         item: docsYml.DocsNavigationItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
@@ -843,6 +851,7 @@ export class DocsDefinitionResolver {
         });
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const hiddenSection = hideChildren || item.hidden;
         return {
             id,
             type: "section",
@@ -851,10 +860,12 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             collapsed: item.collapsed,
-            hidden: item.hidden,
+            hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
+            children: await Promise.all(
+                item.contents.map((child) => this.toNavigationChild(id, child, slug, hiddenSection))
+            ),
             authed: undefined,
             pointsTo: undefined,
             noindex,

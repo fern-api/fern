@@ -2180,6 +2180,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:NotDeprecatedSettings": {
@@ -2241,6 +2242,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -3160,7 +3162,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

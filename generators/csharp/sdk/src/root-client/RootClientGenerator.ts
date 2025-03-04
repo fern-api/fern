@@ -22,11 +22,9 @@ import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerato
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
-export const EXCEPTION_HANDLER_MEMBER_NAME = "_exceptionHandler";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 const CLIENT_OPTIONS_PARAMETER_NAME = "clientOptions";
-const EXCEPTION_INTERCEPTOR_PARAMETER_NAME = "exceptionInterceptor";
 
 interface ConstructorParameter {
     name: string;
@@ -104,17 +102,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             );
         }
 
-        if (this.context.includeExceptionHandler()) {
-            class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
-                    readonly: true,
-                    name: EXCEPTION_HANDLER_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
-                })
-            );
-        }
-
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
@@ -179,18 +166,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         .convert({ reference: param.typeReference })
                         .toOptionalIfNotAlready(),
                     docs: param.docs,
-                    initializer: "null"
-                })
-            );
-        }
-
-        if (this.context.includeExceptionHandler()) {
-            parameters.push(
-                csharp.parameter({
-                    name: EXCEPTION_INTERCEPTOR_PARAMETER_NAME,
-                    type: csharp.Type.optional(
-                        csharp.Type.reference(this.context.getExceptionInterceptorClassReference())
-                    ),
                     initializer: "null"
                 })
             );
@@ -291,24 +266,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 writer.endControlFlow();
                 writer.endControlFlow();
 
-                if (this.context.includeExceptionHandler()) {
-                    writer.writeLine("_exceptionHandler = ");
-                    writer.writeNodeStatement(
-                        csharp.instantiateClass({
-                            classReference: this.context.getExceptionHandlerClassReference(),
-                            arguments_: [csharp.codeblock(EXCEPTION_INTERCEPTOR_PARAMETER_NAME)]
-                        })
-                    );
-                }
-
                 if (this.oauth != null) {
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     );
                     const arguments_ = [csharp.codeblock("new RawClient(clientOptions.Clone())")];
-                    if (this.context.includeExceptionHandler()) {
-                        arguments_.push(csharp.codeblock("_exceptionHandler"));
-                    }
                     writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
                     writer.writeNode(
                         csharp.instantiateClass({
@@ -347,9 +309,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     );
                 }
                 const arguments_ = [csharp.codeblock("_client")];
-                if (this.context.includeExceptionHandler()) {
-                    arguments_.push(csharp.codeblock("_exceptionHandler"));
-                }
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(

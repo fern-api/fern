@@ -2454,6 +2454,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:UserV3Response": {
@@ -2546,6 +2547,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User": {
@@ -2607,6 +2609,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StreamUser": {
@@ -2668,6 +2671,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:User2": {
@@ -2794,6 +2798,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       },
       "type_:StreamUser2": {
@@ -2920,6 +2925,7 @@
             }
           }
         ],
+        "additionalProperties": false,
         "type": "object"
       }
     },
@@ -3741,7 +3747,8 @@
           "type": "json"
         }
       }
-    }
+    },
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

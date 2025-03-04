@@ -506,7 +506,8 @@
       }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "pathParameters": []
   },
   "subpackages": {},
   "rootPackage": {

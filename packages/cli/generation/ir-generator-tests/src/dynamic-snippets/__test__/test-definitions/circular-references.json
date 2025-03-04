@@ -61,7 +61,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType": {
             "type": "object",
@@ -120,7 +121,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_a:A": {
             "type": "object",
@@ -217,7 +219,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_ast:FieldValue": {
             "type": "discriminatedUnion",
@@ -733,7 +736,8 @@
                     }
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_ast:JsonLike": {
             "type": "undiscriminatedUnion",
@@ -837,5 +841,7 @@
     },
     "headers": [],
     "endpoints": {},
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

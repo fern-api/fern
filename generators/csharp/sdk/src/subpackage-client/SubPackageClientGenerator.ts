@@ -10,7 +10,6 @@ import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
-export const EXCEPTION_HANDLER_MEMBER_NAME = "_exceptionHandler";
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -72,17 +71,6 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             );
         }
 
-        if (this.context.includeExceptionHandler()) {
-            class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
-                    readonly: true,
-                    name: EXCEPTION_HANDLER_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
-                })
-            );
-        }
-
         for (const subpackage of this.getSubpackages()) {
             class_.addField(
                 csharp.field({
@@ -127,22 +115,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
         ];
-        if (this.context.includeExceptionHandler()) {
-            parameters.push(
-                csharp.parameter({
-                    name: "exceptionHandler",
-                    type: csharp.Type.reference(this.context.getExceptionHandlerClassReference())
-                })
-            );
-        }
         return {
             access: csharp.Access.Internal,
             parameters,
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
-                if (this.context.includeExceptionHandler()) {
-                    writer.writeLine("_exceptionHandler = exceptionHandler;");
-                }
 
                 if (this.grpcClientInfo != null) {
                     writer.writeLine("_grpc = _client.Grpc;");
@@ -157,9 +134,6 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                 }
 
                 const arguments_ = [csharp.codeblock("_client")];
-                if (this.context.includeExceptionHandler()) {
-                    arguments_.push(csharp.codeblock("_exceptionHandler"));
-                }
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(

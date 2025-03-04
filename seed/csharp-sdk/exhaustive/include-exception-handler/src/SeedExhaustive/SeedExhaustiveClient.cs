@@ -8,13 +8,7 @@ public partial class SeedExhaustiveClient
 {
     private readonly RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    public SeedExhaustiveClient(
-        string token,
-        IExceptionInterceptor? exceptionInterceptor = null,
-        ClientOptions? clientOptions = null
-    )
+    public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -34,15 +28,14 @@ public partial class SeedExhaustiveClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _exceptionHandler = new ExceptionHandler(exceptionInterceptor);
         _client = new RawClient(clientOptions);
-        Endpoints = new EndpointsClient(_client, _exceptionHandler);
-        GeneralErrors = new GeneralErrorsClient(_client, _exceptionHandler);
-        InlinedRequests = new InlinedRequestsClient(_client, _exceptionHandler);
-        NoAuth = new NoAuthClient(_client, _exceptionHandler);
-        NoReqBody = new NoReqBodyClient(_client, _exceptionHandler);
-        ReqWithHeaders = new ReqWithHeadersClient(_client, _exceptionHandler);
-        Types = new TypesClient(_client, _exceptionHandler);
+        Endpoints = new EndpointsClient(_client);
+        GeneralErrors = new GeneralErrorsClient(_client);
+        InlinedRequests = new InlinedRequestsClient(_client);
+        NoAuth = new NoAuthClient(_client);
+        NoReqBody = new NoReqBodyClient(_client);
+        ReqWithHeaders = new ReqWithHeadersClient(_client);
+        Types = new TypesClient(_client);
     }
 
     public EndpointsClient Endpoints { get; init; }

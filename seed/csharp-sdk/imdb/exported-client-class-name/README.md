@@ -32,7 +32,7 @@ using SeedApi;
 
 try {
     var response = await client.Imdb.CreateMovieAsync(...);
-} catch (BaseClientApiException e) {
+} catch (CustomClientApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }

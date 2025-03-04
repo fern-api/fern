@@ -11,12 +11,9 @@ public partial class ParamsClient
 {
     private RawClient _client;
 
-    private readonly ExceptionHandler _exceptionHandler;
-
-    internal ParamsClient(RawClient client, ExceptionHandler exceptionHandler)
+    internal ParamsClient(RawClient client)
     {
         _client = client;
-        _exceptionHandler = exceptionHandler;
     }
 
     /// <summary>
@@ -33,8 +30,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -88,8 +85,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -142,8 +139,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 _query["query"] = request.Query;
@@ -193,8 +190,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 _query["query"] = request.Query;
@@ -246,8 +243,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 _query["query"] = request.Query;
@@ -298,8 +295,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        await _exceptionHandler
-            .TryCatchAsync(async () =>
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
                 _query["query"] = request.Query;
@@ -347,8 +344,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(
@@ -406,8 +403,8 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        return await _exceptionHandler
-            .TryCatchAsync(async () =>
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var response = await _client
                     .SendRequestAsync(

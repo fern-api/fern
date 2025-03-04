@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedOauthClientCredentials.Core;
 
@@ -52,7 +51,7 @@ internal class ExceptionHandler
         }
     }
 
-    internal async Task TryCatchAsync(Func<Task> func)
+    internal async SystemTask TryCatchAsync(Func<Task> func)
     {
         if (_interceptor == null)
         {
@@ -86,4 +85,6 @@ internal class ExceptionHandler
             throw _interceptor.Intercept(ex);
         }
     }
+
+    internal ExceptionHandler Clone() => new ExceptionHandler(_interceptor);
 }
