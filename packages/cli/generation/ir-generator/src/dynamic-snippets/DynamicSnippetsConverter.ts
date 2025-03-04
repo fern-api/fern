@@ -7,13 +7,13 @@ import {
     ApiAuth,
     ContainerType,
     DeclaredTypeName,
+    dynamic,
     dynamic as DynamicSnippets,
     EndpointId,
     EnumTypeDeclaration,
     FernFilepath,
     FileProperty,
     FileUploadRequestProperty,
-    generatorExec,
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
@@ -53,19 +53,20 @@ export declare namespace DynamicSnippetsConverter {
         ir: IntermediateRepresentation;
         generationLanguage?: generatorsYml.GenerationLanguage;
         smartCasing?: boolean;
+        generatorConfig?: dynamic.GeneratorConfig;
     }
 }
 
 export class DynamicSnippetsConverter {
     private readonly ir: IntermediateRepresentation;
+    private readonly casingsGenerator: CasingsGenerator;
     private readonly auth: DynamicSnippets.Auth | undefined;
     private readonly authValues: DynamicSnippets.AuthValues | undefined;
-    private readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
-    private readonly casingsGenerator: CasingsGenerator;
+    private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
 
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
-        this.generationLanguage = args.generationLanguage;
+        this.generatorConfig = args.generatorConfig;
         this.auth = this.convertAuth(this.ir.auth);
         this.authValues = this.getAuthValues(this.ir.auth);
         this.casingsGenerator = constructCasingsGenerator({
@@ -86,8 +87,8 @@ export class DynamicSnippetsConverter {
             headers: this.convertHeaders(),
             endpoints: this.convertEndpoints({ includeExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
-            generatorConfig: this.ir.generatorConfig != null ? this.convertGeneratorConfig(this.ir.generatorConfig) : undefined,
             environments: this.ir.environments,
+            generatorConfig: this.generatorConfig,
         };
     }
 
@@ -648,8 +649,10 @@ export class DynamicSnippetsConverter {
                     value: "<value>"
                 });
             case "oauth":
-                // TODO: Implement OAuth.
-                return undefined;
+                return DynamicSnippets.AuthValues.oauth({
+                    clientId: "<clientId>",
+                    clientSecret: "<clientSecret>"
+                });
             default:
                 assertNever(scheme);
         }
@@ -762,141 +765,5 @@ export class DynamicSnippetsConverter {
             });
         }
         return requests;
-    }
-
-    private convertGeneratorConfig(generatorConfig: generatorExec.GeneratorConfig): DynamicSnippets.GeneratorConfig {
-        return {
-            workspace: generatorConfig.workspaceName,
-            organization: generatorConfig.organization,
-            customConfig: generatorConfig.customConfig,
-            outputConfig: this.convertGeneratorOutputConfig(generatorConfig.output.mode)
-        };
-    }
-
-    private convertGeneratorOutputConfig(mode: generatorExec.OutputMode): DynamicSnippets.GeneratorOutputConfig {
-        switch (mode.type) {
-            case "downloadFiles": 
-                return DynamicSnippets.GeneratorOutputConfig.local();
-            case "publish":
-                return this.convertGeneratorConfigPublishOutputMode(mode);
-            case "github":
-                return this.convertGeneratorConfigGithubOutputMode(mode);
-            default:
-                assertNever(mode);
-        }
-    }
-
-    private convertGeneratorConfigPublishOutputMode(mode: generatorExec.GeneratorPublishConfig): DynamicSnippets.GeneratorOutputConfig {
-        if (mode.publishTarget == null) {
-            return DynamicSnippets.GeneratorOutputConfig.local();
-        }
-        const publishTarget = mode.publishTarget;
-        switch (publishTarget.type) {
-            case "maven":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.maven({
-                        version: mode.version,
-                        coordinate: publishTarget.coordinate,
-                        repoUrl: undefined,
-                    }),
-                );
-            case "npm":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.npm({
-                        version: mode.version,
-                        packageName: publishTarget.packageName,
-                        repoUrl: undefined,
-                    }),
-                );
-            case "pypi":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.pypi({
-                        version: mode.version,
-                        packageName: publishTarget.packageName,
-                        repoUrl: undefined,
-                    }),
-                );
-            case "postman":
-                return DynamicSnippets.GeneratorOutputConfig.local();
-            case "rubygems":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.rubygems({
-                        version: mode.version,
-                        packageName: publishTarget.packageName,
-                        repoUrl: undefined,
-                    }),
-                );
-            case "nuget":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.nuget({
-                        version: mode.version,
-                        packageName: publishTarget.packageName,
-                        repoUrl: undefined,
-                    }),
-                );
-            default:
-                assertNever(publishTarget);
-        }
-    }
-
-    private convertGeneratorConfigGithubOutputMode(mode: generatorExec.GithubOutputMode): DynamicSnippets.GeneratorOutputConfig {
-        if (this.generationLanguage === generatorsYml.GenerationLanguage.GO) {
-            return DynamicSnippets.GeneratorOutputConfig.publish(
-                DynamicSnippets.PublishInfo.go({
-                    version: mode.version,
-                    repoUrl: mode.repoUrl,
-                }),
-            );
-        }
-        if (mode.publishInfo == null) {
-            return DynamicSnippets.GeneratorOutputConfig.local();
-        }
-        const publishInfo = mode.publishInfo;
-        switch (publishInfo.type) {
-            case "maven":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.maven({
-                        version: mode.version,
-                        coordinate: publishInfo.coordinate,
-                        repoUrl: mode.repoUrl,
-                    }),
-                );
-            case "npm":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.npm({
-                        version: mode.version,
-                        packageName: publishInfo.packageName,
-                        repoUrl: mode.repoUrl,
-                    }),
-                );
-            case "pypi":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.pypi({
-                        version: mode.version,
-                        packageName: publishInfo.packageName,
-                        repoUrl: mode.repoUrl,
-                    }),
-                );
-            case "postman":
-                return DynamicSnippets.GeneratorOutputConfig.local();
-            case "rubygems":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.rubygems({
-                        version: mode.version,
-                        packageName: publishInfo.packageName,
-                        repoUrl: mode.repoUrl,
-                    }),
-                );
-            case "nuget":
-                return DynamicSnippets.GeneratorOutputConfig.publish(
-                    DynamicSnippets.PublishInfo.nuget({
-                        version: mode.version,
-                        packageName: publishInfo.packageName,
-                        repoUrl: mode.repoUrl,
-                    }),
-                );
-            default:
-                assertNever(publishInfo);
-        }
     }
 }

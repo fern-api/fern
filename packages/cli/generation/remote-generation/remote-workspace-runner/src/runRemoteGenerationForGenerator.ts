@@ -17,7 +17,7 @@ import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
-import { getGeneratorConfig } from "./getGeneratorConfig";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -61,7 +61,7 @@ export async function runRemoteGenerationForGenerator({
 
     const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
 
-    const generatorConfig = getGeneratorConfig({
+    const dynamicGeneratorConfig = getDynamicGeneratorConfig({
         apiName: workspace.definition.rootApiFile.contents.name,
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
@@ -82,7 +82,7 @@ export async function runRemoteGenerationForGenerator({
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
-        generatorConfig
+        dynamicGeneratorConfig
     });
 
     const sources = workspace.getSources();

@@ -6,6 +6,7 @@ import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-ap
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
+    dynamic,
     ExampleType,
     generatorExec,
     HttpEndpoint,
@@ -76,7 +77,7 @@ export declare namespace generateIntermediateRepresentation {
         sourceResolver: SourceResolver;
         fdrApiDefinitionId?: string;
         includeDynamicExamples?: boolean;
-        generatorConfig?: generatorExec.GeneratorConfig;
+        dynamicGeneratorConfig?: dynamic.GeneratorConfig;
     }
 }
 
@@ -93,7 +94,7 @@ export function generateIntermediateRepresentation({
     fdrApiDefinitionId,
     sourceResolver,
     includeDynamicExamples,
-    generatorConfig
+    dynamicGeneratorConfig
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -182,13 +183,15 @@ export function generateIntermediateRepresentation({
             typesReferencedOnlyByService: {},
             sharedTypes: []
         },
-        generatorConfig,
         webhookGroups: {},
         websocketChannels: {},
         readmeConfig: undefined,
         sourceConfig: undefined,
         publishConfig: undefined,
         dynamic: undefined,
+
+        // TODO: Remove this.
+        generatorConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -545,9 +548,10 @@ export function generateIntermediateRepresentation({
         ...finalIR,
         dynamic: convertIrToDynamicSnippetsIr({
             ir: finalIR,
+            generatorConfig: dynamicGeneratorConfig,
             includeExamples: includeDynamicExamples,
             generationLanguage,
-            smartCasing,
+            smartCasing
         })
     };
 }
