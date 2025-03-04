@@ -366,6 +366,7 @@ export class SdkContextImpl implements SdkContext {
             websocketClientDeclarationReferencer,
             websocketSocketDeclarationReferencer,
             websocketGenerator,
+            includeSerdeLayer,
             packageResolver
         });
         this.environments = new EnvironmentsContextImpl({

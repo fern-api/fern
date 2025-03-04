@@ -31,6 +31,7 @@ export declare namespace WebsocketClassGenerator {
             packageId: PackageId;
             serviceClassName: string;
             importsManager: ImportsManager;
+            includeSerdeLayer: boolean;
         }
     }
 }
@@ -76,7 +77,8 @@ export class WebsocketClassGenerator {
         channel,
         packageId,
         serviceClassName,
-        importsManager
+        importsManager,
+        includeSerdeLayer
     }: WebsocketClassGenerator.generateWebsocketSocket.Args): GeneratedWebsocketSocketClass {
         return new GeneratedWebsocketSocketClassImpl({
             importsManager,
@@ -86,7 +88,8 @@ export class WebsocketClassGenerator {
             packageId,
             packageResolver: this.packageResolver,
             serviceClassName,
-            errorResolver: this.errorResolver
+            errorResolver: this.errorResolver,
+            includeSerdeLayer
         });
     }
 }

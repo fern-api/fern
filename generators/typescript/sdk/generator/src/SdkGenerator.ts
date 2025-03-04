@@ -446,6 +446,8 @@ export class SdkGenerator {
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
+        this.generateWebsocketClients();
+        this.context.logger.debug("Generated websocket clients");
         this.generateServiceDeclarations();
         this.context.logger.debug("Generated services");
         this.generateEnvironments();
@@ -486,11 +488,6 @@ export class SdkGenerator {
             if (oauthScheme != null && oauthScheme.type === "oauth") {
                 this.generateOAuthTokenProvider(oauthScheme);
             }
-        }
-
-        if (Object.entries(this.intermediateRepresentation.websocketChannels ?? {}).length > 0) {
-            this.generateWebsocketClients();
-            this.context.logger.debug("Generated websocket clients");
         }
 
         if (this.npmPackage?.version != null) {

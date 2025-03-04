@@ -20,6 +20,7 @@ export declare namespace WebsocketContextImpl {
         websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
         websocketGenerator: WebsocketClassGenerator;
+        includeSerdeLayer: boolean;
         packageResolver: PackageResolver;
     }
 }
@@ -30,19 +31,22 @@ export class WebsocketContextImpl implements WebsocketClassContext {
     public websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
     public websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
     public websocketGenerator: WebsocketClassGenerator;
+    public includeSerdeLayer: boolean;
 
     constructor({
         sourceFile,
         importsManager,
         websocketClientDeclarationReferencer,
         websocketSocketDeclarationReferencer,
-        websocketGenerator
+        websocketGenerator,
+        includeSerdeLayer
     }: WebsocketContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.websocketClientDeclarationReferencer = websocketClientDeclarationReferencer;
         this.websocketSocketDeclarationReferencer = websocketSocketDeclarationReferencer;
         this.websocketGenerator = websocketGenerator;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getGeneratedWebsocketClientClass(
@@ -67,7 +71,8 @@ export class WebsocketContextImpl implements WebsocketClassContext {
             channel,
             packageId,
             importsManager: this.importsManager,
-            serviceClassName: this.websocketSocketDeclarationReferencer.getExportedName(channelId)
+            serviceClassName: this.websocketSocketDeclarationReferencer.getExportedName(channelId),
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 

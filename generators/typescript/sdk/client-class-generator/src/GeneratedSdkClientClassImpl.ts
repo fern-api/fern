@@ -338,7 +338,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
             (acc: GeneratedWrappedService[], wrappedSubpackageId: SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
-                if (subpackage.hasEndpointsInTree) {
+                if (subpackage.hasEndpointsInTree || subpackage.websocket != null) {
                     acc.push(
                         new GeneratedWrappedService({
                             wrappedSubpackageId,
