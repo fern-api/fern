@@ -151,7 +151,7 @@ public abstract class AbstractEndpointWriter {
     }
 
     public final HttpEndpointMethodSpecs generate() {
-        // Step 0: Populate JavaDoc
+        // Step 1: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
                     JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
