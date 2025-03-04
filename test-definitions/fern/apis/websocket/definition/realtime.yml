@@ -22,15 +22,20 @@ channel:
         properties:
           text: string
 
-  examples:
-    - name: Default example
-      path-parameters:
-        id: doc_123
-      messages:
-        - type: send
-          body: "uvxcdv12344412b"
-        - type: receive
-          body:
-            text: "The weather for today..."
-        - type: send
-          body: "uvxcdv12344412b"
+types:
+  ReceiveEventTest:
+    properties:
+      text: string
+
+  # examples:
+  #   - name: Default example
+  #     path-parameters:
+  #       id: doc_123
+  #     messages:
+  #       - type: send
+  #         body: "uvxcdv12344412b"
+  #       - type: receive
+  #         body:
+  #           text: "The weather for today..."
+  #       - type: send
+  #         body: "uvxcdv12344412b"
