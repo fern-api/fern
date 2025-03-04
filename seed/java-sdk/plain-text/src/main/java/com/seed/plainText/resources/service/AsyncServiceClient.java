@@ -53,13 +53,16 @@ public class AsyncServiceClient {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        return responseBody.string();
+                        future.complete(responseBody.string());
+                        return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedPlainTextApiException(
                             "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedPlainTextException("Network error executing HTTP request", e));
                 }
             }
 
