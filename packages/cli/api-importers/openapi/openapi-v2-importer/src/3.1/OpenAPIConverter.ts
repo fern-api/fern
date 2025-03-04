@@ -55,7 +55,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             dynamic: undefined,
             environments: undefined,
             fdrApiDefinitionId: undefined,
-            generatorConfig: undefined,
             rootPackage: context.createPackage(),
             subpackages: {},
             sdkConfig: {

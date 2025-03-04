@@ -63,7 +63,6 @@ types:
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
-      generatorConfig: optional<generator.GeneratorConfig>
 
   ReadmeConfig:
     docs: |
