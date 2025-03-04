@@ -5,11 +5,15 @@
 import * as FernIr from "../../../../../index";
 
 /**
- * The configuration for the generator. This is a simplified version of the generator-exec
- * GeneratorConfig configuration.
+ * The configuration for the generator. This is a simplified version of the
+ * generator-exec GeneratorConfig configuration.
  */
 export interface GeneratorConfig {
-    workspace: string;
+    /**
+     * The name of the API. This is equivalent to the workspace name in the
+     * generator-exec configuration.
+     */
+    apiName: string;
     organization: string;
     customConfig: unknown;
     outputConfig: FernIr.dynamic.GeneratorOutputConfig;

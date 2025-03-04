@@ -18,7 +18,7 @@ export function getDynamicGeneratorConfig({
         return undefined;
     }
     return {
-        workspace: apiName,
+        apiName,
         organization,
         customConfig: generatorInvocation.config,
         outputConfig

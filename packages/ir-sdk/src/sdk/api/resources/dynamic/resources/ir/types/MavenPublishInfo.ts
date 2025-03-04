@@ -5,6 +5,5 @@
 export interface MavenPublishInfo {
     version: string;
     coordinate: string;
-    /** A full repo url (i.e. https://github.com/fern-api/fern) */
     repoUrl: string | undefined;
 }

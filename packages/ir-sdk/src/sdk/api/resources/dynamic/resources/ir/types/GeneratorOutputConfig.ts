@@ -5,8 +5,8 @@
 import * as FernIr from "../../../../../index";
 
 /**
- * The configuration for the output of the generator. This is a simplified version of the generator-exec
- * output.mode configuration.
+ * The configuration for the output of the generator. This is a simplified version of
+ * the generator-exec output.mode configuration.
  */
 export type GeneratorOutputConfig =
     | FernIr.dynamic.GeneratorOutputConfig.Publish

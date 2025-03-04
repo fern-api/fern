@@ -11,7 +11,7 @@ export const GeneratorConfig: core.serialization.ObjectSchema<
     serializers.dynamic.GeneratorConfig.Raw,
     FernIr.dynamic.GeneratorConfig
 > = core.serialization.objectWithoutOptionalProperties({
-    workspace: core.serialization.string(),
+    apiName: core.serialization.string(),
     organization: core.serialization.string(),
     customConfig: core.serialization.unknown(),
     outputConfig: GeneratorOutputConfig,
@@ -19,7 +19,7 @@ export const GeneratorConfig: core.serialization.ObjectSchema<
 
 export declare namespace GeneratorConfig {
     export interface Raw {
-        workspace: string;
+        apiName: string;
         organization: string;
         customConfig?: unknown;
         outputConfig: GeneratorOutputConfig.Raw;

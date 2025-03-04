@@ -5,6 +5,5 @@
 export interface NugetPublishInfo {
     version: string;
     packageName: string;
-    /** A full repo url (i.e. https://github.com/fern-api/fern) */
     repoUrl: string | undefined;
 }
