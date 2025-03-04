@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace.Core;
 
@@ -326,9 +324,10 @@ public class GetLatestProblemTest : BaseMockServerTest
             "problemId",
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse))
+                .UsingPropertiesComparer()
+        );
     }
 }

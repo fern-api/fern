@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBasicAuth.Core;
 
@@ -41,9 +39,6 @@ public class PostWithBasicAuthTest : BaseMockServerTest
             new Dictionary<object, object?>() { { "key", "value" } },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

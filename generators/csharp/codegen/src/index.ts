@@ -10,3 +10,4 @@ export * from "./project";
 export { type ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType";
 export { TestFileGenerator } from "./TestFileGenerator";
 export * from "./proto/constants";
+export { convertExampleTypeReferenceToTypeReference } from "./context/convertExampleTypeReferenceToTypeReference";
