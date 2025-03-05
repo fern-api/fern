@@ -473,7 +473,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                             key: FdrCjsSdk.PropertyKey(singleFile.key.wireValue),
                                             isOptional: singleFile.isOptional,
                                             contentType: singleFile.contentType,
-                                            description: undefined,
+                                            description: singleFile.docs ?? undefined,
                                             availability: undefined
                                         }),
                                         fileArray: (multipleFiles) => ({
@@ -481,7 +481,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                             key: FdrCjsSdk.PropertyKey(multipleFiles.key.wireValue),
                                             isOptional: multipleFiles.isOptional,
                                             contentType: multipleFiles.contentType,
-                                            description: undefined,
+                                            description: multipleFiles.docs ?? undefined,
                                             availability: undefined
                                         }),
                                         _other: () => undefined
@@ -496,7 +496,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     key: FdrCjsSdk.PropertyKey(bodyProperty.name.wireValue),
                                     valueType: convertTypeReference(bodyProperty.valueType),
                                     contentType: bodyProperty.contentType,
-                                    description: bodyProperty.docs,
+                                    description: bodyProperty.docs ?? undefined,
                                     availability: convertIrAvailability(bodyProperty.availability),
                                     exploded: bodyProperty.style === "exploded"
                                 }),
