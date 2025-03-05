@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -11,24 +9,30 @@ namespace SeedExamples.Test;
 public class RequestTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "request": {}
+            }
+            """;
+        var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var deserializedObject = JsonUtils.Deserialize<Request>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""request"": {}
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Request>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "request": {}
+            }
+            """;
+        var obj = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

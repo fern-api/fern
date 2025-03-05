@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedAliasExtends;
+using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends.Test;
 
@@ -11,24 +9,30 @@ namespace SeedAliasExtends.Test;
 public class ParentTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "parent": "Property from the parent"
+            }
+            """;
+        var expectedObject = new Parent { Parent_ = "Property from the parent" };
+        var deserializedObject = JsonUtils.Deserialize<Parent>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""parent"": ""Property from the parent""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Parent>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "parent": "Property from the parent"
+            }
+            """;
+        var obj = new Parent { Parent_ = "Property from the parent" };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedObject;
+using SeedObject.Core;
 
 namespace SeedObject.Test;
 
@@ -11,25 +9,32 @@ namespace SeedObject.Test;
 public class NameTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "id": "name-sdfg8ajk",
+              "value": "name"
+            }
+            """;
+        var expectedObject = new Name { Id = "name-sdfg8ajk", Value = "name" };
+        var deserializedObject = JsonUtils.Deserialize<Name>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""id"": ""name-sdfg8ajk"",
-          ""value"": ""name""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Name>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "id": "name-sdfg8ajk",
+              "value": "name"
+            }
+            """;
+        var obj = new Name { Id = "name-sdfg8ajk", Value = "name" };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

@@ -1,9 +1,8 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedObjectsWithImports;
+using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Test;
 
@@ -11,62 +10,126 @@ namespace SeedObjectsWithImports.Test;
 public class NodeTest
 {
     [Test]
+    public void TestDeserialization_1()
+    {
+        var json = """
+            {
+              "id": "node-8dvgfja2",
+              "label": "left",
+              "metadata": {
+                "id": "metadata-kjasf923",
+                "data": {
+                  "foo": "bar",
+                  "baz": "qux"
+                }
+              }
+            }
+            """;
+        var expectedObject = new Node
+        {
+            Id = "node-8dvgfja2",
+            Label = "left",
+            Metadata = new Metadata
+            {
+                Id = "metadata-kjasf923",
+                Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization_1()
     {
-        var inputJson =
-            @"
-        {
-          ""id"": ""node-8dvgfja2"",
-          ""label"": ""left"",
-          ""metadata"": {
-            ""id"": ""metadata-kjasf923"",
-            ""data"": {
-              ""foo"": ""bar"",
-              ""baz"": ""qux""
+        var json = """
+            {
+              "id": "node-8dvgfja2",
+              "label": "left",
+              "metadata": {
+                "id": "metadata-kjasf923",
+                "data": {
+                  "foo": "bar",
+                  "baz": "qux"
+                }
+              }
             }
-          }
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var obj = new Node
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Id = "node-8dvgfja2",
+            Label = "left",
+            Metadata = new Metadata
+            {
+                Id = "metadata-kjasf923",
+                Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
+            },
         };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+    }
 
-        var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "id": "node-cwda9fi2x",
+              "label": "right",
+              "metadata": {
+                "id": "metadata-lkasdfv9j",
+                "data": {
+                  "one": "two",
+                  "three": "four"
+                }
+              }
+            }
+            """;
+        var expectedObject = new Node
+        {
+            Id = "node-cwda9fi2x",
+            Label = "right",
+            Metadata = new Metadata
+            {
+                Id = "metadata-lkasdfv9j",
+                Data = new Dictionary<string, string>() { { "one", "two" }, { "three", "four" } },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var inputJson =
-            @"
-        {
-          ""id"": ""node-cwda9fi2x"",
-          ""label"": ""right"",
-          ""metadata"": {
-            ""id"": ""metadata-lkasdfv9j"",
-            ""data"": {
-              ""one"": ""two"",
-              ""three"": ""four""
+        var json = """
+            {
+              "id": "node-cwda9fi2x",
+              "label": "right",
+              "metadata": {
+                "id": "metadata-lkasdfv9j",
+                "data": {
+                  "one": "two",
+                  "three": "four"
+                }
+              }
             }
-          }
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var obj = new Node
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Id = "node-cwda9fi2x",
+            Label = "right",
+            Metadata = new Metadata
+            {
+                Id = "metadata-lkasdfv9j",
+                Data = new Dictionary<string, string>() { { "one", "two" }, { "three", "four" } },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }
