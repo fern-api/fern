@@ -63,14 +63,6 @@ public final class Nullable<T> {
         return Nullable.ofOptional(this.value.getLeft().map(mapper));
     }
 
-    public <U> Nullable<U> flatMap(Function<? super T, ? extends Nullable<? extends U>> mapper) {
-        if (this.isNull()) {
-            return Nullable.ofNull();
-        }
-
-        return Nullable.ofOptional(this.value.getLeft().flatMap());
-    }
-
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Nullable)) {
