@@ -77,8 +77,10 @@ public final class User {
         return metadata;
     }
 
-    @JsonProperty("email")
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
         return email;
     }
 
@@ -91,6 +93,12 @@ public final class User {
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
         return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
+        return email;
     }
 
     @java.lang.Override
@@ -157,6 +165,8 @@ public final class User {
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
+
+        _FinalStage email(Nullable<String> email);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -207,6 +217,18 @@ public final class User {
         @JsonSetter("favorite-number")
         public _FinalStage favoriteNumber(@NotNull WeirdNumber favoriteNumber) {
             this.favoriteNumber = Objects.requireNonNull(favoriteNumber, "favoriteNumber must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
             return this;
         }
 

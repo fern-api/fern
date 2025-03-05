@@ -5,8 +5,9 @@ package com.seed.nullable.resources.nullable.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.nullable.core.WrappedAlias;
 
-public final class UserId {
+public final class UserId implements WrappedAlias {
     private final String value;
 
     private UserId(String value) {

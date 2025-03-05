@@ -77,7 +77,6 @@ public final class User {
         return metadata;
     }
 
-    @JsonProperty("email")
     public Email getEmail() {
         return email;
     }
@@ -91,6 +90,12 @@ public final class User {
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
         return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Email _getEmail() {
+        return email;
     }
 
     @java.lang.Override
@@ -139,6 +144,8 @@ public final class User {
 
     public interface EmailStage {
         FavoriteNumberStage email(@NotNull Email email);
+
+        FavoriteNumberStage email(Nullable<Email> email);
     }
 
     public interface FavoriteNumberStage {
@@ -200,6 +207,17 @@ public final class User {
         @JsonSetter("id")
         public EmailStage id(@NotNull UserId id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
+            return this;
+        }
+
+        public FavoriteNumberStage email(Nullable<Email> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Email.of(Optional.empty());
+            } else {
+                this.email = email.get();
+            }
             return this;
         }
 

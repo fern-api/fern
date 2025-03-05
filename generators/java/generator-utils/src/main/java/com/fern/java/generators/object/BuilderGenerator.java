@@ -184,6 +184,16 @@ public final class BuilderGenerator {
                         builderImplTypeSpec::addField,
                         builderImplTypeSpec::addMethod,
                         false);
+            } else if (enrichedProperty.enrichedObjectProperty.aliasOfNullable()
+                    && enrichedProperty.enrichedObjectProperty.wrappedAliases()) {
+                addAdditionalSetters(
+                        poetTypeName,
+                        enrichedProperty,
+                        nestedBuilderClassName,
+                        _unused -> {},
+                        builderImplTypeSpec::addField,
+                        builderImplTypeSpec::addMethod,
+                        false);
             } else {
                 throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName: "
                         + poetTypeName.getClass().getSimpleName());
@@ -236,6 +246,18 @@ public final class BuilderGenerator {
             builderImpl.addReversedMethods(
                     getRequiredFieldSetterWithImpl(enrichedObjectProperty, previousStage.className()));
 
+            if (enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable()
+                    && enrichedObjectProperty.enrichedObjectProperty.wrappedAliases()) {
+                addAdditionalSetters(
+                        enrichedObjectProperty.enrichedObjectProperty.poetTypeName(),
+                        enrichedObjectProperty,
+                        previousStage.className(),
+                        stageInterfaceBuilder::addMethod,
+                        builderImpl::addReversedFields,
+                        builderImpl::addReversedMethods,
+                        false);
+            }
+
             if (i == 0) {
                 stageInterfaceBuilder.addMethod(
                         getFromSetter().addModifiers(Modifier.ABSTRACT).build());
@@ -264,7 +286,8 @@ public final class BuilderGenerator {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
                 .addAnnotation(ClassName.get("", "java.lang.Override"));
         if (!isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
-                || disableRequiredPropertyBuilderChecks) {
+                || disableRequiredPropertyBuilderChecks
+                || enrichedObjectProperty.enrichedObjectProperty.nullable()) {
             methodBuilder.addStatement(
                     "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name);
         } else {
@@ -348,6 +371,16 @@ public final class BuilderGenerator {
                         builderImpl::addReversedFields,
                         builderImpl::addReversedMethods,
                         true);
+            } else if (enrichedProperty.enrichedObjectProperty.aliasOfNullable()
+                    && enrichedProperty.enrichedObjectProperty.wrappedAliases()) {
+                addAdditionalSetters(
+                        poetTypeName,
+                        enrichedProperty,
+                        finalStageClassName,
+                        finalStageBuilder::addMethod,
+                        builderImpl::addReversedFields,
+                        builderImpl::addReversedMethods,
+                        false);
             } else {
                 throw new RuntimeException("Encountered final stage property that is not a ParameterizedTypeName: "
                         + poetTypeName.toString());
@@ -443,14 +476,14 @@ public final class BuilderGenerator {
                                 propertyTypeName,
                                 finalStageClassName,
                                 implsOverride)
-                        .beginControlFlow("if ($N.isNull())", fieldSpec.name)
-                        .addStatement("this.$N = null", fieldSpec.name)
+                        .beginControlFlow("if ($L.isNull())", fieldSpec.name)
+                        .addStatement("this.$L = null", fieldSpec.name)
                         .endControlFlow()
                         .beginControlFlow("else if ($N.isEmpty())", fieldSpec.name)
-                        .addStatement("this.$N = $T.empty()", fieldSpec.name, Optional.class)
+                        .addStatement("this.$L = $T.empty()", fieldSpec.name, Optional.class)
                         .endControlFlow()
                         .beginControlFlow("else")
-                        .addStatement("this.$N = $T.of($N.get())", fieldSpec.name, Optional.class, fieldSpec.name)
+                        .addStatement("this.$L = $T.of($L.get())", fieldSpec.name, Optional.class, fieldSpec.name)
                         .endControlFlow()
                         .addStatement("return this")
                         .build());
@@ -544,6 +577,43 @@ public final class BuilderGenerator {
                     .addStatement("return this")
                     .build());
         }
+    }
+
+    private void addAdditionalSetters(
+            TypeName propertyTypeName,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ClassName stageClassName,
+            Consumer<MethodSpec> interfaceSetterConsumer,
+            Consumer<FieldSpec> implFieldConsumer,
+            Consumer<MethodSpec> implSetterConsumer,
+            boolean implsOverride) {
+        FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
+
+        interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
+                        enrichedObjectProperty,
+                        nullableClassName,
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), propertyTypeName),
+                        stageClassName)
+                .addModifiers(Modifier.ABSTRACT)
+                .build());
+
+        implSetterConsumer.accept(createNullableItemTypeNameSetter(
+                        enrichedObjectProperty,
+                        nullableClassName,
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), propertyTypeName),
+                        stageClassName,
+                        implsOverride)
+                .beginControlFlow("if ($L.isNull())", fieldSpec.name)
+                .addStatement("this.$L = null", fieldSpec.name)
+                .endControlFlow()
+                .beginControlFlow("else if ($N.isEmpty())", fieldSpec.name)
+                .addStatement("this.$L = $T.of($T.empty())", fieldSpec.name, propertyTypeName, Optional.class)
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("this.$L = $L.get()", fieldSpec.name, fieldSpec.name)
+                .endControlFlow()
+                .addStatement("return this")
+                .build());
     }
 
     private static MethodSpec.Builder createMapEntryAppender(

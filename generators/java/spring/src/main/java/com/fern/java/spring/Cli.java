@@ -18,6 +18,7 @@ import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -89,6 +90,11 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
 
         NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
         this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
+
+        if (context.getCustomConfig().wrappedAliases()) {
+            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
+            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
+        }
 
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();

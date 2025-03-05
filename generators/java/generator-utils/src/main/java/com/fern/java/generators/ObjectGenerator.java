@@ -17,6 +17,7 @@ package com.fern.java.generators;
 
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -248,12 +249,13 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .poetTypeName(typeName)
                     .fromInterface(prop.fromInterface())
                     .inline(true)
+                    .wrappedAliases(prop.wrappedAliases())
                     .objectProperty(prop.objectProperty())
-                    .nullableNonemptyFilterClassName(
-                            generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName())
+                    .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
+                    .typeDeclaration(prop.typeDeclaration())
                     .build();
             result.put(prop, overridden);
         }
@@ -283,9 +285,15 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
                         return EnrichedObjectProperty.of(
                                 objectProperty,
+                                objectProperty
+                                        .getValueType()
+                                        .getNamed()
+                                        .map(NamedType::getTypeId)
+                                        .map(generatorContext::getTypeDeclaration),
                                 generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
                                 false,
                                 inline,
+                                generatorContext.getCustomConfig().wrappedAliases(),
                                 poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
                     })
                     .collect(Collectors.toList());
@@ -303,9 +311,16 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             .visit(new TypeReferenceInlineChecker(generatorContext));
                     return EnrichedObjectProperty.of(
                             propertyMethodSpec.objectProperty(),
+                            propertyMethodSpec
+                                    .objectProperty()
+                                    .getValueType()
+                                    .getNamed()
+                                    .map(NamedType::getTypeId)
+                                    .map(generatorContext::getTypeDeclaration),
                             generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
                             true,
                             inline,
+                            generatorContext.getCustomConfig().wrappedAliases(),
                             propertyMethodSpec.methodSpec().returnType);
                 })
                 .collect(Collectors.toList());

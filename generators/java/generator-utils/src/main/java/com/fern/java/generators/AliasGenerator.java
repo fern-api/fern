@@ -99,8 +99,9 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        TypeSpec.Builder aliasTypeSpecBuilder =
-                TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder aliasTypeSpecBuilder = TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addSuperinterface(generatorContext.getPoetClassNameFactory().getWrappedAliasClassName());
         PoetTypeNameMapper poetTypeNameMapper;
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
             poetTypeNameMapper =
@@ -155,7 +156,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
         return MethodSpec.methodBuilder("get")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(JsonValue.class)
-                .returns(aliasTypeName)
+                .returns(aliasTypeName.isPrimitive() ? aliasTypeName.box() : aliasTypeName)
                 .addStatement("return this.$L", VALUE_FIELD_NAME)
                 .build();
     }

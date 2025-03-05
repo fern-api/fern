@@ -5,9 +5,10 @@ package com.seed.nullable.resources.nullable.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.nullable.core.WrappedAlias;
 import java.util.Optional;
 
-public final class Email {
+public final class Email implements WrappedAlias {
     private final Optional<String> value;
 
     private Email(Optional<String> value) {
