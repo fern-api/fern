@@ -99,7 +99,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
 
     // If we don't have any top level or endpoint level servers, we're in the asyncapi only paradigm.
-    if (!hasTopLevelServersWithName && !hasEndpointLevelServersWithName) {
+    if (
+        !hasTopLevelServersWithName &&
+        !hasEndpointLevelServersWithName &&
+        hasWebsocketServersWithName &&
+        context.ir.servers.length === 0
+    ) {
         for (const [name, schema] of Object.entries(websocketServersWithName)) {
             context.builder.addEnvironment({
                 name,
