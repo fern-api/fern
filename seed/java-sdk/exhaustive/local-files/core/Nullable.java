@@ -78,7 +78,7 @@ public final class Nullable<T> {
             return true;
         }
 
-        return ((Nullable<?>) other).value.getLeft() == this.value.getLeft();
+        return this.value.getLeft().equals(((Nullable<?>) other).value.getLeft());
     }
 
     private static final class Either<L, R> {
