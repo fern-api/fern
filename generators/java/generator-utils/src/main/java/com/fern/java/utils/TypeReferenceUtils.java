@@ -1,6 +1,7 @@
 package com.fern.java.utils;
 
 import com.fern.ir.model.types.*;
+import com.fern.java.AbstractGeneratorContext;
 import java.util.Optional;
 
 public class TypeReferenceUtils {
@@ -233,5 +234,93 @@ public class TypeReferenceUtils {
         SET,
         LITERAL,
         NULLABLE,
+    }
+
+    public static class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
+
+        private final boolean visitNamedType;
+        private final AbstractGeneratorContext<?, ?> clientGeneratorContext;
+
+        public TypeReferenceIsOptional(boolean visitNamedType, AbstractGeneratorContext<?, ?> clientGeneratorContext) {
+            this.visitNamedType = visitNamedType;
+            this.clientGeneratorContext = clientGeneratorContext;
+        }
+
+        @Override
+        public Boolean visitContainer(com.fern.ir.model.types.ContainerType container) {
+            return container.isOptional();
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType named) {
+            if (visitNamedType) {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
+            }
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitive) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    public static class TypeDeclarationIsOptional implements Type.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> clientGeneratorContext;
+
+        public TypeDeclarationIsOptional(AbstractGeneratorContext<?, ?> clientGeneratorContext) {
+            this.clientGeneratorContext = clientGeneratorContext;
+        }
+
+        @Override
+        public Boolean visitAlias(AliasTypeDeclaration alias) {
+            return alias.getAliasOf().visit(new TypeReferenceIsOptional(true, clientGeneratorContext));
+        }
+
+        @Override
+        public Boolean visitEnum(EnumTypeDeclaration _enum) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitObject(ObjectTypeDeclaration object) {
+            boolean allPropertiesOptional = object.getProperties().stream().allMatch(objectProperty -> objectProperty
+                    .getValueType()
+                    .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allExtendsAreOptional = object.getExtends().stream().allMatch(declaredTypeName -> {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
+            });
+            return allPropertiesOptional && allExtendsAreOptional;
+        }
+
+        @Override
+        public Boolean visitUnion(UnionTypeDeclaration union) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUndiscriminatedUnion(UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
     }
 }

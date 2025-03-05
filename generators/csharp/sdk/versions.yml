@@ -9,11 +9,19 @@
 
 - version: 2.0.0
   createdAt: "2025-03-04"
+  irVersion: 57
   changelogEntry:
     - type: break
       summary: >-
         The C# SDK now uses their own copy of the `OneOf` library which will be namespaced under the root namespace of the generated SDK.
-  irVersion: 53
+
+- version: 1.12.0-rc11
+  createdAt: "2025-03-04"
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
 
 - version: 1.12.0-rc10
   createdAt: "2025-03-04"
