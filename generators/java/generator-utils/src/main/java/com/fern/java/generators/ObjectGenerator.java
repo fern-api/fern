@@ -125,6 +125,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                generatorContext.getPoetClassNameFactory().getNullableClassName(),
                 enrichedObjectProperties,
                 implementsInterfaces,
                 true,
@@ -248,6 +249,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .fromInterface(prop.fromInterface())
                     .inline(true)
                     .objectProperty(prop.objectProperty())
+                    .nullableNonemptyFilterClassName(
+                            generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
@@ -280,6 +283,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
                         return EnrichedObjectProperty.of(
                                 objectProperty,
+                                generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
                                 false,
                                 inline,
                                 poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
@@ -299,6 +303,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             .visit(new TypeReferenceInlineChecker(generatorContext));
                     return EnrichedObjectProperty.of(
                             propertyMethodSpec.objectProperty(),
+                            generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
                             true,
                             inline,
                             propertyMethodSpec.methodSpec().returnType);

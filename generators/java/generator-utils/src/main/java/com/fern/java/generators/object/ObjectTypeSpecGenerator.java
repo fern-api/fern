@@ -25,6 +25,7 @@ import javax.lang.model.element.Modifier;
 public final class ObjectTypeSpecGenerator {
     private final ClassName objectClassName;
     private final ClassName generatedObjectMapperClassName;
+    private final ClassName nullableClassName;
     private final List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
     private final List<ImplementsInterface> interfaces;
     private final ICustomConfig.JsonInclude jsonInclude;
@@ -37,6 +38,7 @@ public final class ObjectTypeSpecGenerator {
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
             ClassName generatedObjectMapperClassName,
+            ClassName nullableClassName,
             List<EnrichedObjectProperty> enrichedObjectProperties,
             List<ImplementsInterface> interfaces,
             boolean isSerialized,
@@ -47,6 +49,7 @@ public final class ObjectTypeSpecGenerator {
             boolean builderNotNullChecks) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
+        this.nullableClassName = nullableClassName;
         this.interfaces = interfaces;
         this.jsonInclude = jsonInclude;
         this.builderNotNullChecks = builderNotNullChecks;
@@ -199,6 +202,7 @@ public final class ObjectTypeSpecGenerator {
     private Optional<ObjectBuilder> generateBuilder() {
         BuilderGenerator builderGenerator = new BuilderGenerator(
                 objectClassName,
+                nullableClassName,
                 allEnrichedProperties,
                 isSerialized,
                 supportAdditionalProperties,

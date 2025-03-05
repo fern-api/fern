@@ -42,6 +42,7 @@ public final class BuilderGenerator {
 
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
+    private final ClassName nullableClassName;
     private final String additionalPropertiesFieldName;
     private final List<EnrichedObjectPropertyWithField> objectPropertyWithFields;
     private final List<String> buildMethodArguments = new ArrayList<>();
@@ -53,12 +54,14 @@ public final class BuilderGenerator {
 
     public BuilderGenerator(
             ClassName objectClassName,
+            ClassName nullableClassName,
             List<EnrichedObjectProperty> objectPropertyWithFields,
             boolean isSerialized,
             boolean supportAdditionalProperties,
             boolean disableRequiredPropertyBuilderChecks,
             boolean builderNotNullChecks) {
         this.objectClassName = objectClassName;
+        this.nullableClassName = nullableClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
                 .flatMap(Optional::stream)
@@ -427,6 +430,31 @@ public final class BuilderGenerator {
                     .addStatement("this.$L = $T.ofNullable($L)", fieldSpec.name, Optional.class, fieldSpec.name)
                     .addStatement("return this")
                     .build());
+
+            if (enrichedObjectProperty.enrichedObjectProperty.nullable()) {
+                interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
+                                enrichedObjectProperty, nullableClassName, propertyTypeName, finalStageClassName)
+                        .addModifiers(Modifier.ABSTRACT)
+                        .build());
+
+                implSetterConsumer.accept(createNullableItemTypeNameSetter(
+                                enrichedObjectProperty,
+                                nullableClassName,
+                                propertyTypeName,
+                                finalStageClassName,
+                                implsOverride)
+                        .beginControlFlow("if ($N.isNull())", fieldSpec.name)
+                        .addStatement("this.$N = null", fieldSpec.name)
+                        .endControlFlow()
+                        .beginControlFlow("else if ($N.isEmpty())", fieldSpec.name)
+                        .addStatement("this.$N = $T.empty()", fieldSpec.name, Optional.class)
+                        .endControlFlow()
+                        .beginControlFlow("else")
+                        .addStatement("this.$N = $T.of($N.get())", fieldSpec.name, Optional.class, fieldSpec.name)
+                        .endControlFlow()
+                        .addStatement("return this")
+                        .build());
+            }
         } else if (isEqual(propertyTypeName, ClassName.get(Map.class))) {
             interfaceSetterConsumer.accept(
                     createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName)
@@ -650,6 +678,36 @@ public final class BuilderGenerator {
         String fieldName = enrichedObjectProperty.fieldSpec.name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalTypeName);
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        if (isOverridden) {
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
+        }
+        return setter;
+    }
+
+    private static MethodSpec.Builder createNullableItemTypeNameSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ClassName nullableClassName,
+            ParameterizedTypeName optionalTypeName,
+            ClassName returnClass) {
+        return createNullableItemTypeNameSetter(
+                enrichedObjectProperty, nullableClassName, optionalTypeName, returnClass, false);
+    }
+
+    private static MethodSpec.Builder createNullableItemTypeNameSetter(
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ClassName nullableClassName,
+            ParameterizedTypeName optionalTypeName,
+            ClassName returnClass,
+            boolean isOverridden) {
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
+        TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalTypeName);
+        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass)
+                .addParameter(ParameterizedTypeName.get(nullableClassName, itemTypeName), fieldName);
         if (isOverridden) {
             setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }

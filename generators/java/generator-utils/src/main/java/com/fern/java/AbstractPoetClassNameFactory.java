@@ -77,6 +77,10 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "Nullable");
     }
 
+    public final ClassName getNullableNonemptyFilterClassName() {
+        return ClassName.get(getCorePackage(), "NullableNonemptyFilter");
+    }
+
     public final ClassName getPaginationClassName(String simpleName) {
         return ClassName.get(getPaginationPackage(), simpleName);
     }

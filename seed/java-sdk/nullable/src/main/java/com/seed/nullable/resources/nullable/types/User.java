@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -46,8 +48,12 @@ public final class User {
         return name;
     }
 
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("tags")
     public Optional<List<String>> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
         return tags;
     }
 
@@ -98,6 +104,8 @@ public final class User {
 
         _FinalStage tags(List<String> tags);
 
+        _FinalStage tags(Nullable<List<String>> tags);
+
         _FinalStage metadata(Optional<Metadata> metadata);
 
         _FinalStage metadata(Metadata metadata);
@@ -141,6 +149,18 @@ public final class User {
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Metadata> metadata) {
             this.metadata = metadata;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage tags(Nullable<List<String>> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
             return this;
         }
 
