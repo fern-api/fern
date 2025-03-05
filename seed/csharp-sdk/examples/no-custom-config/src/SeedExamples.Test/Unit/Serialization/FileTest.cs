@@ -1,8 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -10,48 +8,62 @@ namespace SeedExamples.Test;
 public class FileTest
 {
     [Test]
+    public void TestDeserialization_1()
+    {
+        var json = """
+            {
+              "name": "file.txt",
+              "contents": "..."
+            }
+            """;
+        var expectedObject = new File { Name = "file.txt", Contents = "..." };
+        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization_1()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""file.txt"",
-          ""contents"": ""...""
-        }
-        ";
+        var json = """
+            {
+              "name": "file.txt",
+              "contents": "..."
+            }
+            """;
+        var obj = new File { Name = "file.txt", Contents = "..." };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+    }
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "name": "another_file.txt",
+              "contents": "..."
+            }
+            """;
+        var expectedObject = new File { Name = "another_file.txt", Contents = "..." };
+        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""another_file.txt"",
-          ""contents"": ""...""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "name": "another_file.txt",
+              "contents": "..."
+            }
+            """;
+        var obj = new File { Name = "another_file.txt", Contents = "..." };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

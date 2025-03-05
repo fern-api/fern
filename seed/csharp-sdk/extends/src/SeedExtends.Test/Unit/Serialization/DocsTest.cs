@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedExtends;
+using SeedExtends.Core;
 
 namespace SeedExtends.Test;
 
@@ -11,24 +9,33 @@ namespace SeedExtends.Test;
 public class DocsTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "docs": "Types extend this type to include a docs property."
+            }
+            """;
+        var expectedObject = new Docs
+        {
+            Docs_ = "Types extend this type to include a docs property.",
+        };
+        var deserializedObject = JsonUtils.Deserialize<Docs>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""docs"": ""Types extend this type to include a docs property.""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Docs>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "docs": "Types extend this type to include a docs property."
+            }
+            """;
+        var obj = new Docs { Docs_ = "Types extend this type to include a docs property." };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

@@ -37,7 +37,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.17",
     "@fern-fern/generator-exec-sdk": "^0.0.1021",
-    "@fern-fern/ir-sdk": "^56.0.0",
+    "@fern-fern/ir-sdk": "^57.0.0",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0",
     "zod": "^3.22.3",

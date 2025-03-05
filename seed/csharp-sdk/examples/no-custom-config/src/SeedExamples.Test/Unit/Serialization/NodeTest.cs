@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -11,88 +9,164 @@ namespace SeedExamples.Test;
 public class NodeTest
 {
     [Test]
-    public void TestSerialization_1()
+    public void TestDeserialization_1()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""root"",
-          ""nodes"": [
+        var json = """
             {
-              ""name"": ""left""
-            },
-            {
-              ""name"": ""right""
-            }
-          ],
-          ""trees"": [
-            {
-              ""nodes"": [
+              "name": "root",
+              "nodes": [
                 {
-                  ""name"": ""left""
+                  "name": "left"
                 },
                 {
-                  ""name"": ""right""
+                  "name": "right"
+                }
+              ],
+              "trees": [
+                {
+                  "nodes": [
+                    {
+                      "name": "left"
+                    },
+                    {
+                      "name": "right"
+                    }
+                  ]
                 }
               ]
             }
-          ]
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var expectedObject = new Node
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Name = "root",
+            Nodes = new List<Node>()
+            {
+                new Node { Name = "left" },
+                new Node { Name = "right" },
+            },
+            Trees = new List<Tree>()
+            {
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node { Name = "left" },
+                        new Node { Name = "right" },
+                    },
+                },
+            },
         };
+        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
 
-        var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
+    [Test]
+    public void TestSerialization_1()
+    {
+        var json = """
+            {
+              "name": "root",
+              "nodes": [
+                {
+                  "name": "left"
+                },
+                {
+                  "name": "right"
+                }
+              ],
+              "trees": [
+                {
+                  "nodes": [
+                    {
+                      "name": "left"
+                    },
+                    {
+                      "name": "right"
+                    }
+                  ]
+                }
+              ]
+            }
+            """;
+        var obj = new Node
+        {
+            Name = "root",
+            Nodes = new List<Node>()
+            {
+                new Node { Name = "left" },
+                new Node { Name = "right" },
+            },
+            Trees = new List<Tree>()
+            {
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node { Name = "left" },
+                        new Node { Name = "right" },
+                    },
+                },
+            },
+        };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+    }
 
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "name": "left"
+            }
+            """;
+        var expectedObject = new Node { Name = "left" };
+        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""left""
-        }
-        ";
+        var json = """
+            {
+              "name": "left"
+            }
+            """;
+        var obj = new Node { Name = "left" };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+    }
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestDeserialization_3()
+    {
+        var json = """
+            {
+              "name": "right"
+            }
+            """;
+        var expectedObject = new Node { Name = "right" };
+        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization_3()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""right""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var json = """
+            {
+              "name": "right"
+            }
+            """;
+        var obj = new Node { Name = "right" };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

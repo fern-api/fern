@@ -207,6 +207,13 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonNodeClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json.Nodes",
+            name: "JsonNode"
+        });
+    }
+
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): csharp.Annotation {
         let argument: string;
         switch (propertyAccess) {
@@ -235,24 +242,10 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getJTokenClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "JToken",
-            namespace: "Newtonsoft.Json.Linq"
-        });
-    }
-
     public getSystemEnumClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "Enum",
             namespace: "System"
-        });
-    }
-
-    public getFluentAssetionsJsonClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "",
-            namespace: "FluentAssertions.Json"
         });
     }
 

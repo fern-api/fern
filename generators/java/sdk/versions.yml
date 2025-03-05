@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add async clients
+      type: feat
+  createdAt: '2025-03-04'
+  irVersion: 55
+  version: 2.21.0
+- changelogEntry:
+    - summary: |
         Fix type reference syntax in readValue calls
       type: fix
   createdAt: '2025-03-02'

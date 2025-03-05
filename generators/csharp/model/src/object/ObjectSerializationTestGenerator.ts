@@ -23,10 +23,6 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
     ModelGeneratorContext
 > {
     private classReference: csharp.ClassReference;
-    private jsonSerializerClassReference: csharp.ClassReference = csharp.classReference({
-        name: "JsonSerializer",
-        namespace: "System.Text.Json"
-    });
 
     constructor(
         context: ModelGeneratorContext,
@@ -43,58 +39,66 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             namespace: this.context.getTestNamespace()
         });
         this.testInputs.forEach((testInput, index) => {
-            const methodBody = csharp.codeblock((writer) => {
-                writer.writeLine("var inputJson = ");
-                writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
-                writer.newLine();
-
-                // todo: figure out what's broken with this object comparison
-                // writer.write("var expectedObject  = ");
-                // writer.writeNodeStatement(testInput.objectInstantiationSnippet);
-                // writer.newLine();
-
-                writer.write("var serializerOptions  = new ");
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "JsonSerializerOptions",
-                        namespace: "System.Text.Json.Serialization"
-                    })
-                );
-                writer.writeTextStatement(" { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }");
-                writer.writeLine();
-
-                writer.write("var deserializedObject = ");
-                writer.writeNodeStatement(
-                    csharp.invokeMethod({
-                        on: csharp.codeblock((writer) => writer.writeNode(this.jsonSerializerClassReference)),
-                        method: "Deserialize",
-                        generics: [csharp.Type.reference(this.classReference)],
-                        arguments_: [csharp.codeblock("inputJson"), csharp.codeblock("serializerOptions")]
-                    })
-                );
-                // todo: figure out what's broken with this object comparison
-                // writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
-                writer.newLine();
-                writer.write("var serializedJson = ");
-                writer.writeNodeStatement(
-                    csharp.invokeMethod({
-                        on: csharp.codeblock((writer) => writer.writeNode(this.jsonSerializerClassReference)),
-                        method: "Serialize",
-                        arguments_: [csharp.codeblock("deserializedObject"), csharp.codeblock("serializerOptions")]
-                    })
-                );
-                writer.newLine();
-
-                writer.addReference(this.context.getFluentAssetionsJsonClassReference());
-                writer.writeNode(this.context.getJTokenClassReference());
-                writer.write(".Parse(inputJson).Should().BeEquivalentTo(");
-                writer.writeNode(this.context.getJTokenClassReference());
-                writer.writeTextStatement(".Parse(serializedJson))");
-            });
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
+                name: `TestDeserialization${testNumber}`,
+                body: csharp.codeblock((writer) => {
+                    writer.writeLine("var json = ");
+                    writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                    writer.write("var expectedObject  = ");
+                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
+                    writer.write("var deserializedObject = ");
+                    writer.writeNodeStatement(
+                        csharp.invokeMethod({
+                            on: this.context.getJsonUtilsClassReference(),
+                            method: "Deserialize",
+                            generics: [csharp.Type.reference(this.classReference)],
+                            arguments_: [csharp.codeblock("json")]
+                        })
+                    );
+                    writer.write("var serializedJson = ");
+                    writer.writeNodeStatement(
+                        csharp.invokeMethod({
+                            on: this.context.getJsonUtilsClassReference(),
+                            method: "Serialize",
+                            arguments_: [csharp.codeblock("deserializedObject")]
+                        })
+                    );
+                    writer.writeTextStatement(
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer())"
+                    );
+                }),
+                isAsync: false
+            });
+
+            testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
-                body: methodBody,
+                body: csharp.codeblock((writer) => {
+                    writer.writeLine("var json = ");
+                    writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
+                    writer.write("var obj  = ");
+                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
+                    writer.write("var objAsNode = ");
+                    writer.writeNodeStatement(
+                        csharp.invokeMethod({
+                            on: this.context.getJsonUtilsClassReference(),
+                            method: "SerializeToNode",
+                            arguments_: [csharp.codeblock("obj")]
+                        })
+                    );
+                    writer.write("var jsonAsNode = ");
+                    writer.writeNodeStatement(
+                        csharp.invokeMethod({
+                            on: this.context.getJsonUtilsClassReference(),
+                            method: "Deserialize",
+                            generics: [csharp.Type.reference(this.context.getJsonNodeClassReference())],
+                            arguments_: [csharp.codeblock("json")]
+                        })
+                    );
+                    writer.writeTextStatement(
+                        "Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer())"
+                    );
+                }),
                 isAsync: false
             });
         });
@@ -122,14 +126,11 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
 
     private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {
         // Convert object to JSON string with indentation
-        let jsonString = JSON.stringify(jsonObject, null, 2);
-
-        // Escape double quotes for C# string
-        jsonString = jsonString.replace(/"/g, '""');
+        const jsonString = JSON.stringify(jsonObject, null, 2);
 
         // Format it as a multi-line C# string
-        return `@"
+        return `"""
 ${jsonString}
-"`;
+"""`;
     }
 }

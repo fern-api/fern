@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
@@ -48,9 +46,9 @@ public class GetTest : BaseMockServerTest
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingPropertiesComparer()
+        );
     }
 }

@@ -7,6 +7,44 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc12
+  createdAt: "2025-03-05"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Don't rely on the `FluentAssertions.Json` package to test serialization and deserialization.
+
+- version: 1.12.0-rc11
+  createdAt: "2025-03-04"
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 1.12.0-rc10
+  createdAt: "2025-03-04"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Compare .NET objects instead of JSON strings when comparing objects in mock wire tests.
+        With this change, we can remove the dependency on the FluentAssertions.Json package (and implicitly on the Newtonsoft.Json package).
+    - type: chore
+      summary: |
+        Update dependencies in generated test project:
+        - `Microsoft.NET.Test.Sdk`: 17.12.0 => 17.13.0
+        - `NUnit`: 4.2.2 => 4.3.2
+        - `NUnit3TestAdapter`: 4.6.0 => 5.0.0
+        - `NUnit.Analyzers`: 4.4.0 => 4.6.0
+        - `coverlet.collector`: 6.0.2 => 6.0.4
+        - `WireMock.Net`: 1.6.8 => 1.7.4
+    - type: fix
+      summary: |
+        Compare .NET objects instead of JSON strings when comparing objects in mock wire tests,
+        which fixes bugs where JSON deserialization and serialization would cause differences in the JSON strings.
+
 - version: 1.12.0-rc9
   createdAt: "2025-03-03"
   irVersion: 56

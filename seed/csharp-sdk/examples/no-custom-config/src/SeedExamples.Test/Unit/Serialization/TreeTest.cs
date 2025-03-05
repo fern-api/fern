@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -11,31 +9,58 @@ namespace SeedExamples.Test;
 public class TreeTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "nodes": [
+                {
+                  "name": "left"
+                },
+                {
+                  "name": "right"
+                }
+              ]
+            }
+            """;
+        var expectedObject = new Tree
+        {
+            Nodes = new List<Node>()
+            {
+                new Node { Name = "left" },
+                new Node { Name = "right" },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<Tree>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""nodes"": [
+        var json = """
             {
-              ""name"": ""left""
-            },
-            {
-              ""name"": ""right""
+              "nodes": [
+                {
+                  "name": "left"
+                },
+                {
+                  "name": "right"
+                }
+              ]
             }
-          ]
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var obj = new Tree
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Nodes = new List<Node>()
+            {
+                new Node { Name = "left" },
+                new Node { Name = "right" },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Tree>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

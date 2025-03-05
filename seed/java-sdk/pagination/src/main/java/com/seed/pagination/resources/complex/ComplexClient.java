@@ -80,7 +80,7 @@ public class ComplexClient {
                         .pagination(pagination)
                         .build();
                 List<Conversation> result = parsedResponse.getConversations();
-                return new SyncPagingIterable<>(
+                return new SyncPagingIterable<Conversation>(
                         startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
