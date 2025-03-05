@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc13
+  createdAt: "2025-03-05"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Generated classes now follow the C# convention for odering consts, fields, constructors, properties, methods, operators, and inner classes.
+
 - version: 1.12.0-rc12
   createdAt: "2025-03-05"
   irVersion: 57
