@@ -25,16 +25,6 @@ describe("OpenAPIConverterContext3_1", async () => {
             $ref: "https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Pet"
         });
 
-        console.log(result);
-
-        // expect(result.resolved).toBe(true);
-        // if (result.resolved) {
-        //     expect(result.value).toEqual({
-        //         type: "object",
-        //         properties: {
-        //             name: { type: "string" }
-        //         }
-        //     });
-        // }
+        expect(result).toMatchSnapshot();
     });
 });

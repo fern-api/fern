@@ -138,7 +138,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
             fragment = splitReference[1];
-            
+
             if (!url) {
                 return { resolved: false };
             }

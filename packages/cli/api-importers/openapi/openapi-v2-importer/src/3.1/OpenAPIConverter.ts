@@ -85,7 +85,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             errorCollector
         }) as OpenAPIV3_1.Document;
 
-        await this.convertServers({ context, errorCollector });
+        this.convertServers({ context, errorCollector });
 
         await this.convertSecuritySchemes({ context, errorCollector });
 

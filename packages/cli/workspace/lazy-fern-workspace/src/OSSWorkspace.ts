@@ -98,7 +98,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const document of documents) {
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
-                    generationLanguage: "typescript", 
+                    generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
                     spec: document.value as OpenAPIV3_1.Document
