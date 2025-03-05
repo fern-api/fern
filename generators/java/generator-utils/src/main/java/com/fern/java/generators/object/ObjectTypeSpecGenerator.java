@@ -79,6 +79,10 @@ public final class ObjectTypeSpecGenerator {
                 .addMethods(allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::getterProperty)
                         .collect(Collectors.toList()))
+                .addMethods(allEnrichedProperties.stream()
+                        .map(EnrichedObjectProperty::getterForSerialization)
+                        .flatMap(Optional::stream)
+                        .collect(Collectors.toList()))
                 .addMethod(equalsMethod.getEqualsMethodSpec());
 
         if (supportAdditionalProperties) {

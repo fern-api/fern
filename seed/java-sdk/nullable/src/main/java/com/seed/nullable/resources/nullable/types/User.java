@@ -48,8 +48,6 @@ public final class User {
         return name;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("tags")
     public Optional<List<String>> getTags() {
         if (tags == null) {
             return Optional.empty();
@@ -60,6 +58,12 @@ public final class User {
     @JsonProperty("metadata")
     public Optional<Metadata> getMetadata() {
         return metadata;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("tags")
+    private Optional<List<String>> _getTags() {
+        return tags;
     }
 
     @java.lang.Override

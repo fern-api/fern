@@ -90,13 +90,7 @@ public interface EnrichedObjectProperty {
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
-        if (wireKey().isPresent()) {
-            if (nullable()) {
-                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
-                        .addMember("value", "$T.Include.CUSTOM", JsonInclude.class)
-                        .addMember("valueFilter", "$T.class", nullableNonemptyFilterClassName())
-                        .build());
-            }
+        if (wireKey().isPresent() && !nullable()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
@@ -108,6 +102,27 @@ public interface EnrichedObjectProperty {
             getterBuilder.addJavadoc(JavaDocUtils.getReturnDocs(docs().get()));
         }
         return getterBuilder.build();
+    }
+
+    @Value.Lazy
+    default Optional<MethodSpec> getterForSerialization() {
+        if (wireKey().isEmpty() || !nullable()) {
+            return Optional.empty();
+        }
+
+        MethodSpec.Builder getterBuilder = MethodSpec.methodBuilder(
+                        KeyWordUtils.getKeyWordCompatibleMethodName("_get" + pascalCaseKey()))
+                .addModifiers(Modifier.PRIVATE)
+                .returns(poetTypeName());
+        getterBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
+                .addMember("value", "$T.Include.CUSTOM", JsonInclude.class)
+                .addMember("valueFilter", "$T.class", nullableNonemptyFilterClassName())
+                .build());
+        getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                .addMember("value", "$S", wireKey().get())
+                .build());
+        getterBuilder.addStatement("return $L", fieldSpec().get().name);
+        return Optional.of(getterBuilder.build());
     }
 
     @Value.Lazy

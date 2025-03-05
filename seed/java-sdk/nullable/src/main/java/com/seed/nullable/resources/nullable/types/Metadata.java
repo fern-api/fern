@@ -57,8 +57,6 @@ public final class Metadata {
         return updatedAt;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("avatar")
     public Optional<String> getAvatar() {
         if (avatar == null) {
             return Optional.empty();
@@ -69,6 +67,12 @@ public final class Metadata {
     @JsonProperty("activated")
     public Optional<Boolean> getActivated() {
         return activated;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("avatar")
+    private Optional<String> _getAvatar() {
+        return avatar;
     }
 
     @java.lang.Override
