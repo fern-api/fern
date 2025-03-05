@@ -1,7 +1,7 @@
 using global::System;
 using static SeedCsharpNamespaceConflict.OneOf.Functions;
 
-namespace SeedCsharpNamespaceConflict;
+namespace SeedCsharpNamespaceConflict.OneOf;
 
 public class OneOfBase<T0, T1, T2> : IOneOf
 {

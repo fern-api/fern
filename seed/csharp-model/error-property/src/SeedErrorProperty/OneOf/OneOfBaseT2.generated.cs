@@ -1,7 +1,7 @@
 using global::System;
 using static SeedErrorProperty.OneOf.Functions;
 
-namespace SeedErrorProperty;
+namespace SeedErrorProperty.OneOf;
 
 public class OneOfBase<T0, T1, T2> : IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedOauthClientCredentials.OneOf.Functions;
 
-namespace SeedOauthClientCredentials;
+namespace SeedOauthClientCredentials.OneOf;
 
 public readonly struct OneOf<T0, T1, T2, T3, T4> : IOneOf
 {

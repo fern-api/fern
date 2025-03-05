@@ -1,7 +1,7 @@
 using global::System;
 using static SeedNoEnvironment.OneOf.Functions;
 
-namespace SeedNoEnvironment;
+namespace SeedNoEnvironment.OneOf;
 
 public readonly struct OneOf<T0, T1> : IOneOf
 {

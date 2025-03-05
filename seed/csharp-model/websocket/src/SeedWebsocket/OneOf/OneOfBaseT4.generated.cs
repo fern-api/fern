@@ -1,7 +1,7 @@
 using global::System;
 using static SeedWebsocket.OneOf.Functions;
 
-namespace SeedWebsocket;
+namespace SeedWebsocket.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3, T4> : IOneOf
 {

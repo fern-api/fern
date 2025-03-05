@@ -1,4 +1,4 @@
-namespace SeedValidation;
+namespace SeedValidation.OneOf;
 
 public interface IOneOf
 {

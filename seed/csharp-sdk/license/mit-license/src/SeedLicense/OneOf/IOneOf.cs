@@ -1,4 +1,4 @@
-namespace SeedLicense;
+namespace SeedLicense.OneOf;
 
 public interface IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedNurseryApi.OneOf.Functions;
 
-namespace SeedNurseryApi;
+namespace SeedNurseryApi.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

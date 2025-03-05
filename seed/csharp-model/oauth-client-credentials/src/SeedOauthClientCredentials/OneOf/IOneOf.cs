@@ -1,4 +1,4 @@
-namespace SeedOauthClientCredentials;
+namespace SeedOauthClientCredentials.OneOf;
 
 public interface IOneOf
 {

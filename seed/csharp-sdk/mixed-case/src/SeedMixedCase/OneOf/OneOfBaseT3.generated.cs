@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMixedCase.OneOf.Functions;
 
-namespace SeedMixedCase;
+namespace SeedMixedCase.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3> : IOneOf
 {

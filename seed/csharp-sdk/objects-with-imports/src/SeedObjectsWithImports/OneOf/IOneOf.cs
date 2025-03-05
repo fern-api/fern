@@ -1,4 +1,4 @@
-namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports.OneOf;
 
 public interface IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMultiUrlEnvironment.OneOf.Functions;
 
-namespace SeedMultiUrlEnvironment;
+namespace SeedMultiUrlEnvironment.OneOf;
 
 public class OneOfBase<T0, T1> : IOneOf
 {

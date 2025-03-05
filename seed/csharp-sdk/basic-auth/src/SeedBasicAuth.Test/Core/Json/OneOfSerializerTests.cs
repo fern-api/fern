@@ -1,6 +1,5 @@
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth.Test.Core.Json;

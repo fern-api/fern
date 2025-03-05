@@ -1,7 +1,7 @@
 using global::System;
 using static SeedStreaming.OneOf.Functions;
 
-namespace SeedStreaming;
+namespace SeedStreaming.OneOf;
 
 public readonly struct OneOf<T0, T1, T2, T3, T4> : IOneOf
 {

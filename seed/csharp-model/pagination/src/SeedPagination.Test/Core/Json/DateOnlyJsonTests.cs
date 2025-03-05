@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedPagination.Core;
 
 namespace SeedPagination.Test.Core.Json;

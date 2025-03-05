@@ -1,4 +1,4 @@
-namespace SeedBearerTokenEnvironmentVariable;
+namespace SeedBearerTokenEnvironmentVariable.OneOf;
 
 public interface IOneOf
 {

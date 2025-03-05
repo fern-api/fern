@@ -1,4 +1,4 @@
-namespace SeedPathParameters;
+namespace SeedPathParameters.OneOf;
 
 public interface IOneOf
 {

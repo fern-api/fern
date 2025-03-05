@@ -1,7 +1,7 @@
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
-using global::SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
 

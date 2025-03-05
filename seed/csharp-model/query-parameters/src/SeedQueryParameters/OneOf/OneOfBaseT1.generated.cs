@@ -1,7 +1,7 @@
 using global::System;
 using static SeedQueryParameters.OneOf.Functions;
 
-namespace SeedQueryParameters;
+namespace SeedQueryParameters.OneOf;
 
 public class OneOfBase<T0, T1> : IOneOf
 {

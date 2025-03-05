@@ -1,4 +1,4 @@
-namespace SeedServerSentEvents;
+namespace SeedServerSentEvents.OneOf;
 
 public interface IOneOf
 {

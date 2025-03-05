@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedApi.Core;
 
 namespace SeedApi.Test.Core.Json;

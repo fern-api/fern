@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi.Test.Core.Json;

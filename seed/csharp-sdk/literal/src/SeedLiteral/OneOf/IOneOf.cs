@@ -1,4 +1,4 @@
-namespace SeedLiteral;
+namespace SeedLiteral.OneOf;
 
 public interface IOneOf
 {

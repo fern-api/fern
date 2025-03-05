@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.Test.Core.Json;

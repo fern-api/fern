@@ -1,7 +1,7 @@
 using global::System;
 using static SeedValidation.OneOf.Functions;
 
-namespace SeedValidation;
+namespace SeedValidation.OneOf;
 
 public class OneOfBase<T0, T1, T2> : IOneOf
 {

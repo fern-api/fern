@@ -1,4 +1,4 @@
-namespace SeedOauthClientCredentialsEnvironmentVariables;
+namespace SeedOauthClientCredentialsEnvironmentVariables.OneOf;
 
 public interface IOneOf
 {

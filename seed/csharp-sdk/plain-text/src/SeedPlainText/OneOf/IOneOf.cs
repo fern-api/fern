@@ -1,4 +1,4 @@
-namespace SeedPlainText;
+namespace SeedPlainText.OneOf;
 
 public interface IOneOf
 {

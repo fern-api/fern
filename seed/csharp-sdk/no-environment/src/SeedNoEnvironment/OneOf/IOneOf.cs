@@ -1,4 +1,4 @@
-namespace SeedNoEnvironment;
+namespace SeedNoEnvironment.OneOf;
 
 public interface IOneOf
 {

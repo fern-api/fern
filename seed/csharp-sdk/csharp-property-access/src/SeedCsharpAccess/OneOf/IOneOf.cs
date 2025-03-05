@@ -1,4 +1,4 @@
-namespace SeedCsharpAccess;
+namespace SeedCsharpAccess.OneOf;
 
 public interface IOneOf
 {

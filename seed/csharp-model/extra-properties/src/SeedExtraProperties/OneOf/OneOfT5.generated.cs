@@ -1,7 +1,7 @@
 using global::System;
 using static SeedExtraProperties.OneOf.Functions;
 
-namespace SeedExtraProperties;
+namespace SeedExtraProperties.OneOf;
 
 public readonly struct OneOf<T0, T1, T2, T3, T4, T5> : IOneOf
 {

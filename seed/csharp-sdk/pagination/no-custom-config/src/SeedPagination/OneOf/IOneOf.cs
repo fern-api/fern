@@ -1,4 +1,4 @@
-namespace SeedPagination;
+namespace SeedPagination.OneOf;
 
 public interface IOneOf
 {

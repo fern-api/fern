@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;

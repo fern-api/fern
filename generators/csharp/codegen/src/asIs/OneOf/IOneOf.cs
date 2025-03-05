@@ -1,4 +1,4 @@
-namespace <%= namespace%>;
+namespace <%= namespace%>.OneOf;
 
 public interface IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static <%= namespace%>.OneOf.Functions;
 
-namespace <%= namespace%>;
+namespace <%= namespace%>.OneOf;
 
 public readonly struct OneOf<T0, T1, T2> : IOneOf
 {

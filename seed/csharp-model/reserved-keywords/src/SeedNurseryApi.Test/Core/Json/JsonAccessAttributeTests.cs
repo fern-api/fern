@@ -1,5 +1,4 @@
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi.Test.Core.Json;

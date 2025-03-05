@@ -1,7 +1,7 @@
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
-using global::SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedCrossPackageTypeNames.Core;
 
@@ -12,7 +12,6 @@ internal class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     internal int BaseRetryDelay { get; set; } = 1000;
-
 
     /// <summary>
     /// The client options applied on every request.
@@ -219,7 +218,7 @@ internal class RawClient(ClientOptions clientOptions)
                 if (
                     queryItem.Value
                     is global::System.Collections.IEnumerable collection
-                    and not string
+                        and not string
                 )
                 {
                     var items = collection

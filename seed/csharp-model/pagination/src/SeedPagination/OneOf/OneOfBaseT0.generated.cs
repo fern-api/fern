@@ -1,7 +1,7 @@
 using global::System;
 using static SeedPagination.OneOf.Functions;
 
-namespace SeedPagination;
+namespace SeedPagination.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

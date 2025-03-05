@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends.Test.Core.Json;

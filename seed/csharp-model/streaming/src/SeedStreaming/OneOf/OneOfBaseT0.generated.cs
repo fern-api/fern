@@ -1,7 +1,7 @@
 using global::System;
 using static SeedStreaming.OneOf.Functions;
 
-namespace SeedStreaming;
+namespace SeedStreaming.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

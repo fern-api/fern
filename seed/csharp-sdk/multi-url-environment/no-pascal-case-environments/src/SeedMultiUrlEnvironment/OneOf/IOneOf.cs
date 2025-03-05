@@ -1,4 +1,4 @@
-namespace SeedMultiUrlEnvironment;
+namespace SeedMultiUrlEnvironment.OneOf;
 
 public interface IOneOf
 {

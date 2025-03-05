@@ -1,7 +1,7 @@
 using global::System;
 using static SeedCsharpNamespaceConflict.OneOf.Functions;
 
-namespace SeedCsharpNamespaceConflict;
+namespace SeedCsharpNamespaceConflict.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

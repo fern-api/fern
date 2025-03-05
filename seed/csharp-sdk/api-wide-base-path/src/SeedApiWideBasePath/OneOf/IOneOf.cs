@@ -1,4 +1,4 @@
-namespace SeedApiWideBasePath;
+namespace SeedApiWideBasePath.OneOf;
 
 public interface IOneOf
 {

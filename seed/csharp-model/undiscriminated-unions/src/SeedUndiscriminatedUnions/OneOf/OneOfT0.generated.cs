@@ -1,7 +1,7 @@
 using global::System;
 using static SeedUndiscriminatedUnions.OneOf.Functions;
 
-namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

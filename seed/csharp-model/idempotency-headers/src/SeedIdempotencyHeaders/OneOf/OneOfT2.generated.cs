@@ -1,7 +1,7 @@
 using global::System;
 using static SeedIdempotencyHeaders.OneOf.Functions;
 
-namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders.OneOf;
 
 public readonly struct OneOf<T0, T1, T2> : IOneOf
 {

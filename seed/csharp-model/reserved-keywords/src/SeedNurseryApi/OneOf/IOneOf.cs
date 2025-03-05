@@ -1,4 +1,4 @@
-namespace SeedNurseryApi;
+namespace SeedNurseryApi.OneOf;
 
 public interface IOneOf
 {

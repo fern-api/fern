@@ -1,4 +1,4 @@
-namespace SeedUnknownAsAny;
+namespace SeedUnknownAsAny.OneOf;
 
 public interface IOneOf
 {

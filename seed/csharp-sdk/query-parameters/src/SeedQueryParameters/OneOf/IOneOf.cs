@@ -1,4 +1,4 @@
-namespace SeedQueryParameters;
+namespace SeedQueryParameters.OneOf;
 
 public interface IOneOf
 {

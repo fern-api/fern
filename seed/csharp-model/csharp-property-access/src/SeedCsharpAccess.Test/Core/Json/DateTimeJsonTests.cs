@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedCsharpAccess.Core;
 
 namespace SeedCsharpAccess.Test.Core.Json;

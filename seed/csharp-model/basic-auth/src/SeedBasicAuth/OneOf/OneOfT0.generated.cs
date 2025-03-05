@@ -1,7 +1,7 @@
 using global::System;
 using static SeedBasicAuth.OneOf.Functions;
 
-namespace SeedBasicAuth;
+namespace SeedBasicAuth.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

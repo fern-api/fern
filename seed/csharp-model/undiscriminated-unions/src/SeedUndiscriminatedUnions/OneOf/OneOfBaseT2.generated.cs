@@ -1,7 +1,7 @@
 using global::System;
 using static SeedUndiscriminatedUnions.OneOf.Functions;
 
-namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions.OneOf;
 
 public class OneOfBase<T0, T1, T2> : IOneOf
 {

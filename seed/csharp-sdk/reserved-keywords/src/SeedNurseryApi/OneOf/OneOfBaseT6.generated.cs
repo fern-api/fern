@@ -1,7 +1,7 @@
 using global::System;
 using static SeedNurseryApi.OneOf.Functions;
 
-namespace SeedNurseryApi;
+namespace SeedNurseryApi.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3, T4, T5, T6> : IOneOf
 {

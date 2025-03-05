@@ -1,4 +1,4 @@
-namespace SeedTrace;
+namespace SeedTrace.OneOf;
 
 public interface IOneOf
 {

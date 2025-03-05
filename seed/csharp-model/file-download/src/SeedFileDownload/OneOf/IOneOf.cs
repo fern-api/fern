@@ -1,4 +1,4 @@
-namespace SeedFileDownload;
+namespace SeedFileDownload.OneOf;
 
 public interface IOneOf
 {

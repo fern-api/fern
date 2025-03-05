@@ -1,4 +1,4 @@
-namespace SeedMixedCase;
+namespace SeedMixedCase.OneOf;
 
 public interface IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedVariables.OneOf.Functions;
 
-namespace SeedVariables;
+namespace SeedVariables.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

@@ -1,5 +1,4 @@
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters.Test.Core.Json;

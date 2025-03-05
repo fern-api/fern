@@ -1,7 +1,7 @@
 using global::System;
 using static SeedAudiences.OneOf.Functions;
 
-namespace SeedAudiences;
+namespace SeedAudiences.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3, T4, T5, T6> : IOneOf
 {

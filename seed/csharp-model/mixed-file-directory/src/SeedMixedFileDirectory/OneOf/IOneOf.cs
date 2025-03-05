@@ -1,4 +1,4 @@
-namespace SeedMixedFileDirectory;
+namespace SeedMixedFileDirectory.OneOf;
 
 public interface IOneOf
 {

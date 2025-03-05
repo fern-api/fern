@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedWebsocket.Core;
 
 namespace SeedWebsocket.Test.Core.Json;

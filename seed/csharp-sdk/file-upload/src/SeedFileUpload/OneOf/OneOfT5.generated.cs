@@ -1,7 +1,7 @@
 using global::System;
 using static SeedFileUpload.OneOf.Functions;
 
-namespace SeedFileUpload;
+namespace SeedFileUpload.OneOf;
 
 public readonly struct OneOf<T0, T1, T2, T3, T4, T5> : IOneOf
 {

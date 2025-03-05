@@ -1,4 +1,4 @@
-namespace SeedApi;
+namespace SeedApi.OneOf;
 
 public interface IOneOf
 {

@@ -1,4 +1,4 @@
-namespace SeedWebsocket;
+namespace SeedWebsocket.OneOf;
 
 public interface IOneOf
 {

@@ -1,4 +1,4 @@
-namespace SeedBytes;
+namespace SeedBytes.OneOf;
 
 public interface IOneOf
 {

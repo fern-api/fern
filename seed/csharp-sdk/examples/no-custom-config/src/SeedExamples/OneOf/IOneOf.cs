@@ -1,4 +1,4 @@
-namespace SeedExamples;
+namespace SeedExamples.OneOf;
 
 public interface IOneOf
 {

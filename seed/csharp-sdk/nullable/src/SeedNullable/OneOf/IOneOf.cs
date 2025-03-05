@@ -1,4 +1,4 @@
-namespace SeedNullable;
+namespace SeedNullable.OneOf;
 
 public interface IOneOf
 {

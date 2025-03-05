@@ -1,4 +1,4 @@
-namespace SeedBasicAuth;
+namespace SeedBasicAuth.OneOf;
 
 public interface IOneOf
 {

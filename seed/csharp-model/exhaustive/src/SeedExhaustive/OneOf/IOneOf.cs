@@ -1,4 +1,4 @@
-namespace SeedExhaustive;
+namespace SeedExhaustive.OneOf;
 
 public interface IOneOf
 {

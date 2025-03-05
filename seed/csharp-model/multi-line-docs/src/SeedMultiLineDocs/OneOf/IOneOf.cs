@@ -1,4 +1,4 @@
-namespace SeedMultiLineDocs;
+namespace SeedMultiLineDocs.OneOf;
 
 public interface IOneOf
 {

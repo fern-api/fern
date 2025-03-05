@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs.Test.Core.Json;

@@ -1,7 +1,6 @@
 using global::System.Runtime.Serialization;
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment.Test.Core.Json;

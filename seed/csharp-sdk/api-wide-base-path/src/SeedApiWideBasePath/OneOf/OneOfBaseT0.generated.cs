@@ -1,7 +1,7 @@
 using global::System;
 using static SeedApiWideBasePath.OneOf.Functions;
 
-namespace SeedApiWideBasePath;
+namespace SeedApiWideBasePath.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

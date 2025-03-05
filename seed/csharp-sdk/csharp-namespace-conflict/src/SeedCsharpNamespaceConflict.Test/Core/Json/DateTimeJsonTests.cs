@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.Test.Core.Json;

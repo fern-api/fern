@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMultiLineDocs.OneOf.Functions;
 
-namespace SeedMultiLineDocs;
+namespace SeedMultiLineDocs.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

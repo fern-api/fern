@@ -1,4 +1,4 @@
-namespace SeedVariables;
+namespace SeedVariables.OneOf;
 
 public interface IOneOf
 {

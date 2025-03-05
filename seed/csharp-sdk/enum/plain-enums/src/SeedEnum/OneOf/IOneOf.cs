@@ -1,4 +1,4 @@
-namespace SeedEnum;
+namespace SeedEnum.OneOf;
 
 public interface IOneOf
 {

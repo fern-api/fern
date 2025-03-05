@@ -1,7 +1,7 @@
 using global::System;
 using static SeedFileDownload.OneOf.Functions;
 
-namespace SeedFileDownload;
+namespace SeedFileDownload.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

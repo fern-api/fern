@@ -1,7 +1,7 @@
 using global::System;
 using static SeedPathParameters.OneOf.Functions;
 
-namespace SeedPathParameters;
+namespace SeedPathParameters.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

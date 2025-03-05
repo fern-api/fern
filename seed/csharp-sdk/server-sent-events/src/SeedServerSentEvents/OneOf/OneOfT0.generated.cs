@@ -1,7 +1,7 @@
 using global::System;
 using static SeedServerSentEvents.OneOf.Functions;
 
-namespace SeedServerSentEvents;
+namespace SeedServerSentEvents.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

@@ -1,5 +1,4 @@
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedBytes.Core;
 
 namespace SeedBytes.Test.Core.Json;

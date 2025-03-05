@@ -1,7 +1,7 @@
 using global::System;
 using static SeedBearerTokenEnvironmentVariable.OneOf.Functions;
 
-namespace SeedBearerTokenEnvironmentVariable;
+namespace SeedBearerTokenEnvironmentVariable.OneOf;
 
 public readonly struct OneOf<T0, T1> : IOneOf
 {

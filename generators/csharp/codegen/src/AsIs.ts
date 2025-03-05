@@ -27,7 +27,6 @@ export const AsIsFiles = {
     StringEnum: "StringEnum.Template.cs",
     StringEnumExtensions: "StringEnumExtensions.Template.cs",
     TemplateCsProj: "Template.csproj",
-    UsingCs: "Using.cs",
     EditorConfig: ".editorconfig.Template",
     Json: {
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
@@ -41,7 +40,9 @@ export const AsIsFiles = {
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
     OneOfFolder: "OneOf",
+    UsingsCs: "Usings.Template.cs",
     Test: {
+        UsingsCs: "test/Usings.Template.cs",
         TestCustomProps: "test/Test.Custom.props.Template",
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedLicense.OneOf.Functions;
 
-namespace SeedLicense;
+namespace SeedLicense.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

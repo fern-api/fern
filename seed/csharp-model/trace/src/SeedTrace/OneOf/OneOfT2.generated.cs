@@ -1,7 +1,7 @@
 using global::System;
 using static SeedTrace.OneOf.Functions;
 
-namespace SeedTrace;
+namespace SeedTrace.OneOf;
 
 public readonly struct OneOf<T0, T1, T2> : IOneOf
 {

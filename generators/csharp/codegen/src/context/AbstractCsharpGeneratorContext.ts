@@ -295,7 +295,18 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public shouldEmbedOneOf(): boolean {
+        return this.customConfig["embed-one-of"] === true;
+    }
+
     public getOneOfClassReference(generics: csharp.Type[]): csharp.ClassReference {
+        if (this.shouldEmbedOneOf()) {
+            return csharp.classReference({
+                namespace: this.getNamespace(),
+                name: "OneOf",
+                generics
+            });
+        }
         return csharp.classReference({
             namespace: "OneOf",
             name: "OneOf",

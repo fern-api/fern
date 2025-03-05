@@ -1,7 +1,7 @@
 using global::System;
 using static SeedExhaustive.OneOf.Functions;
 
-namespace SeedExhaustive;
+namespace SeedExhaustive.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

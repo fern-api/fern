@@ -1,4 +1,4 @@
-namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions.OneOf;
 
 public interface IOneOf
 {

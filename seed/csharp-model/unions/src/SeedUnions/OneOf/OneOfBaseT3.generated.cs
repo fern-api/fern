@@ -1,7 +1,7 @@
 using global::System;
 using static SeedUnions.OneOf.Functions;
 
-namespace SeedUnions;
+namespace SeedUnions.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3> : IOneOf
 {

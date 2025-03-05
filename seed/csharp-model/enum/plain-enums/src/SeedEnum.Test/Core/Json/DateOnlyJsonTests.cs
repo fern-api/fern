@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedEnum.Core;
 
 namespace SeedEnum.Test.Core.Json;

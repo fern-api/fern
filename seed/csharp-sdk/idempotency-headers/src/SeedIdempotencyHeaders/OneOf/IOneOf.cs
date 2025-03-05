@@ -1,4 +1,4 @@
-namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders.OneOf;
 
 public interface IOneOf
 {

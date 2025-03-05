@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using SeedNoEnvironment.Core;
 using WireMock.Server;
-using global::SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
-using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment.Test.Core;
 

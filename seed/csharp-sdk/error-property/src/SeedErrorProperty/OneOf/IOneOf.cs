@@ -1,4 +1,4 @@
-namespace SeedErrorProperty;
+namespace SeedErrorProperty.OneOf;
 
 public interface IOneOf
 {

@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMixedFileDirectory.OneOf.Functions;
 
-namespace SeedMixedFileDirectory;
+namespace SeedMixedFileDirectory.OneOf;
 
 public readonly struct OneOf<T0, T1, T2> : IOneOf
 {

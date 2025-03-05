@@ -1,4 +1,4 @@
-namespace SeedResponseProperty;
+namespace SeedResponseProperty.OneOf;
 
 public interface IOneOf
 {

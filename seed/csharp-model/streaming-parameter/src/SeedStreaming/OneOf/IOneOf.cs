@@ -1,4 +1,4 @@
-namespace SeedStreaming;
+namespace SeedStreaming.OneOf;
 
 public interface IOneOf
 {

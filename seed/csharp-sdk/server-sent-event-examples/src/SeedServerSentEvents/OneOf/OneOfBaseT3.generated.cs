@@ -1,7 +1,7 @@
 using global::System;
 using static SeedServerSentEvents.OneOf.Functions;
 
-namespace SeedServerSentEvents;
+namespace SeedServerSentEvents.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3> : IOneOf
 {

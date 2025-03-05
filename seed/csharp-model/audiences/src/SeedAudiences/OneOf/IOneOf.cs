@@ -1,4 +1,4 @@
-namespace SeedAudiences;
+namespace SeedAudiences.OneOf;
 
 public interface IOneOf
 {

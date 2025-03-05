@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedNullable.Core;
 
 namespace SeedNullable.Test.Core.Json;

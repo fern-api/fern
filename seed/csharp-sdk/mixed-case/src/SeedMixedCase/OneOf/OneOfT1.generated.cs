@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMixedCase.OneOf.Functions;
 
-namespace SeedMixedCase;
+namespace SeedMixedCase.OneOf;
 
 public readonly struct OneOf<T0, T1> : IOneOf
 {

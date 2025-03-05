@@ -1,6 +1,5 @@
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedNullable.Core;
 
 namespace SeedNullable.Test.Core.Json;

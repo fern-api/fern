@@ -1,7 +1,7 @@
 using global::System;
 using static SeedMultiUrlEnvironmentNoDefault.OneOf.Functions;
 
-namespace SeedMultiUrlEnvironmentNoDefault;
+namespace SeedMultiUrlEnvironmentNoDefault.OneOf;
 
 public readonly struct OneOf<T0, T1> : IOneOf
 {

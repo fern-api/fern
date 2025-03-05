@@ -1,4 +1,4 @@
-namespace SeedVersion;
+namespace SeedVersion.OneOf;
 
 public interface IOneOf
 {

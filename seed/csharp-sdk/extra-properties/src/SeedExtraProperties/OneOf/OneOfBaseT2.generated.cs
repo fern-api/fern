@@ -1,7 +1,7 @@
 using global::System;
 using static SeedExtraProperties.OneOf.Functions;
 
-namespace SeedExtraProperties;
+namespace SeedExtraProperties.OneOf;
 
 public class OneOfBase<T0, T1, T2> : IOneOf
 {

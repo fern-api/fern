@@ -1,7 +1,7 @@
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
-using global::SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedApi.Core;
 
@@ -19,7 +19,6 @@ internal class RawClient(ClientOptions clientOptions)
     /// The gRPC client used to make requests.
     /// </summary>
     public RawGrpcClient Grpc => _grpc.Value;
-
 
     /// <summary>
     /// The client options applied on every request.
@@ -226,7 +225,7 @@ internal class RawClient(ClientOptions clientOptions)
                 if (
                     queryItem.Value
                     is global::System.Collections.IEnumerable collection
-                    and not string
+                        and not string
                 )
                 {
                     var items = collection

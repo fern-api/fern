@@ -1,4 +1,4 @@
-namespace SeedExtraProperties;
+namespace SeedExtraProperties.OneOf;
 
 public interface IOneOf
 {

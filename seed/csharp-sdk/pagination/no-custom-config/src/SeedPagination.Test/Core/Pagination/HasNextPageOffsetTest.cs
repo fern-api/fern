@@ -1,6 +1,5 @@
-using NUnit.Framework;
-using global::SystemTask = global::System.Threading.Tasks.Task;
 using SeedPagination.Core;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -34,7 +33,14 @@ public class HasNextPageOffsetTest
                 HasNext = false,
             },
         }.GetEnumerator();
-        Pager<object> pager = await OffsetPager<Request, object?, Response, int, object?, object>.CreateInstanceAsync(
+        Pager<object> pager = await OffsetPager<
+            Request,
+            object?,
+            Response,
+            int,
+            object?,
+            object
+        >.CreateInstanceAsync(
             new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>

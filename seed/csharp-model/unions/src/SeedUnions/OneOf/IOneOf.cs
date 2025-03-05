@@ -1,4 +1,4 @@
-namespace SeedUnions;
+namespace SeedUnions.OneOf;
 
 public interface IOneOf
 {

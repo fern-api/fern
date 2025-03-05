@@ -1,4 +1,4 @@
-namespace SeedSingleUrlEnvironmentDefault;
+namespace SeedSingleUrlEnvironmentDefault.OneOf;
 
 public interface IOneOf
 {

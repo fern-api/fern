@@ -1,7 +1,7 @@
 using global::System;
 using static SeedBasicAuthEnvironmentVariables.OneOf.Functions;
 
-namespace SeedBasicAuthEnvironmentVariables;
+namespace SeedBasicAuthEnvironmentVariables.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

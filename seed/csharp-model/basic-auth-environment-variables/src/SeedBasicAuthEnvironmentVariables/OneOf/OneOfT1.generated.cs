@@ -1,7 +1,7 @@
 using global::System;
 using static SeedBasicAuthEnvironmentVariables.OneOf.Functions;
 
-namespace SeedBasicAuthEnvironmentVariables;
+namespace SeedBasicAuthEnvironmentVariables.OneOf;
 
 public readonly struct OneOf<T0, T1> : IOneOf
 {

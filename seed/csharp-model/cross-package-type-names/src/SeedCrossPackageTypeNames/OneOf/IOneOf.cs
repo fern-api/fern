@@ -1,4 +1,4 @@
-namespace SeedCrossPackageTypeNames;
+namespace SeedCrossPackageTypeNames.OneOf;
 
 public interface IOneOf
 {

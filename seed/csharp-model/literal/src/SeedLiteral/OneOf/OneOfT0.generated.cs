@@ -1,7 +1,7 @@
 using global::System;
 using static SeedLiteral.OneOf.Functions;
 
-namespace SeedLiteral;
+namespace SeedLiteral.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

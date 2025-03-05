@@ -1,4 +1,4 @@
-namespace SeedBasicAuthEnvironmentVariables;
+namespace SeedBasicAuthEnvironmentVariables.OneOf;
 
 public interface IOneOf
 {

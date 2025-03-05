@@ -1,4 +1,4 @@
-namespace SeedAccept;
+namespace SeedAccept.OneOf;
 
 public interface IOneOf
 {

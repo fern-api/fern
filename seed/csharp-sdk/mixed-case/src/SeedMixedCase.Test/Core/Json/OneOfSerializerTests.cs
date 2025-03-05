@@ -1,6 +1,5 @@
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test.Core.Json;

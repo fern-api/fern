@@ -1,4 +1,4 @@
-namespace SeedAliasExtends;
+namespace SeedAliasExtends.OneOf;
 
 public interface IOneOf
 {

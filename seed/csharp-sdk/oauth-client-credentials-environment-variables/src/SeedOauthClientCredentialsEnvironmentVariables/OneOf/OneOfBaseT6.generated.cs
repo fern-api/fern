@@ -1,7 +1,7 @@
 using global::System;
 using static SeedOauthClientCredentialsEnvironmentVariables.OneOf.Functions;
 
-namespace SeedOauthClientCredentialsEnvironmentVariables;
+namespace SeedOauthClientCredentialsEnvironmentVariables.OneOf;
 
 public class OneOfBase<T0, T1, T2, T3, T4, T5, T6> : IOneOf
 {

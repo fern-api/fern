@@ -1,4 +1,4 @@
-namespace SeedFileUpload;
+namespace SeedFileUpload.OneOf;
 
 public interface IOneOf
 {

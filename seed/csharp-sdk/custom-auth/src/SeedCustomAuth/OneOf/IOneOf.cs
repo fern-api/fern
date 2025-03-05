@@ -1,4 +1,4 @@
-namespace SeedCustomAuth;
+namespace SeedCustomAuth.OneOf;
 
 public interface IOneOf
 {

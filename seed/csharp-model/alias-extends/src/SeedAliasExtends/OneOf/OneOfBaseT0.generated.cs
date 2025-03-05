@@ -1,7 +1,7 @@
 using global::System;
 using static SeedAliasExtends.OneOf.Functions;
 
-namespace SeedAliasExtends;
+namespace SeedAliasExtends.OneOf;
 
 public class OneOfBase<T0> : IOneOf
 {

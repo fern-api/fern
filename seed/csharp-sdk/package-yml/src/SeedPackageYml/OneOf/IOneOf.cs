@@ -1,4 +1,4 @@
-namespace SeedPackageYml;
+namespace SeedPackageYml.OneOf;
 
 public interface IOneOf
 {

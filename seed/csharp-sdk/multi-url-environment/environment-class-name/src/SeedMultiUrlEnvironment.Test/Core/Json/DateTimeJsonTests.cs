@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment.Test.Core.Json;

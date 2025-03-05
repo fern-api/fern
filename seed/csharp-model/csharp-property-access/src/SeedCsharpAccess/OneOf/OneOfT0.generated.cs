@@ -1,7 +1,7 @@
 using global::System;
 using static SeedCsharpAccess.OneOf.Functions;
 
-namespace SeedCsharpAccess;
+namespace SeedCsharpAccess.OneOf;
 
 public readonly struct OneOf<T0> : IOneOf
 {

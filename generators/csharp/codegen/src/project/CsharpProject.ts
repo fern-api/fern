@@ -31,6 +31,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+    private replaceTemplate: ({ contents, namespace }: { contents: string; namespace: string }) => string;
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
@@ -46,6 +47,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         this.sourceFetcher = new SourceFetcher({
             context: this.context,
             sourceConfig: this.context.ir.sourceConfig
+        });
+        this.replaceTemplate = createReplaceTemplate({
+            grpc: this.context.hasGrpcEndpoints(),
+            idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+            rootNamespace: this.context.getNamespace(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 
@@ -216,6 +224,14 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             await readFile(getAsIsFilepath(AsIsFiles.CustomProps), { encoding: "utf-8" })
         );
 
+        await writeFile(
+            join(absolutePathToProjectDirectory, RelativeFilePath.of("Usings.cs")),
+            this.replaceTemplate({
+                contents: await readFile(getAsIsFilepath(AsIsFiles.UsingsCs), { encoding: "utf-8" }),
+                namespace: this.context.getNamespace()
+            })
+        );
+
         await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
             doNotPipeOutput: true,
             cwd: absolutePathToSrcDirectory
@@ -250,6 +266,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
             await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps), { encoding: "utf-8" })
+        );
+        await writeFile(
+            join(absolutePathToTestProject, RelativeFilePath.of("Usings.cs")),
+            this.replaceTemplate({
+                contents: await readFile(getAsIsFilepath(AsIsFiles.Test.UsingsCs), { encoding: "utf-8" }),
+                namespace: this.context.getTestNamespace()
+            })
         );
         await loggingExeca(
             this.context.logger,
@@ -372,12 +395,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return new File(
             filename.replace("test/", "").replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                rootNamespace: this.context.getNamespace()
+                namespace
             })
         );
     }
@@ -387,12 +407,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                rootNamespace: this.context.getNamespace()
+                namespace
             })
         );
     }
@@ -429,12 +446,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return new File(
             fileName.replace(".Template", "").replace("CustomPager", customPagerName),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getCoreNamespace(),
-                rootNamespace: this.context.getNamespace()
+                namespace: this.context.getCoreNamespace()
             }).replaceAll("CustomPager", customPagerName)
         );
     }
@@ -444,12 +458,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getTestUtilsNamespace(),
-                rootNamespace: this.context.getNamespace()
+                namespace: this.context.getTestUtilsNamespace()
             })
         );
     }
@@ -468,25 +479,18 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 }
 
-function replaceTemplate({
-    contents,
-    grpc,
-    idempotencyHeaders,
-    namespace,
-    rootNamespace
-}: {
-    contents: string;
+function createReplaceTemplate(globalTemplateArgs: {
     grpc: boolean;
     idempotencyHeaders: boolean;
     namespace: string;
     rootNamespace: string;
-}): string {
-    return template(contents)({
-        grpc,
-        idempotencyHeaders,
-        namespace,
-        rootNamespace
-    });
+    customConfig: BaseCsharpCustomConfigSchema;
+}): (localTemplateArgs: { contents: string; namespace: string }) => string {
+    return ({ contents, ...localTemplateArgs }) =>
+        template(contents)({
+            ...globalTemplateArgs,
+            ...localTemplateArgs
+        });
 }
 
 function getAsIsFilepath(filename: string): string {
@@ -557,7 +561,7 @@ class CsProj {
 
     public toString(): string {
         const projectGroup = this.getProjectGroup();
-        const dependencies = this.getDependencies();
+        const embedOneOf = this.context.shouldEmbedOneOf();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
@@ -577,7 +581,26 @@ ${projectGroup.join("\n")}
     </ItemGroup>
 
     <ItemGroup>
-        ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
+        <PackageReference Include="PolySharp" Version="1.15.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="System.Text.Json" Version="8.0.5" />
+        ${
+            embedOneOf
+                ? `
+        <Reference Condition="'$(TargetFramework)' == 'net462'" Include="System.Net.Http" />`
+                : `
+        <PackageReference Include="OneOf" Version="3.0.271" />
+        <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+        <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+        <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />`
+        }
+        ${Object.entries(this.context.getExtraDependencies())
+            .map(([name, version]) => {
+                return `<PackageReference Include="${name}" Version="${version}" />`;
+            })
+            .join(`\n${FOUR_SPACES}`)}
     </ItemGroup>
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
@@ -593,21 +616,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     <Import Project="${this.name}.Custom.props" Condition="Exists('${this.name}.Custom.props')" />
 </Project>
 `;
-    }
-
-    private getDependencies(): string[] {
-        const result: string[] = [];
-        result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
-        result.push(
-            `${FOUR_SPACES}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
-        );
-        result.push(`${FOUR_SPACES}<PrivateAssets>all</PrivateAssets>`);
-        result.push("</PackageReference>");
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
-        for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
-            result.push(`<PackageReference Include="${name}" Version="${version}" />`);
-        }
-        return result;
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {

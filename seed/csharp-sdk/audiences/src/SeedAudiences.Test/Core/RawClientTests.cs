@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using SeedAudiences.Core;
 using WireMock.Server;
-using global::SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
-using SeedAudiences.Core;
 
 namespace SeedAudiences.Test.Core;
 

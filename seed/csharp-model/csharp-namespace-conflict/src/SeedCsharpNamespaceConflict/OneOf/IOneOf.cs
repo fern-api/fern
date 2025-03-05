@@ -1,4 +1,4 @@
-namespace SeedCsharpNamespaceConflict;
+namespace SeedCsharpNamespaceConflict.OneOf;
 
 public interface IOneOf
 {

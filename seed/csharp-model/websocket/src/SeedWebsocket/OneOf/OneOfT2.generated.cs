@@ -1,7 +1,7 @@
 using global::System;
 using static SeedWebsocket.OneOf.Functions;
 
-namespace SeedWebsocket;
+namespace SeedWebsocket.OneOf;
 
 public readonly struct OneOf<T0, T1, T2> : IOneOf
 {

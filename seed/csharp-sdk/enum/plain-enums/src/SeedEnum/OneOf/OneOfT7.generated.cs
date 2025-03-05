@@ -1,7 +1,7 @@
 using global::System;
 using static SeedEnum.OneOf.Functions;
 
-namespace SeedEnum;
+namespace SeedEnum.OneOf;
 
 public readonly struct OneOf<T0, T1, T2, T3, T4, T5, T6, T7> : IOneOf
 {
