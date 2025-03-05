@@ -176,7 +176,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
             let resolvedSecurityScheme: OpenAPIV3_1.SecuritySchemeObject;
             if (context.isReferenceObject(securityScheme)) {
-                const resolvedReference = await context.resolveReference<OpenAPIV3_1.SecuritySchemeObject>(securityScheme);
+                const resolvedReference =
+                    await context.resolveReference<OpenAPIV3_1.SecuritySchemeObject>(securityScheme);
                 if (!resolvedReference.resolved) {
                     continue;
                 }

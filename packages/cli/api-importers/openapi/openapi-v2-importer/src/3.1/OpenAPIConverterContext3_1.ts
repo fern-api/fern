@@ -91,7 +91,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         return undefined;
     }
-    
+
     public async getAvailability({
         node,
         breadcrumbs,

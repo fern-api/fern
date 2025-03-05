@@ -188,7 +188,7 @@ export class RequestBodyConverter extends AbstractConverter<
                 })
             };
         }
-    };
+    }
 
     private convertRequestBodyProperty({
         context,
