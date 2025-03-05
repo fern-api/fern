@@ -9,7 +9,11 @@ public final class NullableNonemptyFilter {
     @Override
     public boolean equals(Object o) {
         boolean isOptionalEmpty = isOptionalEmpty(o);
+<<<<<<< HEAD
         boolean isAliasOfOptionalEmpty = o instanceof WrappedAlias && isAliasOfOptionalEmpty((WrappedAlias) o);
+=======
+        boolean isAliasOfOptionalEmpty = o instanceof WrappedAlias && isOptionalEmpty(((WrappedAlias<?>) o).get());
+>>>>>>> 1c07010e3adb61bd59023952401a39ba9563b93f
 
         return isOptionalEmpty || isAliasOfOptionalEmpty;
     }

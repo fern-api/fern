@@ -159,6 +159,28 @@ public interface EnrichedObjectProperty {
                         .isNullable();
     }
 
+    @Value.Lazy
+    default boolean aliasOfNullable() {
+        return typeDeclaration().isPresent()
+                && typeDeclaration().get().getShape().isAlias()
+                && typeDeclaration()
+                        .get()
+                        .getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .isContainer()
+                && typeDeclaration()
+                        .get()
+                        .getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .getContainer()
+                        .get()
+                        .isNullable();
+    }
+
     static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {
         return ImmutableEnrichedObjectProperty.builder();
     }
