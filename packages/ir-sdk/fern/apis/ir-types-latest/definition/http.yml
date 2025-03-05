@@ -153,11 +153,13 @@ types:
       file: FilePropertySingle
       fileArray: FilePropertyArray
   FilePropertySingle:
+    extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
   FilePropertyArray:
+    extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean

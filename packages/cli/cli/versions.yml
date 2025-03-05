@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      OpenAPI file properties can now support descriptions.
+    type: feat
+  irVersion: 57
+  version: 0.56.8
+
+- changelogEntry:
+  - summary: |
       The CLI now recognizes that the latest C# SDK uses IRv57.
     type: internal
   irVersion: 57

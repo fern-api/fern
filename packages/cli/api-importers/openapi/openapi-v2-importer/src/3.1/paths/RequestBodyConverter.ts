@@ -204,7 +204,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.file({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -213,7 +214,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.file({
                     key: property.name,
                     isOptional: true,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -222,7 +224,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -235,7 +238,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -248,7 +252,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: true,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }

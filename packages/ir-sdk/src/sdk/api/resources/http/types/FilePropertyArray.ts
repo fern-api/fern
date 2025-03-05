@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface FilePropertyArray {
+export interface FilePropertyArray extends FernIr.WithDocs {
     key: FernIr.NameAndWireValue;
     isOptional: boolean;
     contentType: string | undefined;

@@ -20329,7 +20329,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "task_file": "optional<file>",
+                    "task_file": {
+                      "docs": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
+                      "type": "optional<file>",
+                    },
                     "task_input": {
                       "docs": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
                       "type": "map<string, unknown>",
@@ -21394,7 +21397,11 @@ service:
                 `user_prompt` and cover any dynamic `{...}` parameters that are
                 referenced in the prompt. Not required if `image_required` is
                 set to `true` and there are no dynamic parameters in the prompt.
-            task_file: optional<file>
+            task_file:
+              type: optional<file>
+              docs: >-
+                Image file to be provided to the LLM, only required when
+                `image_required` is set to `true`.
         content-type: multipart/form-data
       response:
         docs: Successful Response

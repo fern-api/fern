@@ -135,6 +135,7 @@
                   },
                   "isOptional": false,
                   "contentType": "multipart/form-data",
+                  "docs": "The file to upload",
                   "type": "file"
                 },
                 "type": "file"
@@ -165,6 +166,7 @@
                   },
                   "isOptional": true,
                   "contentType": "multipart/form-data",
+                  "docs": "An optional file to upload",
                   "type": "file"
                 },
                 "type": "file"
