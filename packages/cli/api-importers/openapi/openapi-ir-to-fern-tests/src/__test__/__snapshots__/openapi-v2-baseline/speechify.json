@@ -8890,6 +8890,7 @@
                     "wireValue": "sample"
                   },
                   "isOptional": false,
+                  "docs": "Audio sample file",
                   "type": "file"
                 },
                 "type": "file"

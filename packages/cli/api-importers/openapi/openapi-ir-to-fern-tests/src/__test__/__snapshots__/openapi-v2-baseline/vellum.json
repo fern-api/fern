@@ -20514,6 +20514,7 @@
                     "wireValue": "contents"
                   },
                   "isOptional": false,
+                  "docs": "The file contents of the document.",
                   "type": "file"
                 },
                 "type": "file"
