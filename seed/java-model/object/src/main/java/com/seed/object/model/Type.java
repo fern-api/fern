@@ -69,6 +69,10 @@ public final class Type {
 
     private final BigInteger twentythree;
 
+    private final Optional<OffsetDateTime> twentyfour;
+
+    private final Optional<String> twentyfive;
+
     private Type(
             int one,
             double two,
@@ -91,7 +95,9 @@ public final class Type {
             long twenty,
             long twentyone,
             float twentytwo,
-            BigInteger twentythree) {
+            BigInteger twentythree,
+            Optional<OffsetDateTime> twentyfour,
+            Optional<String> twentyfive) {
         this.one = one;
         this.two = two;
         this.three = three;
@@ -114,6 +120,8 @@ public final class Type {
         this.twentyone = twentyone;
         this.twentytwo = twentytwo;
         this.twentythree = twentythree;
+        this.twentyfour = twentyfour;
+        this.twentyfive = twentyfive;
     }
 
     @JsonProperty("one")
@@ -231,6 +239,16 @@ public final class Type {
         return twentythree;
     }
 
+    @JsonProperty("twentyfour")
+    public Optional<OffsetDateTime> getTwentyfour() {
+        return twentyfour;
+    }
+
+    @JsonProperty("twentyfive")
+    public Optional<String> getTwentyfive() {
+        return twentyfive;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -259,7 +277,9 @@ public final class Type {
                 && twenty == other.twenty
                 && twentyone == other.twentyone
                 && twentytwo == other.twentytwo
-                && twentythree.equals(other.twentythree);
+                && twentythree.equals(other.twentythree)
+                && twentyfour.equals(other.twentyfour)
+                && twentyfive.equals(other.twentyfive);
     }
 
     @java.lang.Override
@@ -286,7 +306,9 @@ public final class Type {
                 this.twenty,
                 this.twentyone,
                 this.twentytwo,
-                this.twentythree);
+                this.twentythree,
+                this.twentyfour,
+                this.twentyfive);
     }
 
     @java.lang.Override
@@ -402,6 +424,14 @@ public final class Type {
         _FinalStage addSeventeen(Optional<UUID> seventeen);
 
         _FinalStage addAllSeventeen(List<Optional<UUID>> seventeen);
+
+        _FinalStage twentyfour(Optional<OffsetDateTime> twentyfour);
+
+        _FinalStage twentyfour(OffsetDateTime twentyfour);
+
+        _FinalStage twentyfive(Optional<String> twentyfive);
+
+        _FinalStage twentyfive(String twentyfive);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -452,6 +482,10 @@ public final class Type {
 
         private BigInteger twentythree;
 
+        private Optional<String> twentyfive = Optional.empty();
+
+        private Optional<OffsetDateTime> twentyfour = Optional.empty();
+
         private List<Optional<UUID>> seventeen = new ArrayList<>();
 
         private List<Map<String, Integer>> sixteen = new ArrayList<>();
@@ -492,6 +526,8 @@ public final class Type {
             twentyone(other.getTwentyone());
             twentytwo(other.getTwentytwo());
             twentythree(other.getTwentythree());
+            twentyfour(other.getTwentyfour());
+            twentyfive(other.getTwentyfive());
             return this;
         }
 
@@ -597,6 +633,32 @@ public final class Type {
         @JsonSetter("twentythree")
         public _FinalStage twentythree(BigInteger twentythree) {
             this.twentythree = Objects.requireNonNull(twentythree, "twentythree must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage twentyfive(String twentyfive) {
+            this.twentyfive = Optional.ofNullable(twentyfive);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "twentyfive", nulls = Nulls.SKIP)
+        public _FinalStage twentyfive(Optional<String> twentyfive) {
+            this.twentyfive = twentyfive;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage twentyfour(OffsetDateTime twentyfour) {
+            this.twentyfour = Optional.ofNullable(twentyfour);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "twentyfour", nulls = Nulls.SKIP)
+        public _FinalStage twentyfour(Optional<OffsetDateTime> twentyfour) {
+            this.twentyfour = twentyfour;
             return this;
         }
 
@@ -757,7 +819,9 @@ public final class Type {
                     twenty,
                     twentyone,
                     twentytwo,
-                    twentythree);
+                    twentythree,
+                    twentyfour,
+                    twentyfive);
         }
     }
 }

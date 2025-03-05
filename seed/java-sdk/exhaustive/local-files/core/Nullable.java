@@ -6,7 +6,6 @@ package com.fern.sdk.core;
 
 import java.util.Optional;
 import java.util.function.Function;
-import org.jetbrains.annotations.NotNull;
 
 public final class Nullable<T> {
 
@@ -60,7 +59,7 @@ public final class Nullable<T> {
         return this.value.getLeft().get();
     }
 
-    public <U> Nullable<U> map(@NotNull Function<? super T, ? extends U> mapper) {
+    public <U> Nullable<U> map(Function<? super T, ? extends U> mapper) {
         if (this.isNull()) {
             return Nullable.ofNull();
         }

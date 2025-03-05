@@ -11,6 +11,8 @@ import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
+import com.fern.java.generators.NullableGenerator;
+import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -58,6 +60,12 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         this.addGeneratedFile(objectMappersGenerator.generateFile());
+
+        NullableGenerator nullableGenerator = new NullableGenerator(context);
+        this.addGeneratedFile(nullableGenerator.generateFile());
+
+        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
+        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());

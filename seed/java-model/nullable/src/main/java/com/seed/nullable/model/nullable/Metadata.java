@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -43,14 +45,22 @@ public final class Metadata {
         return updatedAt;
     }
 
-    @JsonProperty("avatar")
     public Optional<String> getAvatar() {
+        if (avatar == null) {
+            return Optional.empty();
+        }
         return avatar;
     }
 
     @JsonProperty("activated")
     public Optional<Boolean> getActivated() {
         return activated;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("avatar")
+    private Optional<String> _getAvatar() {
+        return avatar;
     }
 
     @java.lang.Override
@@ -96,6 +106,8 @@ public final class Metadata {
         _FinalStage avatar(Optional<String> avatar);
 
         _FinalStage avatar(String avatar);
+
+        _FinalStage avatar(Nullable<String> avatar);
 
         _FinalStage activated(Optional<Boolean> activated);
 
@@ -147,6 +159,18 @@ public final class Metadata {
         @JsonSetter(value = "activated", nulls = Nulls.SKIP)
         public _FinalStage activated(Optional<Boolean> activated) {
             this.activated = activated;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage avatar(Nullable<String> avatar) {
+            if (avatar.isNull()) {
+                this.avatar = null;
+            } else if (avatar.isEmpty()) {
+                this.avatar = Optional.empty();
+            } else {
+                this.avatar = Optional.of(avatar.get());
+            }
             return this;
         }
 
