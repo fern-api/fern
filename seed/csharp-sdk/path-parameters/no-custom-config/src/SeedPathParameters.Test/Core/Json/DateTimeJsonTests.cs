@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedPathParameters.Core;
 
 namespace SeedPathParameters.Test.Core.Json;

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedTrace.Core;
 
 namespace SeedTrace.Test.Core.Json;

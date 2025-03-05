@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedAudiences.Core;
 
 namespace SeedAudiences.Test.Core.Json;

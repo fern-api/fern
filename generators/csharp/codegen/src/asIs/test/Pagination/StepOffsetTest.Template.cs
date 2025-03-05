@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 

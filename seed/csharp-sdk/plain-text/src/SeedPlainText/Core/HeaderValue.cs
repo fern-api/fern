@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace SeedPlainText.Core;
 
 internal sealed class HeaderValue(OneOf<string, Func<string>> value)

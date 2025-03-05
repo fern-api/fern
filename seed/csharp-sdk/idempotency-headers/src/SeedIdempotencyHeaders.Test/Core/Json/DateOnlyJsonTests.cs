@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders.Test.Core.Json;

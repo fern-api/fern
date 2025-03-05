@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using global::System.Runtime.CompilerServices;
 
 namespace SeedPagination.Core;
 

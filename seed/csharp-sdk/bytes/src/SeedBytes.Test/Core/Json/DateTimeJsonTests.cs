@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedBytes.Core;
 
 namespace SeedBytes.Test.Core.Json;

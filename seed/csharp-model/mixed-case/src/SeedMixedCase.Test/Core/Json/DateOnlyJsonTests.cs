@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test.Core.Json;

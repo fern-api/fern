@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable.Test.Core.Json;

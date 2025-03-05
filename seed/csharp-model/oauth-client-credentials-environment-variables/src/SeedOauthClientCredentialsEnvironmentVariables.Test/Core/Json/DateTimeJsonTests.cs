@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Core.Json;

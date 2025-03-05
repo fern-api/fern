@@ -1,5 +1,4 @@
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedValidation.Core;
 
 namespace SeedValidation.Test.Core.Json;

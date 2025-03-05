@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty.Test.Core.Json;

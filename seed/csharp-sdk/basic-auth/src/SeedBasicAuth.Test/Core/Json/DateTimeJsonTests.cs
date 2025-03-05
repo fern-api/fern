@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth.Test.Core.Json;

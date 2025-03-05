@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace SeedNullable.Core;
 
 internal sealed class HeaderValue(OneOf<string, Func<string>> value)

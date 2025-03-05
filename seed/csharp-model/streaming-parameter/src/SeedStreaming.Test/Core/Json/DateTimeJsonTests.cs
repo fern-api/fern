@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedStreaming.Core;
 
 namespace SeedStreaming.Test.Core.Json;

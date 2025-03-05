@@ -153,6 +153,12 @@ fixtures:
         type: custom
         filename: "../../LICENSE"
       outputFolder: custom-license
+  undiscriminated-unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        embed-one-of: true
+      outputFolder: embed-one-of
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends

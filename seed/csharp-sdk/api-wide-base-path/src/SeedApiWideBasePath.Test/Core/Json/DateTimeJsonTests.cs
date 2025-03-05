@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath.Test.Core.Json;

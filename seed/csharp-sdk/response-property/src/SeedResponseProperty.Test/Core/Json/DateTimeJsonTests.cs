@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty.Test.Core.Json;

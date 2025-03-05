@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables.Test.Core.Json;

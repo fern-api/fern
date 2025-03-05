@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace SeedAuthEnvironmentVariables.Core;
 
 internal sealed class HeaderValue(OneOf<string, Func<string>> value)

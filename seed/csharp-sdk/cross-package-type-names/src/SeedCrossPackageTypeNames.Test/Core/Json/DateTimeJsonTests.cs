@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.Test.Core.Json;

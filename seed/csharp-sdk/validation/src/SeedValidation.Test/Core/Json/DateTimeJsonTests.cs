@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedValidation.Core;
 
 namespace SeedValidation.Test.Core.Json;

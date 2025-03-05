@@ -1,5 +1,4 @@
 using global::System.Text.Json.Serialization;
-using NUnit.Framework;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.Test.Core.Json;

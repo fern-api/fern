@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties.Test.Core.Json;

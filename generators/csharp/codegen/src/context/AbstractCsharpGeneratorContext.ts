@@ -1,8 +1,9 @@
 import { camelCase, upperFirst } from "lodash-es";
+import path from "path";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, getAllFilesInDirectory, join } from "@fern-api/fs-utils";
 
 import {
     FernFilepath,
@@ -294,7 +295,18 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public shouldEmbedOneOf(): boolean {
+        return this.customConfig["embed-one-of"] === true;
+    }
+
     public getOneOfClassReference(generics: csharp.Type[]): csharp.ClassReference {
+        if (this.shouldEmbedOneOf()) {
+            return csharp.classReference({
+                namespace: this.getNamespace(),
+                name: "OneOf",
+                generics
+            });
+        }
         return csharp.classReference({
             namespace: "OneOf",
             name: "OneOf",

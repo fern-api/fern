@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Json;

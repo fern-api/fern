@@ -4,12 +4,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 
-import {
-    ClassReference,
-    OneOfBaseClassReference,
-    OneOfClassReference,
-    StringEnumClassReference
-} from "./ClassReference";
+import { ClassReference, StringEnumClassReference } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -268,7 +263,6 @@ export class Type extends AstNode {
                 writer.write(this.internalType.value.name);
                 break;
             case "oneOf":
-                writer.addReference(OneOfClassReference);
                 writer.write("OneOf<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
@@ -279,7 +273,6 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "oneOfBase":
-                writer.addReference(OneOfBaseClassReference);
                 writer.write("OneOfBase<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {

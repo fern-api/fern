@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedAccept.Core;
 
 namespace SeedAccept.Test.Core.Json;

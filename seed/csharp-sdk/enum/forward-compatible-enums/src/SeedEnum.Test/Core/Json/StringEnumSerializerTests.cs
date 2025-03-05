@@ -1,6 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using NUnit.Framework;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedEnum.Core;
 
 namespace SeedEnum.Test.Core.Json;

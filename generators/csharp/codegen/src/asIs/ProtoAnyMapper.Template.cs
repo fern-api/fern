@@ -1,4 +1,4 @@
-using System.Reflection;
+using global::System.Reflection;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using WellKnownProto = Google.Protobuf.WellKnownTypes;

@@ -1,4 +1,4 @@
-using System.Runtime.Serialization;
+using global::System.Runtime.Serialization;
 
 namespace SeedEnum.Core;
 

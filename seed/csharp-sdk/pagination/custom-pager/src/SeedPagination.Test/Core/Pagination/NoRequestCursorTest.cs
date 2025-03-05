@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using SeedPagination.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
 
