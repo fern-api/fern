@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Fix an issue where default values for query parameters would occasionally be omitted during parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.9
+
+- changelogEntry:
+  - summary: |
       OpenAPI file properties can now support descriptions.
     type: feat
   irVersion: 57
