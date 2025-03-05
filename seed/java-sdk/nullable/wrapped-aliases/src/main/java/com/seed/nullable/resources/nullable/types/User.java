@@ -78,6 +78,9 @@ public final class User {
     }
 
     public Email getEmail() {
+        if (email == null) {
+            return Email.of(Optional.empty());
+        }
         return email;
     }
 

@@ -72,6 +72,11 @@ public interface EnrichedObjectProperty {
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)
                     .addStatement("return $T.empty()", Optional.class)
                     .endControlFlow();
+        } else if (aliasOfNullable() && wrappedAliases()) {
+            getterBuilder
+                    .beginControlFlow("if ($L == null)", fieldSpec().get().name)
+                    .addStatement("return $T.of($T.empty())", poetTypeName(), Optional.class)
+                    .endControlFlow();
         }
         if (literal().isPresent()) {
             literal().get().visit(new Literal.Visitor<Void>() {
