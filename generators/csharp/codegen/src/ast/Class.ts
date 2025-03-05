@@ -5,82 +5,13 @@ import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
-import { Method } from "./Method";
+import { Method, MethodType } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
-
-export declare namespace Class {
-    type ClassType = (typeof Class.ClassType)[keyof typeof Class.ClassType];
-    interface Args {
-        /* The name of the C# class */
-        name: string;
-        /* The namespace of the C# class*/
-        namespace: string;
-        /* The access level of the C# class */
-        access: Access;
-        /* Defaults to false */
-        static_?: boolean;
-        /* Defaults to false */
-        abstract?: boolean;
-        /* Defaults to false */
-        sealed?: boolean;
-        /* Defaults to false */
-        partial?: boolean;
-        /* Defaults to false */
-        readonly?: boolean;
-        /* Defaults to class */
-        type?: Class.ClassType;
-        /* Summary for the method */
-        summary?: string;
-        /* The class to inherit from if any */
-        parentClassReference?: AstNode;
-        /* Any interfaces the class extends */
-        interfaceReferences?: ClassReference[];
-        /* Defaults to false */
-        isNestedClass?: boolean;
-        /* Any annotations to add to the class */
-        annotations?: Annotation[];
-        /* Any annotations to add to the class */
-        primaryConstructor?: PrimaryConstructor;
-    }
-
-    interface Constructor {
-        /* The body of the constructor */
-        body?: CodeBlock;
-        /* The parameters of the constructor */
-        parameters: Parameter[];
-        /* The access of the constructor */
-        access: Access;
-        /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
-        baseConstructorCall?: MethodInvocation;
-    }
-
-    interface PrimaryConstructor {
-        /* The parameters of the constructor */
-        parameters: Parameter[];
-        /* If this class extends another class, these will be the arguments passed to that parent class's constructor */
-        superClassArguments: (CodeBlock | ClassInstantiation)[];
-    }
-
-    interface CastOperator {
-        parameter: Parameter;
-        type: "implicit" | "explicit";
-        body: CodeBlock;
-        useExpressionBody?: boolean;
-    }
-    interface NormalOperator {
-        type: "==" | "!=";
-        parameters: Parameter[];
-        return: Type;
-        body: CodeBlock;
-        useExpressionBody?: boolean;
-    }
-    type Operator = CastOperator | NormalOperator;
-}
 
 export class Class extends AstNode {
     public static readonly ClassType = {
@@ -162,6 +93,10 @@ export class Class extends AstNode {
         fields.forEach((field) => this.fields.push(field));
     }
 
+    public addConstructors(constructors: Class.Constructor[]): void {
+        constructors.forEach((constructor) => this.addConstructor(constructor));
+    }
+
     public addConstructor(constructor: Class.Constructor): void {
         this.constructors.push(constructor);
     }
@@ -188,6 +123,10 @@ export class Class extends AstNode {
 
     public addOperator(operator: Class.Operator): void {
         this.operators.push(operator);
+    }
+
+    public addOperators(operators: Class.Operator[]): void {
+        operators.forEach((operator) => this.addOperator(operator));
     }
 
     public getNamespace(): string {
@@ -275,76 +214,18 @@ export class Class extends AstNode {
 
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
-
         writer.indent();
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Protected) });
+
+        this.writeConsts(writer);
+        this.writeFieldFields(writer);
+        this.writeConstructors(writer);
+        this.writeProperties(writer);
+        this.writeMethods(writer);
+        this.writeOperators(writer);
+        this.writeNestedClasses(writer);
+        this.writeNestedInterfaces(writer);
+
         writer.dedent();
-
-        writer.indent();
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Private) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeConstructors({ writer, constructors: this.constructors });
-        writer.dedent();
-
-        writer.indent();
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Public) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Internal) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeFields({ writer, fields: this.getFieldsByAccess(undefined) });
-        writer.dedent();
-
-        writer.indent();
-        this.nestedClasses.forEach((nestedClass, index) => {
-            nestedClass.write(writer);
-            writer.writeNewLineIfLastLineNot();
-
-            if (index < this.fields.length - 1) {
-                writer.newLine();
-            }
-        });
-        writer.dedent();
-
-        writer.indent();
-        this.nestedInterfaces.forEach((nestedInterface, index) => {
-            nestedInterface.write(writer);
-            writer.writeNewLineIfLastLineNot();
-
-            if (index < this.fields.length - 1) {
-                writer.newLine();
-            }
-        });
-        writer.dedent();
-
-        writer.indent();
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Public) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Internal) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
-        writer.dedent();
-
-        writer.indent();
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(undefined) });
-        writer.dedent();
-
-        writer.indent();
-        this.operators.forEach((operator) => {
-            this.writeOperator({ writer, operator });
-            writer.newLine();
-        });
-        writer.dedent();
-
         writer.writeLine("}");
     }
 
@@ -359,8 +240,8 @@ export class Class extends AstNode {
         );
     }
 
-    private writeConstructors({ writer, constructors }: { writer: Writer; constructors: Class.Constructor[] }): void {
-        constructors.forEach((constructor, index) => {
+    private writeConstructors(writer: Writer): void {
+        this.constructors.forEach((constructor) => {
             writer.write(`${constructor.access} ${this.name} (`);
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer);
@@ -382,18 +263,6 @@ export class Class extends AstNode {
         });
     }
 
-    private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
-        methods.forEach((method, index) => {
-            method.write(writer);
-            writer.writeNewLineIfLastLineNot();
-            writer.newLine();
-        });
-    }
-
-    private getMethodsByAccess(access: Access | undefined): Method[] {
-        return this.methods.filter((method) => method.access === access);
-    }
-
     private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
         fields.forEach((field, index) => {
             field.write(writer);
@@ -405,8 +274,77 @@ export class Class extends AstNode {
         });
     }
 
-    private getFieldsByAccess(access: Access | undefined): Field[] {
-        return this.fields.filter((field) => field.access === access);
+    private writeConsts(writer: Writer): void {
+        this.writeFields({
+            writer,
+            fields: this.getFields().sort(sortByAccess).sort(sortByStatic).filter(this.fieldConstFilter())
+        });
+    }
+
+    private writeFieldFields(writer: Writer): void {
+        this.writeFields({
+            writer,
+            fields: this.getFields().sort(sortByAccess).sort(sortByStatic).filter(this.fieldFieldFilter())
+        });
+    }
+
+    private writeProperties(writer: Writer): void {
+        this.writeFields({
+            writer,
+            fields: this.getFields().sort(sortByAccess).sort(sortByStatic).filter(this.fieldPropertyFilter())
+        });
+    }
+
+    private writeMethods(writer: Writer): void {
+        this.methods
+            .sort(sortByAccess)
+            .sort(sortMethodType)
+            .forEach((method) => {
+                method.write(writer);
+                writer.writeNewLineIfLastLineNot();
+                writer.newLine();
+            });
+    }
+
+    private writeOperators(writer: Writer): void {
+        this.operators.forEach((operator) => {
+            this.writeOperator({ writer, operator });
+            writer.newLine();
+        });
+    }
+
+    private writeNestedClasses(writer: Writer): void {
+        this.nestedClasses.sort(sortByAccess).forEach((nestedClass, index) => {
+            nestedClass.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
+    }
+
+    private writeNestedInterfaces(writer: Writer): void {
+        this.nestedInterfaces.sort(sortByAccess).forEach((nestedInterface, index) => {
+            nestedInterface.write(writer);
+            writer.writeNewLineIfLastLineNot();
+
+            if (index < this.fields.length - 1) {
+                writer.newLine();
+            }
+        });
+    }
+
+    private fieldConstFilter(): (field: Field) => boolean {
+        return (field) => field.isConst;
+    }
+
+    private fieldFieldFilter(): (field: Field) => boolean {
+        return (field) => field.isField;
+    }
+
+    private fieldPropertyFilter(): (field: Field) => boolean {
+        return (field) => field.isProperty;
     }
 
     public getFields(): Field[] {
@@ -415,7 +353,7 @@ export class Class extends AstNode {
 
     private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
         writer.write("public static ");
-        if (operator.type === "explicit" || operator.type === "implicit") {
+        if (operator.type === Class.CastOperator.Type.Explicit || operator.type === Class.CastOperator.Type.Implicit) {
             writer.write(`${operator.type} `);
             writer.write("operator ");
             writer.write(`${this.name}(`);
@@ -441,4 +379,113 @@ export class Class extends AstNode {
             writer.writeLine("}");
         }
     }
+}
+
+export namespace Class {
+    export type ClassType = (typeof Class.ClassType)[keyof typeof Class.ClassType];
+    export interface Args {
+        /* The name of the C# class */
+        name: string;
+        /* The namespace of the C# class*/
+        namespace: string;
+        /* The access level of the C# class */
+        access: Access;
+        /* Defaults to false */
+        static_?: boolean;
+        /* Defaults to false */
+        abstract?: boolean;
+        /* Defaults to false */
+        sealed?: boolean;
+        /* Defaults to false */
+        partial?: boolean;
+        /* Defaults to false */
+        readonly?: boolean;
+        /* Defaults to class */
+        type?: Class.ClassType;
+        /* Summary for the method */
+        summary?: string;
+        /* The class to inherit from if any */
+        parentClassReference?: AstNode;
+        /* Any interfaces the class extends */
+        interfaceReferences?: ClassReference[];
+        /* Defaults to false */
+        isNestedClass?: boolean;
+        /* Any annotations to add to the class */
+        annotations?: Annotation[];
+        /* Any annotations to add to the class */
+        primaryConstructor?: PrimaryConstructor;
+    }
+
+    export interface Constructor {
+        /* The body of the constructor */
+        body?: CodeBlock;
+        /* The parameters of the constructor */
+        parameters: Parameter[];
+        /* The access of the constructor */
+        access: Access;
+        /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
+        baseConstructorCall?: MethodInvocation;
+    }
+
+    export interface PrimaryConstructor {
+        /* The parameters of the constructor */
+        parameters: Parameter[];
+        /* If this class extends another class, these will be the arguments passed to that parent class's constructor */
+        superClassArguments: (CodeBlock | ClassInstantiation)[];
+    }
+
+    export interface CastOperator {
+        parameter: Parameter;
+        type: CastOperator.Type;
+        body: CodeBlock;
+        useExpressionBody?: boolean;
+    }
+    export namespace CastOperator {
+        export const Type = {
+            Implicit: "implicit",
+            Explicit: "explicit"
+        } as const;
+        export type Type = (typeof CastOperator.Type)[keyof typeof CastOperator.Type];
+    }
+    export interface NormalOperator {
+        type: "==" | "!=";
+        parameters: Parameter[];
+        return: Type;
+        body: CodeBlock;
+        useExpressionBody?: boolean;
+    }
+    export type Operator = CastOperator | NormalOperator;
+}
+
+function accessSorter(access: Access | undefined): number {
+    switch (access) {
+        case undefined:
+            return 0;
+        case Access.Private:
+            return 1;
+        case Access.Protected:
+            return 2;
+        case Access.Internal:
+            return 3;
+        case Access.Public:
+            return 4;
+    }
+}
+
+function sortByAccess(a: { access: Access | undefined }, b: { access: Access | undefined }): number {
+    return accessSorter(a.access) - accessSorter(b.access);
+}
+
+function sortByStatic(a: { isStatic: boolean }, b: { isStatic: boolean }): number {
+    return a.isStatic === b.isStatic ? 0 : a.isStatic ? -1 : 1;
+}
+
+function sortMethodType(a: { type: MethodType }, b: { type: MethodType }): number {
+    if (a.type === MethodType.STATIC && b.type !== MethodType.STATIC) {
+        return -1;
+    }
+    if (a.type !== MethodType.STATIC && b.type === MethodType.STATIC) {
+        return 1;
+    }
+    return 0;
 }

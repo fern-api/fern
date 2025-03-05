@@ -63,20 +63,20 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly access: Access | undefined;
     public readonly type: Type;
-    private const_: boolean;
-    private new_: boolean;
-    private get: Access | boolean;
-    private init: Access | boolean;
-    private set: Access | boolean;
-    private annotations: Annotation[];
-    private initializer?: CodeBlock;
-    private summary?: string;
-    private jsonPropertyName?: string;
-    private readonly?: boolean;
-    private static_?: boolean;
-    private useRequired: boolean;
-    private skipDefaultInitializer: boolean;
-    private interfaceReference?: ClassReference;
+    private readonly const_: boolean;
+    private readonly static_: boolean;
+    private readonly get: Access | boolean;
+    private readonly init: Access | boolean;
+    private readonly set: Access | boolean;
+    private readonly new_: boolean;
+    private readonly annotations: Annotation[];
+    private readonly initializer?: CodeBlock;
+    private readonly summary?: string;
+    private readonly jsonPropertyName?: string;
+    private readonly readonly?: boolean;
+    private readonly useRequired: boolean;
+    private readonly skipDefaultInitializer: boolean;
+    private readonly interfaceReference?: ClassReference;
 
     constructor({
         name,
@@ -111,7 +111,7 @@ export class Field extends AstNode {
         this.summary = summary;
         this.jsonPropertyName = jsonPropertyName;
         this.readonly = readonly;
-        this.static_ = static_;
+        this.static_ = static_ ?? false;
         this.useRequired = useRequired ?? false;
         this.skipDefaultInitializer = skipDefaultInitializer ?? false;
         this.interfaceReference = interfaceReference;
@@ -128,6 +128,24 @@ export class Field extends AstNode {
                 ...this.annotations
             ];
         }
+    }
+
+    public get isConst(): boolean {
+        return this.const_;
+    }
+
+    public get isField(): boolean {
+        if (this.const_) {return false;}
+        return !(this.get || this.init || this.set);
+    }
+
+    public get isProperty(): boolean {
+        if (this.const_) {return false;}
+        return !!(this.get || this.init || this.set);
+    }
+
+    public get isStatic(): boolean {
+        return this.static_;
     }
 
     public write(writer: Writer): void {

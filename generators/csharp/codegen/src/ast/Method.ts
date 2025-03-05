@@ -1,3 +1,5 @@
+import { assertNever } from "@fern-api/core-utils";
+
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
@@ -13,39 +15,6 @@ export enum MethodType {
     STATIC
 }
 
-export declare namespace Method {
-    interface Args {
-        /* The name of the method */
-        name: string;
-        /* The access of the method */
-        access?: Access;
-        /* Whether the method is sync or async. Defaults to false. */
-        isAsync?: boolean;
-        /* The parameters of the method */
-        parameters: Parameter[];
-        /* Whether the method overrides a method in it's base class */
-        override?: boolean;
-        /* The return type of the method */
-        return_?: Type;
-        /* If true, no method body will be written. This is for interface methods. */
-        noBody?: boolean;
-        /* The body of the method */
-        body?: CodeBlock;
-        /* Summary for the method */
-        summary?: string;
-        /* The type of the method, defaults to INSTANCE */
-        type?: MethodType;
-        /* The class this method belongs to, if any */
-        classReference?: ClassReference;
-        /* Any annotations to add to the method */
-        annotations?: Annotation[];
-        /* Any code example to add to the method */
-        codeExample?: string;
-        /* If specified, use the interface name in front of the method name */
-        interfaceReference?: ClassReference;
-    }
-}
-
 export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
@@ -53,6 +22,7 @@ export class Method extends AstNode {
     public readonly return: Type | undefined;
     public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
+    private readonly bodyType: Method.BodyType;
     public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
@@ -60,7 +30,7 @@ export class Method extends AstNode {
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
     private readonly codeExample: string | undefined;
-    private interfaceReference?: ClassReference;
+    private readonly interfaceReference?: ClassReference;
 
     constructor({
         name,
@@ -70,6 +40,7 @@ export class Method extends AstNode {
         return_,
         body,
         noBody,
+        bodyType,
         summary,
         type,
         classReference,
@@ -86,6 +57,7 @@ export class Method extends AstNode {
         this.return = return_;
         this.noBody = noBody ?? false;
         this.body = body;
+        this.bodyType = bodyType ?? Method.BodyType.Statement;
         this.summary = summary;
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
@@ -173,17 +145,69 @@ export class Method extends AstNode {
         if (this.noBody) {
             writer.writeLine(";");
         } else {
-            writer.writeLine(" {");
+            switch (this.bodyType) {
+                case Method.BodyType.Statement:
+                    writer.writeLine(" {");
 
-            writer.indent();
-            this.body?.write(writer);
-            writer.dedent();
+                    writer.indent();
+                    this.body?.write(writer);
+                    writer.dedent();
 
-            writer.writeLine("}");
+                    writer.writeLine("}");
+                    break;
+                case Method.BodyType.Expression:
+                    writer.writeLine(" => ");
+                    this.body?.write(writer);
+                    writer.writeSemicolonIfLastCharacterIsNot();
+                    break;
+                default:
+                    assertNever(this.bodyType);
+            }
         }
     }
 
     public getParameters(): Parameter[] {
         return this.parameters;
     }
+}
+
+export namespace Method {
+    export interface Args {
+        /* Any annotations to add to the method */
+        annotations?: Annotation[];
+        /* Summary for the method */
+        summary?: string;
+        /* The access of the method */
+        access?: Access;
+        /* The type of the method, defaults to INSTANCE */
+        type?: MethodType;
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
+        /* Whether the method is sync or async. Defaults to false. */
+        isAsync?: boolean;
+        /* The return type of the method */
+        return_?: Type;
+        /* The name of the method */
+        name: string;
+        /* The parameters of the method */
+        parameters: Parameter[];
+        /* If true, no method body will be written. This is for interface methods. */
+        noBody?: boolean;
+        /* The body of the method */
+        body?: CodeBlock;
+        /* The body type of the method */
+        bodyType?: BodyType;
+        /* The class this method belongs to, if any */
+        classReference?: ClassReference;
+        /* Any code example to add to the method */
+        codeExample?: string;
+        /* If specified, use the interface name in front of the method name */
+        interfaceReference?: ClassReference;
+    }
+
+    export const BodyType = {
+        Statement: "statement",
+        Expression: "expression"
+    } as const;
+    export type BodyType = (typeof BodyType)[keyof typeof BodyType];
 }
