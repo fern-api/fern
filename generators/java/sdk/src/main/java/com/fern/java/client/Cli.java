@@ -37,6 +37,7 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
+import com.fern.java.generators.NullableGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
@@ -189,6 +190,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
+
+        NullableGenerator nullableGenerator = new NullableGenerator(context);
+        this.addGeneratedFile(nullableGenerator.generateFile());
 
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
