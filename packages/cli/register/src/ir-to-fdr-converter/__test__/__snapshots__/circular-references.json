@@ -47,6 +47,60 @@
         "properties": []
       }
     },
+    "type_ast:TorU": {
+      "name": "TorU",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "T",
+            "type": {
+              "type": "id",
+              "value": "type_ast:T"
+            }
+          },
+          {
+            "typeName": "U",
+            "type": {
+              "type": "id",
+              "value": "type_ast:U"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:T": {
+      "name": "T",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:TorU"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:U": {
+      "name": "U",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:T"
+            }
+          }
+        ]
+      }
+    },
     "type_ast:FieldValue": {
       "name": "FieldValue",
       "shape": {
@@ -238,6 +292,9 @@
       "webhooks": [],
       "websockets": [],
       "types": [
+        "type_ast:TorU",
+        "type_ast:T",
+        "type_ast:U",
         "type_ast:FieldValue",
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",

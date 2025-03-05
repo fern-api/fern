@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.15
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where extraneous NameError-causing update_forward_refs invocations were being emitted.
+
 - version: 4.3.14
   irVersion: 53
   changelogEntry:
