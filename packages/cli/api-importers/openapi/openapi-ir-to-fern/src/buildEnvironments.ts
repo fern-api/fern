@@ -94,8 +94,22 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     }
 
     const numTopLevelServersWithName = Object.keys(topLevelServersWithName).length;
+    const hasTopLevelServersWithName = numTopLevelServersWithName > 0;
     const hasEndpointLevelServersWithName = Object.keys(endpointLevelServersWithName).length > 0;
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
+
+    // If we don't have any top level or endpoint level servers, we're in the asyncapi only paradigm.
+    if (!hasTopLevelServersWithName && !hasEndpointLevelServersWithName) {
+        for (const [name, schema] of Object.entries(websocketServersWithName)) {
+            context.builder.addEnvironment({
+                name,
+                schema
+            });
+        }
+        context.builder.setDefaultEnvironment(Object.keys(websocketServersWithName)[0] as string);
+        context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+        return;
+    }
 
     // Endpoint level servers must always have a name attached. If they don't, we'll throw an error.
     if (endpointLevelSkippedServers.length > 0) {
@@ -107,7 +121,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     }
 
     // In this instance, we don't have any top level servers, so we'll just use the first one at the IR level.
-    if (numTopLevelServersWithName === 0) {
+    if (!hasTopLevelServersWithName) {
         const singleURL = context.ir.servers[0]?.url;
         const singleURLAudiences = context.ir.servers[0]?.audiences;
         if (singleURL != null) {

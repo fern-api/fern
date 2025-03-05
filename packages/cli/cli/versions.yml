@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Enable correct environment generation when only provided an AsyncAPI spec.
+    type: fix
+  irVersion: 57
+  version: 0.56.10
+
+- changelogEntry:
+  - summary: |
       Fix an issue where default values for query parameters would occasionally be omitted during parsing.
     type: fix
   irVersion: 57
