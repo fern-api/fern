@@ -37,6 +37,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
+    private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
 
     private readonly importsManager: ImportsManager;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -135,7 +136,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
                         )
                     ),
                     hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
-                    docs: ["The environment to use for the websocket. Defaults to the default environment."]
+                    docs: ["The environment to use for the websocket."]
                 },
                 {
                     name: GeneratedWebsocketClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
@@ -144,7 +145,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                         )
                     ),
-                    hasQuestionToken: this.channel.baseUrl != null,
+                    hasQuestionToken: true,
                     docs: ["Override the base URL of the websocket."]
                 },
                 {
@@ -275,11 +276,21 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
                     "debug",
-                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME)
+                    ts.factory.createBinaryExpression(
+                        this.getReferenceToOption(GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createFalse()
+                    )
                 ),
                 ts.factory.createPropertyAssignment(
                     "maxRetries",
-                    this.getReferenceToOption(GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME)
+                    ts.factory.createBinaryExpression(
+                        this.getReferenceToOption(GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createNumericLiteral(
+                            GeneratedWebsocketClientClassImpl.DEFAULT_NUM_RECONNECT_ATTEMPTS
+                        )
+                    )
                 )
             ])
         });

@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "56.0.0",
+    "@fern-fern/ir-sdk": "57.0.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",

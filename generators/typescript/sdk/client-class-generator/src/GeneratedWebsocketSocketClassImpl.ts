@@ -34,11 +34,6 @@ export declare namespace GeneratedWebsocketSocketClassImpl {
     }
 }
 
-interface LiteralPropertyValue {
-    propertyWireKey: string;
-    propertyValue: boolean | string;
-}
-
 export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSocketClass {
     private static readonly ARGS_PROPERTY_NAME = "Args";
     private static readonly RESPONSE_PROPERTY_NAME = "Response";
@@ -48,6 +43,8 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly RECEIVED_AT_PROPERTY_NAME = "receivedAt";
     private static readonly EVENT_PARAMETER_NAME = "event";
     private static readonly CALLBACK_PARAMETER_NAME = "callback";
+    private static readonly MESSAGE_PARAMETER_NAME = "message";
+    private static readonly CLOSE_CODE_VALUE = 1000;
 
     private readonly importsManager: ImportsManager;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -117,14 +114,14 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 {
                     parameters: [
                         {
-                            name: `{ ${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME} }`,
+                            name: "args",
                             type: `${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.ARGS_PROPERTY_NAME}`
                         }
                     ],
                     statements: [
-                        `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME} = ${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
+                        `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME} = args.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
                         `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", this.handleOpen);`,
-                        `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("message", this.handleMessage);`,
+                        `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
                         `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("close", this.handleClose);`,
                         `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", this.handleError);`
                     ]
@@ -228,7 +225,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     ),
                     ts.factory.createPropertySignature(
                         undefined,
-                        ts.factory.createIdentifier("message"),
+                        ts.factory.createIdentifier(GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                         ts.factory.createFunctionTypeNode(
                             undefined,
@@ -237,7 +234,9 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                                     undefined,
                                     undefined,
                                     undefined,
-                                    ts.factory.createIdentifier("message"),
+                                    ts.factory.createIdentifier(
+                                        GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME
+                                    ),
                                     undefined,
                                     ts.factory.createTypeReferenceNode(
                                         GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME,
@@ -336,12 +335,15 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             scope: Scope.Public,
             parameters: [
                 {
-                    name: "message",
+                    name: GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME,
                     type: getTextOfTsNode(this.getPublishMessageNode(context))
                 }
             ],
             returnType: "void",
-            statements: ["this.assertSocketIsOpen();", "this.sendJson(message);"]
+            statements: [
+                "this.assertSocketIsOpen();",
+                `this.sendJson(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`
+            ]
         };
     }
 
@@ -355,7 +357,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.reconnect();`,
                 "",
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", this.handleOpen);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("message", this.handleMessage);`,
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("close", this.handleClose);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", this.handleError);`,
                 "",
@@ -373,10 +375,10 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: [
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.close();`,
                 "",
-                "this.handleClose({ code: 1000 } as CloseEvent);",
+                `this.handleClose({ code: ${GeneratedWebsocketSocketClassImpl.CLOSE_CODE_VALUE} } as CloseEvent);`,
                 "",
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("open", this.handleOpen);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("message", this.handleMessage);`,
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("close", this.handleClose);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("error", this.handleError);`
             ]
@@ -471,7 +473,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     ? [
                           `const parsedResponse = ${getTextOfTsNode(this.getParsedExpression(subscribeMessage.body, context))};`,
                           "if (parsedResponse.ok) {",
-                          "    this.eventHandlers.message?.({",
+                          `    this.eventHandlers.message?.(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`,
                           "        ...parsedResponse.value,",
                           "        receivedAt: new Date()",
                           "    });",
@@ -520,8 +522,8 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 }
             ],
             statements: [
-                'const message = event.message ?? "core.ReconnectingWebSocket error";',
-                `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(message));`
+                `const ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME} = event.message ?? "core.ReconnectingWebSocket error";`,
+                `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}));`
             ]
         };
     }
@@ -555,7 +557,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         context: SdkContext
     ): ts.Expression {
         const referenceToRequestBody = ts.factory.createIdentifier("data");
-        // TODO (Eden): We need to instantiate a new WebsocketSchemaContext to get the correct serializer
         switch (responseMessage.type) {
             case "inlinedBody": {
                 throw new Error("Inlined body messages are not supported yet");
@@ -584,7 +585,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private getPublishMessageNode(context: SdkContext): ts.TypeNode {
         // TODO (Eden): At the moment, we're only extracting two messages in the IR: publish & subscribe.
-        // We'll need to update this if we want to support other message types.
+        // We'll need to update this if we want to support a different message array structure.
         return this.channel.messages
             .filter((message) => message.origin === "client")
             .map((message) => {
@@ -600,7 +601,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private getSubscribeMessageNode(context: SdkContext): ts.TypeNode {
         // TODO (Eden): At the moment, we're only extracting two messages in the IR: publish & subscribe.
-        // We'll need to update this if we want to support other message types.
+        // We'll need to update this if we want to support a different message array structure.
         return this.channel.messages
             .filter((message) => message.origin === "server")
             .map((message) => {
