@@ -1,8 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
+using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Test;
 
@@ -10,50 +9,86 @@ namespace SeedObjectsWithImports.Test;
 public class FileTest
 {
     [Test]
+    public void TestDeserialization_1()
+    {
+        var json = """
+            {
+              "name": "file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        var expectedObject = new File
+        {
+            Name = "file.txt",
+            Contents = "...",
+            Info = FileInfo.Regular,
+        };
+        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization_1()
     {
-        var inputJson =
-            @"
+        var json = """
+            {
+              "name": "file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        var obj = new File
         {
-          ""name"": ""file.txt"",
-          ""contents"": ""..."",
-          ""info"": ""REGULAR""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Name = "file.txt",
+            Contents = "...",
+            Info = FileInfo.Regular,
         };
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+    }
 
-        var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "name": "another_file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        var expectedObject = new File
+        {
+            Name = "another_file.txt",
+            Contents = "...",
+            Info = FileInfo.Regular,
+        };
+        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var inputJson =
-            @"
+        var json = """
+            {
+              "name": "another_file.txt",
+              "contents": "...",
+              "info": "REGULAR"
+            }
+            """;
+        var obj = new File
         {
-          ""name"": ""another_file.txt"",
-          ""contents"": ""..."",
-          ""info"": ""REGULAR""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Name = "another_file.txt",
+            Contents = "...",
+            Info = FileInfo.Regular,
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }
