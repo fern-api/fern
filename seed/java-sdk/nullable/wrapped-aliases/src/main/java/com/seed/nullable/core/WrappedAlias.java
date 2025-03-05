@@ -3,11 +3,6 @@
  */
 package com.seed.nullable.core;
 
-<<<<<<< HEAD
 public interface WrappedAlias {
     Object get();
-=======
-public interface WrappedAlias<T> {
-    T get();
->>>>>>> 1c07010e3adb61bd59023952401a39ba9563b93f
 }
