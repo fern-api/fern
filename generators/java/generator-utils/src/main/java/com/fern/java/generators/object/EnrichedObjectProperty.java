@@ -6,6 +6,7 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
@@ -40,6 +41,8 @@ public interface EnrichedObjectProperty {
     Optional<Literal> literal();
 
     ObjectProperty objectProperty();
+
+    Optional<TypeDeclaration> typeDeclaration();
 
     ClassName nullableNonemptyFilterClassName();
 
@@ -90,7 +93,7 @@ public interface EnrichedObjectProperty {
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
-        if (wireKey().isPresent() && !nullable()) {
+        if (wireKey().isPresent() && !nullable() && !aliasOfNullable()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
@@ -106,7 +109,7 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default Optional<MethodSpec> getterForSerialization() {
-        if (wireKey().isEmpty() || !nullable()) {
+        if (wireKey().isEmpty() || (!nullable() && !aliasOfNullable())) {
             return Optional.empty();
         }
 
@@ -131,12 +134,35 @@ public interface EnrichedObjectProperty {
         return declaredType.isContainer() && declaredType.getContainer().get().isNullable();
     }
 
+    @Value.Lazy
+    default boolean aliasOfNullable() {
+        return typeDeclaration().isPresent()
+                && typeDeclaration().get().getShape().isAlias()
+                && typeDeclaration()
+                        .get()
+                        .getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .isContainer()
+                && typeDeclaration()
+                        .get()
+                        .getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .getContainer()
+                        .get()
+                        .isNullable();
+    }
+
     static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {
         return ImmutableEnrichedObjectProperty.builder();
     }
 
     static EnrichedObjectProperty of(
             ObjectProperty objectProperty,
+            Optional<TypeDeclaration> typeDeclaration,
             ClassName nullableNonemptyFilterClassName,
             boolean fromInterface,
             boolean inline,
@@ -155,6 +181,7 @@ public interface EnrichedObjectProperty {
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)
+                .typeDeclaration(typeDeclaration)
                 .build();
     }
 }

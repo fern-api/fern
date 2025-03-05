@@ -2,27 +2,104 @@ package com.fern.java.generators;
 
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedFile;
-import com.fern.java.output.GeneratedResourcesJavaFile;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import com.fern.java.output.GeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.lang.model.element.Modifier;
 
 public class NullableNonemptyFilterGenerator extends AbstractFileGenerator {
+
+    private static final String IS_OPTIONAL_EMPTY = "isOptionalEmpty";
+    private static final String IS_ALIAS_OF_OPTIONAL_EMPTY = "isAliasOfOptionalEmpty";
+    private static final ParameterSpec PARAMETER_SPEC =
+            ParameterSpec.builder(TypeName.get(Object.class), "o").build();
+
     public NullableNonemptyFilterGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(), generatorContext);
     }
 
     @Override
     public GeneratedFile generateFile() {
-        try (InputStream is =
-                NullableNonemptyFilterGenerator.class.getResourceAsStream("/NullableNonemptyFilter.java")) {
-            String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            return GeneratedResourcesJavaFile.builder()
-                    .className(className)
-                    .contents(contents)
-                    .build();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read NullableNonemptyFilter.java");
+        CodeBlock.Builder methodBody = CodeBlock.builder();
+        List<CodeBlock> resultingOrStatement = new ArrayList<>();
+
+        MethodSpec isOptionalEmptySpec = MethodSpec.methodBuilder("isOptionalEmpty")
+                .addParameter(PARAMETER_SPEC)
+                .addModifiers(Modifier.PRIVATE)
+                .returns(TypeName.BOOLEAN)
+                .addStatement(
+                        "return $L instanceof $T && !(($T<?>) $L).isPresent()",
+                        PARAMETER_SPEC.name,
+                        Optional.class,
+                        Optional.class,
+                        PARAMETER_SPEC.name)
+                .build();
+
+        methodBody.addStatement(
+                "boolean $L = $L($L)", IS_OPTIONAL_EMPTY, isOptionalEmptySpec.name, PARAMETER_SPEC.name);
+        resultingOrStatement.add(CodeBlock.of(IS_OPTIONAL_EMPTY));
+
+        if (generatorContext.getCustomConfig().wrappedAliases()) {
+            handleWrappedAliases(methodBody, resultingOrStatement, isOptionalEmptySpec);
         }
+
+        addReturn(methodBody, resultingOrStatement);
+
+        TypeSpec filterTypeSpec = TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addMethod(MethodSpec.methodBuilder("equals")
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(TypeName.BOOLEAN)
+                        .addAnnotation(Override.class)
+                        .addParameter(PARAMETER_SPEC)
+                        .addCode(methodBody.build())
+                        .build())
+                .addMethod(isOptionalEmptySpec)
+                .build();
+
+        JavaFile environmentsFile =
+                JavaFile.builder(className.packageName(), filterTypeSpec).build();
+
+        return GeneratedJavaFile.builder()
+                .className(className)
+                .javaFile(environmentsFile)
+                .build();
+    }
+
+    private void handleWrappedAliases(
+            CodeBlock.Builder methodBody, List<CodeBlock> resultingOrStatement, MethodSpec isOptionalEmptySpec) {
+        ClassName wrappedAliasClassName =
+                generatorContext.getPoetClassNameFactory().getWrappedAliasClassName();
+        methodBody.addStatement(
+                "boolean $L = $L instanceof $T && $L((($T<?>) $L).get())",
+                IS_ALIAS_OF_OPTIONAL_EMPTY,
+                PARAMETER_SPEC.name,
+                wrappedAliasClassName,
+                isOptionalEmptySpec.name,
+                wrappedAliasClassName,
+                PARAMETER_SPEC.name);
+        resultingOrStatement.add(CodeBlock.of(IS_ALIAS_OF_OPTIONAL_EMPTY));
+    }
+
+    private void addReturn(CodeBlock.Builder methodBody, List<CodeBlock> resultingOrStatement) {
+        CodeBlock.Builder resultingOrBuilder = CodeBlock.builder();
+        boolean firstCondition = true;
+        for (CodeBlock part : resultingOrStatement) {
+            if (firstCondition) {
+                firstCondition = false;
+            } else {
+                resultingOrBuilder.add("|| ");
+            }
+            resultingOrBuilder.add(part);
+        }
+        methodBody.addStatement("\nreturn $L", resultingOrBuilder.build());
     }
 }

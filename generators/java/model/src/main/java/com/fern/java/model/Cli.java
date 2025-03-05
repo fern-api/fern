@@ -16,6 +16,7 @@ import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
@@ -66,6 +67,11 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
 
         NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
         this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
+
+        if (context.getCustomConfig().wrappedAliases()) {
+            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
+            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
+        }
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());

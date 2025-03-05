@@ -77,7 +77,6 @@ public final class User {
         return metadata;
     }
 
-    @JsonProperty("email")
     public Optional<String> getEmail() {
         return email;
     }
@@ -91,6 +90,12 @@ public final class User {
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
         return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
+        return email;
     }
 
     @java.lang.Override
