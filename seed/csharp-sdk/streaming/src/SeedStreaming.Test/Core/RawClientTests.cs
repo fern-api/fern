@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using SeedStreaming.Core;
 using WireMock.Server;
-using global::SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
-using SeedStreaming.Core;
 
 namespace SeedStreaming.Test.Core;
 

@@ -31,7 +31,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
-    private replaceTemplate: ({ contents, namespace }: { contents: string; namespace: string }) => string;
+    private replaceTemplate: ({ contents, namespace }: { contents: string; namespace?: string }) => string;
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
@@ -415,28 +415,15 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 
     private async writeOneOfFiles(targetPath: AbsoluteFilePath): Promise<void> {
-        const namespace = this.context.getNamespace();
-        await Promise.all(
-            (
-                await getAllFilesInDirectory(
-                    join(AbsoluteFilePath.of(AS_IS_DIRECTORY), RelativeFilePath.of(AsIsFiles.OneOfFolder))
-                )
-            ).map(async (file) => {
-                const fileName = getFilename(AbsoluteFilePath.of(file));
-                if (fileName == null) {
-                    return Promise.resolve();
-                }
-
-                const contents = await readFile(file, { encoding: "utf-8" });
-                new File(
-                    fileName.replace(".Template", ""),
-                    RelativeFilePath.of(""),
-                    template(contents)({
-                        namespace
-                    })
-                ).write(join(targetPath, RelativeFilePath.of("OneOf")));
-            })
+        const contents = await readFile(
+            join(AbsoluteFilePath.of(AS_IS_DIRECTORY), RelativeFilePath.of(AsIsFiles.OneOf)),
+            { encoding: "utf-8" }
         );
+        await new File(
+            AsIsFiles.OneOf.replace(".Template", ""),
+            RelativeFilePath.of(""),
+            this.replaceTemplate({ contents })
+        ).write(targetPath);
     }
 
     private async createCustomPagerAsIsFile(): Promise<File> {
@@ -485,7 +472,7 @@ function createReplaceTemplate(globalTemplateArgs: {
     namespace: string;
     rootNamespace: string;
     customConfig: BaseCsharpCustomConfigSchema;
-}): (localTemplateArgs: { contents: string; namespace: string }) => string {
+}): (localTemplateArgs: { contents: string; namespace?: string }) => string {
     return ({ contents, ...localTemplateArgs }) =>
         template(contents)({
             ...globalTemplateArgs,

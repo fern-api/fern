@@ -39,7 +39,7 @@ export const AsIsFiles = {
         OneOfSerializer: "OneOfSerializer.Template.cs",
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
-    OneOfFolder: "OneOf",
+    OneOf: "OneOf/OneOf.Template.cs",
     UsingsCs: "Usings.Template.cs",
     Test: {
         UsingsCs: "test/Usings.Template.cs",
