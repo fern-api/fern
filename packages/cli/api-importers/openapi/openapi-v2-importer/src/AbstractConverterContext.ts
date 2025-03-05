@@ -138,8 +138,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
             fragment = splitReference[1];
+            
+            if (!url) {
+                return { resolved: false };
+            }
 
-            const response = await fetch(url!); // Add ! since we know url exists due to startsWith check
+            const response = await fetch(url);
 
             if (!response.ok) {
                 return { resolved: false };

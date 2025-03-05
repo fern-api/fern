@@ -11,11 +11,11 @@ import {
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
-import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
@@ -124,7 +124,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             throw new Error("No OpenAPI document found");
         }
         return mergedIr;
-        throw new Error("No OpenAPI document found");
     }
 
     public async toFernWorkspace(
