@@ -1,9 +1,9 @@
 using NUnit.Framework;
-using SeedBasicAuthEnvironmentVariables.Core;
 using WireMock.Server;
-using SystemTask = System.Threading.Tasks.Task;
+using global::SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
+using SeedBasicAuthEnvironmentVariables.Core;
 
 namespace SeedBasicAuthEnvironmentVariables.Test.Core;
 

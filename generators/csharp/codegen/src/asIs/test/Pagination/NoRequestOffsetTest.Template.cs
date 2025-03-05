@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SystemTask = global::System.Threading.Tasks.Task;
+using global::SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;

@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace SeedEnum.Core;
 
 internal sealed class HeaderValue(OneOf<string, Func<string>> value)

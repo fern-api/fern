@@ -1,5 +1,5 @@
-using System.Runtime.CompilerServices;
 using global::System.Net.Http;
+using global::System.Runtime.CompilerServices;
 
 namespace SeedPagination.Core;
 

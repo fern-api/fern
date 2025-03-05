@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace <%= namespace%>;
 
 internal sealed class HeaderValue(

@@ -1,7 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using NUnit.Framework;
-using OneOf;
 using SeedAlias.Core;
 
 namespace SeedAlias.Test.Core.Json;

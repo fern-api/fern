@@ -1,9 +1,9 @@
 using NUnit.Framework;
-using SeedPackageYml.Core;
 using WireMock.Server;
-using SystemTask = System.Threading.Tasks.Task;
+using global::SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
+using SeedPackageYml.Core;
 
 namespace SeedPackageYml.Test.Core;
 

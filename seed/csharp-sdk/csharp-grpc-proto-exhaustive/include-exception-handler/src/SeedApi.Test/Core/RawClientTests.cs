@@ -1,9 +1,9 @@
 using NUnit.Framework;
-using SeedApi.Core;
 using WireMock.Server;
-using SystemTask = System.Threading.Tasks.Task;
+using global::SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
+using SeedApi.Core;
 
 namespace SeedApi.Test.Core;
 

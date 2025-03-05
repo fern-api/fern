@@ -40,6 +40,7 @@ export const AsIsFiles = {
         OneOfSerializer: "OneOfSerializer.Template.cs",
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
+    OneOfFolder: "OneOf",
     Test: {
         TestCustomProps: "test/Test.Custom.props.Template",
         TemplateTestClientCs: "test/TemplateTestClient.cs",

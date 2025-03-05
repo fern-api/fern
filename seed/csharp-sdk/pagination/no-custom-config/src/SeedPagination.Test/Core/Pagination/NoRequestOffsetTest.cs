@@ -1,6 +1,6 @@
 using NUnit.Framework;
+using global::SystemTask = global::System.Threading.Tasks.Task;
 using SeedPagination.Core;
-using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -22,14 +22,7 @@ public class NoRequestOffsetTest
             new() { Data = new() { Items = ["item1"] } },
             new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = await OffsetPager<
-            Request?,
-            object?,
-            Response,
-            int,
-            object?,
-            object
-        >.CreateInstanceAsync(
+        Pager<object> pager = await OffsetPager<Request?, object?, Response, int, object?, object>.CreateInstanceAsync(
             null,
             null,
             (_, _, _) =>

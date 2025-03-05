@@ -3,7 +3,7 @@ import { template } from "lodash-es";
 import path from "path";
 
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, getAllFilesInDirectory, getFilename, join } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AsIsFiles } from "../AsIs";
@@ -142,7 +142,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             this.testUtilFiles.push(await this.createTestUtilsAsIsFile(file));
         }
 
-        const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
+        const githubWorkflowTemplate = await readFile(getAsIsFilepath(AsIsFiles.CiYaml), { encoding: "utf-8" });
         const githubWorkflow = template(githubWorkflowTemplate)({
             projectName: this.name,
             shouldWritePublishBlock: this.context.publishConfig != null,
@@ -156,6 +156,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await mkdir(ghDir, { recursive: true });
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
+        await this.writeOneOfFiles(absolutePathToProjectDirectory);
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
@@ -212,7 +213,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         await writeFile(
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
-            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
+            await readFile(getAsIsFilepath(AsIsFiles.CustomProps), { encoding: "utf-8" })
         );
 
         await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
@@ -235,9 +236,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await mkdir(absolutePathToTestProject, { recursive: true });
 
-        const testCsProjTemplateContents = (
-            await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
-        ).toString();
+        const testCsProjTemplateContents = await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj), {
+            encoding: "utf-8"
+        });
         const testCsProjContents = template(testCsProjTemplateContents)({
             projectName: this.name,
             testProjectName
@@ -248,7 +249,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
-            (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
+            await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps), { encoding: "utf-8" })
         );
         await loggingExeca(
             this.context.logger,
@@ -367,7 +368,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 
     private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        const contents = await readFile(getAsIsFilepath(filename), { encoding: "utf-8" });
         return new File(
             filename.replace("test/", "").replace(".Template", ""),
             RelativeFilePath.of(""),
@@ -375,13 +376,14 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace
+                namespace,
+                rootNamespace: this.context.getNamespace()
             })
         );
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        const contents = await readFile(getAsIsFilepath(filename), { encoding: "utf-8" });
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
@@ -389,7 +391,33 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace
+                namespace,
+                rootNamespace: this.context.getNamespace()
+            })
+        );
+    }
+
+    private async writeOneOfFiles(targetPath: AbsoluteFilePath): Promise<void> {
+        const namespace = this.context.getNamespace();
+        await Promise.all(
+            (
+                await getAllFilesInDirectory(
+                    join(AbsoluteFilePath.of(AS_IS_DIRECTORY), RelativeFilePath.of(AsIsFiles.OneOfFolder))
+                )
+            ).map(async (file) => {
+                const fileName = getFilename(AbsoluteFilePath.of(file));
+                if (fileName == null) {
+                    return Promise.resolve();
+                }
+
+                const contents = await readFile(file, { encoding: "utf-8" });
+                new File(
+                    fileName.replace(".Template", ""),
+                    RelativeFilePath.of(""),
+                    template(contents)({
+                        namespace
+                    })
+                ).write(join(targetPath, RelativeFilePath.of("OneOf")));
             })
         );
     }
@@ -397,7 +425,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private async createCustomPagerAsIsFile(): Promise<File> {
         const fileName = AsIsFiles.CustomPager;
         const customPagerName = this.context.getCustomPagerName();
-        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
+        const contents = await readFile(getAsIsFilepath(fileName), { encoding: "utf-8" });
         return new File(
             fileName.replace(".Template", "").replace("CustomPager", customPagerName),
             RelativeFilePath.of(""),
@@ -405,13 +433,14 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getCoreNamespace()
+                namespace: this.context.getCoreNamespace(),
+                rootNamespace: this.context.getNamespace()
             }).replaceAll("CustomPager", customPagerName)
         );
     }
 
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        const contents = await readFile(getAsIsFilepath(filename), { encoding: "utf-8" });
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
@@ -419,7 +448,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getTestUtilsNamespace()
+                namespace: this.context.getTestUtilsNamespace(),
+                rootNamespace: this.context.getNamespace()
             })
         );
     }
@@ -432,7 +462,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        const contents = await readFile(getAsIsFilepath(filename), { encoding: "utf-8" });
         filename = filename.replace(".Template", "");
         return new File(filename, RelativeFilePath.of(""), contents);
     }
@@ -442,17 +472,20 @@ function replaceTemplate({
     contents,
     grpc,
     idempotencyHeaders,
-    namespace
+    namespace,
+    rootNamespace
 }: {
     contents: string;
     grpc: boolean;
     idempotencyHeaders: boolean;
     namespace: string;
+    rootNamespace: string;
 }): string {
     return template(contents)({
         grpc,
         idempotencyHeaders,
-        namespace
+        namespace,
+        rootNamespace
     });
 }
 
@@ -570,11 +603,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         );
         result.push(`${FOUR_SPACES}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
-        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
-        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }

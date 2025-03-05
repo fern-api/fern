@@ -1,5 +1,3 @@
-using OneOf;
-
 namespace SeedSingleUrlEnvironmentNoDefault.Core;
 
 internal sealed class HeaderValue(OneOf<string, Func<string>> value)
