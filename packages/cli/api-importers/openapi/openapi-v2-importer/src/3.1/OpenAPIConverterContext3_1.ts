@@ -34,14 +34,14 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         return schemaMatch[1];
     }
 
-    public convertReferenceToTypeReference(
+    public async convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
-    ): { ok: true; reference: TypeReference } | { ok: false } {
+    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
@@ -61,14 +61,14 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         };
     }
 
-    public getPropertyAccess(
+    public async getPropertyAccess(
         schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
-    ): ObjectPropertyAccess | undefined {
+    ): Promise<ObjectPropertyAccess | undefined> {
         let schema = schemaOrReference;
 
         // Keep resolving references until we get to a schema object
         while (this.isReferenceObject(schema)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
             if (!resolved.resolved) {
                 return undefined;
             }
@@ -91,7 +91,8 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         return undefined;
     }
-    public getAvailability({
+    
+    public async getAvailability({
         node,
         breadcrumbs,
         errorCollector
@@ -103,9 +104,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3_1.ParameterObject;
         breadcrumbs: string[];
         errorCollector: ErrorCollector;
-    }): Availability | undefined {
+    }): Promise<Availability | undefined> {
         while (this.isReferenceObject(node)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
             if (!resolved.resolved) {
                 return undefined;
             }
@@ -116,7 +117,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             node,
             breadcrumbs
         });
-        const availability = availabilityExtension.convert({
+        const availability = await availabilityExtension.convert({
             context: this,
             errorCollector
         });

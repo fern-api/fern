@@ -5,6 +5,8 @@ import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-g
 import { generatorsYml } from "@fern-api/configuration";
 import { ContainerType, DeclaredTypeName, Package, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
+import yaml from "js-yaml";
+
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -126,15 +128,46 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @param reference The reference object to resolve
      * @returns Object containing ok status and resolved reference if successful
      */
-    public resolveReference<T>(reference: { $ref: string }): { resolved: true; value: T } | { resolved: false } {
-        // Step 1: Get keys
+    public async resolveReference<T>(reference: { $ref: string }): Promise<{ resolved: true; value: T } | { resolved: false }> {
+
+        let resolvedReference: unknown = this.spec;
+
+        // Handle URL references
+        if (reference.$ref.startsWith('http://') || reference.$ref.startsWith('https://')) {
+            const [url, fragment] = reference.$ref.split('#');
+            const response = await fetch(url!); // Add ! since we know url exists due to startsWith check
+            if (!response.ok) {
+                return { resolved: false };
+            }
+            try {
+                const responseText = await response.text();
+                // Try parsing as JSON first
+                try {
+                    resolvedReference = JSON.parse(responseText);
+                } catch {
+                    // If JSON parsing fails, try YAML parsing
+                    resolvedReference = yaml.load(responseText);
+                }
+                if (resolvedReference == null) {
+                    return { resolved: false };
+                }
+            } catch {
+                return { resolved: false };
+            }
+
+            // If there's no fragment, return the whole document
+            if (!fragment) {
+                return { resolved: true, value: resolvedReference as T };
+            }
+        }
+        
+        // Skip the initial '#' if present and split into keys
         const keys = reference.$ref
-            .substring(2)
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '') // Remove leading http(s):// or # and optional /
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
 
-        // Step 2: Index recursively into the document with all the keys
-        let resolvedReference = this.spec;
+        // Navigate through keys
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };

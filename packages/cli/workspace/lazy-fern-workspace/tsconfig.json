@@ -57,6 +57,9 @@
     },
     {
       "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../../commons/ir-utils"
     }
   ]
 }

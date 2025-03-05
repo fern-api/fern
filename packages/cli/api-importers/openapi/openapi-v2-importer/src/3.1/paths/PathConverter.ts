@@ -36,13 +36,13 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         this.path = path;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): PathConverter.Output | undefined {
+    }): Promise<PathConverter.Output | undefined> {
         const endpoints: OperationConverter.Output[] = [];
         const webhooks: WebhookConverter.Output[] = [];
         const inlinedTypes: Record<string, TypeDeclaration> = {};
@@ -64,7 +64,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                         method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
                         path: this.path
                     });
-                    const convertedWebhook = webhookConverter.convert({ context, errorCollector });
+                    const convertedWebhook = await webhookConverter.convert({ context, errorCollector });
                     if (convertedWebhook != null) {
                         webhooks.push(convertedWebhook);
                         Object.assign(inlinedTypes, convertedWebhook.inlinedTypes);
@@ -106,7 +106,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                     path: this.path,
                     idempotent: idempotentExtension
                 });
-                const convertedOperation = operationConverter.convert({ context, errorCollector });
+                const convertedOperation = await operationConverter.convert({ context, errorCollector });
                 if (convertedOperation != null) {
                     endpoints.push(convertedOperation);
                     Object.assign(inlinedTypes, convertedOperation.inlinedTypes);

@@ -72,26 +72,26 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         };
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): IntermediateRepresentation {
+    }): Promise<IntermediateRepresentation> {
         context.spec = this.removeXFernIgnores({
             document: context.spec,
             context,
             errorCollector
         }) as OpenAPIV3_1.Document;
 
-        this.convertServers({ context, errorCollector });
+        await this.convertServers({ context, errorCollector });
 
-        this.convertSecuritySchemes({ context, errorCollector });
+        await this.convertSecuritySchemes({ context, errorCollector });
 
-        this.convertSchemas({ context, errorCollector });
+        await this.convertSchemas({ context, errorCollector });
 
-        this.convertPaths({ context, errorCollector });
+        await this.convertPaths({ context, errorCollector });
 
         let ir = {
             ...this.ir,
@@ -164,19 +164,19 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         return document;
     }
 
-    private convertSecuritySchemes({
+    private async convertSecuritySchemes({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): void {
+    }): Promise<void> {
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(context.spec.components?.securitySchemes ?? {})) {
             let resolvedSecurityScheme: OpenAPIV3_1.SecuritySchemeObject;
             if (context.isReferenceObject(securityScheme)) {
-                const resolvedReference = context.resolveReference<OpenAPIV3_1.SecuritySchemeObject>(securityScheme);
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.SecuritySchemeObject>(securityScheme);
                 if (!resolvedReference.resolved) {
                     continue;
                 }
@@ -221,20 +221,20 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private convertSchemas({
+    private async convertSchemas({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): void {
+    }): Promise<void> {
         for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
             const schemaConverter = new SchemaConverter({
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = schemaConverter.convert({ context, errorCollector });
+            const convertedSchema = await schemaConverter.convert({ context, errorCollector });
             if (convertedSchema != null) {
                 this.ir.rootPackage.types.push(id);
                 this.ir.types = {
@@ -246,13 +246,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private convertPaths({
+    private async convertPaths({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): void {
+    }): Promise<void> {
         const groupToEndpoints: Record<string, HttpEndpoint[]> = {};
 
         for (const [path, pathItem] of Object.entries(context.spec.paths ?? {})) {
@@ -264,7 +264,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 pathItem,
                 path
             });
-            const convertedPath = pathConverter.convert({ context, errorCollector });
+            const convertedPath = await pathConverter.convert({ context, errorCollector });
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
                     const group = endpoint.group?.join(".") ?? "";

@@ -15,6 +15,7 @@ import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
@@ -93,17 +94,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             context,
             specs: openApiSpecs
         });
+        let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
-                    generationLanguage: "typescript",
+                    generationLanguage: "typescript", 
                     logger: context.logger,
                     smartCasing: false,
                     spec: document.value as OpenAPIV3_1.Document
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
                 const errorCollector = new ErrorCollector({ logger: context.logger });
-                const result = converter.convert({
+                const result = await converter.convert({
                     context: converterContext,
                     errorCollector
                 });
@@ -111,9 +113,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     context.logger.info("OpenAPI 3.1 Converter encountered errors:");
                     errorCollector.logErrors();
                 }
-                return result;
+                if (mergedIr === undefined) {
+                    mergedIr = result;
+                } else {
+                    mergedIr = mergeIntermediateRepresentation(mergedIr, result);
+                }
             }
         }
+        if (mergedIr === undefined) {
+            throw new Error("No OpenAPI document found");
+        }
+        return mergedIr;
         throw new Error("No OpenAPI document found");
     }
 

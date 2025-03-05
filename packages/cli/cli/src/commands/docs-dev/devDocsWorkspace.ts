@@ -41,30 +41,42 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                const fernWorkspaces = await Promise.all(
-                    project.apiWorkspaces.map(async (workspace) => {
-                        return workspace.toFernWorkspace({ context });
-                    })
-                );
                 const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
-                await validateDocsWorkspaceWithoutExiting({
-                    workspace: docsWorkspace,
-                    context,
-                    logWarnings: true,
-                    logSummary: false,
-                    fernWorkspaces,
-                    ossWorkspaces: await filterOssWorkspaces(project),
-                    excludeRules
-                });
-                for (const fernWorkspace of fernWorkspaces) {
-                    await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
-                        await validateAPIWorkspaceWithoutExiting({
-                            workspace: fernWorkspace,
-                            context: apiWorkspaceContext,
-                            logWarnings: false,
-                            logSummary: false
-                        });
+                if (docsWorkspace.config.experimental?.openapiParserV3) {
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        fernWorkspaces: [],
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
                     });
+                } else {
+                    const fernWorkspaces = await Promise.all(
+                        project.apiWorkspaces.map(async (workspace) => {
+                            return workspace.toFernWorkspace({ context });
+                        })
+                    );
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        fernWorkspaces,
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
+                    });
+                    for (const fernWorkspace of fernWorkspaces) {
+                        await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
+                            await validateAPIWorkspaceWithoutExiting({
+                                workspace: fernWorkspace,
+                                context: apiWorkspaceContext,
+                                logWarnings: false,
+                                logSummary: false
+                            });
+                        });
+                    }
                 }
             },
             context,
