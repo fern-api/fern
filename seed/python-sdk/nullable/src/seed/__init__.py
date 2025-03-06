@@ -2,7 +2,31 @@
 
 from . import nullable
 from .client import AsyncSeedNullable, SeedNullable
-from .nullable import Metadata, User
+from .nullable import (
+    Email,
+    Metadata,
+    Status,
+    Status_Active,
+    Status_Archived,
+    Status_SoftDeleted,
+    User,
+    UserId,
+    WeirdNumber,
+)
 from .version import __version__
 
-__all__ = ["AsyncSeedNullable", "Metadata", "SeedNullable", "User", "__version__", "nullable"]
+__all__ = [
+    "AsyncSeedNullable",
+    "Email",
+    "Metadata",
+    "SeedNullable",
+    "Status",
+    "Status_Active",
+    "Status_Archived",
+    "Status_SoftDeleted",
+    "User",
+    "UserId",
+    "WeirdNumber",
+    "__version__",
+    "nullable",
+]
