@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add support for explicit nulls in serialization
+      type: feat
+  createdAt: '2025-03-05'
+  irVersion: 55
+  version: 2.22.0
+- changelogEntry:
+    - summary: |
         Add async clients
       type: feat
   createdAt: '2025-03-04'

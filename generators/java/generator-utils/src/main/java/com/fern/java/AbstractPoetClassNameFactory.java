@@ -73,6 +73,18 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "QueryStringMapperTest");
     }
 
+    public final ClassName getNullableClassName() {
+        return ClassName.get(getCorePackage(), "Nullable");
+    }
+
+    public final ClassName getNullableNonemptyFilterClassName() {
+        return ClassName.get(getCorePackage(), "NullableNonemptyFilter");
+    }
+
+    public final ClassName getWrappedAliasClassName() {
+        return ClassName.get(getCorePackage(), "WrappedAlias");
+    }
+
     public final ClassName getPaginationClassName(String simpleName) {
         return ClassName.get(getPaginationPackage(), simpleName);
     }

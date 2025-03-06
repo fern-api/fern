@@ -13,13 +13,14 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
+import com.seed.object.core.WrappedAlias;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
-public final class AliasSetInline {
+public final class AliasSetInline implements WrappedAlias {
     private final Set<ValueItem> value;
 
     private AliasSetInline(Set<ValueItem> value) {

@@ -123,6 +123,11 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  nullable:
+    - customConfig:
+        wrapped-aliases: true
+      outputFolder: wrapped-aliases
+    - outputFolder: no-custom-config
 scripts:
   - docker: fernapi/java-seed
     commands:
