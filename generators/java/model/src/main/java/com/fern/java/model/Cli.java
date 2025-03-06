@@ -11,12 +11,9 @@ import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
-import com.fern.java.generators.NullableGenerator;
-import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
-import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
@@ -61,17 +58,6 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         this.addGeneratedFile(objectMappersGenerator.generateFile());
-
-        NullableGenerator nullableGenerator = new NullableGenerator(context);
-        this.addGeneratedFile(nullableGenerator.generateFile());
-
-        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
-        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
-
-        if (context.getCustomConfig().wrappedAliases()) {
-            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
-            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
-        }
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());

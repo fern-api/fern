@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import core.Nullable;
-import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
@@ -27,14 +25,24 @@ import org.jetbrains.annotations.NotNull;
 public final class User {
   private final String name;
 
+  private final UserId id;
+
   private final Optional<List<String>> tags;
 
   private final Optional<Metadata> metadata;
 
-  private User(String name, Optional<List<String>> tags, Optional<Metadata> metadata) {
+  private final Email email;
+
+  private final WeirdNumber favoriteNumber;
+
+  private User(String name, UserId id, Optional<List<String>> tags, Optional<Metadata> metadata,
+      Email email, WeirdNumber favoriteNumber) {
     this.name = name;
+    this.id = id;
     this.tags = tags;
     this.metadata = metadata;
+    this.email = email;
+    this.favoriteNumber = favoriteNumber;
   }
 
   @JsonProperty("name")
@@ -42,10 +50,13 @@ public final class User {
     return name;
   }
 
+  @JsonProperty("id")
+  public UserId getId() {
+    return id;
+  }
+
+  @JsonProperty("tags")
   public Optional<List<String>> getTags() {
-    if (tags == null) {
-      return Optional.empty();
-    }
     return tags;
   }
 
@@ -54,13 +65,14 @@ public final class User {
     return metadata;
   }
 
-  @JsonInclude(
-      value = JsonInclude.Include.CUSTOM,
-      valueFilter = NullableNonemptyFilter.class
-  )
-  @JsonProperty("tags")
-  private Optional<List<String>> _getTags() {
-    return tags;
+  @JsonProperty("email")
+  public Email getEmail() {
+    return email;
+  }
+
+  @JsonProperty("favorite-number")
+  public WeirdNumber getFavoriteNumber() {
+    return favoriteNumber;
   }
 
   @java.lang.Override
@@ -70,12 +82,12 @@ public final class User {
   }
 
   private boolean equalTo(User other) {
-    return name.equals(other.name) && tags.equals(other.tags) && metadata.equals(other.metadata);
+    return name.equals(other.name) && id.equals(other.id) && tags.equals(other.tags) && metadata.equals(other.metadata) && email.equals(other.email) && favoriteNumber.equals(other.favoriteNumber);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.name, this.tags, this.metadata);
+    return Objects.hash(this.name, this.id, this.tags, this.metadata, this.email, this.favoriteNumber);
   }
 
   @java.lang.Override
@@ -88,9 +100,21 @@ public final class User {
   }
 
   public interface NameStage {
-    _FinalStage name(@NotNull String name);
+    IdStage name(@NotNull String name);
 
     Builder from(User other);
+  }
+
+  public interface IdStage {
+    EmailStage id(@NotNull UserId id);
+  }
+
+  public interface EmailStage {
+    FavoriteNumberStage email(@NotNull Email email);
+  }
+
+  public interface FavoriteNumberStage {
+    _FinalStage favoriteNumber(@NotNull WeirdNumber favoriteNumber);
   }
 
   public interface _FinalStage {
@@ -100,8 +124,6 @@ public final class User {
 
     _FinalStage tags(List<String> tags);
 
-    _FinalStage tags(Nullable<List<String>> tags);
-
     _FinalStage metadata(Optional<Metadata> metadata);
 
     _FinalStage metadata(Metadata metadata);
@@ -110,8 +132,14 @@ public final class User {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements NameStage, _FinalStage {
+  public static final class Builder implements NameStage, IdStage, EmailStage, FavoriteNumberStage, _FinalStage {
     private String name;
+
+    private UserId id;
+
+    private Email email;
+
+    private WeirdNumber favoriteNumber;
 
     private Optional<Metadata> metadata = Optional.empty();
 
@@ -123,15 +151,39 @@ public final class User {
     @java.lang.Override
     public Builder from(User other) {
       name(other.getName());
+      id(other.getId());
       tags(other.getTags());
       metadata(other.getMetadata());
+      email(other.getEmail());
+      favoriteNumber(other.getFavoriteNumber());
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(@NotNull String name) {
+    public IdStage name(@NotNull String name) {
       this.name = Objects.requireNonNull(name, "name must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("id")
+    public EmailStage id(@NotNull UserId id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("email")
+    public FavoriteNumberStage email(@NotNull Email email) {
+      this.email = Objects.requireNonNull(email, "email must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("favorite-number")
+    public _FinalStage favoriteNumber(@NotNull WeirdNumber favoriteNumber) {
+      this.favoriteNumber = Objects.requireNonNull(favoriteNumber, "favoriteNumber must not be null");
       return this;
     }
 
@@ -148,20 +200,6 @@ public final class User {
     )
     public _FinalStage metadata(Optional<Metadata> metadata) {
       this.metadata = metadata;
-      return this;
-    }
-
-    @java.lang.Override
-    public _FinalStage tags(Nullable<List<String>> tags) {
-      if (tags.isNull()) {
-        this.tags = null;
-      }
-      else if (tags.isEmpty()) {
-        this.tags = Optional.empty();
-      }
-      else {
-        this.tags = Optional.of(tags.get());
-      }
       return this;
     }
 
@@ -183,7 +221,7 @@ public final class User {
 
     @java.lang.Override
     public User build() {
-      return new User(name, tags, metadata);
+      return new User(name, id, tags, metadata, email, favoriteNumber);
     }
   }
 }

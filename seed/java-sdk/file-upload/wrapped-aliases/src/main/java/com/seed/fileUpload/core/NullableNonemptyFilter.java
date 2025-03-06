@@ -6,9 +6,22 @@ package com.seed.fileUpload.core;
 import java.util.Optional;
 
 public final class NullableNonemptyFilter {
-
     @Override
     public boolean equals(Object o) {
+        boolean isOptionalEmpty = isOptionalEmpty(o);
+        boolean isAliasOfOptionalEmpty = o instanceof WrappedAlias && isAliasOfOptionalEmpty((WrappedAlias) o);
+
+        return isOptionalEmpty || isAliasOfOptionalEmpty;
+    }
+
+    private boolean isOptionalEmpty(Object o) {
         return o instanceof Optional && !((Optional<?>) o).isPresent();
+    }
+
+    private boolean isAliasOfOptionalEmpty(WrappedAlias o) {
+        if (o.get() instanceof WrappedAlias) {
+            return isAliasOfOptionalEmpty((WrappedAlias) o.get());
+        }
+        return isOptionalEmpty(o.get());
     }
 }

@@ -4,12 +4,19 @@
 
 package com.fern.sdk.core;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Optional;
 
 public final class NullableNonemptyFilter {
+  @Override
+  public boolean equals(Object o) {
+    boolean isOptionalEmpty = isOptionalEmpty(o);
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof Optional && !((Optional<?>) o).isPresent();
-    }
+        return isOptionalEmpty;
+  }
+
+  private boolean isOptionalEmpty(Object o) {
+    return o instanceof Optional && !((Optional<?>) o).isPresent();
+  }
 }

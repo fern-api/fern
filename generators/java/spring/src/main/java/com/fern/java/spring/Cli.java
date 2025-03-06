@@ -13,12 +13,9 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
-import com.fern.java.generators.NullableGenerator;
-import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
-import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -84,17 +81,6 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
-
-        NullableGenerator nullableGenerator = new NullableGenerator(context);
-        this.addGeneratedFile(nullableGenerator.generateFile());
-
-        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
-        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
-
-        if (context.getCustomConfig().wrappedAliases()) {
-            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
-            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
-        }
 
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();

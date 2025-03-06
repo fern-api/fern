@@ -8,6 +8,7 @@ import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
+import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
@@ -47,6 +48,8 @@ public interface EnrichedObjectProperty {
     Optional<TypeDeclaration> typeDeclaration();
 
     ClassName nullableNonemptyFilterClassName();
+
+    AbstractGeneratorContext.GeneratorType generator();
 
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
@@ -138,13 +141,15 @@ public interface EnrichedObjectProperty {
     @Value.Lazy
     default boolean nullable() {
         TypeReference declaredType = objectProperty().getValueType();
-        return declaredType.isContainer() && declaredType.getContainer().get().isNullable()
-                || (!wrappedAliases() && aliasOfNullable());
+        boolean nullable =
+                declaredType.isContainer() && declaredType.getContainer().get().isNullable()
+                        || (!wrappedAliases() && aliasOfNullable());
+        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && nullable;
     }
 
     @Value.Lazy
     default boolean aliasOfNullable() {
-        return typeDeclaration().isPresent()
+        boolean aliasOfNullable = typeDeclaration().isPresent()
                 && typeDeclaration().get().getShape().isAlias()
                 && typeDeclaration()
                         .get()
@@ -162,6 +167,7 @@ public interface EnrichedObjectProperty {
                         .getContainer()
                         .get()
                         .isNullable();
+        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && aliasOfNullable;
     }
 
     static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {
@@ -170,6 +176,7 @@ public interface EnrichedObjectProperty {
 
     static EnrichedObjectProperty of(
             ObjectProperty objectProperty,
+            AbstractGeneratorContext.GeneratorType generator,
             Optional<TypeDeclaration> typeDeclaration,
             ClassName nullableNonemptyFilterClassName,
             boolean fromInterface,
@@ -188,6 +195,7 @@ public interface EnrichedObjectProperty {
                 .wrappedAliases(wrappedAliases)
                 .objectProperty(objectProperty)
                 .nullableNonemptyFilterClassName(nullableNonemptyFilterClassName)
+                .generator(generator)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)

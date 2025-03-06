@@ -6,9 +6,14 @@ package com.seed.audiences.core;
 import java.util.Optional;
 
 public final class NullableNonemptyFilter {
-
     @Override
     public boolean equals(Object o) {
+        boolean isOptionalEmpty = isOptionalEmpty(o);
+
+        return isOptionalEmpty;
+    }
+
+    private boolean isOptionalEmpty(Object o) {
         return o instanceof Optional && !((Optional<?>) o).isPresent();
     }
 }

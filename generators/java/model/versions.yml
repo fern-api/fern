@@ -1,12 +1,5 @@
 - changelogEntry:
     - summary: |
-        Add support for explicit nulls in serialization
-      type: feat
-  createdAt: '2025-03-05'
-  irVersion: 55
-  version: 1.8.0
-- changelogEntry:
-    - summary: |
         Upgrade IR version dependency to v55
       type: chore
   createdAt: '2025-02-20'

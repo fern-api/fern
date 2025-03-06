@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import core.Nullable;
-import core.NullableNonemptyFilter;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Object;
@@ -34,12 +32,15 @@ public final class Metadata {
 
   private final Optional<Boolean> activated;
 
+  private final Status status;
+
   private Metadata(OffsetDateTime createdAt, OffsetDateTime updatedAt, Optional<String> avatar,
-      Optional<Boolean> activated) {
+      Optional<Boolean> activated, Status status) {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.avatar = avatar;
     this.activated = activated;
+    this.status = status;
   }
 
   @JsonProperty("createdAt")
@@ -52,10 +53,8 @@ public final class Metadata {
     return updatedAt;
   }
 
+  @JsonProperty("avatar")
   public Optional<String> getAvatar() {
-    if (avatar == null) {
-      return Optional.empty();
-    }
     return avatar;
   }
 
@@ -64,13 +63,9 @@ public final class Metadata {
     return activated;
   }
 
-  @JsonInclude(
-      value = JsonInclude.Include.CUSTOM,
-      valueFilter = NullableNonemptyFilter.class
-  )
-  @JsonProperty("avatar")
-  private Optional<String> _getAvatar() {
-    return avatar;
+  @JsonProperty("status")
+  public Status getStatus() {
+    return status;
   }
 
   @java.lang.Override
@@ -80,12 +75,12 @@ public final class Metadata {
   }
 
   private boolean equalTo(Metadata other) {
-    return createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt) && avatar.equals(other.avatar) && activated.equals(other.activated);
+    return createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt) && avatar.equals(other.avatar) && activated.equals(other.activated) && status.equals(other.status);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.createdAt, this.updatedAt, this.avatar, this.activated);
+    return Objects.hash(this.createdAt, this.updatedAt, this.avatar, this.activated, this.status);
   }
 
   @java.lang.Override
@@ -104,7 +99,11 @@ public final class Metadata {
   }
 
   public interface UpdatedAtStage {
-    _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
+    StatusStage updatedAt(@NotNull OffsetDateTime updatedAt);
+  }
+
+  public interface StatusStage {
+    _FinalStage status(@NotNull Status status);
   }
 
   public interface _FinalStage {
@@ -114,8 +113,6 @@ public final class Metadata {
 
     _FinalStage avatar(String avatar);
 
-    _FinalStage avatar(Nullable<String> avatar);
-
     _FinalStage activated(Optional<Boolean> activated);
 
     _FinalStage activated(Boolean activated);
@@ -124,10 +121,12 @@ public final class Metadata {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements CreatedAtStage, UpdatedAtStage, _FinalStage {
+  public static final class Builder implements CreatedAtStage, UpdatedAtStage, StatusStage, _FinalStage {
     private OffsetDateTime createdAt;
 
     private OffsetDateTime updatedAt;
+
+    private Status status;
 
     private Optional<Boolean> activated = Optional.empty();
 
@@ -142,6 +141,7 @@ public final class Metadata {
       updatedAt(other.getUpdatedAt());
       avatar(other.getAvatar());
       activated(other.getActivated());
+      status(other.getStatus());
       return this;
     }
 
@@ -154,8 +154,15 @@ public final class Metadata {
 
     @java.lang.Override
     @JsonSetter("updatedAt")
-    public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+    public StatusStage updatedAt(@NotNull OffsetDateTime updatedAt) {
       this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("status")
+    public _FinalStage status(@NotNull Status status) {
+      this.status = Objects.requireNonNull(status, "status must not be null");
       return this;
     }
 
@@ -172,20 +179,6 @@ public final class Metadata {
     )
     public _FinalStage activated(Optional<Boolean> activated) {
       this.activated = activated;
-      return this;
-    }
-
-    @java.lang.Override
-    public _FinalStage avatar(Nullable<String> avatar) {
-      if (avatar.isNull()) {
-        this.avatar = null;
-      }
-      else if (avatar.isEmpty()) {
-        this.avatar = Optional.empty();
-      }
-      else {
-        this.avatar = Optional.of(avatar.get());
-      }
       return this;
     }
 
@@ -207,7 +200,7 @@ public final class Metadata {
 
     @java.lang.Override
     public Metadata build() {
-      return new Metadata(createdAt, updatedAt, avatar, activated);
+      return new Metadata(createdAt, updatedAt, avatar, activated, status);
     }
   }
 }

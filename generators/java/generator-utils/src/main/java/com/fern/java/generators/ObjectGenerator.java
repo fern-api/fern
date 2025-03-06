@@ -252,6 +252,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .wrappedAliases(prop.wrappedAliases())
                     .objectProperty(prop.objectProperty())
                     .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
+                    .generator(prop.generator())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
@@ -285,6 +286,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
                         return EnrichedObjectProperty.of(
                                 objectProperty,
+                                generatorContext.getType(),
                                 objectProperty
                                         .getValueType()
                                         .getNamed()
@@ -311,6 +313,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             .visit(new TypeReferenceInlineChecker(generatorContext));
                     return EnrichedObjectProperty.of(
                             propertyMethodSpec.objectProperty(),
+                            generatorContext.getType(),
                             propertyMethodSpec
                                     .objectProperty()
                                     .getValueType()
