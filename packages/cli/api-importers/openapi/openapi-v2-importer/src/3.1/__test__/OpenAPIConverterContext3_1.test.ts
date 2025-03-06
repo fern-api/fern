@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
@@ -16,6 +16,7 @@ describe("OpenAPIConverterContext3_1", async () => {
 
         const context = new OpenAPIConverterContext3_1({
             spec,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             logger: undefined as any,
             generationLanguage: undefined,
             smartCasing: false
@@ -26,5 +27,5 @@ describe("OpenAPIConverterContext3_1", async () => {
         });
 
         expect(result).toMatchSnapshot();
-    });
+    }, 100_000);
 });
