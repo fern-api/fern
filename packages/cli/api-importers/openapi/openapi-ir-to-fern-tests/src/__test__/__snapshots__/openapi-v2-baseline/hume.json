@@ -21084,6 +21084,7 @@
         }
       },
       "headers": [],
+      "docs": "Chat with Empathic Voice Interface (EVI)",
       "pathParameters": [],
       "queryParameters": [
         {
