@@ -326,6 +326,154 @@ func (f *FieldValue) validate() error {
 	return nil
 }
 
+type FirstUnion struct {
+	FirstUnionFirstElement  *FirstUnionFirstElement
+	FirstUnionSecondElement *FirstUnionSecondElement
+
+	typ string
+}
+
+func NewFirstUnionFromFirstUnionFirstElement(value *FirstUnionFirstElement) *FirstUnion {
+	return &FirstUnion{typ: "FirstUnionFirstElement", FirstUnionFirstElement: value}
+}
+
+func NewFirstUnionFromFirstUnionSecondElement(value *FirstUnionSecondElement) *FirstUnion {
+	return &FirstUnion{typ: "FirstUnionSecondElement", FirstUnionSecondElement: value}
+}
+
+func (f *FirstUnion) GetFirstUnionFirstElement() *FirstUnionFirstElement {
+	if f == nil {
+		return nil
+	}
+	return f.FirstUnionFirstElement
+}
+
+func (f *FirstUnion) GetFirstUnionSecondElement() *FirstUnionSecondElement {
+	if f == nil {
+		return nil
+	}
+	return f.FirstUnionSecondElement
+}
+
+func (f *FirstUnion) UnmarshalJSON(data []byte) error {
+	valueFirstUnionFirstElement := new(FirstUnionFirstElement)
+	if err := json.Unmarshal(data, &valueFirstUnionFirstElement); err == nil {
+		f.typ = "FirstUnionFirstElement"
+		f.FirstUnionFirstElement = valueFirstUnionFirstElement
+		return nil
+	}
+	valueFirstUnionSecondElement := new(FirstUnionSecondElement)
+	if err := json.Unmarshal(data, &valueFirstUnionSecondElement); err == nil {
+		f.typ = "FirstUnionSecondElement"
+		f.FirstUnionSecondElement = valueFirstUnionSecondElement
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+}
+
+func (f FirstUnion) MarshalJSON() ([]byte, error) {
+	if f.typ == "FirstUnionFirstElement" || f.FirstUnionFirstElement != nil {
+		return json.Marshal(f.FirstUnionFirstElement)
+	}
+	if f.typ == "FirstUnionSecondElement" || f.FirstUnionSecondElement != nil {
+		return json.Marshal(f.FirstUnionSecondElement)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+type FirstUnionVisitor interface {
+	VisitFirstUnionFirstElement(*FirstUnionFirstElement) error
+	VisitFirstUnionSecondElement(*FirstUnionSecondElement) error
+}
+
+func (f *FirstUnion) Accept(visitor FirstUnionVisitor) error {
+	if f.typ == "FirstUnionFirstElement" || f.FirstUnionFirstElement != nil {
+		return visitor.VisitFirstUnionFirstElement(f.FirstUnionFirstElement)
+	}
+	if f.typ == "FirstUnionSecondElement" || f.FirstUnionSecondElement != nil {
+		return visitor.VisitFirstUnionSecondElement(f.FirstUnionSecondElement)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+type FirstUnionFirstElement struct {
+	Child *SecondUnion `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *FirstUnionFirstElement) GetChild() *SecondUnion {
+	if f == nil {
+		return nil
+	}
+	return f.Child
+}
+
+func (f *FirstUnionFirstElement) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FirstUnionFirstElement) UnmarshalJSON(data []byte) error {
+	type unmarshaler FirstUnionFirstElement
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FirstUnionFirstElement(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	return nil
+}
+
+func (f *FirstUnionFirstElement) String() string {
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FirstUnionSecondElement struct {
+	Child *SecondUnion `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *FirstUnionSecondElement) GetChild() *SecondUnion {
+	if f == nil {
+		return nil
+	}
+	return f.Child
+}
+
+func (f *FirstUnionSecondElement) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FirstUnionSecondElement) UnmarshalJSON(data []byte) error {
+	type unmarshaler FirstUnionSecondElement
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FirstUnionSecondElement(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	return nil
+}
+
+func (f *FirstUnionSecondElement) String() string {
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 // This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
@@ -424,4 +572,152 @@ func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
 
 func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
+}
+
+type SecondUnion struct {
+	SecondUnionFirstElement  *SecondUnionFirstElement
+	SecondUnionSecondElement *SecondUnionSecondElement
+
+	typ string
+}
+
+func NewSecondUnionFromSecondUnionFirstElement(value *SecondUnionFirstElement) *SecondUnion {
+	return &SecondUnion{typ: "SecondUnionFirstElement", SecondUnionFirstElement: value}
+}
+
+func NewSecondUnionFromSecondUnionSecondElement(value *SecondUnionSecondElement) *SecondUnion {
+	return &SecondUnion{typ: "SecondUnionSecondElement", SecondUnionSecondElement: value}
+}
+
+func (s *SecondUnion) GetSecondUnionFirstElement() *SecondUnionFirstElement {
+	if s == nil {
+		return nil
+	}
+	return s.SecondUnionFirstElement
+}
+
+func (s *SecondUnion) GetSecondUnionSecondElement() *SecondUnionSecondElement {
+	if s == nil {
+		return nil
+	}
+	return s.SecondUnionSecondElement
+}
+
+func (s *SecondUnion) UnmarshalJSON(data []byte) error {
+	valueSecondUnionFirstElement := new(SecondUnionFirstElement)
+	if err := json.Unmarshal(data, &valueSecondUnionFirstElement); err == nil {
+		s.typ = "SecondUnionFirstElement"
+		s.SecondUnionFirstElement = valueSecondUnionFirstElement
+		return nil
+	}
+	valueSecondUnionSecondElement := new(SecondUnionSecondElement)
+	if err := json.Unmarshal(data, &valueSecondUnionSecondElement); err == nil {
+		s.typ = "SecondUnionSecondElement"
+		s.SecondUnionSecondElement = valueSecondUnionSecondElement
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
+}
+
+func (s SecondUnion) MarshalJSON() ([]byte, error) {
+	if s.typ == "SecondUnionFirstElement" || s.SecondUnionFirstElement != nil {
+		return json.Marshal(s.SecondUnionFirstElement)
+	}
+	if s.typ == "SecondUnionSecondElement" || s.SecondUnionSecondElement != nil {
+		return json.Marshal(s.SecondUnionSecondElement)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type SecondUnionVisitor interface {
+	VisitSecondUnionFirstElement(*SecondUnionFirstElement) error
+	VisitSecondUnionSecondElement(*SecondUnionSecondElement) error
+}
+
+func (s *SecondUnion) Accept(visitor SecondUnionVisitor) error {
+	if s.typ == "SecondUnionFirstElement" || s.SecondUnionFirstElement != nil {
+		return visitor.VisitSecondUnionFirstElement(s.SecondUnionFirstElement)
+	}
+	if s.typ == "SecondUnionSecondElement" || s.SecondUnionSecondElement != nil {
+		return visitor.VisitSecondUnionSecondElement(s.SecondUnionSecondElement)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type SecondUnionFirstElement struct {
+	Child *FirstUnion `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SecondUnionFirstElement) GetChild() *FirstUnion {
+	if s == nil {
+		return nil
+	}
+	return s.Child
+}
+
+func (s *SecondUnionFirstElement) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *SecondUnionFirstElement) UnmarshalJSON(data []byte) error {
+	type unmarshaler SecondUnionFirstElement
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SecondUnionFirstElement(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	return nil
+}
+
+func (s *SecondUnionFirstElement) String() string {
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SecondUnionSecondElement struct {
+	Child *FirstUnion `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SecondUnionSecondElement) GetChild() *FirstUnion {
+	if s == nil {
+		return nil
+	}
+	return s.Child
+}
+
+func (s *SecondUnionSecondElement) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *SecondUnionSecondElement) UnmarshalJSON(data []byte) error {
+	type unmarshaler SecondUnionSecondElement
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SecondUnionSecondElement(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	return nil
+}
+
+func (s *SecondUnionSecondElement) String() string {
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
