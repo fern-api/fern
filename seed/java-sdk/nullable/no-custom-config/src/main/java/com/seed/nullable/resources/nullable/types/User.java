@@ -72,15 +72,14 @@ public final class User {
         return tags;
     }
 
-    @JsonProperty("metadata")
     public Optional<Metadata> getMetadata() {
+        if (metadata == null) {
+            return Optional.empty();
+        }
         return metadata;
     }
 
     public Optional<String> getEmail() {
-        if (email == null) {
-            return Optional.empty();
-        }
         return email;
     }
 
@@ -93,6 +92,12 @@ public final class User {
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
         return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("metadata")
+    private Optional<Metadata> _getMetadata() {
+        return metadata;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -162,11 +167,11 @@ public final class User {
 
         _FinalStage metadata(Metadata metadata);
 
+        _FinalStage metadata(Nullable<Metadata> metadata);
+
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
-
-        _FinalStage email(Nullable<String> email);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -221,18 +226,6 @@ public final class User {
         }
 
         @java.lang.Override
-        public _FinalStage email(Nullable<String> email) {
-            if (email.isNull()) {
-                this.email = null;
-            } else if (email.isEmpty()) {
-                this.email = Optional.empty();
-            } else {
-                this.email = Optional.of(email.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage email(String email) {
             this.email = Optional.ofNullable(email);
             return this;
@@ -242,6 +235,18 @@ public final class User {
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
         public _FinalStage email(Optional<String> email) {
             this.email = email;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage metadata(Nullable<Metadata> metadata) {
+            if (metadata.isNull()) {
+                this.metadata = null;
+            } else if (metadata.isEmpty()) {
+                this.metadata = Optional.empty();
+            } else {
+                this.metadata = Optional.of(metadata.get());
+            }
             return this;
         }
 

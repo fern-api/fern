@@ -72,8 +72,10 @@ public final class User {
         return tags;
     }
 
-    @JsonProperty("metadata")
     public Optional<Metadata> getMetadata() {
+        if (metadata == null) {
+            return Optional.empty();
+        }
         return metadata;
     }
 
@@ -93,6 +95,12 @@ public final class User {
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
         return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("metadata")
+    private Optional<Metadata> _getMetadata() {
+        return metadata;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -167,6 +175,8 @@ public final class User {
         _FinalStage metadata(Optional<Metadata> metadata);
 
         _FinalStage metadata(Metadata metadata);
+
+        _FinalStage metadata(Nullable<Metadata> metadata);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -235,6 +245,18 @@ public final class User {
         @JsonSetter("favorite-number")
         public _FinalStage favoriteNumber(@NotNull WeirdNumber favoriteNumber) {
             this.favoriteNumber = Objects.requireNonNull(favoriteNumber, "favoriteNumber must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage metadata(Nullable<Metadata> metadata) {
+            if (metadata.isNull()) {
+                this.metadata = null;
+            } else if (metadata.isEmpty()) {
+                this.metadata = Optional.empty();
+            } else {
+                this.metadata = Optional.of(metadata.get());
+            }
             return this;
         }
 

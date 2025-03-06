@@ -68,8 +68,10 @@ public final class Metadata {
         return avatar;
     }
 
-    @JsonProperty("activated")
     public Optional<Boolean> getActivated() {
+        if (activated == null) {
+            return Optional.empty();
+        }
         return activated;
     }
 
@@ -82,6 +84,12 @@ public final class Metadata {
     @JsonProperty("avatar")
     private Optional<String> _getAvatar() {
         return avatar;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("activated")
+    private Optional<Boolean> _getActivated() {
+        return activated;
     }
 
     @java.lang.Override
@@ -143,6 +151,8 @@ public final class Metadata {
         _FinalStage activated(Optional<Boolean> activated);
 
         _FinalStage activated(Boolean activated);
+
+        _FinalStage activated(Nullable<Boolean> activated);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -190,6 +200,18 @@ public final class Metadata {
         @JsonSetter("status")
         public _FinalStage status(@NotNull Status status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage activated(Nullable<Boolean> activated) {
+            if (activated.isNull()) {
+                this.activated = null;
+            } else if (activated.isEmpty()) {
+                this.activated = Optional.empty();
+            } else {
+                this.activated = Optional.of(activated.get());
+            }
             return this;
         }
 

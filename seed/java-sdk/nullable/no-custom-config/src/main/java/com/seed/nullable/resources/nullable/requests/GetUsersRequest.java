@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,13 +64,29 @@ public final class GetUsersRequest {
         return activated;
     }
 
-    @JsonProperty("tags")
     public Optional<String> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
         return tags;
     }
 
-    @JsonProperty("extra")
     public Optional<Boolean> getExtra() {
+        if (extra == null) {
+            return Optional.empty();
+        }
+        return extra;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("tags")
+    private Optional<String> _getTags() {
+        return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("extra")
+    private Optional<Boolean> _getExtra() {
         return extra;
     }
 
@@ -175,6 +193,17 @@ public final class GetUsersRequest {
             return this;
         }
 
+        public Builder tags(Nullable<String> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "extra", nulls = Nulls.SKIP)
         public Builder extra(Optional<Boolean> extra) {
             this.extra = extra;
@@ -183,6 +212,17 @@ public final class GetUsersRequest {
 
         public Builder extra(Boolean extra) {
             this.extra = Optional.ofNullable(extra);
+            return this;
+        }
+
+        public Builder extra(Nullable<Boolean> extra) {
+            if (extra.isNull()) {
+                this.extra = null;
+            } else if (extra.isEmpty()) {
+                this.extra = Optional.empty();
+            } else {
+                this.extra = Optional.of(extra.get());
+            }
             return this;
         }
 

@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +34,16 @@ public final class DeleteUserRequest {
     /**
      * @return The user to delete.
      */
-    @JsonProperty("username")
     public Optional<String> getUsername() {
+        if (username == null) {
+            return Optional.empty();
+        }
+        return username;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("username")
+    private Optional<String> _getUsername() {
         return username;
     }
 
@@ -88,6 +98,17 @@ public final class DeleteUserRequest {
 
         public Builder username(String username) {
             this.username = Optional.ofNullable(username);
+            return this;
+        }
+
+        public Builder username(Nullable<String> username) {
+            if (username.isNull()) {
+                this.username = null;
+            } else if (username.isEmpty()) {
+                this.username = Optional.empty();
+            } else {
+                this.username = Optional.of(username.get());
+            }
             return this;
         }
 

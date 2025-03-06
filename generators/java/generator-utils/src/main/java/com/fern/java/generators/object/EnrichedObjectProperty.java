@@ -140,11 +140,9 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default boolean nullable() {
-        TypeReference declaredType = objectProperty().getValueType();
-        boolean nullable =
-                declaredType.isContainer() && declaredType.getContainer().get().isNullable()
-                        || (!wrappedAliases() && aliasOfNullable());
-        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && nullable;
+        boolean nullable = generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                && isNullable(objectProperty().getValueType());
+        return nullable || optionalNullable();
     }
 
     @Value.Lazy
@@ -168,6 +166,26 @@ public interface EnrichedObjectProperty {
                         .get()
                         .isNullable();
         return generator().equals(AbstractGeneratorContext.GeneratorType.SDK) && aliasOfNullable;
+    }
+
+    @Value.Lazy
+    default boolean optionalNullable() {
+        return generator().equals(AbstractGeneratorContext.GeneratorType.SDK)
+                && isOptional(objectProperty().getValueType())
+                && isNullable(objectProperty()
+                        .getValueType()
+                        .getContainer()
+                        .get()
+                        .getOptional()
+                        .get());
+    }
+
+    static boolean isOptional(TypeReference reference) {
+        return reference.isContainer() && reference.getContainer().get().isOptional();
+    }
+
+    static boolean isNullable(TypeReference reference) {
+        return reference.isContainer() && reference.getContainer().get().isNullable();
     }
 
     static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {
