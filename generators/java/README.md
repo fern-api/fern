@@ -14,7 +14,7 @@ Fern handles transforming an API definition -- either an OpenAPI or Fern specifi
 
 Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
-Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=documentation) to dive straight in and find out what Fern can do for you!
+Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/learn?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
 ## Generating Java
 
@@ -28,7 +28,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
     path: ../generated/java
 ```
 
-By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
+By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. To run generation on the server and download a local preview instead of committing to a repository, use the `--preview` flag. [Read more.](https://buildwithfern.com/learn/cli-reference/commands#fern-generate)
 
 ## Configuration
 
