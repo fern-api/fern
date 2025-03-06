@@ -473,7 +473,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     ? [
                           `const parsedResponse = ${getTextOfTsNode(this.getParsedExpression(subscribeMessage.body, context))};`,
                           "if (parsedResponse.ok) {",
-                          `    this.eventHandlers.message?.(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`,
+                          `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.({`,
                           "        ...parsedResponse.value,",
                           "        receivedAt: new Date()",
                           "    });",

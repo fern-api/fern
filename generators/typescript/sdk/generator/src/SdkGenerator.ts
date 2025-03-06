@@ -110,6 +110,7 @@ export declare namespace SdkGenerator {
         outputEsm: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
+        shouldGenerateWebsocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         requireDefaultEnvironment: boolean;
@@ -150,6 +151,7 @@ export class SdkGenerator {
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
+    private shouldGenerateWebsocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
@@ -223,6 +225,7 @@ export class SdkGenerator {
         this.generateOAuthClients =
             this.config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
+        this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -446,8 +449,10 @@ export class SdkGenerator {
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
-        this.generateWebsocketClients();
-        this.context.logger.debug("Generated websocket clients");
+        if (this.shouldGenerateWebsocketClients) {
+            this.generateWebsocketClients();
+            this.context.logger.debug("Generated websocket clients");
+        }
         this.generateServiceDeclarations();
         this.context.logger.debug("Generated services");
         this.generateEnvironments();

@@ -12,7 +12,16 @@ import {
 
 import { SetRequired } from "@fern-api/core-utils";
 
-import { IntermediateRepresentation, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import {
+    AuthScheme,
+    BasicAuthScheme,
+    BearerAuthScheme,
+    HeaderAuthScheme,
+    IntermediateRepresentation,
+    OAuthScheme,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketClientClassImpl {
     export interface Init {
@@ -38,6 +47,11 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
     private static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
+
+    private oauthAuthScheme: OAuthScheme | undefined;
+    private bearerAuthScheme: BearerAuthScheme | undefined;
+    private basicAuthScheme: BasicAuthScheme | undefined;
+    private authHeaders: HeaderAuthScheme[];
 
     private readonly importsManager: ImportsManager;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -66,6 +80,27 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
         this.serviceClassName = serviceClassName;
         this.errorResolver = errorResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+
+        this.authHeaders = [];
+        for (const authScheme of intermediateRepresentation.auth.schemes) {
+            AuthScheme._visit(authScheme, {
+                basic: (basicAuthScheme) => {
+                    this.basicAuthScheme = basicAuthScheme;
+                },
+                bearer: (bearerAuthScheme) => {
+                    this.bearerAuthScheme = bearerAuthScheme;
+                },
+                header: (header) => {
+                    this.authHeaders.push(header);
+                },
+                oauth: (oauthScheme) => {
+                    this.oauthAuthScheme = oauthScheme;
+                },
+                _other: () => {
+                    throw new Error("Unknown auth scheme: " + authScheme.type);
+                }
+            });
+        }
     }
 
     public writeToFile(context: SdkContext): void {
@@ -124,43 +159,129 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
 
     private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const generatedEnvironments = context.environments.getGeneratedEnvironments();
+        const properties = [];
+        for (const header of this.authHeaders) {
+            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
+            const isOptional =
+                referenceToHeaderType.isOptional ||
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                header.headerEnvVar != null;
+            properties.push({
+                name: this.getOptionKeyForAuthHeader(header),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
+                            ? referenceToHeaderType.typeNode
+                            : ts.factory.createUnionTypeNode([
+                                  referenceToHeaderType.typeNodeWithoutUndefined,
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                    )
+                ),
+                hasQuestionToken: isOptional,
+                docs: header.headerEnvVar != null ? [`The ${header.headerEnvVar} environment variable`] : []
+            });
+        }
+        if (this.bearerAuthScheme != null) {
+            properties.push({
+                name: this.getBearerAuthOptionKey(this.bearerAuthScheme),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
+                            this.bearerAuthScheme.tokenEnvVar == null
+                            ? context.coreUtilities.auth.BearerToken._getReferenceToType()
+                            : ts.factory.createUnionTypeNode([
+                                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                    )
+                ),
+                hasQuestionToken:
+                    !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                    this.bearerAuthScheme.tokenEnvVar != null
+            });
+        }
+        if (this.basicAuthScheme != null) {
+            properties.push(
+                {
+                    name: this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
+                    type: getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
+                                this.basicAuthScheme.passwordEnvVar == null &&
+                                this.basicAuthScheme.usernameEnvVar == null
+                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                : ts.factory.createUnionTypeNode([
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                  ])
+                        )
+                    ),
+                    hasQuestionToken:
+                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
+                },
+                {
+                    name: this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
+                    type: getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
+                                this.basicAuthScheme.passwordEnvVar == null &&
+                                this.basicAuthScheme.usernameEnvVar == null
+                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                : ts.factory.createUnionTypeNode([
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                  ])
+                        )
+                    ),
+                    hasQuestionToken:
+                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
+                }
+            );
+        }
+        if (!this.requireDefaultEnvironment) {
+            properties.push({
+                name: GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
+                    )
+                ),
+                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
+                docs: ["The environment to use for the websocket."]
+            });
+        }
+        properties.push(
+            {
+                name: GeneratedWebsocketClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    )
+                ),
+                hasQuestionToken: true,
+                docs: ["Override the base URL of the websocket."]
+            },
+            {
+                name: GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME,
+                type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
+                hasQuestionToken: true,
+                docs: ["Enable debug mode on the websocket. Defaults to false."]
+            },
+            {
+                name: GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME,
+                type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+                hasQuestionToken: true,
+                docs: ["Number of reconnect attempts. Defaults to 30."]
+            }
+        );
+
         return {
             kind: StructureKind.Interface,
             name: GeneratedWebsocketClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties: [
-                {
-                    name: GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
-                        )
-                    ),
-                    hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
-                    docs: ["The environment to use for the websocket."]
-                },
-                {
-                    name: GeneratedWebsocketClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                        )
-                    ),
-                    hasQuestionToken: true,
-                    docs: ["Override the base URL of the websocket."]
-                },
-                {
-                    name: GeneratedWebsocketClientClassImpl.DEBUG_PROPERTY_NAME,
-                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
-                    hasQuestionToken: true,
-                    docs: ["Enable debug mode on the websocket. Defaults to false."]
-                },
-                {
-                    name: GeneratedWebsocketClientClassImpl.RECONNECT_ATTEMPTS_PROPERTY_NAME,
-                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
-                    hasQuestionToken: true,
-                    docs: ["Number of reconnect attempts. Defaults to 30."]
-                }
-            ]
+            properties
         };
     }
 
@@ -204,16 +325,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
                             undefined,
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                ts.factory.createUnionTypeNode([
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    ts.factory.createArrayTypeNode(
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                    ),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
-                                    ts.factory.createArrayTypeNode(
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
-                                    )
-                                ])
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                             ]),
                             ts.factory.createObjectLiteralExpression()
                         )
@@ -328,12 +440,10 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
             );
         }
 
-        // TODO: What exactly is going on here?
-        // return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
-        //     referenceToEnvironmentValue,
-        //     baseUrlId: channel.baseUrl ?? undefined
-        // });
-        return referenceToEnvironmentValue;
+        return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
+            referenceToEnvironmentValue,
+            baseUrlId: channel.baseUrl ?? undefined
+        });
     }
 
     private getReferenceToOption(option: string): ts.Expression {
@@ -341,7 +451,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
     }
 
     private getReferenceToArg(arg: string): ts.Expression {
-        return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg));
+        return ts.factory.createPropertyAccessExpression(this.getReferenceToArgs(), arg);
     }
 
     public getSocketTypeNode(context: SdkContext): ts.TypeNode {
@@ -377,6 +487,22 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
+    }
+
+    private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {
+        return header.name.name.camelCase.unsafeName;
+    }
+
+    private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
+        return bearerAuthScheme.token.camelCase.safeName;
+    }
+
+    private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.username.camelCase.safeName;
+    }
+
+    private getBasicAuthPasswordOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.password.camelCase.safeName;
     }
 
     public getBaseUrl(channel: WebSocketChannel, context: SdkContext): ts.Expression {
