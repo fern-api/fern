@@ -5,8 +5,9 @@ package com.seed.object.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.object.core.WrappedAlias;
 
-public final class OtherAliasVariant {
+public final class OtherAliasVariant implements WrappedAlias {
     private final OtherAliasVariantType value;
 
     private OtherAliasVariant(OtherAliasVariantType value) {
