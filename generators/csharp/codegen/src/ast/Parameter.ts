@@ -13,6 +13,7 @@ export declare namespace Parameter {
         docs?: string;
         /* The initializer for the parameter */
         initializer?: string;
+        ref?: boolean;
         out?: boolean;
     }
 }
@@ -22,18 +23,23 @@ export class Parameter extends AstNode {
     public readonly docs: string | undefined;
     public readonly initializer: string | undefined;
     public readonly type: Type | TypeParameter;
+    private readonly ref: boolean;
     private readonly out: boolean;
 
-    constructor({ name, type, docs, initializer, out }: Parameter.Args) {
+    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args) {
         super();
         this.name = name;
         this.type = type;
         this.docs = docs;
         this.initializer = initializer;
+        this.ref = ref ?? false;
         this.out = out ?? false;
     }
 
     public write(writer: Writer): void {
+        if (this.ref) {
+            writer.write("ref ");
+        }
         if (this.out) {
             writer.write("out ");
         }

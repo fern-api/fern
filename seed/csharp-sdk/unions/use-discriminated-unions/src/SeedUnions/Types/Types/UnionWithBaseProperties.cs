@@ -1,7 +1,10 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[JsonConverter(typeof(UnionWithBaseProperties.JsonConverter))]
 public record UnionWithBaseProperties
 {
     /// <summary>
@@ -39,26 +42,34 @@ public record UnionWithBaseProperties
     /// <summary>
     /// Discriminant value
     /// </summary>
+    [JsonPropertyName("type")]
     public string Type { get; internal set; }
 
     /// <summary>
     /// Discriminated union value
     /// </summary>
+    [JsonIgnore]
     public object Value { get; internal set; }
+
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
     /// Returns true if of type <see cref="int"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsInteger => Type == "integer";
 
     /// <summary>
     /// Returns true if of type <see cref="string"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsString => Type == "string";
 
     /// <summary>
     /// Returns true if of type <see cref="Foo"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsFoo => Type == "foo";
 
     /// <summary>
@@ -152,9 +163,77 @@ public record UnionWithBaseProperties
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithBaseProperties(int value) => new(value);
+    internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(UnionWithBaseProperties).IsAssignableFrom(typeToConvert);
 
-    public static implicit operator UnionWithBaseProperties(string value) => new(value);
+        public override UnionWithBaseProperties Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonObject = JsonElement.ParseValue(ref reader);
+            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            {
+                throw new JsonException("Missing discriminator property 'type'");
+            }
+            if (discriminatorElement.ValueKind != JsonValueKind.String)
+            {
+                if (discriminatorElement.ValueKind == JsonValueKind.Null)
+                {
+                    throw new JsonException("Discriminator property 'type' is null");
+                }
 
-    public static implicit operator UnionWithBaseProperties(Foo value) => new(value);
+                throw new JsonException(
+                    $"Discriminator property 'type' is not a string, instead is {discriminatorElement.ToString()}"
+                );
+            }
+
+            var discriminator =
+                discriminatorElement.GetString()
+                ?? throw new JsonException("Discriminator property 'type' is null");
+
+            switch (discriminator)
+            {
+                case "integer":
+                {
+                    var value = jsonObject.Deserialize<int>();
+                    return new UnionWithBaseProperties(value);
+                }
+                case "string":
+                {
+                    var value =
+                        jsonObject.Deserialize<string>()
+                        ?? throw new JsonException("Failed to deserialize string");
+                    return new UnionWithBaseProperties(value);
+                }
+                case "foo":
+                {
+                    var value = jsonObject.Deserialize<Foo>();
+                    return new UnionWithBaseProperties(value);
+                }
+                default:
+                    throw new JsonException(
+                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
+                    );
+            }
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UnionWithBaseProperties value,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
+            if (jsonNode == null)
+            {
+                throw new JsonException("Failed to serialize UnionWithBaseProperties");
+            }
+
+            jsonNode.WriteTo(writer, options);
+        }
+    }
 }

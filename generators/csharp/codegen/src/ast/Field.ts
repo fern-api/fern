@@ -154,6 +154,14 @@ export class Field extends AstNode {
         return this.static_;
     }
 
+    public get isRequired(): boolean {
+        return this.useRequired;
+    }
+
+    public get isOptional(): boolean {
+        return this.type.isOptional();
+    }
+
     public write(writer: Writer): void {
         writer.writeNode(this.doc);
 

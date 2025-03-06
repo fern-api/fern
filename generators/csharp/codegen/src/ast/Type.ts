@@ -41,7 +41,8 @@ type InternalType =
     | StringEnum
     | CoreReference
     | Action
-    | Func;
+    | Func
+    | CsharpType;
 
 interface Integer {
     type: "int";
@@ -162,6 +163,10 @@ interface Func {
     type: "func";
     typeParameters: (Type | TypeParameter)[];
     returnType: Type | TypeParameter;
+}
+
+interface CsharpType {
+    type: "csharpType";
 }
 
 /* A C# parameter to a method */
@@ -333,6 +338,9 @@ export class Type extends AstNode {
                 });
                 writer.write(">");
                 break;
+            case "csharpType":
+                writer.write("global::System.Type");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -365,6 +373,41 @@ export class Type extends AstNode {
 
     public isCollection(): boolean {
         return ["list", "set", "map"].includes(this.internalType.type);
+    }
+
+    public isReferenceType(): boolean | undefined {
+        switch (this.internalType.type) {
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "bool":
+            case "float":
+            case "double":
+            case "dateOnly":
+            case "dateTime":
+            case "keyValuePair":
+            case "stringEnum":
+            case "oneOf":
+                return false;
+            case "string":
+            case "uuid": // C# GUID is a value type, but we use string for UUID
+            case "object":
+            case "array":
+            case "listType":
+            case "list":
+            case "set":
+            case "map":
+            case "optional":
+            case "action":
+            case "func":
+            case "oneOfBase":
+            case "csharpType":
+                return true;
+            case "reference":
+            case "coreReference":
+                return undefined;
+        }
     }
 
     public toOptionalIfNotAlready(): Type {
@@ -585,6 +628,12 @@ export class Type extends AstNode {
             type: "func",
             typeParameters,
             returnType
+        });
+    }
+
+    public static csharpType(): Type {
+        return new this({
+            type: "csharpType"
         });
     }
 

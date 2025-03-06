@@ -1,7 +1,10 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[JsonConverter(typeof(Shape.JsonConverter))]
 public record Shape
 {
     /// <summary>
@@ -30,21 +33,28 @@ public record Shape
     /// <summary>
     /// Discriminant value
     /// </summary>
+    [JsonPropertyName("type")]
     public string Type { get; internal set; }
 
     /// <summary>
     /// Discriminated union value
     /// </summary>
+    [JsonIgnore]
     public object Value { get; internal set; }
+
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
     /// Returns true if of type <see cref="Circle"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsCircle => Type == "circle";
 
     /// <summary>
     /// Returns true if of type <see cref="Square"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsSquare => Type == "square";
 
     /// <summary>
@@ -114,7 +124,70 @@ public record Shape
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Shape(Circle value) => new(value);
+    internal sealed class JsonConverter : JsonConverter<Shape>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(Shape).IsAssignableFrom(typeToConvert);
 
-    public static implicit operator Shape(Square value) => new(value);
+        public override Shape Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonObject = JsonElement.ParseValue(ref reader);
+            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            {
+                throw new JsonException("Missing discriminator property 'type'");
+            }
+            if (discriminatorElement.ValueKind != JsonValueKind.String)
+            {
+                if (discriminatorElement.ValueKind == JsonValueKind.Null)
+                {
+                    throw new JsonException("Discriminator property 'type' is null");
+                }
+
+                throw new JsonException(
+                    $"Discriminator property 'type' is not a string, instead is {discriminatorElement.ToString()}"
+                );
+            }
+
+            var discriminator =
+                discriminatorElement.GetString()
+                ?? throw new JsonException("Discriminator property 'type' is null");
+
+            switch (discriminator)
+            {
+                case "circle":
+                {
+                    var value = jsonObject.Deserialize<Circle>();
+                    return new Shape(value);
+                }
+                case "square":
+                {
+                    var value = jsonObject.Deserialize<Square>();
+                    return new Shape(value);
+                }
+                default:
+                    throw new JsonException(
+                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
+                    );
+            }
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Shape value,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
+            if (jsonNode == null)
+            {
+                throw new JsonException("Failed to serialize Shape");
+            }
+
+            jsonNode.WriteTo(writer, options);
+        }
+    }
 }

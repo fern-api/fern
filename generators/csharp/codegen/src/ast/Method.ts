@@ -161,7 +161,7 @@ export class Method extends AstNode {
                     writer.writeLine("}");
                     break;
                 case Method.BodyType.Expression:
-                    writer.writeLine(" => ");
+                    writer.write(" => ");
                     this.body?.write(writer);
                     writer.writeSemicolonIfLastCharacterIsNot();
                     break;

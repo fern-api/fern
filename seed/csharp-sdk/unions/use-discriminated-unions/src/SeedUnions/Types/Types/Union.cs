@@ -1,7 +1,13 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
+/// <summary>
+/// This is a simple union.
+/// </summary>
+[JsonConverter(typeof(Union.JsonConverter))]
 public record Union
 {
     /// <summary>
@@ -30,21 +36,25 @@ public record Union
     /// <summary>
     /// Discriminant value
     /// </summary>
+    [JsonPropertyName("type")]
     public string Type { get; internal set; }
 
     /// <summary>
     /// Discriminated union value
     /// </summary>
+    [JsonIgnore]
     public object Value { get; internal set; }
 
     /// <summary>
     /// Returns true if of type <see cref="Foo"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsFoo => Type == "foo";
 
     /// <summary>
     /// Returns true if of type <see cref="Bar"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsBar => Type == "bar";
 
     /// <summary>
@@ -117,4 +127,71 @@ public record Union
     public static implicit operator Union(Foo value) => new(value);
 
     public static implicit operator Union(Bar value) => new(value);
+
+    internal sealed class JsonConverter : JsonConverter<Union>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(Union).IsAssignableFrom(typeToConvert);
+
+        public override Union Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonObject = JsonElement.ParseValue(ref reader);
+            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            {
+                throw new JsonException("Missing discriminator property 'type'");
+            }
+            if (discriminatorElement.ValueKind != JsonValueKind.String)
+            {
+                if (discriminatorElement.ValueKind == JsonValueKind.Null)
+                {
+                    throw new JsonException("Discriminator property 'type' is null");
+                }
+
+                throw new JsonException(
+                    $"Discriminator property 'type' is not a string, instead is {discriminatorElement.ToString()}"
+                );
+            }
+
+            var discriminator =
+                discriminatorElement.GetString()
+                ?? throw new JsonException("Discriminator property 'type' is null");
+
+            switch (discriminator)
+            {
+                case "foo":
+                {
+                    var value = jsonObject.Deserialize<Foo>();
+                    return new Union(value);
+                }
+                case "bar":
+                {
+                    var value = jsonObject.Deserialize<Bar>();
+                    return new Union(value);
+                }
+                default:
+                    throw new JsonException(
+                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
+                    );
+            }
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Union value,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
+            if (jsonNode == null)
+            {
+                throw new JsonException("Failed to serialize Union");
+            }
+
+            jsonNode.WriteTo(writer, options);
+        }
+    }
 }

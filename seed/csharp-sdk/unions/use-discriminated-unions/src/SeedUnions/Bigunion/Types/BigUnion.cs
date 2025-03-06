@@ -1,7 +1,10 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[JsonConverter(typeof(BigUnion.JsonConverter))]
 public record BigUnion
 {
     /// <summary>
@@ -273,156 +276,196 @@ public record BigUnion
     /// <summary>
     /// Discriminant value
     /// </summary>
+    [JsonPropertyName("type")]
     public string Type { get; internal set; }
 
     /// <summary>
     /// Discriminated union value
     /// </summary>
+    [JsonIgnore]
     public object Value { get; internal set; }
+
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
+    [JsonPropertyName("created-at")]
+    public required DateTime CreatedAt { get; set; }
+
+    [JsonPropertyName("archived-at")]
+    public DateTime? ArchivedAt { get; set; }
 
     /// <summary>
     /// Returns true if of type <see cref="NormalSweet"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsNormalSweet => Type == "normalSweet";
 
     /// <summary>
     /// Returns true if of type <see cref="ThankfulFactor"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsThankfulFactor => Type == "thankfulFactor";
 
     /// <summary>
     /// Returns true if of type <see cref="JumboEnd"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsJumboEnd => Type == "jumboEnd";
 
     /// <summary>
     /// Returns true if of type <see cref="HastyPain"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsHastyPain => Type == "hastyPain";
 
     /// <summary>
     /// Returns true if of type <see cref="MistySnow"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsMistySnow => Type == "mistySnow";
 
     /// <summary>
     /// Returns true if of type <see cref="DistinctFailure"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsDistinctFailure => Type == "distinctFailure";
 
     /// <summary>
     /// Returns true if of type <see cref="PracticalPrinciple"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsPracticalPrinciple => Type == "practicalPrinciple";
 
     /// <summary>
     /// Returns true if of type <see cref="LimpingStep"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsLimpingStep => Type == "limpingStep";
 
     /// <summary>
     /// Returns true if of type <see cref="VibrantExcitement"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsVibrantExcitement => Type == "vibrantExcitement";
 
     /// <summary>
     /// Returns true if of type <see cref="ActiveDiamond"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsActiveDiamond => Type == "activeDiamond";
 
     /// <summary>
     /// Returns true if of type <see cref="PopularLimit"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsPopularLimit => Type == "popularLimit";
 
     /// <summary>
     /// Returns true if of type <see cref="FalseMirror"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsFalseMirror => Type == "falseMirror";
 
     /// <summary>
     /// Returns true if of type <see cref="PrimaryBlock"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsPrimaryBlock => Type == "primaryBlock";
 
     /// <summary>
     /// Returns true if of type <see cref="RotatingRatio"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsRotatingRatio => Type == "rotatingRatio";
 
     /// <summary>
     /// Returns true if of type <see cref="ColorfulCover"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsColorfulCover => Type == "colorfulCover";
 
     /// <summary>
     /// Returns true if of type <see cref="DisloyalValue"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsDisloyalValue => Type == "disloyalValue";
 
     /// <summary>
     /// Returns true if of type <see cref="GruesomeCoach"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsGruesomeCoach => Type == "gruesomeCoach";
 
     /// <summary>
     /// Returns true if of type <see cref="TotalWork"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsTotalWork => Type == "totalWork";
 
     /// <summary>
     /// Returns true if of type <see cref="HarmoniousPlay"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsHarmoniousPlay => Type == "harmoniousPlay";
 
     /// <summary>
     /// Returns true if of type <see cref="UniqueStress"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsUniqueStress => Type == "uniqueStress";
 
     /// <summary>
     /// Returns true if of type <see cref="UnwillingSmoke"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsUnwillingSmoke => Type == "unwillingSmoke";
 
     /// <summary>
     /// Returns true if of type <see cref="FrozenSleep"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsFrozenSleep => Type == "frozenSleep";
 
     /// <summary>
     /// Returns true if of type <see cref="DiligentDeal"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsDiligentDeal => Type == "diligentDeal";
 
     /// <summary>
     /// Returns true if of type <see cref="AttractiveScript"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsAttractiveScript => Type == "attractiveScript";
 
     /// <summary>
     /// Returns true if of type <see cref="HoarseMouse"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsHoarseMouse => Type == "hoarseMouse";
 
     /// <summary>
     /// Returns true if of type <see cref="CircularCard"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsCircularCard => Type == "circularCard";
 
     /// <summary>
     /// Returns true if of type <see cref="PotableBad"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsPotableBad => Type == "potableBad";
 
     /// <summary>
     /// Returns true if of type <see cref="TriangularRepair"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsTriangularRepair => Type == "triangularRepair";
 
     /// <summary>
     /// Returns true if of type <see cref="GaseousRoad"/>.
     /// </summary>
+    [JsonIgnore]
     public bool IsGaseousRoad => Type == "gaseousRoad";
 
     /// <summary>
@@ -1200,61 +1243,205 @@ public record BigUnion
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator BigUnion(NormalSweet value) => new(value);
+    internal sealed class JsonConverter : JsonConverter<BigUnion>
+    {
+        public override bool CanConvert(global::System.Type typeToConvert) =>
+            typeof(BigUnion).IsAssignableFrom(typeToConvert);
 
-    public static implicit operator BigUnion(ThankfulFactor value) => new(value);
+        public override BigUnion Read(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonObject = JsonElement.ParseValue(ref reader);
+            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            {
+                throw new JsonException("Missing discriminator property 'type'");
+            }
+            if (discriminatorElement.ValueKind != JsonValueKind.String)
+            {
+                if (discriminatorElement.ValueKind == JsonValueKind.Null)
+                {
+                    throw new JsonException("Discriminator property 'type' is null");
+                }
 
-    public static implicit operator BigUnion(JumboEnd value) => new(value);
+                throw new JsonException(
+                    $"Discriminator property 'type' is not a string, instead is {discriminatorElement.ToString()}"
+                );
+            }
 
-    public static implicit operator BigUnion(HastyPain value) => new(value);
+            var discriminator =
+                discriminatorElement.GetString()
+                ?? throw new JsonException("Discriminator property 'type' is null");
 
-    public static implicit operator BigUnion(MistySnow value) => new(value);
+            switch (discriminator)
+            {
+                case "normalSweet":
+                {
+                    var value = jsonObject.Deserialize<NormalSweet>();
+                    return new BigUnion(value);
+                }
+                case "thankfulFactor":
+                {
+                    var value = jsonObject.Deserialize<ThankfulFactor>();
+                    return new BigUnion(value);
+                }
+                case "jumboEnd":
+                {
+                    var value = jsonObject.Deserialize<JumboEnd>();
+                    return new BigUnion(value);
+                }
+                case "hastyPain":
+                {
+                    var value = jsonObject.Deserialize<HastyPain>();
+                    return new BigUnion(value);
+                }
+                case "mistySnow":
+                {
+                    var value = jsonObject.Deserialize<MistySnow>();
+                    return new BigUnion(value);
+                }
+                case "distinctFailure":
+                {
+                    var value = jsonObject.Deserialize<DistinctFailure>();
+                    return new BigUnion(value);
+                }
+                case "practicalPrinciple":
+                {
+                    var value = jsonObject.Deserialize<PracticalPrinciple>();
+                    return new BigUnion(value);
+                }
+                case "limpingStep":
+                {
+                    var value = jsonObject.Deserialize<LimpingStep>();
+                    return new BigUnion(value);
+                }
+                case "vibrantExcitement":
+                {
+                    var value = jsonObject.Deserialize<VibrantExcitement>();
+                    return new BigUnion(value);
+                }
+                case "activeDiamond":
+                {
+                    var value = jsonObject.Deserialize<ActiveDiamond>();
+                    return new BigUnion(value);
+                }
+                case "popularLimit":
+                {
+                    var value = jsonObject.Deserialize<PopularLimit>();
+                    return new BigUnion(value);
+                }
+                case "falseMirror":
+                {
+                    var value = jsonObject.Deserialize<FalseMirror>();
+                    return new BigUnion(value);
+                }
+                case "primaryBlock":
+                {
+                    var value = jsonObject.Deserialize<PrimaryBlock>();
+                    return new BigUnion(value);
+                }
+                case "rotatingRatio":
+                {
+                    var value = jsonObject.Deserialize<RotatingRatio>();
+                    return new BigUnion(value);
+                }
+                case "colorfulCover":
+                {
+                    var value = jsonObject.Deserialize<ColorfulCover>();
+                    return new BigUnion(value);
+                }
+                case "disloyalValue":
+                {
+                    var value = jsonObject.Deserialize<DisloyalValue>();
+                    return new BigUnion(value);
+                }
+                case "gruesomeCoach":
+                {
+                    var value = jsonObject.Deserialize<GruesomeCoach>();
+                    return new BigUnion(value);
+                }
+                case "totalWork":
+                {
+                    var value = jsonObject.Deserialize<TotalWork>();
+                    return new BigUnion(value);
+                }
+                case "harmoniousPlay":
+                {
+                    var value = jsonObject.Deserialize<HarmoniousPlay>();
+                    return new BigUnion(value);
+                }
+                case "uniqueStress":
+                {
+                    var value = jsonObject.Deserialize<UniqueStress>();
+                    return new BigUnion(value);
+                }
+                case "unwillingSmoke":
+                {
+                    var value = jsonObject.Deserialize<UnwillingSmoke>();
+                    return new BigUnion(value);
+                }
+                case "frozenSleep":
+                {
+                    var value = jsonObject.Deserialize<FrozenSleep>();
+                    return new BigUnion(value);
+                }
+                case "diligentDeal":
+                {
+                    var value = jsonObject.Deserialize<DiligentDeal>();
+                    return new BigUnion(value);
+                }
+                case "attractiveScript":
+                {
+                    var value = jsonObject.Deserialize<AttractiveScript>();
+                    return new BigUnion(value);
+                }
+                case "hoarseMouse":
+                {
+                    var value = jsonObject.Deserialize<HoarseMouse>();
+                    return new BigUnion(value);
+                }
+                case "circularCard":
+                {
+                    var value = jsonObject.Deserialize<CircularCard>();
+                    return new BigUnion(value);
+                }
+                case "potableBad":
+                {
+                    var value = jsonObject.Deserialize<PotableBad>();
+                    return new BigUnion(value);
+                }
+                case "triangularRepair":
+                {
+                    var value = jsonObject.Deserialize<TriangularRepair>();
+                    return new BigUnion(value);
+                }
+                case "gaseousRoad":
+                {
+                    var value = jsonObject.Deserialize<GaseousRoad>();
+                    return new BigUnion(value);
+                }
+                default:
+                    throw new JsonException(
+                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
+                    );
+            }
+        }
 
-    public static implicit operator BigUnion(DistinctFailure value) => new(value);
+        public override void Write(
+            Utf8JsonWriter writer,
+            BigUnion value,
+            JsonSerializerOptions options
+        )
+        {
+            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
+            if (jsonNode == null)
+            {
+                throw new JsonException("Failed to serialize BigUnion");
+            }
 
-    public static implicit operator BigUnion(PracticalPrinciple value) => new(value);
-
-    public static implicit operator BigUnion(LimpingStep value) => new(value);
-
-    public static implicit operator BigUnion(VibrantExcitement value) => new(value);
-
-    public static implicit operator BigUnion(ActiveDiamond value) => new(value);
-
-    public static implicit operator BigUnion(PopularLimit value) => new(value);
-
-    public static implicit operator BigUnion(FalseMirror value) => new(value);
-
-    public static implicit operator BigUnion(PrimaryBlock value) => new(value);
-
-    public static implicit operator BigUnion(RotatingRatio value) => new(value);
-
-    public static implicit operator BigUnion(ColorfulCover value) => new(value);
-
-    public static implicit operator BigUnion(DisloyalValue value) => new(value);
-
-    public static implicit operator BigUnion(GruesomeCoach value) => new(value);
-
-    public static implicit operator BigUnion(TotalWork value) => new(value);
-
-    public static implicit operator BigUnion(HarmoniousPlay value) => new(value);
-
-    public static implicit operator BigUnion(UniqueStress value) => new(value);
-
-    public static implicit operator BigUnion(UnwillingSmoke value) => new(value);
-
-    public static implicit operator BigUnion(FrozenSleep value) => new(value);
-
-    public static implicit operator BigUnion(DiligentDeal value) => new(value);
-
-    public static implicit operator BigUnion(AttractiveScript value) => new(value);
-
-    public static implicit operator BigUnion(HoarseMouse value) => new(value);
-
-    public static implicit operator BigUnion(CircularCard value) => new(value);
-
-    public static implicit operator BigUnion(PotableBad value) => new(value);
-
-    public static implicit operator BigUnion(TriangularRepair value) => new(value);
-
-    public static implicit operator BigUnion(GaseousRoad value) => new(value);
+            jsonNode.WriteTo(writer, options);
+        }
+    }
 }
