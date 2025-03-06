@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Correctly parse channel descriptions in AsyncAPI v2 and v3 specs.
+    type: fix
+  irVersion: 57
+  version: 0.56.13
+
+- changelogEntry:
+  - summary: |
       Updated the OpenAPI parser to:
       - Support parsing references that point to external files (e.g. https://github.com/...)
       - Enable merging Intermediate Representations (IRs) when APIs have multiple OpenAPI specs

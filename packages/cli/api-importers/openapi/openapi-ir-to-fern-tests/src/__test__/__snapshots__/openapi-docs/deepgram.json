@@ -6009,6 +6009,7 @@ errors:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Voice Agent WebSocket",
           "examples": [
             {
               "messages": [
@@ -6623,6 +6624,7 @@ errors:
   path: /agent
   url: public
   auth: false
+  docs: Deepgram Voice Agent WebSocket
   headers:
     Sec-Websocket-Protocol:
       type: string
@@ -7040,6 +7042,7 @@ types:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Speech to Text WebSocket",
           "examples": [
             {
               "messages": [
@@ -8379,6 +8382,7 @@ channel:
   path: /v1/listen
   url: public
   auth: false
+  docs: Deepgram Speech to Text WebSocket
   query-parameters:
     callback:
       type: string
@@ -13771,6 +13775,7 @@ docs: Manage your projects
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Text to Speech WebSocket",
           "examples": [
             {
               "messages": [
@@ -14132,6 +14137,7 @@ channel:
   path: /v1/speak
   url: public
   auth: false
+  docs: Deepgram Text to Speech WebSocket
   query-parameters:
     encoding:
       type: SpeakEncoding
