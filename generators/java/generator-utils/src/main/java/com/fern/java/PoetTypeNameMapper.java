@@ -161,17 +161,17 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitUint() {
             if (primitiveAllowed) {
-                return TypeName.LONG;
+                return TypeName.INT;
             }
-            return ClassName.get(Long.class);
+            return ClassName.get(Integer.class);
         }
 
         @Override
         public TypeName visitUint64() {
             if (primitiveAllowed) {
-                return TypeName.LONG;
+                return TypeName.INT;
             }
-            return ClassName.get(Long.class);
+            return ClassName.get(Integer.class);
         }
 
         @Override
