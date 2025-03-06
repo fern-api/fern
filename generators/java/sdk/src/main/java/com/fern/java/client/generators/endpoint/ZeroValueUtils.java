@@ -57,7 +57,7 @@ public class ZeroValueUtils {
 
         @Override
         public CodeBlock visitUint64() {
-            return CodeBlock.of("$L != 0", variableName);
+            return CodeBlock.of("$L != 0L", variableName);
         }
 
         @Override
@@ -140,7 +140,7 @@ public class ZeroValueUtils {
 
         @Override
         public CodeBlock visitUint64(Uint64Type uint64Type) {
-            return CodeBlock.of("$L != 0", variableName);
+            return CodeBlock.of("$L != 0L", variableName);
         }
 
         @Override

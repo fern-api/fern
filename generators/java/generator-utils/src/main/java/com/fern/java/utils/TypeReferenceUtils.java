@@ -188,7 +188,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitUint64() {
-            return "Integer";
+            return "Long";
         }
 
         @Override
