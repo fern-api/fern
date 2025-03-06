@@ -29,7 +29,7 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
-import { Type } from "../ast";
+import { Type, TypeParameter } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
@@ -122,6 +122,10 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getIdempotencyHeaders(): HttpHeader[] {
         return this.ir.idempotencyHeaders;
+    }
+
+    public shouldGenerateDiscriminatedUnions(): boolean {
+        return this.customConfig["use-discriminated-unions"] ?? false;
     }
 
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
@@ -498,7 +502,7 @@ export abstract class AbstractCsharpGeneratorContext<
     /**
      * Prints the Type in a simple string format.
      */
-    public printType(type: Type): string {
+    public printType(type: Type | TypeParameter): string {
         return type.toString({
             namespace: this.getNamespace(),
             allNamespaceSegments: this.getAllNamespaceSegments(),

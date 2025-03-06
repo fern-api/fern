@@ -20,9 +20,11 @@ import {
     Set,
     Switch,
     Ternary,
-    TestClass
+    TestClass,
+    TypeParameter
 } from "./ast";
 import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
+import { XmlDocBlock } from "./ast/XmlDocBlock";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -52,6 +54,10 @@ export function coreClassReference(args: CoreClassReference.Args): CoreClassRefe
     return new CoreClassReference(args);
 }
 
+export function xmlDocBlock(arg: XmlDocBlock.Arg): XmlDocBlock {
+    return new XmlDocBlock(arg);
+}
+
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
 }
@@ -70,6 +76,13 @@ export function anonymousFunction(args: AnonymousFunction.Args): AnonymousFuncti
 
 export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
+}
+
+export function typeParameter(args: string | TypeParameter.Args): TypeParameter {
+    if (typeof args === "string") {
+        args = { name: args };
+    }
+    return new TypeParameter(args);
 }
 
 export function interface_(args: Interface.Args): Interface {
@@ -132,6 +145,7 @@ export {
     MethodInvocation,
     MethodType,
     Parameter,
+    TypeParameter,
     Type,
     Type as Types,
     Writer,

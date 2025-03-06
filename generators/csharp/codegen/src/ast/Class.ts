@@ -9,8 +9,8 @@ import { Method, MethodType } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { XmlDocBlock } from "./XmlDocBlock";
 import { AstNode } from "./core/AstNode";
-import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 
 export class Class extends AstNode {
@@ -35,6 +35,7 @@ export class Class extends AstNode {
     public readonly isNestedClass: boolean;
     public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
+    private readonly doc: XmlDocBlock;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
 
@@ -59,6 +60,7 @@ export class Class extends AstNode {
         isNestedClass,
         type,
         summary,
+        doc,
         annotations,
         primaryConstructor
     }: Class.Args) {
@@ -74,7 +76,7 @@ export class Class extends AstNode {
         this.isNestedClass = isNestedClass ?? false;
         this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
-
+        this.doc = XmlDocBlock.of(doc ?? { summary });
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
         this.annotations = annotations ?? [];
@@ -139,10 +141,7 @@ export class Class extends AstNode {
             writer.newLine();
         }
 
-        if (this.summary != null) {
-            const docXmlWriter = new DocXmlWriter(writer);
-            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
-        }
+        writer.writeNode(this.doc);
         if (this.annotations.length > 0) {
             writer.write("[");
             this.annotations.forEach((annotation) => {
@@ -242,6 +241,7 @@ export class Class extends AstNode {
 
     private writeConstructors(writer: Writer): void {
         this.constructors.forEach((constructor) => {
+            writer.writeNode(XmlDocBlock.of(constructor.doc));
             writer.write(`${constructor.access} ${this.name} (`);
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer);
@@ -298,6 +298,7 @@ export class Class extends AstNode {
     private writeMethods(writer: Writer): void {
         this.methods
             .sort(sortByAccess)
+            .sort(sortMethodName)
             .sort(sortMethodType)
             .forEach((method) => {
                 method.write(writer);
@@ -402,8 +403,9 @@ export namespace Class {
         readonly?: boolean;
         /* Defaults to class */
         type?: Class.ClassType;
-        /* Summary for the method */
+        /* Summary for the class */
         summary?: string;
+        doc?: XmlDocBlock.Like;
         /* The class to inherit from if any */
         parentClassReference?: AstNode;
         /* Any interfaces the class extends */
@@ -417,6 +419,7 @@ export namespace Class {
     }
 
     export interface Constructor {
+        doc?: XmlDocBlock.Like;
         /* The body of the constructor */
         body?: CodeBlock;
         /* The parameters of the constructor */
@@ -486,6 +489,31 @@ function sortMethodType(a: { type: MethodType }, b: { type: MethodType }): numbe
     }
     if (a.type !== MethodType.STATIC && b.type === MethodType.STATIC) {
         return 1;
+    }
+    return 0;
+}
+
+function sortMethodName(a: { name: string }, b: { name: string }): number {
+    // put FromProto and ToProto 3rd from last
+    if (a.name === "FromProto" || a.name === "ToProto") {
+        return b.name === "Equals" || b.name === "ToString" ? -1 : 1;
+    }
+    if (b.name === "FromProto" || b.name === "ToProto") {
+        return a.name === "Equals" || a.name === "ToString" ? 1 : -1;
+    }
+    // put ToString last
+    if (a.name === "ToString") {
+        return 1;
+    }
+    if (b.name === "ToString") {
+        return -1;
+    }
+    // put Equals second to last
+    if (a.name === "Equals") {
+        return b.name === "ToString" ? -1 : 1;
+    }
+    if (b.name === "Equals") {
+        return a.name === "ToString" ? 1 : -1;
     }
     return 0;
 }

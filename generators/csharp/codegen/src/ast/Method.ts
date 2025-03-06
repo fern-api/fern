@@ -6,8 +6,9 @@ import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { TypeParameter } from "./TypeParameter";
+import { XmlDocBlock } from "./XmlDocBlock";
 import { AstNode } from "./core/AstNode";
-import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 
 export enum MethodType {
@@ -19,17 +20,18 @@ export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
     public readonly access: Access | undefined;
-    public readonly return: Type | undefined;
+    public readonly return: Type | TypeParameter | undefined;
     public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
     private readonly bodyType: Method.BodyType;
     public readonly summary: string | undefined;
+    private readonly doc: XmlDocBlock;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
     public readonly override: boolean;
     private readonly parameters: Parameter[];
+    private readonly typeParameters: TypeParameter[];
     private readonly annotations: Annotation[];
-    private readonly codeExample: string | undefined;
     private readonly interfaceReference?: ClassReference;
 
     constructor({
@@ -42,9 +44,11 @@ export class Method extends AstNode {
         noBody,
         bodyType,
         summary,
+        doc,
         type,
         classReference,
         parameters,
+        typeParameters,
         annotations,
         codeExample,
         interfaceReference
@@ -59,11 +63,12 @@ export class Method extends AstNode {
         this.body = body;
         this.bodyType = bodyType ?? Method.BodyType.Statement;
         this.summary = summary;
+        this.doc = XmlDocBlock.of(doc ?? { summary, codeExample });
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
+        this.typeParameters = typeParameters ?? [];
         this.annotations = annotations ?? [];
-        this.codeExample = codeExample;
         this.interfaceReference = interfaceReference;
     }
 
@@ -72,17 +77,7 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const docXmlWriter = new DocXmlWriter(writer);
-        if (this.summary != null) {
-            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
-        }
-        if (this.codeExample != null) {
-            docXmlWriter.writeOpenNode("example");
-            docXmlWriter.writeOpenNode("code");
-            docXmlWriter.writeMultilineWithEscaping(this.codeExample);
-            docXmlWriter.writeCloseNode("code");
-            docXmlWriter.writeCloseNode("example");
-        }
+        writer.writeNode(this.doc);
 
         if (this.annotations.length > 0) {
             writer.write("[");
@@ -134,6 +129,16 @@ export class Method extends AstNode {
             writer.write(`${this.interfaceReference.name}.`);
         }
         writer.write(this.name);
+        if (this.typeParameters.length > 0) {
+            writer.write("<");
+            this.typeParameters.forEach((typeParameter, idx) => {
+                typeParameter.write(writer);
+                if (idx < this.typeParameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(">");
+        }
         writer.write("(");
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer);
@@ -177,6 +182,7 @@ export namespace Method {
         annotations?: Annotation[];
         /* Summary for the method */
         summary?: string;
+        doc?: XmlDocBlock.Like;
         /* The access of the method */
         access?: Access;
         /* The type of the method, defaults to INSTANCE */
@@ -186,9 +192,11 @@ export namespace Method {
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
         /* The return type of the method */
-        return_?: Type;
+        return_?: Type | TypeParameter;
         /* The name of the method */
         name: string;
+        /* The parameters of the method */
+        typeParameters?: TypeParameter[];
         /* The parameters of the method */
         parameters: Parameter[];
         /* If true, no method body will be written. This is for interface methods. */

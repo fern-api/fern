@@ -11,6 +11,7 @@ import {
     StringEnumClassReference
 } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
+import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -38,7 +39,9 @@ type InternalType =
     | OneOf
     | OneOfBase
     | StringEnum
-    | CoreReference;
+    | CoreReference
+    | Action
+    | Func;
 
 interface Integer {
     type: "int";
@@ -148,6 +151,17 @@ interface OneOfBase {
 interface StringEnum {
     type: "stringEnum";
     value: ClassReference;
+}
+
+interface Action {
+    type: "action";
+    typeParameters: (Type | TypeParameter)[];
+}
+
+interface Func {
+    type: "func";
+    typeParameters: (Type | TypeParameter)[];
+    returnType: Type | TypeParameter;
 }
 
 /* A C# parameter to a method */
@@ -293,6 +307,30 @@ export class Type extends AstNode {
                 writer.addReference(StringEnumClassReference);
                 writer.write("StringEnum<");
                 this.internalType.value.write(writer);
+                writer.write(">");
+                break;
+            case "action":
+                writer.write("Action");
+                if (this.internalType.typeParameters.length > 0) {
+                    writer.write("<");
+                    this.internalType.typeParameters.forEach((type, index) => {
+                        if (index !== 0) {
+                            writer.write(", ");
+                        }
+                        type.write(writer);
+                    });
+                    writer.write(">");
+                }
+                break;
+            case "func":
+                writer.write("Func");
+                writer.write("<");
+                [...this.internalType.typeParameters, this.internalType.returnType].forEach((type, index) => {
+                    if (index !== 0) {
+                        writer.write(", ");
+                    }
+                    type.write(writer);
+                });
                 writer.write(">");
                 break;
             default:
@@ -526,6 +564,27 @@ export class Type extends AstNode {
         return new this({
             type: "stringEnum",
             value
+        });
+    }
+
+    public static action({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }): Type {
+        return new this({
+            type: "action",
+            typeParameters
+        });
+    }
+
+    public static func({
+        typeParameters,
+        returnType
+    }: {
+        typeParameters: (Type | TypeParameter)[];
+        returnType: Type | TypeParameter;
+    }): Type {
+        return new this({
+            type: "func",
+            typeParameters,
+            returnType
         });
     }
 

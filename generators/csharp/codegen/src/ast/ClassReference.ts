@@ -11,7 +11,7 @@ export declare namespace ClassReference {
         /* The namespace alias for C# class */
         namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: csharp.Type[];
+        generics?: (csharp.Type | csharp.TypeParameter)[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
     }
@@ -21,7 +21,7 @@ export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
-    public readonly generics: csharp.Type[];
+    public readonly generics: (csharp.Type | csharp.TypeParameter)[];
     public readonly fullyQualified: boolean;
 
     constructor({ name, namespace, namespaceAlias, generics, fullyQualified }: ClassReference.Args) {

@@ -584,12 +584,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         stepType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        offsetType: csharp.Type;
-        stepType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        offsetType: csharp.Type | csharp.TypeParameter;
+        stepType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -605,11 +605,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         cursorType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        cursorType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        cursorType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),

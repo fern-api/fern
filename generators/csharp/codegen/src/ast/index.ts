@@ -20,6 +20,7 @@ export { AnonymousFunction } from "./AnonymousFunction";
 export { MethodInvocation } from "./MethodInvocation";
 export { Or } from "./Or";
 export { Parameter } from "./Parameter";
+export { TypeParameter } from "./TypeParameter";
 export { Set } from "./Set";
 export { Switch } from "./Switch";
 export { Ternary } from "./Ternary";
