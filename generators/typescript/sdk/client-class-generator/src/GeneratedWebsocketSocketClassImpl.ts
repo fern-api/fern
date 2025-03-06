@@ -593,7 +593,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     // TODO (Eden): Handle inlined body messages
                     throw new Error("Inlined body messages are not supported yet");
                 }
-                // @ts-ignore
                 const generatedType = context.type.getReferenceToType(message.body.bodyType);
                 return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
             })[0] as ts.TypeNode;
@@ -609,7 +608,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     // TODO (Eden): Handle inlined body messages
                     throw new Error("Inlined body messages are not supported yet");
                 }
-                // @ts-ignore
                 const generatedType = context.type.getReferenceToType(message.body.bodyType);
                 return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
             })[0] as ts.TypeNode;
