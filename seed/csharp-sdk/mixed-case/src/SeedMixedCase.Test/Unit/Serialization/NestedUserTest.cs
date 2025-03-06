@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedMixedCase;
+using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test;
 
@@ -11,38 +9,78 @@ namespace SeedMixedCase.Test;
 public class NestedUserTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "Name": "username",
+              "NestedUser": {
+                "userName": "nestedUsername",
+                "metadata_tags": [
+                  "tag1",
+                  "tag2"
+                ],
+                "EXTRA_PROPERTIES": {
+                  "foo": "bar",
+                  "baz": "qux"
+                }
+              }
+            }
+            """;
+        var expectedObject = new NestedUser
+        {
+            Name = "username",
+            NestedUser_ = new User
+            {
+                UserName = "nestedUsername",
+                MetadataTags = new List<string>() { "tag1", "tag2" },
+                ExtraProperties = new Dictionary<string, string>()
+                {
+                    { "foo", "bar" },
+                    { "baz", "qux" },
+                },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<NestedUser>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""Name"": ""username"",
-          ""NestedUser"": {
-            ""userName"": ""nestedUsername"",
-            ""metadata_tags"": [
-              ""tag1"",
-              ""tag2""
-            ],
-            ""EXTRA_PROPERTIES"": {
-              ""foo"": ""bar"",
-              ""baz"": ""qux""
+        var json = """
+            {
+              "Name": "username",
+              "NestedUser": {
+                "userName": "nestedUsername",
+                "metadata_tags": [
+                  "tag1",
+                  "tag2"
+                ],
+                "EXTRA_PROPERTIES": {
+                  "foo": "bar",
+                  "baz": "qux"
+                }
+              }
             }
-          }
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var obj = new NestedUser
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Name = "username",
+            NestedUser_ = new User
+            {
+                UserName = "nestedUsername",
+                MetadataTags = new List<string>() { "tag1", "tag2" },
+                ExtraProperties = new Dictionary<string, string>()
+                {
+                    { "foo", "bar" },
+                    { "baz", "qux" },
+                },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<NestedUser>(
-            inputJson,
-            serializerOptions
-        );
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

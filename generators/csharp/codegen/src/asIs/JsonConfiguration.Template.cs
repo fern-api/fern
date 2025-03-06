@@ -1,4 +1,5 @@
 using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
 using global::System.Text.Json.Serialization.Metadata;
 
@@ -6,7 +7,7 @@ namespace <%= namespace%>;
 
 internal static partial class JsonOptions
 {
-    public static readonly JsonSerializerOptions JsonSerializerOptions;
+    internal static readonly JsonSerializerOptions JsonSerializerOptions;
 
     static JsonOptions()
     {
@@ -18,7 +19,7 @@ internal static partial class JsonOptions
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
 #endif
-                new OneOfSerializer(),
+                new OneOfSerializer()
             },
 #if DEBUG
             WriteIndented = true,
@@ -73,19 +74,26 @@ internal static partial class JsonOptions
 
 internal static class JsonUtils
 {
-    public static string Serialize<T>(T obj)
-    {
-        return JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
-    }
+    internal static string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
 
-    public static string SerializeAsString<T>(T obj)
+    internal static JsonElement SerializeToElement<T>(T obj) =>
+        JsonSerializer.SerializeToElement(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static JsonDocument SerializeToDocument<T>(T obj) =>
+        JsonSerializer.SerializeToDocument(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static JsonNode? SerializeToNode<T>(T obj) =>
+        JsonSerializer.SerializeToNode(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static byte[] SerializeToUtf8Bytes<T>(T obj) =>
+        JsonSerializer.SerializeToUtf8Bytes(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static string SerializeAsString<T>(T obj)
     {
         var json = JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
         return json.Trim('"');
     }
 
-    public static T Deserialize<T>(string json)
-    {
-        return JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
-    }
+    internal static T Deserialize<T>(string json) =>
+        JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
 }

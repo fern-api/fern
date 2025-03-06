@@ -35,6 +35,10 @@ export function buildChannel({
         convertedChannel["display-name"] = channel.summary;
     }
 
+    if (channel.description != null) {
+        convertedChannel.docs = channel.description;
+    }
+
     const maybeChannelNamespace = getNamespaceFromGroup(channel.groupName);
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};

@@ -23,13 +23,13 @@ export class AvailabilityExtension extends AbstractExtension<
         this.node = node;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): AvailabilityStatus | undefined {
+    }): Promise<AvailabilityStatus | undefined> {
         const extensionValue = this.getExtensionValue(this.node);
         if (extensionValue == null) {
             return undefined;

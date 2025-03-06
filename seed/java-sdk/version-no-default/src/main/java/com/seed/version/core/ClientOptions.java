@@ -70,6 +70,13 @@ public final class ClientOptions {
         return this.version;
     }
 
+    public int timeout(RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return this.timeout;
+        }
+        return requestOptions.getTimeout().orElse(this.timeout);
+    }
+
     public OkHttpClient httpClient() {
         return this.httpClient;
     }

@@ -219,8 +219,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 57.0.0
+        version: 57.0.0
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../packages/cli/fern-definition/schema
@@ -274,8 +274,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^56.0.0
-        version: 56.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -314,6 +314,69 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/csharp/dynamic-snippets:
+    devDependencies:
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.24.0)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.24.0)
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/path-utils
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      string.prototype.replaceall:
+        specifier: ^1.0.10
+        version: 1.0.10
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   generators/csharp/model:
     devDependencies:
       '@fern-api/base-generator':
@@ -329,8 +392,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^56.0.0
-        version: 56.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -398,8 +461,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021
       '@fern-fern/ir-sdk':
-        specifier: ^56.0.0
-        version: 56.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -458,8 +521,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -510,8 +573,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -561,8 +624,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -697,8 +760,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -820,8 +883,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -871,8 +934,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -916,8 +979,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -979,8 +1042,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1045,8 +1108,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021
       '@fern-fern/ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1639,8 +1702,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 55.0.0
-        version: 55.0.0
+        specifier: 57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1762,8 +1825,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^55.0.0
-        version: 55.0.0
+        specifier: ^57.0.0
+        version: 57.0.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -4350,6 +4413,9 @@ importers:
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4366,6 +4432,9 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -7124,6 +7193,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
@@ -9399,8 +9471,8 @@ packages:
   '@fern-api/docs-parsers@0.0.65':
     resolution: {integrity: sha512-+xZ6AU5Y/EdOeG5WIkUftiifNKC3QiMtjdZ5vlqcO0ZzehhpK0yOFRVfkQl6Z+eiD/VBZfTP5HYvlBkWy1xrJQ==}
 
-  '@fern-api/dynamic-ir-sdk@55.0.0':
-    resolution: {integrity: sha512-VQDqR99oQRHT/FiZJbBJ1edtvLg6nGwm3Ft/AkL0Kg5mZ3pHRvmIjiSqwj0ItSybisPHTFoZwvnkb4g0cmBn3A==}
+  '@fern-api/dynamic-ir-sdk@57.0.0':
+    resolution: {integrity: sha512-l0maf2uPPTuFWrPG+Rh7kWKF6smwO3vwZ7JdwmJeB4F8T7uNR/gMwIr/EpzmwJp4/CiyPGkO4KJfm23X2GTjNw==}
 
   '@fern-api/fdr-sdk@0.132.0-26ae3d805':
     resolution: {integrity: sha512-uX0rfMPFAoyRVeGToOpsAS/9ERANvrXCfilpfdIM26Xp24197Yxi0AQkASqVYt8vZcvLaN/MQUIAkAuH0WInFw==}
@@ -9464,6 +9536,12 @@ packages:
 
   '@fern-fern/ir-sdk@56.0.0':
     resolution: {integrity: sha512-kfsvFg9TIC9ZSI1vFEWdv7tmz3MG8ptL9jYIlZZYGjUZNiMDEl7SSZutcL5cBlb2NF2edZThNEXE0j6cubWj5Q==}
+
+  '@fern-fern/ir-sdk@55.1.0':
+    resolution: {integrity: sha512-q9SVTHL4nAHkjBjI0boZKdjIy7x1bh+wBgjLj0q6aGuUdzjJiJZ3oNkYuGf3gLW0tb8R0CqWkHdPrL/VSwKrRQ==}
+
+  '@fern-fern/ir-sdk@57.0.0':
+    resolution: {integrity: sha512-FD7MWhlfcSYTpjd1r4FCqFVSGotsD7S+frKDeUA4bGobJIFlMNyjFsCeNtUxuggUrw45B28ZUMaQbaO0iG5hGQ==}
 
   '@fern-fern/ir-sdk@57.0.0':
     resolution: {integrity: sha512-FD7MWhlfcSYTpjd1r4FCqFVSGotsD7S+frKDeUA4bGobJIFlMNyjFsCeNtUxuggUrw45B28ZUMaQbaO0iG5hGQ==}
@@ -17247,7 +17325,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@fern-api/dynamic-ir-sdk@55.0.0': {}
+  '@fern-api/dynamic-ir-sdk@57.0.0': {}
 
   '@fern-api/fdr-sdk@0.132.0-26ae3d805(typescript@5.7.2)':
     dependencies:
@@ -17398,6 +17476,10 @@ snapshots:
   '@fern-fern/ir-sdk@55.0.0': {}
 
   '@fern-fern/ir-sdk@56.0.0': {}
+
+  '@fern-fern/ir-sdk@55.1.0': {}
+
+  '@fern-fern/ir-sdk@57.0.0': {}
 
   '@fern-fern/ir-sdk@57.0.0': {}
 

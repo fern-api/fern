@@ -1,0 +1,103 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listAllPets": {
+              "auth": false,
+              "display-name": "List all pets",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "key": "value",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/pets",
+              "response": {
+                "docs": "A list of pets",
+                "status-code": 200,
+                "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Error": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "optional<integer>",
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listAllPets:
+      path: /pets
+      method: GET
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      display-name: List all pets
+      response:
+        docs: A list of pets
+        type: unknown
+        status-code: 200
+      examples:
+        - response:
+            body:
+              key: value
+  source:
+    openapi: ../openapi.yml
+types:
+  Error:
+    properties:
+      code: optional<integer>
+      message: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "URL Reference API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: URL Reference API
+",
+  },
+}

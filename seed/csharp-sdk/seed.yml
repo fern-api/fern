@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v56
+irVersion: v57
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 

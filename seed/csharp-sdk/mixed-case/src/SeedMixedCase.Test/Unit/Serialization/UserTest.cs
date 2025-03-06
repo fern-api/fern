@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedMixedCase;
+using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test;
 
@@ -11,32 +9,64 @@ namespace SeedMixedCase.Test;
 public class UserTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "userName": "username",
+              "metadata_tags": [
+                "tag1",
+                "tag2"
+              ],
+              "EXTRA_PROPERTIES": {
+                "foo": "bar",
+                "baz": "qux"
+              }
+            }
+            """;
+        var expectedObject = new User
+        {
+            UserName = "username",
+            MetadataTags = new List<string>() { "tag1", "tag2" },
+            ExtraProperties = new Dictionary<string, string>()
+            {
+                { "foo", "bar" },
+                { "baz", "qux" },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<User>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var json = """
+            {
+              "userName": "username",
+              "metadata_tags": [
+                "tag1",
+                "tag2"
+              ],
+              "EXTRA_PROPERTIES": {
+                "foo": "bar",
+                "baz": "qux"
+              }
+            }
+            """;
+        var obj = new User
         {
-          ""userName"": ""username"",
-          ""metadata_tags"": [
-            ""tag1"",
-            ""tag2""
-          ],
-          ""EXTRA_PROPERTIES"": {
-            ""foo"": ""bar"",
-            ""baz"": ""qux""
-          }
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            UserName = "username",
+            MetadataTags = new List<string>() { "tag1", "tag2" },
+            ExtraProperties = new Dictionary<string, string>()
+            {
+                { "foo", "bar" },
+                { "baz", "qux" },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<User>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

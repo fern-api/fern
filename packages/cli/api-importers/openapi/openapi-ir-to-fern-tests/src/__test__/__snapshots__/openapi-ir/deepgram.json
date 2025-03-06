@@ -22978,6 +22978,7 @@
         }
       ],
       "path": "/v1/speak",
+      "description": "Deepgram Text to Speech WebSocket",
       "examples": [
         {
           "queryParameters": [],
@@ -25222,6 +25223,7 @@
         }
       ],
       "path": "/v1/listen",
+      "description": "Deepgram Speech to Text WebSocket",
       "examples": [
         {
           "queryParameters": [],
@@ -27001,6 +27003,7 @@
         }
       ],
       "path": "/agent",
+      "description": "Deepgram Voice Agent WebSocket",
       "examples": [
         {
           "queryParameters": [],

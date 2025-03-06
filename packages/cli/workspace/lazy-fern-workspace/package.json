@@ -43,6 +43,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/openapi-v2-parser": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@redocly/openapi-core": "^1.4.1",
     "@types/uuid": "^9.0.8",

@@ -40,11 +40,11 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.CSHARP_SDK]: "1.12.0-rc11",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.PHP_SDK]: "0.14.1"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V56.IntermediateRepresentation.jsonOrThrow(ir, {

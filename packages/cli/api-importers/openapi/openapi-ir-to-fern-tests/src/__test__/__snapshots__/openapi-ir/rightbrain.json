@@ -47670,8 +47670,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
               "type": "file"
             },
+            "description": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
             "exploded": false
           }
         ],

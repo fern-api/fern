@@ -41,13 +41,13 @@ export class RequestBodyConverter extends AbstractConverter<
         this.method = method;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): RequestBodyConverter.Output | undefined {
+    }): Promise<RequestBodyConverter.Output | undefined> {
         if (!this.requestBody.content) {
             return undefined;
         }
@@ -65,7 +65,7 @@ export class RequestBodyConverter extends AbstractConverter<
         );
         for (const contentType of multipartContentTypes) {
             const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = this.convertRequestSchemaForMediaType({
+            const convertedSchema = await this.convertRequestSchemaForMediaType({
                 schemaId,
                 contentType,
                 context,
@@ -106,7 +106,7 @@ export class RequestBodyConverter extends AbstractConverter<
         return undefined;
     }
 
-    private convertRequestSchemaForMediaType({
+    private async convertRequestSchemaForMediaType({
         schemaId,
         contentType,
         context,
@@ -116,7 +116,7 @@ export class RequestBodyConverter extends AbstractConverter<
         contentType: string;
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): SchemaOrReferenceConverter.Output | undefined {
+    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         const mediaTypeObject = this.requestBody.content[contentType];
         if (mediaTypeObject == null || mediaTypeObject.schema == null) {
             return undefined;
@@ -127,7 +127,7 @@ export class RequestBodyConverter extends AbstractConverter<
             schemaOrReference: mediaTypeObject.schema,
             schemaIdOverride: schemaId
         });
-        const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
         if (convertedSchema == null) {
             return undefined;
         }
@@ -135,7 +135,7 @@ export class RequestBodyConverter extends AbstractConverter<
         return convertedSchema;
     }
 
-    private handleJsonOrFormContent = ({
+    private async handleJsonOrFormContent({
         contentType,
         context,
         errorCollector
@@ -143,9 +143,9 @@ export class RequestBodyConverter extends AbstractConverter<
         contentType: string;
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): RequestBodyConverter.Output | undefined => {
+    }): Promise<RequestBodyConverter.Output | undefined> {
         const schemaId = [...this.group, this.method, "Request"].join("_");
-        const convertedSchema = this.convertRequestSchemaForMediaType({
+        const convertedSchema = await this.convertRequestSchemaForMediaType({
             schemaId,
             contentType,
             context,
@@ -188,7 +188,7 @@ export class RequestBodyConverter extends AbstractConverter<
                 })
             };
         }
-    };
+    }
 
     private convertRequestBodyProperty({
         context,
@@ -204,7 +204,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.file({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -213,7 +214,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.file({
                     key: property.name,
                     isOptional: true,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -222,7 +224,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -235,7 +238,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: false,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }
@@ -248,7 +252,8 @@ export class RequestBodyConverter extends AbstractConverter<
                 FileProperty.fileArray({
                     key: property.name,
                     isOptional: true,
-                    contentType
+                    contentType,
+                    docs: property.docs
                 })
             );
         }

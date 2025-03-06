@@ -9,8 +9,10 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
-        // lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+        // Lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
         forceUseConstructor?: boolean;
+        // Write the instantiation across multiple lines
+        multiline?: boolean;
     }
 }
 
@@ -18,12 +20,14 @@ export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: Arguments;
     private readonly forceUseConstructor: boolean;
+    public readonly multiline: boolean;
 
-    constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, forceUseConstructor, multiline }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
         this.forceUseConstructor = forceUseConstructor ?? false;
+        this.multiline = multiline ?? false;
     }
 
     public write(writer: Writer): void {
@@ -36,13 +40,14 @@ export class ClassInstantiation extends AstNode {
 
         const hasNamedArguments = hasNamedArgument(this.arguments_);
         if (hasNamedArguments && !this.forceUseConstructor) {
-            writer.write("{ ");
+            writer.write("{");
         } else {
             writer.write("(");
         }
 
         writer.newLine();
         writer.indent();
+
         this.arguments_.forEach((argument, idx) => {
             if (isNamedArgument(argument)) {
                 writer.write(`${argument.name} = `);
@@ -51,7 +56,12 @@ export class ClassInstantiation extends AstNode {
                 argument.write(writer);
             }
             if (idx < this.arguments_.length - 1) {
-                writer.write(", ");
+                writer.write(",");
+                if (this.multiline) {
+                    writer.newLine();
+                } else {
+                    writer.write(" ");
+                }
             }
         });
         writer.writeLine();

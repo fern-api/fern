@@ -1,9 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -11,36 +9,90 @@ namespace SeedExamples.Test;
 public class ResponseTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "response": "Initializing...",
+              "identifiers": [
+                {
+                  "type": "primitive",
+                  "value": "example",
+                  "label": "Primitive"
+                },
+                {
+                  "type": "unknown",
+                  "value": "{}",
+                  "label": "Unknown"
+                }
+              ]
+            }
+            """;
+        var expectedObject = new Response
+        {
+            Response_ = "Initializing...",
+            Identifiers = new List<Identifier>()
+            {
+                new Identifier
+                {
+                    Type = BasicType.Primitive,
+                    Value = "example",
+                    Label = "Primitive",
+                },
+                new Identifier
+                {
+                    Type = ComplexType.Unknown,
+                    Value = "{}",
+                    Label = "Unknown",
+                },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<Response>(json);
+        var serializedJson = JsonUtils.Serialize(deserializedObject);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""response"": ""Initializing..."",
-          ""identifiers"": [
+        var json = """
             {
-              ""type"": ""primitive"",
-              ""value"": ""example"",
-              ""label"": ""Primitive""
-            },
-            {
-              ""type"": ""unknown"",
-              ""value"": ""{}"",
-              ""label"": ""Unknown""
+              "response": "Initializing...",
+              "identifiers": [
+                {
+                  "type": "primitive",
+                  "value": "example",
+                  "label": "Primitive"
+                },
+                {
+                  "type": "unknown",
+                  "value": "{}",
+                  "label": "Unknown"
+                }
+              ]
             }
-          ]
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var obj = new Response
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Response_ = "Initializing...",
+            Identifiers = new List<Identifier>()
+            {
+                new Identifier
+                {
+                    Type = BasicType.Primitive,
+                    Value = "example",
+                    Label = "Primitive",
+                },
+                new Identifier
+                {
+                    Type = ComplexType.Unknown,
+                    Value = "{}",
+                    Label = "Unknown",
+                },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Response>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var objAsNode = JsonUtils.SerializeToNode(obj);
+        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
+        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
     }
 }

@@ -343,6 +343,13 @@ export class Type extends AstNode {
         return undefined;
     }
 
+    public unwrapIfOptional(): Type {
+        if (this.internalType.type === "optional") {
+            return (this.internalType as Optional).value;
+        }
+        return this;
+    }
+
     public isOptional(): boolean {
         return this.internalType.type === "optional";
     }
