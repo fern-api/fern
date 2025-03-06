@@ -533,7 +533,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         context: SdkContext
     ): ts.Expression {
         const referenceToRequestBody = ts.factory.createIdentifier("payload");
-        // TODO (Eden): We need to instantiate a new WebsocketSchemaContext to get the correct serializer
         switch (subscribeMessage.type) {
             case "inlinedBody": {
                 throw new Error("Inlined body messages are not supported yet");
