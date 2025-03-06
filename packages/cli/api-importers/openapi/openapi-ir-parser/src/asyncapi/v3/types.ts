@@ -32,6 +32,7 @@ export interface ChannelV3 {
     servers?: OpenAPIV3.ReferenceObject[];
     // TODO: Add support for reference objects
     parameters?: Record<string, ChannelParameter>;
+    description?: string;
 }
 
 export interface Operation {
