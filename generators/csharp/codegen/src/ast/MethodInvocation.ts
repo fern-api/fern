@@ -1,3 +1,5 @@
+import { NamedArgument } from "@fern-api/base-generator";
+
 import { csharp } from "..";
 import { AnonymousFunction } from "../csharp";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -18,23 +20,26 @@ export declare namespace MethodInvocation {
         /* The method to invoke */
         method: string;
         /* A map of the field for the class and the value to be assigned to it. */
-        arguments_: (CodeBlock | ClassInstantiation | AnonymousFunction)[];
+        arguments_: AstNode[];
         /* In the event of an instance method, you'll want to invoke it on said instance */
         on?: AstNode;
         /* Any generics used in the method invocation */
         generics?: csharp.Type[];
+        /* Whether to use a multiline method invocation */
+        multiline?: boolean;
     }
 }
 
 export class MethodInvocation extends AstNode {
-    private arguments: (CodeBlock | ClassInstantiation | AnonymousFunction)[];
+    private arguments: AstNode[];
     private method: string;
     private on: AstNode | undefined;
     private async: boolean;
     private configureAwait: boolean;
     private generics: csharp.Type[];
+    private multiline: boolean;
 
-    constructor({ method, arguments_, on, async, configureAwait, generics }: MethodInvocation.Args) {
+    constructor({ method, arguments_, on, async, configureAwait, generics, multiline }: MethodInvocation.Args) {
         super();
 
         this.method = method;
@@ -43,6 +48,7 @@ export class MethodInvocation extends AstNode {
         this.async = async ?? false;
         this.configureAwait = configureAwait ?? false;
         this.generics = generics ?? [];
+        this.multiline = multiline ?? false;
     }
 
     public write(writer: Writer): void {
@@ -65,16 +71,23 @@ export class MethodInvocation extends AstNode {
             writer.write(">");
         }
         writer.write("(");
-
-        writer.indent();
+        if (this.multiline) {
+            writer.indent();
+        }
         this.arguments.forEach((arg, idx) => {
             arg.write(writer);
             if (idx < this.arguments.length - 1) {
-                writer.write(", ");
+                writer.write(",");
+                if (this.multiline) {
+                    writer.writeLine();
+                } else {
+                    writer.write(" ");
+                }
             }
         });
-        writer.dedent();
-
+        if (this.multiline) {
+            writer.dedent();
+        }
         writer.write(")");
         if (this.async && this.configureAwait === false) {
             writer.write(".ConfigureAwait(false)");
