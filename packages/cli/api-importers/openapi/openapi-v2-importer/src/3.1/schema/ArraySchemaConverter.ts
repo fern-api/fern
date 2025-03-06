@@ -28,13 +28,13 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
         this.schema = schema;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): ArraySchemaConverter.Output | undefined {
+    }): Promise<ArraySchemaConverter.Output | undefined> {
         if (this.schema.items == null) {
             return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
         }
@@ -44,7 +44,7 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
             schemaOrReference: this.schema.items
         });
 
-        const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
         if (convertedSchema != null) {
             return {
                 typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),

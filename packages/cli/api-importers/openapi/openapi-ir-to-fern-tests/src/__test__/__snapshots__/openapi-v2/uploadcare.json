@@ -10660,6 +10660,7 @@
                   },
                   "isOptional": false,
                   "contentType": "multipart/form-data",
+                  "docs": "File's content",
                   "type": "fileArray"
                 },
                 "type": "file"

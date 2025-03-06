@@ -30,9 +30,4 @@ from .practitioner import Practitioner  # noqa: E402
 from .script import Script  # noqa: E402
 from .resource_list import ResourceList  # noqa: E402
 
-update_forward_refs(Account, BaseResource=BaseResource)
-update_forward_refs(Memo, BaseResource=BaseResource)
-update_forward_refs(Patient, BaseResource=BaseResource)
-update_forward_refs(Practitioner, BaseResource=BaseResource)
-update_forward_refs(Script, BaseResource=BaseResource)
 update_forward_refs(BaseResource)

@@ -33,8 +33,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "An optional file to upload",
               "type": "file"
             },
+            "description": "An optional file to upload",
             "exploded": false
           }
         ],
@@ -83,6 +85,7 @@
             "schema": {
               "isOptional": false,
               "isArray": true,
+              "description": "A list of files to upload",
               "type": "file"
             },
             "exploded": false
@@ -92,6 +95,7 @@
             "schema": {
               "isOptional": true,
               "isArray": true,
+              "description": "An optional list of files to upload",
               "type": "file"
             },
             "exploded": false
@@ -153,8 +157,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "An optional file to upload",
               "type": "file"
             },
+            "description": "An optional file to upload",
             "exploded": false
           },
           {

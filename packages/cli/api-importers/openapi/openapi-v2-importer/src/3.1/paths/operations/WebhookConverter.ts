@@ -15,13 +15,13 @@ export class WebhookConverter extends AbstractOperationConverter {
         super({ breadcrumbs, operation, method, path });
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): WebhookConverter.Output | undefined {
+    }): Promise<WebhookConverter.Output | undefined> {
         if (this.operation.operationId == null) {
             errorCollector.collect({
                 message: "Skipping webhook because no operation id present",
@@ -55,13 +55,13 @@ export class WebhookConverter extends AbstractOperationConverter {
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
         const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
-        const { headers, pathParameters, queryParameters } = this.convertParameters({
+        const { headers, pathParameters, queryParameters } = await this.convertParameters({
             context,
             errorCollector,
             breadcrumbs: payloadBreadcrumbs
         });
 
-        const requestBody = this.convertRequestBody({
+        const requestBody = await this.convertRequestBody({
             context,
             errorCollector,
             breadcrumbs: payloadBreadcrumbs,
@@ -102,7 +102,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 headers,
                 payload,
                 examples: [],
-                availability: context.getAvailability({
+                availability: await context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector

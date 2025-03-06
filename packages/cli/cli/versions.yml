@@ -1,5 +1,50 @@
 - changelogEntry:
   - summary: |
+      Correctly parse channel descriptions in AsyncAPI v2 and v3 specs.
+    type: fix
+  irVersion: 57
+  version: 0.56.13
+
+- changelogEntry:
+  - summary: |
+      Updated the OpenAPI parser to:
+      - Support parsing references that point to external files (e.g. https://github.com/...)
+      - Enable merging Intermediate Representations (IRs) when APIs have multiple OpenAPI specs
+      - Skip legacy parsers when openapi-parser-v3 is enabled for cleaner CLI logging
+    type: fix
+  irVersion: 57
+  version: 0.56.12
+
+- changelogEntry:
+  - summary: |
+      Add `x-fern-address` extension for AsyncAPI v2.x.x specs to specify the channel address.
+    type: fix
+  irVersion: 57
+  version: 0.56.11
+
+- changelogEntry:
+  - summary: |
+      Enable correct environment generation when only provided an AsyncAPI spec.
+    type: fix
+  irVersion: 57
+  version: 0.56.10
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where default values for query parameters would occasionally be omitted during parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.9
+
+- changelogEntry:
+  - summary: |
+      OpenAPI file properties can now support descriptions.
+    type: feat
+  irVersion: 57
+  version: 0.56.8
+
+- changelogEntry:
+  - summary: |
       The CLI now recognizes that the latest C# SDK uses IRv57.
     type: internal
   irVersion: 57

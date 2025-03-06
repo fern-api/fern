@@ -23,13 +23,13 @@ export class OperationConverter extends AbstractOperationConverter {
         this.idempotent = idempotent;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): OperationConverter.Output | undefined {
+    }): Promise<OperationConverter.Output | undefined> {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -39,13 +39,13 @@ export class OperationConverter extends AbstractOperationConverter {
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
-        const { headers, pathParameters, queryParameters } = this.convertParameters({
+        const { headers, pathParameters, queryParameters } = await this.convertParameters({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const requestBody = this.convertRequestBody({
+        const requestBody = await this.convertRequestBody({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
@@ -56,7 +56,7 @@ export class OperationConverter extends AbstractOperationConverter {
             return undefined;
         }
 
-        const response = this.convertResponseBody({
+        const response = await this.convertResponseBody({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "responses"],
@@ -81,7 +81,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 response,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
-                availability: context.getAvailability({
+                availability: await context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector

@@ -26,6 +26,7 @@ export interface ChannelV2 {
     subscribe?: SubscribeEvent;
     servers?: string[];
     parameters?: Record<string, OpenAPIV3.ParameterObject>;
+    description?: string;
 }
 
 export interface Tag {

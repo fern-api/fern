@@ -65262,6 +65262,7 @@
           }
         }
       ],
+      "docs": "Deepgram Text to Speech WebSocket",
       "pathParameters": [],
       "queryParameters": [
         {
@@ -66219,6 +66220,7 @@
           }
         }
       ],
+      "docs": "Deepgram Speech to Text WebSocket",
       "pathParameters": [],
       "queryParameters": [
         {
@@ -68527,6 +68529,7 @@
           }
         }
       ],
+      "docs": "Deepgram Voice Agent WebSocket",
       "pathParameters": [],
       "queryParameters": [],
       "messages": [

@@ -230,6 +230,8 @@ export function parseAsyncAPIV2({
                 }
             }
 
+            const address = getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_CHANNEL_ADDRESS);
+            const path = address != null ? address : transformToValidPath(channelPath);
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -264,8 +266,8 @@ export function parseAsyncAPIV2({
                     (server): server is ServerContext => server != null
                 ),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: transformToValidPath(channelPath),
-                description: undefined,
+                path,
+                description: channel.description,
                 examples,
                 source
             };

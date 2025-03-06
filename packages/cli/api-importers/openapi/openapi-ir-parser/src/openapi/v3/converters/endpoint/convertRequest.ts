@@ -141,7 +141,7 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
+                        schema: MultipartSchema.file({ isOptional: false, isArray: false, description: undefined }),
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
@@ -159,8 +159,12 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: false,
+                            description: property.schema.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
                         exploded: false,
@@ -177,7 +181,11 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
+                        schema: MultipartSchema.file({
+                            isOptional: false,
+                            isArray: true,
+                            description: property.schema.value.description
+                        }),
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
@@ -196,8 +204,12 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: true,
+                            description: property.schema.value.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
                         exploded: false,

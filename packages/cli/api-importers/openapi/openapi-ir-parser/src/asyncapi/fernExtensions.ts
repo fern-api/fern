@@ -12,6 +12,17 @@ export const FernAsyncAPIExtension = {
     FERN_PARAMETER_OPTIONAL: "x-fern-optional",
 
     /**
+     * The x-fern-address allows you to specify the address for the websocket channel.
+     * Used in v2.x.x specs to specify the address for a websocket channel when the channel
+     * name is not the same as the address.
+     *
+     * channels:
+     *   /my-channel:
+     *     x-fern-address: /get-user
+     */
+    FERN_CHANNEL_ADDRESS: "x-fern-address",
+
+    /**
      * The x-fern-summary allows you to specify a display name for the websocket channel.
      */
     FERN_DISPLAY_NAME: "x-fern-display-name",

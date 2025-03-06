@@ -38,13 +38,13 @@ export class ResponseBodyConverter extends AbstractConverter<
         this.statusCode = statusCode;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): ResponseBodyConverter.Output | undefined {
+    }): Promise<ResponseBodyConverter.Output | undefined> {
         if (!this.responseBody.content) {
             return undefined;
         }
@@ -67,7 +67,7 @@ export class ResponseBodyConverter extends AbstractConverter<
                 schemaIdOverride: schemaId
             });
 
-            const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+            const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
             if (convertedSchema == null) {
                 continue;
             }
