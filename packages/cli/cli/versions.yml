@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add `x-fern-address` extension for AsyncAPI v2.x.x specs to specify the channel address.
+    type: fix
+  irVersion: 57
+  version: 0.56.11
+
+- changelogEntry:
+  - summary: |
       Enable correct environment generation when only provided an AsyncAPI spec.
     type: fix
   irVersion: 57
