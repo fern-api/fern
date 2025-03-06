@@ -6,6 +6,7 @@ import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { StringEnumGenerator } from "./enum/StringEnumGenerator";
 import { ObjectGenerator } from "./object/ObjectGenerator";
+import { UnionGenerator } from "./union/UnionGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
@@ -25,7 +26,12 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 return new ObjectGenerator(context, typeDeclaration, otd).generate();
             },
             undiscriminatedUnion: () => undefined,
-            union: () => undefined,
+            union: (unionDeclaration) => {
+                if (context.shouldGenerateDiscriminatedUnions()) {
+                    return new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();
+                }
+                return undefined;
+            },
             _other: () => undefined
         });
         if (file != null) {

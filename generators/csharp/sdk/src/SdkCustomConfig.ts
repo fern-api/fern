@@ -24,7 +24,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "generate-mock-server-tests": z.boolean().optional(),
     "inline-path-parameters": z.boolean().optional(),
     "custom-pager-name": z.string().optional(),
-    "include-exception-handler": z.boolean().optional()
+    "include-exception-handler": z.boolean().optional(),
+    "use-discriminated-unions": z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

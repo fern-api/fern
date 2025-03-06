@@ -6,7 +6,8 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "package-id": z.string().optional(),
-    "custom-pager-name": z.string().optional()
+    "custom-pager-name": z.string().optional(),
+    "use-discriminated-unions": z.boolean().optional()
 });
 
 export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>;
