@@ -293,7 +293,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitUint() {
-            return CodeBlock.of("return $T.$L($L)", Long.class, "toString", VALUE_FIELD_NAME);
+            return CodeBlock.of("return $T.$L($L)", Integer.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override
