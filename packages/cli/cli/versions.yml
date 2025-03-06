@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+      Updated the OpenAPI parser to:
+      - Support parsing references that point to external files (e.g. https://github.com/...)
+      - Enable merging Intermediate Representations (IRs) when APIs have multiple OpenAPI specs
+      - Skip legacy parsers when openapi-parser-v3 is enabled for cleaner CLI logging
+    type: fix
+  irVersion: 57
+  version: 0.56.12
+
+- changelogEntry:
+  - summary: |
       Add `x-fern-address` extension for AsyncAPI v2.x.x specs to specify the channel address.
     type: fix
   irVersion: 57
