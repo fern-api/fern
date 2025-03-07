@@ -41,6 +41,7 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      - dotnet build src/*.DynamicSnippets
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
       # - dotnet test src
 

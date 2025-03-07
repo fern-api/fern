@@ -10,6 +10,12 @@
   ],
   "references": [
     {
+      "path": "../../../../../generators/browser-compatible-base"
+    },
+    {
+      "path": "../../../../../generators/csharp/dynamic-snippets"
+    },
+    {
       "path": "../../../../../generators/go-v2/dynamic-snippets"
     },
     {

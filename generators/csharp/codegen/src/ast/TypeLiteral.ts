@@ -11,6 +11,7 @@ type InternalTypeLiteral =
     | Date_
     | DateTime
     | Dictionary
+    | Double
     | Float
     | Integer
     | List
@@ -48,6 +49,11 @@ interface Date_ {
 interface DateTime {
     type: "datetime";
     value: string;
+}
+
+interface Double {
+    type: "double";
+    value: number;
 }
 
 interface Float {
@@ -161,12 +167,28 @@ export class TypeLiteral extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             }
-            case "integer":
-            case "long":
-            case "uint":
-            case "ulong":
-            case "float": {
+            case "integer": {
                 writer.write(this.internalType.value.toString());
+                break;
+            }
+            case "long": {
+                writer.write(`${this.internalType.value}l`);
+                break;
+            }
+            case "uint": {
+                writer.write(`${this.internalType.value}u`);
+                break;
+            }
+            case "ulong": {
+                writer.write(`${this.internalType.value}ul`);
+                break;
+            }
+            case "double": {
+                writer.write(this.internalType.value.toString());
+                break;
+            }
+            case "float": {
+                writer.write(`${this.internalType.value}f`);
                 break;
             }
             case "string": {
@@ -339,6 +361,10 @@ export class TypeLiteral extends AstNode {
 
     public static datetime(value: string): TypeLiteral {
         return new this({ type: "datetime", value });
+    }
+
+    public static double(value: number): TypeLiteral {
+        return new this({ type: "double", value });
     }
 
     public static integer(value: number): TypeLiteral {

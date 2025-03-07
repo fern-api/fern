@@ -2,6 +2,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 import { AbstractEndpointSnippetGenerator } from "./AbstractEndpointSnippetGenerator";
+import { Options } from "./Options";
 import { Result } from "./Result";
 
 export abstract class AbstractDynamicSnippetsGenerator<
@@ -13,7 +14,8 @@ export abstract class AbstractDynamicSnippetsGenerator<
     protected abstract createSnippetGenerator(context: Context): EndpointSnippetGenerator;
 
     public async generate(
-        request: FernIr.dynamic.EndpointSnippetRequest
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
     ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
@@ -24,7 +26,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
             const context = this.context.clone() as Context;
             const snippetGenerator = this.createSnippetGenerator(context);
             try {
-                const snippet = await snippetGenerator.generateSnippet({ endpoint, request });
+                const snippet = await snippetGenerator.generateSnippet({ endpoint, request, options });
                 if (context.errors.empty()) {
                     return {
                         snippet,
@@ -41,7 +43,10 @@ export abstract class AbstractDynamicSnippetsGenerator<
         return result.getResponseOrThrow({ endpoint: request.endpoint });
     }
 
-    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
+    public generateSync(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): FernIr.dynamic.EndpointSnippetResponse {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
@@ -51,7 +56,7 @@ export abstract class AbstractDynamicSnippetsGenerator<
             const context = this.context.clone() as Context;
             const snippetGenerator = this.createSnippetGenerator(context);
             try {
-                const snippet = snippetGenerator.generateSnippetSync({ endpoint, request });
+                const snippet = snippetGenerator.generateSnippetSync({ endpoint, request, options });
                 if (context.errors.empty()) {
                     return {
                         snippet,
