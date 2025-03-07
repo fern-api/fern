@@ -492,7 +492,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const optionsInterface = this.generateOptionsInterface(context);
         serviceModule.statements = [
             optionsInterface,
-            ...(this.generatedEndpointImplementations.length > 0
+            ...(this.generatedEndpointImplementations.length > 0 || this.isRoot
                 ? [this.generateRequestOptionsInterface(context)]
                 : []),
             ...(this.generatedWebsocketImplementation != null

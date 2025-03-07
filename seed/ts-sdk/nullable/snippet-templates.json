@@ -317,6 +317,78 @@
                                                     "type": "generic"
                                                 },
                                                 "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "status: $FERN_INPUT",
+                                                    "discriminantField": "type",
+                                                    "members": {
+                                                        "active": {
+                                                            "imports": [],
+                                                            "templateString": "status: { type : \"active\" }",
+                                                            "isOptional": true,
+                                                            "templateInputs": [],
+                                                            "type": "generic"
+                                                        },
+                                                        "archived": {
+                                                            "imports": [],
+                                                            "templateString": "status: { \n\t\t\t\ttype : \"archived\", \n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "isOptional": true,
+                                                            "templateInputs": [
+                                                                {
+                                                                    "value": {
+                                                                        "imports": [],
+                                                                        "templateString": "value: $FERN_INPUT",
+                                                                        "isOptional": true,
+                                                                        "templateInputs": [
+                                                                            {
+                                                                                "location": "BODY",
+                                                                                "path": "metadata.status.value",
+                                                                                "type": "payload"
+                                                                            }
+                                                                        ],
+                                                                        "type": "generic"
+                                                                    },
+                                                                    "type": "template"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "soft-deleted": {
+                                                            "imports": [],
+                                                            "templateString": "status: { \n\t\t\t\ttype : \"soft-deleted\", \n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "isOptional": true,
+                                                            "templateInputs": [
+                                                                {
+                                                                    "value": {
+                                                                        "imports": [],
+                                                                        "templateString": "value: $FERN_INPUT",
+                                                                        "isOptional": true,
+                                                                        "templateInputs": [
+                                                                            {
+                                                                                "location": "BODY",
+                                                                                "path": "metadata.status.value",
+                                                                                "type": "payload"
+                                                                            }
+                                                                        ],
+                                                                        "type": "generic"
+                                                                    },
+                                                                    "type": "template"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        }
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "metadata.status",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "discriminatedUnion"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
