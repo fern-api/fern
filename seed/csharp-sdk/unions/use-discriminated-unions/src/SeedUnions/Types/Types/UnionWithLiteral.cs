@@ -7,18 +7,19 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithLiteral.JsonConverter))]
 public record UnionWithLiteral
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
+    internal UnionWithLiteral(string type, object value)
+    {
+        Type = type;
+        Value = value;
+    }
 
     /// <summary>
-    /// Create an instance of UnionWithLiteral with <see cref="string"/>.
+    /// Create an instance of UnionWithLiteral with <see cref="UnionWithLiteral.Fern"/>.
     /// </summary>
-    public UnionWithLiteral(string value)
+    public UnionWithLiteral(UnionWithLiteral.Fern value)
     {
         Type = "fern";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -30,34 +31,33 @@ public record UnionWithLiteral
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     [JsonPropertyName("base")]
     public string Base { get; set; } = "base";
 
     /// <summary>
-    /// Returns true if of type <see cref="string"/>.
+    /// Returns true if <see cref="Type"/> is "fern"
     /// </summary>
-    [JsonIgnore]
     public bool IsFern => Type == "fern";
 
     /// <summary>
-    /// Returns the value as a <see cref="string"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'fern', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="string"/>.</exception>
-    public string AsFern() => (string)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fern'.</exception>
+    public string AsFern() =>
+        IsFern ? (string)Value : throw new Exception("UnionWithLiteral.Type is not 'fern'");
 
-    public T Match<T>(Func<string, T> onFern)
+    public T Match<T>(Func<string, T> onFern, Func<string, object, T> _onUnknown)
     {
         return Type switch
         {
             "fern" => onFern(AsFern()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<string> onFern)
+    public void Visit(Action<string> onFern, Action<string, object> _onUnknown)
     {
         switch (Type)
         {
@@ -65,7 +65,8 @@ public record UnionWithLiteral
                 onFern(AsFern());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
@@ -74,9 +75,9 @@ public record UnionWithLiteral
     /// </summary>
     public bool TryAsFern(out string? value)
     {
-        if (Value is string asValue)
+        if (Type == "fern")
         {
-            value = asValue;
+            value = (string)Value;
             return true;
         }
         value = null;
@@ -84,6 +85,15 @@ public record UnionWithLiteral
     }
 
     public override string ToString() => JsonUtils.Serialize(this);
+
+    /// <summary>
+    /// Base properties for the discriminated union
+    /// </summary>
+    internal record BaseProperties
+    {
+        [JsonPropertyName("base")]
+        public string Base { get; set; } = "base";
+    }
 
     internal sealed class JsonConverter : JsonConverter<UnionWithLiteral>
     {
@@ -96,8 +106,8 @@ public record UnionWithLiteral
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -122,9 +132,14 @@ public record UnionWithLiteral
                 case "fern":
                 {
                     var value =
-                        jsonObject.Deserialize<string>()
+                        json.Deserialize<string>(options)
                         ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithLiteral(value);
+                    var baseProperties =
+                        json.Deserialize<UnionWithLiteral.BaseProperties>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize UnionWithLiteral.BaseProperties"
+                        );
+                    return new UnionWithLiteral("fern", value) { Base = baseProperties.Base };
                 }
                 default:
                     throw new JsonException(
@@ -147,5 +162,22 @@ public record UnionWithLiteral
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for fern
+    /// </summary>
+    public record Fern
+    {
+        public Fern(string value)
+        {
+            Value = value;
+        }
+
+        internal string Value { get; set; }
+
+        public override string ToString() => Value;
+
+        public static implicit operator Fern(string value) => new(value);
     }
 }

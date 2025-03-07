@@ -7,27 +7,28 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithoutKey.JsonConverter))]
 public record UnionWithoutKey
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
-
-    /// <summary>
-    /// Create an instance of UnionWithoutKey with <see cref="Foo"/>.
-    /// </summary>
-    public UnionWithoutKey(Foo value)
+    internal UnionWithoutKey(string type, object value)
     {
-        Type = "foo";
+        Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithoutKey with <see cref="Bar"/>.
+    /// Create an instance of UnionWithoutKey with <see cref="UnionWithoutKey.Foo"/>.
     /// </summary>
-    public UnionWithoutKey(Bar value)
+    public UnionWithoutKey(UnionWithoutKey.Foo value)
+    {
+        Type = "foo";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithoutKey with <see cref="UnionWithoutKey.Bar"/>.
+    /// </summary>
+    public UnionWithoutKey(UnionWithoutKey.Bar value)
     {
         Type = "bar";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -39,44 +40,51 @@ public record UnionWithoutKey
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     /// <summary>
-    /// Returns true if of type <see cref="Foo"/>.
+    /// Returns true if <see cref="Type"/> is "foo"
     /// </summary>
-    [JsonIgnore]
     public bool IsFoo => Type == "foo";
 
     /// <summary>
-    /// Returns true if of type <see cref="Bar"/>.
+    /// Returns true if <see cref="Type"/> is "bar"
     /// </summary>
-    [JsonIgnore]
     public bool IsBar => Type == "bar";
 
     /// <summary>
-    /// Returns the value as a <see cref="Foo"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="Foo"/>.</exception>
-    public Foo AsFoo() => (Foo)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
+    public SeedUnions.Foo AsFoo() =>
+        IsFoo ? (SeedUnions.Foo)Value : throw new Exception("UnionWithoutKey.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Bar"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="Bar"/>.</exception>
-    public Bar AsBar() => (Bar)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
+    public SeedUnions.Bar AsBar() =>
+        IsBar ? (SeedUnions.Bar)Value : throw new Exception("UnionWithoutKey.Type is not 'bar'");
 
-    public T Match<T>(Func<Foo, T> onFoo, Func<Bar, T> onBar)
+    public T Match<T>(
+        Func<SeedUnions.Foo, T> onFoo,
+        Func<SeedUnions.Bar, T> onBar,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
             "bar" => onBar(AsBar()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<Foo> onFoo, Action<Bar> onBar)
+    public void Visit(
+        Action<SeedUnions.Foo> onFoo,
+        Action<SeedUnions.Bar> onBar,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
@@ -87,18 +95,19 @@ public record UnionWithoutKey
                 onBar(AsBar());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Foo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Foo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsFoo(out Foo? value)
+    public bool TryAsFoo(out SeedUnions.Foo? value)
     {
-        if (Value is Foo asValue)
+        if (Type == "foo")
         {
-            value = asValue;
+            value = (SeedUnions.Foo)Value;
             return true;
         }
         value = null;
@@ -106,13 +115,13 @@ public record UnionWithoutKey
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Bar"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Bar"/> and returns true if successful.
     /// </summary>
-    public bool TryAsBar(out Bar? value)
+    public bool TryAsBar(out SeedUnions.Bar? value)
     {
-        if (Value is Bar asValue)
+        if (Type == "bar")
         {
-            value = asValue;
+            value = (SeedUnions.Bar)Value;
             return true;
         }
         value = null;
@@ -121,9 +130,9 @@ public record UnionWithoutKey
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithoutKey(Foo value) => new(value);
+    public static implicit operator UnionWithoutKey(UnionWithoutKey.Foo value) => new(value);
 
-    public static implicit operator UnionWithoutKey(Bar value) => new(value);
+    public static implicit operator UnionWithoutKey(UnionWithoutKey.Bar value) => new(value);
 
     internal sealed class JsonConverter : JsonConverter<UnionWithoutKey>
     {
@@ -136,8 +145,8 @@ public record UnionWithoutKey
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -161,13 +170,17 @@ public record UnionWithoutKey
             {
                 case "foo":
                 {
-                    var value = jsonObject.Deserialize<Foo>();
-                    return new UnionWithoutKey(value);
+                    var value =
+                        json.Deserialize<SeedUnions.Foo>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
+                    return new UnionWithoutKey("foo", value);
                 }
                 case "bar":
                 {
-                    var value = jsonObject.Deserialize<Bar>();
-                    return new UnionWithoutKey(value);
+                    var value =
+                        json.Deserialize<SeedUnions.Bar>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.Bar");
+                    return new UnionWithoutKey("bar", value);
                 }
                 default:
                     throw new JsonException(
@@ -190,5 +203,39 @@ public record UnionWithoutKey
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for foo
+    /// </summary>
+    public struct Foo
+    {
+        public Foo(SeedUnions.Foo value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.Foo Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for bar
+    /// </summary>
+    public struct Bar
+    {
+        public Bar(SeedUnions.Bar value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.Bar Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Bar(SeedUnions.Bar value) => new(value);
     }
 }

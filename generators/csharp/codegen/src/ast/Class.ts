@@ -115,6 +115,10 @@ export class Class extends AstNode {
         this.nestedClasses.push(subClass);
     }
 
+    public addNestedClasses(subClasses: Class[]): void {
+        subClasses.forEach((subClass) => this.addNestedClass(subClass));
+    }
+
     public addNestedInterface(subInterface: Interface): void {
         this.nestedInterfaces.push(subInterface);
     }

@@ -7,27 +7,28 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithPrimitive.JsonConverter))]
 public record UnionWithPrimitive
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
-
-    /// <summary>
-    /// Create an instance of UnionWithPrimitive with <see cref="int"/>.
-    /// </summary>
-    public UnionWithPrimitive(int value)
+    internal UnionWithPrimitive(string type, object value)
     {
-        Type = "integer";
+        Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithPrimitive with <see cref="string"/>.
+    /// Create an instance of UnionWithPrimitive with <see cref="UnionWithPrimitive.Integer"/>.
     /// </summary>
-    public UnionWithPrimitive(string value)
+    public UnionWithPrimitive(UnionWithPrimitive.Integer value)
+    {
+        Type = "integer";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithPrimitive with <see cref="UnionWithPrimitive.String"/>.
+    /// </summary>
+    public UnionWithPrimitive(UnionWithPrimitive.String value)
     {
         Type = "string";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -39,44 +40,51 @@ public record UnionWithPrimitive
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     /// <summary>
-    /// Returns true if of type <see cref="int"/>.
+    /// Returns true if <see cref="Type"/> is "integer"
     /// </summary>
-    [JsonIgnore]
     public bool IsInteger => Type == "integer";
 
     /// <summary>
-    /// Returns true if of type <see cref="string"/>.
+    /// Returns true if <see cref="Type"/> is "string"
     /// </summary>
-    [JsonIgnore]
     public bool IsString => Type == "string";
 
     /// <summary>
-    /// Returns the value as a <see cref="int"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'integer', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="int"/>.</exception>
-    public int AsInteger() => (int)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
+    public int AsInteger() =>
+        IsInteger ? (int)Value : throw new Exception("UnionWithPrimitive.Type is not 'integer'");
 
     /// <summary>
-    /// Returns the value as a <see cref="string"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="string"/>.</exception>
-    public string AsString() => (string)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
+    public string AsString() =>
+        IsString ? (string)Value : throw new Exception("UnionWithPrimitive.Type is not 'string'");
 
-    public T Match<T>(Func<int, T> onInteger, Func<string, T> onString)
+    public T Match<T>(
+        Func<int, T> onInteger,
+        Func<string, T> onString,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "integer" => onInteger(AsInteger()),
             "string" => onString(AsString()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<int> onInteger, Action<string> onString)
+    public void Visit(
+        Action<int> onInteger,
+        Action<string> onString,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
@@ -87,7 +95,8 @@ public record UnionWithPrimitive
                 onString(AsString());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
@@ -96,9 +105,9 @@ public record UnionWithPrimitive
     /// </summary>
     public bool TryAsInteger(out int? value)
     {
-        if (Value is int asValue)
+        if (Type == "integer")
         {
-            value = asValue;
+            value = (int)Value;
             return true;
         }
         value = null;
@@ -110,9 +119,9 @@ public record UnionWithPrimitive
     /// </summary>
     public bool TryAsString(out string? value)
     {
-        if (Value is string asValue)
+        if (Type == "string")
         {
-            value = asValue;
+            value = (string)Value;
             return true;
         }
         value = null;
@@ -121,9 +130,11 @@ public record UnionWithPrimitive
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithPrimitive(int value) => new(value);
+    public static implicit operator UnionWithPrimitive(UnionWithPrimitive.Integer value) =>
+        new(value);
 
-    public static implicit operator UnionWithPrimitive(string value) => new(value);
+    public static implicit operator UnionWithPrimitive(UnionWithPrimitive.String value) =>
+        new(value);
 
     internal sealed class JsonConverter : JsonConverter<UnionWithPrimitive>
     {
@@ -136,8 +147,8 @@ public record UnionWithPrimitive
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -161,15 +172,15 @@ public record UnionWithPrimitive
             {
                 case "integer":
                 {
-                    var value = jsonObject.Deserialize<int>();
-                    return new UnionWithPrimitive(value);
+                    var value = json.Deserialize<int>(options);
+                    return new UnionWithPrimitive("integer", value);
                 }
                 case "string":
                 {
                     var value =
-                        jsonObject.Deserialize<string>()
+                        json.Deserialize<string>(options)
                         ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithPrimitive(value);
+                    return new UnionWithPrimitive("string", value);
                 }
                 default:
                     throw new JsonException(
@@ -192,5 +203,39 @@ public record UnionWithPrimitive
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for integer
+    /// </summary>
+    public struct Integer
+    {
+        public Integer(int value)
+        {
+            Value = value;
+        }
+
+        internal int Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Integer(int value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for string
+    /// </summary>
+    public record String
+    {
+        public String(string value)
+        {
+            Value = value;
+        }
+
+        internal string Value { get; set; }
+
+        public override string ToString() => Value;
+
+        public static implicit operator String(string value) => new(value);
     }
 }

@@ -7,27 +7,28 @@ namespace SeedUnions;
 [JsonConverter(typeof(Shape.JsonConverter))]
 public record Shape
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
-
-    /// <summary>
-    /// Create an instance of Shape with <see cref="Circle"/>.
-    /// </summary>
-    public Shape(Circle value)
+    internal Shape(string type, object value)
     {
-        Type = "circle";
+        Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of Shape with <see cref="Square"/>.
+    /// Create an instance of Shape with <see cref="Shape.Circle"/>.
     /// </summary>
-    public Shape(Square value)
+    public Shape(Shape.Circle value)
+    {
+        Type = "circle";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of Shape with <see cref="Shape.Square"/>.
+    /// </summary>
+    public Shape(Shape.Square value)
     {
         Type = "square";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -39,47 +40,54 @@ public record Shape
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// Returns true if of type <see cref="Circle"/>.
+    /// Returns true if <see cref="Type"/> is "circle"
     /// </summary>
-    [JsonIgnore]
     public bool IsCircle => Type == "circle";
 
     /// <summary>
-    /// Returns true if of type <see cref="Square"/>.
+    /// Returns true if <see cref="Type"/> is "square"
     /// </summary>
-    [JsonIgnore]
     public bool IsSquare => Type == "square";
 
     /// <summary>
-    /// Returns the value as a <see cref="Circle"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Circle"/> if <see cref="Type"/> is 'circle', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="Circle"/>.</exception>
-    public Circle AsCircle() => (Circle)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'circle'.</exception>
+    public SeedUnions.Circle AsCircle() =>
+        IsCircle ? (SeedUnions.Circle)Value : throw new Exception("Shape.Type is not 'circle'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Square"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="Square"/>.</exception>
-    public Square AsSquare() => (Square)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'square'.</exception>
+    public SeedUnions.Square AsSquare() =>
+        IsSquare ? (SeedUnions.Square)Value : throw new Exception("Shape.Type is not 'square'");
 
-    public T Match<T>(Func<Circle, T> onCircle, Func<Square, T> onSquare)
+    public T Match<T>(
+        Func<SeedUnions.Circle, T> onCircle,
+        Func<SeedUnions.Square, T> onSquare,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "circle" => onCircle(AsCircle()),
             "square" => onSquare(AsSquare()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<Circle> onCircle, Action<Square> onSquare)
+    public void Visit(
+        Action<SeedUnions.Circle> onCircle,
+        Action<SeedUnions.Square> onSquare,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
@@ -90,18 +98,19 @@ public record Shape
                 onSquare(AsSquare());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Circle"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Circle"/> and returns true if successful.
     /// </summary>
-    public bool TryAsCircle(out Circle? value)
+    public bool TryAsCircle(out SeedUnions.Circle? value)
     {
-        if (Value is Circle asValue)
+        if (Type == "circle")
         {
-            value = asValue;
+            value = (SeedUnions.Circle)Value;
             return true;
         }
         value = null;
@@ -109,13 +118,13 @@ public record Shape
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Square"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Square"/> and returns true if successful.
     /// </summary>
-    public bool TryAsSquare(out Square? value)
+    public bool TryAsSquare(out SeedUnions.Square? value)
     {
-        if (Value is Square asValue)
+        if (Type == "square")
         {
-            value = asValue;
+            value = (SeedUnions.Square)Value;
             return true;
         }
         value = null;
@@ -123,6 +132,15 @@ public record Shape
     }
 
     public override string ToString() => JsonUtils.Serialize(this);
+
+    /// <summary>
+    /// Base properties for the discriminated union
+    /// </summary>
+    internal record BaseProperties
+    {
+        [JsonPropertyName("id")]
+        public required string Id { get; set; }
+    }
 
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
@@ -135,8 +153,8 @@ public record Shape
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -160,13 +178,23 @@ public record Shape
             {
                 case "circle":
                 {
-                    var value = jsonObject.Deserialize<Circle>();
-                    return new Shape(value);
+                    var value =
+                        json.Deserialize<SeedUnions.Circle>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.Circle");
+                    var baseProperties =
+                        json.Deserialize<Shape.BaseProperties>(options)
+                        ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
+                    return new Shape("circle", value) { Id = baseProperties.Id };
                 }
                 case "square":
                 {
-                    var value = jsonObject.Deserialize<Square>();
-                    return new Shape(value);
+                    var value =
+                        json.Deserialize<SeedUnions.Square>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.Square");
+                    var baseProperties =
+                        json.Deserialize<Shape.BaseProperties>(options)
+                        ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
+                    return new Shape("square", value) { Id = baseProperties.Id };
                 }
                 default:
                     throw new JsonException(
@@ -189,5 +217,39 @@ public record Shape
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for circle
+    /// </summary>
+    public struct Circle
+    {
+        public Circle(SeedUnions.Circle value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.Circle Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Circle(SeedUnions.Circle value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for square
+    /// </summary>
+    public struct Square
+    {
+        public Square(SeedUnions.Square value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.Square Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Square(SeedUnions.Square value) => new(value);
     }
 }

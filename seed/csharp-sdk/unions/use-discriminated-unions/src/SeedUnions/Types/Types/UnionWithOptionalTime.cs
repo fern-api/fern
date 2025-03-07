@@ -7,27 +7,28 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithOptionalTime.JsonConverter))]
 public record UnionWithOptionalTime
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
-
-    /// <summary>
-    /// Create an instance of UnionWithOptionalTime with <see cref="DateOnly?"/>.
-    /// </summary>
-    public UnionWithOptionalTime(DateOnly? value)
+    internal UnionWithOptionalTime(string type, object value)
     {
-        Type = "date";
+        Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithOptionalTime with <see cref="DateTime?"/>.
+    /// Create an instance of UnionWithOptionalTime with <see cref="UnionWithOptionalTime.Date"/>.
     /// </summary>
-    public UnionWithOptionalTime(DateTime? value)
+    public UnionWithOptionalTime(UnionWithOptionalTime.Date value)
+    {
+        Type = "date";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithOptionalTime with <see cref="UnionWithOptionalTime.Datetime"/>.
+    /// </summary>
+    public UnionWithOptionalTime(UnionWithOptionalTime.Datetime value)
     {
         Type = "datetime";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -39,44 +40,53 @@ public record UnionWithOptionalTime
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     /// <summary>
-    /// Returns true if of type <see cref="DateOnly?"/>.
+    /// Returns true if <see cref="Type"/> is "date"
     /// </summary>
-    [JsonIgnore]
     public bool IsDate => Type == "date";
 
     /// <summary>
-    /// Returns true if of type <see cref="DateTime?"/>.
+    /// Returns true if <see cref="Type"/> is "datetime"
     /// </summary>
-    [JsonIgnore]
     public bool IsDatetime => Type == "datetime";
 
     /// <summary>
-    /// Returns the value as a <see cref="DateOnly?"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="DateOnly?"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="DateOnly?"/>.</exception>
-    public DateOnly? AsDate() => (DateOnly?)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
+    public DateOnly? AsDate() =>
+        IsDate ? (DateOnly?)Value : throw new Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
-    /// Returns the value as a <see cref="DateTime?"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="DateTime?"/>.</exception>
-    public DateTime? AsDatetime() => (DateTime?)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
+    public DateTime? AsDatetime() =>
+        IsDatetime
+            ? (DateTime?)Value
+            : throw new Exception("UnionWithOptionalTime.Type is not 'datetime'");
 
-    public T Match<T>(Func<DateOnly?, T> onDate, Func<DateTime?, T> onDatetime)
+    public T Match<T>(
+        Func<DateOnly?, T> onDate,
+        Func<DateTime?, T> onDatetime,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "date" => onDate(AsDate()),
             "datetime" => onDatetime(AsDatetime()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<DateOnly?> onDate, Action<DateTime?> onDatetime)
+    public void Visit(
+        Action<DateOnly?> onDate,
+        Action<DateTime?> onDatetime,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
@@ -87,7 +97,8 @@ public record UnionWithOptionalTime
                 onDatetime(AsDatetime());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
@@ -96,9 +107,9 @@ public record UnionWithOptionalTime
     /// </summary>
     public bool TryAsDate(out DateOnly? value)
     {
-        if (Value is DateOnly asValue)
+        if (Type == "date")
         {
-            value = asValue;
+            value = (DateOnly?)Value;
             return true;
         }
         value = null;
@@ -110,9 +121,9 @@ public record UnionWithOptionalTime
     /// </summary>
     public bool TryAsDatetime(out DateTime? value)
     {
-        if (Value is DateTime asValue)
+        if (Type == "datetime")
         {
-            value = asValue;
+            value = (DateTime?)Value;
             return true;
         }
         value = null;
@@ -121,9 +132,11 @@ public record UnionWithOptionalTime
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithOptionalTime(DateOnly? value) => new(value);
+    public static implicit operator UnionWithOptionalTime(UnionWithOptionalTime.Date value) =>
+        new(value);
 
-    public static implicit operator UnionWithOptionalTime(DateTime? value) => new(value);
+    public static implicit operator UnionWithOptionalTime(UnionWithOptionalTime.Datetime value) =>
+        new(value);
 
     internal sealed class JsonConverter : JsonConverter<UnionWithOptionalTime>
     {
@@ -136,8 +149,8 @@ public record UnionWithOptionalTime
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -162,16 +175,16 @@ public record UnionWithOptionalTime
                 case "date":
                 {
                     var value =
-                        jsonObject.Deserialize<DateOnly?>()
+                        json.Deserialize<DateOnly?>(options)
                         ?? throw new JsonException("Failed to deserialize DateOnly?");
-                    return new UnionWithOptionalTime(value);
+                    return new UnionWithOptionalTime("date", value);
                 }
                 case "datetime":
                 {
                     var value =
-                        jsonObject.Deserialize<DateTime?>()
+                        json.Deserialize<DateTime?>(options)
                         ?? throw new JsonException("Failed to deserialize DateTime?");
-                    return new UnionWithOptionalTime(value);
+                    return new UnionWithOptionalTime("datetime", value);
                 }
                 default:
                     throw new JsonException(
@@ -194,5 +207,39 @@ public record UnionWithOptionalTime
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for date
+    /// </summary>
+    public record Date
+    {
+        public Date(DateOnly? value)
+        {
+            Value = value;
+        }
+
+        internal DateOnly? Value { get; set; }
+
+        public override string ToString() => Value?.ToString();
+
+        public static implicit operator Date(DateOnly? value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for datetime
+    /// </summary>
+    public record Datetime
+    {
+        public Datetime(DateTime? value)
+        {
+            Value = value;
+        }
+
+        internal DateTime? Value { get; set; }
+
+        public override string ToString() => Value?.ToString();
+
+        public static implicit operator Datetime(DateTime? value) => new(value);
     }
 }

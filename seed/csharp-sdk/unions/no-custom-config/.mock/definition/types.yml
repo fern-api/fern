@@ -27,6 +27,13 @@ types:
       integer: integer
       string: string
 
+  UnionWithDuplicatePrimitive:
+    union:
+      integer1: integer
+      integer2: integer
+      string1: string
+      string2: string
+
   UnionWithoutKey:
     union:
       foo: Foo
@@ -34,10 +41,16 @@ types:
         docs: "This is a bar field."
         type: Bar
 
-  UnionWithUnknown:
+  UnionWithNoProperties:
     union:
       foo: Foo
-      unknown: {}
+      empty: {}
+
+  UnionWithMultipleNoProperties:
+    union:
+      foo: Foo
+      empty1: {}
+      empty2: {}
 
   UnionWithLiteral:
     base-properties:
@@ -68,9 +81,24 @@ types:
     union:
       foo: Foo
 
+  UnionWithDuplicateTypes:
+    union:
+      foo1: Foo
+      foo2: Foo
+
+  UnionWithSubTypes:
+    union:
+      foo: Foo
+      fooExtended: FooExtended
+
   Foo:
     properties:
       name: string
+
+  FooExtended:
+    extends: Foo
+    properties:
+      age: integer
 
   Bar:
     properties:

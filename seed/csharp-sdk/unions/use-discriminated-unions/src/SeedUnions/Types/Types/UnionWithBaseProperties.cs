@@ -7,36 +7,37 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithBaseProperties.JsonConverter))]
 public record UnionWithBaseProperties
 {
-    /// <summary>
-    /// Discriminator property name for serialization/deserialization
-    /// </summary>
-    internal const string DiscriminatorName = "type";
+    internal UnionWithBaseProperties(string type, object value)
+    {
+        Type = type;
+        Value = value;
+    }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="int"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.Integer"/>.
     /// </summary>
-    public UnionWithBaseProperties(int value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.Integer value)
     {
         Type = "integer";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="string"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.String"/>.
     /// </summary>
-    public UnionWithBaseProperties(string value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.String value)
     {
         Type = "string";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithBaseProperties with <see cref="Foo"/>.
+    /// Create an instance of UnionWithBaseProperties with <see cref="UnionWithBaseProperties.Foo"/>.
     /// </summary>
-    public UnionWithBaseProperties(Foo value)
+    public UnionWithBaseProperties(UnionWithBaseProperties.Foo value)
     {
         Type = "foo";
-        Value = value;
+        Value = value.Value;
     }
 
     /// <summary>
@@ -48,60 +49,75 @@ public record UnionWithBaseProperties
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    [JsonIgnore]
     public object Value { get; internal set; }
 
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// Returns true if of type <see cref="int"/>.
+    /// Returns true if <see cref="Type"/> is "integer"
     /// </summary>
-    [JsonIgnore]
     public bool IsInteger => Type == "integer";
 
     /// <summary>
-    /// Returns true if of type <see cref="string"/>.
+    /// Returns true if <see cref="Type"/> is "string"
     /// </summary>
-    [JsonIgnore]
     public bool IsString => Type == "string";
 
     /// <summary>
-    /// Returns true if of type <see cref="Foo"/>.
+    /// Returns true if <see cref="Type"/> is "foo"
     /// </summary>
-    [JsonIgnore]
     public bool IsFoo => Type == "foo";
 
     /// <summary>
-    /// Returns the value as a <see cref="int"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'integer', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="int"/>.</exception>
-    public int AsInteger() => (int)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
+    public int AsInteger() =>
+        IsInteger
+            ? (int)Value
+            : throw new Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
-    /// Returns the value as a <see cref="string"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="string"/>.</exception>
-    public string AsString() => (string)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
+    public string AsString() =>
+        IsString
+            ? (string)Value
+            : throw new Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Foo"/> if it is of that type, otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="InvalidCastException">Thrown when the value is not an instance of <see cref="Foo"/>.</exception>
-    public Foo AsFoo() => (Foo)Value;
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
+    public SeedUnions.Foo AsFoo() =>
+        IsFoo
+            ? (SeedUnions.Foo)Value
+            : throw new Exception("UnionWithBaseProperties.Type is not 'foo'");
 
-    public T Match<T>(Func<int, T> onInteger, Func<string, T> onString, Func<Foo, T> onFoo)
+    public T Match<T>(
+        Func<int, T> onInteger,
+        Func<string, T> onString,
+        Func<SeedUnions.Foo, T> onFoo,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "integer" => onInteger(AsInteger()),
             "string" => onString(AsString()),
             "foo" => onFoo(AsFoo()),
-            _ => throw new Exception($"Unexpected Type: {Type}"),
+            _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<int> onInteger, Action<string> onString, Action<Foo> onFoo)
+    public void Visit(
+        Action<int> onInteger,
+        Action<string> onString,
+        Action<SeedUnions.Foo> onFoo,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
@@ -115,7 +131,8 @@ public record UnionWithBaseProperties
                 onFoo(AsFoo());
                 break;
             default:
-                throw new Exception($"Unexpected Type: {Type}");
+                _onUnknown(Type, Value);
+                break;
         }
     }
 
@@ -124,9 +141,9 @@ public record UnionWithBaseProperties
     /// </summary>
     public bool TryAsInteger(out int? value)
     {
-        if (Value is int asValue)
+        if (Type == "integer")
         {
-            value = asValue;
+            value = (int)Value;
             return true;
         }
         value = null;
@@ -138,9 +155,9 @@ public record UnionWithBaseProperties
     /// </summary>
     public bool TryAsString(out string? value)
     {
-        if (Value is string asValue)
+        if (Type == "string")
         {
-            value = asValue;
+            value = (string)Value;
             return true;
         }
         value = null;
@@ -148,13 +165,13 @@ public record UnionWithBaseProperties
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Foo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="SeedUnions.Foo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsFoo(out Foo? value)
+    public bool TryAsFoo(out SeedUnions.Foo? value)
     {
-        if (Value is Foo asValue)
+        if (Type == "foo")
         {
-            value = asValue;
+            value = (SeedUnions.Foo)Value;
             return true;
         }
         value = null;
@@ -162,6 +179,15 @@ public record UnionWithBaseProperties
     }
 
     public override string ToString() => JsonUtils.Serialize(this);
+
+    /// <summary>
+    /// Base properties for the discriminated union
+    /// </summary>
+    internal record BaseProperties
+    {
+        [JsonPropertyName("id")]
+        public required string Id { get; set; }
+    }
 
     internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
     {
@@ -174,8 +200,8 @@ public record UnionWithBaseProperties
             JsonSerializerOptions options
         )
         {
-            var jsonObject = JsonElement.ParseValue(ref reader);
-            if (!jsonObject.TryGetProperty("type", out var discriminatorElement))
+            var json = JsonElement.ParseValue(ref reader);
+            if (!json.TryGetProperty("type", out var discriminatorElement))
             {
                 throw new JsonException("Missing discriminator property 'type'");
             }
@@ -199,20 +225,37 @@ public record UnionWithBaseProperties
             {
                 case "integer":
                 {
-                    var value = jsonObject.Deserialize<int>();
-                    return new UnionWithBaseProperties(value);
+                    var value = json.Deserialize<int>(options);
+                    var baseProperties =
+                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
+                        );
+                    return new UnionWithBaseProperties("integer", value) { Id = baseProperties.Id };
                 }
                 case "string":
                 {
                     var value =
-                        jsonObject.Deserialize<string>()
+                        json.Deserialize<string>(options)
                         ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithBaseProperties(value);
+                    var baseProperties =
+                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
+                        );
+                    return new UnionWithBaseProperties("string", value) { Id = baseProperties.Id };
                 }
                 case "foo":
                 {
-                    var value = jsonObject.Deserialize<Foo>();
-                    return new UnionWithBaseProperties(value);
+                    var value =
+                        json.Deserialize<SeedUnions.Foo>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
+                    var baseProperties =
+                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
+                        );
+                    return new UnionWithBaseProperties("foo", value) { Id = baseProperties.Id };
                 }
                 default:
                     throw new JsonException(
@@ -235,5 +278,56 @@ public record UnionWithBaseProperties
 
             jsonNode.WriteTo(writer, options);
         }
+    }
+
+    /// <summary>
+    /// Discriminated union type for integer
+    /// </summary>
+    public struct Integer
+    {
+        public Integer(int value)
+        {
+            Value = value;
+        }
+
+        internal int Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Integer(int value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for string
+    /// </summary>
+    public record String
+    {
+        public String(string value)
+        {
+            Value = value;
+        }
+
+        internal string Value { get; set; }
+
+        public override string ToString() => Value;
+
+        public static implicit operator String(string value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for foo
+    /// </summary>
+    public struct Foo
+    {
+        public Foo(SeedUnions.Foo value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.Foo Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
     }
 }

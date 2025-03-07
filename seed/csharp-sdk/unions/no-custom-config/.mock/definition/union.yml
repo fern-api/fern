@@ -10,11 +10,11 @@ types:
       circle: Circle
       square: Square
 
-  Circle: 
+  Circle:
     properties:
       radius: double
 
-  Square: 
+  Square:
     properties:
       length: double
 

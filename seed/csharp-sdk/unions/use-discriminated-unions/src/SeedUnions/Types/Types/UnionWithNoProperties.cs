@@ -4,21 +4,30 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithSingleElement.JsonConverter))]
-public record UnionWithSingleElement
+[JsonConverter(typeof(UnionWithNoProperties.JsonConverter))]
+public record UnionWithNoProperties
 {
-    internal UnionWithSingleElement(string type, object value)
+    internal UnionWithNoProperties(string type, object value)
     {
         Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithSingleElement with <see cref="UnionWithSingleElement.Foo"/>.
+    /// Create an instance of UnionWithNoProperties with <see cref="UnionWithNoProperties.Foo"/>.
     /// </summary>
-    public UnionWithSingleElement(UnionWithSingleElement.Foo value)
+    public UnionWithNoProperties(UnionWithNoProperties.Foo value)
     {
         Type = "foo";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithNoProperties with <see cref="UnionWithNoProperties.Empty"/>.
+    /// </summary>
+    public UnionWithNoProperties(UnionWithNoProperties.Empty value)
+    {
+        Type = "empty";
         Value = value.Value;
     }
 
@@ -39,29 +48,53 @@ public record UnionWithSingleElement
     public bool IsFoo => Type == "foo";
 
     /// <summary>
+    /// Returns true if <see cref="Type"/> is "empty"
+    /// </summary>
+    public bool IsEmpty => Type == "empty";
+
+    /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value
-            : throw new Exception("UnionWithSingleElement.Type is not 'foo'");
+            : throw new Exception("UnionWithNoProperties.Type is not 'foo'");
 
-    public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object, T> _onUnknown)
+    /// <summary>
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
+    public object AsEmpty() =>
+        IsEmpty ? Value : throw new Exception("UnionWithNoProperties.Type is not 'empty'");
+
+    public T Match<T>(
+        Func<SeedUnions.Foo, T> onFoo,
+        Func<object, T> onEmpty,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
+            "empty" => onEmpty(AsEmpty()),
             _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<SeedUnions.Foo> onFoo, Action<string, object> _onUnknown)
+    public void Visit(
+        Action<SeedUnions.Foo> onFoo,
+        Action<object> onEmpty,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
             case "foo":
                 onFoo(AsFoo());
+                break;
+            case "empty":
+                onEmpty(AsEmpty());
                 break;
             default:
                 _onUnknown(Type, Value);
@@ -83,17 +116,31 @@ public record UnionWithSingleElement
         return false;
     }
 
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsEmpty(out object? value)
+    {
+        if (Type == "empty")
+        {
+            value = Value;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithSingleElement(UnionWithSingleElement.Foo value) =>
+    public static implicit operator UnionWithNoProperties(UnionWithNoProperties.Foo value) =>
         new(value);
 
-    internal sealed class JsonConverter : JsonConverter<UnionWithSingleElement>
+    internal sealed class JsonConverter : JsonConverter<UnionWithNoProperties>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(UnionWithSingleElement).IsAssignableFrom(typeToConvert);
+            typeof(UnionWithNoProperties).IsAssignableFrom(typeToConvert);
 
-        public override UnionWithSingleElement Read(
+        public override UnionWithNoProperties Read(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -127,7 +174,14 @@ public record UnionWithSingleElement
                     var value =
                         json.Deserialize<SeedUnions.Foo>(options)
                         ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithSingleElement("foo", value);
+                    return new UnionWithNoProperties("foo", value);
+                }
+                case "empty":
+                {
+                    var value =
+                        json.Deserialize<object>(options)
+                        ?? throw new JsonException("Failed to deserialize object");
+                    return new UnionWithNoProperties("empty", value);
                 }
                 default:
                     throw new JsonException(
@@ -138,14 +192,14 @@ public record UnionWithSingleElement
 
         public override void Write(
             Utf8JsonWriter writer,
-            UnionWithSingleElement value,
+            UnionWithNoProperties value,
             JsonSerializerOptions options
         )
         {
             var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
             if (jsonNode == null)
             {
-                throw new JsonException("Failed to serialize UnionWithSingleElement");
+                throw new JsonException("Failed to serialize UnionWithNoProperties");
             }
 
             jsonNode.WriteTo(writer, options);
@@ -167,5 +221,15 @@ public record UnionWithSingleElement
         public override string ToString() => Value.ToString();
 
         public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for empty
+    /// </summary>
+    public record Empty
+    {
+        internal object Value => new { };
+
+        public override string ToString() => Value.ToString();
     }
 }

@@ -4,21 +4,30 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithSingleElement.JsonConverter))]
-public record UnionWithSingleElement
+[JsonConverter(typeof(UnionWithSubTypes.JsonConverter))]
+public record UnionWithSubTypes
 {
-    internal UnionWithSingleElement(string type, object value)
+    internal UnionWithSubTypes(string type, object value)
     {
         Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithSingleElement with <see cref="UnionWithSingleElement.Foo"/>.
+    /// Create an instance of UnionWithSubTypes with <see cref="UnionWithSubTypes.Foo"/>.
     /// </summary>
-    public UnionWithSingleElement(UnionWithSingleElement.Foo value)
+    public UnionWithSubTypes(UnionWithSubTypes.Foo value)
     {
         Type = "foo";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithSubTypes with <see cref="UnionWithSubTypes.FooExtended"/>.
+    /// </summary>
+    public UnionWithSubTypes(UnionWithSubTypes.FooExtended value)
+    {
+        Type = "fooExtended";
         Value = value.Value;
     }
 
@@ -39,29 +48,53 @@ public record UnionWithSingleElement
     public bool IsFoo => Type == "foo";
 
     /// <summary>
+    /// Returns true if <see cref="Type"/> is "fooExtended"
+    /// </summary>
+    public bool IsFooExtended => Type == "fooExtended";
+
+    /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo
-            ? (SeedUnions.Foo)Value
-            : throw new Exception("UnionWithSingleElement.Type is not 'foo'");
+        IsFoo ? (SeedUnions.Foo)Value : throw new Exception("UnionWithSubTypes.Type is not 'foo'");
 
-    public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object, T> _onUnknown)
+    /// <summary>
+    /// Returns the value as a <see cref="SeedUnions.FooExtended"/> if <see cref="Type"/> is 'fooExtended', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fooExtended'.</exception>
+    public SeedUnions.FooExtended AsFooExtended() =>
+        IsFooExtended
+            ? (SeedUnions.FooExtended)Value
+            : throw new Exception("UnionWithSubTypes.Type is not 'fooExtended'");
+
+    public T Match<T>(
+        Func<SeedUnions.Foo, T> onFoo,
+        Func<SeedUnions.FooExtended, T> onFooExtended,
+        Func<string, object, T> _onUnknown
+    )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
+            "fooExtended" => onFooExtended(AsFooExtended()),
             _ => _onUnknown(Type, Value),
         };
     }
 
-    public void Visit(Action<SeedUnions.Foo> onFoo, Action<string, object> _onUnknown)
+    public void Visit(
+        Action<SeedUnions.Foo> onFoo,
+        Action<SeedUnions.FooExtended> onFooExtended,
+        Action<string, object> _onUnknown
+    )
     {
         switch (Type)
         {
             case "foo":
                 onFoo(AsFoo());
+                break;
+            case "fooExtended":
+                onFooExtended(AsFooExtended());
                 break;
             default:
                 _onUnknown(Type, Value);
@@ -83,17 +116,33 @@ public record UnionWithSingleElement
         return false;
     }
 
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="SeedUnions.FooExtended"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsFooExtended(out SeedUnions.FooExtended? value)
+    {
+        if (Type == "fooExtended")
+        {
+            value = (SeedUnions.FooExtended)Value;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithSingleElement(UnionWithSingleElement.Foo value) =>
+    public static implicit operator UnionWithSubTypes(UnionWithSubTypes.Foo value) => new(value);
+
+    public static implicit operator UnionWithSubTypes(UnionWithSubTypes.FooExtended value) =>
         new(value);
 
-    internal sealed class JsonConverter : JsonConverter<UnionWithSingleElement>
+    internal sealed class JsonConverter : JsonConverter<UnionWithSubTypes>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(UnionWithSingleElement).IsAssignableFrom(typeToConvert);
+            typeof(UnionWithSubTypes).IsAssignableFrom(typeToConvert);
 
-        public override UnionWithSingleElement Read(
+        public override UnionWithSubTypes Read(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -127,7 +176,14 @@ public record UnionWithSingleElement
                     var value =
                         json.Deserialize<SeedUnions.Foo>(options)
                         ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithSingleElement("foo", value);
+                    return new UnionWithSubTypes("foo", value);
+                }
+                case "fooExtended":
+                {
+                    var value =
+                        json.Deserialize<SeedUnions.FooExtended>(options)
+                        ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended");
+                    return new UnionWithSubTypes("fooExtended", value);
                 }
                 default:
                     throw new JsonException(
@@ -138,14 +194,14 @@ public record UnionWithSingleElement
 
         public override void Write(
             Utf8JsonWriter writer,
-            UnionWithSingleElement value,
+            UnionWithSubTypes value,
             JsonSerializerOptions options
         )
         {
             var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
             if (jsonNode == null)
             {
-                throw new JsonException("Failed to serialize UnionWithSingleElement");
+                throw new JsonException("Failed to serialize UnionWithSubTypes");
             }
 
             jsonNode.WriteTo(writer, options);
@@ -167,5 +223,22 @@ public record UnionWithSingleElement
         public override string ToString() => Value.ToString();
 
         public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for fooExtended
+    /// </summary>
+    public struct FooExtended
+    {
+        public FooExtended(SeedUnions.FooExtended value)
+        {
+            Value = value;
+        }
+
+        internal SeedUnions.FooExtended Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator FooExtended(SeedUnions.FooExtended value) => new(value);
     }
 }

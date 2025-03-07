@@ -4,33 +4,39 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-/// <summary>
-/// This is a simple union.
-/// </summary>
-[JsonConverter(typeof(Union.JsonConverter))]
-public record Union
+[JsonConverter(typeof(UnionWithMultipleNoProperties.JsonConverter))]
+public record UnionWithMultipleNoProperties
 {
-    internal Union(string type, object value)
+    internal UnionWithMultipleNoProperties(string type, object value)
     {
         Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of Union with <see cref="Union.Foo"/>.
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Foo"/>.
     /// </summary>
-    public Union(Union.Foo value)
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Union with <see cref="Union.Bar"/>.
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Empty1"/>.
     /// </summary>
-    public Union(Union.Bar value)
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Empty1 value)
     {
-        Type = "bar";
+        Type = "empty1";
+        Value = value.Value;
+    }
+
+    /// <summary>
+    /// Create an instance of UnionWithMultipleNoProperties with <see cref="UnionWithMultipleNoProperties.Empty2"/>.
+    /// </summary>
+    public UnionWithMultipleNoProperties(UnionWithMultipleNoProperties.Empty2 value)
+    {
+        Type = "empty2";
         Value = value.Value;
     }
 
@@ -51,41 +57,62 @@ public record Union
     public bool IsFoo => Type == "foo";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "bar"
+    /// Returns true if <see cref="Type"/> is "empty1"
     /// </summary>
-    public bool IsBar => Type == "bar";
+    public bool IsEmpty1 => Type == "empty1";
+
+    /// <summary>
+    /// Returns true if <see cref="Type"/> is "empty2"
+    /// </summary>
+    public bool IsEmpty2 => Type == "empty2";
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value : throw new Exception("Union.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
-    public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value : throw new Exception("Union.Type is not 'bar'");
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty1'.</exception>
+    public object AsEmpty1() =>
+        IsEmpty1
+            ? Value
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
+
+    /// <summary>
+    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty2'.</exception>
+    public object AsEmpty2() =>
+        IsEmpty2
+            ? Value
+            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
-        Func<SeedUnions.Bar, T> onBar,
+        Func<object, T> onEmpty1,
+        Func<object, T> onEmpty2,
         Func<string, object, T> _onUnknown
     )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
-            "bar" => onBar(AsBar()),
+            "empty1" => onEmpty1(AsEmpty1()),
+            "empty2" => onEmpty2(AsEmpty2()),
             _ => _onUnknown(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
-        Action<SeedUnions.Bar> onBar,
+        Action<object> onEmpty1,
+        Action<object> onEmpty2,
         Action<string, object> _onUnknown
     )
     {
@@ -94,8 +121,11 @@ public record Union
             case "foo":
                 onFoo(AsFoo());
                 break;
-            case "bar":
-                onBar(AsBar());
+            case "empty1":
+                onEmpty1(AsEmpty1());
+                break;
+            case "empty2":
+                onEmpty2(AsEmpty2());
                 break;
             default:
                 _onUnknown(Type, Value);
@@ -118,13 +148,27 @@ public record Union
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedUnions.Bar"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
     /// </summary>
-    public bool TryAsBar(out SeedUnions.Bar? value)
+    public bool TryAsEmpty1(out object? value)
     {
-        if (Type == "bar")
+        if (Type == "empty1")
         {
-            value = (SeedUnions.Bar)Value;
+            value = Value;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsEmpty2(out object? value)
+    {
+        if (Type == "empty2")
+        {
+            value = Value;
             return true;
         }
         value = null;
@@ -133,16 +177,16 @@ public record Union
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Union(Union.Foo value) => new(value);
+    public static implicit operator UnionWithMultipleNoProperties(
+        UnionWithMultipleNoProperties.Foo value
+    ) => new(value);
 
-    public static implicit operator Union(Union.Bar value) => new(value);
-
-    internal sealed class JsonConverter : JsonConverter<Union>
+    internal sealed class JsonConverter : JsonConverter<UnionWithMultipleNoProperties>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(Union).IsAssignableFrom(typeToConvert);
+            typeof(UnionWithMultipleNoProperties).IsAssignableFrom(typeToConvert);
 
-        public override Union Read(
+        public override UnionWithMultipleNoProperties Read(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -176,14 +220,21 @@ public record Union
                     var value =
                         json.Deserialize<SeedUnions.Foo>(options)
                         ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new Union("foo", value);
+                    return new UnionWithMultipleNoProperties("foo", value);
                 }
-                case "bar":
+                case "empty1":
                 {
                     var value =
-                        json.Deserialize<SeedUnions.Bar>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Bar");
-                    return new Union("bar", value);
+                        json.Deserialize<object>(options)
+                        ?? throw new JsonException("Failed to deserialize object");
+                    return new UnionWithMultipleNoProperties("empty1", value);
+                }
+                case "empty2":
+                {
+                    var value =
+                        json.Deserialize<object>(options)
+                        ?? throw new JsonException("Failed to deserialize object");
+                    return new UnionWithMultipleNoProperties("empty2", value);
                 }
                 default:
                     throw new JsonException(
@@ -194,14 +245,14 @@ public record Union
 
         public override void Write(
             Utf8JsonWriter writer,
-            Union value,
+            UnionWithMultipleNoProperties value,
             JsonSerializerOptions options
         )
         {
             var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
             if (jsonNode == null)
             {
-                throw new JsonException("Failed to serialize Union");
+                throw new JsonException("Failed to serialize UnionWithMultipleNoProperties");
             }
 
             jsonNode.WriteTo(writer, options);
@@ -226,19 +277,22 @@ public record Union
     }
 
     /// <summary>
-    /// Discriminated union type for bar
+    /// Discriminated union type for empty1
     /// </summary>
-    public struct Bar
+    public record Empty1
     {
-        public Bar(SeedUnions.Bar value)
-        {
-            Value = value;
-        }
-
-        internal SeedUnions.Bar Value { get; set; }
+        internal object Value => new { };
 
         public override string ToString() => Value.ToString();
+    }
 
-        public static implicit operator Bar(SeedUnions.Bar value) => new(value);
+    /// <summary>
+    /// Discriminated union type for empty2
+    /// </summary>
+    public record Empty2
+    {
+        internal object Value => new { };
+
+        public override string ToString() => Value.ToString();
     }
 }
