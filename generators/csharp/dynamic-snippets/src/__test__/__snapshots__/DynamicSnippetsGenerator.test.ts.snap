@@ -11,7 +11,7 @@ var client = new AcmeClient(
 await client.Service.GetMetadataAsync(
     new GetMetadataRequest{
         Shallow = false,
-        Tag = new List<string?>(){
+        Tag = new List<string>(){
             "development",
             "public",
         },
@@ -32,7 +32,7 @@ var client = new AcmeClient(
 await client.Service.GetMetadataAsync(
     new GetMetadataRequest{
         Shallow = false,
-        Tag = new List<string?>(){
+        Tag = new List<string>(){
             "development",
         },
         XAPIVersion = "0.0.1"
@@ -439,7 +439,7 @@ var client = new AcmeClient(
 
 await client.Nullable.GetUsersAsync(
     new GetUsersRequest{
-        Usernames = new List<string?>(){
+        Usernames = new List<string>(){
             "john.doe",
             "jane.doe",
         },
