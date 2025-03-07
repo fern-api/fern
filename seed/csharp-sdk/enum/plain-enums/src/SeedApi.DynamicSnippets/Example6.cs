@@ -19,13 +19,13 @@ public class Example6
                 Operand = new List<Operand>(){
                     Operand.GreaterThan,
                 },
-                MaybeOperand = new List<Operand?>(){
+                MaybeOperand = new List<Operand>(){
                     Operand.GreaterThan,
                 },
                 OperandOrColor = new List<OneOf<Color, Operand>>(){
                     Color.Red,
                 },
-                MaybeOperandOrColor = new List<OneOf<Color, Operand>?>(){
+                MaybeOperandOrColor = new List<OneOf<Color, Operand>>(){
                     Color.Red,
                 }
             }

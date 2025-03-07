@@ -15,7 +15,7 @@ public class Example9
 
         await client.Dataservice.FetchAsync(
             new FetchRequest{
-                Ids = new List<string?>(){
+                Ids = new List<string>(){
                     "ids",
                 },
                 Namespace = "namespace"

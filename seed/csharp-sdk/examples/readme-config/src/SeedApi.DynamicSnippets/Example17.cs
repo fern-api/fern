@@ -17,7 +17,7 @@ public class Example17
         await client.Service.GetMetadataAsync(
             new GetMetadataRequest{
                 Shallow = true,
-                Tag = new List<string?>(){
+                Tag = new List<string>(){
                     "tag",
                 },
                 XApiVersion = "X-API-Version"

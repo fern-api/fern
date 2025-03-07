@@ -20,7 +20,7 @@ public class Example13
                 Limit = 1,
                 OtherField = "otherField",
                 MultiLineDocs = "multiLineDocs",
-                OptionalMultipleField = new List<string?>(){
+                OptionalMultipleField = new List<string>(){
                     "optionalMultipleField",
                 },
                 MultipleField = new List<string>(){
