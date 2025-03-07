@@ -73,7 +73,7 @@ export class DynamicTypeLiteralMapper {
             return csharp.TypeLiteral.nop();
         }
         return csharp.TypeLiteral.list({
-            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list, unboxOptionals: true }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
@@ -94,7 +94,7 @@ export class DynamicTypeLiteralMapper {
             return csharp.TypeLiteral.nop();
         }
         return csharp.TypeLiteral.set({
-            valueType: this.context.dynamicTypeMapper.convert({ typeReference: set }),
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: set, unboxOptionals: true }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {

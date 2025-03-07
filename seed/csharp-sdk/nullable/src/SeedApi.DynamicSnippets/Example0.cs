@@ -15,11 +15,11 @@ public class Example0
 
         await client.Nullable.GetUsersAsync(
             new GetUsersRequest{
-                Usernames = new List<string?>(){
+                Usernames = new List<string>(){
                     "usernames",
                 },
                 Avatar = "avatar",
-                Activated = new List<bool?>(){
+                Activated = new List<bool>(){
                     true,
                 },
                 Tags = new List<string?>(){

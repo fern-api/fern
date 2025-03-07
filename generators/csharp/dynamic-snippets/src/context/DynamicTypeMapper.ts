@@ -7,6 +7,7 @@ import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorConte
 export declare namespace DynamicTypeMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
+        unboxOptionals?: boolean;
     }
 }
 
@@ -20,14 +21,15 @@ export class DynamicTypeMapper {
     public convert(args: DynamicTypeMapper.Args): csharp.Type {
         switch (args.typeReference.type) {
             case "list":
-                return csharp.Type.list(this.convert({ typeReference: args.typeReference }));
+                return csharp.Type.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
-            case "map":
+            case "map": {
                 return csharp.Type.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 );
+            }
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
@@ -36,13 +38,16 @@ export class DynamicTypeMapper {
                 return this.convertNamed({ named });
             }
             case "optional":
-                return csharp.Type.optional(this.convert({ typeReference: args.typeReference.value }));
-            case "nullable":
-                return csharp.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+            case "nullable": {
+                const value = this.convert({ typeReference: args.typeReference.value });
+                return args.unboxOptionals
+                    ? value
+                    : csharp.Type.optional(value);
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                return csharp.Type.set(this.convert({ typeReference: args.typeReference }));
+                return csharp.Type.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "unknown":
                 return this.convertUnknown();
             default:
