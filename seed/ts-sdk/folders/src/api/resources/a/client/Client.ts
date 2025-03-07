@@ -12,17 +12,6 @@ export declare namespace A {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
     }
-
-    export interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
-        /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
-    }
 }
 
 export class A {

@@ -1,4 +1,15 @@
 types:
+  TorU:
+    discriminated: false
+    union: 
+      - T
+      - U
+  T:
+    properties:
+      child: TorU
+  U:
+    properties:
+      child: T
   FieldValue:
     union:
       primitive_value: PrimitiveValue
