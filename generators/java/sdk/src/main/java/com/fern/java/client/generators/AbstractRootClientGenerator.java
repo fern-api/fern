@@ -95,11 +95,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
         this.generatedErrors = generatedErrors;
-        this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
+        this.builderName = builderName();
         this.requestOptionsFile = requestOptionsFile;
     }
 
     protected abstract AbstractClientGeneratorUtils clientGeneratorUtils();
+
+    protected abstract ClassName className();
+
+    protected abstract ClassName builderName();
 
     @Override
     public GeneratedRootClient generateFile() {
@@ -116,7 +120,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
         return GeneratedRootClient.builder()
-                .className(className)
+                .className(className())
                 .javaFile(JavaFile.builder(
                                 className.packageName(), result.getClientImpl().build())
                         .build())
@@ -133,7 +137,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         TypeSpec.Builder clientBuilder =
                 TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         MethodSpec.Builder buildMethod =
-                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
         clientBuilder.addField(FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
                 .addModifiers(Modifier.PRIVATE)
@@ -240,7 +244,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         CLIENT_OPTIONS_BUILDER_NAME,
                         generatedClientOptions.environment(),
                         environmentField)
-                .addStatement("return new $T($L.build())", className, CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return new $T($L.build())", className(), CLIENT_OPTIONS_BUILDER_NAME)
                 .build());
 
         return clientBuilder.build();
