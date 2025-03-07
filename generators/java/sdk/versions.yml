@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix async client builder generation
+      type: fix
+  createdAt: '2025-03-07'
+  irVersion: 55
+  version: 2.23.1
+- changelogEntry:
+    - summary: |
         Represent protobuf uint as int rather than long
       type: fix
   createdAt: '2025-03-06'
