@@ -22,7 +22,7 @@ public class AsyncSeedIdempotencyHeadersClient {
         return this.paymentClient.get();
     }
 
-    public static SeedIdempotencyHeadersClientBuilder builder() {
-        return new SeedIdempotencyHeadersClientBuilder();
+    public static AsyncSeedIdempotencyHeadersClientBuilder builder() {
+        return new AsyncSeedIdempotencyHeadersClientBuilder();
     }
 }

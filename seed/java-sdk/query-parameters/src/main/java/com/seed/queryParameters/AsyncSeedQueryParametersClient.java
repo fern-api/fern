@@ -22,7 +22,7 @@ public class AsyncSeedQueryParametersClient {
         return this.userClient.get();
     }
 
-    public static SeedQueryParametersClientBuilder builder() {
-        return new SeedQueryParametersClientBuilder();
+    public static AsyncSeedQueryParametersClientBuilder builder() {
+        return new AsyncSeedQueryParametersClientBuilder();
     }
 }

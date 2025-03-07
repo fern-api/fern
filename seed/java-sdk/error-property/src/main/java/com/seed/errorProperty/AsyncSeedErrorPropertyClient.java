@@ -22,7 +22,7 @@ public class AsyncSeedErrorPropertyClient {
         return this.propertyBasedErrorClient.get();
     }
 
-    public static SeedErrorPropertyClientBuilder builder() {
-        return new SeedErrorPropertyClientBuilder();
+    public static AsyncSeedErrorPropertyClientBuilder builder() {
+        return new AsyncSeedErrorPropertyClientBuilder();
     }
 }

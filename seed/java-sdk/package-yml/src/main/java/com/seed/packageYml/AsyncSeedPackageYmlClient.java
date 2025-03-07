@@ -96,7 +96,7 @@ public class AsyncSeedPackageYmlClient {
         return this.serviceClient.get();
     }
 
-    public static SeedPackageYmlClientBuilder builder() {
-        return new SeedPackageYmlClientBuilder();
+    public static AsyncSeedPackageYmlClientBuilder builder() {
+        return new AsyncSeedPackageYmlClientBuilder();
     }
 }

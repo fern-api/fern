@@ -22,7 +22,7 @@ public class AsyncSeedVersionClient {
         return this.userClient.get();
     }
 
-    public static SeedVersionClientBuilder builder() {
-        return new SeedVersionClientBuilder();
+    public static AsyncSeedVersionClientBuilder builder() {
+        return new AsyncSeedVersionClientBuilder();
     }
 }

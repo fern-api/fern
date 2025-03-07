@@ -38,7 +38,7 @@ public class AsyncSeedAudiencesClient {
         return this.fooClient.get();
     }
 
-    public static SeedAudiencesClientBuilder builder() {
-        return new SeedAudiencesClientBuilder();
+    public static AsyncSeedAudiencesClientBuilder builder() {
+        return new AsyncSeedAudiencesClientBuilder();
     }
 }

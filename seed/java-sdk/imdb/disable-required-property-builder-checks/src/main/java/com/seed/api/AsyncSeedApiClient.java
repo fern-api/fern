@@ -22,7 +22,7 @@ public class AsyncSeedApiClient {
         return this.imdbClient.get();
     }
 
-    public static SeedApiClientBuilder builder() {
-        return new SeedApiClientBuilder();
+    public static AsyncSeedApiClientBuilder builder() {
+        return new AsyncSeedApiClientBuilder();
     }
 }

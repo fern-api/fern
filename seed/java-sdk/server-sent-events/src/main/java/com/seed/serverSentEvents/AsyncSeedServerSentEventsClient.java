@@ -22,7 +22,7 @@ public class AsyncSeedServerSentEventsClient {
         return this.completionsClient.get();
     }
 
-    public static SeedServerSentEventsClientBuilder builder() {
-        return new SeedServerSentEventsClientBuilder();
+    public static AsyncSeedServerSentEventsClientBuilder builder() {
+        return new AsyncSeedServerSentEventsClientBuilder();
     }
 }

@@ -22,7 +22,7 @@ public class AsyncSeedNoEnvironmentClient {
         return this.dummyClient.get();
     }
 
-    public static SeedNoEnvironmentClientBuilder builder() {
-        return new SeedNoEnvironmentClientBuilder();
+    public static AsyncSeedNoEnvironmentClientBuilder builder() {
+        return new AsyncSeedNoEnvironmentClientBuilder();
     }
 }

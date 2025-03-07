@@ -22,7 +22,7 @@ public class AsyncSeedBasicAuthClient {
         return this.basicAuthClient.get();
     }
 
-    public static SeedBasicAuthClientBuilder builder() {
-        return new SeedBasicAuthClientBuilder();
+    public static AsyncSeedBasicAuthClientBuilder builder() {
+        return new AsyncSeedBasicAuthClientBuilder();
     }
 }
