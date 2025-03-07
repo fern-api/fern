@@ -7,12 +7,10 @@ import * as SeedTrace from "../../../index";
 export type ErrorInfo =
     | SeedTrace.ErrorInfo.CompileError
     /**
-     * If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
-     *  */
+     * If the submission cannot be executed and throws a runtime error before getting to any of the testcases. */
     | SeedTrace.ErrorInfo.RuntimeError
     /**
-     * If the trace backend encounters an unexpected error.
-     *  */
+     * If the trace backend encounters an unexpected error. */
     | SeedTrace.ErrorInfo.InternalError
     | SeedTrace.ErrorInfo._Unknown;
 
@@ -50,7 +48,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "compileError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.CompileError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -63,7 +61,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "runtimeError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.RuntimeError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -76,7 +74,7 @@ export const ErrorInfo = {
         return {
             ...value,
             type: "internalError",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo.InternalError,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
@@ -88,7 +86,7 @@ export const ErrorInfo = {
     _unknown: (value: { type: string }): SeedTrace.ErrorInfo._Unknown => {
         return {
             ...(value as any),
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: SeedTrace.ErrorInfo._Unknown,
                 visitor: SeedTrace.ErrorInfo._Visitor<_Result>,
             ) {
