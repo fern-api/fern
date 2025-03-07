@@ -9,15 +9,24 @@ import * as core from "../../../../core";
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNullable.User> = core.serialization.object(
     {
         name: core.serialization.string(),
+        id: core.serialization.lazy(() => serializers.UserId),
         tags: core.serialization.list(core.serialization.string()).optional(),
         metadata: core.serialization.lazyObject(() => serializers.Metadata).optional(),
+        email: core.serialization.lazy(() => serializers.Email),
+        favoriteNumber: core.serialization.property(
+            "favorite-number",
+            core.serialization.lazy(() => serializers.WeirdNumber),
+        ),
     },
 );
 
 export declare namespace User {
     export interface Raw {
         name: string;
+        id: serializers.UserId.Raw;
         tags?: string[] | null;
         metadata?: serializers.Metadata.Raw | null;
+        email?: serializers.Email.Raw;
+        "favorite-number": serializers.WeirdNumber.Raw;
     }
 }
