@@ -17,6 +17,9 @@ public record Metadata
     [JsonPropertyName("activated")]
     public bool? Activated { get; set; }
 
+    [JsonPropertyName("status")]
+    public required object Status { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
