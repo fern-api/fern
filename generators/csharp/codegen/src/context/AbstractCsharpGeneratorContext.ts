@@ -141,7 +141,10 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getAdditionalPropertiesType(): csharp.Type {
-        return csharp.Type.idictionary(csharp.Type.string(), csharp.Type.reference(this.getJsonElementClassReference()));
+        return csharp.Type.idictionary(
+            csharp.Type.string(),
+            csharp.Type.reference(this.getJsonElementClassReference())
+        );
     }
 
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
