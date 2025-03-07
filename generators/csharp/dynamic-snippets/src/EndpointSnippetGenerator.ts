@@ -1,12 +1,13 @@
 import { upperFirst } from "lodash-es";
 import { camelCase } from "lodash-es";
 
-import { NamedArgument, Scope } from "@fern-api/browser-compatible-base-generator";
+import { NamedArgument, Options, Scope, Style } from "@fern-api/browser-compatible-base-generator";
 import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
+import { Config } from "./Config";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
@@ -29,13 +30,13 @@ export class EndpointSnippetGenerator {
     public async generateSnippet({
         endpoint,
         request,
-        verbose
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
-        verbose?: boolean;
+        options: Options;
     }): Promise<string> {
-        const code = this.buildCodeBlock({ endpoint, snippet: request, verbose });
+        const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
             namespace: SNIPPET_NAMESPACE,
             rootNamespace: this.context.getRootNamespace(),
@@ -48,13 +49,13 @@ export class EndpointSnippetGenerator {
     public generateSnippetSync({
         endpoint,
         request,
-        verbose
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
-        verbose?: boolean;
+        options: Options;
     }): string {
-        const code = this.buildCodeBlock({ endpoint, snippet: request, verbose });
+        const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
             namespace: SNIPPET_NAMESPACE,
             rootNamespace: this.context.getRootNamespace(),
@@ -67,22 +68,32 @@ export class EndpointSnippetGenerator {
     private buildCodeBlock({
         endpoint,
         snippet,
-        verbose
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        verbose?: boolean;
+        options: Options;
     }): csharp.AstNode {
         const body = csharp.codeblock((writer) => {
-            writer.writeNode(this.constructClient({ endpoint, snippet }));
-            writer.writeLine();
-            writer.writeNode(this.callMethod({ endpoint, snippet }));
+            writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
+            writer.newLine();
+            writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
         });
-        if (!verbose) {
-            return body;
+        const style = this.getStyle(options);
+        switch (style) {
+            case Style.Concise:
+                return body;
+            case Style.Full:
+                return this.buildFullCodeBlock({ body, options });
+            default:
+                assertNever(style);
         }
+    }
+
+    private buildFullCodeBlock({ body, options }: { body: csharp.CodeBlock; options: Options }): csharp.AstNode {
+        const config = this.getConfig(options);
         const class_ = csharp.class_({
-            name: SNIPPET_CLASS_NAME,
+            name: config.fullStyleClassName ?? SNIPPET_CLASS_NAME,
             namespace: SNIPPET_NAMESPACE,
             access: csharp.Access.Public
         });
@@ -90,6 +101,7 @@ export class EndpointSnippetGenerator {
             csharp.method({
                 name: SNIPPET_METHOD_NAME,
                 access: csharp.Access.Public,
+                isAsync: true,
                 parameters: [],
                 body
             })
@@ -121,7 +133,9 @@ export class EndpointSnippetGenerator {
             on: csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
-            async: true
+            async: true,
+            configureAwait: true,
+            multiline: true
         });
     }
 
@@ -173,7 +187,8 @@ export class EndpointSnippetGenerator {
                     arguments_: optionArgs.map((arg) => ({
                         name: arg.name,
                         assignment: arg.assignment
-                    }))
+                    })),
+                    multiline: true
                 })
             }
         ];
@@ -192,8 +207,7 @@ export class EndpointSnippetGenerator {
         }
         return [
             {
-                // TODO: We should use the Environment parameter when applicable (e.g. multi-environment values).
-                name: "BaseUrl",
+                name: this.getBaseUrlOptionName(),
                 assignment: baseUrlArg
             }
         ];
@@ -214,6 +228,13 @@ export class EndpointSnippetGenerator {
             return csharp.TypeLiteral.nop();
         }
         if (baseUrl != null) {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                this.context.errors.add({
+                    severity: Severity.Critical,
+                    message: "The C# SDK doesn't support a baseUrl when multiple URL environments are configured"
+                });
+                return csharp.TypeLiteral.nop();
+            }
             return csharp.TypeLiteral.string(baseUrl);
         }
         if (environment != null) {
@@ -241,7 +262,8 @@ export class EndpointSnippetGenerator {
                                 typeReference: STRING_TYPE_REFERENCE,
                                 value
                             })
-                        }))
+                        })),
+                        multiline: true
                     })
                 );
             }
@@ -307,11 +329,11 @@ export class EndpointSnippetGenerator {
     }): NamedArgument[] {
         return [
             {
-                name: this.context.getPropertyName(auth.username),
+                name: this.context.getParameterName(auth.username),
                 assignment: csharp.TypeLiteral.string(values.username)
             },
             {
-                name: this.context.getPropertyName(auth.password),
+                name: this.context.getParameterName(auth.password),
                 assignment: csharp.TypeLiteral.string(values.password)
             }
         ];
@@ -326,7 +348,7 @@ export class EndpointSnippetGenerator {
     }): NamedArgument[] {
         return [
             {
-                name: this.context.getPropertyName(auth.token),
+                name: this.context.getParameterName(auth.token),
                 assignment: csharp.TypeLiteral.string(values.token)
             }
         ];
@@ -341,7 +363,7 @@ export class EndpointSnippetGenerator {
     }): NamedArgument[] {
         return [
             {
-                name: this.context.getPropertyName(auth.header.name.name),
+                name: this.context.getParameterName(auth.header.name.name),
                 assignment: this.context.dynamicTypeLiteralMapper.convert({
                     typeReference: auth.header.typeReference,
                     value: values.value
@@ -359,11 +381,11 @@ export class EndpointSnippetGenerator {
     }): NamedArgument[] {
         return [
             {
-                name: this.context.getPropertyName(auth.clientId),
+                name: this.context.getParameterName(auth.clientId),
                 assignment: csharp.TypeLiteral.string(values.clientId)
             },
             {
-                name: this.context.getPropertyName(auth.clientSecret),
+                name: this.context.getParameterName(auth.clientSecret),
                 assignment: csharp.TypeLiteral.string(values.clientSecret)
             }
         ];
@@ -381,7 +403,7 @@ export class EndpointSnippetGenerator {
             const arg = this.getConstructorHeaderArg({ header, value: values.value });
             if (arg != null) {
                 args.push({
-                    name: this.context.getPropertyName(header.name.name),
+                    name: this.context.getParameterName(header.name.name),
                     assignment: arg
                 });
             }
@@ -438,8 +460,9 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: csharp.ConstructorField[] = [];
-        if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        if (pathParameters.length > 0) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
         this.context.errors.unscope();
 
@@ -459,28 +482,20 @@ export class EndpointSnippetGenerator {
         ) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
-
-        if (
-            this.context.needsRequestParameter({
+        // For now, the C# SDK always requires the inlined request parameter.
+        args.push(
+            this.getInlinedRequestArg({
                 request,
-                inlinePathParameters,
-                inlineFileProperties: true // The C# generator always includes file properties in the request.
-            })
-        ) {
-            args.push(
-                this.getInlinedRequestArg({
+                snippet,
+                pathParameterFields: this.context.includePathParametersInWrappedRequest({
                     request,
-                    snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                        request,
-                        inlinePathParameters
-                    })
-                        ? pathParameterFields
-                        : [],
-                    filePropertyInfo
+                    inlinePathParameters
                 })
-            );
-        }
+                    ? pathParameterFields
+                    : [],
+                filePropertyInfo
+            })
+        );
         return args;
     }
 
@@ -679,7 +694,9 @@ export class EndpointSnippetGenerator {
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): csharp.ClassInstantiation {
         return csharp.instantiateClass({
             classReference: this.context.getRootClientClassReference(),
-            arguments_
+            arguments_,
+            forceUseConstructor: true,
+            multiline: true
         });
     }
 
@@ -711,5 +728,20 @@ export class EndpointSnippetGenerator {
                 .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
         return this.context.getMethodName(endpoint.declaration.name);
+    }
+
+    private getBaseUrlOptionName(): string {
+        if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+            return "Environment";
+        }
+        return "BaseUrl";
+    }
+
+    private getStyle(options: Options): Style {
+        return options.style ?? this.context.options.style ?? Style.Full;
+    }
+
+    private getConfig(options: Options): Config {
+        return options.config ?? this.context.options.config ?? {};
     }
 }

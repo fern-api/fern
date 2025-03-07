@@ -6,6 +6,7 @@ namespace SeedCsharpAccess;
 public record User
 {
     [JsonPropertyName("id")]
+    [JsonAccess(JsonAccessType.ReadOnly)]
     public required string Id { get; set; }
 
     [JsonPropertyName("name")]
@@ -15,6 +16,7 @@ public record User
     public required string Email { get; set; }
 
     [JsonPropertyName("password")]
+    [JsonAccess(JsonAccessType.WriteOnly)]
     public required string Password { get; set; }
 
     public override string ToString()

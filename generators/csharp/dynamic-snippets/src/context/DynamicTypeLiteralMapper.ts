@@ -56,7 +56,7 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                return this.convertList({ list: args.typeReference.value, value: args.value });
+                return this.convertSet({ set: args.typeReference.value, value: args.value });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
@@ -73,11 +73,32 @@ export class DynamicTypeLiteralMapper {
             return csharp.TypeLiteral.nop();
         }
         return csharp.TypeLiteral.list({
-            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list, unboxOptionals: true }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
                     return this.convert({ typeReference: list, value: v });
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
+    }
+
+    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): csharp.TypeLiteral {
+        if (!Array.isArray(value)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected array but got: ${typeof value}`
+            });
+            return csharp.TypeLiteral.nop();
+        }
+        return csharp.TypeLiteral.set({
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: set, unboxOptionals: true }),
+            values: value.map((v, index) => {
+                this.context.errors.scope({ index });
+                try {
+                    return this.convert({ typeReference: set, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -291,7 +312,7 @@ export class DynamicTypeLiteralMapper {
                 if (num == null) {
                     return csharp.TypeLiteral.nop();
                 }
-                return csharp.TypeLiteral.long(num);
+                return csharp.TypeLiteral.double(num);
             }
             case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as });

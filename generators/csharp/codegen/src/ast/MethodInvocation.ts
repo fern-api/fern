@@ -71,24 +71,35 @@ export class MethodInvocation extends AstNode {
             writer.write(">");
         }
         writer.write("(");
+        if (this.arguments.length === 0) {
+            writer.write(")");
+            this.writeEnd(writer);
+            return;
+        }
         if (this.multiline) {
+            writer.newLine();
             writer.indent();
         }
         this.arguments.forEach((arg, idx) => {
             arg.write(writer);
             if (idx < this.arguments.length - 1) {
                 writer.write(",");
-                if (this.multiline) {
-                    writer.writeLine();
-                } else {
+                if (!this.multiline) {
                     writer.write(" ");
                 }
+            }
+            if (this.multiline) {
+                writer.newLine();
             }
         });
         if (this.multiline) {
             writer.dedent();
         }
         writer.write(")");
+        this.writeEnd(writer);
+    }
+
+    private writeEnd(writer: Writer): void {
         if (this.async && this.configureAwait === false) {
             writer.write(".ConfigureAwait(false)");
         }

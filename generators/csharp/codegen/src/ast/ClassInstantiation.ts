@@ -45,28 +45,44 @@ export class ClassInstantiation extends AstNode {
             writer.write("(");
         }
 
-        writer.newLine();
-        writer.indent();
+        if (this.arguments_.length === 0) {
+            this.writeEnd({ writer, hasNamedArguments });
+            return;
+        }
 
+        if (this.multiline) {
+            writer.newLine();
+        }
+
+        writer.indent();
         this.arguments_.forEach((argument, idx) => {
             if (isNamedArgument(argument)) {
-                writer.write(`${argument.name} = `);
+                writer.write(`${argument.name}`);
+                if (this.forceUseConstructor) {
+                    writer.write(": ");
+                } else {
+                    writer.write(" = ");
+                }
                 writer.writeNodeOrString(argument.assignment);
             } else {
                 argument.write(writer);
             }
             if (idx < this.arguments_.length - 1) {
                 writer.write(",");
-                if (this.multiline) {
-                    writer.newLine();
-                } else {
+                if (!this.multiline) {
                     writer.write(" ");
                 }
             }
+            if (this.multiline) {
+                writer.newLine();
+            }
         });
-        writer.writeLine();
         writer.dedent();
 
+        this.writeEnd({ writer, hasNamedArguments });
+    }
+
+    private writeEnd({ writer, hasNamedArguments }: { writer: Writer; hasNamedArguments: boolean }): void {
         if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("}");
         } else {
