@@ -22,7 +22,7 @@ public class AsyncSeedMultiLineDocsClient {
         return this.userClient.get();
     }
 
-    public static SeedMultiLineDocsClientBuilder builder() {
-        return new SeedMultiLineDocsClientBuilder();
+    public static AsyncSeedMultiLineDocsClientBuilder builder() {
+        return new AsyncSeedMultiLineDocsClientBuilder();
     }
 }

@@ -12,7 +12,7 @@ public class AsyncSeedWebsocketClient {
         this.clientOptions = clientOptions;
     }
 
-    public static SeedWebsocketClientBuilder builder() {
-        return new SeedWebsocketClientBuilder();
+    public static AsyncSeedWebsocketClientBuilder builder() {
+        return new AsyncSeedWebsocketClientBuilder();
     }
 }

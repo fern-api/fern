@@ -22,7 +22,7 @@ public class AsyncSeedExtraPropertiesClient {
         return this.userClient.get();
     }
 
-    public static SeedExtraPropertiesClientBuilder builder() {
-        return new SeedExtraPropertiesClientBuilder();
+    public static AsyncSeedExtraPropertiesClientBuilder builder() {
+        return new AsyncSeedExtraPropertiesClientBuilder();
     }
 }

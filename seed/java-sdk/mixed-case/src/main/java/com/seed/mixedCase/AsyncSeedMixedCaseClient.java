@@ -22,7 +22,7 @@ public class AsyncSeedMixedCaseClient {
         return this.serviceClient.get();
     }
 
-    public static SeedMixedCaseClientBuilder builder() {
-        return new SeedMixedCaseClientBuilder();
+    public static AsyncSeedMixedCaseClientBuilder builder() {
+        return new AsyncSeedMixedCaseClientBuilder();
     }
 }

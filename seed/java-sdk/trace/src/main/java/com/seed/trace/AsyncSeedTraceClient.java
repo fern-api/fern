@@ -78,7 +78,7 @@ public class AsyncSeedTraceClient {
         return this.syspropClient.get();
     }
 
-    public static SeedTraceClientBuilder builder() {
-        return new SeedTraceClientBuilder();
+    public static AsyncSeedTraceClientBuilder builder() {
+        return new AsyncSeedTraceClientBuilder();
     }
 }

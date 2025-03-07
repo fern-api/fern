@@ -22,7 +22,7 @@ public class AsyncSeedNullableClient {
         return this.nullableClient.get();
     }
 
-    public static SeedNullableClientBuilder builder() {
-        return new SeedNullableClientBuilder();
+    public static AsyncSeedNullableClientBuilder builder() {
+        return new AsyncSeedNullableClientBuilder();
     }
 }

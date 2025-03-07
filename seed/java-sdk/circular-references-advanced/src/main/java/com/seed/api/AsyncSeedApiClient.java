@@ -12,7 +12,7 @@ public class AsyncSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public static SeedApiClientBuilder builder() {
-        return new SeedApiClientBuilder();
+    public static AsyncSeedApiClientBuilder builder() {
+        return new AsyncSeedApiClientBuilder();
     }
 }

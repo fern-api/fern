@@ -166,7 +166,7 @@ public class AsyncSeedExamplesClient {
         return this.serviceClient.get();
     }
 
-    public static SeedExamplesClientBuilder builder() {
-        return new SeedExamplesClientBuilder();
+    public static AsyncSeedExamplesClientBuilder builder() {
+        return new AsyncSeedExamplesClientBuilder();
     }
 }

@@ -22,7 +22,7 @@ public class AsyncSeedUnknownAsAnyClient {
         return this.unknownClient.get();
     }
 
-    public static SeedUnknownAsAnyClientBuilder builder() {
-        return new SeedUnknownAsAnyClientBuilder();
+    public static AsyncSeedUnknownAsAnyClientBuilder builder() {
+        return new AsyncSeedUnknownAsAnyClientBuilder();
     }
 }

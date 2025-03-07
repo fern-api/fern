@@ -30,7 +30,7 @@ public class AsyncSeedPaginationClient {
         return this.usersClient.get();
     }
 
-    public static SeedPaginationClientBuilder builder() {
-        return new SeedPaginationClientBuilder();
+    public static AsyncSeedPaginationClientBuilder builder() {
+        return new AsyncSeedPaginationClientBuilder();
     }
 }

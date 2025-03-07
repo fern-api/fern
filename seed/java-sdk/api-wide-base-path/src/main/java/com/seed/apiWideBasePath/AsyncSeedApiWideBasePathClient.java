@@ -22,7 +22,7 @@ public class AsyncSeedApiWideBasePathClient {
         return this.serviceClient.get();
     }
 
-    public static SeedApiWideBasePathClientBuilder builder() {
-        return new SeedApiWideBasePathClientBuilder();
+    public static AsyncSeedApiWideBasePathClientBuilder builder() {
+        return new AsyncSeedApiWideBasePathClientBuilder();
     }
 }

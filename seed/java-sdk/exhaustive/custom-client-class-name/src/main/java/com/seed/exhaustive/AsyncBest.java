@@ -54,7 +54,7 @@ public class AsyncBest {
         return this.reqWithHeadersClient.get();
     }
 
-    public static BestBuilder builder() {
-        return new BestBuilder();
+    public static AsyncBestBuilder builder() {
+        return new AsyncBestBuilder();
     }
 }
