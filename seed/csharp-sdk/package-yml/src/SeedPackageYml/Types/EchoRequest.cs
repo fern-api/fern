@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedPackageYml.Core;
 
@@ -10,6 +11,13 @@ public record EchoRequest
 
     [JsonPropertyName("size")]
     public required int Size { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

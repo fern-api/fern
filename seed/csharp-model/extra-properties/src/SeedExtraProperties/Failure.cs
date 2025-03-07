@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExtraProperties.Core;
 
@@ -7,6 +8,13 @@ public record Failure
 {
     [JsonPropertyName("status")]
     public string Status { get; set; } = "failure";
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

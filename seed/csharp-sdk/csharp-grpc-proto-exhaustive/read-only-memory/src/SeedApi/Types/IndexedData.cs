@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -12,6 +13,13 @@ public record IndexedData
 
     [JsonPropertyName("values")]
     public ReadOnlyMemory<float> Values { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

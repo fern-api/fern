@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -18,6 +19,13 @@ public record UpdateResponse
 
     [JsonPropertyName("indexTypes")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

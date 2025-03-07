@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
@@ -11,6 +12,13 @@ public record BinaryTreeValue
     [JsonPropertyName("nodes")]
     public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } =
         new Dictionary<string, BinaryTreeNodeValue>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

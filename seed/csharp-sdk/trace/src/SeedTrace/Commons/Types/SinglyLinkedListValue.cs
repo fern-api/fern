@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
@@ -11,6 +12,13 @@ public record SinglyLinkedListValue
     [JsonPropertyName("nodes")]
     public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; set; } =
         new Dictionary<string, SinglyLinkedListNodeValue>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

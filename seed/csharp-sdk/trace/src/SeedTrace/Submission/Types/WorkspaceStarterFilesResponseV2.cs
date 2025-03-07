@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
@@ -8,6 +9,13 @@ public record WorkspaceStarterFilesResponseV2
     [JsonPropertyName("filesByLanguage")]
     public Dictionary<Language, V2.Files> FilesByLanguage { get; set; } =
         new Dictionary<Language, V2.Files>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

@@ -124,6 +124,29 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
+    public getJsonElementClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonElement"
+        });
+    }
+
+    public getJsonExtensionDataAttribute(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonExtensionData",
+                namespace: "System.Text.Json.Serialization"
+            })
+        });
+    }
+
+    public getAdditionalPropertiesType(): csharp.Type {
+        return csharp.Type.idictionary(
+            csharp.Type.string(),
+            csharp.Type.reference(this.getJsonElementClassReference())
+        );
+    }
+
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),

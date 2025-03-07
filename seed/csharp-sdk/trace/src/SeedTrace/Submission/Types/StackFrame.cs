@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
@@ -13,6 +14,13 @@ public record StackFrame
 
     [JsonPropertyName("scopes")]
     public IEnumerable<Scope> Scopes { get; set; } = new List<Scope>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

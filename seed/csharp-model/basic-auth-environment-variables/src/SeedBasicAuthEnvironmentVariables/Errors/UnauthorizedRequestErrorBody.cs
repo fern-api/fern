@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedBasicAuthEnvironmentVariables.Core;
 
@@ -7,6 +8,13 @@ public record UnauthorizedRequestErrorBody
 {
     [JsonPropertyName("message")]
     public required string Message { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {
