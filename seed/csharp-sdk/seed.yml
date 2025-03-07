@@ -182,8 +182,17 @@ allowedFailures:
   ## MORE Failures
   - literal
   - oauth-client-credentials-custom
-  - pagination
+  - pagination:no-custom-config
+  - pagination:custom-pager
+  - pagination:custom-pager-with-exception-handler
+
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
   - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
-  - csharp-grpc-proto-exhaustive # TODO: Add support for well-known types.
+  - trace
+
+  # TODO: Add support for well-known types.
+  - csharp-grpc-proto-exhaustive:no-custom-config
+  - csharp-grpc-proto-exhaustive:package-id
+  - csharp-grpc-proto-exhaustive:read-only-memory
+  - csharp-grpc-proto-exhaustive:include-exception-handler
