@@ -228,6 +228,13 @@ export class EndpointSnippetGenerator {
             return csharp.TypeLiteral.nop();
         }
         if (baseUrl != null) {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                this.context.errors.add({
+                    severity: Severity.Critical,
+                    message: "The C# SDK doesn't support a baseUrl when multiple URL environments are configured"
+                });
+                return csharp.TypeLiteral.nop();
+            }
             return csharp.TypeLiteral.string(baseUrl);
         }
         if (environment != null) {

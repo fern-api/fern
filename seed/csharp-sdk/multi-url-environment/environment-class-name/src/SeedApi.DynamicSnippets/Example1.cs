@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedMultiUrlEnvironment;
-using SeedMultiUrlEnvironment.Core;
 
 namespace Usage;
 
@@ -8,10 +7,7 @@ public class Example1
 {
     public async global::System.Threading.Tasks.Task Do() {
         var client = new SeedMultiUrlEnvironmentClient(
-            token: "<token>",
-            clientOptions: new ClientOptions{
-                Environment = "https://api.fern.com"
-            }
+            token: "<token>"
         );
 
         await client.S3.GetPresignedUrlAsync(
