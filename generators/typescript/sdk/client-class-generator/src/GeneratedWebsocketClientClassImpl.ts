@@ -17,11 +17,14 @@ import {
     BasicAuthScheme,
     BearerAuthScheme,
     HeaderAuthScheme,
+    HttpHeader,
     IntermediateRepresentation,
     OAuthScheme,
     WebSocketChannel,
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
+
+import { GeneratedHeader } from "./GeneratedHeader";
 
 export declare namespace GeneratedWebsocketClientClassImpl {
     export interface Init {
@@ -36,6 +39,8 @@ export declare namespace GeneratedWebsocketClientClassImpl {
     }
 }
 
+type CustomHeader = { type: "global"; header: HttpHeader } | { type: "authScheme"; header: HeaderAuthScheme };
+
 export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClientClass {
     private static readonly OPTIONS_INTERFACE_NAME = "Options";
     private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs";
@@ -47,7 +52,7 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
     private static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
-
+    private static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
@@ -133,6 +138,15 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
         });
 
         const statements = this.generateConnectMethodStatements(context);
+
+        if (this.shouldGenerateCustomAuthorizationHeaderHelperMethod()) {
+            serviceClass.methods?.push({
+                scope: Scope.Protected,
+                isAsync: true,
+                name: GeneratedWebsocketClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
+                statements: this.getCustomAuthorizationHeaderStatements(context).map(getTextOfTsNode)
+            });
+        }
 
         serviceClass.methods?.push({
             name: "connect",
@@ -362,6 +376,51 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier("headers"),
+                            undefined,
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                            ]),
+                            ts.factory.createObjectLiteralExpression()
+                        )
+                    ],
+                    ts.NodeFlags.Let
+                )
+            ),
+            ...(this.shouldGenerateCustomAuthorizationHeaderHelperMethod()
+                ? [
+                      ts.factory.createExpressionStatement(
+                          ts.factory.createBinaryExpression(
+                              ts.factory.createIdentifier("headers"),
+                              ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                              ts.factory.createObjectLiteralExpression(
+                                  [
+                                      ts.factory.createSpreadAssignment(
+                                          ts.factory.createAwaitExpression(
+                                              ts.factory.createCallExpression(
+                                                  ts.factory.createPropertyAccessExpression(
+                                                      ts.factory.createThis(),
+                                                      GeneratedWebsocketClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
+                                                  ),
+                                                  undefined,
+                                                  []
+                                              )
+                                          )
+                                      ),
+                                      ts.factory.createSpreadAssignment(ts.factory.createIdentifier("headers"))
+                                  ],
+                                  true
+                              )
+                          )
+                      )
+                  ]
+                : []),
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
@@ -381,9 +440,91 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
         ];
     }
 
+    private getCustomAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
+        const elements: GeneratedHeader[] = [];
+        const statements: ts.Statement[] = [];
+        for (const header of this.getCustomAuthorizationHeaders()) {
+            const headerVariableName = `${header.header.name.name.camelCase.unsafeName}Value`;
+            const headerExpression =
+                header.type === "authScheme" && header.header.headerEnvVar != null
+                    ? ts.factory.createBinaryExpression(
+                          ts.factory.createParenthesizedExpression(
+                              context.coreUtilities.fetcher.Supplier.get(
+                                  this.getReferenceToOption(this.getKeyForCustomHeader(header))
+                              )
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                          ts.factory.createElementAccessExpression(
+                              ts.factory.createPropertyAccessChain(
+                                  ts.factory.createIdentifier("process"),
+                                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                  ts.factory.createIdentifier("env")
+                              ),
+                              ts.factory.createStringLiteral(header.header.headerEnvVar)
+                          )
+                      )
+                    : context.coreUtilities.fetcher.Supplier.get(
+                          this.getReferenceToOption(this.getKeyForCustomHeader(header))
+                      );
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(headerVariableName),
+                                undefined,
+                                undefined,
+                                headerExpression
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            const headerValue =
+                header.type === "authScheme" && header.header.prefix != null
+                    ? ts.factory.createTemplateExpression(
+                          ts.factory.createTemplateHead(`${header.header.prefix.trim()} `),
+                          [
+                              ts.factory.createTemplateSpan(
+                                  ts.factory.createIdentifier(headerVariableName),
+                                  ts.factory.createTemplateTail("", "")
+                              )
+                          ]
+                      )
+                    : ts.factory.createIdentifier(headerVariableName);
+            elements.push({
+                header: header.header.name.wireValue,
+                value: headerValue
+            });
+        }
+
+        const authHeaders: ts.ObjectLiteralElementLike[] = elements.map(({ header, value }) =>
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+        );
+
+        const toAuthHeaderStatement = ts.factory.createReturnStatement(
+            ts.factory.createObjectLiteralExpression(authHeaders)
+        );
+        statements.push(toAuthHeaderStatement);
+
+        return statements;
+    }
+
+    private getKeyForCustomHeader(header: CustomHeader): string {
+        switch (header.type) {
+            case "authScheme":
+                return this.getOptionKeyForAuthHeader(header.header);
+            case "global":
+                return this.getOptionKeyForHeader(header.header);
+        }
+    }
+
     private getReferenceToWebsocket(context: SdkContext): ts.Expression {
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
-            url: this.appendQueryParameters(this.getBaseUrl(this.channel, context), context),
+            url: this.buildFullUrl(this.getBaseUrl(this.channel, context), this.channel, context),
             protocols: ts.factory.createArrayLiteralExpression([]),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
@@ -404,13 +545,41 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
                         )
                     )
                 )
-            ])
+            ]),
+            headers: ts.factory.createIdentifier("headers")
         });
     }
 
-    private appendQueryParameters(url: ts.Expression, context: SdkContext): ts.Expression {
+    private shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
+        return this.getCustomAuthorizationHeaders().length > 0;
+    }
+
+    private getCustomAuthorizationHeaders(): CustomHeader[] {
+        const headers: CustomHeader[] = [];
+
+        for (const header of this.intermediateRepresentation.headers) {
+            if (this.isAuthorizationHeader(header)) {
+                headers.push({ type: "global", header });
+            }
+        }
+
+        for (const header of this.authHeaders) {
+            headers.push({ type: "authScheme", header });
+        }
+
+        return headers;
+    }
+
+    private isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
+        return header.name.wireValue.toLowerCase() === "authorization";
+    }
+
+    private buildFullUrl(url: ts.Expression, channel: WebSocketChannel, context: SdkContext): ts.Expression {
         return ts.factory.createTemplateExpression(ts.factory.createTemplateHead("", ""), [
-            ts.factory.createTemplateSpan(url, ts.factory.createTemplateMiddle("?", "?")),
+            ts.factory.createTemplateSpan(
+                url,
+                ts.factory.createTemplateMiddle(`${channel.path.head}?`, `${channel.path.head}?`)
+            ),
             ts.factory.createTemplateSpan(
                 context.externalDependencies.qs.stringify(ts.factory.createIdentifier("queryParams")),
                 ts.factory.createTemplateTail("", "")
@@ -487,6 +656,10 @@ export class GeneratedWebsocketClientClassImpl implements GeneratedWebsocketClie
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedWebsocketClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
+    }
+
+    private getOptionKeyForHeader(header: HttpHeader): string {
+        return header.name.name.camelCase.unsafeName;
     }
 
     private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {

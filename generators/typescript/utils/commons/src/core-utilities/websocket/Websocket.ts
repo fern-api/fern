@@ -7,6 +7,7 @@ export interface Websocket {
             url: ts.Expression;
             protocols: ts.Expression;
             options: ts.ObjectLiteralExpression;
+            headers: ts.Expression;
         }) => ts.Expression;
     };
     readonly CloseEvent: {

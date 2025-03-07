@@ -28,11 +28,17 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
         _connect: this.withExportedName(
             "ReconnectingWebSocket",
             (ReconnectingWebSocket) =>
-                (args: { url: ts.Expression; protocols: ts.Expression; options: ts.ObjectLiteralExpression }) =>
+                (args: {
+                    url: ts.Expression;
+                    protocols: ts.Expression;
+                    options: ts.ObjectLiteralExpression;
+                    headers: ts.Expression;
+                }) =>
                     ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
                         args.url,
                         args.protocols,
-                        args.options
+                        args.options,
+                        args.headers
                     ])
         )
     };

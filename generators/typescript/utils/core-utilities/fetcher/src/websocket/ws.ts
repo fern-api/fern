@@ -78,11 +78,12 @@ export class ReconnectingWebSocket {
     private readonly _url: UrlProvider;
     private readonly _protocols?: string | string[];
     private readonly _options: Options;
-
-    constructor(url: UrlProvider, protocols?: string | string[], options: Options = {}) {
+    private readonly _headers?: Record<string, any>;
+    constructor(url: UrlProvider, protocols?: string | string[], options: Options = {}, headers?: Record<string, any>) {
         this._url = url;
         this._protocols = protocols;
         this._options = options;
+        this._headers = headers;
         if (this._options.startClosed) {
             this._shouldReconnect = false;
         }
@@ -379,7 +380,9 @@ export class ReconnectingWebSocket {
                     return;
                 }
                 this._debug("connect", { url, protocols: this._protocols });
-                this._ws = this._protocols ? new WebSocket(url, this._protocols) : new WebSocket(url);
+                this._ws = this._protocols
+                    ? new WebSocket(url, this._protocols, this._headers)
+                    : new WebSocket(url, undefined, this._headers);
                 this._ws!.binaryType = this._binaryType;
                 this._connectLock = false;
                 this._addListeners();
