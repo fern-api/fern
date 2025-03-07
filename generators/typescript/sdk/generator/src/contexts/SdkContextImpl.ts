@@ -49,7 +49,6 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-refer
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
-import { WebsocketClientDeclarationReferencer } from "../declaration-referencers/WebsocketClientDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "../declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
@@ -106,7 +105,6 @@ export declare namespace SdkContextImpl {
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         sdkClientClassGenerator: SdkClientClassGenerator;
-        websocketClientDeclarationReferencer: WebsocketClientDeclarationReferencer;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
         websocketGenerator: WebsocketClassGenerator;
         packageResolver: PackageResolver;
@@ -201,7 +199,6 @@ export class SdkContextImpl implements SdkContext {
         requestWrapperGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         sdkInlinedRequestBodySchemaGenerator,
-        websocketClientDeclarationReferencer,
         websocketSocketDeclarationReferencer,
         websocketGenerator,
         packageResolver,
@@ -363,7 +360,6 @@ export class SdkContextImpl implements SdkContext {
         this.websocket = new WebsocketContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
-            websocketClientDeclarationReferencer,
             websocketSocketDeclarationReferencer,
             websocketGenerator,
             includeSerdeLayer,

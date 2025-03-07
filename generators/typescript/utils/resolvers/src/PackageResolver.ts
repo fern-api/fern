@@ -78,4 +78,12 @@ export class PackageResolver {
         }
         return service;
     }
+
+    public getWebSocketChannelDeclaration(packageId: PackageId): WebSocketChannel | undefined {
+        const package_ = this.resolvePackage(packageId);
+        if (package_.websocket == null) {
+            return undefined;
+        }
+        return this.resolveWebSocketChannel(package_.websocket);
+    }
 }

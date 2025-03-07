@@ -15,6 +15,7 @@ export declare namespace SdkClientClassGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        shouldGenerateWebsocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
@@ -45,6 +46,7 @@ export class SdkClientClassGenerator {
     private neverThrowErrors: boolean;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
+    private shouldGenerateWebsocketClients: boolean;
     private requireDefaultEnvironment: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
@@ -64,6 +66,7 @@ export class SdkClientClassGenerator {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        shouldGenerateWebsocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
@@ -82,6 +85,7 @@ export class SdkClientClassGenerator {
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
+        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
@@ -112,6 +116,7 @@ export class SdkClientClassGenerator {
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
+            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
