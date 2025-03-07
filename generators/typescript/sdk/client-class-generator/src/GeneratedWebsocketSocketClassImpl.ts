@@ -1,6 +1,5 @@
-import { ImportsManager, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
     ClassDeclarationStructure,
     InterfaceDeclarationStructure,
@@ -12,25 +11,13 @@ import {
     ts
 } from "ts-morph";
 
-import {
-    IntermediateRepresentation,
-    WebSocketChannel,
-    WebSocketChannelId,
-    WebSocketMessage,
-    WebSocketMessageBody
-} from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
-        importsManager: ImportsManager;
-        intermediateRepresentation: IntermediateRepresentation;
         includeSerdeLayer: boolean;
-        channelId: WebSocketChannelId;
         channel: WebSocketChannel;
-        packageResolver: PackageResolver;
-        packageId: PackageId;
         serviceClassName: string;
-        errorResolver: ErrorResolver;
     }
 }
 
@@ -46,36 +33,14 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly MESSAGE_PARAMETER_NAME = "message";
     private static readonly CLOSE_CODE_VALUE = 1000;
 
-    private readonly importsManager: ImportsManager;
-    private readonly intermediateRepresentation: IntermediateRepresentation;
-    private readonly includeSerdeLayer: boolean;
-    private readonly channelId: WebSocketChannelId;
     private readonly channel: WebSocketChannel;
-    private readonly packageResolver: PackageResolver;
-    private readonly packageId: PackageId;
+    private readonly includeSerdeLayer: boolean;
     private readonly serviceClassName: string;
-    private readonly errorResolver: ErrorResolver;
 
-    constructor({
-        importsManager,
-        intermediateRepresentation,
-        includeSerdeLayer,
-        channelId,
-        channel,
-        packageResolver,
-        packageId,
-        serviceClassName,
-        errorResolver
-    }: GeneratedWebsocketSocketClassImpl.Init) {
-        this.importsManager = importsManager;
-        this.intermediateRepresentation = intermediateRepresentation;
+    constructor({ includeSerdeLayer, channel, serviceClassName }: GeneratedWebsocketSocketClassImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
-        this.channelId = channelId;
         this.channel = channel;
-        this.packageResolver = packageResolver;
-        this.packageId = packageId;
         this.serviceClassName = serviceClassName;
-        this.errorResolver = errorResolver;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -595,34 +560,5 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 const generatedType = context.type.getReferenceToType(message.body.bodyType);
                 return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
             })[0] as ts.TypeNode;
-    }
-
-    private getSubscribeMessageNode(context: SdkContext): ts.TypeNode {
-        // TODO (Eden): At the moment, we're only extracting two messages in the IR: publish & subscribe.
-        // We'll need to update this if we want to support a different message array structure.
-        return this.channel.messages
-            .filter((message) => message.origin === "server")
-            .map((message) => {
-                if (message.body.type === "inlinedBody") {
-                    // TODO (Eden): Handle inlined body messages
-                    throw new Error("Inlined body messages are not supported yet");
-                }
-                const generatedType = context.type.getReferenceToType(message.body.bodyType);
-                return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
-            })[0] as ts.TypeNode;
-    }
-
-    public instantiate(args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(this.serviceClassName), undefined, [
-            args.referenceToOptions
-        ]);
-    }
-
-    public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
-        throw new Error("Not implemented");
-    }
-
-    public instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage }): ts.Expression {
-        throw new Error("Not implemented");
     }
 }

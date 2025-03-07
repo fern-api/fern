@@ -387,10 +387,7 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields
         });
         this.websocketGenerator = new WebsocketClassGenerator({
-            intermediateRepresentation,
-            errorResolver: this.errorResolver,
-            packageResolver: this.packageResolver,
-            requireDefaultEnvironment: config.requireDefaultEnvironment
+            intermediateRepresentation
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -663,9 +660,7 @@ export class SdkGenerator {
                     filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.websocket
-                            .getGeneratedWebsocketSocketClass(subpackageId, channel, packageId)
-                            ?.writeToFile(context);
+                        context.websocket.getGeneratedWebsocketSocketClass(subpackageId, channel)?.writeToFile(context);
                     }
                 });
             }

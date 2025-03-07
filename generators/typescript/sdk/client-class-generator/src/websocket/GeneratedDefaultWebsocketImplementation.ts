@@ -403,10 +403,4 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             environment
         );
     }
-
-    public instantiate(args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(this.serviceClassName), undefined, [
-            args.referenceToOptions
-        ]);
-    }
 }
