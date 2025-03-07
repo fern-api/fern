@@ -6273,6 +6273,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../workspace/commons
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../../../../generators/browser-compatible-base
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../../cli-source-resolver
@@ -6282,6 +6285,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../commons/core-utils
+      '@fern-api/csharp-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/csharp/dynamic-snippets
       '@fern-api/docker-utils':
         specifier: workspace:*
         version: link:../docker-utils

@@ -2,7 +2,8 @@ import { camelCase, upperFirst } from "lodash-es";
 
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    FernGeneratorExec,
+    Options
 } from "@fern-api/browser-compatible-base-generator";
 import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -22,12 +23,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     constructor({
         ir,
-        config
+        config,
+        options
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
+        options?: Options;
     }) {
-        super({ ir, config });
+        super({ ir, config, options });
         this.ir = ir;
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseCsharpCustomConfigSchema) : undefined;
@@ -43,7 +46,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public clone(): DynamicSnippetsGeneratorContext {
         return new DynamicSnippetsGeneratorContext({
             ir: this.ir,
-            config: this.config
+            config: this.config,
+            options: this.options
         });
     }
 
@@ -63,6 +67,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getClassName(name: FernIr.Name): string {
         return name.pascalCase.safeName;
+    }
+
+    public getParameterName(name: FernIr.Name): string {
+        return name.camelCase.safeName;
     }
 
     public getPropertyName(name: FernIr.Name): string {
