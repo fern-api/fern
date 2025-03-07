@@ -15,6 +15,7 @@ public class GetUsersTest : BaseMockServerTest
             [
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -23,11 +24,17 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
-                }
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1
               },
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -36,8 +43,13 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
-                }
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1
               }
             ]
             """;

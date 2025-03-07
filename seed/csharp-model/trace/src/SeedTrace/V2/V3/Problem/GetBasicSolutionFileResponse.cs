@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
@@ -9,6 +10,13 @@ public record GetBasicSolutionFileResponse
     [JsonPropertyName("solutionFileByLanguage")]
     public Dictionary<Language, FileInfoV2> SolutionFileByLanguage { get; set; } =
         new Dictionary<Language, FileInfoV2>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

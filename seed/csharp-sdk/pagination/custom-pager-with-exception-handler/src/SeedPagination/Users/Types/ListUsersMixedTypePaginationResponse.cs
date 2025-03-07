@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
@@ -10,6 +11,13 @@ public record ListUsersMixedTypePaginationResponse
 
     [JsonPropertyName("data")]
     public IEnumerable<User> Data { get; set; } = new List<User>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {
