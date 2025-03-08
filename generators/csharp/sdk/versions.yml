@@ -7,6 +7,25 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc15
+  createdAt: "2025-03-08"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        The SDK now supports a `BodyProperties` and `QueryParameters` request option, which
+        can be used to add arbitrary properties to the request. This is useful for interacting
+        with alpha or undocumented functionality.
+
+        ```csharp
+        var response = await client.Users.List(
+          ...,
+          new RequestOptions {
+            QueryParameters = new Dictionary<string, object> { { "limit", 100 } },
+          }
+        );
+        ```
+
 - version: 1.12.0-rc14
   createdAt: "2025-03-07"
   irVersion: 57

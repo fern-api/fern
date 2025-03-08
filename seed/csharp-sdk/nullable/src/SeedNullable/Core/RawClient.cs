@@ -175,7 +175,10 @@ internal class RawClient(ClientOptions clientOptions)
                 if (jsonRequest.Body != null)
                 {
                     httpRequest.Content = new StringContent(
-                        JsonUtils.Serialize(jsonRequest.Body),
+                        JsonUtils.SerializeWithAdditionalProperties(
+                            jsonRequest.Body,
+                            jsonRequest.Options?.BodyProperties
+                        ),
                         Encoding.UTF8,
                         "application/json"
                     );
@@ -208,10 +211,13 @@ internal class RawClient(ClientOptions clientOptions)
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (request.Query.Count <= 0)
+
+        var queryParameters = GetQueryParameters(request);
+        if (queryParameters.Count == 0)
             return url;
+
         url += "?";
-        url = request.Query.Aggregate(
+        url = queryParameters.Aggregate(
             url,
             (current, queryItem) =>
             {
@@ -240,6 +246,24 @@ internal class RawClient(ClientOptions clientOptions)
         );
         url = url[..^1];
         return url;
+    }
+
+    private static Dictionary<string, object> GetQueryParameters(BaseApiRequest request)
+    {
+        if (request.Options?.QueryParameters == null || request.Options.QueryParameters.Count == 0)
+        {
+            return request.Query;
+        }
+        if (request.Query.Count == 0)
+        {
+            return request.Options.QueryParameters;
+        }
+        var merged = new Dictionary<string, object>(request.Query);
+        foreach (var param in request.Options.QueryParameters)
+        {
+            merged[param.Key] = param.Value;
+        }
+        return merged;
     }
 
     private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)

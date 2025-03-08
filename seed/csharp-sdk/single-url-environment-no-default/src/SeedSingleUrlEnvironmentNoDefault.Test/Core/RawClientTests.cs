@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using SeedSingleUrlEnvironmentNoDefault;
 using SeedSingleUrlEnvironmentNoDefault.Core;
+using WireMock.Matchers;
 using WireMock.Server;
 using SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
@@ -98,6 +100,137 @@ public class RawClientTests
         Assert.That(content, Is.EqualTo("Failure"));
 
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_AdditionalQueryParameters()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "bar").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new RawClient.BaseApiRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+            Options = new RequestOptions
+            {
+                QueryParameters = new Dictionary<string, object> { { "foo", "bar" } },
+            },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo("Success"));
+
+        Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_AdditionalQueryParameters_Override()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "baz").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new RawClient.BaseApiRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+            Query = new Dictionary<string, object> { { "foo", "bar" } },
+            Options = new RequestOptions
+            {
+                QueryParameters = new Dictionary<string, object> { { "foo", "baz" } },
+            },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo("Success"));
+
+        Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_AdditionalBodyProperties()
+    {
+        string expectedBody = "{\n  \"foo\": \"bar\",\n  \"baz\": \"qux\"\n}";
+        _server
+            .Given(
+                WireMockRequest
+                    .Create()
+                    .WithPath("/test")
+                    .UsingPost()
+                    .WithBody(new JsonMatcher(expectedBody))
+            )
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new RawClient.JsonApiRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new Dictionary<string, object> { { "foo", "bar" } },
+            Options = new RequestOptions
+            {
+                BodyProperties = new Dictionary<string, object> { { "baz", "qux" } },
+            },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo("Success"));
+
+        Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
+
+        var requestBody = _server.LogEntries.First().RequestMessage.Body;
+        Assert.That(requestBody, Is.EqualTo(expectedBody));
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_AdditionalBodyProperties_Override()
+    {
+        string expectedBody = "{\n  \"foo\": \"baz\"\n}";
+        _server
+            .Given(
+                WireMockRequest
+                    .Create()
+                    .WithPath("/test")
+                    .UsingPost()
+                    .WithBody(new JsonMatcher(expectedBody))
+            )
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new RawClient.JsonApiRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new Dictionary<string, object> { { "foo", "bar" } },
+            Options = new RequestOptions
+            {
+                BodyProperties = new Dictionary<string, object> { { "foo", "baz" } },
+            },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo("Success"));
+
+        Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
+
+        var requestBody = _server.LogEntries.First().RequestMessage.Body;
+        Assert.That(requestBody, Is.EqualTo(expectedBody));
     }
 
     [TearDown]
