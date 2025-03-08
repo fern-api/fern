@@ -108,7 +108,7 @@ client.nullable.get_users(
 import datetime
 
 from seed import SeedNullable
-from seed.nullable import Metadata
+from seed.nullable import Metadata, Status
 
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
@@ -125,6 +125,7 @@ client.nullable.create_user(
         ),
         avatar="avatar",
         activated=True,
+        status=Status(),
     ),
     avatar="avatar",
 )
