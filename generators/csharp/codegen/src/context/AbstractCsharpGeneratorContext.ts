@@ -211,10 +211,24 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonElementClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonElement"
+        });
+    }
+
     public getJsonNodeClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: "System.Text.Json.Nodes",
             name: "JsonNode"
+        });
+    }
+
+    public getJsonObjClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json.Nodes",
+            name: "JsonObject"
         });
     }
 

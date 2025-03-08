@@ -231,7 +231,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsTestUtils(): string[] {
-        return [];
+        return [AsIsFiles.Test.JsonElementComparer];
     }
 
     public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {

@@ -17,7 +17,7 @@ export declare namespace TestClass {
 
 const SERIALIZATION_TEST_FOLDER = RelativeFilePath.of("Unit/Serialization");
 
-export class ObjectSerializationTestGenerator extends FileGenerator<
+export class UnionSerializationTestGenerator extends FileGenerator<
     CSharpFile,
     ModelCustomConfigSchema,
     ModelGeneratorContext

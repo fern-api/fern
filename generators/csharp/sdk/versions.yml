@@ -7,10 +7,40 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
-- version: 1.12.0-rc13
+- version: 1.12.0-rc15
   createdAt: "2025-03-05"
   irVersion: 57
   changelogEntry:
+    - type: feat
+      summary: |
+        Generate **discriminated unions** with:
+        - Type safety with compile-time checking
+        - Exhaustive discriminant value matching
+        - JSON serialization support
+
+        Here's a simple example how to use a shape discriminated union:
+        ```csharp
+        var shape = new Shape(new Circle { Radius = 5 });
+
+        // Type checking
+        if (shape.IsCircle) {
+            Console.WriteLine($"Radius: {circle.AsCircle().Radius}");
+        }
+
+        // Discriminant value matching
+        var area = shape.Match(
+            circle => Math.PI * circle.Radius * circle.Radius,
+            square => square.Length * square.Length,
+            (type, _) => throw new NotSupportedException($"Unknown: {type}")
+        );
+
+        // TryAs pattern
+        if (shape.TryAsCircle(out var circle)) {
+            Console.WriteLine($"Radius: {circle.Radius}");
+        }
+        ```
+    - type: feat
+      summary: Improved serialization tests for generated classes for normal objects and discriminated unions.
     - type: feat
       summary: Generated classes now follow the C# convention for odering consts, fields, constructors, properties, methods, operators, and inner classes.
 

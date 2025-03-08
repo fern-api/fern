@@ -1,4 +1,4 @@
-import { Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
+import { AbstractAstNode, Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
 
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
@@ -9,8 +9,17 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
-        // lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+        /**
+         * lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+         * @deprecated Use properties instead
+         * @see properties
+         */
         forceUseConstructor?: boolean;
+        properties?: Property[];
+    }
+    interface Property {
+        name: AbstractAstNode | string;
+        value: AbstractAstNode | string;
     }
 }
 
@@ -18,12 +27,14 @@ export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: Arguments;
     private readonly forceUseConstructor: boolean;
+    private readonly properties: ClassInstantiation.Property[];
 
-    constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, forceUseConstructor, properties }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
         this.forceUseConstructor = forceUseConstructor ?? false;
+        this.properties = properties ?? [];
     }
 
     public write(writer: Writer): void {
@@ -61,6 +72,18 @@ export class ClassInstantiation extends AstNode {
             writer.write("}");
         } else {
             writer.write(")");
+        }
+        if (this.properties.length > 0) {
+            writer.write("{ ");
+            this.properties.forEach((property, idx) => {
+                writer.writeNodeOrString(property.name);
+                writer.write(" = ");
+                writer.writeNodeOrString(property.value);
+                if (idx < this.properties.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write("}");
         }
     }
 }
