@@ -365,9 +365,9 @@ export class TypeLiteral extends AstNode {
         writer.writeLine(">() {{");
         writer.indent();
         for (const entry of entries) {
-            writer.writeLine("put(\"");
+            writer.writeLine('put("');
             writer.writeNode(entry.key);
-            writer.writeLine("\", ");
+            writer.writeLine('", ');
             writer.writeNode(entry.value);
             writer.writeLine(");");
         }
