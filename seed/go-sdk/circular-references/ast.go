@@ -527,3 +527,165 @@ func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
 func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
 }
+
+type T struct {
+	Child *TorU `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *T) GetChild() *TorU {
+	if t == nil {
+		return nil
+	}
+	return t.Child
+}
+
+func (t *T) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *T) UnmarshalJSON(data []byte) error {
+	type unmarshaler T
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = T(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *T) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type TorU struct {
+	T *T
+	U *U
+
+	typ string
+}
+
+func NewTorUFromT(value *T) *TorU {
+	return &TorU{typ: "T", T: value}
+}
+
+func NewTorUFromU(value *U) *TorU {
+	return &TorU{typ: "U", U: value}
+}
+
+func (t *TorU) GetT() *T {
+	if t == nil {
+		return nil
+	}
+	return t.T
+}
+
+func (t *TorU) GetU() *U {
+	if t == nil {
+		return nil
+	}
+	return t.U
+}
+
+func (t *TorU) UnmarshalJSON(data []byte) error {
+	valueT := new(T)
+	if err := json.Unmarshal(data, &valueT); err == nil {
+		t.typ = "T"
+		t.T = valueT
+		return nil
+	}
+	valueU := new(U)
+	if err := json.Unmarshal(data, &valueU); err == nil {
+		t.typ = "U"
+		t.U = valueU
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, t)
+}
+
+func (t TorU) MarshalJSON() ([]byte, error) {
+	if t.typ == "T" || t.T != nil {
+		return json.Marshal(t.T)
+	}
+	if t.typ == "U" || t.U != nil {
+		return json.Marshal(t.U)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
+type TorUVisitor interface {
+	VisitT(*T) error
+	VisitU(*U) error
+}
+
+func (t *TorU) Accept(visitor TorUVisitor) error {
+	if t.typ == "T" || t.T != nil {
+		return visitor.VisitT(t.T)
+	}
+	if t.typ == "U" || t.U != nil {
+		return visitor.VisitU(t.U)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
+type U struct {
+	Child *T `json:"child,omitempty" url:"child,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *U) GetChild() *T {
+	if u == nil {
+		return nil
+	}
+	return u.Child
+}
+
+func (u *U) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *U) UnmarshalJSON(data []byte) error {
+	type unmarshaler U
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = U(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *U) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
