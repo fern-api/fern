@@ -197,7 +197,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 headerEntries.push({
                     key: csharp.codeblock(`"${param.header.name}"`),
                     value: csharp.codeblock(
-                        param.value.type === "string" ? `"${param.value.string}"` : param.value ? `"true"` : `"false"`
+                        param.value.type === "string"
+                            ? `"${param.value.string}"`
+                            : param.value
+                              ? `"${true.toString()}"`
+                              : `"${false.toString()}"`
                     )
                 });
             }
