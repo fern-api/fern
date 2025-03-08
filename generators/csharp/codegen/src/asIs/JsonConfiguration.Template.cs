@@ -74,7 +74,8 @@ internal static partial class JsonOptions
 
 internal static class JsonUtils
 {
-    internal static string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
+    internal static string Serialize<T>(T obj) =>
+        JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
 
     internal static JsonElement SerializeToElement<T>(T obj) =>
         JsonSerializer.SerializeToElement(obj, JsonOptions.JsonSerializerOptions);
@@ -92,6 +93,28 @@ internal static class JsonUtils
     {
         var json = JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
         return json.Trim('"');
+    }
+
+    internal static string SerializeWithAdditionalProperties<T>(T obj, Dictionary<string, object>? additionalProperties = null)
+    {
+        if (additionalProperties == null || additionalProperties.Count == 0)
+        {
+            return Serialize(obj);
+        }
+        var jsonNode = SerializeToNode(obj);
+        if (jsonNode is JsonObject jsonObject)
+        {
+            foreach (var property in additionalProperties)
+            {
+                var propertyNode = JsonSerializer.SerializeToNode(
+                    property.Value,
+                    JsonOptions.JsonSerializerOptions
+                );
+                jsonObject[property.Key] = propertyNode;
+            }
+            return jsonObject.ToJsonString(JsonOptions.JsonSerializerOptions);
+        }
+        throw new InvalidOperationException("The serialized object must be a JSON object to add properties.");
     }
 
     internal static T Deserialize<T>(string json) =>
