@@ -26,6 +26,10 @@ public partial class SeedBearerTokenEnvironmentVariableClient
                 { "User-Agent", "Fernbearer-token-environment-variable/0.0.1" },
             }
         );
+        if (clientOptions.Version != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.Version;
+        }
         clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {

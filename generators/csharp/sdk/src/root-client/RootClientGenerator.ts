@@ -41,6 +41,7 @@ interface ConstructorParameter {
 interface LiteralParameter {
     name: string;
     value: Literal;
+    header?: HeaderInfo;
 }
 
 interface HeaderInfo {
@@ -192,12 +193,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
 
         for (const param of literalParameters) {
-            headerEntries.push({
-                key: csharp.codeblock(`"${param.name}"`),
-                value: csharp.codeblock(
-                    param.value.type === "string" ? `"${param.value.string}"` : `${param.value.boolean}.ToString()`
-                )
-            });
+            if (param.header != null) {
+                headerEntries.push({
+                    key: csharp.codeblock(`"${param.header.name}"`),
+                    value: csharp.codeblock(
+                        param.value.type === "string" ? `"${param.value.string}"` : param.value ? `"true"` : `"false"`
+                    )
+                });
+            }
         }
 
         const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
@@ -251,6 +254,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         arguments_: [headerDictionary]
                     })
                 );
+
+                for (const param of literalParameters) {
+                    if (param.header != null) {
+                        writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`));
+                        writer.write(`defaultHeaders["${param.header.name}"] = `);
+                        if (param.value.type === "string") {
+                            writer.write(`clientOptions.${param.name}`);
+                        } else {
+                            writer.write(`clientOptions.${param.name}.ToString()`);
+                        }
+                        writer.writeLine(";");
+                        writer.endControlFlow();
+                    }
+                }
 
                 writer.write("clientOptions ??= ");
                 writer.writeNodeStatement(
@@ -331,10 +348,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         includeEnvVarArguments?: boolean;
         asSnippet?: boolean;
     }): csharp.ClassInstantiation {
-        csharp.instantiateClass({
-            classReference: this.context.getClientOptionsClassReference(),
-            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
-        });
         const arguments_ = [];
         for (const header of this.context.ir.headers) {
             if (
@@ -420,9 +433,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 optionalParameters.push(param);
             } else if (param.typeReference.type === "container" && param.typeReference.container.type === "literal") {
                 literalParameters.push({
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    name: param.header!.name,
-                    value: param.typeReference.container.literal
+                    name: param.name,
+                    value: param.typeReference.container.literal,
+                    header: param.header
                 });
             } else {
                 requiredParameters.push(param);
@@ -535,9 +548,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     }
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
-        const name = header.name.name.camelCase.safeName;
         return {
-            name,
+            name:
+                header.valueType.type === "container" && header.valueType.container.type === "literal"
+                    ? header.name.name.pascalCase.safeName
+                    : header.name.name.camelCase.safeName,
             header: {
                 name: header.name.wireValue
             },
