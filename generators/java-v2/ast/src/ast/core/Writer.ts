@@ -36,7 +36,7 @@ export class Writer extends AbstractWriter {
     /**
      * Adds the given package name to the rolling set.
      */
-    public addImport(packageName: string) {
+    public addImport(packageName: string): void {
         this.imports.add(packageName);
     }
 }

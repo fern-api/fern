@@ -8,7 +8,7 @@ import { Writer } from "./core/Writer";
 
 type InternalTypeLiteral =
     | BigInteger
-    | Boolean
+    | Boolean_
     | Bytes
     | Date
     | DateTime
@@ -30,7 +30,7 @@ interface BigInteger {
     value: string;
 }
 
-interface Boolean {
+interface Boolean_ {
     type: "boolean";
     value: boolean;
 }
@@ -350,7 +350,7 @@ export class TypeLiteral extends AstNode {
     private writeMap({ writer, map }: { writer: Writer; map: Map }): void {
         const entries = filterNopMapEntries({ entries: map.entries });
         if (entries.length === 0) {
-            writer.write(`new HashMap<`);
+            writer.write("new HashMap<");
             writer.writeNode(map.keyType);
             writer.write(", ");
             writer.writeNode(map.valueType);
@@ -358,16 +358,16 @@ export class TypeLiteral extends AstNode {
             return;
         }
 
-        writer.writeLine(`new HashMap<`);
+        writer.writeLine("new HashMap<");
         writer.writeNode(map.keyType);
         writer.write(", ");
         writer.writeNode(map.valueType);
         writer.writeLine(">() {{");
         writer.indent();
         for (const entry of entries) {
-            writer.writeLine(`put("`);
+            writer.writeLine("put(\"");
             writer.writeNode(entry.key);
-            writer.writeLine(`", `);
+            writer.writeLine("\", ");
             writer.writeNode(entry.value);
             writer.writeLine(");");
         }

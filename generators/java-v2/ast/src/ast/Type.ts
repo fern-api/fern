@@ -1,13 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { java } from "..";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 type InternalType =
     | BigInteger
-    | Boolean
+    | Boolean_
     | Bytes
     | Date
     | DateTime
@@ -27,7 +26,7 @@ interface BigInteger {
     type: "bigInteger";
 }
 
-interface Boolean {
+interface Boolean_ {
     type: "boolean";
 }
 
