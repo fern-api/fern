@@ -26,6 +26,8 @@ public partial class ClientOptions
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
 
+    public string? XApiVersion { get; init; } = null;
+
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>

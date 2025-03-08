@@ -26,6 +26,10 @@ public partial class RequestOptions : IRequestOptions
     /// </summary>
     public TimeSpan? Timeout { get; init; }
 
+    public string? Version { get; init; }
+
+    public bool? AuditLogging { get; init; }
+
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
