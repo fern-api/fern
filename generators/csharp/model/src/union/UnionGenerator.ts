@@ -688,7 +688,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     if (baseProperties.length > 0) {
                         writer.write("var baseProperties = json.Deserialize<");
                         writer.writeNode(this.classReference);
-                        writer.write(".BaseProperties>(options) ?? throw new JsonException(\"Failed to deserialize ");
+                        writer.write('.BaseProperties>(options) ?? throw new JsonException("Failed to deserialize ');
                         writer.writeNode(this.classReference);
                         writer.writeLine('.BaseProperties");');
                     }

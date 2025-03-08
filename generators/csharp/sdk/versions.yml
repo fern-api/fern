@@ -39,6 +39,10 @@
             Console.WriteLine($"Radius: {circle.Radius}");
         }
         ```
+
+        This feature is off by default for backward compatibility.
+        To enable it, set `use-discriminated-unions` to `true` in the generator configuration.
+
     - type: feat
       summary: Improved serialization tests for generated classes for normal objects and discriminated unions.
     - type: feat
