@@ -9,9 +9,15 @@ public record CreateResponse
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static CreateResponse FromProto(ProtoUserV1.CreateResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new CreateResponse
+        {
+            User = value.User != null ? UserModel.FromProto(value.User) : null,
+        };
     }
 
     /// <summary>
@@ -27,14 +33,8 @@ public record CreateResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static CreateResponse FromProto(ProtoUserV1.CreateResponse value)
+    public override string ToString()
     {
-        return new CreateResponse
-        {
-            User = value.User != null ? UserModel.FromProto(value.User) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

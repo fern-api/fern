@@ -19,9 +19,32 @@ public record UpdateResponse
     [JsonPropertyName("indexTypes")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new UpdateResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UpdateResponse FromProto(ProtoDataV1Grpc.UpdateResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new UpdateResponse
+        {
+            UpdatedAt = value.UpdatedAt.ToDateTime(),
+            IndexType = value.IndexType switch
+            {
+                ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
+                ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
+                ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
+                _ => throw new ArgumentException($"Unknown enum value: {value.IndexType}"),
+            },
+            Details = value.Details != null ? value.Details : null,
+            IndexTypes = value.IndexTypes.Select(type =>
+                type switch
+                {
+                    ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
+                    ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
+                    ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
+                    _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
+                }
+            ),
+        };
     }
 
     /// <summary>
@@ -67,31 +90,8 @@ public record UpdateResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new UpdateResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static UpdateResponse FromProto(ProtoDataV1Grpc.UpdateResponse value)
+    public override string ToString()
     {
-        return new UpdateResponse
-        {
-            UpdatedAt = value.UpdatedAt.ToDateTime(),
-            IndexType = value.IndexType switch
-            {
-                ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
-                ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
-                ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
-                _ => throw new ArgumentException($"Unknown enum value: {value.IndexType}"),
-            },
-            Details = value.Details != null ? value.Details : null,
-            IndexTypes = value.IndexTypes.Select(type =>
-                type switch
-                {
-                    ProtoDataV1Grpc.IndexType.Invalid => SeedApi.IndexType.IndexTypeInvalid,
-                    ProtoDataV1Grpc.IndexType.Default => SeedApi.IndexType.IndexTypeDefault,
-                    ProtoDataV1Grpc.IndexType.Strict => SeedApi.IndexType.IndexTypeStrict,
-                    _ => throw new ArgumentException($"Unknown enum value: {value.IndexTypes}"),
-                }
-            ),
-        };
+        return JsonUtils.Serialize(this);
     }
 }

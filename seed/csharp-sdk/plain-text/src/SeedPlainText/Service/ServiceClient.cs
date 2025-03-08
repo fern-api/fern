@@ -13,11 +13,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetTextAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetTextAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

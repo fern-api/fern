@@ -9,9 +9,12 @@ public record Pagination
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new Pagination type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value)
     {
-        return JsonUtils.Serialize(this);
+        return new Pagination { Next = value.Next };
     }
 
     /// <summary>
@@ -27,11 +30,8 @@ public record Pagination
         return result;
     }
 
-    /// <summary>
-    /// Returns a new Pagination type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value)
+    public override string ToString()
     {
-        return new Pagination { Next = value.Next };
+        return JsonUtils.Serialize(this);
     }
 }

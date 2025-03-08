@@ -5,9 +5,12 @@ namespace SeedApi;
 
 public record DeleteResponse
 {
-    public override string ToString()
+    /// <summary>
+    /// Returns a new DeleteResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static DeleteResponse FromProto(ProtoDataV1Grpc.DeleteResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new DeleteResponse();
     }
 
     /// <summary>
@@ -18,11 +21,8 @@ public record DeleteResponse
         return new ProtoDataV1Grpc.DeleteResponse();
     }
 
-    /// <summary>
-    /// Returns a new DeleteResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static DeleteResponse FromProto(ProtoDataV1Grpc.DeleteResponse value)
+    public override string ToString()
     {
-        return new DeleteResponse();
+        return JsonUtils.Serialize(this);
     }
 }

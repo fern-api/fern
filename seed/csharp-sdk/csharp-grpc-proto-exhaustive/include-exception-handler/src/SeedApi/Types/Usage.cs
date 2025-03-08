@@ -9,9 +9,12 @@ public record Usage
     [JsonPropertyName("units")]
     public uint? Units { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new Usage type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Usage FromProto(ProtoDataV1Grpc.Usage value)
     {
-        return JsonUtils.Serialize(this);
+        return new Usage { Units = value.Units };
     }
 
     /// <summary>
@@ -27,11 +30,8 @@ public record Usage
         return result;
     }
 
-    /// <summary>
-    /// Returns a new Usage type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static Usage FromProto(ProtoDataV1Grpc.Usage value)
+    public override string ToString()
     {
-        return new Usage { Units = value.Units };
+        return JsonUtils.Serialize(this);
     }
 }

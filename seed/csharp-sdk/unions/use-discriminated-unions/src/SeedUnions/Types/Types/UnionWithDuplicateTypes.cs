@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithDuplicateTypes.JsonConverter))]
 public record UnionWithDuplicateTypes
 {
-    internal UnionWithDuplicateTypes(string type, object value)
+    internal UnionWithDuplicateTypes(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithDuplicateTypes
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo1"
@@ -58,7 +62,7 @@ public record UnionWithDuplicateTypes
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo1'.</exception>
     public SeedUnions.Foo AsFoo1() =>
         IsFoo1
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo1'");
 
     /// <summary>
@@ -67,27 +71,27 @@ public record UnionWithDuplicateTypes
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo2'.</exception>
     public SeedUnions.Foo AsFoo2() =>
         IsFoo2
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo1,
         Func<SeedUnions.Foo, T> onFoo2,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "foo1" => onFoo1(AsFoo1()),
             "foo2" => onFoo2(AsFoo2()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo1,
         Action<SeedUnions.Foo> onFoo2,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -99,7 +103,7 @@ public record UnionWithDuplicateTypes
                 onFoo2(AsFoo2());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -111,7 +115,7 @@ public record UnionWithDuplicateTypes
     {
         if (Type == "foo1")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -125,7 +129,7 @@ public record UnionWithDuplicateTypes
     {
         if (Type == "foo2")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -172,27 +176,15 @@ public record UnionWithDuplicateTypes
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo1":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithDuplicateTypes("foo1", value);
-                }
-                case "foo2":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithDuplicateTypes("foo2", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo1" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                "foo2" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithDuplicateTypes(discriminator, value);
         }
 
         public override void Write(
@@ -201,13 +193,15 @@ public record UnionWithDuplicateTypes
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithDuplicateTypes");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo1" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "foo2" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

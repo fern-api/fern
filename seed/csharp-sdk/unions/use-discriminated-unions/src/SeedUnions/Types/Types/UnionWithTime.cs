@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithTime.JsonConverter))]
 public record UnionWithTime
 {
-    internal UnionWithTime(string type, object value)
+    internal UnionWithTime(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -49,7 +53,7 @@ public record UnionWithTime
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "value"
@@ -71,27 +75,27 @@ public record UnionWithTime
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'value'.</exception>
     public int AsValue() =>
-        IsValue ? (int)Value : throw new Exception("UnionWithTime.Type is not 'value'");
+        IsValue ? (int)Value! : throw new Exception("UnionWithTime.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateOnly"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly AsDate() =>
-        IsDate ? (DateOnly)Value : throw new Exception("UnionWithTime.Type is not 'date'");
+        IsDate ? (DateOnly)Value! : throw new Exception("UnionWithTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
     public DateTime AsDatetime() =>
-        IsDatetime ? (DateTime)Value : throw new Exception("UnionWithTime.Type is not 'datetime'");
+        IsDatetime ? (DateTime)Value! : throw new Exception("UnionWithTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<int, T> onValue,
         Func<DateOnly, T> onDate,
         Func<DateTime, T> onDatetime,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
@@ -99,7 +103,7 @@ public record UnionWithTime
             "value" => onValue(AsValue()),
             "date" => onDate(AsDate()),
             "datetime" => onDatetime(AsDatetime()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
@@ -107,7 +111,7 @@ public record UnionWithTime
         Action<int> onValue,
         Action<DateOnly> onDate,
         Action<DateTime> onDatetime,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -122,7 +126,7 @@ public record UnionWithTime
                 onDatetime(AsDatetime());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -134,7 +138,7 @@ public record UnionWithTime
     {
         if (Type == "value")
         {
-            value = (int)Value;
+            value = (int)Value!;
             return true;
         }
         value = null;
@@ -148,7 +152,7 @@ public record UnionWithTime
     {
         if (Type == "date")
         {
-            value = (DateOnly)Value;
+            value = (DateOnly)Value!;
             return true;
         }
         value = null;
@@ -162,7 +166,7 @@ public record UnionWithTime
     {
         if (Type == "datetime")
         {
-            value = (DateTime)Value;
+            value = (DateTime)Value!;
             return true;
         }
         value = null;
@@ -209,28 +213,14 @@ public record UnionWithTime
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "value":
-                {
-                    var value = json.Deserialize<int>(options);
-                    return new UnionWithTime("value", value);
-                }
-                case "date":
-                {
-                    var value = json.Deserialize<DateOnly>(options);
-                    return new UnionWithTime("date", value);
-                }
-                case "datetime":
-                {
-                    var value = json.Deserialize<DateTime>(options);
-                    return new UnionWithTime("datetime", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "value" => json.GetProperty("value").Deserialize<int>(options),
+                "date" => json.GetProperty("value").Deserialize<DateOnly>(options),
+                "datetime" => json.GetProperty("value").Deserialize<DateTime>(options),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithTime(discriminator, value);
         }
 
         public override void Write(
@@ -239,18 +229,24 @@ public record UnionWithTime
             JsonSerializerOptions options
         )
         {
-            var json = JsonSerializer.SerializeToNode(value.Value, options) 
-                       ?? throw new JsonException("Failed to serialize UnionWithTime");
+            JsonNode json =
+                value.Type switch
+                {
+                    "value" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "date" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "datetime" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
             json["type"] = value.Type;
-            var basePropertiesJson = JsonSerializer.SerializeToNode(new UnionWithTime.BaseProperties
-            {
-                
-            }, options) ?? throw new JsonException("Failed to serialize UnionWithTime.BaseProperties");
-            foreach (var property in basePropertiesJson.AsObject())
-            {
-                json[property.Key] = property.Value;
-            }
-
             json.WriteTo(writer, options);
         }
     }

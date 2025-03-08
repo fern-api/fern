@@ -3,6 +3,9 @@ using SeedAlias.Core;
 
 namespace SeedAlias;
 
+/// <summary>
+/// A simple type with just a name.
+/// </summary>
 public record Type
 {
     [JsonPropertyName("id")]

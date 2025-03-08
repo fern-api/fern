@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples.Core;
 
@@ -7,7 +7,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class FileTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -18,26 +18,25 @@ public class FileTest
             """;
         var expectedObject = new File { Name = "file.txt", Contents = "..." };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "file.txt",
               "contents": "..."
             }
             """;
-        var obj = new File { Name = "file.txt", Contents = "..." };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualObj = new File { Name = "file.txt", Contents = "..." };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -48,22 +47,21 @@ public class FileTest
             """;
         var expectedObject = new File { Name = "another_file.txt", Contents = "..." };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "another_file.txt",
               "contents": "..."
             }
             """;
-        var obj = new File { Name = "another_file.txt", Contents = "..." };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualObj = new File { Name = "another_file.txt", Contents = "..." };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -15,11 +15,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.EndpointAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -3,6 +3,9 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Auth;
 
+/// <summary>
+/// An OAuth token response.
+/// </summary>
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]

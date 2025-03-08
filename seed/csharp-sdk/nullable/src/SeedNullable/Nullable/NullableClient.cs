@@ -14,8 +14,7 @@ public partial class NullableClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Nullable.GetUsersAsync(
     ///     new GetUsersRequest
     ///     {
@@ -26,8 +25,7 @@ public partial class NullableClient
     ///         Extra = true,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<User>> GetUsersAsync(
         GetUsersRequest request,
         RequestOptions? options = null,
@@ -84,8 +82,7 @@ public partial class NullableClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Nullable.CreateUserAsync(
     ///     new CreateUserRequest
     ///     {
@@ -101,8 +98,7 @@ public partial class NullableClient
     ///         Avatar = "avatar",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
@@ -145,11 +141,9 @@ public partial class NullableClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Nullable.DeleteUserAsync(new DeleteUserRequest { Username = "xy" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> DeleteUserAsync(
         DeleteUserRequest request,
         RequestOptions? options = null,

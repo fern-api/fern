@@ -19,11 +19,9 @@ public partial class ServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Health.Service.CheckAsync("id-2sdx82h");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task CheckAsync(
         string id,
         RequestOptions? options = null,
@@ -59,11 +57,9 @@ public partial class ServiceClient
     /// <summary>
     /// This endpoint checks the health of the service.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Health.Service.PingAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> PingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

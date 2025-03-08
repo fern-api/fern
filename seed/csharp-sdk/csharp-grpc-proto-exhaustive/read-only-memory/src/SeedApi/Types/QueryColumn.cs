@@ -21,9 +21,20 @@ public record QueryColumn
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryColumn FromProto(ProtoDataV1Grpc.QueryColumn value)
     {
-        return JsonUtils.Serialize(this);
+        return new QueryColumn
+        {
+            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
+            TopK = value.TopK,
+            Namespace = value.Namespace,
+            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+        };
     }
 
     /// <summary>
@@ -55,19 +66,8 @@ public record QueryColumn
         return result;
     }
 
-    /// <summary>
-    /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static QueryColumn FromProto(ProtoDataV1Grpc.QueryColumn value)
+    public override string ToString()
     {
-        return new QueryColumn
-        {
-            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
-            TopK = value.TopK,
-            Namespace = value.Namespace,
-            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
-            IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

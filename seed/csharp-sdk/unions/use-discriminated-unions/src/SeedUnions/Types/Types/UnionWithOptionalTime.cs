@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithOptionalTime.JsonConverter))]
 public record UnionWithOptionalTime
 {
-    internal UnionWithOptionalTime(string type, object value)
+    internal UnionWithOptionalTime(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithOptionalTime
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "date"
@@ -57,7 +61,9 @@ public record UnionWithOptionalTime
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly? AsDate() =>
-        IsDate ? (DateOnly?)Value : throw new Exception("UnionWithOptionalTime.Type is not 'date'");
+        IsDate
+            ? (DateOnly?)Value!
+            : throw new Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
@@ -65,27 +71,27 @@ public record UnionWithOptionalTime
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
     public DateTime? AsDatetime() =>
         IsDatetime
-            ? (DateTime?)Value
+            ? (DateTime?)Value!
             : throw new Exception("UnionWithOptionalTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<DateOnly?, T> onDate,
         Func<DateTime?, T> onDatetime,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "date" => onDate(AsDate()),
             "datetime" => onDatetime(AsDatetime()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<DateOnly?> onDate,
         Action<DateTime?> onDatetime,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -97,7 +103,7 @@ public record UnionWithOptionalTime
                 onDatetime(AsDatetime());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -109,7 +115,7 @@ public record UnionWithOptionalTime
     {
         if (Type == "date")
         {
-            value = (DateOnly?)Value;
+            value = (DateOnly?)Value!;
             return true;
         }
         value = null;
@@ -123,7 +129,7 @@ public record UnionWithOptionalTime
     {
         if (Type == "datetime")
         {
-            value = (DateTime?)Value;
+            value = (DateTime?)Value!;
             return true;
         }
         value = null;
@@ -170,27 +176,13 @@ public record UnionWithOptionalTime
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "date":
-                {
-                    var value =
-                        json.Deserialize<DateOnly?>(options)
-                        ?? throw new JsonException("Failed to deserialize DateOnly?");
-                    return new UnionWithOptionalTime("date", value);
-                }
-                case "datetime":
-                {
-                    var value =
-                        json.Deserialize<DateTime?>(options)
-                        ?? throw new JsonException("Failed to deserialize DateTime?");
-                    return new UnionWithOptionalTime("datetime", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "date" => json.GetProperty("value").Deserialize<DateOnly?>(options),
+                "datetime" => json.GetProperty("value").Deserialize<DateTime?>(options),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithOptionalTime(discriminator, value);
         }
 
         public override void Write(
@@ -199,13 +191,21 @@ public record UnionWithOptionalTime
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithOptionalTime");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "date" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "datetime" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

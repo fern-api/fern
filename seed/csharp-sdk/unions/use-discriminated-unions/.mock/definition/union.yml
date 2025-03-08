@@ -2,6 +2,10 @@ types:
   GetShapeRequest:
     properties:
       id: string
+    examples:
+    - name: example
+      value:
+        id: example
 
   Shape:
     base-properties:
@@ -9,6 +13,17 @@ types:
     union:
       circle: Circle
       square: Square
+    examples:
+    - name: circle
+      value:
+        type: circle
+        id: example
+        radius: 5.0
+    - name: square
+      value:
+        type: square
+        id: example
+        length: 5.0
 
   Circle:
     properties:

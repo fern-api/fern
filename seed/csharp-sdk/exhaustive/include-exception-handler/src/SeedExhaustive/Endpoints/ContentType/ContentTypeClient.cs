@@ -16,8 +16,7 @@ public partial class ContentTypeClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -36,8 +35,7 @@ public partial class ContentTypeClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task PostJsonPatchContentTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
@@ -77,8 +75,7 @@ public partial class ContentTypeClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -97,8 +94,7 @@ public partial class ContentTypeClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task PostJsonPatchContentWithCharsetTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,

@@ -14,8 +14,7 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(
     ///     new CreateUserRequest
     ///     {
@@ -24,8 +23,7 @@ public partial class UserClient
     ///         Name = "name",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,

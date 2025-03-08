@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithBaseProperties.JsonConverter))]
 public record UnionWithBaseProperties
 {
-    internal UnionWithBaseProperties(string type, object value)
+    internal UnionWithBaseProperties(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -49,7 +53,7 @@ public record UnionWithBaseProperties
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     [JsonPropertyName("id")]
     public required string Id { get; set; }
@@ -75,7 +79,7 @@ public record UnionWithBaseProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
     public int AsInteger() =>
         IsInteger
-            ? (int)Value
+            ? (int)Value!
             : throw new Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
@@ -84,7 +88,7 @@ public record UnionWithBaseProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
         IsString
-            ? (string)Value
+            ? (string)Value!
             : throw new Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
@@ -93,14 +97,14 @@ public record UnionWithBaseProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
         IsFoo
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithBaseProperties.Type is not 'foo'");
 
     public T Match<T>(
         Func<int, T> onInteger,
         Func<string, T> onString,
         Func<SeedUnions.Foo, T> onFoo,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
@@ -108,7 +112,7 @@ public record UnionWithBaseProperties
             "integer" => onInteger(AsInteger()),
             "string" => onString(AsString()),
             "foo" => onFoo(AsFoo()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
@@ -116,7 +120,7 @@ public record UnionWithBaseProperties
         Action<int> onInteger,
         Action<string> onString,
         Action<SeedUnions.Foo> onFoo,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -131,7 +135,7 @@ public record UnionWithBaseProperties
                 onFoo(AsFoo());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -143,7 +147,7 @@ public record UnionWithBaseProperties
     {
         if (Type == "integer")
         {
-            value = (int)Value;
+            value = (int)Value!;
             return true;
         }
         value = null;
@@ -157,7 +161,7 @@ public record UnionWithBaseProperties
     {
         if (Type == "string")
         {
-            value = (string)Value;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -171,7 +175,7 @@ public record UnionWithBaseProperties
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -221,47 +225,21 @@ public record UnionWithBaseProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "integer":
-                {
-                    var value = json.Deserialize<int>(options);
-                    var baseProperties =
-                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
-                        );
-                    return new UnionWithBaseProperties("integer", value) { Id = baseProperties.Id };
-                }
-                case "string":
-                {
-                    var value =
-                        json.Deserialize<string>(options)
-                        ?? throw new JsonException("Failed to deserialize string");
-                    var baseProperties =
-                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
-                        );
-                    return new UnionWithBaseProperties("string", value) { Id = baseProperties.Id };
-                }
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    var baseProperties =
-                        json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize UnionWithBaseProperties.BaseProperties"
-                        );
-                    return new UnionWithBaseProperties("foo", value) { Id = baseProperties.Id };
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "integer" => json.GetProperty("value").Deserialize<int>(options),
+                "string" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                _ => json.Deserialize<object?>(options),
+            };
+            var baseProperties =
+                json.Deserialize<UnionWithBaseProperties.BaseProperties>(options)
+                ?? throw new JsonException(
+                    "Failed to deserialize UnionWithBaseProperties.BaseProperties"
+                );
+            return new UnionWithBaseProperties(discriminator, value) { Id = baseProperties.Id };
         }
 
         public override void Write(
@@ -270,13 +248,34 @@ public record UnionWithBaseProperties
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
+            JsonNode json =
+                value.Type switch
+                {
+                    "integer" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "string" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            var basePropertiesJson =
+                JsonSerializer.SerializeToNode(
+                    new UnionWithBaseProperties.BaseProperties { Id = value.Id },
+                    options
+                )
+                ?? throw new JsonException(
+                    "Failed to serialize UnionWithBaseProperties.BaseProperties"
+                );
+            foreach (var property in basePropertiesJson.AsObject())
             {
-                throw new JsonException("Failed to serialize UnionWithBaseProperties");
+                json[property.Key] = property.Value;
             }
-
-            jsonNode.WriteTo(writer, options);
+            json.WriteTo(writer, options);
         }
     }
 

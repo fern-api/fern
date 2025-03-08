@@ -9,9 +9,12 @@ public record NamespaceSummary
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new NamespaceSummary type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static NamespaceSummary FromProto(ProtoDataV1Grpc.NamespaceSummary value)
     {
-        return JsonUtils.Serialize(this);
+        return new NamespaceSummary { Count = value.Count };
     }
 
     /// <summary>
@@ -27,11 +30,8 @@ public record NamespaceSummary
         return result;
     }
 
-    /// <summary>
-    /// Returns a new NamespaceSummary type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static NamespaceSummary FromProto(ProtoDataV1Grpc.NamespaceSummary value)
+    public override string ToString()
     {
-        return new NamespaceSummary { Count = value.Count };
+        return JsonUtils.Serialize(this);
     }
 }

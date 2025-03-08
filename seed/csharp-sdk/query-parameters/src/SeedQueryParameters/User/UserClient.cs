@@ -14,8 +14,7 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUsernameAsync(
     ///     new GetUsersRequest
     ///     {
@@ -70,8 +69,7 @@ public partial class UserClient
     ///         Filter = ["filter"],
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,

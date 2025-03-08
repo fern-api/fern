@@ -3,6 +3,9 @@ using SeedObject.Core;
 
 namespace SeedObject;
 
+/// <summary>
+/// Exercises all of the built-in types.
+/// </summary>
 public record Type
 {
     [JsonPropertyName("one")]

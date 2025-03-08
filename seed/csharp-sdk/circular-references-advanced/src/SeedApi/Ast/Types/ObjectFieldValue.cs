@@ -3,6 +3,9 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+/// <summary>
+/// This type allows us to test a circular reference with a union type (see FieldValue).
+/// </summary>
 public record ObjectFieldValue
 {
     [JsonPropertyName("name")]

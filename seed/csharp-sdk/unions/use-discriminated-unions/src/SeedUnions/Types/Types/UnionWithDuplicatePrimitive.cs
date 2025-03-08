@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithDuplicatePrimitive.JsonConverter))]
 public record UnionWithDuplicatePrimitive
 {
-    internal UnionWithDuplicatePrimitive(string type, object value)
+    internal UnionWithDuplicatePrimitive(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -58,7 +62,7 @@ public record UnionWithDuplicatePrimitive
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "integer1"
@@ -86,7 +90,7 @@ public record UnionWithDuplicatePrimitive
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer1'.</exception>
     public int AsInteger1() =>
         IsInteger1
-            ? (int)Value
+            ? (int)Value!
             : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer1'");
 
     /// <summary>
@@ -95,7 +99,7 @@ public record UnionWithDuplicatePrimitive
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer2'.</exception>
     public int AsInteger2() =>
         IsInteger2
-            ? (int)Value
+            ? (int)Value!
             : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer2'");
 
     /// <summary>
@@ -104,7 +108,7 @@ public record UnionWithDuplicatePrimitive
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string1'.</exception>
     public string AsString1() =>
         IsString1
-            ? (string)Value
+            ? (string)Value!
             : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string1'");
 
     /// <summary>
@@ -113,7 +117,7 @@ public record UnionWithDuplicatePrimitive
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string2'.</exception>
     public string AsString2() =>
         IsString2
-            ? (string)Value
+            ? (string)Value!
             : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string2'");
 
     public T Match<T>(
@@ -121,7 +125,7 @@ public record UnionWithDuplicatePrimitive
         Func<int, T> onInteger2,
         Func<string, T> onString1,
         Func<string, T> onString2,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
@@ -130,7 +134,7 @@ public record UnionWithDuplicatePrimitive
             "integer2" => onInteger2(AsInteger2()),
             "string1" => onString1(AsString1()),
             "string2" => onString2(AsString2()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
@@ -139,7 +143,7 @@ public record UnionWithDuplicatePrimitive
         Action<int> onInteger2,
         Action<string> onString1,
         Action<string> onString2,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -157,7 +161,7 @@ public record UnionWithDuplicatePrimitive
                 onString2(AsString2());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -169,7 +173,7 @@ public record UnionWithDuplicatePrimitive
     {
         if (Type == "integer1")
         {
-            value = (int)Value;
+            value = (int)Value!;
             return true;
         }
         value = null;
@@ -183,7 +187,7 @@ public record UnionWithDuplicatePrimitive
     {
         if (Type == "integer2")
         {
-            value = (int)Value;
+            value = (int)Value!;
             return true;
         }
         value = null;
@@ -197,7 +201,7 @@ public record UnionWithDuplicatePrimitive
     {
         if (Type == "string1")
         {
-            value = (string)Value;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -211,7 +215,7 @@ public record UnionWithDuplicatePrimitive
     {
         if (Type == "string2")
         {
-            value = (string)Value;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -268,37 +272,17 @@ public record UnionWithDuplicatePrimitive
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "integer1":
-                {
-                    var value = json.Deserialize<int>(options);
-                    return new UnionWithDuplicatePrimitive("integer1", value);
-                }
-                case "integer2":
-                {
-                    var value = json.Deserialize<int>(options);
-                    return new UnionWithDuplicatePrimitive("integer2", value);
-                }
-                case "string1":
-                {
-                    var value =
-                        json.Deserialize<string>(options)
-                        ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithDuplicatePrimitive("string1", value);
-                }
-                case "string2":
-                {
-                    var value =
-                        json.Deserialize<string>(options)
-                        ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithDuplicatePrimitive("string2", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "integer1" => json.GetProperty("value").Deserialize<int>(options),
+                "integer2" => json.GetProperty("value").Deserialize<int>(options),
+                "string1" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "string2" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithDuplicatePrimitive(discriminator, value);
         }
 
         public override void Write(
@@ -307,13 +291,29 @@ public record UnionWithDuplicatePrimitive
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithDuplicatePrimitive");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "integer1" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "integer2" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "string1" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "string2" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

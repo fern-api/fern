@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithoutKey.JsonConverter))]
 public record UnionWithoutKey
 {
-    internal UnionWithoutKey(string type, object value)
+    internal UnionWithoutKey(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithoutKey
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo"
@@ -57,33 +61,33 @@ public record UnionWithoutKey
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value : throw new Exception("UnionWithoutKey.Type is not 'foo'");
+        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithoutKey.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value : throw new Exception("UnionWithoutKey.Type is not 'bar'");
+        IsBar ? (SeedUnions.Bar)Value! : throw new Exception("UnionWithoutKey.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
         Func<SeedUnions.Bar, T> onBar,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
             "bar" => onBar(AsBar()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
         Action<SeedUnions.Bar> onBar,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -95,7 +99,7 @@ public record UnionWithoutKey
                 onBar(AsBar());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -107,7 +111,7 @@ public record UnionWithoutKey
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -121,7 +125,7 @@ public record UnionWithoutKey
     {
         if (Type == "bar")
         {
-            value = (SeedUnions.Bar)Value;
+            value = (SeedUnions.Bar)Value!;
             return true;
         }
         value = null;
@@ -166,27 +170,15 @@ public record UnionWithoutKey
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithoutKey("foo", value);
-                }
-                case "bar":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Bar>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Bar");
-                    return new UnionWithoutKey("bar", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                "bar" => json.Deserialize<SeedUnions.Bar>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithoutKey(discriminator, value);
         }
 
         public override void Write(
@@ -195,13 +187,15 @@ public record UnionWithoutKey
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithoutKey");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "bar" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

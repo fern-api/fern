@@ -16,11 +16,9 @@ public partial class HttpMethodsClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestGetAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> TestGetAsync(
         string id,
         RequestOptions? options = null,
@@ -67,11 +65,9 @@ public partial class HttpMethodsClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -119,14 +115,12 @@ public partial class HttpMethodsClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "id",
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -175,8 +169,7 @@ public partial class HttpMethodsClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
     ///     new ObjectWithOptionalField
@@ -196,8 +189,7 @@ public partial class HttpMethodsClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
@@ -246,11 +238,9 @@ public partial class HttpMethodsClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestDeleteAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,

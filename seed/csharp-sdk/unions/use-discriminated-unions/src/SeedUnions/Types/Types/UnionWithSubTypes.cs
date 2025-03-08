@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithSubTypes.JsonConverter))]
 public record UnionWithSubTypes
 {
-    internal UnionWithSubTypes(string type, object value)
+    internal UnionWithSubTypes(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithSubTypes
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo"
@@ -57,7 +61,7 @@ public record UnionWithSubTypes
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value : throw new Exception("UnionWithSubTypes.Type is not 'foo'");
+        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithSubTypes.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FooExtended"/> if <see cref="Type"/> is 'fooExtended', otherwise throws an exception.
@@ -65,27 +69,27 @@ public record UnionWithSubTypes
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fooExtended'.</exception>
     public SeedUnions.FooExtended AsFooExtended() =>
         IsFooExtended
-            ? (SeedUnions.FooExtended)Value
+            ? (SeedUnions.FooExtended)Value!
             : throw new Exception("UnionWithSubTypes.Type is not 'fooExtended'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
         Func<SeedUnions.FooExtended, T> onFooExtended,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
             "fooExtended" => onFooExtended(AsFooExtended()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
         Action<SeedUnions.FooExtended> onFooExtended,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -97,7 +101,7 @@ public record UnionWithSubTypes
                 onFooExtended(AsFooExtended());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -109,7 +113,7 @@ public record UnionWithSubTypes
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -123,7 +127,7 @@ public record UnionWithSubTypes
     {
         if (Type == "fooExtended")
         {
-            value = (SeedUnions.FooExtended)Value;
+            value = (SeedUnions.FooExtended)Value!;
             return true;
         }
         value = null;
@@ -169,27 +173,15 @@ public record UnionWithSubTypes
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithSubTypes("foo", value);
-                }
-                case "fooExtended":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.FooExtended>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended");
-                    return new UnionWithSubTypes("fooExtended", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                "fooExtended" => json.Deserialize<SeedUnions.FooExtended>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithSubTypes(discriminator, value);
         }
 
         public override void Write(
@@ -198,13 +190,15 @@ public record UnionWithSubTypes
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithSubTypes");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "fooExtended" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

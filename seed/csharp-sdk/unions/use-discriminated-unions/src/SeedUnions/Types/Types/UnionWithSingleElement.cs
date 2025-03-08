@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithSingleElement.JsonConverter))]
 public record UnionWithSingleElement
 {
-    internal UnionWithSingleElement(string type, object value)
+    internal UnionWithSingleElement(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -31,7 +35,7 @@ public record UnionWithSingleElement
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo"
@@ -44,19 +48,19 @@ public record UnionWithSingleElement
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
         IsFoo
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithSingleElement.Type is not 'foo'");
 
-    public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object, T> _onUnknown)
+    public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object?, T> onUnknown_)
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
-    public void Visit(Action<SeedUnions.Foo> onFoo, Action<string, object> _onUnknown)
+    public void Visit(Action<SeedUnions.Foo> onFoo, Action<string, object?> onUnknown_)
     {
         switch (Type)
         {
@@ -64,7 +68,7 @@ public record UnionWithSingleElement
                 onFoo(AsFoo());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -76,7 +80,7 @@ public record UnionWithSingleElement
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -120,20 +124,13 @@ public record UnionWithSingleElement
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithSingleElement("foo", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithSingleElement(discriminator, value);
         }
 
         public override void Write(
@@ -142,13 +139,14 @@ public record UnionWithSingleElement
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithSingleElement");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

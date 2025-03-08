@@ -15,11 +15,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.FolderD.Service.GetDirectThreadAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Response> GetDirectThreadAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

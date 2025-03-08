@@ -14,11 +14,9 @@ public partial class UnionClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Union.GetAndReturnUnionAsync(new Dog { Name = "name", LikesToWoof = true });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> GetAndReturnUnionAsync(
         object request,
         RequestOptions? options = null,

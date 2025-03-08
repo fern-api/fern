@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithPrimitive.JsonConverter))]
 public record UnionWithPrimitive
 {
-    internal UnionWithPrimitive(string type, object value)
+    internal UnionWithPrimitive(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithPrimitive
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "integer"
@@ -57,33 +61,33 @@ public record UnionWithPrimitive
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
     public int AsInteger() =>
-        IsInteger ? (int)Value : throw new Exception("UnionWithPrimitive.Type is not 'integer'");
+        IsInteger ? (int)Value! : throw new Exception("UnionWithPrimitive.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value : throw new Exception("UnionWithPrimitive.Type is not 'string'");
+        IsString ? (string)Value! : throw new Exception("UnionWithPrimitive.Type is not 'string'");
 
     public T Match<T>(
         Func<int, T> onInteger,
         Func<string, T> onString,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "integer" => onInteger(AsInteger()),
             "string" => onString(AsString()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<int> onInteger,
         Action<string> onString,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -95,7 +99,7 @@ public record UnionWithPrimitive
                 onString(AsString());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -107,7 +111,7 @@ public record UnionWithPrimitive
     {
         if (Type == "integer")
         {
-            value = (int)Value;
+            value = (int)Value!;
             return true;
         }
         value = null;
@@ -121,7 +125,7 @@ public record UnionWithPrimitive
     {
         if (Type == "string")
         {
-            value = (string)Value;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -168,25 +172,14 @@ public record UnionWithPrimitive
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "integer":
-                {
-                    var value = json.Deserialize<int>(options);
-                    return new UnionWithPrimitive("integer", value);
-                }
-                case "string":
-                {
-                    var value =
-                        json.Deserialize<string>(options)
-                        ?? throw new JsonException("Failed to deserialize string");
-                    return new UnionWithPrimitive("string", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "integer" => json.GetProperty("value").Deserialize<int>(options),
+                "string" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithPrimitive(discriminator, value);
         }
 
         public override void Write(
@@ -195,13 +188,21 @@ public record UnionWithPrimitive
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithPrimitive");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "integer" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    "string" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

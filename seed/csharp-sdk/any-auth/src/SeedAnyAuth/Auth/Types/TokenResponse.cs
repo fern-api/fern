@@ -3,6 +3,9 @@ using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
+/// <summary>
+/// An OAuth token response.
+/// </summary>
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]

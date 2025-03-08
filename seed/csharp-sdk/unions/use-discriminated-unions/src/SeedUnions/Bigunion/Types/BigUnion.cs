@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(BigUnion.JsonConverter))]
 public record BigUnion
 {
-    internal BigUnion(string type, object value)
+    internal BigUnion(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -283,7 +287,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     [JsonPropertyName("id")]
     public required string Id { get; set; }
@@ -445,7 +449,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'normalSweet'.</exception>
     public SeedUnions.NormalSweet AsNormalSweet() =>
         IsNormalSweet
-            ? (SeedUnions.NormalSweet)Value
+            ? (SeedUnions.NormalSweet)Value!
             : throw new Exception("BigUnion.Type is not 'normalSweet'");
 
     /// <summary>
@@ -454,7 +458,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'thankfulFactor'.</exception>
     public SeedUnions.ThankfulFactor AsThankfulFactor() =>
         IsThankfulFactor
-            ? (SeedUnions.ThankfulFactor)Value
+            ? (SeedUnions.ThankfulFactor)Value!
             : throw new Exception("BigUnion.Type is not 'thankfulFactor'");
 
     /// <summary>
@@ -463,7 +467,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'jumboEnd'.</exception>
     public SeedUnions.JumboEnd AsJumboEnd() =>
         IsJumboEnd
-            ? (SeedUnions.JumboEnd)Value
+            ? (SeedUnions.JumboEnd)Value!
             : throw new Exception("BigUnion.Type is not 'jumboEnd'");
 
     /// <summary>
@@ -472,7 +476,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'hastyPain'.</exception>
     public SeedUnions.HastyPain AsHastyPain() =>
         IsHastyPain
-            ? (SeedUnions.HastyPain)Value
+            ? (SeedUnions.HastyPain)Value!
             : throw new Exception("BigUnion.Type is not 'hastyPain'");
 
     /// <summary>
@@ -481,7 +485,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'mistySnow'.</exception>
     public SeedUnions.MistySnow AsMistySnow() =>
         IsMistySnow
-            ? (SeedUnions.MistySnow)Value
+            ? (SeedUnions.MistySnow)Value!
             : throw new Exception("BigUnion.Type is not 'mistySnow'");
 
     /// <summary>
@@ -490,7 +494,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'distinctFailure'.</exception>
     public SeedUnions.DistinctFailure AsDistinctFailure() =>
         IsDistinctFailure
-            ? (SeedUnions.DistinctFailure)Value
+            ? (SeedUnions.DistinctFailure)Value!
             : throw new Exception("BigUnion.Type is not 'distinctFailure'");
 
     /// <summary>
@@ -499,7 +503,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'practicalPrinciple'.</exception>
     public SeedUnions.PracticalPrinciple AsPracticalPrinciple() =>
         IsPracticalPrinciple
-            ? (SeedUnions.PracticalPrinciple)Value
+            ? (SeedUnions.PracticalPrinciple)Value!
             : throw new Exception("BigUnion.Type is not 'practicalPrinciple'");
 
     /// <summary>
@@ -508,7 +512,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'limpingStep'.</exception>
     public SeedUnions.LimpingStep AsLimpingStep() =>
         IsLimpingStep
-            ? (SeedUnions.LimpingStep)Value
+            ? (SeedUnions.LimpingStep)Value!
             : throw new Exception("BigUnion.Type is not 'limpingStep'");
 
     /// <summary>
@@ -517,7 +521,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'vibrantExcitement'.</exception>
     public SeedUnions.VibrantExcitement AsVibrantExcitement() =>
         IsVibrantExcitement
-            ? (SeedUnions.VibrantExcitement)Value
+            ? (SeedUnions.VibrantExcitement)Value!
             : throw new Exception("BigUnion.Type is not 'vibrantExcitement'");
 
     /// <summary>
@@ -526,7 +530,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'activeDiamond'.</exception>
     public SeedUnions.ActiveDiamond AsActiveDiamond() =>
         IsActiveDiamond
-            ? (SeedUnions.ActiveDiamond)Value
+            ? (SeedUnions.ActiveDiamond)Value!
             : throw new Exception("BigUnion.Type is not 'activeDiamond'");
 
     /// <summary>
@@ -535,7 +539,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'popularLimit'.</exception>
     public SeedUnions.PopularLimit AsPopularLimit() =>
         IsPopularLimit
-            ? (SeedUnions.PopularLimit)Value
+            ? (SeedUnions.PopularLimit)Value!
             : throw new Exception("BigUnion.Type is not 'popularLimit'");
 
     /// <summary>
@@ -544,7 +548,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'falseMirror'.</exception>
     public SeedUnions.FalseMirror AsFalseMirror() =>
         IsFalseMirror
-            ? (SeedUnions.FalseMirror)Value
+            ? (SeedUnions.FalseMirror)Value!
             : throw new Exception("BigUnion.Type is not 'falseMirror'");
 
     /// <summary>
@@ -553,7 +557,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'primaryBlock'.</exception>
     public SeedUnions.PrimaryBlock AsPrimaryBlock() =>
         IsPrimaryBlock
-            ? (SeedUnions.PrimaryBlock)Value
+            ? (SeedUnions.PrimaryBlock)Value!
             : throw new Exception("BigUnion.Type is not 'primaryBlock'");
 
     /// <summary>
@@ -562,7 +566,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'rotatingRatio'.</exception>
     public SeedUnions.RotatingRatio AsRotatingRatio() =>
         IsRotatingRatio
-            ? (SeedUnions.RotatingRatio)Value
+            ? (SeedUnions.RotatingRatio)Value!
             : throw new Exception("BigUnion.Type is not 'rotatingRatio'");
 
     /// <summary>
@@ -571,7 +575,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'colorfulCover'.</exception>
     public SeedUnions.ColorfulCover AsColorfulCover() =>
         IsColorfulCover
-            ? (SeedUnions.ColorfulCover)Value
+            ? (SeedUnions.ColorfulCover)Value!
             : throw new Exception("BigUnion.Type is not 'colorfulCover'");
 
     /// <summary>
@@ -580,7 +584,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'disloyalValue'.</exception>
     public SeedUnions.DisloyalValue AsDisloyalValue() =>
         IsDisloyalValue
-            ? (SeedUnions.DisloyalValue)Value
+            ? (SeedUnions.DisloyalValue)Value!
             : throw new Exception("BigUnion.Type is not 'disloyalValue'");
 
     /// <summary>
@@ -589,7 +593,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'gruesomeCoach'.</exception>
     public SeedUnions.GruesomeCoach AsGruesomeCoach() =>
         IsGruesomeCoach
-            ? (SeedUnions.GruesomeCoach)Value
+            ? (SeedUnions.GruesomeCoach)Value!
             : throw new Exception("BigUnion.Type is not 'gruesomeCoach'");
 
     /// <summary>
@@ -598,7 +602,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'totalWork'.</exception>
     public SeedUnions.TotalWork AsTotalWork() =>
         IsTotalWork
-            ? (SeedUnions.TotalWork)Value
+            ? (SeedUnions.TotalWork)Value!
             : throw new Exception("BigUnion.Type is not 'totalWork'");
 
     /// <summary>
@@ -607,7 +611,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'harmoniousPlay'.</exception>
     public SeedUnions.HarmoniousPlay AsHarmoniousPlay() =>
         IsHarmoniousPlay
-            ? (SeedUnions.HarmoniousPlay)Value
+            ? (SeedUnions.HarmoniousPlay)Value!
             : throw new Exception("BigUnion.Type is not 'harmoniousPlay'");
 
     /// <summary>
@@ -616,7 +620,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'uniqueStress'.</exception>
     public SeedUnions.UniqueStress AsUniqueStress() =>
         IsUniqueStress
-            ? (SeedUnions.UniqueStress)Value
+            ? (SeedUnions.UniqueStress)Value!
             : throw new Exception("BigUnion.Type is not 'uniqueStress'");
 
     /// <summary>
@@ -625,7 +629,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'unwillingSmoke'.</exception>
     public SeedUnions.UnwillingSmoke AsUnwillingSmoke() =>
         IsUnwillingSmoke
-            ? (SeedUnions.UnwillingSmoke)Value
+            ? (SeedUnions.UnwillingSmoke)Value!
             : throw new Exception("BigUnion.Type is not 'unwillingSmoke'");
 
     /// <summary>
@@ -634,7 +638,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'frozenSleep'.</exception>
     public SeedUnions.FrozenSleep AsFrozenSleep() =>
         IsFrozenSleep
-            ? (SeedUnions.FrozenSleep)Value
+            ? (SeedUnions.FrozenSleep)Value!
             : throw new Exception("BigUnion.Type is not 'frozenSleep'");
 
     /// <summary>
@@ -643,7 +647,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'diligentDeal'.</exception>
     public SeedUnions.DiligentDeal AsDiligentDeal() =>
         IsDiligentDeal
-            ? (SeedUnions.DiligentDeal)Value
+            ? (SeedUnions.DiligentDeal)Value!
             : throw new Exception("BigUnion.Type is not 'diligentDeal'");
 
     /// <summary>
@@ -652,7 +656,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'attractiveScript'.</exception>
     public SeedUnions.AttractiveScript AsAttractiveScript() =>
         IsAttractiveScript
-            ? (SeedUnions.AttractiveScript)Value
+            ? (SeedUnions.AttractiveScript)Value!
             : throw new Exception("BigUnion.Type is not 'attractiveScript'");
 
     /// <summary>
@@ -661,7 +665,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'hoarseMouse'.</exception>
     public SeedUnions.HoarseMouse AsHoarseMouse() =>
         IsHoarseMouse
-            ? (SeedUnions.HoarseMouse)Value
+            ? (SeedUnions.HoarseMouse)Value!
             : throw new Exception("BigUnion.Type is not 'hoarseMouse'");
 
     /// <summary>
@@ -670,7 +674,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'circularCard'.</exception>
     public SeedUnions.CircularCard AsCircularCard() =>
         IsCircularCard
-            ? (SeedUnions.CircularCard)Value
+            ? (SeedUnions.CircularCard)Value!
             : throw new Exception("BigUnion.Type is not 'circularCard'");
 
     /// <summary>
@@ -679,7 +683,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'potableBad'.</exception>
     public SeedUnions.PotableBad AsPotableBad() =>
         IsPotableBad
-            ? (SeedUnions.PotableBad)Value
+            ? (SeedUnions.PotableBad)Value!
             : throw new Exception("BigUnion.Type is not 'potableBad'");
 
     /// <summary>
@@ -688,7 +692,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'triangularRepair'.</exception>
     public SeedUnions.TriangularRepair AsTriangularRepair() =>
         IsTriangularRepair
-            ? (SeedUnions.TriangularRepair)Value
+            ? (SeedUnions.TriangularRepair)Value!
             : throw new Exception("BigUnion.Type is not 'triangularRepair'");
 
     /// <summary>
@@ -697,7 +701,7 @@ public record BigUnion
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'gaseousRoad'.</exception>
     public SeedUnions.GaseousRoad AsGaseousRoad() =>
         IsGaseousRoad
-            ? (SeedUnions.GaseousRoad)Value
+            ? (SeedUnions.GaseousRoad)Value!
             : throw new Exception("BigUnion.Type is not 'gaseousRoad'");
 
     public T Match<T>(
@@ -730,7 +734,7 @@ public record BigUnion
         Func<SeedUnions.PotableBad, T> onPotableBad,
         Func<SeedUnions.TriangularRepair, T> onTriangularRepair,
         Func<SeedUnions.GaseousRoad, T> onGaseousRoad,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
@@ -764,7 +768,7 @@ public record BigUnion
             "potableBad" => onPotableBad(AsPotableBad()),
             "triangularRepair" => onTriangularRepair(AsTriangularRepair()),
             "gaseousRoad" => onGaseousRoad(AsGaseousRoad()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
@@ -798,7 +802,7 @@ public record BigUnion
         Action<SeedUnions.PotableBad> onPotableBad,
         Action<SeedUnions.TriangularRepair> onTriangularRepair,
         Action<SeedUnions.GaseousRoad> onGaseousRoad,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -891,7 +895,7 @@ public record BigUnion
                 onGaseousRoad(AsGaseousRoad());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -903,7 +907,7 @@ public record BigUnion
     {
         if (Type == "normalSweet")
         {
-            value = (SeedUnions.NormalSweet)Value;
+            value = (SeedUnions.NormalSweet)Value!;
             return true;
         }
         value = null;
@@ -917,7 +921,7 @@ public record BigUnion
     {
         if (Type == "thankfulFactor")
         {
-            value = (SeedUnions.ThankfulFactor)Value;
+            value = (SeedUnions.ThankfulFactor)Value!;
             return true;
         }
         value = null;
@@ -931,7 +935,7 @@ public record BigUnion
     {
         if (Type == "jumboEnd")
         {
-            value = (SeedUnions.JumboEnd)Value;
+            value = (SeedUnions.JumboEnd)Value!;
             return true;
         }
         value = null;
@@ -945,7 +949,7 @@ public record BigUnion
     {
         if (Type == "hastyPain")
         {
-            value = (SeedUnions.HastyPain)Value;
+            value = (SeedUnions.HastyPain)Value!;
             return true;
         }
         value = null;
@@ -959,7 +963,7 @@ public record BigUnion
     {
         if (Type == "mistySnow")
         {
-            value = (SeedUnions.MistySnow)Value;
+            value = (SeedUnions.MistySnow)Value!;
             return true;
         }
         value = null;
@@ -973,7 +977,7 @@ public record BigUnion
     {
         if (Type == "distinctFailure")
         {
-            value = (SeedUnions.DistinctFailure)Value;
+            value = (SeedUnions.DistinctFailure)Value!;
             return true;
         }
         value = null;
@@ -987,7 +991,7 @@ public record BigUnion
     {
         if (Type == "practicalPrinciple")
         {
-            value = (SeedUnions.PracticalPrinciple)Value;
+            value = (SeedUnions.PracticalPrinciple)Value!;
             return true;
         }
         value = null;
@@ -1001,7 +1005,7 @@ public record BigUnion
     {
         if (Type == "limpingStep")
         {
-            value = (SeedUnions.LimpingStep)Value;
+            value = (SeedUnions.LimpingStep)Value!;
             return true;
         }
         value = null;
@@ -1015,7 +1019,7 @@ public record BigUnion
     {
         if (Type == "vibrantExcitement")
         {
-            value = (SeedUnions.VibrantExcitement)Value;
+            value = (SeedUnions.VibrantExcitement)Value!;
             return true;
         }
         value = null;
@@ -1029,7 +1033,7 @@ public record BigUnion
     {
         if (Type == "activeDiamond")
         {
-            value = (SeedUnions.ActiveDiamond)Value;
+            value = (SeedUnions.ActiveDiamond)Value!;
             return true;
         }
         value = null;
@@ -1043,7 +1047,7 @@ public record BigUnion
     {
         if (Type == "popularLimit")
         {
-            value = (SeedUnions.PopularLimit)Value;
+            value = (SeedUnions.PopularLimit)Value!;
             return true;
         }
         value = null;
@@ -1057,7 +1061,7 @@ public record BigUnion
     {
         if (Type == "falseMirror")
         {
-            value = (SeedUnions.FalseMirror)Value;
+            value = (SeedUnions.FalseMirror)Value!;
             return true;
         }
         value = null;
@@ -1071,7 +1075,7 @@ public record BigUnion
     {
         if (Type == "primaryBlock")
         {
-            value = (SeedUnions.PrimaryBlock)Value;
+            value = (SeedUnions.PrimaryBlock)Value!;
             return true;
         }
         value = null;
@@ -1085,7 +1089,7 @@ public record BigUnion
     {
         if (Type == "rotatingRatio")
         {
-            value = (SeedUnions.RotatingRatio)Value;
+            value = (SeedUnions.RotatingRatio)Value!;
             return true;
         }
         value = null;
@@ -1099,7 +1103,7 @@ public record BigUnion
     {
         if (Type == "colorfulCover")
         {
-            value = (SeedUnions.ColorfulCover)Value;
+            value = (SeedUnions.ColorfulCover)Value!;
             return true;
         }
         value = null;
@@ -1113,7 +1117,7 @@ public record BigUnion
     {
         if (Type == "disloyalValue")
         {
-            value = (SeedUnions.DisloyalValue)Value;
+            value = (SeedUnions.DisloyalValue)Value!;
             return true;
         }
         value = null;
@@ -1127,7 +1131,7 @@ public record BigUnion
     {
         if (Type == "gruesomeCoach")
         {
-            value = (SeedUnions.GruesomeCoach)Value;
+            value = (SeedUnions.GruesomeCoach)Value!;
             return true;
         }
         value = null;
@@ -1141,7 +1145,7 @@ public record BigUnion
     {
         if (Type == "totalWork")
         {
-            value = (SeedUnions.TotalWork)Value;
+            value = (SeedUnions.TotalWork)Value!;
             return true;
         }
         value = null;
@@ -1155,7 +1159,7 @@ public record BigUnion
     {
         if (Type == "harmoniousPlay")
         {
-            value = (SeedUnions.HarmoniousPlay)Value;
+            value = (SeedUnions.HarmoniousPlay)Value!;
             return true;
         }
         value = null;
@@ -1169,7 +1173,7 @@ public record BigUnion
     {
         if (Type == "uniqueStress")
         {
-            value = (SeedUnions.UniqueStress)Value;
+            value = (SeedUnions.UniqueStress)Value!;
             return true;
         }
         value = null;
@@ -1183,7 +1187,7 @@ public record BigUnion
     {
         if (Type == "unwillingSmoke")
         {
-            value = (SeedUnions.UnwillingSmoke)Value;
+            value = (SeedUnions.UnwillingSmoke)Value!;
             return true;
         }
         value = null;
@@ -1197,7 +1201,7 @@ public record BigUnion
     {
         if (Type == "frozenSleep")
         {
-            value = (SeedUnions.FrozenSleep)Value;
+            value = (SeedUnions.FrozenSleep)Value!;
             return true;
         }
         value = null;
@@ -1211,7 +1215,7 @@ public record BigUnion
     {
         if (Type == "diligentDeal")
         {
-            value = (SeedUnions.DiligentDeal)Value;
+            value = (SeedUnions.DiligentDeal)Value!;
             return true;
         }
         value = null;
@@ -1225,7 +1229,7 @@ public record BigUnion
     {
         if (Type == "attractiveScript")
         {
-            value = (SeedUnions.AttractiveScript)Value;
+            value = (SeedUnions.AttractiveScript)Value!;
             return true;
         }
         value = null;
@@ -1239,7 +1243,7 @@ public record BigUnion
     {
         if (Type == "hoarseMouse")
         {
-            value = (SeedUnions.HoarseMouse)Value;
+            value = (SeedUnions.HoarseMouse)Value!;
             return true;
         }
         value = null;
@@ -1253,7 +1257,7 @@ public record BigUnion
     {
         if (Type == "circularCard")
         {
-            value = (SeedUnions.CircularCard)Value;
+            value = (SeedUnions.CircularCard)Value!;
             return true;
         }
         value = null;
@@ -1267,7 +1271,7 @@ public record BigUnion
     {
         if (Type == "potableBad")
         {
-            value = (SeedUnions.PotableBad)Value;
+            value = (SeedUnions.PotableBad)Value!;
             return true;
         }
         value = null;
@@ -1281,7 +1285,7 @@ public record BigUnion
     {
         if (Type == "triangularRepair")
         {
-            value = (SeedUnions.TriangularRepair)Value;
+            value = (SeedUnions.TriangularRepair)Value!;
             return true;
         }
         value = null;
@@ -1295,7 +1299,7 @@ public record BigUnion
     {
         if (Type == "gaseousRoad")
         {
-            value = (SeedUnions.GaseousRoad)Value;
+            value = (SeedUnions.GaseousRoad)Value!;
             return true;
         }
         value = null;
@@ -1351,474 +1355,81 @@ public record BigUnion
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "normalSweet":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.NormalSweet>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("normalSweet", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "thankfulFactor":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.ThankfulFactor>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.ThankfulFactor"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("thankfulFactor", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "jumboEnd":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.JumboEnd>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.JumboEnd");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("jumboEnd", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "hastyPain":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.HastyPain>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.HastyPain");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("hastyPain", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "mistySnow":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.MistySnow>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.MistySnow");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("mistySnow", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "distinctFailure":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.DistinctFailure>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.DistinctFailure"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("distinctFailure", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "practicalPrinciple":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.PracticalPrinciple>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.PracticalPrinciple"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("practicalPrinciple", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "limpingStep":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.LimpingStep>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("limpingStep", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "vibrantExcitement":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.VibrantExcitement>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.VibrantExcitement"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("vibrantExcitement", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "activeDiamond":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.ActiveDiamond>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.ActiveDiamond"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("activeDiamond", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "popularLimit":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.PopularLimit>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("popularLimit", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "falseMirror":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.FalseMirror>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("falseMirror", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "primaryBlock":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.PrimaryBlock>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("primaryBlock", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "rotatingRatio":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.RotatingRatio>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.RotatingRatio"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("rotatingRatio", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "colorfulCover":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.ColorfulCover>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.ColorfulCover"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("colorfulCover", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "disloyalValue":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.DisloyalValue>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.DisloyalValue"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("disloyalValue", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "gruesomeCoach":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.GruesomeCoach>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.GruesomeCoach"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("gruesomeCoach", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "totalWork":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.TotalWork>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.TotalWork");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("totalWork", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "harmoniousPlay":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.HarmoniousPlay>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.HarmoniousPlay"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("harmoniousPlay", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "uniqueStress":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.UniqueStress>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("uniqueStress", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "unwillingSmoke":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.UnwillingSmoke>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.UnwillingSmoke"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("unwillingSmoke", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "frozenSleep":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.FrozenSleep>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("frozenSleep", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "diligentDeal":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.DiligentDeal>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("diligentDeal", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "attractiveScript":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.AttractiveScript>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.AttractiveScript"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("attractiveScript", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "hoarseMouse":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.HoarseMouse>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("hoarseMouse", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "circularCard":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.CircularCard>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("circularCard", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "potableBad":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.PotableBad>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("potableBad", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "triangularRepair":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.TriangularRepair>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedUnions.TriangularRepair"
-                        );
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("triangularRepair", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                case "gaseousRoad":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.GaseousRoad>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad");
-                    var baseProperties =
-                        json.Deserialize<BigUnion.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
-                    return new BigUnion("gaseousRoad", value)
-                    {
-                        Id = baseProperties.Id,
-                        CreatedAt = baseProperties.CreatedAt,
-                        ArchivedAt = baseProperties.ArchivedAt,
-                    };
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "normalSweet" => json.Deserialize<SeedUnions.NormalSweet>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet"),
+                "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ThankfulFactor"),
+                "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.JumboEnd"),
+                "hastyPain" => json.Deserialize<SeedUnions.HastyPain>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HastyPain"),
+                "mistySnow" => json.Deserialize<SeedUnions.MistySnow>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.MistySnow"),
+                "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DistinctFailure"),
+                "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedUnions.PracticalPrinciple"
+                    ),
+                "limpingStep" => json.Deserialize<SeedUnions.LimpingStep>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep"),
+                "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedUnions.VibrantExcitement"
+                    ),
+                "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ActiveDiamond"),
+                "popularLimit" => json.Deserialize<SeedUnions.PopularLimit>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit"),
+                "falseMirror" => json.Deserialize<SeedUnions.FalseMirror>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror"),
+                "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock"),
+                "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.RotatingRatio"),
+                "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ColorfulCover"),
+                "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DisloyalValue"),
+                "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.GruesomeCoach"),
+                "totalWork" => json.Deserialize<SeedUnions.TotalWork>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.TotalWork"),
+                "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HarmoniousPlay"),
+                "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress"),
+                "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.UnwillingSmoke"),
+                "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep"),
+                "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal"),
+                "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.AttractiveScript"),
+                "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse"),
+                "circularCard" => json.Deserialize<SeedUnions.CircularCard>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard"),
+                "potableBad" => json.Deserialize<SeedUnions.PotableBad>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad"),
+                "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.TriangularRepair"),
+                "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad"),
+                _ => json.Deserialize<object?>(options),
+            };
+            var baseProperties =
+                json.Deserialize<BigUnion.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");
+            return new BigUnion(discriminator, value)
+            {
+                Id = baseProperties.Id,
+                CreatedAt = baseProperties.CreatedAt,
+                ArchivedAt = baseProperties.ArchivedAt,
+            };
         }
 
         public override void Write(
@@ -1827,13 +1438,56 @@ public record BigUnion
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
+            JsonNode json =
+                value.Type switch
+                {
+                    "normalSweet" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "thankfulFactor" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "jumboEnd" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "hastyPain" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "mistySnow" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "distinctFailure" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "practicalPrinciple" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "limpingStep" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "vibrantExcitement" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "activeDiamond" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "popularLimit" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "falseMirror" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "primaryBlock" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "rotatingRatio" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "colorfulCover" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "disloyalValue" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "gruesomeCoach" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "totalWork" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "harmoniousPlay" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "uniqueStress" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "unwillingSmoke" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "frozenSleep" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "diligentDeal" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "attractiveScript" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "hoarseMouse" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "circularCard" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "potableBad" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "triangularRepair" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "gaseousRoad" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            var basePropertiesJson =
+                JsonSerializer.SerializeToNode(
+                    new BigUnion.BaseProperties
+                    {
+                        Id = value.Id,
+                        CreatedAt = value.CreatedAt,
+                        ArchivedAt = value.ArchivedAt,
+                    },
+                    options
+                ) ?? throw new JsonException("Failed to serialize BigUnion.BaseProperties");
+            foreach (var property in basePropertiesJson.AsObject())
             {
-                throw new JsonException("Failed to serialize BigUnion");
+                json[property.Key] = property.Value;
             }
-
-            jsonNode.WriteTo(writer, options);
+            json.WriteTo(writer, options);
         }
     }
 

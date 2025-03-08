@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithMultipleNoProperties.JsonConverter))]
 public record UnionWithMultipleNoProperties
 {
-    internal UnionWithMultipleNoProperties(string type, object value)
+    internal UnionWithMultipleNoProperties(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -49,7 +53,7 @@ public record UnionWithMultipleNoProperties
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo"
@@ -72,7 +76,7 @@ public record UnionWithMultipleNoProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
         IsFoo
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
@@ -81,7 +85,7 @@ public record UnionWithMultipleNoProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty1'.</exception>
     public object AsEmpty1() =>
         IsEmpty1
-            ? Value
+            ? Value!
             : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
 
     /// <summary>
@@ -90,14 +94,14 @@ public record UnionWithMultipleNoProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty2'.</exception>
     public object AsEmpty2() =>
         IsEmpty2
-            ? Value
+            ? Value!
             : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
         Func<object, T> onEmpty1,
         Func<object, T> onEmpty2,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
@@ -105,7 +109,7 @@ public record UnionWithMultipleNoProperties
             "foo" => onFoo(AsFoo()),
             "empty1" => onEmpty1(AsEmpty1()),
             "empty2" => onEmpty2(AsEmpty2()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
@@ -113,7 +117,7 @@ public record UnionWithMultipleNoProperties
         Action<SeedUnions.Foo> onFoo,
         Action<object> onEmpty1,
         Action<object> onEmpty2,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -128,7 +132,7 @@ public record UnionWithMultipleNoProperties
                 onEmpty2(AsEmpty2());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -140,7 +144,7 @@ public record UnionWithMultipleNoProperties
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -154,7 +158,7 @@ public record UnionWithMultipleNoProperties
     {
         if (Type == "empty1")
         {
-            value = Value;
+            value = Value!;
             return true;
         }
         value = null;
@@ -168,7 +172,7 @@ public record UnionWithMultipleNoProperties
     {
         if (Type == "empty2")
         {
-            value = Value;
+            value = Value!;
             return true;
         }
         value = null;
@@ -213,34 +217,15 @@ public record UnionWithMultipleNoProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithMultipleNoProperties("foo", value);
-                }
-                case "empty1":
-                {
-                    var value =
-                        json.Deserialize<object>(options)
-                        ?? throw new JsonException("Failed to deserialize object");
-                    return new UnionWithMultipleNoProperties("empty1", value);
-                }
-                case "empty2":
-                {
-                    var value =
-                        json.Deserialize<object>(options)
-                        ?? throw new JsonException("Failed to deserialize object");
-                    return new UnionWithMultipleNoProperties("empty2", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                "empty1" => new { },
+                "empty2" => new { },
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithMultipleNoProperties(discriminator, value);
         }
 
         public override void Write(
@@ -249,13 +234,16 @@ public record UnionWithMultipleNoProperties
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithMultipleNoProperties");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "empty1" => null,
+                    "empty2" => null,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

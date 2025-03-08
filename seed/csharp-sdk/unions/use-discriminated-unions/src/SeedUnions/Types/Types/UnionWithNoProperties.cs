@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithNoProperties.JsonConverter))]
 public record UnionWithNoProperties
 {
-    internal UnionWithNoProperties(string type, object value)
+    internal UnionWithNoProperties(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record UnionWithNoProperties
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "foo"
@@ -58,7 +62,7 @@ public record UnionWithNoProperties
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
         IsFoo
-            ? (SeedUnions.Foo)Value
+            ? (SeedUnions.Foo)Value!
             : throw new Exception("UnionWithNoProperties.Type is not 'foo'");
 
     /// <summary>
@@ -66,26 +70,26 @@ public record UnionWithNoProperties
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
     public object AsEmpty() =>
-        IsEmpty ? Value : throw new Exception("UnionWithNoProperties.Type is not 'empty'");
+        IsEmpty ? Value! : throw new Exception("UnionWithNoProperties.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
         Func<object, T> onEmpty,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "foo" => onFoo(AsFoo()),
             "empty" => onEmpty(AsEmpty()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
         Action<object> onEmpty,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -97,7 +101,7 @@ public record UnionWithNoProperties
                 onEmpty(AsEmpty());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -109,7 +113,7 @@ public record UnionWithNoProperties
     {
         if (Type == "foo")
         {
-            value = (SeedUnions.Foo)Value;
+            value = (SeedUnions.Foo)Value!;
             return true;
         }
         value = null;
@@ -123,7 +127,7 @@ public record UnionWithNoProperties
     {
         if (Type == "empty")
         {
-            value = Value;
+            value = Value!;
             return true;
         }
         value = null;
@@ -167,27 +171,14 @@ public record UnionWithNoProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "foo":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Foo>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Foo");
-                    return new UnionWithNoProperties("foo", value);
-                }
-                case "empty":
-                {
-                    var value =
-                        json.Deserialize<object>(options)
-                        ?? throw new JsonException("Failed to deserialize object");
-                    return new UnionWithNoProperties("empty", value);
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                "empty" => new { },
+                _ => json.Deserialize<object?>(options),
+            };
+            return new UnionWithNoProperties(discriminator, value);
         }
 
         public override void Write(
@@ -196,13 +187,15 @@ public record UnionWithNoProperties
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
-            {
-                throw new JsonException("Failed to serialize UnionWithNoProperties");
-            }
-
-            jsonNode.WriteTo(writer, options);
+            JsonNode json =
+                value.Type switch
+                {
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "empty" => null,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            json.WriteTo(writer, options);
         }
     }
 

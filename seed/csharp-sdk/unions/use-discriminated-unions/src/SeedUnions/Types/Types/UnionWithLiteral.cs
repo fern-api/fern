@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(UnionWithLiteral.JsonConverter))]
 public record UnionWithLiteral
 {
-    internal UnionWithLiteral(string type, object value)
+    internal UnionWithLiteral(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -31,7 +35,7 @@ public record UnionWithLiteral
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     [JsonPropertyName("base")]
     public string Base { get; set; } = "base";
@@ -46,18 +50,18 @@ public record UnionWithLiteral
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fern'.</exception>
     public string AsFern() =>
-        IsFern ? (string)Value : throw new Exception("UnionWithLiteral.Type is not 'fern'");
+        IsFern ? (string)Value! : throw new Exception("UnionWithLiteral.Type is not 'fern'");
 
-    public T Match<T>(Func<string, T> onFern, Func<string, object, T> _onUnknown)
+    public T Match<T>(Func<string, T> onFern, Func<string, object?, T> onUnknown_)
     {
         return Type switch
         {
             "fern" => onFern(AsFern()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
-    public void Visit(Action<string> onFern, Action<string, object> _onUnknown)
+    public void Visit(Action<string> onFern, Action<string, object?> onUnknown_)
     {
         switch (Type)
         {
@@ -65,7 +69,7 @@ public record UnionWithLiteral
                 onFern(AsFern());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -77,7 +81,7 @@ public record UnionWithLiteral
     {
         if (Type == "fern")
         {
-            value = (string)Value;
+            value = (string)Value!;
             return true;
         }
         value = null;
@@ -127,25 +131,16 @@ public record UnionWithLiteral
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "fern":
-                {
-                    var value =
-                        json.Deserialize<string>(options)
-                        ?? throw new JsonException("Failed to deserialize string");
-                    var baseProperties =
-                        json.Deserialize<UnionWithLiteral.BaseProperties>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize UnionWithLiteral.BaseProperties"
-                        );
-                    return new UnionWithLiteral("fern", value) { Base = baseProperties.Base };
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "fern" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                _ => json.Deserialize<object?>(options),
+            };
+            var baseProperties =
+                json.Deserialize<UnionWithLiteral.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize UnionWithLiteral.BaseProperties");
+            return new UnionWithLiteral(discriminator, value) { Base = baseProperties.Base };
         }
 
         public override void Write(
@@ -154,13 +149,26 @@ public record UnionWithLiteral
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
+            JsonNode json =
+                value.Type switch
+                {
+                    "fern" => new JsonObject
+                    {
+                        ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
+                    },
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            var basePropertiesJson =
+                JsonSerializer.SerializeToNode(
+                    new UnionWithLiteral.BaseProperties { Base = value.Base },
+                    options
+                ) ?? throw new JsonException("Failed to serialize UnionWithLiteral.BaseProperties");
+            foreach (var property in basePropertiesJson.AsObject())
             {
-                throw new JsonException("Failed to serialize UnionWithLiteral");
+                json[property.Key] = property.Value;
             }
-
-            jsonNode.WriteTo(writer, options);
+            json.WriteTo(writer, options);
         }
     }
 

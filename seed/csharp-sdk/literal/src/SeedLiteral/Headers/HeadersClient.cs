@@ -14,8 +14,7 @@ public partial class HeadersClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Headers.SendAsync(
     ///     new SendLiteralsInHeadersRequest
     ///     {
@@ -24,8 +23,7 @@ public partial class HeadersClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInHeadersRequest request,
         RequestOptions? options = null,

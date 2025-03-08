@@ -8,6 +8,11 @@ namespace SeedApi;
 public partial class ClientOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get; init; } = "";
@@ -31,11 +36,6 @@ public partial class ClientOptions
     /// The options used for gRPC client endpoints.
     /// </summary>
     public GrpcChannelOptions? GrpcOptions { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// Clones this and returns a new instance

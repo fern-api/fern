@@ -9,9 +9,12 @@ public record ListElement
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new ListElement type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
     {
-        return JsonUtils.Serialize(this);
+        return new ListElement { Id = value.Id };
     }
 
     /// <summary>
@@ -27,11 +30,8 @@ public record ListElement
         return result;
     }
 
-    /// <summary>
-    /// Returns a new ListElement type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
+    public override string ToString()
     {
-        return new ListElement { Id = value.Id };
+        return JsonUtils.Serialize(this);
     }
 }

@@ -1,4 +1,8 @@
+// ReSharper disable NullableWarningSuppressionIsUsed
+// ReSharper disable InconsistentNaming
+
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
@@ -7,7 +11,7 @@ namespace SeedUnions;
 [JsonConverter(typeof(Shape.JsonConverter))]
 public record Shape
 {
-    internal Shape(string type, object value)
+    internal Shape(string type, object? value)
     {
         Type = type;
         Value = value;
@@ -40,7 +44,7 @@ public record Shape
     /// <summary>
     /// Discriminated union value
     /// </summary>
-    public object Value { get; internal set; }
+    public object? Value { get; internal set; }
 
     [JsonPropertyName("id")]
     public required string Id { get; set; }
@@ -60,33 +64,33 @@ public record Shape
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'circle'.</exception>
     public SeedUnions.Circle AsCircle() =>
-        IsCircle ? (SeedUnions.Circle)Value : throw new Exception("Shape.Type is not 'circle'");
+        IsCircle ? (SeedUnions.Circle)Value! : throw new Exception("Shape.Type is not 'circle'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'square'.</exception>
     public SeedUnions.Square AsSquare() =>
-        IsSquare ? (SeedUnions.Square)Value : throw new Exception("Shape.Type is not 'square'");
+        IsSquare ? (SeedUnions.Square)Value! : throw new Exception("Shape.Type is not 'square'");
 
     public T Match<T>(
         Func<SeedUnions.Circle, T> onCircle,
         Func<SeedUnions.Square, T> onSquare,
-        Func<string, object, T> _onUnknown
+        Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "circle" => onCircle(AsCircle()),
             "square" => onSquare(AsSquare()),
-            _ => _onUnknown(Type, Value),
+            _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<SeedUnions.Circle> onCircle,
         Action<SeedUnions.Square> onSquare,
-        Action<string, object> _onUnknown
+        Action<string, object?> onUnknown_
     )
     {
         switch (Type)
@@ -98,7 +102,7 @@ public record Shape
                 onSquare(AsSquare());
                 break;
             default:
-                _onUnknown(Type, Value);
+                onUnknown_(Type, Value);
                 break;
         }
     }
@@ -110,7 +114,7 @@ public record Shape
     {
         if (Type == "circle")
         {
-            value = (SeedUnions.Circle)Value;
+            value = (SeedUnions.Circle)Value!;
             return true;
         }
         value = null;
@@ -124,7 +128,7 @@ public record Shape
     {
         if (Type == "square")
         {
-            value = (SeedUnions.Square)Value;
+            value = (SeedUnions.Square)Value!;
             return true;
         }
         value = null;
@@ -174,33 +178,18 @@ public record Shape
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            switch (discriminator)
+            var value = discriminator switch
             {
-                case "circle":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Circle>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Circle");
-                    var baseProperties =
-                        json.Deserialize<Shape.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
-                    return new Shape("circle", value) { Id = baseProperties.Id };
-                }
-                case "square":
-                {
-                    var value =
-                        json.Deserialize<SeedUnions.Square>(options)
-                        ?? throw new JsonException("Failed to deserialize SeedUnions.Square");
-                    var baseProperties =
-                        json.Deserialize<Shape.BaseProperties>(options)
-                        ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
-                    return new Shape("square", value) { Id = baseProperties.Id };
-                }
-                default:
-                    throw new JsonException(
-                        $"Discriminator property 'type' is unexpected value '{discriminator}'"
-                    );
-            }
+                "circle" => json.Deserialize<SeedUnions.Circle>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Circle"),
+                "square" => json.Deserialize<SeedUnions.Square>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Square"),
+                _ => json.Deserialize<object?>(options),
+            };
+            var baseProperties =
+                json.Deserialize<Shape.BaseProperties>(options)
+                ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
+            return new Shape(discriminator, value) { Id = baseProperties.Id };
         }
 
         public override void Write(
@@ -209,13 +198,22 @@ public record Shape
             JsonSerializerOptions options
         )
         {
-            var jsonNode = JsonSerializer.SerializeToNode(value.Value, options);
-            if (jsonNode == null)
+            JsonNode json =
+                value.Type switch
+                {
+                    "circle" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "square" => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                } ?? new JsonObject();
+            json["type"] = value.Type;
+            var basePropertiesJson =
+                JsonSerializer.SerializeToNode(new Shape.BaseProperties { Id = value.Id }, options)
+                ?? throw new JsonException("Failed to serialize Shape.BaseProperties");
+            foreach (var property in basePropertiesJson.AsObject())
             {
-                throw new JsonException("Failed to serialize Shape");
+                json[property.Key] = property.Value;
             }
-
-            jsonNode.WriteTo(writer, options);
+            json.WriteTo(writer, options);
         }
     }
 

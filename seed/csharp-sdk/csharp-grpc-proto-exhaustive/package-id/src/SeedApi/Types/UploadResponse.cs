@@ -9,9 +9,12 @@ public record UploadResponse
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new UploadResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UploadResponse FromProto(ProtoDataV1Grpc.UploadResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new UploadResponse { Count = value.Count };
     }
 
     /// <summary>
@@ -27,11 +30,8 @@ public record UploadResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new UploadResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static UploadResponse FromProto(ProtoDataV1Grpc.UploadResponse value)
+    public override string ToString()
     {
-        return new UploadResponse { Count = value.Count };
+        return JsonUtils.Serialize(this);
     }
 }

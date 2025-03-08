@@ -12,9 +12,16 @@ public record QueryResult
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new QueryResult type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryResult FromProto(ProtoDataV1Grpc.QueryResult value)
     {
-        return JsonUtils.Serialize(this);
+        return new QueryResult
+        {
+            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Namespace = value.Namespace,
+        };
     }
 
     /// <summary>
@@ -34,15 +41,8 @@ public record QueryResult
         return result;
     }
 
-    /// <summary>
-    /// Returns a new QueryResult type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static QueryResult FromProto(ProtoDataV1Grpc.QueryResult value)
+    public override string ToString()
     {
-        return new QueryResult
-        {
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
-            Namespace = value.Namespace,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

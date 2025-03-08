@@ -16,11 +16,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Folder.Service.EndpointAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -52,13 +50,11 @@ public partial class ServiceClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Folder.Service.UnknownRequestAsync(
     ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task UnknownRequestAsync(
         object request,
         RequestOptions? options = null,
