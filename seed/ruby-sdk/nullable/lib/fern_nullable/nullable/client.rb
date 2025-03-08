@@ -68,6 +68,7 @@ module SeedNullableClient
     #   * :updated_at (DateTime)
     #   * :avatar (String)
     #   * :activated (Boolean)
+    #   * :status (Hash)
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
@@ -189,6 +190,7 @@ module SeedNullableClient
     #   * :updated_at (DateTime)
     #   * :avatar (String)
     #   * :activated (Boolean)
+    #   * :status (Hash)
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
