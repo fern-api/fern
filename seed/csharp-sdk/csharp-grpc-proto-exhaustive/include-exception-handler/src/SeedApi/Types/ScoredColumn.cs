@@ -26,12 +26,23 @@ public record ScoredColumn
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new ScoredColumn type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ScoredColumn FromProto(ProtoDataV1Grpc.ScoredColumn value)
     {
-        return JsonUtils.Serialize(this);
+        return new ScoredColumn
+        {
+            Id = value.Id,
+            Score = value.Score,
+            Values = value.Values?.ToList(),
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+        };
     }
 
     /// <summary>
@@ -60,19 +71,8 @@ public record ScoredColumn
         return result;
     }
 
-    /// <summary>
-    /// Returns a new ScoredColumn type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static ScoredColumn FromProto(ProtoDataV1Grpc.ScoredColumn value)
+    public override string ToString()
     {
-        return new ScoredColumn
-        {
-            Id = value.Id,
-            Score = value.Score,
-            Values = value.Values?.ToList(),
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-            IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

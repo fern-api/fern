@@ -14,8 +14,7 @@ public partial class AuthClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
     ///     new GetTokenRequest
     ///     {
@@ -26,8 +25,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
@@ -78,8 +76,7 @@ public partial class AuthClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.RefreshTokenAsync(
     ///     new RefreshTokenRequest
     ///     {
@@ -91,8 +88,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
         RequestOptions? options = null,

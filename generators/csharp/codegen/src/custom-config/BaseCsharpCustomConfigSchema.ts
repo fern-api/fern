@@ -20,6 +20,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
+    "use-discriminated-unions": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z

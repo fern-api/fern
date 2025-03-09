@@ -7,6 +7,11 @@ namespace SeedBearerTokenEnvironmentVariable;
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    Headers IRequestOptions.Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get; init; }
@@ -27,9 +32,4 @@ public partial class RequestOptions : IRequestOptions
     public TimeSpan? Timeout { get; init; }
 
     public string? Version { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
 }

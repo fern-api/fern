@@ -28,6 +28,16 @@ class _Factory:
 
 
 class UnionWithoutKey(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithoutKey_Foo
+
+    UnionWithoutKey_Foo(
+        name="example1",
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

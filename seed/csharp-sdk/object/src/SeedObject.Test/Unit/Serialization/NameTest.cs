@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedObject;
 using SeedObject.Core;
@@ -19,22 +19,21 @@ public class NameTest
             """;
         var expectedObject = new Name { Id = "name-sdfg8ajk", Value = "name" };
         var deserializedObject = JsonUtils.Deserialize<Name>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "id": "name-sdfg8ajk",
               "value": "name"
             }
             """;
-        var obj = new Name { Id = "name-sdfg8ajk", Value = "name" };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualObj = new Name { Id = "name-sdfg8ajk", Value = "name" };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

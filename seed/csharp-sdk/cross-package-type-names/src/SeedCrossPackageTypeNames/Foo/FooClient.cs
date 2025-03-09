@@ -14,8 +14,7 @@ public partial class FooClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Foo.FindAsync(
     ///     new FindRequest
     ///     {
@@ -24,8 +23,7 @@ public partial class FooClient
     ///         PrivateProperty = 1,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ImportingType> FindAsync(
         FindRequest request,
         RequestOptions? options = null,

@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
@@ -66,14 +66,13 @@ public class DirectoryTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Directory>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "root",
               "files": [
@@ -97,7 +96,7 @@ public class DirectoryTest
               ]
             }
             """;
-        var obj = new Directory
+        var actualObj = new Directory
         {
             Name = "root",
             Files = new List<File>()
@@ -126,8 +125,8 @@ public class DirectoryTest
                 },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

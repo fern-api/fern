@@ -21,6 +21,8 @@ export declare namespace CsharpTypeMapper {
         reference: TypeReference;
         /* Defaults to false */
         unboxOptionals?: boolean;
+        /* Defaults to false */
+        fullyQualified?: boolean;
     }
 }
 
@@ -31,15 +33,15 @@ export class CsharpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference, unboxOptionals }: CsharpTypeMapper.Args): Type {
+    public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
                     container: reference.container,
-                    unboxOptionals: unboxOptionals ?? false
+                    unboxOptionals
                 });
             case "named":
-                return this.convertNamed({ named: reference });
+                return this.convertNamed({ named: reference, fullyQualified });
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
@@ -126,8 +128,8 @@ export class CsharpTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-        const objectClassReference = this.convertToClassReference(named);
+    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): Type {
+        const objectClassReference = this.convertToClassReference(named, { fullyQualified });
         if (this.context.protobufResolver.isWellKnownProtobufType(named.typeId)) {
             if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
                 return csharp.Type.object();
@@ -143,6 +145,9 @@ export class CsharpTypeMapper {
             case "object":
                 return csharp.Type.reference(objectClassReference);
             case "union":
+                if (this.context.shouldGenerateDiscriminatedUnions()) {
+                    return csharp.Type.reference(objectClassReference);
+                }
                 return csharp.Type.object();
             case "undiscriminatedUnion": {
                 return csharp.Type.oneOf(

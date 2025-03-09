@@ -7,6 +7,11 @@ namespace SeedAuthEnvironmentVariables;
 public partial class ClientOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get; init; } = "";
@@ -27,11 +32,6 @@ public partial class ClientOptions
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
 
     public string? XApiVersion { get; init; } = null;
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// Clones this and returns a new instance

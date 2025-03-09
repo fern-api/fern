@@ -15,11 +15,9 @@ public partial class PaymentClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
         IdempotentRequestOptions? options = null,
@@ -62,11 +60,9 @@ public partial class PaymentClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Payment.DeleteAsync("paymentId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteAsync(
         string paymentId,
         RequestOptions? options = null,

@@ -8,6 +8,14 @@ import pydantic
 
 
 class Base(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.types import FernUnionWithLiteral
+
+    FernUnionWithLiteral()
+    """
+
     base: typing.Literal["base"] = "base"
 
     if IS_PYDANTIC_V2:
@@ -33,4 +41,9 @@ class FernUnionWithLiteral(Base):
             smart_union = True
 
 
+"""
+from seed.types import FernUnionWithLiteral
+
+FernUnionWithLiteral()
+"""
 UnionWithLiteral = FernUnionWithLiteral

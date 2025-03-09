@@ -157,6 +157,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
+        await this.createTestUtilsDirectory({ absolutePathToTestProjectDirectory });
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
@@ -413,7 +414,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
-            filename.replace(".Template", ""),
+            filename.replace("test/", "").replace(".Template", ""),
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,

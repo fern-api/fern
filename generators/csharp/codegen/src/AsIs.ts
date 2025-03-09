@@ -45,6 +45,7 @@ export const AsIsFiles = {
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
         RawClientTests: "test/RawClientTests.Template.cs",
+        JsonElementComparer: "test/JsonElementComparer.Template.cs",
         Pagination: [
             "test/Pagination/GuidCursorTest.Template.cs",
             "test/Pagination/HasNextPageOffsetTest.Template.cs",

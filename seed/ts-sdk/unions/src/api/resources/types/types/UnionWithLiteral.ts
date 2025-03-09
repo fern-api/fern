@@ -4,6 +4,13 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "fern",
+ *         value: "fern"
+ *     }
+ */
 export type UnionWithLiteral = SeedUnions.UnionWithLiteral.Fern;
 
 export namespace UnionWithLiteral {

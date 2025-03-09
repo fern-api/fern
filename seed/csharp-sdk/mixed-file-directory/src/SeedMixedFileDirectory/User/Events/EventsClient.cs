@@ -22,11 +22,9 @@ public partial class EventsClient
     /// <summary>
     /// List all user events.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<Event>> ListEventsAsync(
         ListUserEventsRequest request,
         RequestOptions? options = null,

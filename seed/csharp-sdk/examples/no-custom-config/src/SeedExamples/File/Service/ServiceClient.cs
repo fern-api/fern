@@ -18,14 +18,12 @@ public partial class ServiceClient
     /// <summary>
     /// This endpoint returns a file by its name.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.File.Service.GetFileAsync(
     ///     "file.txt",
     ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<File> GetFileAsync(
         string filename,
         GetFileRequest request,

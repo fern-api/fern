@@ -4,6 +4,11 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
+/// <summary>
+/// A user object. This type is used throughout the following APIs:
+///   - createUser
+///   - getUser
+/// </summary>
 public record User
 {
     [JsonPropertyName("id")]
@@ -28,7 +33,7 @@ public record User
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
     public override string ToString()

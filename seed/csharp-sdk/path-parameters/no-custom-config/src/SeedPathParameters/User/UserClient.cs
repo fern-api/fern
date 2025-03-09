@@ -14,11 +14,9 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUserAsync(
         string tenantId,
         string userId,
@@ -63,8 +61,7 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(
     ///     "tenant_id",
     ///     new User
@@ -73,8 +70,7 @@ public partial class UserClient
     ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         string tenantId,
         User request,
@@ -118,8 +114,7 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.UpdateUserAsync(
     ///     "tenant_id",
     ///     "user_id",
@@ -132,8 +127,7 @@ public partial class UserClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> UpdateUserAsync(
         string tenantId,
         string userId,
@@ -179,11 +173,9 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<User>> SearchUsersAsync(
         string tenantId,
         string userId,

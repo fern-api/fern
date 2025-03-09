@@ -15,11 +15,9 @@ public partial class UnionClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Union.GetAsync("string");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<
         OneOf<
             string,
@@ -87,11 +85,9 @@ public partial class UnionClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Union.GetMetadataAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

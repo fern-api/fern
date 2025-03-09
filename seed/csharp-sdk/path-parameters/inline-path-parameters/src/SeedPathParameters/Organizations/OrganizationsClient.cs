@@ -14,11 +14,9 @@ public partial class OrganizationsClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Organization> GetOrganizationAsync(
         string tenantId,
         string organizationId,
@@ -62,8 +60,7 @@ public partial class OrganizationsClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.GetOrganizationUserAsync(
     ///     new GetOrganizationUserRequest
     ///     {
@@ -72,8 +69,7 @@ public partial class OrganizationsClient
     ///         UserId = "user_id",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetOrganizationUserAsync(
         GetOrganizationUserRequest request,
         RequestOptions? options = null,
@@ -116,15 +112,13 @@ public partial class OrganizationsClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.SearchOrganizationsAsync(
     ///     "tenant_id",
     ///     "organization_id",
     ///     new SearchOrganizationsRequest { Limit = 1 }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(
         string tenantId,
         string organizationId,

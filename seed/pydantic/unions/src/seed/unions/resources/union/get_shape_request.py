@@ -7,6 +7,16 @@ import pydantic
 
 
 class GetShapeRequest(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources import GetShapeRequest
+
+    GetShapeRequest(
+        id="example",
+    )
+    """
+
     id: str
 
     if IS_PYDANTIC_V2:

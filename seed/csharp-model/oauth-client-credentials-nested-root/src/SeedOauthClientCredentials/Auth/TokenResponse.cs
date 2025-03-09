@@ -4,6 +4,9 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Auth;
 
+/// <summary>
+/// An OAuth token response.
+/// </summary>
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]
@@ -19,7 +22,7 @@ public record TokenResponse
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
     public override string ToString()

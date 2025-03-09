@@ -23,12 +23,21 @@ public record QueryResponse
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new QueryResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryResponse FromProto(ProtoDataV1Grpc.QueryResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new QueryResponse
+        {
+            Results = value.Results?.Select(QueryResult.FromProto),
+            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Namespace = value.Namespace,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+        };
     }
 
     /// <summary>
@@ -56,17 +65,8 @@ public record QueryResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new QueryResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static QueryResponse FromProto(ProtoDataV1Grpc.QueryResponse value)
+    public override string ToString()
     {
-        return new QueryResponse
-        {
-            Results = value.Results?.Select(QueryResult.FromProto),
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
-            Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }
