@@ -384,6 +384,18 @@ export class Type extends AstNode {
         return ["list", "set", "map"].includes(this.internalType.type);
     }
 
+    public getCollectionValueType(): Type | undefined {
+        switch (this.internalType.type) {
+            case "list":
+            case "set":
+                return this.internalType.value;
+            case "map":
+                return this.internalType.valueType;
+            default:
+                return undefined;
+        }
+    }
+
     public isReferenceType(): boolean | undefined {
         switch (this.internalType.type) {
             case "int":
