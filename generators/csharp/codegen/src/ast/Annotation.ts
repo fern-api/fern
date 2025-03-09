@@ -23,7 +23,7 @@ export class Annotation extends AstNode {
 
     public write(writer: Writer): void {
         writer.addReference(this.reference);
-        writer.write(`${this.reference.name}`);
+        writer.writeNode(this.reference);
         if (this.argument != null) {
             writer.write("(");
             if (typeof this.argument === "string") {

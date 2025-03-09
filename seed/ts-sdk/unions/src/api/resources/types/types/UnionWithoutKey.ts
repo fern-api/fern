@@ -4,6 +4,19 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "foo",
+ *         name: "example1"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "bar",
+ *         name: "example1"
+ *     }
+ */
 export type UnionWithoutKey =
     | SeedUnions.UnionWithoutKey.Foo
     /**

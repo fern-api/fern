@@ -1,4 +1,4 @@
-import { Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
+import { AbstractAstNode, Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
 
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
@@ -9,10 +9,19 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
-        // Lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+        /**
+         * Lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+         * @deprecated Use properties instead
+         * @see properties
+         */
         forceUseConstructor?: boolean;
+        properties?: Property[];
         // Write the instantiation across multiple lines
         multiline?: boolean;
+    }
+    interface Property {
+        name: AbstractAstNode | string;
+        value: AbstractAstNode | string;
     }
 }
 
@@ -20,13 +29,15 @@ export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: Arguments;
     private readonly forceUseConstructor: boolean;
+    private readonly properties: ClassInstantiation.Property[];
     public readonly multiline: boolean;
 
-    constructor({ classReference, arguments_, forceUseConstructor, multiline }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, forceUseConstructor, properties, multiline }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
         this.forceUseConstructor = forceUseConstructor ?? false;
+        this.properties = properties ?? [];
         this.multiline = multiline ?? false;
     }
 
@@ -87,6 +98,21 @@ export class ClassInstantiation extends AstNode {
             writer.write("}");
         } else {
             writer.write(")");
+        }
+        if (this.properties.length > 0) {
+            writer.write("{ ");
+            this.properties.forEach((property, idx) => {
+                writer.writeNodeOrString(property.name);
+                writer.write(" = ");
+                writer.writeNodeOrString(property.value);
+                if (idx < this.properties.length - 1) {
+                    writer.write(", ");
+                    if (this.multiline) {
+                        writer.newLine();
+                    }
+                }
+            });
+            writer.write("}");
         }
     }
 }

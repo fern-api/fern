@@ -15,11 +15,9 @@ public partial class PrimitiveClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetAndReturnStringAsync(
         string request,
         RequestOptions? options = null,
@@ -62,11 +60,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<int> GetAndReturnIntAsync(
         int request,
         RequestOptions? options = null,
@@ -109,11 +105,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<long> GetAndReturnLongAsync(
         long request,
         RequestOptions? options = null,
@@ -156,11 +150,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<double> GetAndReturnDoubleAsync(
         double request,
         RequestOptions? options = null,
@@ -203,11 +195,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> GetAndReturnBoolAsync(
         bool request,
         RequestOptions? options = null,
@@ -250,13 +240,11 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
     ///     new DateTime(2024, 01, 15, 09, 30, 00, 000)
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<DateTime> GetAndReturnDatetimeAsync(
         DateTime request,
         RequestOptions? options = null,
@@ -299,11 +287,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<DateOnly> GetAndReturnDateAsync(
         DateOnly request,
         RequestOptions? options = null,
@@ -346,11 +332,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetAndReturnUuidAsync(
         string request,
         RequestOptions? options = null,
@@ -393,11 +377,9 @@ public partial class PrimitiveClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetAndReturnBase64Async(
         string request,
         RequestOptions? options = null,

@@ -18,8 +18,7 @@ public partial class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
@@ -73,8 +72,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
@@ -120,8 +118,7 @@ public partial class ProblemClient
     /// <summary>
     /// Updates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.UpdateProblemAsync(
     ///     "problemId",
     ///     new CreateProblemRequest
@@ -176,8 +173,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
@@ -224,11 +220,9 @@ public partial class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
@@ -264,8 +258,7 @@ public partial class ProblemClient
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
@@ -278,8 +271,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,

@@ -20,8 +20,7 @@ public partial class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
     ///     new PostWithObjectBody
     ///     {
@@ -45,8 +44,7 @@ public partial class InlinedRequestsClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request,
         RequestOptions? options = null,

@@ -21,11 +21,6 @@ public record CreateRequest
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the CreateRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -53,5 +48,10 @@ public record CreateRequest
             result.Metadata = Metadata.ToProto();
         }
         return result;
+    }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

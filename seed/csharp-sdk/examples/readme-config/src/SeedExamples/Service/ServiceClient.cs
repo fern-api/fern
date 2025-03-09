@@ -14,11 +14,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetMovieAsync("movie-c06a4ad7");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
@@ -60,8 +58,7 @@ public partial class ServiceClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.CreateMovieAsync(
     ///     new Movie
     ///     {
@@ -87,8 +84,7 @@ public partial class ServiceClient
     ///         Revenue = 1000000,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> CreateMovieAsync(
         Movie request,
         RequestOptions? options = null,
@@ -131,8 +127,7 @@ public partial class ServiceClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetMetadataAsync(
     ///     new GetMetadataRequest
     ///     {
@@ -141,8 +136,7 @@ public partial class ServiceClient
     ///         XApiVersion = "0.0.1",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> GetMetadataAsync(
         GetMetadataRequest request,
         RequestOptions? options = null,
@@ -195,8 +189,7 @@ public partial class ServiceClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.CreateBigEntityAsync(
     ///     new BigEntity
     ///     {
@@ -406,8 +399,7 @@ public partial class ServiceClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Response> CreateBigEntityAsync(
         BigEntity request,
         RequestOptions? options = null,

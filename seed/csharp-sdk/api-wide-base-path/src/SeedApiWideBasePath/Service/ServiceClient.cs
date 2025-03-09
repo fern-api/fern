@@ -14,11 +14,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task PostAsync(
         string pathParam,
         string serviceParam,

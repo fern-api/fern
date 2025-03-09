@@ -13,7 +13,7 @@ public record FolderCFoo
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
     public override string ToString()

@@ -154,6 +154,12 @@ fixtures:
         type: custom
         filename: "../../LICENSE"
       outputFolder: custom-license
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-discriminated-unions: true
+      outputFolder: use-discriminated-unions
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends

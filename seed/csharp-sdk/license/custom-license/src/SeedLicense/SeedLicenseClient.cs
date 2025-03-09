@@ -31,11 +31,9 @@ public partial class SeedLicenseClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

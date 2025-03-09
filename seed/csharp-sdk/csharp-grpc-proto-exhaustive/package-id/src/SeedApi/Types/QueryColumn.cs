@@ -27,12 +27,23 @@ public record QueryColumn
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryColumn FromProto(ProtoDataV1Grpc.QueryColumn value)
     {
-        return JsonUtils.Serialize(this);
+        return new QueryColumn
+        {
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
+            TopK = value.TopK,
+            Namespace = value.Namespace,
+            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+        };
     }
 
     /// <summary>
@@ -64,19 +75,8 @@ public record QueryColumn
         return result;
     }
 
-    /// <summary>
-    /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static QueryColumn FromProto(ProtoDataV1Grpc.QueryColumn value)
+    public override string ToString()
     {
-        return new QueryColumn
-        {
-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
-            TopK = value.TopK,
-            Namespace = value.Namespace,
-            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
-            IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

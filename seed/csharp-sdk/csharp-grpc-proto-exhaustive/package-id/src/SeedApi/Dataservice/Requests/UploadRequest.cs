@@ -12,11 +12,6 @@ public record UploadRequest
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the UploadRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -32,5 +27,10 @@ public record UploadRequest
             result.Namespace = Namespace ?? "";
         }
         return result;
+    }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

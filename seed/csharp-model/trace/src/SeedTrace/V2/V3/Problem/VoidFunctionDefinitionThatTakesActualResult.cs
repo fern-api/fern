@@ -4,6 +4,9 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
+/// <summary>
+/// The generated signature will include an additional param, actualResult
+/// </summary>
 public record VoidFunctionDefinitionThatTakesActualResult
 {
     [JsonPropertyName("additionalParameters")]
@@ -16,7 +19,7 @@ public record VoidFunctionDefinitionThatTakesActualResult
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
     public override string ToString()

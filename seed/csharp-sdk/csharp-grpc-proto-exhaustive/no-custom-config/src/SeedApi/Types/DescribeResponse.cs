@@ -23,12 +23,24 @@ public record DescribeResponse
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
-    public override string ToString()
+    /// <summary>
+    /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static DescribeResponse FromProto(ProtoDataV1Grpc.DescribeResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new DescribeResponse
+        {
+            Namespaces = value.Namespaces?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => NamespaceSummary.FromProto(kvp.Value)
+            ),
+            Dimension = value.Dimension,
+            Fullness = value.Fullness,
+            TotalCount = value.TotalCount,
+        };
     }
 
     /// <summary>
@@ -60,20 +72,8 @@ public record DescribeResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static DescribeResponse FromProto(ProtoDataV1Grpc.DescribeResponse value)
+    public override string ToString()
     {
-        return new DescribeResponse
-        {
-            Namespaces = value.Namespaces?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => NamespaceSummary.FromProto(kvp.Value)
-            ),
-            Dimension = value.Dimension,
-            Fullness = value.Fullness,
-            TotalCount = value.TotalCount,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

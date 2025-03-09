@@ -21,11 +21,9 @@ public partial class UserClient
     /// <summary>
     /// List all users.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<User>> ListAsync(
         ListUsersRequest request,
         RequestOptions? options = null,

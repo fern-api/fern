@@ -8,6 +8,16 @@ import pydantic
 
 
 class FooUnionWithoutKey(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.types import FooUnionWithoutKey
+
+    FooUnionWithoutKey(
+        name="example1",
+    )
+    """
+
     type: typing.Literal["foo"] = "foo"
     name: str
 
@@ -22,6 +32,16 @@ class FooUnionWithoutKey(UniversalBaseModel):
 
 
 class BarUnionWithoutKey(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.types import FooUnionWithoutKey
+
+    FooUnionWithoutKey(
+        name="example1",
+    )
+    """
+
     type: typing.Literal["bar"] = "bar"
     name: str
 
@@ -35,4 +55,11 @@ class BarUnionWithoutKey(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+"""
+from seed.types import FooUnionWithoutKey
+
+FooUnionWithoutKey(
+    name="example1",
+)
+"""
 UnionWithoutKey = typing.Union[FooUnionWithoutKey, BarUnionWithoutKey]

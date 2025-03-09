@@ -14,11 +14,9 @@ public partial class PackageClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Package.TestAsync(new TestRequest { For = "for" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task TestAsync(
         TestRequest request,
         RequestOptions? options = null,

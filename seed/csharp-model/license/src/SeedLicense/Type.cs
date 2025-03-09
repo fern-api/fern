@@ -4,6 +4,9 @@ using SeedLicense.Core;
 
 namespace SeedLicense;
 
+/// <summary>
+/// A simple type with just a name.
+/// </summary>
 public record Type
 {
     [JsonPropertyName("name")]
@@ -13,7 +16,7 @@ public record Type
     /// Additional properties received from the response, if any.
     /// </summary>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties =
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
     public override string ToString()

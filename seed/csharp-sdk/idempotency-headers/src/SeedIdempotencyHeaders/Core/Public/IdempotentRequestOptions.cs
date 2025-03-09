@@ -7,6 +7,11 @@ namespace SeedIdempotencyHeaders;
 public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    Headers IRequestOptions.Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get; init; }
@@ -29,11 +34,6 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     public string IdempotencyKey { get; init; }
 
     public int IdempotencyExpiration { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
 
     Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
     {

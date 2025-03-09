@@ -15,11 +15,9 @@ public partial class EnumClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<WeatherReport> GetAndReturnEnumAsync(
         WeatherReport request,
         RequestOptions? options = null,

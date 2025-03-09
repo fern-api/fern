@@ -33,11 +33,6 @@ public record QueryRequest
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the QueryRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -78,5 +73,10 @@ public record QueryRequest
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
+    }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

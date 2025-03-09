@@ -15,11 +15,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> GetExceptionAsync(
         string notificationId,
         RequestOptions? options = null,
