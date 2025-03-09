@@ -17,13 +17,16 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
-    builder = Foo.Builder.class
+    builder = FooExtended.Builder.class
 )
-public final class Foo implements IFoo {
+public final class FooExtended implements IFoo {
   private final String name;
 
-  private Foo(String name) {
+  private final int age;
+
+  private FooExtended(String name, int age) {
     this.name = name;
+    this.age = age;
   }
 
   @JsonProperty("name")
@@ -32,19 +35,24 @@ public final class Foo implements IFoo {
     return name;
   }
 
+  @JsonProperty("age")
+  public int getAge() {
+    return age;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
-    return other instanceof Foo && equalTo((Foo) other);
+    return other instanceof FooExtended && equalTo((FooExtended) other);
   }
 
-  private boolean equalTo(Foo other) {
-    return name.equals(other.name);
+  private boolean equalTo(FooExtended other) {
+    return name.equals(other.name) && age == other.age;
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.name);
+    return Objects.hash(this.name, this.age);
   }
 
   @java.lang.Override
@@ -57,40 +65,54 @@ public final class Foo implements IFoo {
   }
 
   public interface NameStage {
-    _FinalStage name(@NotNull String name);
+    AgeStage name(@NotNull String name);
 
-    Builder from(Foo other);
+    Builder from(FooExtended other);
+  }
+
+  public interface AgeStage {
+    _FinalStage age(int age);
   }
 
   public interface _FinalStage {
-    Foo build();
+    FooExtended build();
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements NameStage, _FinalStage {
+  public static final class Builder implements NameStage, AgeStage, _FinalStage {
     private String name;
+
+    private int age;
 
     private Builder() {
     }
 
     @java.lang.Override
-    public Builder from(Foo other) {
+    public Builder from(FooExtended other) {
       name(other.getName());
+      age(other.getAge());
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(@NotNull String name) {
+    public AgeStage name(@NotNull String name) {
       this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
-    public Foo build() {
-      return new Foo(name);
+    @JsonSetter("age")
+    public _FinalStage age(int age) {
+      this.age = age;
+      return this;
+    }
+
+    @java.lang.Override
+    public FooExtended build() {
+      return new FooExtended(name, age);
     }
   }
 }
