@@ -1,4 +1,4 @@
-import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
+import { Argument, Arguments, NamedArgument, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
 
 import { TypeLiteral } from "../TypeLiteral";
 import { Writer } from "../core/Writer";
@@ -17,6 +17,20 @@ export function writeArguments({ writer, arguments_ }: { writer: Writer; argumen
     }
     writer.dedent();
     writer.write(")");
+}
+
+export function writeBuilderArguments({ writer, arguments_ }: { writer: Writer; arguments_: NamedArgument[] }): void {
+    writer.write(".builder()");
+    writer.indent();
+    for (const argument of arguments_) {
+        writer.writeLine(`.${argument.name}(`);
+        writer.indent();
+        writer.writeNodeOrString(argument.assignment);
+        writer.dedent();
+        writer.writeLine(")");
+    }
+    writer.dedent();
+    writer.write(".build()");
 }
 
 function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {

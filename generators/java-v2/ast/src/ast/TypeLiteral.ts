@@ -10,6 +10,7 @@ type InternalTypeLiteral =
     | BigInteger
     | Boolean_
     | Bytes
+    | Class_
     | Date
     | DateTime
     | Double
@@ -38,6 +39,17 @@ interface Boolean_ {
 interface Bytes {
     type: "bytes";
     value: string;
+}
+
+interface Class_ {
+    type: "class";
+    reference: ClassReference;
+    parameters: ConstructorParameter[];
+}
+
+export interface ConstructorParameter {
+    name: string;
+    value: TypeLiteral;
 }
 
 interface Float {
@@ -134,6 +146,10 @@ export class TypeLiteral extends AstNode {
             case "bytes":
                 writer.write(`"${this.internalType.value}".getBytes()`);
                 break;
+            case "class": {
+                this.writeClass({ writer, class_: this.internalType });
+                break;
+            }
             case "float":
                 writer.write(`${this.internalType.value}f`);
                 break;
@@ -209,6 +225,16 @@ export class TypeLiteral extends AstNode {
             type: "bytes",
             value
         });
+    }
+
+    public static class_({
+        reference,
+        parameters
+    }: {
+        reference: ClassReference;
+        parameters: ConstructorParameter[];
+    }): TypeLiteral {
+        return new this({ type: "class", reference, parameters });
     }
 
     public static date(value: string): TypeLiteral {
@@ -329,6 +355,16 @@ export class TypeLiteral extends AstNode {
             java.instantiateClass({
                 classReference: BigIntegerClassReference,
                 arguments_: [TypeLiteral.string(bigInteger.value)]
+            })
+        );
+    }
+
+    private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
+        const parameters = filterNopConstructorParameters({ parameters: class_.parameters });
+        writer.writeNode(
+            java.instantiateClass({
+                classReference: class_.reference,
+                arguments_: parameters.map((parameter) => parameter.value)
             })
         );
     }
@@ -466,6 +502,14 @@ export const UUIDClassReference = new ClassReference({
     name: "UUID",
     packageName: "java.util"
 });
+
+function filterNopConstructorParameters({
+    parameters
+}: {
+    parameters: ConstructorParameter[];
+}): ConstructorParameter[] {
+    return parameters.filter((parameter) => !TypeLiteral.isNop(parameter.value));
+}
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {
     return entries.filter((entry) => !TypeLiteral.isNop(entry.key) && !TypeLiteral.isNop(entry.value));

@@ -30,6 +30,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/java-ast": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^57.0.0",

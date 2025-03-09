@@ -17,4 +17,13 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 }
 
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, ClassInstantiation, ClassReference, MethodInvocation, Type, TypeLiteral, Writer } from "./ast";
+export {
+    CodeBlock,
+    ClassInstantiation,
+    ClassReference,
+    type ConstructorParameter,
+    MethodInvocation,
+    Type,
+    TypeLiteral,
+    Writer
+} from "./ast";

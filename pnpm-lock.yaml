@@ -853,6 +853,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0

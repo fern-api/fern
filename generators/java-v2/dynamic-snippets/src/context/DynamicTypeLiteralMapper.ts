@@ -1,3 +1,5 @@
+import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
@@ -23,6 +25,601 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): java.TypeLiteral {
+        // eslint-disable-next-line eqeqeq
+        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but javat null"
+            });
+        }
+        if (args.value == null) {
+            return java.TypeLiteral.nop();
+        }
+        switch (args.typeReference.type) {
+            case "list":
+                return this.convertList({ list: args.typeReference.value, value: args.value });
+            case "literal":
+                return java.TypeLiteral.nop();
+            case "map":
+                return this.convertMap({ map: args.typeReference, value: args.value });
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return this.convertNamed({ named, value: args.value, as: args.as });
+            }
+            case "nullable":
+                return java.TypeLiteral.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                );
+            case "optional":
+                return java.TypeLiteral.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                );
+            case "primitive":
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
+            case "set":
+                return this.convertList({ list: args.typeReference.value, value: args.value });
+            case "unknown":
+                return this.convertUnknown({ value: args.value });
+            default:
+                assertNever(args.typeReference);
+        }
+    }
+
+    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
+        if (!Array.isArray(value)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected array but javat: ${typeof value}`
+            });
+            return java.TypeLiteral.nop();
+        }
+        return java.TypeLiteral.list({
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
+            values: value.map((v, index) => {
+                this.context.errors.scope({ index });
+                try {
+                    return this.convert({ typeReference: list, value: v });
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
+    }
+
+    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): java.TypeLiteral {
+        if (typeof value !== "object" || value == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected object but javat: ${value == null ? "null" : typeof value}`
+            });
+            return java.TypeLiteral.nop();
+        }
+        return java.TypeLiteral.map({
+            keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
+            entries: Object.entries(value).map(([key, value]) => {
+                this.context.errors.scope(key);
+                try {
+                    return {
+                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
+                        value: this.convert({ typeReference: map.value, value })
+                    };
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
+    }
+
+    private convertNamed({
+        named,
+        value,
+        as
+    }: {
+        named: FernIr.dynamic.NamedType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
+        switch (named.type) {
+            case "alias":
+                return this.convert({ typeReference: named.typeReference, value, as });
+            case "discriminatedUnion":
+                return this.convertDiscriminatedUnion({
+                    discriminatedUnion: named,
+                    value
+                });
+            case "enum":
+                return this.convertEnum({ enum_: named, value });
+            case "object":
+                return this.convertObject({ object_: named, value });
+            case "undiscriminatedUnion":
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+            default:
+                assertNever(named);
+        }
+    }
+
+    private convertDiscriminatedUnion({
+        discriminatedUnion,
+        value
+    }: {
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): java.TypeLiteral {
+        const classReference = this.context.getJavaClassReferenceFromDeclaration({
+            declaration: discriminatedUnion.declaration
+        });
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return java.TypeLiteral.nop();
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const baseFields = this.getBaseFields({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
+        });
+        switch (unionVariant.type) {
+            case "samePropertiesAsObject": {
+                const named = this.context.resolveNamedType({
+                    typeId: unionVariant.typeId
+                });
+                if (named == null) {
+                    return java.TypeLiteral.nop();
+                }
+                // TODO: Use the builder here.
+                return java.TypeLiteral.class_({
+                    reference: classReference,
+                    parameters: [
+                        ...baseFields,
+                        {
+                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                            value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
+                        }
+                    ]
+                });
+            }
+            case "singleProperty": {
+                const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                if (record == null) {
+                    return java.TypeLiteral.nop();
+                }
+                try {
+                    // TODO: Use the builder here.
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    return java.TypeLiteral.class_({
+                        reference: classReference,
+                        parameters: [
+                            ...baseFields,
+                            {
+                                name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                                value: this.convert({
+                                    typeReference: unionVariant.typeReference,
+                                    value: record[unionVariant.discriminantValue.wireValue]
+                                })
+                            }
+                        ]
+                    });
+                } finally {
+                    this.context.errors.unscope();
+                }
+            }
+            case "noProperties":
+                // TODO: Use the builder here.
+                return java.TypeLiteral.class_({
+                    reference: classReference,
+                    parameters: baseFields
+                });
+            default:
+                assertNever(unionVariant);
+        }
+    }
+
+    private getBaseFields({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): java.ConstructorParameter[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+    }
+
+    private convertObject({
+        object_,
+        value
+    }: {
+        object_: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): java.TypeLiteral {
+        const properties = this.context.associateByWireValue({
+            parameters: object_.properties,
+            values: this.context.getRecord(value) ?? {}
+        });
+        // TODO: Use the builder here.
+        return java.TypeLiteral.class_({
+            reference: this.context.getJavaClassReferenceFromDeclaration({
+                declaration: object_.declaration
+            }),
+            parameters: properties.map((property) => {
+                this.context.errors.scope(property.name.wireValue);
+                try {
+                    return {
+                        name: this.context.getPropertyName(property.name.name),
+                        value: this.convert(property)
+                    };
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
+    }
+
+    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): java.TypeLiteral {
+        const name = this.getEnumValueName({ enum_, value });
+        if (name == null) {
+            return java.TypeLiteral.nop();
+        }
+        // TODO: Consider forward compatible enums here.
+        // return java.TypeLiteral.enum(
+        //     java.typeReference({
+        //         name,
+        //         importPath: this.context.getImportPath(enum_.declaration.fernFilepath)
+        //     })
+        // );
         return java.TypeLiteral.nop();
+    }
+
+    private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
+        if (typeof value !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected enum value string, javat: ${typeof value}`
+            });
+            return undefined;
+        }
+        const enumValue = enum_.values.find((v) => v.wireValue === value);
+        if (enumValue == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `An enum value named "${value}" does not exist in this context`
+            });
+            return undefined;
+        }
+        // TODO: Is this the right naming convention?
+        return `${this.context.getClassName(enum_.declaration.name)}${this.context.getClassName(enumValue.name)}`;
+    }
+
+    private convertUndiscriminatedUnion({
+        undiscriminatedUnion,
+        value
+    }: {
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        value: unknown;
+    }): java.TypeLiteral {
+        const result = this.findMatchingUndiscriminatedUnionType({
+            undiscriminatedUnion,
+            value
+        });
+        if (result == null) {
+            return java.TypeLiteral.nop();
+        }
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: result.valueTypeReference });
+        if (fieldName == null) {
+            return java.TypeLiteral.nop();
+        }
+        // TODO: Use the of<fieldName> static method here.
+        return java.TypeLiteral.class_({
+            reference: this.context.getJavaClassReferenceFromDeclaration({
+                declaration: undiscriminatedUnion.declaration
+            }),
+            parameters: [
+                {
+                    name: fieldName,
+                    value: result.typeInstantiation
+                }
+            ]
+        });
+    }
+
+    private findMatchingUndiscriminatedUnionType({
+        undiscriminatedUnion,
+        value
+    }: {
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        value: unknown;
+    }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
+        for (const typeReference of undiscriminatedUnion.types) {
+            try {
+                const typeInstantiation = this.convert({ typeReference, value });
+                return { valueTypeReference: typeReference, typeInstantiation };
+            } catch (e) {
+                continue;
+            }
+        }
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
+        });
+        return undefined;
+    }
+
+    private getUndiscriminatedUnionFieldName({
+        typeReference
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+    }): string | undefined {
+        switch (typeReference.type) {
+            case "list":
+                return this.getUndiscriminatedUnionFieldNameForList({ list: typeReference });
+            case "literal":
+                return this.getUndiscriminatedUnionFieldNameForLiteral({ literal: typeReference.value });
+            case "map":
+                return this.getUndiscriminatedUnionFieldNameForMap({ map: typeReference });
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return undefined;
+                }
+                return this.context.getClassName(named.declaration.name);
+            }
+            case "optional":
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
+            case "nullable":
+                return this.getUndiscriminatedUnionFieldNameForNullable({ typeReference });
+            case "primitive":
+                return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
+            case "set":
+                return this.getUndiscriminatedUnionFieldNameForSet({ set: typeReference });
+            case "unknown":
+                return "Unknown";
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private getUndiscriminatedUnionFieldNameForList({
+        list
+    }: {
+        list: FernIr.dynamic.TypeReference.List;
+    }): string | undefined {
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list });
+        if (fieldName == null) {
+            return undefined;
+        }
+        return `ListOf${fieldName}`;
+    }
+
+    private getUndiscriminatedUnionFieldNameForMap({ map }: { map: FernIr.dynamic.MapType }): string | undefined {
+        const keyFieldName = this.getUndiscriminatedUnionFieldName({ typeReference: map.key });
+        if (keyFieldName == null) {
+            return undefined;
+        }
+        const valueFieldName = this.getUndiscriminatedUnionFieldName({ typeReference: map.value });
+        if (valueFieldName == null) {
+            return undefined;
+        }
+        return `MapOf${keyFieldName}To${valueFieldName}`;
+    }
+
+    private getUndiscriminatedUnionFieldNameForOptional({
+        typeReference
+    }: {
+        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
+    }): string | undefined {
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
+        if (fieldName == null) {
+            return undefined;
+        }
+        return `Optional${fieldName}`;
+    }
+
+    private getUndiscriminatedUnionFieldNameForNullable({
+        typeReference
+    }: {
+        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
+    }): string | undefined {
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
+        if (fieldName == null) {
+            return undefined;
+        }
+        return `Nullable${fieldName}`;
+    }
+
+    private getUndiscriminatedUnionFieldNameForSet({
+        set
+    }: {
+        set: FernIr.dynamic.TypeReference.Set;
+    }): string | undefined {
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
+        if (fieldName == null) {
+            return undefined;
+        }
+        return `SetOf${fieldName}`;
+    }
+
+    private getUndiscriminatedUnionFieldNameForLiteral({
+        literal
+    }: {
+        literal: FernIr.dynamic.LiteralType;
+    }): string | undefined {
+        // The Java SDK doesn't support literal types here.
+        return undefined;
+    }
+
+    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
+        switch (primitive) {
+            case "INTEGER":
+            case "UINT":
+                return "Integer";
+            case "LONG":
+            case "UINT_64":
+                return "Long";
+            case "FLOAT":
+                return "Float";
+            case "DOUBLE":
+                return "Double";
+            case "BOOLEAN":
+                return "Boolean";
+            case "BIG_INTEGER":
+                return "BigInteger";
+            case "STRING":
+                return "String";
+            case "UUID":
+                return "Uuid";
+            case "DATE":
+                return "Date";
+            case "DATE_TIME":
+                return "DateTime";
+            case "BASE_64":
+                return "Base64";
+            default:
+                assertNever(primitive);
+        }
+    }
+
+    private convertUnknown({ value }: { value: unknown }): java.TypeLiteral {
+        // TODO: Add support for unknown types here.
+        return java.TypeLiteral.nop();
+    }
+
+    private convertPrimitive({
+        primitive,
+        value,
+        as
+    }: {
+        primitive: FernIr.PrimitiveTypeV1;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
+        switch (primitive) {
+            case "INTEGER":
+            case "UINT": {
+                const num = this.getValueAsNumber({ value, as });
+                if (num == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.integer(num);
+            }
+            case "LONG":
+            case "UINT_64": {
+                const num = this.getValueAsNumber({ value, as });
+                if (num == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.long(num);
+            }
+            case "FLOAT": {
+                const num = this.getValueAsNumber({ value, as });
+                if (num == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.float(num);
+            }
+            case "DOUBLE": {
+                const num = this.getValueAsNumber({ value, as });
+                if (num == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.double(num);
+            }
+            case "BOOLEAN": {
+                const bool = this.getValueAsBoolean({ value, as });
+                if (bool == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.boolean(bool);
+            }
+            case "STRING": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.string(str);
+            }
+            case "DATE": {
+                const date = this.context.getValueAsString({ value });
+                if (date == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.string(date);
+            }
+            case "DATE_TIME": {
+                const dateTime = this.context.getValueAsString({ value });
+                if (dateTime == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.dateTime(dateTime);
+            }
+            case "UUID": {
+                const uuid = this.context.getValueAsString({ value });
+                if (uuid == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.uuid(uuid);
+            }
+            case "BASE_64": {
+                const base64 = this.context.getValueAsString({ value });
+                if (base64 == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.bytes(base64);
+            }
+            case "BIG_INTEGER": {
+                const bigInt = this.context.getValueAsString({ value });
+                if (bigInt == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.bigInteger(bigInt);
+            }
+            default:
+                assertNever(primitive);
+        }
+    }
+
+    private getValueAsNumber({
+        value,
+        as
+    }: {
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): number | undefined {
+        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
+        return this.context.getValueAsNumber({ value: num });
+    }
+
+    private getValueAsBoolean({
+        value,
+        as
+    }: {
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): boolean | undefined {
+        const bool =
+            as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
+        return this.context.getValueAsBoolean({ value: bool });
     }
 }
