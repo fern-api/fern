@@ -17,9 +17,9 @@ redirects:
 </Tab>
 <Tab title="Redirect with regex">
 ```yml title="docs.yml"
-  - source: "/old-folder/:slug" # <- matches /old-folder/foo, /old-folder/bar, etc.
+  - source: "/old-folder/:slug" # <- /old-folder/foo, /old-folder/bar, etc.
     destination: "/new-folder/:slug"
-  - source: "/incorrect/:slug*" # <- matches /incorrect, /incorrect/foo/bar/baz, etc.
+  - source: "/incorrect/:slug*" # <- /incorrect, /incorrect/foo/bar/baz, etc.
     destination: "/correct/:slug*" 
 ```
 <Info>
