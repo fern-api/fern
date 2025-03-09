@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework.Constraints;
-using SeedUnions.Core;
 
 namespace NUnit.Framework;
 
@@ -38,7 +35,7 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
 
     public int GetHashCode(JsonElement obj)
     {
-        return JsonUtils.Serialize(obj).GetHashCode();
+        return JsonSerializer.Serialize(obj).GetHashCode();
     }
 
     private bool CompareJsonElements(JsonElement x, JsonElement y, string path)
@@ -68,7 +65,8 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
 
                 if (xStr is null || yStr is null)
                 {
-                    _failurePath = $"{path}: Expected {(xStr is null ? "null" : $"\"{xStr}\"")} but got {(yStr is null ? "null" : $"\"{yStr}\"")}";
+                    _failurePath =
+                        $"{path}: Expected {(xStr is null ? "null" : $"\"{xStr}\"")} but got {(yStr is null ? "null" : $"\"{yStr}\"")}";
                     return false;
                 }
 
@@ -117,16 +115,14 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
     private bool IsLikelyDateTimeString(string? str)
     {
         // Simple heuristic to identify likely ISO date time strings
-        return str != null &&
-               (str.Contains("T") &&
-               (str.EndsWith("Z") || str.Contains("+") || str.Contains("-")));
+        return str != null
+            && (str.Contains("T") && (str.EndsWith("Z") || str.Contains("+") || str.Contains("-")));
     }
 
     private bool AreEquivalentDateTimeStrings(string str1, string str2)
     {
         // Try to parse both as DateTime
-        if (DateTime.TryParse(str1, out DateTime dt1) &&
-            DateTime.TryParse(str2, out DateTime dt2))
+        if (DateTime.TryParse(str1, out DateTime dt1) && DateTime.TryParse(str2, out DateTime dt2))
         {
             return dt1 == dt2;
         }
