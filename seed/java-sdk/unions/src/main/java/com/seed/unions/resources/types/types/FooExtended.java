@@ -17,14 +17,17 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Foo.Builder.class)
-public final class Foo implements IFoo {
+@JsonDeserialize(builder = FooExtended.Builder.class)
+public final class FooExtended implements IFoo {
     private final String name;
+
+    private final int age;
 
     private final Map<String, Object> additionalProperties;
 
-    private Foo(String name, Map<String, Object> additionalProperties) {
+    private FooExtended(String name, int age, Map<String, Object> additionalProperties) {
         this.name = name;
+        this.age = age;
         this.additionalProperties = additionalProperties;
     }
 
@@ -34,10 +37,15 @@ public final class Foo implements IFoo {
         return name;
     }
 
+    @JsonProperty("age")
+    public int getAge() {
+        return age;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Foo && equalTo((Foo) other);
+        return other instanceof FooExtended && equalTo((FooExtended) other);
     }
 
     @JsonAnyGetter
@@ -45,13 +53,13 @@ public final class Foo implements IFoo {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Foo other) {
-        return name.equals(other.name);
+    private boolean equalTo(FooExtended other) {
+        return name.equals(other.name) && age == other.age;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(this.name, this.age);
     }
 
     @java.lang.Override
@@ -64,18 +72,24 @@ public final class Foo implements IFoo {
     }
 
     public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        AgeStage name(@NotNull String name);
 
-        Builder from(Foo other);
+        Builder from(FooExtended other);
+    }
+
+    public interface AgeStage {
+        _FinalStage age(int age);
     }
 
     public interface _FinalStage {
-        Foo build();
+        FooExtended build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, _FinalStage {
+    public static final class Builder implements NameStage, AgeStage, _FinalStage {
         private String name;
+
+        private int age;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -83,21 +97,29 @@ public final class Foo implements IFoo {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(Foo other) {
+        public Builder from(FooExtended other) {
             name(other.getName());
+            age(other.getAge());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public AgeStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
-        public Foo build() {
-            return new Foo(name, additionalProperties);
+        @JsonSetter("age")
+        public _FinalStage age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        @java.lang.Override
+        public FooExtended build() {
+            return new FooExtended(name, age, additionalProperties);
         }
     }
 }
