@@ -34,9 +34,16 @@ class Metadata extends JsonSerializableType
     public ?bool $activated;
 
     /**
+     * @var Status $status
+     */
+    #[JsonProperty('status')]
+    public Status $status;
+
+    /**
      * @param array{
      *   createdAt: DateTime,
      *   updatedAt: DateTime,
+     *   status: Status,
      *   avatar?: ?string,
      *   activated?: ?bool,
      * } $values
@@ -48,6 +55,7 @@ class Metadata extends JsonSerializableType
         $this->updatedAt = $values['updatedAt'];
         $this->avatar = $values['avatar'] ?? null;
         $this->activated = $values['activated'] ?? null;
+        $this->status = $values['status'];
     }
 
     /**
