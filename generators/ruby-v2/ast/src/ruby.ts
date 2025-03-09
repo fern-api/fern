@@ -5,4 +5,4 @@ export function codeblock(arg: CodeBlock.Arg): CodeBlock {
 }
 
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Writer } from "./ast";
+export { CodeBlock, Type, TypeLiteral, Writer } from "./ast";
