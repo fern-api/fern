@@ -158,6 +158,7 @@ export class Method extends AstNode {
                     this.body?.write(writer);
                     writer.dedent();
 
+                    writer.writeNewLineIfLastLineNot();
                     writer.writeLine("}");
                     break;
                 case Method.BodyType.Expression:

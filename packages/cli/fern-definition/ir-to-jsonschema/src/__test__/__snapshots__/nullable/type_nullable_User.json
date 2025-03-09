@@ -4,6 +4,9 @@
     "name": {
       "type": "string"
     },
+    "id": {
+      "$ref": "#/definitions/nullable.UserId"
+    },
     "tags": {
       "oneOf": [
         {
@@ -33,14 +36,96 @@
           "type": "null"
         }
       ]
+    },
+    "email": {
+      "$ref": "#/definitions/nullable.Email"
+    },
+    "favorite-number": {
+      "$ref": "#/definitions/nullable.WeirdNumber"
     }
   },
   "required": [
     "name",
-    "tags"
+    "id",
+    "tags",
+    "email",
+    "favorite-number"
   ],
   "additionalProperties": false,
   "definitions": {
+    "nullable.UserId": {
+      "type": "string"
+    },
+    "nullable.Status": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "active",
+            "archived",
+            "soft-deleted"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "active"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "archived"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "soft-deleted"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
     "nullable.Metadata": {
       "type": "object",
       "properties": {
@@ -78,14 +163,48 @@
               "type": "null"
             }
           ]
+        },
+        "status": {
+          "$ref": "#/definitions/nullable.Status"
         }
       },
       "required": [
         "createdAt",
         "updatedAt",
-        "avatar"
+        "avatar",
+        "status"
       ],
       "additionalProperties": false
+    },
+    "nullable.Email": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable.WeirdNumber": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "number"
+        }
+      ]
     }
   }
 }

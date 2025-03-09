@@ -22,7 +22,7 @@ public class AsyncSeedStreamingClient {
         return this.dummyClient.get();
     }
 
-    public static SeedStreamingClientBuilder builder() {
-        return new SeedStreamingClientBuilder();
+    public static AsyncSeedStreamingClientBuilder builder() {
+        return new AsyncSeedStreamingClientBuilder();
     }
 }

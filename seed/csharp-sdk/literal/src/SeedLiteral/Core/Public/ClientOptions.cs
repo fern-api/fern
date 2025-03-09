@@ -31,6 +31,10 @@ public partial class ClientOptions
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
 
+    public string? Version { get; init; } = null;
+
+    public bool? AuditLogging { get; init; } = null;
+
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>

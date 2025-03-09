@@ -31,6 +31,8 @@ public partial class ClientOptions
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
 
+    public string? XApiVersion { get; init; } = null;
+
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>

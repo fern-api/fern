@@ -47,6 +47,114 @@
         "properties": []
       }
     },
+    "type_ast:FirstUnion": {
+      "name": "FirstUnion",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "FirstUnionFirstElement",
+            "type": {
+              "type": "id",
+              "value": "type_ast:FirstUnionFirstElement"
+            }
+          },
+          {
+            "typeName": "FirstUnionSecondElement",
+            "type": {
+              "type": "id",
+              "value": "type_ast:FirstUnionSecondElement"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:SecondUnion": {
+      "name": "SecondUnion",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "SecondUnionFirstElement",
+            "type": {
+              "type": "id",
+              "value": "type_ast:SecondUnionFirstElement"
+            }
+          },
+          {
+            "typeName": "SecondUnionSecondElement",
+            "type": {
+              "type": "id",
+              "value": "type_ast:SecondUnionSecondElement"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:FirstUnionFirstElement": {
+      "name": "FirstUnionFirstElement",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:SecondUnion"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:FirstUnionSecondElement": {
+      "name": "FirstUnionSecondElement",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:SecondUnion"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:SecondUnionFirstElement": {
+      "name": "SecondUnionFirstElement",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:FirstUnion"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:SecondUnionSecondElement": {
+      "name": "SecondUnionSecondElement",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "child",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:FirstUnion"
+            }
+          }
+        ]
+      }
+    },
     "type_ast:ContainerValue": {
       "name": "ContainerValue",
       "shape": {
@@ -218,6 +326,12 @@
       "webhooks": [],
       "websockets": [],
       "types": [
+        "type_ast:FirstUnion",
+        "type_ast:SecondUnion",
+        "type_ast:FirstUnionFirstElement",
+        "type_ast:FirstUnionSecondElement",
+        "type_ast:SecondUnionFirstElement",
+        "type_ast:SecondUnionSecondElement",
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",
         "type_ast:ObjectValue",

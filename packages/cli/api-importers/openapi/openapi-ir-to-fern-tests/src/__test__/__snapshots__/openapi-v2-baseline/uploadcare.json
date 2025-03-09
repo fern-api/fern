@@ -13906,6 +13906,7 @@
                     "wireValue": "{filename}"
                   },
                   "isOptional": false,
+                  "docs": "File's content",
                   "type": "fileArray"
                 },
                 "type": "file"

@@ -242,6 +242,7 @@ icao
 icns
 Identitical
 idgen
+idictionary
 idna
 ietf
 IHGUMUOY

@@ -22,7 +22,7 @@ public class AsyncSeedBytesClient {
         return this.serviceClient.get();
     }
 
-    public static SeedBytesClientBuilder builder() {
-        return new SeedBytesClientBuilder();
+    public static AsyncSeedBytesClientBuilder builder() {
+        return new AsyncSeedBytesClientBuilder();
     }
 }

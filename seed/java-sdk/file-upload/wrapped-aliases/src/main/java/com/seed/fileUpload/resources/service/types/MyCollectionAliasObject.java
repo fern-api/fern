@@ -5,9 +5,10 @@ package com.seed.fileUpload.resources.service.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.fileUpload.core.WrappedAlias;
 import java.util.List;
 
-public final class MyCollectionAliasObject {
+public final class MyCollectionAliasObject implements WrappedAlias {
     private final List<MyObject> value;
 
     private MyCollectionAliasObject(List<MyObject> value) {

@@ -29,5 +29,5 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     }: {
         context: Context;
         errorCollector: ErrorCollector;
-    }): Output | undefined;
+    }): Output | undefined | Promise<Output | undefined>;
 }

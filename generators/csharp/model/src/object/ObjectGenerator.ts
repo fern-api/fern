@@ -39,6 +39,27 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
         class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }));
 
+        class_.addField(
+            csharp.field({
+                name: "AdditionalProperties",
+                type: this.context.getAdditionalPropertiesType(),
+                access: csharp.Access.Public,
+                summary: "Additional properties received from the response, if any.",
+                set: csharp.Access.Internal,
+                get: csharp.Access.Public,
+                initializer: csharp.codeblock((writer) =>
+                    writer.writeNode(
+                        csharp.dictionary({
+                            keyType: csharp.Type.string(),
+                            valueType: csharp.Type.reference(this.context.getJsonElementClassReference()),
+                            values: undefined
+                        })
+                    )
+                ),
+                annotations: [this.context.getJsonExtensionDataAttribute()]
+            })
+        );
+
         class_.addMethod(this.context.getToStringMethod());
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {

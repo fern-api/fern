@@ -102,7 +102,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 continue;
             }
             const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `;
-            const docsStrings = parameter.docs.split("\n").map((line, index) => {
+            const docsStrings = parameter.docs.split("\n").map((line: string, index: number) => {
                 if (index === 0) {
                     return `${docsStrPrefix}${line}`;
                 } else {

@@ -22,7 +22,7 @@ public class AsyncSeedSinglePropertyClient {
         return this.singlePropertyClient.get();
     }
 
-    public static SeedSinglePropertyClientBuilder builder() {
-        return new SeedSinglePropertyClientBuilder();
+    public static AsyncSeedSinglePropertyClientBuilder builder() {
+        return new AsyncSeedSinglePropertyClientBuilder();
     }
 }

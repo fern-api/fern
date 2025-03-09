@@ -30,7 +30,7 @@ public class AsyncSeedPathParametersClient {
         return this.userClient.get();
     }
 
-    public static SeedPathParametersClientBuilder builder() {
-        return new SeedPathParametersClientBuilder();
+    public static AsyncSeedPathParametersClientBuilder builder() {
+        return new AsyncSeedPathParametersClientBuilder();
     }
 }

@@ -25,5 +25,4 @@ class KeyValuePair(UniversalBaseModel):
 from .map_value import MapValue  # noqa: E402
 from .variable_value import VariableValue  # noqa: E402
 
-update_forward_refs(MapValue, KeyValuePair=KeyValuePair)
 update_forward_refs(KeyValuePair)

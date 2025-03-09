@@ -22,7 +22,7 @@ public class AsyncSeedPlainTextClient {
         return this.serviceClient.get();
     }
 
-    public static SeedPlainTextClientBuilder builder() {
-        return new SeedPlainTextClientBuilder();
+    public static AsyncSeedPlainTextClientBuilder builder() {
+        return new AsyncSeedPlainTextClientBuilder();
     }
 }

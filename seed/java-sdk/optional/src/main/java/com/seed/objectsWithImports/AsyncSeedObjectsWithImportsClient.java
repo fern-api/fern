@@ -22,7 +22,7 @@ public class AsyncSeedObjectsWithImportsClient {
         return this.optionalClient.get();
     }
 
-    public static SeedObjectsWithImportsClientBuilder builder() {
-        return new SeedObjectsWithImportsClientBuilder();
+    public static AsyncSeedObjectsWithImportsClientBuilder builder() {
+        return new AsyncSeedObjectsWithImportsClientBuilder();
     }
 }

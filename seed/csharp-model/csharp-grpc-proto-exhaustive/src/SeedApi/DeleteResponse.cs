@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -5,6 +7,13 @@ namespace SeedApi;
 
 public record DeleteResponse
 {
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Returns a new DeleteResponse type from its Protobuf-equivalent representation.
     /// </summary>

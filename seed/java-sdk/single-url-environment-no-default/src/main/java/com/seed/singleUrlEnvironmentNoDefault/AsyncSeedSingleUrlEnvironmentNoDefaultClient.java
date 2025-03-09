@@ -22,7 +22,7 @@ public class AsyncSeedSingleUrlEnvironmentNoDefaultClient {
         return this.dummyClient.get();
     }
 
-    public static SeedSingleUrlEnvironmentNoDefaultClientBuilder builder() {
-        return new SeedSingleUrlEnvironmentNoDefaultClientBuilder();
+    public static AsyncSeedSingleUrlEnvironmentNoDefaultClientBuilder builder() {
+        return new AsyncSeedSingleUrlEnvironmentNoDefaultClientBuilder();
     }
 }

@@ -22,7 +22,7 @@ public class AsyncSeedAuthEnvironmentVariablesClient {
         return this.serviceClient.get();
     }
 
-    public static SeedAuthEnvironmentVariablesClientBuilder builder() {
-        return new SeedAuthEnvironmentVariablesClientBuilder();
+    public static AsyncSeedAuthEnvironmentVariablesClientBuilder builder() {
+        return new AsyncSeedAuthEnvironmentVariablesClientBuilder();
     }
 }

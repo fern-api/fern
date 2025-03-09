@@ -61,7 +61,8 @@ export function convertHttpRequestBody({
                                     name: property.key
                                 }),
                                 isOptional: property.isOptional,
-                                contentType: property.contentType
+                                contentType: property.contentType,
+                                docs: property.docs
                             })
                         );
                     } else {
@@ -72,7 +73,8 @@ export function convertHttpRequestBody({
                                     name: property.key
                                 }),
                                 isOptional: property.isOptional,
-                                contentType: property.contentType
+                                contentType: property.contentType,
+                                docs: property.docs
                             })
                         );
                     }

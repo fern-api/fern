@@ -1,0 +1,515 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Service.GetMetadataAsync(
+    new GetMetadataRequest{
+        Shallow = false,
+        Tag = new List<string>(){
+            "development",
+            "public",
+        },
+        XAPIVersion = "0.0.1"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Service.GetMetadataAsync(
+    new GetMetadataRequest{
+        Shallow = false,
+        Tag = new List<string>(){
+            "development",
+        },
+        XAPIVersion = "0.0.1"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
+"using Acme;
+using Acme.Types;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Service.CreateBigEntityAsync(
+    new BigEntity{
+        CastMember = new Actor{
+            ID = "john.doe",
+            Name = "John Doe"
+        },
+        ExtendedMovie = new ExtendedMovie{
+            Cast = new List<string>(){
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            },
+            ID = "movie-sda231x",
+            Title = "Pulp Fiction",
+            From = "Quentin Tarantino",
+            Rating = 8.5,
+            Tag = "tag-12efs9dv",
+            Metadata = new Dictionary<string, object>(){
+                ["academyAward"] = true,
+                ["releaseDate"] = "2023-12-08",
+                ["ratings"] = new Dictionary<string, object>() {
+                    ["rottenTomatoes"] = 97,
+                    ["imdb"] = 7.6,
+                },
+            },
+            Revenue = 1000000l
+        }
+    }
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
+"using Acme;
+using Acme.Types;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Service.CreateMovieAsync(
+    new Movie{
+        ID = "movie-c06a4ad7",
+        Prequel = "movie-cv9b914f",
+        Title = "The Boy and the Heron",
+        From = "Hayao Miyazaki",
+        Rating = 8,
+        Tag = "development",
+        Metadata = new Dictionary<string, object>(){
+            ["actors"] = new List<object>() {
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+            },
+            ["releaseDate"] = "2023-12-08",
+            ["ratings"] = new Dictionary<string, object>() {
+                ["rottenTomatoes"] = 97,
+                ["imdb"] = 7.6,
+            },
+        },
+        Revenue = 1000000l
+    }
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"using Acme;
+using Acme.Types.Object;
+using System.Globalization;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+    new ObjectWithOptionalField{
+        String = "string",
+        Integer = 1,
+        Long = 1000000l,
+        Double = 1.1,
+        Bool = true,
+        Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+        Date = DateOnly.Parse("2023-01-15"),
+        UUID = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Base64 = "SGVsbG8gd29ybGQh",
+        List = new List<string>(){
+            "list",
+            "list",
+        },
+        Set = new HashSet<string>(){
+            "set",
+        },
+        Map = new Dictionary<int, string>(){
+            [1] = "map",
+        },
+        Bigint = "1000000"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"using Acme;
+using Acme.Types.Object;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
+    new List<ObjectWithRequiredField>(){
+        new ObjectWithRequiredField{
+            String = "one"
+        },
+        new ObjectWithRequiredField{
+            String = "two"
+        },
+        new ObjectWithRequiredField{
+            String = "three"
+        },
+    }
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
+    new List<string>(){
+        "one",
+        "two",
+        "three",
+    }
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient();
+
+await client.Service.PostAsync(
+    new MyRequest()
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient();
+
+await client.Service.JustFileAsync(
+    new JustFileRequest()
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient();
+
+await client.Service.JustFileWithQueryParamsAsync(
+    new JustFileWithQueryParamsRequest{
+        Integer = 42,
+        MaybeString = "exists"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Imdb.GetMovieAsync(
+    "movie_xyz"
+);
+"
+`;
+
+exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"using Acme;
+using Acme.Imdb;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Imdb.CreateMovieAsync(
+    new CreateMovieRequest{
+        Title = "The Matrix",
+        Rating = 8.2
+    }
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
+"using Acme;
+using Acme.Core;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        Environment = new AcmeEnvironment{
+            Ec2 = "https://custom.ec2.aws.com",
+            S3 = "https://custom.s3.aws.com"
+        }
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest{
+        S3Key = "xyz"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
+"using Acme;
+using Acme.Core;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        Environment = AcmeEnvironment.Production
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest{
+        S3Key = "xyz"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
+"using Acme;
+using Acme.Core;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        Environment = AcmeEnvironment.Staging
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest{
+        S3Key = "xyz"
+    }
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Body properties' 1`] = `
+"using Acme;
+using Acme.Core;
+using Acme.Nullable;
+using System.Globalization;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.Nullable.CreateUserAsync(
+    new CreateUserRequest{
+        Username = "john.doe",
+        Tags = new List<string>(){
+            "admin",
+        },
+        Metadata = new Metadata{
+            CreatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
+            UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal)
+        }
+    }
+);
+"
+`;
+
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
+"using Acme;
+using Acme.Core;
+using Acme.Nullable;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.Nullable.GetUsersAsync(
+    new GetUsersRequest{
+        Usernames = new List<string>(){
+            "john.doe",
+            "jane.doe",
+        },
+        Tags = new List<string?>(){}
+    }
+);
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
+"using Acme;
+using Acme.Core;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        BaseUrl = AcmeEnvironment.Production
+    }
+);
+
+await client.Dummy.GetDummyAsync();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
+"using Acme;
+using Acme.Core;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        BaseUrl = AcmeEnvironment.Staging
+    }
+);
+
+await client.Dummy.GetDummyAsync();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
+"using Acme;
+using Acme.Core;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions{
+        BaseUrl = "http://localhost:8080"
+    }
+);
+
+await client.Dummy.GetDummyAsync();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;

@@ -11,6 +11,7 @@ import {
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
@@ -93,6 +94,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             context,
             specs: openApiSpecs
         });
+        let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
@@ -103,7 +105,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
                 const errorCollector = new ErrorCollector({ logger: context.logger });
-                const result = converter.convert({
+                const result = await converter.convert({
                     context: converterContext,
                     errorCollector
                 });
@@ -111,10 +113,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     context.logger.info("OpenAPI 3.1 Converter encountered errors:");
                     errorCollector.logErrors();
                 }
-                return result;
+                if (mergedIr === undefined) {
+                    mergedIr = result;
+                } else {
+                    mergedIr = mergeIntermediateRepresentation(mergedIr, result);
+                }
             }
         }
-        throw new Error("No OpenAPI document found");
+        if (mergedIr === undefined) {
+            throw new Error("No OpenAPI document found");
+        }
+        return mergedIr;
     }
 
     public async toFernWorkspace(

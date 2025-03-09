@@ -58,7 +58,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): AbstractOperationConverter.Output | undefined;
+    }): Promise<AbstractOperationConverter.Output | undefined>;
 
     protected convertHttpMethod(): HttpMethod | undefined {
         switch (this.method) {
@@ -77,7 +77,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
     }
 
-    protected convertParameters({
+    protected async convertParameters({
         context,
         errorCollector,
         breadcrumbs
@@ -85,11 +85,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         breadcrumbs: string[];
-    }): {
+    }): Promise<{
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
-    } {
+    }> {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
@@ -108,7 +108,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 parameter
             });
 
-            const convertedParameter = parameterConverter.convert({ context, errorCollector });
+            const convertedParameter = await parameterConverter.convert({ context, errorCollector });
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
@@ -149,7 +149,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         };
     }
 
-    protected convertRequestBody({
+    protected async convertRequestBody({
         context,
         errorCollector,
         breadcrumbs,
@@ -161,14 +161,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): HttpRequestBody | undefined | null {
+    }): Promise<HttpRequestBody | undefined | null> {
         if (this.operation.requestBody == null) {
             return undefined;
         }
 
         let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
         if (context.isReferenceObject(this.operation.requestBody)) {
-            const resolvedReference = context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
+            const resolvedReference = await context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
                 this.operation.requestBody
             );
             if (resolvedReference.resolved) {
@@ -188,7 +188,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             group: group ?? [],
             method
         });
-        const convertedRequestBody = requestBodyConverter.convert({ context, errorCollector });
+        const convertedRequestBody = await requestBodyConverter.convert({ context, errorCollector });
 
         if (convertedRequestBody != null) {
             this.inlinedTypes = {
@@ -201,7 +201,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
-    protected convertResponseBody({
+    protected async convertResponseBody({
         context,
         errorCollector,
         breadcrumbs,
@@ -213,7 +213,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): HttpResponse | undefined {
+    }): Promise<HttpResponse | undefined> {
         if (this.operation.responses == null) {
             return undefined;
         }
@@ -226,7 +226,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
             let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
             if (context.isReferenceObject(response)) {
-                const resolvedReference = context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
                 if (resolvedReference.resolved) {
                     resolvedResponse = resolvedReference.value;
                 }
@@ -245,7 +245,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 method,
                 statusCode
             });
-            const convertedResponseBody = responseBodyConverter.convert({ context, errorCollector });
+            const convertedResponseBody = await responseBodyConverter.convert({ context, errorCollector });
             if (convertedResponseBody != null) {
                 this.inlinedTypes = {
                     ...this.inlinedTypes,

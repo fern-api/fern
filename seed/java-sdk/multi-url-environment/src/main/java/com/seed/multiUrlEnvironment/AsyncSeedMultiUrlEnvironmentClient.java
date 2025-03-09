@@ -30,7 +30,7 @@ public class AsyncSeedMultiUrlEnvironmentClient {
         return this.s3Client.get();
     }
 
-    public static SeedMultiUrlEnvironmentClientBuilder builder() {
-        return new SeedMultiUrlEnvironmentClientBuilder();
+    public static AsyncSeedMultiUrlEnvironmentClientBuilder builder() {
+        return new AsyncSeedMultiUrlEnvironmentClientBuilder();
     }
 }

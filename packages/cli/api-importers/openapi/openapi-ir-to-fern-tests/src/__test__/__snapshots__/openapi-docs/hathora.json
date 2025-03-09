@@ -3774,7 +3774,10 @@ service:
                 },
                 "name": "CreatePrivateLobbyDeprecatedRequest",
                 "query-parameters": {
-                  "local": "optional<boolean>",
+                  "local": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "region": "optional<root.Region>",
                 },
               },
@@ -3826,7 +3829,10 @@ service:
                 },
                 "name": "CreatePublicLobbyDeprecatedRequest",
                 "query-parameters": {
-                  "local": "optional<boolean>",
+                  "local": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "region": "optional<root.Region>",
                 },
               },
@@ -3891,7 +3897,10 @@ service:
                 },
                 "name": "ListActivePublicLobbiesDeprecatedRequest",
                 "query-parameters": {
-                  "local": "optional<boolean>",
+                  "local": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "region": "optional<root.Region>",
                 },
               },
@@ -3928,7 +3937,9 @@ service:
         name: CreatePrivateLobbyDeprecatedRequest
         query-parameters:
           region: optional<root.Region>
-          local: optional<boolean>
+          local:
+            type: optional<boolean>
+            default: false
         headers:
           Authorization:
             type: string
@@ -3963,7 +3974,9 @@ service:
         name: CreatePublicLobbyDeprecatedRequest
         query-parameters:
           region: optional<root.Region>
-          local: optional<boolean>
+          local:
+            type: optional<boolean>
+            default: false
         headers:
           Authorization:
             type: string
@@ -3997,7 +4010,9 @@ service:
       request:
         name: ListActivePublicLobbiesDeprecatedRequest
         query-parameters:
-          local: optional<boolean>
+          local:
+            type: optional<boolean>
+            default: false
           region: optional<root.Region>
         headers:
           Authorization:
@@ -4908,7 +4923,10 @@ types:
               "request": {
                 "name": "GetLogsForAppRequest",
                 "query-parameters": {
-                  "follow": "optional<boolean>",
+                  "follow": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "region": "optional<root.Region>",
                   "tailLines": "optional<root.TailLines>",
                 },
@@ -4938,7 +4956,10 @@ types:
               "request": {
                 "name": "GetLogsForDeploymentRequest",
                 "query-parameters": {
-                  "follow": "optional<boolean>",
+                  "follow": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "tailLines": "optional<root.TailLines>",
                 },
               },
@@ -4967,7 +4988,10 @@ types:
               "request": {
                 "name": "GetLogsForProcessRequest",
                 "query-parameters": {
-                  "follow": "optional<boolean>",
+                  "follow": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "tailLines": "optional<root.TailLines>",
                 },
               },
@@ -5003,7 +5027,9 @@ service:
       request:
         name: GetLogsForAppRequest
         query-parameters:
-          follow: optional<boolean>
+          follow:
+            type: optional<boolean>
+            default: false
           tailLines: optional<root.TailLines>
           region: optional<root.Region>
       response:
@@ -5024,7 +5050,9 @@ service:
       request:
         name: GetLogsForProcessRequest
         query-parameters:
-          follow: optional<boolean>
+          follow:
+            type: optional<boolean>
+            default: false
           tailLines: optional<root.TailLines>
       response:
         docs: Ok
@@ -5044,7 +5072,9 @@ service:
       request:
         name: GetLogsForDeploymentRequest
         query-parameters:
-          follow: optional<boolean>
+          follow:
+            type: optional<boolean>
+            default: false
           tailLines: optional<root.TailLines>
       response:
         docs: Ok
@@ -5125,7 +5155,10 @@ service:
                     "type": "optional<root.MetricName>",
                   },
                   "start": "optional<integer>",
-                  "step": "optional<integer>",
+                  "step": {
+                    "default": 60,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -5166,7 +5199,9 @@ service:
             allow-multiple: true
           end: optional<integer>
           start: optional<integer>
-          step: optional<integer>
+          step:
+            type: optional<integer>
+            default: 60
       response:
         docs: Ok
         type: root.MetricsResponse

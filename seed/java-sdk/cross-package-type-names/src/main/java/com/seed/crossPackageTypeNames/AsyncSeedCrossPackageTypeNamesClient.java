@@ -38,7 +38,7 @@ public class AsyncSeedCrossPackageTypeNamesClient {
         return this.fooClient.get();
     }
 
-    public static SeedCrossPackageTypeNamesClientBuilder builder() {
-        return new SeedCrossPackageTypeNamesClientBuilder();
+    public static AsyncSeedCrossPackageTypeNamesClientBuilder builder() {
+        return new AsyncSeedCrossPackageTypeNamesClientBuilder();
     }
 }

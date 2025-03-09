@@ -103,7 +103,7 @@ export class Writer extends AbstractWriter {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
-    ${this.buffer}`;
+${this.buffer}`;
             }
         }
         return this.buffer;

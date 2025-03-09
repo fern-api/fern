@@ -148,8 +148,10 @@ export {
     TypeParameter,
     Type,
     Type as Types,
+    TypeLiteral,
     Writer,
     VALID_READ_ONLY_MEMORY_TYPES,
     convertReadOnlyPrimitiveTypes
 } from "./ast";
+export { type ConstructorField } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";

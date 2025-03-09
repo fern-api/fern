@@ -15075,6 +15075,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -15603,6 +15604,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -16073,6 +16075,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -20287,6 +20290,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -20800,6 +20804,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -21255,6 +21260,7 @@
                     "primitive": {
                       "v1": "BOOLEAN",
                       "v2": {
+                        "default": false,
                         "type": "boolean"
                       }
                     },
@@ -21909,6 +21915,7 @@
                     "primitive": {
                       "v1": "INTEGER",
                       "v2": {
+                        "default": 60,
                         "type": "integer"
                       }
                     },

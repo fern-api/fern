@@ -48,6 +48,32 @@
     - type: feat
       summary: Generated classes now follow the C# convention for odering consts, fields, constructors, properties, methods, operators, and inner classes.
 
+- version: 1.12.0-rc14
+  createdAt: "2025-03-07"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for overriding literal global headers via the `ClientOptions` class.
+
+- version: 1.12.0-rc13
+  createdAt: "2025-03-07"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for receiving additional properties in object types with the new `AdditionalProperties` field.
+        This is useful when you want to parse an object that has properties that are not available in the SDK
+        (e.g. alpha and/or undocumented properties).
+
+        ```csharp
+        // Call the endpoint.
+        var response = await client.GetUser(...);
+
+        // Print the additional properties.
+        Console.WriteLine(response.AdditionalProperties);
+        ```
+
 - version: 1.12.0-rc12
   createdAt: "2025-03-05"
   irVersion: 57

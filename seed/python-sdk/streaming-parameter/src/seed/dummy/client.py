@@ -120,7 +120,7 @@ class DummyClient:
                                             object_=json.loads(_text),
                                         ),
                                     )
-                                except:
+                                except Exception:
                                     pass
                             return
                         _response.read()
@@ -274,7 +274,7 @@ class AsyncDummyClient:
                                             object_=json.loads(_text),
                                         ),
                                     )
-                                except:
+                                except Exception:
                                     pass
                             return
                         await _response.aread()

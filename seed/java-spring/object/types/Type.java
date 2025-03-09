@@ -71,7 +71,7 @@ public final class Type {
 
   private final Name nineteen;
 
-  private final long twenty;
+  private final int twenty;
 
   private final long twentyone;
 
@@ -87,7 +87,7 @@ public final class Type {
       String seven, UUID eight, byte[] nine, List<Integer> ten, Set<Double> eleven,
       Map<String, Boolean> twelve, Optional<Long> thirteen, Object fourteen,
       List<List<Integer>> fifteen, List<Map<String, Integer>> sixteen,
-      List<Optional<UUID>> seventeen, Name nineteen, long twenty, long twentyone, float twentytwo,
+      List<Optional<UUID>> seventeen, Name nineteen, int twenty, long twentyone, float twentytwo,
       BigInteger twentythree, Optional<OffsetDateTime> twentyfour, Optional<String> twentyfive) {
     this.one = one;
     this.two = two;
@@ -211,7 +211,7 @@ public final class Type {
   }
 
   @JsonProperty("twenty")
-  public long getTwenty() {
+  public int getTwenty() {
     return twenty;
   }
 
@@ -311,7 +311,7 @@ public final class Type {
   }
 
   public interface TwentyStage {
-    TwentyoneStage twenty(long twenty);
+    TwentyoneStage twenty(int twenty);
   }
 
   public interface TwentyoneStage {
@@ -404,7 +404,7 @@ public final class Type {
 
     private Name nineteen;
 
-    private long twenty;
+    private int twenty;
 
     private long twentyone;
 
@@ -541,7 +541,7 @@ public final class Type {
 
     @java.lang.Override
     @JsonSetter("twenty")
-    public TwentyoneStage twenty(long twenty) {
+    public TwentyoneStage twenty(int twenty) {
       this.twenty = twenty;
       return this;
     }

@@ -22,7 +22,7 @@ public class AsyncSeedFileDownloadClient {
         return this.serviceClient.get();
     }
 
-    public static SeedFileDownloadClientBuilder builder() {
-        return new SeedFileDownloadClientBuilder();
+    public static AsyncSeedFileDownloadClientBuilder builder() {
+        return new AsyncSeedFileDownloadClientBuilder();
     }
 }

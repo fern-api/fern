@@ -30,4 +30,8 @@ public partial class RequestOptions : IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
+
+    public string? Version { get; init; }
+
+    public bool? AuditLogging { get; init; }
 }

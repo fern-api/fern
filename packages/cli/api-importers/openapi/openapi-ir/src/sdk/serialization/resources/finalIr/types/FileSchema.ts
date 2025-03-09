@@ -5,15 +5,18 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDescription } from "../../commons/types/WithDescription";
 
 export const FileSchema: core.serialization.ObjectSchema<serializers.FileSchema.Raw, FernOpenapiIr.FileSchema> =
-    core.serialization.objectWithoutOptionalProperties({
-        isOptional: core.serialization.boolean(),
-        isArray: core.serialization.boolean(),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            isOptional: core.serialization.boolean(),
+            isArray: core.serialization.boolean(),
+        })
+        .extend(WithDescription);
 
 export declare namespace FileSchema {
-    export interface Raw {
+    export interface Raw extends WithDescription.Raw {
         isOptional: boolean;
         isArray: boolean;
     }

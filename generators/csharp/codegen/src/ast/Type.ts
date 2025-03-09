@@ -32,6 +32,7 @@ type InternalType =
     | ListType
     | List
     | Set
+    | IDictionary
     | Map
     | KeyValuePair
     | Optional
@@ -114,6 +115,12 @@ interface Set {
 
 interface Map {
     type: "map";
+    keyType: Type;
+    valueType: Type;
+}
+
+interface IDictionary {
+    type: "idictionary";
     keyType: Type;
     valueType: Type;
 }
@@ -244,6 +251,7 @@ export class Type extends AstNode {
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
+            case "idictionary":
             case "map": {
                 const keyType = this.internalType.keyType;
                 const valueType = this.internalType.valueType;
@@ -256,7 +264,8 @@ export class Type extends AstNode {
                     writer.write("object");
                     break;
                 }
-                writer.write("Dictionary<");
+                const typeName = this.internalType.type === "idictionary" ? "IDictionary" : "Dictionary";
+                writer.write(`${typeName}<`);
                 keyType.write(writer);
                 writer.write(", ");
                 valueType.write(writer);
@@ -403,6 +412,7 @@ export class Type extends AstNode {
             case "func":
             case "oneOfBase":
             case "csharpType":
+            case "idictionary":
                 return true;
             case "reference":
             case "coreReference":
@@ -556,6 +566,13 @@ export class Type extends AstNode {
         });
     }
 
+    public static idictionary(keyType: Type, valueType: Type): Type {
+        return new this({
+            type: "idictionary",
+            keyType,
+            valueType
+        });
+    }
     public static keyValuePair(keyType: Type, valueType: Type): Type {
         return new this({
             type: "keyValuePair",

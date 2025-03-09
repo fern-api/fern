@@ -22,7 +22,7 @@ public class AsyncSeedNurseryApiClient {
         return this.packageClient.get();
     }
 
-    public static SeedNurseryApiClientBuilder builder() {
-        return new SeedNurseryApiClientBuilder();
+    public static AsyncSeedNurseryApiClientBuilder builder() {
+        return new AsyncSeedNurseryApiClientBuilder();
     }
 }
