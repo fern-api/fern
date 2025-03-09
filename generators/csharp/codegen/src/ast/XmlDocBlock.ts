@@ -3,13 +3,12 @@ import { XmlDocWriter } from "./core/XmlDocWriter";
 
 export declare namespace XmlDocBlock {
     type Like = XmlDocBlock | XmlDocBlock.Arg;
-    type Arg =
-        | {
-              summary?: XmlDocNode;
-              codeExample?: XmlDocNode;
-              exceptions?: Map<string | AstNode, XmlDocNode>;
-          }
-        | XmlDocNode;
+    type XmlDocProps = {
+        summary?: XmlDocNode;
+        codeExample?: XmlDocNode;
+        exceptions?: Map<string | AstNode, XmlDocNode>;
+    };
+    type Arg = XmlDocProps | XmlDocNode;
     type XmlDocNode = string | ((writer: XmlDocWriter) => void) | null | undefined;
 }
 

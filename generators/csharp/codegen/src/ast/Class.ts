@@ -25,7 +25,7 @@ export class Class extends AstNode {
     public readonly namespace: string;
     public readonly access: Access;
     public readonly static_: boolean;
-    public readonly abstract: boolean;
+    public readonly abstract_: boolean;
     public readonly sealed: boolean;
     public readonly readonly: boolean;
     public readonly partial: boolean;
@@ -51,7 +51,7 @@ export class Class extends AstNode {
         namespace,
         access,
         static_,
-        abstract,
+        abstract_,
         sealed,
         partial,
         readonly,
@@ -69,7 +69,7 @@ export class Class extends AstNode {
         this.namespace = namespace;
         this.access = access;
         this.static_ = static_ ?? false;
-        this.abstract = abstract ?? false;
+        this.abstract_ = abstract_ ?? false;
         this.sealed = sealed ?? false;
         this.readonly = readonly ?? false;
         this.partial = partial ?? false;
@@ -158,7 +158,7 @@ export class Class extends AstNode {
         if (this.static_) {
             writer.write(" static");
         }
-        if (this.abstract) {
+        if (this.abstract_) {
             writer.write(" abstract");
         }
         if (this.sealed) {
@@ -398,7 +398,7 @@ export namespace Class {
         /* Defaults to false */
         static_?: boolean;
         /* Defaults to false */
-        abstract?: boolean;
+        abstract_?: boolean;
         /* Defaults to false */
         sealed?: boolean;
         /* Defaults to false */

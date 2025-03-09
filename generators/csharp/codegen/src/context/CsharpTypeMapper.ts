@@ -38,7 +38,7 @@ export class CsharpTypeMapper {
             case "container":
                 return this.convertContainer({
                     container: reference.container,
-                    unboxOptionals: unboxOptionals
+                    unboxOptionals
                 });
             case "named":
                 return this.convertNamed({ named: reference, fullyQualified });
