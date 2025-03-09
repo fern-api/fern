@@ -3,9 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-type InternalType =
-    | Boolean_
-    | String_;
+type InternalType = Boolean_ | String_;
 
 interface Boolean_ {
     type: "boolean";
