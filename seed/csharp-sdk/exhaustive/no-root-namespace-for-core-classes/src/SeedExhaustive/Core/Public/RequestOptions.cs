@@ -26,6 +26,17 @@ public partial class RequestOptions : IRequestOptions
     public TimeSpan? Timeout { get; init; }
 
     /// <summary>
+    /// Additional query parameters sent with the request.
+    /// </summary>
+    public Dictionary<string, object>? QueryParameters { get; init; }
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is a no-op for multipart/form-data endpoints.
+    /// </summary>
+    public Dictionary<string, object>? BodyProperties { get; init; }
+
+    /// <summary>
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
