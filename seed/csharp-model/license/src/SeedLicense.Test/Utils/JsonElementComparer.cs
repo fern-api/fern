@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework.Constraints;
-using SeedUnions.Core;
 
 namespace NUnit.Framework;
 
@@ -38,7 +35,7 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
 
     public int GetHashCode(JsonElement obj)
     {
-        return JsonUtils.Serialize(obj).GetHashCode();
+        return JsonSerializer.Serialize(obj).GetHashCode();
     }
 
     private bool CompareJsonElements(JsonElement x, JsonElement y, string path)
