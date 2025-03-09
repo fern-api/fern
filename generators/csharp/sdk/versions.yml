@@ -7,8 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.12.0-rc16
+  createdAt: "2025-03-09"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Remove hardcoded namespace import from JsonElementComparer.cs
+
 - version: 1.12.0-rc15
-  createdAt: "2025-03-05"
+  createdAt: "2025-03-09"
   irVersion: 57
   changelogEntry:
     - type: feat
