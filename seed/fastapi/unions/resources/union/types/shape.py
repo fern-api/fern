@@ -36,6 +36,16 @@ class _Factory:
 
 
 class Shape(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.union import Shape_Circle
+
+    Shape_Circle(
+        radius=5.0,
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

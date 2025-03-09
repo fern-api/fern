@@ -4,6 +4,19 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "circle",
+ *         radius: 5
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "square",
+ *         length: 5
+ *     }
+ */
 export type Shape = SeedUnions.Shape.Circle | SeedUnions.Shape.Square;
 
 export namespace Shape {

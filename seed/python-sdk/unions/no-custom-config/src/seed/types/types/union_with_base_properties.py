@@ -8,6 +8,14 @@ import pydantic
 
 
 class Base(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithBaseProperties_Integer
+
+    UnionWithBaseProperties_Integer(value=5)
+    """
+
     id: str
 
     if IS_PYDANTIC_V2:
@@ -47,6 +55,14 @@ class UnionWithBaseProperties_String(Base):
 
 
 class UnionWithBaseProperties_Foo(Base):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithBaseProperties_Integer
+
+    UnionWithBaseProperties_Integer(value=5)
+    """
+
     type: typing.Literal["foo"] = "foo"
     name: str
 
@@ -60,6 +76,11 @@ class UnionWithBaseProperties_Foo(Base):
             extra = pydantic.Extra.allow
 
 
+"""
+from seed.types import UnionWithBaseProperties_Integer
+
+UnionWithBaseProperties_Integer(value=5)
+"""
 UnionWithBaseProperties = typing.Union[
     UnionWithBaseProperties_Integer, UnionWithBaseProperties_String, UnionWithBaseProperties_Foo
 ]

@@ -16,4 +16,15 @@ class UnionWithOptionalTime_Datetime(UniversalBaseModel):
     type: typing.Literal["datetime"] = "datetime"
 
 
+"""
+import datetime
+
+from seed.unions.resources import UnionWithOptionalTime_Date
+
+UnionWithOptionalTime_Date(
+    value=datetime.date.fromisoformat(
+        "1994-01-01",
+    )
+)
+"""
 UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime]

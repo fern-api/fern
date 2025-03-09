@@ -15,4 +15,9 @@ class UnionWithPrimitive_String(UniversalBaseModel):
     type: typing.Literal["string"] = "string"
 
 
+"""
+from seed.unions.resources import UnionWithPrimitive_Integer
+
+UnionWithPrimitive_Integer(value=9)
+"""
 UnionWithPrimitive = typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String]
