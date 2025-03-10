@@ -6,6 +6,18 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.12.0-rc18
+  createdAt: "2025-03-10"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Make the behavior between a wrapped request with body properties and normal body request consistent.
+        Previously, a wrapped request with body properties would not omit `null` values even if the JSON configuration is configured to omit `null` values.
+    - type: fix
+      summary: |
+        Fix a bug where required properties that were `[JsonIgnore]` threw an error during serialization.
+
 
 - version: 1.12.0-rc17
   createdAt: "2025-03-09"

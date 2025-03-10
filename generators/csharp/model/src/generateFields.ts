@@ -9,32 +9,42 @@ export function generateFields({
     className,
     context
 }: {
-    properties: FernIr.ObjectProperty[];
+    properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
     className: string;
     context: ModelGeneratorContext;
 }): csharp.Field[] {
-    return properties.map((property) => {
-        const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
-        const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
-            typeReference: property.valueType
-        });
-        const fieldAttributes = [];
-        if (property.propertyAccess) {
-            fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
-        }
+    return properties.map((property) => generateField({ property, className, context }));
+}
 
-        return csharp.field({
-            name: getPropertyName({ className, objectProperty: property.name, context }),
-            type: fieldType,
-            access: csharp.Access.Public,
-            get: true,
-            set: true,
-            summary: property.docs,
-            jsonPropertyName: property.name.wireValue,
-            useRequired: true,
-            initializer: maybeLiteralInitializer,
-            annotations: fieldAttributes
-        });
+export function generateField({
+    property,
+    className,
+    context
+}: {
+    property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
+    className: string;
+    context: ModelGeneratorContext;
+}): csharp.Field {
+    const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
+    const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
+        typeReference: property.valueType
+    });
+    const fieldAttributes = [];
+    if ("propertyAccess" in property && property.propertyAccess) {
+        fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
+    }
+
+    return csharp.field({
+        name: getPropertyName({ className, objectProperty: property.name, context }),
+        type: fieldType,
+        access: csharp.Access.Public,
+        get: true,
+        set: true,
+        summary: property.docs,
+        jsonPropertyName: property.name.wireValue,
+        useRequired: true,
+        initializer: maybeLiteralInitializer,
+        annotations: fieldAttributes
     });
 }
 

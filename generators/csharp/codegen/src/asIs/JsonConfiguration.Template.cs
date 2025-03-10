@@ -60,6 +60,19 @@ internal static partial class JsonOptions
                                         throw new ArgumentOutOfRangeException();
                                 }
                             }
+
+                            var jsonIgnoreAttribute = propertyInfo
+                                .AttributeProvider?.GetCustomAttributes(
+                                    typeof(JsonIgnoreAttribute),
+                                    true
+                                )
+                                .OfType<JsonIgnoreAttribute>()
+                                .FirstOrDefault();
+
+                            if (jsonIgnoreAttribute is not null)
+                            {
+                                propertyInfo.IsRequired = false;
+                            }
                         }
                     },
                 },

@@ -11,6 +11,7 @@ public record UpdateUserRequest
     [JsonIgnore]
     public required string UserId { get; set; }
 
+    [JsonIgnore]
     public required User Body { get; set; }
 
     public override string ToString()
