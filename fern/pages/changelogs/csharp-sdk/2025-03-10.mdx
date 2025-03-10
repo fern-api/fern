@@ -6,7 +6,5 @@ Previously, a wrapped request with body properties would not omit `null` values 
 **`(fix):`** Fix a bug where required properties that were `[JsonIgnore]` threw an error during serialization.
 
 
-**`(fix):`** Add `AdditionalProperties` property to wrapped requests with body properties.
-
 **`(feat):`** Improve performance of query string value to string conversion by relying less on `JsonSerializer` and more on `ToString()`.
 
