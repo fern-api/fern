@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders.Core;
 
@@ -11,13 +10,6 @@ public record CreatePaymentRequest
 
     [JsonPropertyName("currency")]
     public required Currency Currency { get; set; }
-
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

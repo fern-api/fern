@@ -17,8 +17,6 @@
     - type: fix
       summary: |
         Fix a bug where required properties that were `[JsonIgnore]` threw an error during serialization.
-    - type: fix
-      summary: Add `AdditionalProperties` property to wrapped requests with body properties.
     - type: feat
       summary: Improve performance of query string value to string conversion by relying less on `JsonSerializer` and more on `ToString()`.
 
