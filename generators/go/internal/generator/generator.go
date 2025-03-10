@@ -359,8 +359,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	case ModeFiber:
 		break
 	case ModeClient:
-		// TODO: Re-enable the go-v2 SDK generator.
-		//
 		// If we're running in SDK mode, start by running the go-v2 SDK generator.
 		v2 := gov2.New(g.coordinator)
 		if err := v2.Run(); err != nil {
