@@ -59,3 +59,27 @@ exports[`Method > writes method with yield parameter 1`] = `
 end
 "
 `;
+
+exports[`Method > writes private class methods 1`] = `
+"private_class_method def self.foobar
+end
+"
+`;
+
+exports[`Method > writes private instance methods 1`] = `
+"private def foobar
+end
+"
+`;
+
+exports[`Method > writes protected class methods 1`] = `
+"protected_class_method def self.foobar
+end
+"
+`;
+
+exports[`Method > writes protected instance methods 1`] = `
+"protected def foobar
+end
+"
+`;

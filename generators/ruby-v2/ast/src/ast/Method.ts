@@ -7,6 +7,12 @@ import { YieldParameter } from "./YieldParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
+export type MethodKind = "instance" | "class";
+export const MethodKind = { Instance: "instance", Class_: "class" } as const;
+
+export type MethodVisibility = "public" | "private" | "protected";
+export const MethodVisibility = { Public: "public", Private: "private", Protected: "protected" } as const;
+
 export declare namespace Method {
     interface ParameterArgs {
         /* An array of this method's positional parameters. */
@@ -22,30 +28,34 @@ export declare namespace Method {
     }
 
     interface Args {
+        /* Kind of method (instance or class). */
+        kind?: MethodKind;
         /* The name of the parameter. */
         name: string;
         /* If the method will be marked as private. */
-        private_?: boolean;
+        visibility?: MethodVisibility;
         /* The set of method parameters. */
         parameters?: ParameterArgs;
     }
 }
 
 export class Method extends AstNode {
+    public readonly kind: MethodKind;
     public readonly name: string;
     public readonly positionalParameters: PositionalParameter[];
     public readonly keywordParameters: KeywordParameter[];
     public readonly positionalSplatParameter: PositionalSplatParameter | null;
     public readonly keywordSplatParameter: KeywordSplatParameter | null;
     public readonly yieldParameter: YieldParameter | null;
-    private readonly private_: boolean;
+    private readonly visibility: MethodVisibility;
     private readonly statements: AstNode[] = [];
 
-    constructor({ name, private_, parameters }: Method.Args) {
+    constructor({ kind, name, visibility, parameters }: Method.Args) {
         super();
 
+        this.kind = kind ?? MethodKind.Instance;
         this.name = name;
-        this.private_ = private_ ?? false;
+        this.visibility = visibility ?? MethodVisibility.Public;
         this.positionalParameters = parameters?.positional ?? [];
         this.keywordParameters = parameters?.keyword ?? [];
         this.positionalSplatParameter = parameters?.positionalSplat ?? null;
@@ -54,23 +64,27 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
-        /*
-        TODO: Typically, you would define `private` once in a Ruby file and every subsequent method definition will be
-        considered private -- in practice, that will be difficult to implement
-        */
-        if (this.private_) {
-            writer.write("private ");
+        if (this.visibility !== MethodVisibility.Public) {
+            writer.write(this.visibility);
+
+            if (this.kind === MethodKind.Class_) {
+                writer.write("_class_method");
+            }
+
+            writer.write(" ");
         }
 
-        writer.write(`def ${this.name}`);
+        switch (this.kind) {
+            case MethodKind.Instance:
+                writer.write(`def ${this.name}`);
+                break;
 
-        if (
-            this.positionalParameters.length ||
-            this.keywordParameters.length ||
-            this.positionalSplatParameter ||
-            this.keywordSplatParameter ||
-            this.yieldParameter
-        ) {
+            case MethodKind.Class_:
+                writer.write(`def self.${this.name}`);
+                break;
+        }
+
+        if (this.parameters.length) {
             writer.write("(");
 
             this.parameters.forEach((parameter, index) => {
@@ -101,11 +115,11 @@ export class Method extends AstNode {
         writer.newLine();
     }
 
+    /*
+    NOTE: This returns the parameters in the following order: positional, keyword, positional splat, keyword splat,
+    yield. In reality, you can mix and match _some_ of these, but by convention, parameters should be in this order.
+    */
     get parameters(): Parameter[] {
-        /*
-        NOTE: These are in a specific order (positional, keyword, positional splat, keyword splat, yield) -- in reality
-        you can mix _some_ of these
-        */
         return [
             ...this.positionalParameters,
             ...this.keywordParameters,

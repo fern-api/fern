@@ -1,5 +1,6 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
+import { MethodKind, MethodVisibility } from "../Method";
 import { Writer } from "../core/Writer";
 
 describe("Method", () => {
@@ -111,6 +112,44 @@ describe("Method", () => {
                 keyword: [ruby.keywordParameter({ name: "three" }), ruby.keywordParameter({ name: "four" })],
                 yield: ruby.yieldParameter({ name: "block" })
             }
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes private instance methods", () => {
+        const method = ruby.method({
+            name: "foobar",
+            visibility: MethodVisibility.Private
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes protected instance methods", () => {
+        const method = ruby.method({
+            name: "foobar",
+            visibility: MethodVisibility.Protected
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes private class methods", () => {
+        const method = ruby.method({
+            name: "foobar",
+            visibility: MethodVisibility.Private,
+            kind: MethodKind.Class_
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes protected class methods", () => {
+        const method = ruby.method({
+            name: "foobar",
+            visibility: MethodVisibility.Protected,
+            kind: MethodKind.Class_
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
