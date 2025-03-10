@@ -750,6 +750,12 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -759,6 +765,9 @@ importers:
       '@fern-api/go-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/go-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -801,6 +810,9 @@ importers:
       typescript:
         specifier: 5.7.2
         version: 5.7.2
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)

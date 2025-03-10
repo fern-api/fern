@@ -1,13 +1,20 @@
+import urlJoin from "url-join";
+
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
+import { convertIr } from "./utils/convertIr";
 import { WireTestGenerator } from "./wiretest/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -51,10 +58,10 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         if (context.config.output.snippetFilepath != null) {
             try {
+                const endpointSnippets = this.generateSnippets({ context });
                 await this.generateReadme({
                     context,
-                    // TODO: Support (and indeed require there to be) snippets
-                    endpointSnippets: []
+                    endpointSnippets
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");
@@ -64,18 +71,77 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         await context.project.persist();
     }
 
+    private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
+        const endpointSnippets: Endpoint[] = [];
+        const dynamicIr = context.ir.dynamic;
+
+        if (!dynamicIr) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            // TEMPORARY HACK: As of 11-Mar-25, convertIr is not a shared library, but ideally
+            // it should be. If you're reading this and considering copying convertIr and
+            // related helpers into another generator, first confirm whether now is a good time
+            // to invest in making this a shared library instead.
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            const method = endpoint.location.method;
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+
+            if (endpoint.examples?.length) {
+                for (const endpointExample of endpoint.examples ?? []) {
+                    endpointSnippets.push({
+                        exampleIdentifier: endpointExample.id,
+                        id: {
+                            method,
+                            path,
+                            identifierOverride: endpointId
+                        },
+                        snippet: FernGeneratorExec.EndpointSnippet.go({
+                            client: dynamicSnippetsGenerator.generateSync(
+                                convertDynamicEndpointSnippetRequest(endpointExample)
+                            ).snippet
+                        })
+                    });
+                }
+            } else {
+                // TEMPORARY HACK: As of 11-Mar-25, the go generator is using IR v53, which doesn't include
+                // endpoint examples. Therefore, we're using a placeholder snippet here to unblock development
+                // of README generation.
+                endpointSnippets.push({
+                    id: {
+                        method,
+                        path,
+                        identifierOverride: endpointId
+                    },
+                    snippet: FernGeneratorExec.EndpointSnippet.go({
+                        client: `
+<PLACEHOLDER>
+`
+                    })
+                });
+            }
+        }
+
+        return endpointSnippets;
+    }
+
     private async generateReadme({
         context,
         endpointSnippets
     }: {
         context: SdkGeneratorContext;
-        endpointSnippets: FernGeneratorExec.Endpoint[];
+        endpointSnippets: Endpoint[];
     }): Promise<void> {
-        // TODO: Support (and indeed require there to be) snippets
-        // if (endpointSnippets.length === 0) {
-        //     context.logger.debug("No snippets were produced; skipping README.md generation.");
-        //     return;
-        // }
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
