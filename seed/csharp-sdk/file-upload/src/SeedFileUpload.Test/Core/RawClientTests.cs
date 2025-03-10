@@ -57,7 +57,7 @@ public class RawClientTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.BaseApiRequest
+        var request = new RawClient.EmptyApiRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -84,7 +84,7 @@ public class RawClientTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
-        var request = new RawClient.BaseApiRequest
+        var request = new RawClient.EmptyApiRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
