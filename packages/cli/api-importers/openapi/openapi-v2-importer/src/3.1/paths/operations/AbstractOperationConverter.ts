@@ -19,11 +19,11 @@ import {
 
 import { AbstractConverter } from "../../../AbstractConverter";
 import { ErrorCollector } from "../../../ErrorCollector";
-import { convertToExampleTypeReference } from "../../../ExampleTypeReferenceConverter";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { SdkGroupNameExtension } from "../../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-name";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
+import { convertToExampleTypeReference } from "../../../convertToExampleTypeReference";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
