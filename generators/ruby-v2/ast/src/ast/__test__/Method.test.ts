@@ -4,17 +4,29 @@ import { MethodKind, MethodVisibility } from "../Method";
 import { Writer } from "../core/Writer";
 
 describe("Method", () => {
-    let writer: Writer;
     let writerConfig: Writer.Args;
 
     beforeEach(() => {
         writerConfig = { customConfig: BaseRubyCustomConfigSchema.parse({ clientClassName: "Example" }) };
-
-        writer = new Writer({ customConfig: BaseRubyCustomConfigSchema.parse({ clientClassName: "Example" }) });
     });
 
     test("writes method with no parameters", () => {
         const method = ruby.method({ name: "fizzbuzz" });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method with empty parameter arrays", () => {
+        const method = ruby.method({
+            name: "fizzbuzz",
+            parameters: { positional: [], keyword: [] }
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method with special characters in name", () => {
+        const method = ruby.method({ name: "fizz_buzz!" });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
@@ -117,6 +129,21 @@ describe("Method", () => {
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
 
+    test("writes method with all parameter types", () => {
+        const method = ruby.method({
+            name: "fizzbuzz",
+            parameters: {
+                positional: [ruby.parameter({ name: "one" })],
+                keyword: [ruby.keywordParameter({ name: "two" })],
+                positionalSplat: ruby.positionalSplatParameter({ name: "three" }),
+                keywordSplat: ruby.keywordSplatParameter({ name: "four" }),
+                yield: ruby.yieldParameter({ name: "five" })
+            }
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
     test("writes private instance methods", () => {
         const method = ruby.method({
             name: "foobar",
@@ -150,6 +177,15 @@ describe("Method", () => {
             name: "foobar",
             visibility: MethodVisibility.Protected,
             kind: MethodKind.Class_
+        });
+
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method with docstring", () => {
+        const method = ruby.method({
+            name: "bizbuzz",
+            docstring: "This is a method\nthat does nothing"
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();

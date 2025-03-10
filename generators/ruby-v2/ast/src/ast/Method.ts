@@ -1,3 +1,4 @@
+import { Comment } from "./Comment";
 import { KeywordParameter } from "./KeywordParameter";
 import { KeywordSplatParameter } from "./KeywordSplatParameter";
 import { Parameter } from "./Parameter";
@@ -28,10 +29,12 @@ export declare namespace Method {
     }
 
     interface Args {
-        /* Kind of method (instance or class). */
-        kind?: MethodKind;
         /* The name of the parameter. */
         name: string;
+        /* The docstring for the method. */
+        docstring?: string;
+        /* Kind of method (instance or class). */
+        kind?: MethodKind;
         /* If the method will be marked as private. */
         visibility?: MethodVisibility;
         /* The set of method parameters. */
@@ -40,30 +43,36 @@ export declare namespace Method {
 }
 
 export class Method extends AstNode {
-    public readonly kind: MethodKind;
     public readonly name: string;
+    public readonly docstring: string | undefined;
+    public readonly kind: MethodKind;
     public readonly positionalParameters: PositionalParameter[];
     public readonly keywordParameters: KeywordParameter[];
-    public readonly positionalSplatParameter: PositionalSplatParameter | null;
-    public readonly keywordSplatParameter: KeywordSplatParameter | null;
-    public readonly yieldParameter: YieldParameter | null;
+    public readonly positionalSplatParameter: PositionalSplatParameter | undefined;
+    public readonly keywordSplatParameter: KeywordSplatParameter | undefined;
+    public readonly yieldParameter: YieldParameter | undefined;
     private readonly visibility: MethodVisibility;
     private readonly statements: AstNode[] = [];
 
-    constructor({ kind, name, visibility, parameters }: Method.Args) {
+    constructor({ name, docstring, kind, visibility, parameters }: Method.Args) {
         super();
 
-        this.kind = kind ?? MethodKind.Instance;
         this.name = name;
+        this.docstring = docstring;
+        this.kind = kind ?? MethodKind.Instance;
         this.visibility = visibility ?? MethodVisibility.Public;
         this.positionalParameters = parameters?.positional ?? [];
         this.keywordParameters = parameters?.keyword ?? [];
-        this.positionalSplatParameter = parameters?.positionalSplat ?? null;
-        this.keywordSplatParameter = parameters?.keywordSplat ?? null;
-        this.yieldParameter = parameters?.yield ?? null;
+        this.positionalSplatParameter = parameters?.positionalSplat;
+        this.keywordSplatParameter = parameters?.keywordSplat;
+        this.yieldParameter = parameters?.yield;
     }
 
     public write(writer: Writer): void {
+        if (this.docstring) {
+            new Comment({ docs: this.docstring }).write(writer);
+        }
+
         if (this.visibility !== MethodVisibility.Public) {
             writer.write(this.visibility);
 
@@ -97,9 +106,9 @@ export class Method extends AstNode {
             writer.write(")");
         }
 
-        writer.newLine();
-
         if (this.statements.length) {
+            writer.newLine();
+
             writer.indent();
             this.statements.forEach((statement, index) => {
                 statement.write(writer);
@@ -108,9 +117,11 @@ export class Method extends AstNode {
                 }
             });
             writer.dedent();
-        }
 
-        writer.write("end");
+            writer.write("end");
+        } else {
+            writer.write("; end");
+        }
 
         writer.newLine();
     }
@@ -127,7 +138,7 @@ export class Method extends AstNode {
             this.keywordSplatParameter,
             this.yieldParameter
         ].flatMap((param) => {
-            return param !== null ? param : [];
+            return param !== undefined ? param : [];
         });
     }
 }

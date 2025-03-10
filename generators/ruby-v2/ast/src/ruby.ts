@@ -1,5 +1,6 @@
 import {
     CodeBlock,
+    Comment,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
@@ -45,4 +46,8 @@ export function yieldParameter(args: YieldParameter.Args): YieldParameter {
 
 export function method(args: Method.Args): Method {
     return new Method(args);
+}
+
+export function comment(args: Comment.Args): Comment {
+    return new Comment(args);
 }

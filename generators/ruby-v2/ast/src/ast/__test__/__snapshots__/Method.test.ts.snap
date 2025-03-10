@@ -1,85 +1,93 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Method > writes method with all parameter types 1`] = `
+"def fizzbuzz(one, two:, *three, **four, &five); end
+"
+`;
+
+exports[`Method > writes method with docstring 1`] = `
+"# This is a method
+# that does nothing
+def bizbuzz; end
+"
+`;
+
 exports[`Method > writes method with double splat parameter 1`] = `
-"def fizzbuzz(**one)
-end
+"def fizzbuzz(**one); end
+"
+`;
+
+exports[`Method > writes method with empty parameter arrays 1`] = `
+"def fizzbuzz; end
 "
 `;
 
 exports[`Method > writes method with keyword parameters 1`] = `
-"def fizzbuzz(one:, two:)
-end
+"def fizzbuzz(one:, two:); end
 "
 `;
 
 exports[`Method > writes method with mix of positional and keyword parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:)
-end
+"def fizzbuzz(one, two, three:, four:); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and double-splat parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, **double_splatted)
-end
+"def fizzbuzz(one, two, three:, four:, **double_splatted); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and single-splat parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, *splatted)
-end
+"def fizzbuzz(one, two, three:, four:, *splatted); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and yield parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, &block)
-end
+"def fizzbuzz(one, two, three:, four:, &block); end
 "
 `;
 
 exports[`Method > writes method with no parameters 1`] = `
-"def fizzbuzz
-end
+"def fizzbuzz; end
 "
 `;
 
 exports[`Method > writes method with positional parameters 1`] = `
-"def fizzbuzz(one, two)
-end
+"def fizzbuzz(one, two); end
 "
 `;
 
 exports[`Method > writes method with single splat parameter 1`] = `
-"def fizzbuzz(*one)
-end
+"def fizzbuzz(*one); end
+"
+`;
+
+exports[`Method > writes method with special characters in name 1`] = `
+"def fizz_buzz!; end
 "
 `;
 
 exports[`Method > writes method with yield parameter 1`] = `
-"def fizzbuzz(&one)
-end
+"def fizzbuzz(&one); end
 "
 `;
 
 exports[`Method > writes private class methods 1`] = `
-"private_class_method def self.foobar
-end
+"private_class_method def self.foobar; end
 "
 `;
 
 exports[`Method > writes private instance methods 1`] = `
-"private def foobar
-end
+"private def foobar; end
 "
 `;
 
 exports[`Method > writes protected class methods 1`] = `
-"protected_class_method def self.foobar
-end
+"protected_class_method def self.foobar; end
 "
 `;
 
 exports[`Method > writes protected instance methods 1`] = `
-"protected def foobar
-end
+"protected def foobar; end
 "
 `;

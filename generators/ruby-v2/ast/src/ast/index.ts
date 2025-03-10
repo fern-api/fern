@@ -1,5 +1,6 @@
 export { AstNode } from "./core/AstNode";
 export { CodeBlock } from "./CodeBlock";
+export { Comment } from "./Comment";
 export { KeywordSplatParameter } from "./KeywordSplatParameter";
 export { KeywordParameter } from "./KeywordParameter";
 export { Method } from "./Method";
