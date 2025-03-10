@@ -24,6 +24,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             absolutePathToDirectory: this.absolutePathToOutputDirectory,
             files: this.sourceFiles
         });
+
+        await this.writeRawFiles();
     }
 
     private async writeGoFiles({
