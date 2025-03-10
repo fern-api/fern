@@ -381,8 +381,8 @@ export class ReconnectingWebSocket {
                 }
                 this._debug("connect", { url, protocols: this._protocols });
                 this._ws = this._protocols
-                    ? new WebSocket(url, this._protocols, this._headers)
-                    : new WebSocket(url, undefined, this._headers);
+                    ? new WebSocket(url, this._protocols, { headers: this._headers })
+                    : new WebSocket(url, undefined, { headers: this._headers });
                 this._ws!.binaryType = this._binaryType;
                 this._connectLock = false;
                 this._addListeners();
