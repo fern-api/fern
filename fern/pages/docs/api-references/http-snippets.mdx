@@ -1,7 +1,7 @@
 ---
 title: Display HTTP snippets
 description: Enable HTTP code examples using cURL, Python requests, TypeScript fetch, and more from the request examples documented in your API definition.
-subtitle: HTTP snippets allow users to see API request examples using common HTTP clients like cURL, TypeScript, Python, C#, Go, Java, PHP, Ruby, and Swift.
+subtitle: HTTP snippets allow users to see API request examples using common HTTP clients
 ---
 
 <Frame>
@@ -25,6 +25,34 @@ Currently, HTTP snippets are provided as an all-or-nothing set. You cannot confi
 To generate HTTP snippets, add request examples to your API definition:
 - For Fern Definition: Follow the [examples documentation](/learn/api-definition/fern/examples)
 - For OpenAPI: Follow the [request/response examples documentation](/learn/api-definition/openapi/extensions/others#request--response-examples)
+
+### Set Default Snippet Language
+
+HTTP snippets support several languages. Our development work is driven by customer requests, so please request support for languages not listed here by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
+
+* csharp
+* curl
+* dotnet
+* go
+* java
+* javascript
+* python
+* ruby
+* typescript
+
+To set the default snippet language, use the `default-language` key at the top indentation level of `docs.yml`.
+
+<CodeBlock title="docs.yml">
+    ```yaml {1}
+    default-language: typescript
+
+    navigation:
+    - api: API Reference
+    snippets:
+    python: your-package-name
+    typescript: your-package-name
+    ```
+</CodeBlock>
 
 ### Generated Features
 
