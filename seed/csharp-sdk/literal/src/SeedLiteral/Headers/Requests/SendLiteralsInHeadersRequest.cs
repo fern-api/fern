@@ -11,6 +11,7 @@ public record SendLiteralsInHeadersRequest
     [JsonIgnore]
     public bool Async { get; set; } = true;
 
+    [JsonPropertyName("query")]
     public required string Query { get; set; }
 
     public override string ToString()
