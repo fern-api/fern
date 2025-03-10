@@ -151,6 +151,27 @@ export abstract class AbstractCsharpGeneratorContext<
         );
     }
 
+    public createAdditionalPropertiesField(): csharp.Field {
+        return csharp.field({
+            name: "AdditionalProperties",
+            type: this.getAdditionalPropertiesType(),
+            access: csharp.Access.Public,
+            summary: "Additional properties received from the response, if any.",
+            set: csharp.Access.Internal,
+            get: csharp.Access.Public,
+            initializer: csharp.codeblock((writer) =>
+                writer.writeNode(
+                    csharp.dictionary({
+                        keyType: csharp.Type.string(),
+                        valueType: csharp.Type.reference(this.getJsonElementClassReference()),
+                        values: undefined
+                    })
+                )
+            ),
+            annotations: [this.getJsonExtensionDataAttribute()]
+        });
+    }
+
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
@@ -30,6 +31,13 @@ public record UpdateRequest
 
     [JsonPropertyName("indexTypes")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.

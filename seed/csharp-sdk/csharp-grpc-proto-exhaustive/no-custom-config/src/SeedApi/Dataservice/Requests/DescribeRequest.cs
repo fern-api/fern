@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
@@ -12,6 +13,13 @@ public record DescribeRequest
 
     [JsonPropertyName("after")]
     public DateTime? After { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     /// <summary>
     /// Maps the DescribeRequest type into its Protobuf-equivalent representation.

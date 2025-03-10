@@ -2,6 +2,7 @@ using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
 using global::System.Text.Json.Serialization.Metadata;
+using CultureInfo = global::System.Globalization.CultureInfo;
 
 namespace SeedPagination.Core;
 
@@ -101,8 +102,25 @@ internal static class JsonUtils
 
     internal static string SerializeAsString<T>(T obj)
     {
-        var json = JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
-        return json.Trim('"');
+        return obj switch
+        {
+            null => "null",
+            string str => str,
+            true => "true",
+            false => "false",
+            int i => i.ToString(CultureInfo.InvariantCulture),
+            long l => l.ToString(CultureInfo.InvariantCulture),
+            float f => f.ToString(CultureInfo.InvariantCulture),
+            double d => d.ToString(CultureInfo.InvariantCulture),
+            decimal dec => dec.ToString(CultureInfo.InvariantCulture),
+            short s => s.ToString(CultureInfo.InvariantCulture),
+            ushort u => u.ToString(CultureInfo.InvariantCulture),
+            uint u => u.ToString(CultureInfo.InvariantCulture),
+            ulong u => u.ToString(CultureInfo.InvariantCulture),
+            char c => c.ToString(CultureInfo.InvariantCulture),
+            Guid guid => guid.ToString("D"),
+            _ => Serialize(obj).Trim('"'),
+        };
     }
 
     internal static T Deserialize<T>(string json) =>

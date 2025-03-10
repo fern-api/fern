@@ -154,6 +154,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         });
                     }
                 }
+
+                class_.addField(this.context.createAdditionalPropertiesField());
             },
             fileUpload: () => undefined,
             bytes: () => undefined,
