@@ -4,6 +4,7 @@ import { Writer } from "./core/Writer";
 
 export declare namespace KeywordParameter {
     interface Args extends Parameter.Args {
+        /* The default value of this parameter. */
         initializer?: AstNode;
     }
 }

@@ -2,6 +2,7 @@ import { AstNode } from "./core/AstNode";
 
 export declare namespace Parameter {
     interface Args {
+        /* The name of this parameter. */
         name: string;
     }
 }

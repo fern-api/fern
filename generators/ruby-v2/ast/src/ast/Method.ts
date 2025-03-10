@@ -9,16 +9,24 @@ import { Writer } from "./core/Writer";
 
 export declare namespace Method {
     interface ParameterArgs {
+        /* An array of this method's positional parameters. */
         positional?: PositionalParameter[];
+        /* An array of this method's keyword parameters. */
         keyword?: KeywordParameter[];
+        /* This method's positional splat parameter (`*name`). */
         positionalSplat?: PositionalSplatParameter;
+        /* This method's keyword splat parameter (`**name`). */
         keywordSplat?: KeywordSplatParameter;
+        /* This method's yield parameter (`&name`). */
         yield?: YieldParameter;
     }
 
     interface Args {
+        /* The name of the parameter. */
         name: string;
+        /* If the method will be marked as private. */
         private_?: boolean;
+        /* The set of method parameters. */
         parameters?: ParameterArgs;
     }
 }
@@ -94,6 +102,10 @@ export class Method extends AstNode {
     }
 
     get parameters(): Parameter[] {
+        /*
+        NOTE: These are in a specific order (positional, keyword, positional splat, keyword splat, yield) -- in reality
+        you can mix _some_ of these
+        */
         return [
             ...this.positionalParameters,
             ...this.keywordParameters,
