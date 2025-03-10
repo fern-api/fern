@@ -17,8 +17,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --passWithNoTests --run",
-    "test:update": "vitest --passWithNoTests --run -u",
+    "test": "vitest --run",
+    "test:update": "vitest --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",

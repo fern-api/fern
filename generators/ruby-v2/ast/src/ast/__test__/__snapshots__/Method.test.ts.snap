@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Method > writes method with double splat parameter 1`] = `
+"def fizzbuzz(**one)
+end
+"
+`;
+
+exports[`Method > writes method with keyword parameters 1`] = `
+"def fizzbuzz(one:, two:)
+end
+"
+`;
+
+exports[`Method > writes method with mix of positional and keyword parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:)
+end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and double-splat parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, **double_splatted)
+end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and single-splat parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, *splatted)
+end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and yield parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, &block)
+end
+"
+`;
+
+exports[`Method > writes method with no parameters 1`] = `
+"def fizzbuzz
+end
+"
+`;
+
+exports[`Method > writes method with positional parameters 1`] = `
+"def fizzbuzz(one, two)
+end
+"
+`;
+
+exports[`Method > writes method with single splat parameter 1`] = `
+"def fizzbuzz(*one)
+end
+"
+`;
+
+exports[`Method > writes method with yield parameter 1`] = `
+"def fizzbuzz(&one)
+end
+"
+`;

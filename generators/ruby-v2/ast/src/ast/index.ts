@@ -1,5 +1,12 @@
 export { AstNode } from "./core/AstNode";
 export { CodeBlock } from "./CodeBlock";
+export { KeywordSplatParameter } from "./KeywordSplatParameter";
+export { KeywordParameter } from "./KeywordParameter";
+export { Method } from "./Method";
+export { Parameter } from "./Parameter";
+export { PositionalParameter } from "./PositionalParameter";
+export { PositionalSplatParameter } from "./PositionalSplatParameter";
 export { Type } from "./Type";
 export { TypeLiteral } from "./TypeLiteral";
 export { Writer } from "./core/Writer";
+export { YieldParameter } from "./YieldParameter";
