@@ -57,7 +57,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                     operation
                 });
                 const webhookExtension = webhookExtensionConverter.convert({ context, errorCollector });
-                if (webhookExtension != null && webhookExtension === true) {
+                if (webhookExtension) {
                     const webhookConverter = new WebhookConverter({
                         breadcrumbs: operationBreadcrumbs,
                         operation,
