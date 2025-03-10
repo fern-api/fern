@@ -125,7 +125,11 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
+        } else if (
+            resolvedSchema.type === "oneOf" &&
+            resolvedSchema.value.type === "undiscriminated" &&
+            resolvedSchema.value.schemas.every((s) => s.type === "literal" && s.value.type === "string")
+        ) {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
@@ -290,7 +294,11 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
+        } else if (
+            schema.value.type === "oneOf" &&
+            schema.value.value.type === "undiscriminated" &&
+            schema.value.value.schemas.every((s) => s.type === "literal" && s.value.type === "string")
+        ) {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {

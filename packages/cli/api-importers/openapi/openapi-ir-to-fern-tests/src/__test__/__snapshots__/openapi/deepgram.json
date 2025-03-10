@@ -10151,9 +10151,8 @@ channel:
                     "type": "optional<ListenRequestCallbackMethod>",
                   },
                   "custom_intent": {
-                    "allow-multiple": true,
                     "docs": "Custom intents you want the model to detect within your input audio if present",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestCustomIntent>",
                   },
                   "custom_intent_mode": {
                     "default": "extended",
@@ -10161,9 +10160,8 @@ channel:
                     "type": "optional<ListenRequestCustomIntentMode>",
                   },
                   "custom_topic": {
-                    "allow-multiple": true,
                     "docs": "Custom topics you want the model to detect within your input audio or text if present Submit up to 100",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestCustomTopic>",
                   },
                   "custom_topic_mode": {
                     "default": "extended",
@@ -10176,9 +10174,8 @@ channel:
                     "type": "optional<boolean>",
                   },
                   "detect_language": {
-                    "default": false,
                     "docs": "Identifies the dominant language spoken in submitted audio",
-                    "type": "optional<boolean>",
+                    "type": "optional<ListenRequestDetectLanguage>",
                   },
                   "diarize": {
                     "default": false,
@@ -10200,9 +10197,8 @@ channel:
                     "type": "optional<ListenRequestEncoding>",
                   },
                   "extra": {
-                    "allow-multiple": true,
                     "docs": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestExtra>",
                   },
                   "filler_words": {
                     "default": false,
@@ -10220,9 +10216,8 @@ channel:
                     "type": "optional<string>",
                   },
                   "keywords": {
-                    "allow-multiple": true,
                     "docs": "Keywords can boost or suppress specialized terminology and brands",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestKeywords>",
                   },
                   "language": {
                     "default": "en",
@@ -10265,17 +10260,15 @@ channel:
                   },
                   "redact": {
                     "docs": "Redaction removes sensitive information from your transcripts",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestRedact>",
                   },
                   "replace": {
-                    "allow-multiple": true,
                     "docs": "Search for terms or phrases in submitted audio and replaces them",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestReplace>",
                   },
                   "search": {
-                    "allow-multiple": true,
                     "docs": "Search for terms or phrases in submitted audio",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestSearch>",
                   },
                   "sentiment": {
                     "default": false,
@@ -10292,9 +10285,8 @@ channel:
                     "type": "optional<ListenRequestSummarize>",
                   },
                   "tag": {
-                    "allow-multiple": true,
                     "docs": "Label your requests for the purpose of identification during usage reporting",
-                    "type": "optional<string>",
+                    "type": "optional<ListenRequestTag>",
                   },
                   "topics": {
                     "default": false,
@@ -10343,6 +10335,19 @@ channel:
               "openapi": "../openapi.yml",
             },
           },
+          "ListenRequestCustomIntent": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
           "ListenRequestCustomIntentMode": {
             "default": "extended",
             "enum": [
@@ -10354,6 +10359,19 @@ channel:
               "openapi": "../openapi.yml",
             },
           },
+          "ListenRequestCustomTopic": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
           "ListenRequestCustomTopicMode": {
             "default": "extended",
             "enum": [
@@ -10364,6 +10382,22 @@ channel:
             "source": {
               "openapi": "../openapi.yml",
             },
+          },
+          "ListenRequestDetectLanguage": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "default": false,
+                "type": "boolean",
+              },
+              "list<string>",
+            ],
           },
           "ListenRequestEncoding": {
             "enum": [
@@ -10386,6 +10420,32 @@ channel:
             "source": {
               "openapi": "../openapi.yml",
             },
+          },
+          "ListenRequestExtra": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
+          "ListenRequestKeywords": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
           },
           "ListenRequestLanguage": {
             "default": "en",
@@ -10519,103 +10579,139 @@ channel:
             },
           },
           "ListenRequestModel": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "literal<"nova-3">",
+              "literal<"nova-3-general">",
+              "literal<"nova-2">",
+              "literal<"nova-2-general">",
+              "literal<"nova-2-meeting">",
+              "literal<"nova-2-finance">",
+              "literal<"nova-2-conversationalai">",
+              "literal<"nova-2-voicemail">",
+              "literal<"nova-2-video">",
+              "literal<"nova-2-medical">",
+              "literal<"nova-2-drivethru">",
+              "literal<"nova-2-automotive">",
+              "literal<"nova">",
+              "literal<"nova-general">",
+              "literal<"nova-phonecall">",
+              "literal<"nova-medical">",
+              "literal<"enhanced">",
+              "literal<"enhanced-general">",
+              "literal<"enhanced-meeting">",
+              "literal<"enhanced-phonecall">",
+              "literal<"enhanced-finance">",
+              "literal<"base">",
+              "literal<"meeting">",
+              "literal<"phonecall">",
+              "literal<"finance">",
+              "literal<"conversationalai">",
+              "literal<"voicemail">",
+              "literal<"video">",
+              {
+                "docs": "Custom string if you've had a model trained by Deepgram",
+                "type": "string",
+              },
+            ],
+          },
+          "ListenRequestRedact": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<ListenRequestRedactItem>",
+            ],
+          },
+          "ListenRequestRedactItem": {
             "enum": [
-              {
-                "name": "Nova3",
-                "value": "nova-3",
-              },
-              {
-                "name": "Nova3General",
-                "value": "nova-3-general",
-              },
-              {
-                "name": "Nova2",
-                "value": "nova-2",
-              },
-              {
-                "name": "Nova2General",
-                "value": "nova-2-general",
-              },
-              {
-                "name": "Nova2Meeting",
-                "value": "nova-2-meeting",
-              },
-              {
-                "name": "Nova2Finance",
-                "value": "nova-2-finance",
-              },
-              {
-                "name": "Nova2Conversationalai",
-                "value": "nova-2-conversationalai",
-              },
-              {
-                "name": "Nova2Voicemail",
-                "value": "nova-2-voicemail",
-              },
-              {
-                "name": "Nova2Video",
-                "value": "nova-2-video",
-              },
-              {
-                "name": "Nova2Medical",
-                "value": "nova-2-medical",
-              },
-              {
-                "name": "Nova2Drivethru",
-                "value": "nova-2-drivethru",
-              },
-              {
-                "name": "Nova2Automotive",
-                "value": "nova-2-automotive",
-              },
-              "nova",
-              {
-                "name": "NovaGeneral",
-                "value": "nova-general",
-              },
-              {
-                "name": "NovaPhonecall",
-                "value": "nova-phonecall",
-              },
-              {
-                "name": "NovaMedical",
-                "value": "nova-medical",
-              },
-              "enhanced",
-              {
-                "name": "EnhancedGeneral",
-                "value": "enhanced-general",
-              },
-              {
-                "name": "EnhancedMeeting",
-                "value": "enhanced-meeting",
-              },
-              {
-                "name": "EnhancedPhonecall",
-                "value": "enhanced-phonecall",
-              },
-              {
-                "name": "EnhancedFinance",
-                "value": "enhanced-finance",
-              },
-              "base",
-              "meeting",
-              "phonecall",
-              "finance",
-              "conversationalai",
-              "voicemail",
-              "video",
+              "pci",
+              "pii",
+              "numbers",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ListenRequestReplace": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
+          "ListenRequestSearch": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
             ],
           },
           "ListenRequestSummarize": {
-            "enum": [
-              "v2",
-              "v1",
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "literal<"v2">",
+              "literal<"v1">",
+              "boolean",
+            ],
+          },
+          "ListenRequestTag": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
             ],
           },
           "ListenRequestVersion": {
-            "enum": [
-              "latest",
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "literal<"latest">",
+              {
+                "docs": "Use a previous version of a model",
+                "type": "string",
+              },
             ],
           },
         },
@@ -10628,6 +10724,13 @@ channel:
     default: POST
     source:
       openapi: ../openapi.yml
+  ListenRequestCustomTopic:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
   ListenRequestCustomTopicMode:
     enum:
       - extended
@@ -10635,11 +10738,26 @@ channel:
     default: extended
     source:
       openapi: ../openapi.yml
+  ListenRequestCustomIntent:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
   ListenRequestCustomIntentMode:
     enum:
       - extended
       - strict
     default: extended
+    source:
+      openapi: ../openapi.yml
+  ListenRequestDetectLanguage:
+    discriminated: false
+    union:
+      - type: boolean
+        default: false
+      - list<string>
     source:
       openapi: ../openapi.yml
   ListenRequestEncoding:
@@ -10654,6 +10772,20 @@ channel:
       - opus
       - speex
       - g729
+    source:
+      openapi: ../openapi.yml
+  ListenRequestExtra:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
+  ListenRequestKeywords:
+    discriminated: false
+    union:
+      - string
+      - list<string>
     source:
       openapi: ../openapi.yml
   ListenRequestLanguage:
@@ -10740,61 +10872,92 @@ channel:
     source:
       openapi: ../openapi.yml
   ListenRequestModel:
+    discriminated: false
+    union:
+      - literal<"nova-3">
+      - literal<"nova-3-general">
+      - literal<"nova-2">
+      - literal<"nova-2-general">
+      - literal<"nova-2-meeting">
+      - literal<"nova-2-finance">
+      - literal<"nova-2-conversationalai">
+      - literal<"nova-2-voicemail">
+      - literal<"nova-2-video">
+      - literal<"nova-2-medical">
+      - literal<"nova-2-drivethru">
+      - literal<"nova-2-automotive">
+      - literal<"nova">
+      - literal<"nova-general">
+      - literal<"nova-phonecall">
+      - literal<"nova-medical">
+      - literal<"enhanced">
+      - literal<"enhanced-general">
+      - literal<"enhanced-meeting">
+      - literal<"enhanced-phonecall">
+      - literal<"enhanced-finance">
+      - literal<"base">
+      - literal<"meeting">
+      - literal<"phonecall">
+      - literal<"finance">
+      - literal<"conversationalai">
+      - literal<"voicemail">
+      - literal<"video">
+      - type: string
+        docs: Custom string if you've had a model trained by Deepgram
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedactItem:
     enum:
-      - value: nova-3
-        name: Nova3
-      - value: nova-3-general
-        name: Nova3General
-      - value: nova-2
-        name: Nova2
-      - value: nova-2-general
-        name: Nova2General
-      - value: nova-2-meeting
-        name: Nova2Meeting
-      - value: nova-2-finance
-        name: Nova2Finance
-      - value: nova-2-conversationalai
-        name: Nova2Conversationalai
-      - value: nova-2-voicemail
-        name: Nova2Voicemail
-      - value: nova-2-video
-        name: Nova2Video
-      - value: nova-2-medical
-        name: Nova2Medical
-      - value: nova-2-drivethru
-        name: Nova2Drivethru
-      - value: nova-2-automotive
-        name: Nova2Automotive
-      - nova
-      - value: nova-general
-        name: NovaGeneral
-      - value: nova-phonecall
-        name: NovaPhonecall
-      - value: nova-medical
-        name: NovaMedical
-      - enhanced
-      - value: enhanced-general
-        name: EnhancedGeneral
-      - value: enhanced-meeting
-        name: EnhancedMeeting
-      - value: enhanced-phonecall
-        name: EnhancedPhonecall
-      - value: enhanced-finance
-        name: EnhancedFinance
-      - base
-      - meeting
-      - phonecall
-      - finance
-      - conversationalai
-      - voicemail
-      - video
+      - pci
+      - pii
+      - numbers
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedact:
+    discriminated: false
+    union:
+      - string
+      - list<ListenRequestRedactItem>
+    source:
+      openapi: ../openapi.yml
+  ListenRequestReplace:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
+  ListenRequestSearch:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
   ListenRequestSummarize:
-    enum:
-      - v2
-      - v1
+    discriminated: false
+    union:
+      - literal<"v2">
+      - literal<"v1">
+      - boolean
+    source:
+      openapi: ../openapi.yml
+  ListenRequestTag:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../openapi.yml
   ListenRequestVersion:
-    enum:
-      - latest
+    discriminated: false
+    union:
+      - literal<"latest">
+      - type: string
+        docs: Use a previous version of a model
+    source:
+      openapi: ../openapi.yml
 imports:
   root: __package__.yml
 service:
@@ -10820,8 +10983,7 @@ service:
             default: POST
             docs: HTTP method by which the callback request will be made
           custom_topic:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestCustomTopic>
             docs: >-
               Custom topics you want the model to detect within your input audio
               or text if present Submit up to 100
@@ -10835,8 +10997,7 @@ service:
               the model will return its own detected topics in addition to those
               submitted using the `custom_topic` param
           custom_intent:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestCustomIntent>
             docs: >-
               Custom intents you want the model to detect within your input
               audio if present
@@ -10856,8 +11017,7 @@ service:
               Identifies and extracts key entities from content in submitted
               audio
           detect_language:
-            type: optional<boolean>
-            default: false
+            type: optional<ListenRequestDetectLanguage>
             docs: Identifies the dominant language spoken in submitted audio
           diarize_version:
             type: optional<string>
@@ -10880,8 +11040,7 @@ service:
             type: optional<ListenRequestEncoding>
             docs: Specify the expected encoding of your submitted audio
           extra:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestExtra>
             docs: >-
               Arbitrary key-value pairs that are attached to the API response
               for usage in downstream processing
@@ -10902,8 +11061,7 @@ service:
               Key term prompting can boost or suppress specialized terminology
               and brands. Only compatible with Nova-3
           keywords:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestKeywords>
             docs: Keywords can boost or suppress specialized terminology and brands
           language:
             type: optional<ListenRequestLanguage>
@@ -10945,15 +11103,13 @@ service:
             default: false
             docs: Add punctuation and capitalization to the transcript
           redact:
-            type: optional<string>
+            type: optional<ListenRequestRedact>
             docs: Redaction removes sensitive information from your transcripts
           replace:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestReplace>
             docs: Search for terms or phrases in submitted audio and replaces them
           search:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestSearch>
             docs: Search for terms or phrases in submitted audio
           sentiment:
             type: optional<boolean>
@@ -10970,8 +11126,7 @@ service:
             type: optional<ListenRequestSummarize>
             docs: Summarize content
           tag:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<ListenRequestTag>
             docs: >-
               Label your requests for the purpose of identification during usage
               reporting
@@ -11161,9 +11316,8 @@ docs: Power your apps with world-class speech recognition
                     "type": "optional<TextReadRequestCallbackMethod>",
                   },
                   "custom_topic": {
-                    "allow-multiple": true,
                     "docs": "Custom topics you want the model to detect within your input audio or text if present Submit up to 100",
-                    "type": "optional<string>",
+                    "type": "optional<TextReadRequestCustomTopic>",
                   },
                   "custom_topic_mode": {
                     "default": "extended",
@@ -11222,6 +11376,19 @@ docs: Power your apps with world-class speech recognition
               "openapi": "../openapi.yml",
             },
           },
+          "TextReadRequestCustomTopic": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
           "TextReadRequestCustomTopicMode": {
             "default": "extended",
             "enum": [
@@ -11241,6 +11408,13 @@ docs: Power your apps with world-class speech recognition
       - POST
       - PUT
     default: POST
+    source:
+      openapi: ../openapi.yml
+  TextReadRequestCustomTopic:
+    discriminated: false
+    union:
+      - string
+      - list<string>
     source:
       openapi: ../openapi.yml
   TextReadRequestCustomTopicMode:
@@ -11275,8 +11449,7 @@ service:
             default: POST
             docs: HTTP method by which the callback request will be made
           custom_topic:
-            type: optional<string>
-            allow-multiple: true
+            type: optional<TextReadRequestCustomTopic>
             docs: >-
               Custom topics you want the model to detect within your input audio
               or text if present Submit up to 100
