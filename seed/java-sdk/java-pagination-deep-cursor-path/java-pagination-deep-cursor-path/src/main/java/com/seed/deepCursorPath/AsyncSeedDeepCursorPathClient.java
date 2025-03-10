@@ -22,7 +22,7 @@ public class AsyncSeedDeepCursorPathClient {
         return this.deepCursorPathClient.get();
     }
 
-    public static SeedDeepCursorPathClientBuilder builder() {
-        return new SeedDeepCursorPathClientBuilder();
+    public static AsyncSeedDeepCursorPathClientBuilder builder() {
+        return new AsyncSeedDeepCursorPathClientBuilder();
     }
 }

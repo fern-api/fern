@@ -14,8 +14,7 @@ public partial class QueryClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Query.SendAsync(
     ///     new SendLiteralsInQueryRequest
     ///     {
@@ -30,8 +29,7 @@ public partial class QueryClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
         RequestOptions? options = null,

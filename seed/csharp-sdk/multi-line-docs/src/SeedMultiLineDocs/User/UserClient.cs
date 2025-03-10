@@ -19,11 +19,9 @@ public partial class UserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("userId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetUserAsync(
         string userId,
         RequestOptions? options = null,
@@ -60,11 +58,9 @@ public partial class UserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,

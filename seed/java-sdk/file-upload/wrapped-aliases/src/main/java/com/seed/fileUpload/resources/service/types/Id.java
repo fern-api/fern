@@ -5,8 +5,9 @@ package com.seed.fileUpload.resources.service.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.fileUpload.core.WrappedAlias;
 
-public final class Id {
+public final class Id implements WrappedAlias {
     private final String value;
 
     private Id(String value) {

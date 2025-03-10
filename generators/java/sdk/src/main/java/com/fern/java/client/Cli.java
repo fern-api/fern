@@ -41,12 +41,15 @@ import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
+import com.fern.java.generators.NullableGenerator;
+import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
@@ -193,6 +196,17 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
+
+        NullableGenerator nullableGenerator = new NullableGenerator(context);
+        this.addGeneratedFile(nullableGenerator.generateFile());
+
+        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
+        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
+
+        if (context.getCustomConfig().wrappedAliases()) {
+            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
+            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
+        }
 
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();

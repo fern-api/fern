@@ -31,11 +31,9 @@ public partial class SeedAliasClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync("typeId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetAsync(
         string typeId,
         RequestOptions? options = null,

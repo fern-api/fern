@@ -267,7 +267,7 @@ export function parseAsyncAPIV2({
                 ),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path,
-                description: undefined,
+                description: channel.description,
                 examples,
                 source
             };

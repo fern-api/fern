@@ -14,56 +14,6 @@ public partial class ComplexClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
-    /// await client.Complex.SearchAsync(
-    ///     new SearchRequest
-    ///     {
-    ///         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
-    ///         Query = new SingleFilterSearchRequest
-    ///         {
-    ///             Field = "field",
-    ///             Operator = SingleFilterSearchRequestOperator.Equals,
-    ///             Value = "value",
-    ///         },
-    ///     }
-    /// );
-    /// </code>
-    /// </example>
-    public async Task<Pager<Conversation>> SearchAsync(
-        SearchRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        if (request is not null)
-        {
-            request = request with { };
-        }
-        var pager = await CursorPager<
-            SearchRequest,
-            RequestOptions?,
-            PaginatedConversationResponse,
-            string?,
-            Conversation
-        >
-            .CreateInstanceAsync(
-                request,
-                options,
-                SearchInternalAsync,
-                (request, cursor) =>
-                {
-                    request.Pagination ??= new();
-                    request.Pagination.StartingAfter = cursor;
-                },
-                response => response?.Pages?.Next?.StartingAfter,
-                response => response?.Conversations?.ToList(),
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        return pager;
-    }
-
     private async Task<PaginatedConversationResponse> SearchInternalAsync(
         SearchRequest request,
         RequestOptions? options = null,
@@ -105,5 +55,53 @@ public partial class ComplexClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Complex.SearchAsync(
+    ///     new SearchRequest
+    ///     {
+    ///         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+    ///         Query = new SingleFilterSearchRequest
+    ///         {
+    ///             Field = "field",
+    ///             Operator = SingleFilterSearchRequestOperator.Equals,
+    ///             Value = "value",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<Pager<Conversation>> SearchAsync(
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            SearchRequest,
+            RequestOptions?,
+            PaginatedConversationResponse,
+            string?,
+            Conversation
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                SearchInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Pagination ??= new();
+                    request.Pagination.StartingAfter = cursor;
+                },
+                response => response?.Pages?.Next?.StartingAfter,
+                response => response?.Conversations?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }

@@ -14,8 +14,7 @@ public partial class OptionalClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Optional.SendOptionalBodyAsync(
     ///     new Dictionary&lt;string, object&gt;()
     ///     {
@@ -25,8 +24,7 @@ public partial class OptionalClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> SendOptionalBodyAsync(
         Dictionary<string, object?>? request,
         RequestOptions? options = null,

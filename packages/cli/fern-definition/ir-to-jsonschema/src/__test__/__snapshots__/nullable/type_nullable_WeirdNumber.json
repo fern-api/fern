@@ -1,0 +1,21 @@
+{
+  "anyOf": [
+    {
+      "type": "integer"
+    },
+    {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "type": "number"
+    }
+  ],
+  "definitions": {}
+}

@@ -1196,6 +1196,7 @@
         }
       ],
       "path": "/chat",
+      "description": "Chat with Empathic Voice Interface (EVI)",
       "examples": [
         {
           "queryParameters": [],

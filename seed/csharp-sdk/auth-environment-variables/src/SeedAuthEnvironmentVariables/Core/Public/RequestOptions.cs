@@ -7,6 +7,11 @@ namespace SeedAuthEnvironmentVariables;
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    Headers IRequestOptions.Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get; init; }
@@ -26,8 +31,5 @@ public partial class RequestOptions : IRequestOptions
     /// </summary>
     public TimeSpan? Timeout { get; init; }
 
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    public string? XApiVersion { get; init; }
 }

@@ -3916,6 +3916,7 @@ types:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Chat with Empathic Voice Interface (EVI)",
           "examples": [
             {
               "messages": [
@@ -4082,6 +4083,7 @@ There are three ways to obtain the Chat Group ID:
   path: /chat
   url: prod
   auth: false
+  docs: Chat with Empathic Voice Interface (EVI)
   query-parameters:
     config_id:
       type: optional<string>

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -13,9 +14,23 @@ public record IndexedData
     [JsonPropertyName("values")]
     public IEnumerable<float> Values { get; set; } = new List<float>();
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new IndexedData type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static IndexedData FromProto(ProtoDataV1Grpc.IndexedData value)
     {
-        return JsonUtils.Serialize(this);
+        return new IndexedData
+        {
+            Indices = value.Indices?.ToList() ?? Enumerable.Empty<uint>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
+        };
     }
 
     /// <summary>
@@ -35,15 +50,8 @@ public record IndexedData
         return result;
     }
 
-    /// <summary>
-    /// Returns a new IndexedData type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static IndexedData FromProto(ProtoDataV1Grpc.IndexedData value)
+    public override string ToString()
     {
-        return new IndexedData
-        {
-            Indices = value.Indices?.ToList() ?? Enumerable.Empty<uint>(),
-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
-        };
+        return JsonUtils.Serialize(this);
     }
 }

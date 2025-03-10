@@ -27,6 +27,14 @@ class _Factory:
 
 
 class UnionWithPrimitive(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithPrimitive_Integer
+
+    UnionWithPrimitive_Integer(value=9)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

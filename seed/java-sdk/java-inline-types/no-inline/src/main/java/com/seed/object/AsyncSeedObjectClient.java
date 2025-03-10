@@ -202,7 +202,7 @@ public class AsyncSeedObjectClient {
         return future;
     }
 
-    public static SeedObjectClientBuilder builder() {
-        return new SeedObjectClientBuilder();
+    public static AsyncSeedObjectClientBuilder builder() {
+        return new AsyncSeedObjectClientBuilder();
     }
 }

@@ -17,11 +17,9 @@ public partial class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.PropertyBasedError.ThrowErrorAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> ThrowErrorAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

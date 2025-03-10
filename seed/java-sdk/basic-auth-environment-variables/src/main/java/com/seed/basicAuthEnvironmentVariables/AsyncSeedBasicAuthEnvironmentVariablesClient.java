@@ -22,7 +22,7 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClient {
         return this.basicAuthClient.get();
     }
 
-    public static SeedBasicAuthEnvironmentVariablesClientBuilder builder() {
-        return new SeedBasicAuthEnvironmentVariablesClientBuilder();
+    public static AsyncSeedBasicAuthEnvironmentVariablesClientBuilder builder() {
+        return new AsyncSeedBasicAuthEnvironmentVariablesClientBuilder();
     }
 }

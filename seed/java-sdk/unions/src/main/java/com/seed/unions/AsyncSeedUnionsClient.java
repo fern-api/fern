@@ -30,7 +30,7 @@ public class AsyncSeedUnionsClient {
         return this.unionClient.get();
     }
 
-    public static SeedUnionsClientBuilder builder() {
-        return new SeedUnionsClientBuilder();
+    public static AsyncSeedUnionsClientBuilder builder() {
+        return new AsyncSeedUnionsClientBuilder();
     }
 }

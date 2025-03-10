@@ -41,6 +41,7 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      - dotnet build src/*.DynamicSnippets
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
       # - dotnet test src
 
@@ -153,6 +154,12 @@ fixtures:
         type: custom
         filename: "../../LICENSE"
       outputFolder: custom-license
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-discriminated-unions: true
+      outputFolder: use-discriminated-unions
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends
@@ -181,4 +188,17 @@ allowedFailures:
   ## MORE Failures
   - literal
   - oauth-client-credentials-custom
-  - pagination
+  - pagination:no-custom-config
+  - pagination:custom-pager
+  - pagination:custom-pager-with-exception-handler
+
+  ## Dynamic snippets
+  - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
+  - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
+  - trace
+
+  # TODO: Add support for well-known types.
+  - csharp-grpc-proto-exhaustive:no-custom-config
+  - csharp-grpc-proto-exhaustive:package-id
+  - csharp-grpc-proto-exhaustive:read-only-memory
+  - csharp-grpc-proto-exhaustive:include-exception-handler

@@ -22,7 +22,7 @@ public class AsyncSeedOauthClientCredentialsDefaultClient {
         return this.authClient.get();
     }
 
-    public static SeedOauthClientCredentialsDefaultClientBuilder builder() {
-        return new SeedOauthClientCredentialsDefaultClientBuilder();
+    public static AsyncSeedOauthClientCredentialsDefaultClientBuilder builder() {
+        return new AsyncSeedOauthClientCredentialsDefaultClientBuilder();
     }
 }

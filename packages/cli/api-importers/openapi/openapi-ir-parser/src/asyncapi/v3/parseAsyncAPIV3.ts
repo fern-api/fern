@@ -336,7 +336,7 @@ export function parseAsyncAPIV3({
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
-                description: undefined,
+                description: channel.description,
                 examples,
                 source
             };

@@ -3,8 +3,8 @@ import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Type } from "./Type";
+import { XmlDocBlock } from "./XmlDocBlock";
 import { AstNode } from "./core/AstNode";
-import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 
 export declare namespace Field {
@@ -48,6 +48,7 @@ export declare namespace Field {
         initializer?: CodeBlock;
         /* The summary tag (used for describing the field) */
         summary?: string;
+        doc?: XmlDocBlock.Like;
         /* JSON value for this particular field */
         jsonPropertyName?: string;
         /* If true, we will consider setting the field to required based on its type. If false, we will not. */
@@ -63,20 +64,20 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly access: Access | undefined;
     public readonly type: Type;
-    private const_: boolean;
-    private new_: boolean;
-    private get: Access | boolean;
-    private init: Access | boolean;
-    private set: Access | boolean;
-    private annotations: Annotation[];
-    private initializer?: CodeBlock;
-    private summary?: string;
-    private jsonPropertyName?: string;
-    private readonly?: boolean;
-    private static_?: boolean;
-    private useRequired: boolean;
-    private skipDefaultInitializer: boolean;
-    private interfaceReference?: ClassReference;
+    private readonly const_: boolean;
+    private readonly static_: boolean;
+    private readonly get: Access | boolean;
+    private readonly init: Access | boolean;
+    private readonly set: Access | boolean;
+    private readonly new_: boolean;
+    private readonly annotations: Annotation[];
+    private readonly initializer?: CodeBlock;
+    private readonly doc: XmlDocBlock;
+    private readonly jsonPropertyName?: string;
+    private readonly readonly?: boolean;
+    private readonly useRequired: boolean;
+    private readonly skipDefaultInitializer: boolean;
+    private readonly interfaceReference?: ClassReference;
 
     constructor({
         name,
@@ -90,6 +91,7 @@ export class Field extends AstNode {
         annotations,
         initializer,
         summary,
+        doc,
         jsonPropertyName,
         readonly,
         static_,
@@ -108,10 +110,10 @@ export class Field extends AstNode {
         this.init = init ?? false;
         this.annotations = annotations ?? [];
         this.initializer = initializer;
-        this.summary = summary;
+        this.doc = XmlDocBlock.of(doc ?? { summary });
         this.jsonPropertyName = jsonPropertyName;
         this.readonly = readonly;
-        this.static_ = static_;
+        this.static_ = static_ ?? false;
         this.useRequired = useRequired ?? false;
         this.skipDefaultInitializer = skipDefaultInitializer ?? false;
         this.interfaceReference = interfaceReference;
@@ -130,11 +132,38 @@ export class Field extends AstNode {
         }
     }
 
-    public write(writer: Writer): void {
-        if (this.summary != null) {
-            const docXmlWriter = new DocXmlWriter(writer);
-            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
+    public get isConst(): boolean {
+        return this.const_;
+    }
+
+    public get isField(): boolean {
+        if (this.const_) {
+            return false;
         }
+        return !(this.get || this.init || this.set);
+    }
+
+    public get isProperty(): boolean {
+        if (this.const_) {
+            return false;
+        }
+        return !!(this.get || this.init || this.set);
+    }
+
+    public get isStatic(): boolean {
+        return this.static_;
+    }
+
+    public get isRequired(): boolean {
+        return this.useRequired;
+    }
+
+    public get isOptional(): boolean {
+        return this.type.isOptional();
+    }
+
+    public write(writer: Writer): void {
+        writer.writeNode(this.doc);
 
         if (this.annotations.length > 0) {
             for (const annotation of this.annotations) {

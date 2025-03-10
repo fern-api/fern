@@ -22,7 +22,7 @@ public class AsyncSeedUndiscriminatedUnionsClient {
         return this.unionClient.get();
     }
 
-    public static SeedUndiscriminatedUnionsClientBuilder builder() {
-        return new SeedUndiscriminatedUnionsClientBuilder();
+    public static AsyncSeedUndiscriminatedUnionsClientBuilder builder() {
+        return new AsyncSeedUndiscriminatedUnionsClientBuilder();
     }
 }

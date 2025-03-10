@@ -15,11 +15,9 @@ public partial class NoReqBodyClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.NoReqBody.GetWithNoRequestBodyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -65,11 +63,9 @@ public partial class NoReqBodyClient
             .ConfigureAwait(false);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.NoReqBody.PostWithNoRequestBodyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> PostWithNoRequestBodyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

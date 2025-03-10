@@ -38,10 +38,30 @@ types:
   NormalSweet:
     properties:
       value: string
+    examples:
+    - name: One
+      value:
+        value: example1
+    - name: Two
+      value:
+        value: example2
+    - name: Three
+      value:
+        value: example3
 
   ThankfulFactor:
     properties:
       value: string
+    examples:
+    - name: One
+      value:
+        value: example1
+    - name: Two
+      value:
+        value: example2
+    - name: Three
+      value:
+        value: example3
 
   JumboEnd:
     properties:

@@ -9,7 +9,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class CreatePlaylistTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """

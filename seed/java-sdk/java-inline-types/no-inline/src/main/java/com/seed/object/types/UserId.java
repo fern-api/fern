@@ -5,8 +5,9 @@ package com.seed.object.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.object.core.WrappedAlias;
 
-public final class UserId {
+public final class UserId implements WrappedAlias {
     private final String value;
 
     private UserId(String value) {

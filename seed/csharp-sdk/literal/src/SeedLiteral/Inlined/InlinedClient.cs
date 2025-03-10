@@ -14,8 +14,7 @@ public partial class InlinedClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Inlined.SendAsync(
     ///     new SendLiteralsInlinedRequest
     ///     {
@@ -32,8 +31,7 @@ public partial class InlinedClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInlinedRequest request,
         RequestOptions? options = null,

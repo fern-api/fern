@@ -131,7 +131,7 @@ class EndpointResponseCodeWriter:
                         ),
                     )
                     writer.write_newline_if_last_line_not()
-                writer.write_line("except:")
+                writer.write_line("except Exception:")
                 with writer.indent():
                     writer.write_line("pass")
 

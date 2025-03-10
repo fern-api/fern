@@ -12,7 +12,7 @@ public class AsyncSeedObjectClient {
         this.clientOptions = clientOptions;
     }
 
-    public static SeedObjectClientBuilder builder() {
-        return new SeedObjectClientBuilder();
+    public static AsyncSeedObjectClientBuilder builder() {
+        return new AsyncSeedObjectClientBuilder();
     }
 }

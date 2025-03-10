@@ -22,7 +22,7 @@ public class AsyncSeedAcceptClient {
         return this.serviceClient.get();
     }
 
-    public static SeedAcceptClientBuilder builder() {
-        return new SeedAcceptClientBuilder();
+    public static AsyncSeedAcceptClientBuilder builder() {
+        return new AsyncSeedAcceptClientBuilder();
     }
 }

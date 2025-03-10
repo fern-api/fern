@@ -18,6 +18,7 @@ resharper_unused_type_global_highlighting = hint
 resharper_private_field_can_be_converted_to_local_variable_highlighting = hint
 resharper_not_accessed_field_local_highlighting = hint
 resharper_inconsistent_naming_highlighting = hint
+resharper_convert_type_check_pattern_to_null_check_highlighting = hint
 
 [src/**/Types/*.cs]
 resharper_check_namespace_highlighting = none

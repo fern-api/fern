@@ -9,6 +9,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import java.util.Map;
 import java.util.Optional;
 
@@ -51,5 +52,15 @@ public class AsyncRootClientGenerator extends AbstractRootClientGenerator {
                 requestOptionsFile,
                 generatorContext.getIr().getRootPackage(),
                 generatedErrors);
+    }
+
+    @Override
+    protected ClassName className() {
+        return ClassName.get(className.packageName(), "Async" + className.simpleName());
+    }
+
+    @Override
+    protected ClassName builderName() {
+        return ClassName.get(className.packageName(), "Async" + className.simpleName() + "Builder");
     }
 }

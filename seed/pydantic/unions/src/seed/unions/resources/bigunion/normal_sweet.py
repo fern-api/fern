@@ -7,6 +7,16 @@ import pydantic
 
 
 class NormalSweet(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources import NormalSweet
+
+    NormalSweet(
+        value="example1",
+    )
+    """
+
     value: str
 
     if IS_PYDANTIC_V2:

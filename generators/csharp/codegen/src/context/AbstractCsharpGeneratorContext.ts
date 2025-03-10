@@ -29,7 +29,7 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
-import { Type } from "../ast";
+import { Type, TypeParameter } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
@@ -124,6 +124,54 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
+    public shouldGenerateDiscriminatedUnions(): boolean {
+        return this.customConfig["use-discriminated-unions"] ?? false;
+    }
+
+    public getJsonElementClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonElement"
+        });
+    }
+
+    public getJsonExtensionDataAttribute(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonExtensionData",
+                namespace: "System.Text.Json.Serialization"
+            })
+        });
+    }
+
+    public getAdditionalPropertiesType(): csharp.Type {
+        return csharp.Type.idictionary(
+            csharp.Type.string(),
+            csharp.Type.reference(this.getJsonElementClassReference())
+        );
+    }
+
+    public createAdditionalPropertiesField(): csharp.Field {
+        return csharp.field({
+            name: "AdditionalProperties",
+            type: this.getAdditionalPropertiesType(),
+            access: csharp.Access.Public,
+            summary: "Additional properties received from the response, if any.",
+            set: csharp.Access.Internal,
+            get: csharp.Access.Public,
+            initializer: csharp.codeblock((writer) =>
+                writer.writeNode(
+                    csharp.dictionary({
+                        keyType: csharp.Type.string(),
+                        valueType: csharp.Type.reference(this.getJsonElementClassReference()),
+                        values: undefined
+                    })
+                )
+            ),
+            annotations: [this.getJsonExtensionDataAttribute()]
+        });
+    }
+
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -211,6 +259,28 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: "System.Text.Json.Nodes",
             name: "JsonNode"
+        });
+    }
+
+    public getJsonObjClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json.Nodes",
+            name: "JsonObject"
+        });
+    }
+
+    public getJsonConverterAttributeReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonConverter"
+        });
+    }
+
+    public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonConverter",
+            generics: [typeToConvert]
         });
     }
 
@@ -498,7 +568,7 @@ export abstract class AbstractCsharpGeneratorContext<
     /**
      * Prints the Type in a simple string format.
      */
-    public printType(type: Type): string {
+    public printType(type: Type | TypeParameter): string {
         return type.toString({
             namespace: this.getNamespace(),
             allNamespaceSegments: this.getAllNamespaceSegments(),

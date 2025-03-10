@@ -437,7 +437,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: OffsetPagination;
         requestParam?: csharp.Parameter;
-        requestOptionsType: csharp.Type;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
         unpagedEndpointResponseType: csharp.Type;
         itemType: csharp.Type;
         writer: csharp.Writer;
@@ -519,9 +519,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: CursorPagination;
         requestParam?: csharp.Parameter;
-        requestOptionsType: csharp.Type;
-        unpagedEndpointResponseType: csharp.Type;
-        itemType: csharp.Type;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        unpagedEndpointResponseType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
         writer: csharp.Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;

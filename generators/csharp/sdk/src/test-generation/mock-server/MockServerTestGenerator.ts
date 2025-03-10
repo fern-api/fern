@@ -14,6 +14,7 @@ import {
     HttpEndpoint,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+import { TypeDeclaration } from "@fern-fern/ir-sdk/serialization";
 
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";

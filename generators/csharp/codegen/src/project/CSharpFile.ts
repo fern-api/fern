@@ -24,6 +24,8 @@ export declare namespace CSharpFile {
         namespace: string;
         /* Custom generator config */
         customConfig: BaseCsharpCustomConfigSchema;
+        /* The header to be written to the file */
+        fileHeader?: string;
     }
 }
 
@@ -34,19 +36,21 @@ export class CSharpFile extends File {
         allNamespaceSegments,
         allTypeClassReferences,
         namespace,
-        customConfig
+        customConfig,
+        fileHeader
     }: CSharpFile.Args) {
-        super(
-            `${clazz.name}.cs`,
-            directory,
-            clazz.toString({
-                namespace: clazz.getNamespace(),
-                allNamespaceSegments,
-                allTypeClassReferences,
-                rootNamespace: namespace,
-                customConfig
-            })
-        );
+        let fileContents = clazz.toString({
+            namespace: clazz.getNamespace(),
+            allNamespaceSegments,
+            allTypeClassReferences,
+            rootNamespace: namespace,
+            customConfig
+        });
+        if (fileHeader) {
+            fileContents = `${fileHeader}\n\n${fileContents}`;
+        }
+
+        super(`${clazz.name}.cs`, directory, fileContents);
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {

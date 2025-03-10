@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -8,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class ExceptionInfoTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -25,28 +25,27 @@ public class ExceptionInfoTest
             ExceptionStacktrace = "<logs>",
         };
         var deserializedObject = JsonUtils.Deserialize<ExceptionInfo>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "exceptionType": "Unavailable",
               "exceptionMessage": "This component is unavailable!",
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var obj = new ExceptionInfo
+        var actualObj = new ExceptionInfo
         {
             ExceptionType = "Unavailable",
             ExceptionMessage = "This component is unavailable!",
             ExceptionStacktrace = "<logs>",
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }
