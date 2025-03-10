@@ -32,6 +32,7 @@ export class ClassInstantiation extends AstNode {
     private readonly properties: ClassInstantiation.Property[];
     public readonly multiline: boolean;
 
+    /* eslint-disable deprecation/deprecation */
     constructor({ classReference, arguments_, forceUseConstructor, properties, multiline }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
