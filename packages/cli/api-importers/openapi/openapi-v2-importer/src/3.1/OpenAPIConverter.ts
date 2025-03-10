@@ -288,6 +288,17 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
 
+        this.addServicesToIr({ groupToEndpoints, context });
+        this.addWebhookGroupsToIr({ webhookGroups: this.ir.webhookGroups, context });
+    }
+
+    private addServicesToIr({
+        groupToEndpoints,
+        context
+    }: {
+        groupToEndpoints: Record<string, FernIr.HttpEndpoint[]>;
+        context: OpenAPIConverterContext3_1;
+    }): void {
         for (const [group, endpoints] of Object.entries(groupToEndpoints)) {
             const allParts = group.split(".").map((part) => context.casingsGenerator.generateName(part));
             const finalpart = allParts[allParts.length - 1] ?? context.casingsGenerator.generateName("");
@@ -320,6 +331,31 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 this.ir.rootPackage.subpackages.push(group);
             } else {
                 this.ir.rootPackage.service = group;
+            }
+        }
+    }
+
+    private addWebhookGroupsToIr({
+        webhookGroups,
+        context
+    }: {
+        webhookGroups: Record<string, FernIr.Webhook[]>;
+        context: OpenAPIConverterContext3_1;
+    }): void {
+        for (const [group, webhooks] of Object.entries(webhookGroups)) {
+            this.ir.webhookGroups[group] = webhooks;
+
+            if (group !== "") {
+                if (this.ir.subpackages[group] == null) {
+                    this.ir.subpackages[group] = {
+                        name: context.casingsGenerator.generateName(group),
+                        ...context.createPackage({ name: group })
+                    };
+                }
+                this.ir.subpackages[group].webhooks = group;
+                this.ir.rootPackage.subpackages.push(group);
+            } else {
+                this.ir.rootPackage.webhooks = group;
             }
         }
     }
