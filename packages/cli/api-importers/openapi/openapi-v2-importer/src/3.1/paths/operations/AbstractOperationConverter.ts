@@ -2,20 +2,28 @@ import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
+    ExampleCodeSample,
+    ExampleEndpointSuccessResponse,
+    ExampleRequestBody,
+    ExampleResponse,
     HttpHeader,
     HttpMethod,
     HttpRequestBody,
     HttpResponse,
     PathParameter,
     QueryParameter,
-    TypeDeclaration
+    SupportedSdkLanguage,
+    TypeDeclaration,
+    UserSpecifiedEndpointExample
 } from "@fern-api/ir-sdk";
 
 import { AbstractConverter } from "../../../AbstractConverter";
 import { ErrorCollector } from "../../../ErrorCollector";
+import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { SdkGroupNameExtension } from "../../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-name";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
+import { convertToExampleTypeReference } from "../../../convertToExampleTypeReference";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
@@ -351,6 +359,67 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             group: [tag],
             method: camelCase(methodTokens.join("_"))
         };
+    }
+
+    protected parseExamples({
+        context,
+        errorCollector
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+    }): UserSpecifiedEndpointExample[] {
+        const fernExamplesExtension = new FernExamplesExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        });
+
+        const examples = fernExamplesExtension.convert({
+            context,
+            errorCollector
+        });
+
+        if (examples == null) {
+            return [];
+        }
+
+        return examples.map((example): UserSpecifiedEndpointExample => ({
+            example: {
+                id: "",
+                name: context.casingsGenerator.generateName(""),
+                docs: undefined,
+                url: "",
+                endpointHeaders: [],
+                serviceHeaders: [],
+                rootPathParameters: [],
+                servicePathParameters: [],
+                endpointPathParameters: Object.entries(example.pathParameters ?? {}).map(([key, value]) => {
+                    return {
+                        name: context.casingsGenerator.generateName(key),
+                        value: convertToExampleTypeReference(value)
+                    }
+                }),
+                queryParameters: Object.entries(example.queryParameters ?? {}).map(([key, value]) => {
+                    return {
+                        name: context.casingsGenerator.generateNameAndWireValue({ name: key, wireValue: key}),
+                        shape: undefined,
+                        value: convertToExampleTypeReference(value)
+                    }
+                }),
+                request: example.request != null ? ExampleRequestBody.inlinedRequestBody({
+                    properties: [],
+                    jsonExample: example.request,
+                }) : undefined,
+                response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(convertToExampleTypeReference(example.response ?? {})))
+            },
+            codeSamples: example.codeSamples?.map((codeSample) => {
+                return ExampleCodeSample.sdk({
+                    sdk: codeSample.sdk as SupportedSdkLanguage,
+                    code: codeSample.code,
+                    name: undefined,
+                    docs: undefined
+                });
+            })
+        }));
     }
 }
 
