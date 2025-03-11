@@ -136,11 +136,12 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             channel: {
                 name: context.casingsGenerator.generateName(this.channelPath),
                 displayName: this.channelPath,
-                baseUrl: undefined,
+                baseUrl: this.channel.servers?.[0],
                 path: {
                     head: this.channelPath,
                     parts: []
                 },
+                // TODO: Dynamically parse auth from channel
                 auth: false,
                 headers,
                 queryParameters,
@@ -152,7 +153,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
                 }),
-                docs: undefined
+                docs: this.channel.description
             },
             inlinedTypes: this.inlinedTypes
         };

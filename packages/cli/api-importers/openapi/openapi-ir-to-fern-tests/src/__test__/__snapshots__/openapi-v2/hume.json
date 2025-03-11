@@ -46482,7 +46482,8 @@
       ],
       "pathParameters": [],
       "messages": [],
-      "examples": []
+      "examples": [],
+      "docs": "Chat with Empathic Voice Interface (EVI)"
     }
   },
   "pathParameters": [],

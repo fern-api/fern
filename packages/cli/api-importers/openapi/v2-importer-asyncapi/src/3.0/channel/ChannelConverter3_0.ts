@@ -25,6 +25,7 @@ type ChannelParameterLocation = {
 };
 
 const LOCATION_PREFIX = "$message.";
+const SERVER_REFERENCE_PREFIX = "#/servers/";
 
 export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterContext, ChannelConverter3_0.Output> {
     private readonly channel: AsyncAPIV3.ChannelV3;
@@ -93,11 +94,12 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             channel: {
                 name: context.casingsGenerator.generateName(this.channelPath),
                 displayName: this.channelPath,
-                baseUrl: undefined,
+                baseUrl: this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector),
                 path: {
                     head: this.channelPath,
                     parts: []
                 },
+                // TODO: Dynamically parse auth from channel
                 auth: false,
                 headers,
                 queryParameters,
@@ -109,7 +111,7 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
                 }),
-                docs: undefined
+                docs: this.channel.description
             },
             inlinedTypes: this.inlinedTypes
         };
@@ -156,5 +158,32 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             });
             return undefined;
         }
+    }
+
+    private resolveChannelServersFromReference(
+        servers: OpenAPIV3.ReferenceObject[],
+        errorCollector: ErrorCollector
+    ): string | undefined {
+        if (servers == null || servers.length === 0 || servers[0] == null) {
+            return undefined;
+        }
+        // TODO (Eden): We should eventually support multiple servers
+        const serverRef = servers[0];
+        if (!serverRef.$ref.startsWith(SERVER_REFERENCE_PREFIX)) {
+            errorCollector.collect({
+                message: `Failed to resolve server name from server ref ${serverRef.$ref}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+        const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
+        if (serverName == null) {
+            errorCollector.collect({
+                message: `Failed to find server with name ${serverName}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+        return serverName;
     }
 }
