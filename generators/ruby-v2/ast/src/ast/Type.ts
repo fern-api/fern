@@ -205,15 +205,56 @@ export class Type extends AstNode {
         return new this(undefined);
     }
 
-    public static nil(): Type {
+    public static self(): Type {
         return new this({
-            type: "nil"
+            type: "self"
+        });
+    }
+
+    public static class_(): Type {
+        return new this({
+            type: "class"
+        });
+    }
+
+    public static instance(): Type {
+        return new this({
+            type: "instance"
         });
     }
 
     public static boolean(): Type {
         return new this({
             type: "boolean"
+        });
+    }
+    public static nil(): Type {
+        return new this({
+            type: "nil"
+        });
+    }
+
+    public static top(): Type {
+        return new this({
+            type: "top"
+        });
+    }
+
+    public static bot(): Type {
+        return new this({
+            type: "bot"
+        });
+    }
+
+    public static void(): Type {
+        return new this({
+            type: "void"
+        });
+    }
+
+    public static boolish(): Type {
+        return new this({
+            type: "boolish"
         });
     }
 
@@ -229,10 +270,17 @@ export class Type extends AstNode {
         });
     }
 
-    public static union(memberValues: Union["elems"]): Type {
+    public static union(elems: Union["elems"]): Type {
         return new this({
             type: "union",
-            elems: memberValues
+            elems
+        });
+    }
+
+    public static intersection(elems: Intersection["elems"]): Type {
+        return new this({
+            type: "intersection",
+            elems
         });
     }
 
@@ -248,6 +296,35 @@ export class Type extends AstNode {
             type: "hash",
             keyType,
             valueType
+        });
+    }
+
+    public static object(klass: string): Type {
+        return new this({
+            type: "object",
+            klass
+        });
+    }
+
+    public static singleton(klass: string): Type {
+        return new this({
+            type: "singleton",
+            klass
+        });
+    }
+
+    public static tuple(elems: Tuple["elems"]): Type {
+        return new this({
+            type: "tuple",
+            elems
+        });
+    }
+
+    public static generic(baseKlass: string, parameters: Generic["parameters"]): Type {
+        return new this({
+            type: "generic",
+            baseKlass,
+            parameters
         });
     }
 
