@@ -106,9 +106,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return { pathParameters, queryParameters, headers };
         }
 
-        for (const parameter of this.operation.parameters) {
+        for (let parameter of this.operation.parameters) {
             if (context.isReferenceObject(parameter)) {
-                continue;
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+                if (resolvedReference.resolved) {
+                    parameter = resolvedReference.value;
+                } else {
+                    continue;
+                }
             }
 
             const parameterConverter = new ParameterConverter({

@@ -234,14 +234,26 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     channel,
                     channelPath
                 });
-                await channelConverter.convert({ context, errorCollector });
+                const convertedChannel = await channelConverter.convert({ context, errorCollector });
+                if (convertedChannel != null) {
+                    this.ir.websocketChannels = {
+                        ...this.ir.websocketChannels,
+                        [channelPath]: convertedChannel
+                    };
+                }
             } else {
                 const channelConverter = new ChannelConverter2_X({
                     breadcrumbs: ["channels", channelPath],
                     channel,
                     channelPath
                 });
-                await channelConverter.convert({ context, errorCollector });
+                const convertedChannel = await channelConverter.convert({ context, errorCollector });
+                if (convertedChannel != null) {
+                    this.ir.websocketChannels = {
+                        ...this.ir.websocketChannels,
+                        [channelPath]: convertedChannel
+                    };
+                }
             }
         }
     }

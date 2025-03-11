@@ -46244,6 +46244,40 @@
     "hasEndpointsInTree": false
   },
   "idempotencyHeaders": [],
+  "websocketChannels": {
+    "/chat": {
+      "name": {
+        "originalName": "/chat",
+        "camelCase": {
+          "unsafeName": "chat",
+          "safeName": "chat"
+        },
+        "snakeCase": {
+          "unsafeName": "chat",
+          "safeName": "chat"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "CHAT",
+          "safeName": "CHAT"
+        },
+        "pascalCase": {
+          "unsafeName": "Chat",
+          "safeName": "Chat"
+        }
+      },
+      "displayName": "/chat",
+      "path": {
+        "head": "/chat",
+        "parts": []
+      },
+      "auth": false,
+      "headers": [],
+      "queryParameters": [],
+      "pathParameters": [],
+      "messages": [],
+      "examples": []
+    }
+  },
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"

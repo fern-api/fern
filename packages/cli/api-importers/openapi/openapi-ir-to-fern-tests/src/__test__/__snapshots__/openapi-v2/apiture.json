@@ -16515,6 +16515,163 @@
                 "type": "container"
               },
               "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "allows",
+                  "camelCase": {
+                    "unsafeName": "allows",
+                    "safeName": "allows"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "allows",
+                    "safeName": "allows"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ALLOWS",
+                    "safeName": "ALLOWS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Allows",
+                    "safeName": "Allows"
+                  }
+                },
+                "wireValue": "allows"
+              },
+              "docs": "Filter the result to accounts that have corresponding `true` values in `account.allows`. For example `?allows=transferTo,transferFrom,view` returns only accounts where `account.allows.transferTo`, `account.allows.transferFrom`, and `account.allows.view` are all `true` for the caller.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "container": {
+                      "list": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "name": {
+                          "originalName": "",
+                          "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                          },
+                          "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                          },
+                          "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                          }
+                        },
+                        "typeId": "accountAllowsFilter",
+                        "inline": false,
+                        "type": "named"
+                      },
+                      "type": "list"
+                    },
+                    "type": "container"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of items to return in this paged response.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "max": 1000,
+                          "min": 0
+                        },
+                        "type": "integer"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
             }
           ],
           "headers": [],
@@ -25459,7 +25616,267 @@
             "parts": []
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "allows",
+                  "camelCase": {
+                    "unsafeName": "allows",
+                    "safeName": "allows"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "allows",
+                    "safeName": "allows"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ALLOWS",
+                    "safeName": "ALLOWS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Allows",
+                    "safeName": "Allows"
+                  }
+                },
+                "wireValue": "allows"
+              },
+              "docs": "Filter the result to accounts that have corresponding `true` values in `account.allows`. For example `?allows=transferTo,transferFrom,view` returns only accounts where `account.allows.transferTo`, `account.allows.transferFrom`, and `account.allows.view` are all `true` for the caller.",
+              "valueType": {
+                "container": {
+                  "list": {
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "",
+                      "camelCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "snakeCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      },
+                      "pascalCase": {
+                        "unsafeName": "",
+                        "safeName": ""
+                      }
+                    },
+                    "typeId": "accountAllowsFilter",
+                    "inline": false,
+                    "type": "named"
+                  },
+                  "type": "list"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "secCode",
+                  "camelCase": {
+                    "unsafeName": "secCode",
+                    "safeName": "secCode"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sec_code",
+                    "safeName": "sec_code"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SEC_CODE",
+                    "safeName": "SEC_CODE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SecCode",
+                    "safeName": "SecCode"
+                  }
+                },
+                "wireValue": "secCode"
+              },
+              "docs": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "achSecCode",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "customerId",
+                  "camelCase": {
+                    "unsafeName": "customerId",
+                    "safeName": "customerId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "customer_id",
+                    "safeName": "customer_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CUSTOMER_ID",
+                    "safeName": "CUSTOMER_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CustomerId",
+                    "safeName": "CustomerId"
+                  }
+                },
+                "wireValue": "customerId"
+              },
+              "docs": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "resourceId",
+                "inline": false,
+                "type": "named"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of items to return in this paged response.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "max": 1000,
+                          "min": 0
+                        },
+                        "type": "integer"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "response": {
             "statusCode": 200,
@@ -25506,11 +25923,353 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "f333894",
+                "id": "9541258a",
                 "url": "/achEligibleAccounts",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "queryParameters": [],
+                "queryParameters": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "allows",
+                        "camelCase": {
+                          "unsafeName": "allows",
+                          "safeName": "allows"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "allows",
+                          "safeName": "allows"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ALLOWS",
+                          "safeName": "ALLOWS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Allows",
+                          "safeName": "Allows"
+                        }
+                      },
+                      "wireValue": "allows"
+                    },
+                    "shape": {
+                      "type": "single"
+                    },
+                    "value": {
+                      "jsonExample": [
+                        "billPay",
+                        "billPay"
+                      ],
+                      "shape": {
+                        "container": {
+                          "list": [
+                            {
+                              "jsonExample": "billPay",
+                              "shape": {
+                                "shape": {
+                                  "value": {
+                                    "name": {
+                                      "originalName": "billPay",
+                                      "camelCase": {
+                                        "unsafeName": "billPay",
+                                        "safeName": "billPay"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "bill_pay",
+                                        "safeName": "bill_pay"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "BILL_PAY",
+                                        "safeName": "BILL_PAY"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "BillPay",
+                                        "safeName": "BillPay"
+                                      }
+                                    },
+                                    "wireValue": "billPay"
+                                  },
+                                  "type": "enum"
+                                },
+                                "typeName": {
+                                  "typeId": "accountAllowsFilter",
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": []
+                                  },
+                                  "name": {
+                                    "originalName": "accountAllowsFilter",
+                                    "camelCase": {
+                                      "unsafeName": "accountAllowsFilter",
+                                      "safeName": "accountAllowsFilter"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "account_allows_filter",
+                                      "safeName": "account_allows_filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "ACCOUNT_ALLOWS_FILTER",
+                                      "safeName": "ACCOUNT_ALLOWS_FILTER"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "AccountAllowsFilter",
+                                      "safeName": "AccountAllowsFilter"
+                                    }
+                                  }
+                                },
+                                "type": "named"
+                              }
+                            },
+                            {
+                              "jsonExample": "billPay",
+                              "shape": {
+                                "shape": {
+                                  "value": {
+                                    "name": {
+                                      "originalName": "billPay",
+                                      "camelCase": {
+                                        "unsafeName": "billPay",
+                                        "safeName": "billPay"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "bill_pay",
+                                        "safeName": "bill_pay"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "BILL_PAY",
+                                        "safeName": "BILL_PAY"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "BillPay",
+                                        "safeName": "BillPay"
+                                      }
+                                    },
+                                    "wireValue": "billPay"
+                                  },
+                                  "type": "enum"
+                                },
+                                "typeName": {
+                                  "typeId": "accountAllowsFilter",
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": []
+                                  },
+                                  "name": {
+                                    "originalName": "accountAllowsFilter",
+                                    "camelCase": {
+                                      "unsafeName": "accountAllowsFilter",
+                                      "safeName": "accountAllowsFilter"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "account_allows_filter",
+                                      "safeName": "account_allows_filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "ACCOUNT_ALLOWS_FILTER",
+                                      "safeName": "ACCOUNT_ALLOWS_FILTER"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "AccountAllowsFilter",
+                                      "safeName": "AccountAllowsFilter"
+                                    }
+                                  }
+                                },
+                                "type": "named"
+                              }
+                            }
+                          ],
+                          "itemType": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "packagePath": []
+                            },
+                            "name": {
+                              "originalName": "",
+                              "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                              },
+                              "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                              },
+                              "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                              }
+                            },
+                            "typeId": "accountAllowsFilter",
+                            "inline": false,
+                            "type": "named"
+                          },
+                          "type": "list"
+                        },
+                        "type": "container"
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "secCode",
+                        "camelCase": {
+                          "unsafeName": "secCode",
+                          "safeName": "secCode"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "sec_code",
+                          "safeName": "sec_code"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SEC_CODE",
+                          "safeName": "SEC_CODE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "SecCode",
+                          "safeName": "SecCode"
+                        }
+                      },
+                      "wireValue": "secCode"
+                    },
+                    "shape": {
+                      "type": "single"
+                    },
+                    "value": {
+                      "jsonExample": "arc",
+                      "shape": {
+                        "shape": {
+                          "value": {
+                            "name": {
+                              "originalName": "arc",
+                              "camelCase": {
+                                "unsafeName": "arc",
+                                "safeName": "arc"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "arc",
+                                "safeName": "arc"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "ARC",
+                                "safeName": "ARC"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Arc",
+                                "safeName": "Arc"
+                              }
+                            },
+                            "wireValue": "arc"
+                          },
+                          "type": "enum"
+                        },
+                        "typeName": {
+                          "typeId": "achSecCode",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "achSecCode",
+                            "camelCase": {
+                              "unsafeName": "achSecCode",
+                              "safeName": "achSecCode"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "ach_sec_code",
+                              "safeName": "ach_sec_code"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACH_SEC_CODE",
+                              "safeName": "ACH_SEC_CODE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AchSecCode",
+                              "safeName": "AchSecCode"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "customerId",
+                        "camelCase": {
+                          "unsafeName": "customerId",
+                          "safeName": "customerId"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "customer_id",
+                          "safeName": "customer_id"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CUSTOMER_ID",
+                          "safeName": "CUSTOMER_ID"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "CustomerId",
+                          "safeName": "CustomerId"
+                        }
+                      },
+                      "wireValue": "customerId"
+                    },
+                    "shape": {
+                      "type": "single"
+                    },
+                    "value": {
+                      "jsonExample": "banana",
+                      "shape": {
+                        "shape": {
+                          "value": {
+                            "jsonExample": "banana",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "banana"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "alias"
+                        },
+                        "typeName": {
+                          "typeId": "resourceId",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "resourceId",
+                            "camelCase": {
+                              "unsafeName": "resourceId",
+                              "safeName": "resourceId"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "resource_id",
+                              "safeName": "resource_id"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "RESOURCE_ID",
+                              "safeName": "RESOURCE_ID"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ResourceId",
+                              "safeName": "ResourceId"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    }
+                  }
+                ],
                 "servicePathParameters": [],
                 "serviceHeaders": [],
                 "rootPathParameters": [],
@@ -31625,7 +32384,99 @@
               "location": "ENDPOINT"
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of items to return in this paged response.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "max": 1000,
+                          "min": 0
+                        },
+                        "type": "integer"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            }
+          ],
           "headers": [],
           "response": {
             "statusCode": 200,
@@ -37574,14 +38425,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -37870,8 +38741,8 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "471b1d84",
-                "url": "/institutions/institutionId/transferSchedule",
+                "id": "3343bd98",
+                "url": "/institutions/xy/transferSchedule",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
                   {
@@ -37895,15 +38766,50 @@
                       }
                     },
                     "value": {
-                      "jsonExample": "institutionId",
+                      "jsonExample": "xy",
                       "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "institutionId"
+                        "shape": {
+                          "value": {
+                            "jsonExample": "xy",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "xy"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "type": "string"
+                          "type": "alias"
                         },
-                        "type": "primitive"
+                        "typeName": {
+                          "typeId": "institutionId",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "institutionId",
+                            "camelCase": {
+                              "unsafeName": "institutionId",
+                              "safeName": "institutionId"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "institution_id",
+                              "safeName": "institution_id"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "INSTITUTION_ID",
+                              "safeName": "INSTITUTION_ID"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "InstitutionId",
+                              "safeName": "InstitutionId"
+                            }
+                          }
+                        },
+                        "type": "named"
                       }
                     }
                   }
@@ -38634,14 +39540,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -38700,14 +39626,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -38768,7 +39714,51 @@
               "allowMultiple": false
             }
           ],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "If-None-Match",
+                  "camelCase": {
+                    "unsafeName": "ifNoneMatch",
+                    "safeName": "ifNoneMatch"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "if_none_match",
+                    "safeName": "if_none_match"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IF_NONE_MATCH",
+                    "safeName": "IF_NONE_MATCH"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IfNoneMatch",
+                    "safeName": "IfNoneMatch"
+                  }
+                },
+                "wireValue": "If-None-Match"
+              },
+              "docs": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "maxLength": 512
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              }
+            }
+          ],
           "response": {
             "statusCode": 200,
             "body": {
@@ -38814,8 +39804,8 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "ee6dbc2f",
-                "url": "/institutions/institutionId/cutoffTimes",
+                "id": "8d593dfb",
+                "url": "/institutions/xy/cutoffTimes",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
                   {
@@ -38839,15 +39829,50 @@
                       }
                     },
                     "value": {
-                      "jsonExample": "institutionId",
+                      "jsonExample": "xy",
                       "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "institutionId"
+                        "shape": {
+                          "value": {
+                            "jsonExample": "xy",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "xy"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "type": "string"
+                          "type": "alias"
                         },
-                        "type": "primitive"
+                        "typeName": {
+                          "typeId": "institutionId",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "institutionId",
+                            "camelCase": {
+                              "unsafeName": "institutionId",
+                              "safeName": "institutionId"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "institution_id",
+                              "safeName": "institution_id"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "INSTITUTION_ID",
+                              "safeName": "INSTITUTION_ID"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "InstitutionId",
+                              "safeName": "InstitutionId"
+                            }
+                          }
+                        },
+                        "type": "named"
                       }
                     }
                   }
@@ -39633,14 +40658,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -39699,14 +40744,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -39955,8 +41020,8 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "ed8f6b05",
-                "url": "/institutions/institutionId/transferDateRestrictions",
+                "id": "38496379",
+                "url": "/institutions/xy/transferDateRestrictions",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
                   {
@@ -39980,15 +41045,50 @@
                       }
                     },
                     "value": {
-                      "jsonExample": "institutionId",
+                      "jsonExample": "xy",
                       "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "institutionId"
+                        "shape": {
+                          "value": {
+                            "jsonExample": "xy",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "xy"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
                           },
-                          "type": "string"
+                          "type": "alias"
                         },
-                        "type": "primitive"
+                        "typeName": {
+                          "typeId": "institutionId",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "institutionId",
+                            "camelCase": {
+                              "unsafeName": "institutionId",
+                              "safeName": "institutionId"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "institution_id",
+                              "safeName": "institution_id"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "INSTITUTION_ID",
+                              "safeName": "INSTITUTION_ID"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "InstitutionId",
+                              "safeName": "InstitutionId"
+                            }
+                          }
+                        },
+                        "type": "named"
                       }
                     }
                   }
@@ -41254,14 +42354,34 @@
                   "safeName": "InstitutionId"
                 }
               },
+              "docs": "The unique identifier of a financial institution.",
               "valueType": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
                   }
                 },
-                "type": "primitive"
+                "typeId": "institutionId",
+                "inline": false,
+                "type": "named"
               },
               "location": "ENDPOINT"
             }
@@ -41388,6 +42508,51 @@
             }
           ],
           "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
             {
               "name": {
                 "name": {
@@ -46974,7 +48139,51 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "If-None-Match",
+                  "camelCase": {
+                    "unsafeName": "ifNoneMatch",
+                    "safeName": "ifNoneMatch"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "if_none_match",
+                    "safeName": "if_none_match"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "IF_NONE_MATCH",
+                    "safeName": "IF_NONE_MATCH"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IfNoneMatch",
+                    "safeName": "IfNoneMatch"
+                  }
+                },
+                "wireValue": "If-None-Match"
+              },
+              "docs": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "maxLength": 512
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              }
+            }
+          ],
           "response": {
             "statusCode": 200,
             "body": {
@@ -48085,6 +49294,97 @@
                       "v1": "BOOLEAN",
                       "v2": {
                         "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "start",
+                  "camelCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "start",
+                    "safeName": "start"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "START",
+                    "safeName": "START"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Start",
+                    "safeName": "Start"
+                  }
+                },
+                "wireValue": "start"
+              },
+              "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
+                        },
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              },
+              "allowMultiple": false
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "limit",
+                  "camelCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "limit",
+                    "safeName": "limit"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIMIT",
+                    "safeName": "LIMIT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  }
+                },
+                "wireValue": "limit"
+              },
+              "docs": "The maximum number of items to return in this paged response.",
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "max": 1000,
+                          "min": 0
+                        },
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
@@ -54078,7 +55378,61 @@
           },
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Challenge",
+                  "camelCase": {
+                    "unsafeName": "challenge",
+                    "safeName": "challenge"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "challenge",
+                    "safeName": "challenge"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHALLENGE",
+                    "safeName": "CHALLENGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Challenge",
+                    "safeName": "Challenge"
+                  }
+                },
+                "wireValue": "Challenge"
+              },
+              "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "challengeToken",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "requestBody": {
             "contentType": "application/json",
             "docs": "The data necessary to create a new transfer.",
@@ -54157,9 +55511,81 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "674e44d1",
+                "id": "15956397",
                 "url": "/transfers",
-                "endpointHeaders": [],
+                "endpointHeaders": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "Challenge",
+                        "camelCase": {
+                          "unsafeName": "challenge",
+                          "safeName": "challenge"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "challenge",
+                          "safeName": "challenge"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHALLENGE",
+                          "safeName": "CHALLENGE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Challenge",
+                          "safeName": "Challenge"
+                        }
+                      },
+                      "wireValue": "Challenge"
+                    },
+                    "value": {
+                      "jsonExample": "mandarin",
+                      "shape": {
+                        "shape": {
+                          "value": {
+                            "jsonExample": "mandarin",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "mandarin"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "alias"
+                        },
+                        "typeName": {
+                          "typeId": "challengeToken",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "challengeToken",
+                            "camelCase": {
+                              "unsafeName": "challengeToken",
+                              "safeName": "challengeToken"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "challenge_token",
+                              "safeName": "challenge_token"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "CHALLENGE_TOKEN",
+                              "safeName": "CHALLENGE_TOKEN"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ChallengeToken",
+                              "safeName": "ChallengeToken"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    }
+                  }
+                ],
                 "endpointPathParameters": [],
                 "queryParameters": [],
                 "servicePathParameters": [],
@@ -61296,7 +62722,61 @@
             }
           ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "Challenge",
+                  "camelCase": {
+                    "unsafeName": "challenge",
+                    "safeName": "challenge"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "challenge",
+                    "safeName": "challenge"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHALLENGE",
+                    "safeName": "CHALLENGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Challenge",
+                    "safeName": "Challenge"
+                  }
+                },
+                "wireValue": "Challenge"
+              },
+              "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
+              "valueType": {
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "name": {
+                  "originalName": "",
+                  "camelCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "snakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  },
+                  "pascalCase": {
+                    "unsafeName": "",
+                    "safeName": ""
+                  }
+                },
+                "typeId": "challengeToken",
+                "inline": false,
+                "type": "named"
+              }
+            }
+          ],
           "requestBody": {
             "contentType": "application/merge-patch+json",
             "docs": "The fields to update within the transfer.",
@@ -61375,9 +62855,81 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "4b612c5d",
+                "id": "53033917",
                 "url": "/transfers/transferId",
-                "endpointHeaders": [],
+                "endpointHeaders": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "Challenge",
+                        "camelCase": {
+                          "unsafeName": "challenge",
+                          "safeName": "challenge"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "challenge",
+                          "safeName": "challenge"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHALLENGE",
+                          "safeName": "CHALLENGE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Challenge",
+                          "safeName": "Challenge"
+                        }
+                      },
+                      "wireValue": "Challenge"
+                    },
+                    "value": {
+                      "jsonExample": "mandarin",
+                      "shape": {
+                        "shape": {
+                          "value": {
+                            "jsonExample": "mandarin",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "mandarin"
+                                },
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "alias"
+                        },
+                        "typeName": {
+                          "typeId": "challengeToken",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "challengeToken",
+                            "camelCase": {
+                              "unsafeName": "challengeToken",
+                              "safeName": "challengeToken"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "challenge_token",
+                              "safeName": "challenge_token"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "CHALLENGE_TOKEN",
+                              "safeName": "CHALLENGE_TOKEN"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ChallengeToken",
+                              "safeName": "ChallengeToken"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    }
+                  }
+                ],
                 "endpointPathParameters": [
                   {
                     "name": {

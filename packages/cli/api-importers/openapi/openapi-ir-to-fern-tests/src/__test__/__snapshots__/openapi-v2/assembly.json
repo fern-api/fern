@@ -55113,6 +55113,40 @@
     "hasEndpointsInTree": false
   },
   "idempotencyHeaders": [],
+  "websocketChannels": {
+    "/{userId}": {
+      "name": {
+        "originalName": "/{userId}",
+        "camelCase": {
+          "unsafeName": "userId",
+          "safeName": "userId"
+        },
+        "snakeCase": {
+          "unsafeName": "user_id",
+          "safeName": "user_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "USER_ID",
+          "safeName": "USER_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "UserId",
+          "safeName": "UserId"
+        }
+      },
+      "displayName": "/{userId}",
+      "path": {
+        "head": "/{userId}",
+        "parts": []
+      },
+      "auth": false,
+      "headers": [],
+      "queryParameters": [],
+      "pathParameters": [],
+      "messages": [],
+      "examples": []
+    }
+  },
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
