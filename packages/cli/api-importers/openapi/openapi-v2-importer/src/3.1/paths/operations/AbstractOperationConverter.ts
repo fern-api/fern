@@ -36,6 +36,16 @@ export declare namespace AbstractOperationConverter {
     }
 }
 
+
+
+interface ConvertedRequestBody {
+    value: HttpRequestBody;
+    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+}
+interface ConvertedResponseBody extends HttpResponse {
+    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+}
+
 export abstract class AbstractOperationConverter extends AbstractConverter<
     OpenAPIConverterContext3_1,
     AbstractOperationConverter.Output
@@ -161,7 +171,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): Promise<HttpRequestBody | undefined | null> {
+    }): Promise<ConvertedRequestBody | undefined | null> {
         if (this.operation.requestBody == null) {
             return undefined;
         }
@@ -195,7 +205,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ...this.inlinedTypes,
                 ...convertedRequestBody.inlinedTypes
             };
-            return convertedRequestBody.requestBody;
+            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples }
         }
 
         return undefined;
@@ -213,7 +223,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): Promise<HttpResponse | undefined> {
+    }): Promise<ConvertedResponseBody | undefined> {
         if (this.operation.responses == null) {
             return undefined;
         }
@@ -253,7 +263,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 };
                 return {
                     statusCode: statusCodeNum,
-                    body: convertedResponseBody.responseBody
+                    body: convertedResponseBody.responseBody,
+                    examples: convertedResponseBody.examples,
                 };
             }
         }
