@@ -205,7 +205,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ...this.inlinedTypes,
                 ...convertedRequestBody.inlinedTypes
             };
-            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples }
+            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples };
         }
 
         return undefined;
