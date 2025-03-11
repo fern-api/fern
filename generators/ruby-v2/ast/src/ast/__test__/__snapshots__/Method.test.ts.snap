@@ -4,6 +4,14 @@ exports[`Method > type definitions > writes type definition for method with no p
 
 exports[`Method > type definitions > writes type definition for method with no parameters and untyped return type 1`] = `"def foobar: () -> untyped"`;
 
+exports[`Method > type definitions > writes type definition for method with typed (but optional) positional parameters 1`] = `"def foobar: (?String, ?Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with typed keyword parameters 1`] = `"def foobar: (biz: String, baz: Integer) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with typed positional parameters 1`] = `"def foobar: (String, Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with untyped positional parameters 1`] = `"def foobar: (untyped) -> untyped"`;
+
 exports[`Method > writes method with all parameter types 1`] = `
 "def fizzbuzz(one, two:, *three, **four, &five); end
 "

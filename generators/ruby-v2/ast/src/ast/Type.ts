@@ -3,31 +3,32 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-type InternalType = Untyped | Boolean_ | Integer | String_;
+export type InternalType = "untyped" | "boolean" | "integer" | "string";
 
-interface Untyped {
-    type: "untyped";
-}
-
-interface Boolean_ {
-    type: "boolean";
-}
-
-interface Integer {
-    type: "integer";
-}
-
-interface String_ {
-    type: "string";
+declare namespace Type {
+    interface Args {
+        internalType: InternalType;
+        optional?: boolean;
+    }
 }
 
 export class Type extends AstNode {
-    private constructor(public readonly internalType: InternalType) {
+    public readonly internalType: InternalType;
+    public readonly optional_: boolean;
+
+    private constructor({ internalType, optional }: Type.Args) {
         super();
+        this.internalType = internalType;
+        this.optional_ = optional ?? false;
     }
 
+    // TODO: Should this be `writeTypeDefinition` instead, and `write` should do nothing?
     public write(writer: Writer): void {
-        switch (this.internalType.type) {
+        if (this.optional_ && this.internalType !== "untyped") {
+            writer.write("?");
+        }
+
+        switch (this.internalType) {
             case "untyped":
                 writer.write("untyped");
                 break;
@@ -48,25 +49,29 @@ export class Type extends AstNode {
     /* Static factory methods for creating a Type */
     public static untyped(): Type {
         return new this({
-            type: "untyped"
+            internalType: "untyped"
         });
     }
 
     public static boolean(): Type {
         return new this({
-            type: "boolean"
+            internalType: "boolean"
         });
     }
 
     public static integer(): Type {
         return new this({
-            type: "integer"
+            internalType: "integer"
         });
     }
 
     public static string(): Type {
         return new this({
-            type: "string"
+            internalType: "string"
         });
+    }
+
+    public optional(): Type {
+        return new Type({ internalType: this.internalType, optional: true });
     }
 }

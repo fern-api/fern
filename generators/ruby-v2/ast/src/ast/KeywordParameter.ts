@@ -12,8 +12,8 @@ export declare namespace KeywordParameter {
 export class KeywordParameter extends Parameter {
     public readonly initializer: AstNode | undefined;
 
-    constructor({ name, initializer }: KeywordParameter.Args) {
-        super({ name });
+    constructor({ name, type, initializer }: KeywordParameter.Args) {
+        super({ name, type });
 
         this.initializer = initializer;
     }
@@ -24,5 +24,11 @@ export class KeywordParameter extends Parameter {
         if (this.initializer) {
             writer.write(` ${this.initializer.write(writer)}`);
         }
+    }
+
+    public writeTypeDefinition(writer: Writer): void {
+        writer.write(`${this.name}: `);
+
+        this.type.write(writer);
     }
 }

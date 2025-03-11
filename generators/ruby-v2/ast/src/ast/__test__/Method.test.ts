@@ -23,6 +23,61 @@ describe("Method", () => {
 
             expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
         });
+
+        test("writes type definition for method with untyped positional parameters", () => {
+            const method = ruby.method({
+                name: "foobar",
+                parameters: { positional: [ruby.positionalParameter({ name: "biz", type: Type.untyped() })] },
+                returnType: Type.untyped()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with typed positional parameters", () => {
+            const method = ruby.method({
+                name: "foobar",
+                parameters: {
+                    positional: [
+                        ruby.positionalParameter({ name: "biz", type: Type.string() }),
+                        ruby.positionalParameter({ name: "baz", type: Type.integer() })
+                    ]
+                },
+                returnType: Type.untyped()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with typed (but optional) positional parameters", () => {
+            const method = ruby.method({
+                name: "foobar",
+                parameters: {
+                    positional: [
+                        ruby.positionalParameter({ name: "biz", type: Type.string().optional() }),
+                        ruby.positionalParameter({ name: "baz", type: Type.integer().optional() })
+                    ]
+                },
+                returnType: Type.untyped()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with typed keyword parameters", () => {
+            const method = ruby.method({
+                name: "foobar",
+                parameters: {
+                    positional: [
+                        ruby.keywordParameter({ name: "biz", type: Type.string() }),
+                        ruby.keywordParameter({ name: "baz", type: Type.integer() })
+                    ]
+                },
+                returnType: Type.boolean()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
     });
 
     test("writes method with no parameters", () => {

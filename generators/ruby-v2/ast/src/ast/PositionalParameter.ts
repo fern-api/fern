@@ -12,8 +12,8 @@ export declare namespace PositionalParameter {
 export class PositionalParameter extends Parameter {
     public readonly initializer: AstNode | undefined;
 
-    constructor({ name, initializer }: PositionalParameter.Args) {
-        super({ name });
+    constructor({ name, type, initializer }: PositionalParameter.Args) {
+        super({ name, type });
 
         this.initializer = initializer;
     }
@@ -24,5 +24,9 @@ export class PositionalParameter extends Parameter {
         if (this.initializer) {
             writer.write(` = ${this.initializer.write(writer)}`);
         }
+    }
+
+    public writeTypeDefinition(writer: Writer): void {
+        this.type.write(writer);
     }
 }

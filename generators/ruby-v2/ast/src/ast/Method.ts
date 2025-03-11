@@ -133,7 +133,17 @@ export class Method extends TypedAstNode {
     }
 
     public writeTypeDefinition(writer: Writer): void {
-        writer.write(`def ${this.name}: () -> `);
+        writer.write(`def ${this.name}: (`);
+
+        this.parameters.forEach((parameter, index) => {
+            parameter.writeTypeDefinition(writer);
+
+            if (index < this.parameters.length - 1) {
+                writer.write(", ");
+            }
+        });
+
+        writer.write(") -> ");
 
         this.returnType.write(writer);
     }
