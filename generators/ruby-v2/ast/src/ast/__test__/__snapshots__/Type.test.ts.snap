@@ -4,6 +4,12 @@ exports[`Type > writes boolean 1`] = `"bool"`;
 
 exports[`Type > writes integer 1`] = `"Integer"`;
 
+exports[`Type > writes nil 1`] = `"nil"`;
+
+exports[`Type > writes nilable 1`] = `"bool | nil"`;
+
 exports[`Type > writes string 1`] = `"String"`;
+
+exports[`Type > writes unions 1`] = `"String | Integer"`;
 
 exports[`Type > writes untyped 1`] = `"untyped"`;

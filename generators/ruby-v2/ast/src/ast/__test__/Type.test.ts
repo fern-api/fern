@@ -16,6 +16,12 @@ describe("Type", () => {
         expect(untyped.toString(writerConfig)).toMatchSnapshot();
     });
 
+    test("writes nil", () => {
+        const nil = Type.nil();
+
+        expect(nil.toString(writerConfig)).toMatchSnapshot();
+    });
+
     test("writes boolean", () => {
         const boolean = Type.boolean();
 
@@ -32,5 +38,17 @@ describe("Type", () => {
         const string = Type.string();
 
         expect(string.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes unions", () => {
+        const union = Type.union([Type.string(), Type.integer()]);
+
+        expect(union.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes nilable", () => {
+        const nilable = Type.boolean().nilable();
+
+        expect(nilable.toString(writerConfig)).toMatchSnapshot();
     });
 });

@@ -27,7 +27,7 @@ describe("Method", () => {
         test("writes type definition for method with untyped positional parameters", () => {
             const method = ruby.method({
                 name: "foobar",
-                parameters: { positional: [ruby.positionalParameter({ name: "biz", type: Type.untyped() })] },
+                parameters: { positional: [ruby.parameters.positional({ name: "biz", type: Type.untyped() })] },
                 returnType: Type.untyped()
             });
 
@@ -39,8 +39,8 @@ describe("Method", () => {
                 name: "foobar",
                 parameters: {
                     positional: [
-                        ruby.positionalParameter({ name: "biz", type: Type.string() }),
-                        ruby.positionalParameter({ name: "baz", type: Type.integer() })
+                        ruby.parameters.positional({ name: "biz", type: Type.string() }),
+                        ruby.parameters.positional({ name: "baz", type: Type.integer() })
                     ]
                 },
                 returnType: Type.untyped()
@@ -54,11 +54,10 @@ describe("Method", () => {
                 name: "foobar",
                 parameters: {
                     positional: [
-                        ruby.positionalParameter({ name: "biz", type: Type.string().optional() }),
-                        ruby.positionalParameter({ name: "baz", type: Type.integer().optional() })
+                        ruby.parameters.positional({ name: "biz", type: Type.string(), optional: true }),
+                        ruby.parameters.positional({ name: "baz", type: Type.integer(), optional: true })
                     ]
-                },
-                returnType: Type.untyped()
+                }
             });
 
             expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
@@ -69,9 +68,33 @@ describe("Method", () => {
                 name: "foobar",
                 parameters: {
                     positional: [
-                        ruby.keywordParameter({ name: "biz", type: Type.string() }),
-                        ruby.keywordParameter({ name: "baz", type: Type.integer() })
+                        ruby.parameters.keyword({ name: "biz", type: Type.string() }),
+                        ruby.parameters.keyword({ name: "baz", type: Type.integer() })
                     ]
+                },
+                returnType: Type.boolean()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with positional splat parameter", () => {
+            const method = ruby.method({
+                name: "valid_name?",
+                parameters: {
+                    positionalSplat: ruby.parameters.positionalSplat({ name: "names", type: Type.string() })
+                },
+                returnType: Type.boolean()
+            });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with keyword splat parameter", () => {
+            const method = ruby.method({
+                name: "valid_name?",
+                parameters: {
+                    positionalSplat: ruby.parameters.keywordSplat({ name: "names", type: Type.untyped() })
                 },
                 returnType: Type.boolean()
             });
@@ -104,7 +127,9 @@ describe("Method", () => {
     test("writes method with positional parameters", () => {
         const method = ruby.method({
             name: "fizzbuzz",
-            parameters: { positional: [ruby.parameter({ name: "one" }), ruby.parameter({ name: "two" })] }
+            parameters: {
+                positional: [ruby.parameters.positional({ name: "one" }), ruby.parameters.positional({ name: "two" })]
+            }
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
@@ -114,7 +139,7 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                keyword: [ruby.keywordParameter({ name: "one" }), ruby.keywordParameter({ name: "two" })]
+                keyword: [ruby.parameters.keyword({ name: "one" }), ruby.parameters.keyword({ name: "two" })]
             }
         });
 
@@ -124,7 +149,7 @@ describe("Method", () => {
     test("writes method with single splat parameter", () => {
         const method = ruby.method({
             name: "fizzbuzz",
-            parameters: { positionalSplat: ruby.positionalSplatParameter({ name: "one" }) }
+            parameters: { positionalSplat: ruby.parameters.positionalSplat({ name: "one" }) }
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
@@ -133,7 +158,7 @@ describe("Method", () => {
     test("writes method with double splat parameter", () => {
         const method = ruby.method({
             name: "fizzbuzz",
-            parameters: { keywordSplat: ruby.keywordSplatParameter({ name: "one" }) }
+            parameters: { keywordSplat: ruby.parameters.keywordSplat({ name: "one" }) }
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
@@ -142,7 +167,7 @@ describe("Method", () => {
     test("writes method with yield parameter", () => {
         const method = ruby.method({
             name: "fizzbuzz",
-            parameters: { yield: ruby.yieldParameter({ name: "one" }) }
+            parameters: { yield: ruby.parameters.yield({ name: "one" }) }
         });
 
         expect(method.toString(writerConfig)).toMatchSnapshot();
@@ -152,8 +177,8 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                positional: [ruby.parameter({ name: "one" }), ruby.parameter({ name: "two" })],
-                keyword: [ruby.keywordParameter({ name: "three" }), ruby.keywordParameter({ name: "four" })]
+                positional: [ruby.parameters.positional({ name: "one" }), ruby.parameters.positional({ name: "two" })],
+                keyword: [ruby.parameters.keyword({ name: "three" }), ruby.parameters.keyword({ name: "four" })]
             }
         });
 
@@ -164,9 +189,9 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                positional: [ruby.parameter({ name: "one" }), ruby.parameter({ name: "two" })],
-                keyword: [ruby.keywordParameter({ name: "three" }), ruby.keywordParameter({ name: "four" })],
-                positionalSplat: ruby.positionalSplatParameter({ name: "splatted" })
+                positional: [ruby.parameters.positional({ name: "one" }), ruby.parameters.positional({ name: "two" })],
+                keyword: [ruby.parameters.keyword({ name: "three" }), ruby.parameters.keyword({ name: "four" })],
+                positionalSplat: ruby.parameters.positionalSplat({ name: "splatted" })
             }
         });
 
@@ -177,9 +202,9 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                positional: [ruby.parameter({ name: "one" }), ruby.parameter({ name: "two" })],
-                keyword: [ruby.keywordParameter({ name: "three" }), ruby.keywordParameter({ name: "four" })],
-                keywordSplat: ruby.keywordSplatParameter({ name: "double_splatted" })
+                positional: [ruby.parameters.positional({ name: "one" }), ruby.parameters.positional({ name: "two" })],
+                keyword: [ruby.parameters.keyword({ name: "three" }), ruby.parameters.keyword({ name: "four" })],
+                keywordSplat: ruby.parameters.keywordSplat({ name: "double_splatted" })
             }
         });
 
@@ -190,9 +215,9 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                positional: [ruby.parameter({ name: "one" }), ruby.parameter({ name: "two" })],
-                keyword: [ruby.keywordParameter({ name: "three" }), ruby.keywordParameter({ name: "four" })],
-                yield: ruby.yieldParameter({ name: "block" })
+                positional: [ruby.parameters.positional({ name: "one" }), ruby.parameters.positional({ name: "two" })],
+                keyword: [ruby.parameters.keyword({ name: "three" }), ruby.parameters.keyword({ name: "four" })],
+                yield: ruby.parameters.yield({ name: "block" })
             }
         });
 
@@ -203,11 +228,11 @@ describe("Method", () => {
         const method = ruby.method({
             name: "fizzbuzz",
             parameters: {
-                positional: [ruby.parameter({ name: "one" })],
-                keyword: [ruby.keywordParameter({ name: "two" })],
-                positionalSplat: ruby.positionalSplatParameter({ name: "three" }),
-                keywordSplat: ruby.keywordSplatParameter({ name: "four" }),
-                yield: ruby.yieldParameter({ name: "five" })
+                positional: [ruby.parameters.positional({ name: "one" })],
+                keyword: [ruby.parameters.keyword({ name: "two" })],
+                positionalSplat: ruby.parameters.positionalSplat({ name: "three" }),
+                keywordSplat: ruby.parameters.keywordSplat({ name: "four" }),
+                yield: ruby.parameters.yield({ name: "five" })
             }
         });
 

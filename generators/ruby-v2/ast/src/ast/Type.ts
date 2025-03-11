@@ -3,75 +3,127 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-export type InternalType = "untyped" | "boolean" | "integer" | "string";
-
-declare namespace Type {
-    interface Args {
-        internalType: InternalType;
-        optional?: boolean;
-    }
+interface Nil {
+    type: "nil";
 }
 
+interface Boolean_ {
+    type: "boolean";
+}
+
+interface Boolish {
+    type: "boolish";
+}
+
+interface String_ {
+    type: "string";
+}
+
+interface Integer {
+    type: "integer";
+}
+
+interface Union {
+    type: "union";
+    memberValues: Type[];
+}
+
+interface Array_ {
+    type: "array";
+    value: Type;
+}
+
+export type SingleType = Nil | Boolean_ | Boolish | String_ | Integer | Union;
+export type CollectionType = Array_;
+
+type InternalType = SingleType | CollectionType;
+
 export class Type extends AstNode {
-    public readonly internalType: InternalType;
-    public readonly optional_: boolean;
-
-    private constructor({ internalType, optional }: Type.Args) {
+    private constructor(public readonly internalType: InternalType | undefined) {
         super();
-        this.internalType = internalType;
-        this.optional_ = optional ?? false;
     }
 
-    // TODO: Should this be `writeTypeDefinition` instead, and `write` should do nothing?
     public write(writer: Writer): void {
-        if (this.optional_ && this.internalType !== "untyped") {
-            writer.write("?");
-        }
-
-        switch (this.internalType) {
-            case "untyped":
-                writer.write("untyped");
-                break;
-            case "boolean":
-                writer.write("bool");
-                break;
-            case "integer":
-                writer.write("Integer");
-                break;
-            case "string":
-                writer.write("String");
-                break;
-            default:
-                assertNever(this.internalType);
+        if (this.internalType) {
+            switch (this.internalType.type) {
+                case "nil":
+                    writer.write("nil");
+                    break;
+                case "boolean":
+                    writer.write("bool");
+                    break;
+                case "boolish":
+                    writer.write("boolish");
+                    break;
+                case "string":
+                    writer.write("String");
+                    break;
+                case "integer":
+                    writer.write("Integer");
+                    break;
+                case "union":
+                    writer.delimit({
+                        nodes: this.internalType.memberValues,
+                        delimiter: " | ",
+                        writeFunction: (argument) => argument.write(writer)
+                    });
+                    break;
+                case "array":
+                    writer.write("Array[");
+                    this.internalType.value.write(writer);
+                    writer.write("]");
+                    break;
+                default:
+                    assertNever(this.internalType);
+            }
+        } else {
+            writer.write("untyped");
         }
     }
 
-    /* Static factory methods for creating a Type */
     public static untyped(): Type {
+        return new this(undefined);
+    }
+
+    public static nil(): Type {
         return new this({
-            internalType: "untyped"
+            type: "nil"
         });
     }
 
     public static boolean(): Type {
         return new this({
-            internalType: "boolean"
-        });
-    }
-
-    public static integer(): Type {
-        return new this({
-            internalType: "integer"
+            type: "boolean"
         });
     }
 
     public static string(): Type {
         return new this({
-            internalType: "string"
+            type: "string"
         });
     }
 
-    public optional(): Type {
-        return new Type({ internalType: this.internalType, optional: true });
+    public static integer(): Type {
+        return new this({
+            type: "integer"
+        });
+    }
+
+    public static union(memberValues: Union["memberValues"]): Type {
+        return new this({
+            type: "union",
+            memberValues
+        });
+    }
+
+    public static nilable(value: Type): Type {
+        return Type.union([value, Type.nil()]);
+    }
+
+    /**
+     * Helper for converting an existing type into an nilable type
+     */
+    public nilable(): Type {
+        return Type.nilable(this);
     }
 }
