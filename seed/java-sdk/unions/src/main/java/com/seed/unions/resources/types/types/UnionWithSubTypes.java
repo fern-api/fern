@@ -14,11 +14,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class UnionWithUnknown {
+public final class UnionWithSubTypes {
     private final Value value;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    private UnionWithUnknown(Value value) {
+    private UnionWithSubTypes(Value value) {
         this.value = value;
     }
 
@@ -26,20 +26,20 @@ public final class UnionWithUnknown {
         return value.visit(visitor);
     }
 
-    public static UnionWithUnknown foo(Foo value) {
-        return new UnionWithUnknown(new FooValue(value));
+    public static UnionWithSubTypes foo(Foo value) {
+        return new UnionWithSubTypes(new FooValue(value));
     }
 
-    public static UnionWithUnknown unknown() {
-        return new UnionWithUnknown(new UnknownValue());
+    public static UnionWithSubTypes fooExtended(FooExtended value) {
+        return new UnionWithSubTypes(new FooExtendedValue(value));
     }
 
     public boolean isFoo() {
         return value instanceof FooValue;
     }
 
-    public boolean isUnknown() {
-        return value instanceof UnknownValue;
+    public boolean isFooExtended() {
+        return value instanceof FooExtendedValue;
     }
 
     public boolean _isUnknown() {
@@ -49,6 +49,13 @@ public final class UnionWithUnknown {
     public Optional<Foo> getFoo() {
         if (isFoo()) {
             return Optional.of(((FooValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<FooExtended> getFooExtended() {
+        if (isFooExtended()) {
+            return Optional.of(((FooExtendedValue) value).value);
         }
         return Optional.empty();
     }
@@ -68,13 +75,13 @@ public final class UnionWithUnknown {
     public interface Visitor<T> {
         T visitFoo(Foo foo);
 
-        T visitUnknown();
+        T visitFooExtended(FooExtended fooExtended);
 
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({@JsonSubTypes.Type(FooValue.class), @JsonSubTypes.Type(UnknownValue.class)})
+    @JsonSubTypes({@JsonSubTypes.Type(FooValue.class), @JsonSubTypes.Type(FooExtendedValue.class)})
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -115,30 +122,46 @@ public final class UnionWithUnknown {
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "value: " + value + "}";
+            return "UnionWithSubTypes{" + "value: " + value + "}";
         }
     }
 
-    @JsonTypeName("unknown")
+    @JsonTypeName("fooExtended")
     @JsonIgnoreProperties("type")
-    private static final class UnknownValue implements Value {
+    private static final class FooExtendedValue implements Value {
+        @JsonUnwrapped
+        private FooExtended value;
+
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private UnknownValue() {}
+        private FooExtendedValue() {}
+
+        private FooExtendedValue(FooExtended value) {
+            this.value = value;
+        }
 
         @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitUnknown();
+            return visitor.visitFooExtended(value);
         }
 
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof UnknownValue;
+            return other instanceof FooExtendedValue && equalTo((FooExtendedValue) other);
+        }
+
+        private boolean equalTo(FooExtendedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
         }
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "}";
+            return "UnionWithSubTypes{" + "value: " + value + "}";
         }
     }
 
@@ -174,7 +197,7 @@ public final class UnionWithUnknown {
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "type: " + type + ", value: " + value + "}";
+            return "UnionWithSubTypes{" + "type: " + type + ", value: " + value + "}";
         }
     }
 }
