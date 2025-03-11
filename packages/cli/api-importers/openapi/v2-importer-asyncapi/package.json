@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/openapi-v2-parser",
+  "name": "@fern-api/v2-importer-asyncapi",
   "version": "0.0.0",
   "repository": {
     "type": "git",

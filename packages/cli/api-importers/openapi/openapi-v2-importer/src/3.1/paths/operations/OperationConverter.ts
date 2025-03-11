@@ -2,8 +2,8 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { ErrorCollector } from "../../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 

@@ -1,25 +1,8 @@
-import { z } from "zod";
+import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
+import { FernEnumConfigSchema } from "../schemas/EnumSchema";
 import { FernEnumConfig } from "../types/FernEnumConfig";
-
-const CasingConfigSchema = z.object({
-    snake: z.string().optional(),
-    camel: z.string().optional(),
-    screamingSnake: z.string().optional(),
-    pascal: z.string().optional()
-});
-
-const EnumValueConfigSchema = z.object({
-    description: z.string().optional(),
-    name: z.string().optional(),
-    casing: CasingConfigSchema.optional()
-});
-
-const FernEnumConfigSchema = z.record(EnumValueConfigSchema);
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractConverter.Args {

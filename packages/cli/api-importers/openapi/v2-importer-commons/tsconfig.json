@@ -34,9 +34,6 @@
     },
     {
       "path": "../../../../commons/casings-generator"
-    },
-    {
-      "path": "../v2-importer-commons"
     }
   ]
 }

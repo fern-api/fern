@@ -1,9 +1,8 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverterContext, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverterContext } from "../AbstractConverterContext";
-import { ErrorCollector } from "../ErrorCollector";
 import { AvailabilityExtension } from "../extensions/x-fern-availability";
 
 /**

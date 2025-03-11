@@ -45,6 +45,8 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
+    "@fern-api/v2-importer-asyncapi": "workspace:*",
+    "@fern-api/v2-importer-commons": "workspace:*",
     "@redocly/openapi-core": "^1.4.1",
     "@types/uuid": "^9.0.8",
     "axios": "^1.8.2",
